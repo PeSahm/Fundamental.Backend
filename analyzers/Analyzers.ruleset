@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+SonarAnalyzer.CSharp - https://rules.sonarsource.com/csharp
+StyleCop.Analyzers - https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/DOCUMENTATION.md
+Microsoft.CodeAnalysis.FxCopAnalyzers - https://github.com/dotnet/roslyn-analyzers/blob/main/src/NetAnalyzers/Core/AnalyzerReleases.Shipped.md
+-->
+<RuleSet Name="Analyzers Rules" Description="Code analysis rules" ToolsVersion="16.0">
+  <Rules AnalyzerId="SonarAnalyzer.CSharp" RuleNamespace="SonarAnalyzer.CSharp">
+      <Rule Id="S125" Action="None" />
+      <Rule Id="S1075" Action="None" />
+      <Rule Id="S1135" Action="None" />
+      <Rule Id="S2094" Action="None" />
+  </Rules>
+
+  <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <Rule Id="SA0001" Action="None" />
+    <Rule Id="SA1005" Action="Info" />
+    <Rule Id="SA1009" Action="None" />
+    <Rule Id="SA1101" Action="None" />
+    <Rule Id="SA1111" Action="None" />
+    <Rule Id="SA1200" Action="None" />
+    <Rule Id="SA1201" Action="None" />
+    <Rule Id="SA1309" Action="None" />
+    <Rule Id="SA1310" Action="None" />
+    <Rule Id="SA1413" Action="Info" />
+    <Rule Id="SA1512" Action="None" />
+    <Rule Id="SA1516" Action="None" />
+    <Rule Id="SA1518" Action="None" />
+    <Rule Id="SA1600" Action="None" />
+    <Rule Id="SA1601" Action="Hidden" />
+    <Rule Id="SA1602" Action="None" />
+    <Rule Id="SA1611" Action="None" />
+    <Rule Id="SA1615" Action="None" />
+    <Rule Id="SA1623" Action="None" />
+    <Rule Id="SA1627" Action="None" />
+    <Rule Id="SA1633" Action="None" />
+  </Rules>
+  <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
+  </Rules>
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.NetAnalyzers" RuleNamespace="Microsoft.CodeAnalysis.NetAnalyzers">
+    <Rule Id="CA1069" Action="Error" />
+  </Rules>
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp.Analyzers" RuleNamespace="Microsoft.CodeAnalysis.CSharp.Analyzers">
+      <Rule Id="CS8618" Action="Info" />
+  </Rules>
+</RuleSet>

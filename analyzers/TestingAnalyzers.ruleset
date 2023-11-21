@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+SonarAnalyzer.CSharp - https://rules.sonarsource.com/csharp
+StyleCop.Analyzers - https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/DOCUMENTATION.md
+Microsoft.CodeAnalysis.FxCopAnalyzers - https://github.com/dotnet/roslyn-analyzers/blob/main/src/NetAnalyzers/Core/AnalyzerReleases.Shipped.md
+-->
+<RuleSet Name="Analyzers Rules" Description="Code analysis rules" ToolsVersion="16.0">
+  <Rules AnalyzerId="SonarAnalyzer.CSharp" RuleNamespace="SonarAnalyzer.CSharp">
+    <Rule Id="S103" Action="None" />   
+    <Rule Id="S107" Action="Warning" />  
+    <Rule Id="S110" Action="Warning" /> 
+    <Rule Id="S113" Action="None" />  	
+    <Rule Id="S125" Action="Info" />  	
+    <Rule Id="S927" Action="Warning" />   
+	<Rule Id="S1118" Action="Warning" />
+	<Rule Id="S1144" Action="Warning" />	
+	<Rule Id="S1313" Action="Warning" />		
+    <Rule Id="S1450" Action="Warning" />
+    <Rule Id="S1481" Action="Warning" />
+    <Rule Id="S1854" Action="Warning" />
+    <Rule Id="S2068" Action="Warning" />	
+    <Rule Id="S2077" Action="Warning" />
+    <Rule Id="S2092" Action="Warning" />		
+    <Rule Id="S2234" Action="Warning" />
+	<Rule Id="S2259" Action="None" />
+	<Rule Id="S2342" Action="Warning" />
+	<Rule Id="S2436" Action="Warning" />
+	<Rule Id="S2437" Action="Warning" />	
+    <Rule Id="S2971" Action="Warning" />
+    <Rule Id="S3011" Action="Warning" />	
+	<Rule Id="S3330" Action="Warning" />		
+    <Rule Id="S3442" Action="Warning" />
+    <Rule Id="S3925" Action="None" />
+    <Rule Id="S3928" Action="Warning" />
+    <Rule Id="S4136" Action="None" />	
+    <Rule Id="S4457" Action="None" />
+	<Rule Id="S4581" Action="None" />
+  </Rules>
+  <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <Rule Id="SA0001" Action="None" />
+    <Rule Id="SA1005" Action="Info" />
+    <Rule Id="SA1025" Action="Warning" />
+    <Rule Id="SA1028" Action="Warning" />
+    <Rule Id="SA1100" Action="None" />
+    <Rule Id="SA1101" Action="None" />
+    <Rule Id="SA1116" Action="Warning" />
+    <Rule Id="SA1117" Action="Warning" />
+    <Rule Id="SA1137" Action="Warning" />
+    <Rule Id="SA1200" Action="None" />
+    <Rule Id="SA1201" Action="None" />
+    <Rule Id="SA1202" Action="None" />
+    <Rule Id="SA1204" Action="None" />
+    <Rule Id="SA1210" Action="None" />
+    <Rule Id="SA1214" Action="None" />
+    <Rule Id="SA1306" Action="None" />
+    <Rule Id="SA1309" Action="None" />
+    <Rule Id="SA1310" Action="None" />
+    <Rule Id="SA1312" Action="None" />
+    <Rule Id="SA1313" Action="None" />
+    <Rule Id="SA1401" Action="Info" />
+    <Rule Id="SA1413" Action="Info" />
+    <Rule Id="SA1508" Action="None" />
+    <Rule Id="SA1513" Action="None" />
+    <Rule Id="SA1516" Action="None" />
+	<Rule Id="SA1518" Action="None" />
+    <Rule Id="SA1600" Action="None" />
+    <Rule Id="SA1601" Action="None" />
+    <Rule Id="SA1602" Action="None" />
+    <Rule Id="SA1615" Action="None" />
+    <Rule Id="SA1623" Action="None" />
+    <Rule Id="SA1629" Action="None" />
+    <Rule Id="SA1633" Action="None" />
+    <Rule Id="SA1649" Action="None" />
+  </Rules>
+  <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
+    <Rule Id="CA1012" Action="None" />
+  </Rules>
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.NetAnalyzers" RuleNamespace="Microsoft.CodeAnalysis.NetAnalyzers">
+    <Rule Id="CA1012" Action="None" />
+  </Rules>
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp.Analyzers" RuleNamespace="Microsoft.CodeAnalysis.CSharp.Analyzers">
+      <Rule Id="CS8618" Action="None" />
+  </Rules>
+</RuleSet>
