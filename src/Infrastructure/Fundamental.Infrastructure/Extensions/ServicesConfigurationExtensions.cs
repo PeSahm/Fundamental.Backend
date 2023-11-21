@@ -14,10 +14,10 @@ public static class ServicesConfigurationExtensions
         builder.Services.AddScoped<IUnitOfWork>(provider => provider.GetService<FundamentalDbContext>()!);
 
         builder.Services.AddMediatR(
-            _ =>
+            cfg =>
             {
                 // cfg.AddOpenBehavior(typeof(CommonErrorsPipelineBehavior<,>));
-                // cfg.RegisterServicesFromAssemblies(WifiApplicationRootMarker.Assembly);
+                 cfg.RegisterServicesFromAssemblies(typeof(ServicesConfigurationExtensions).Assembly);
             });
     }
 }
