@@ -13,5 +13,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\Infrastructure\Fundamental.Infrastructure\Fundamental.Infrastructure.csproj" />
     </ItemGroup>
-
+    <ItemGroup>
+        <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
+    </ItemGroup>
 </Project>
