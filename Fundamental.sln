@@ -12,6 +12,20 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fundamental.Infrastructure"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fundamental.WebApi", "src\Presentation\Fundamental.WebApi\Fundamental.WebApi.csproj", "{E48F5F06-C463-44E1-8C63-9E08454A4041}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "analyzers", "analyzers", "{4BC0C234-9881-4B54-A300-E6BBB4D3D716}"
+	ProjectSection(SolutionItems) = preProject
+		analyzers\Analyzers.ruleset = analyzers\Analyzers.ruleset
+		analyzers\TestingAnalyzers.ruleset = analyzers\TestingAnalyzers.ruleset
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{F45A4DC7-19ED-4B83-B6BA-52F2C9052CF6}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		Directory.Build.props = Directory.Build.props
+		global.json = global.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

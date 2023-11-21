@@ -1,9 +1,7 @@
 using Fundamental.Infrastructure.Extensions;
 using Serilog;
 
-
-var builder = WebApplication.CreateBuilder(args);
-
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddDbContexts(builder.Configuration);
@@ -34,7 +32,7 @@ builder.Services.AddCors(options =>
             .SetIsOriginAllowedToAllowWildcardSubdomains();
     });
 });
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.UseSwagger();
@@ -49,6 +47,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-
 app.Run();
-
