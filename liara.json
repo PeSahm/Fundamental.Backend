@@ -1,0 +1,10 @@
+{
+    "platform": "netcore",
+    "app": "fundamental-endpoint",
+    "port": 443,
+    "netcore": {
+        "version": "6.0",
+        "finalDllName": "Fundamental.WebApi",
+        "csprojectFile": "src/Presentation/Fundamental.WebApi"
+    }
+}
