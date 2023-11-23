@@ -28,6 +28,7 @@ builder.AddServices();
 builder.Host.ConfigureAppConfiguration(b => b
     .AddJsonFile("appsettings.Override.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables());
+
 builder.Services.AddHttpContextAccessor();
 builder.Host.UseSerilog((context, serviceProvider, configuration) =>
 {
