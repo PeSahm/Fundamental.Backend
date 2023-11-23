@@ -15,7 +15,7 @@ public class Symbol : BaseEntity<Guid>
         string name,
         string companyEnCode,
         string companyPersianName,
-        string companyIsin,
+        string? companyIsin,
         ulong marketCap,
         string sectorCode,
         string subSectorCode,
@@ -50,7 +50,7 @@ public class Symbol : BaseEntity<Guid>
     public string Name { get; private set; }
     public string CompanyEnCode { get; private set; }
     public string CompanyPersianName { get; private set; }
-    public string CompanyIsin { get; private set; }
+    public string? CompanyIsin { get; private set; }
     public ulong MarketCap { get; private set; }
     public string SectorCode { get; private set; }
     public string SubSectorCode { get; private set; }

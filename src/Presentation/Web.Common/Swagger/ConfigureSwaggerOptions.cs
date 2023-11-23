@@ -73,7 +73,7 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
     {
         OpenApiInfo info = new()
         {
-            Title = $"UltraTone.Backend.Legacy.Customer-{description.GroupName}",
+            Title = $"Fundamental-{description.GroupName}",
             Version = description.GetApiVersion().ToString()
         };
 

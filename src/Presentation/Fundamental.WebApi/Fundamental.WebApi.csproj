@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\BuildingBlock\ErrorHandling.AspNetCore\ErrorHandling.AspNetCore.csproj" />
       <ProjectReference Include="..\..\Infrastructure\Fundamental.Infrastructure\Fundamental.Infrastructure.csproj" />
       <ProjectReference Include="..\Web.Common\Web.Common.csproj" />
     </ItemGroup>
