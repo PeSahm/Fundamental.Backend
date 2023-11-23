@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\BuildingBlock\ErrorHandling\ErrorHandling.csproj" />
       <ProjectReference Include="..\..\BuildingBlock\Fundamental.BuildingBlock\Fundamental.BuildingBlock.csproj" />
     </ItemGroup>
 
@@ -14,10 +15,5 @@
         <PackageReference Include="Ardalis.Specification" Version="6.1.0" />
         <PackageReference Include="ErrorOr" Version="1.2.1" />
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Symbols\Enums\" />
-      <Folder Include="Symbols\Specifications\" />
     </ItemGroup>
 </Project>
