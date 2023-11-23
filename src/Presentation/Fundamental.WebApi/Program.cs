@@ -1,11 +1,26 @@
+using System.Reflection;
+using FluentValidation;
+using Fundamental.Application;
 using Fundamental.Infrastructure.Extensions;
+using Fundamental.Infrastructure.Serialization;
+using Fundamental.Web.Common.Extensions;
+using Fundamental.WebApi.Extensions;
+using Fundamental.WebApi.Middlewares;
+using Fundamental.WebApi.Swagger;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Serilog;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(x => x.JsonSerializerOptions.Converters.Add(new DateTimeConverter()))
+    .ConfigureCustomApiBehaviorOptions();
+
 builder.Services.AddDbContexts(builder.Configuration);
 builder.AddServices();
+
 builder.Host.ConfigureAppConfiguration(b => b
     .AddJsonFile("appsettings.Override.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables());
@@ -17,8 +32,23 @@ builder.Host.UseSerilog((context, serviceProvider, configuration) =>
         .ReadFrom.Services(serviceProvider);
 });
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddApiVersioning(options =>
+{
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+    options.ReportApiVersions = true;
+    options.ApiVersionReader = new HeaderApiVersionReader("x-api-version");
+});
+builder.Services.TryAddEnumerable(ServiceDescriptor.Transient<IApiDescriptionProvider, CustomerApiDescriptionProvider>());
+builder.Services.AddVersionedApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'VVV";
+    options.SubstituteApiVersionInUrl = true;
+});
+
+// builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddCustomSwagger();
+builder.Services.AddValidatorsFromAssemblies(new List<Assembly> { typeof(ApplicationDependencyInjection).Assembly });
 
 builder.Services.AddCors(options =>
 {
@@ -35,13 +65,13 @@ builder.Services.AddCors(options =>
 WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
-app.UseSwagger();
-app.UseSwaggerUI();
+app.UseCustomSwaggerUi();
 
 app.UseHttpsRedirection();
 
 app.UseRouting();
 app.UseCors();
+app.UseMiddleware<ErrorLoggingMiddleware>();
 
 app.UseAuthorization();
 

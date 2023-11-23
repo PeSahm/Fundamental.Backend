@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Adds ASP.NET Core filters that translate from Result to ActionResult.</Description>
+    <Summary>Adds ASP.NET Core filters that translate from Result to ActionResult.</Summary>
+    <PackageTags>result pattern web api aspnetcore mvc</PackageTags>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ErrorHandling\ErrorHandling.csproj" />
+  </ItemGroup>
+
+
+</Project>
