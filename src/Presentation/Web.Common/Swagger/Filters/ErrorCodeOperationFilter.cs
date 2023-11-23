@@ -6,6 +6,7 @@ using Fundamental.ErrorHandling;
 using Fundamental.ErrorHandling.Attributes;
 using Fundamental.ErrorHandling.Enums;
 using Fundamental.ErrorHandling.Helpers;
+using Fundamental.Infrastructure.Extensions;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -26,7 +27,7 @@ public class ErrorCodeOperationFilter : IOperationFilter
             .Where(a => a.IsEnum && a.GetCustomAttribute<HandlerCodeAttribute>() is not null)
             .ToDictionary(a => a.GetCustomAttribute<HandlerCodeAttribute>()!.HandlerCode);
 
-        _errorMessages = ResourceHelper.GetAllErrorMessages(typeof(ApplicationDependencyInjection).Assembly);
+        _errorMessages = ResourceHelper.GetAllErrorMessages(typeof(ServicesConfigurationExtensions).Assembly);
     }
 
     public void Apply(OpenApiOperation operation, OperationFilterContext context)

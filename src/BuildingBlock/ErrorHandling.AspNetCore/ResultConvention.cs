@@ -30,7 +30,9 @@ namespace ErrorHandling.AspNetCore
                 returnType = returnType.GetGenericArguments()[0];
             }
 
-            bool isResult = returnType.IsGenericType && returnType.GetGenericTypeDefinition() == typeof(IResponse);
+            bool isResult = returnType.IsGenericType &&
+                            (returnType.GetGenericTypeDefinition() == typeof(Response) ||
+                             returnType.GetGenericTypeDefinition() == typeof(Response<>));
 
             if (isResult)
             {

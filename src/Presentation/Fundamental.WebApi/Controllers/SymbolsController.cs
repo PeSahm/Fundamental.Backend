@@ -1,3 +1,4 @@
+using ErrorHandling.AspNetCore;
 using Fundamental.Application.Symbols.Queries.GetSymbols;
 using Fundamental.ErrorHandling;
 using MediatR;
@@ -8,6 +9,7 @@ namespace Fundamental.WebApi.Controllers
     [ApiController]
     [Route("symbols")]
     [ApiVersion("1.0")]
+    [TranslateResultToActionResult]
     public class SymbolsController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -18,9 +20,9 @@ namespace Fundamental.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<Response<List<GetSymbolsResultDto>>> GetSymbols([FromQuery]string filter)
+        public async Task<Response<List<GetSymbolsResultDto>>> GetSymbols([FromQuery]GetSymbolsRequest request)
         {
-            return await _mediator.Send(new GetSymbolsRequest(filter));
+            return await _mediator.Send(request);
         }
     }
 }

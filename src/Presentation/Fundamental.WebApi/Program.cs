@@ -1,4 +1,5 @@
 using System.Reflection;
+using ErrorHandling.AspNetCore;
 using FluentValidation;
 using Fundamental.Application;
 using Fundamental.Infrastructure.Extensions;
@@ -14,7 +15,10 @@ using Serilog;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers()
+builder.Services.AddControllers(options =>
+    {
+        options.AddDefaultResultConvention();
+    })
     .AddJsonOptions(x => x.JsonSerializerOptions.Converters.Add(new DateTimeConverter()))
     .ConfigureCustomApiBehaviorOptions();
 
@@ -24,7 +28,7 @@ builder.AddServices();
 builder.Host.ConfigureAppConfiguration(b => b
     .AddJsonFile("appsettings.Override.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables());
-
+builder.Services.AddHttpContextAccessor();
 builder.Host.UseSerilog((context, serviceProvider, configuration) =>
 {
     configuration
@@ -46,7 +50,7 @@ builder.Services.AddVersionedApiExplorer(options =>
     options.SubstituteApiVersionInUrl = true;
 });
 
-// builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddCustomSwagger();
 builder.Services.AddValidatorsFromAssemblies(new List<Assembly> { typeof(ApplicationDependencyInjection).Assembly });
 
