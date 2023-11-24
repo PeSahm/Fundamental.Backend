@@ -21,7 +21,7 @@ namespace Fundamental.Migrations.Fundamental
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Isin = table.Column<string>(type: "varchar(12)", nullable: false),
-                    TseInsCode = table.Column<string>(type: "varchar(20)", nullable: false),
+                    TseInsCode = table.Column<string>(type: "varchar(40)", nullable: false),
                     EnName = table.Column<string>(type: "varchar(100)", nullable: false),
                     SymbolEnName = table.Column<string>(type: "varchar(100)", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(100)", nullable: false),

@@ -18,7 +18,7 @@ public class SymbolConfiguration : EntityTypeConfigurationBase<Symbol>
         builder.HasIndex(x => x.Isin).IsUnique();
 
         builder.Property(x => x.TseInsCode)
-            .HasColumnType("varchar(20)")
+            .HasColumnType("varchar(40)")
             .HasColumnName("TseInsCode")
             .IsRequired();
 

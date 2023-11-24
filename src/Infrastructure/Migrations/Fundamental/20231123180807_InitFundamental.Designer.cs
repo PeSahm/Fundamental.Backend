@@ -101,7 +101,7 @@ namespace Fundamental.Migrations.Fundamental
 
                     b.Property<string>("TseInsCode")
                         .IsRequired()
-                        .HasColumnType("varchar(20)")
+                        .HasColumnType("varchar(40)")
                         .HasColumnName("TseInsCode");
 
                     b.Property<DateTime?>("UpdatedAt")
