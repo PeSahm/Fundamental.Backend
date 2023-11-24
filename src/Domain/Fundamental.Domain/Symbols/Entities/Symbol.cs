@@ -54,11 +54,21 @@ public class Symbol : BaseEntity<Guid>
     public ulong MarketCap { get; private set; }
     public string SectorCode { get; private set; }
     public string SubSectorCode { get; private set; }
+
+    public ProductType ProductType { get; private set; }
+
     public void SetProductType(ProductType productType, DateTime updatedAt)
     {
         ProductType = productType;
         UpdatedAt = updatedAt;
     }
 
-    public ProductType ProductType { get; private set; }
+    public void AddInvestmentSymbol(SymbolRelation symbolRelation)
+    {
+        InvestmentSymbols.Add(symbolRelation);
+    }
+
+    public ICollection<SymbolRelation> InvestmentSymbols { get; private set; } = new List<SymbolRelation>();
+
+    public ICollection<SymbolRelation> InvestorSymbols { get; private set; } = new List<SymbolRelation>();
 }

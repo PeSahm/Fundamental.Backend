@@ -19,6 +19,8 @@ public class FundamentalDbContext : DbContext, IUnitOfWork
 
     public DbSet<Symbol> Symbols { get; set; } = null!;
 
+    public DbSet<SymbolRelation> SymbolRelations { get; set; } = null!;
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(
