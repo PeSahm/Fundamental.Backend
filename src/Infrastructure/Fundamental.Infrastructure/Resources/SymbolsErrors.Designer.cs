@@ -67,5 +67,41 @@ namespace Fundamental.Infrastructure.Resources {
                 return ResourceManager.GetString("11_999_101", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Investor isin is invalid..
+        /// </summary>
+        internal static string _13_399_101 {
+            get {
+                return ResourceManager.GetString("13_399_101", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Investment isin is invalid..
+        /// </summary>
+        internal static string _13_399_102 {
+            get {
+                return ResourceManager.GetString("13_399_102", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter valid ratio..
+        /// </summary>
+        internal static string _13_399_103 {
+            get {
+                return ResourceManager.GetString("13_399_103", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This relation already added. .
+        /// </summary>
+        internal static string _13_399_104 {
+            get {
+                return ResourceManager.GetString("13_399_104", resourceCulture);
+            }
+        }
     }
 }

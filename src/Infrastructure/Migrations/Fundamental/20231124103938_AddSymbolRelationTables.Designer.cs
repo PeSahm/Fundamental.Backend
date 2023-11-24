@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fundamental.Migrations.Fundamental
 {
     [DbContext(typeof(FundamentalDbContext))]
-    [Migration("20231123180807_InitFundamental")]
-    partial class InitFundamental
+    [Migration("20231124103938_AddSymbolRelationTables")]
+    partial class AddSymbolRelationTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -119,6 +119,76 @@ namespace Fundamental.Migrations.Fundamental
                     b.HasIndex("Name");
 
                     b.ToTable("Symbols", "shd");
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.SymbolRelation", b =>
+                {
+                    b.Property<long>("_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnOrder(0);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("_id"), 1L, 1);
+
+                    b.Property<long>("ChildId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(1);
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("Ratio")
+                        .HasColumnType("float")
+                        .HasColumnName("Ratio");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("ModifiedAt");
+
+                    b.HasKey("_id");
+
+                    b.HasIndex("ChildId");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("SymbolRelations");
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.SymbolRelation", b =>
+                {
+                    b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Child")
+                        .WithMany("InvestorSymbols")
+                        .HasForeignKey("ChildId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Parent")
+                        .WithMany("InvestmentSymbols")
+                        .HasForeignKey("ParentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Child");
+
+                    b.Navigation("Parent");
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.Symbol", b =>
+                {
+                    b.Navigation("InvestmentSymbols");
+
+                    b.Navigation("InvestorSymbols");
                 });
 #pragma warning restore 612, 618
         }

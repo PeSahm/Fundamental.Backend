@@ -1,11 +1,14 @@
-﻿using System;
+﻿using Fundamental.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace Fundamental.Migrations.Fundamental
 {
-    public partial class InitFundamental : Migration
+    [DbContext(typeof(FundamentalDbContext))]
+    [Migration("20231123180807_InitFundamental")]
+    public class InitFundamental : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
