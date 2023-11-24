@@ -28,4 +28,10 @@ public class SymbolSpec : Specification<Symbol>
 
         return select;
     }
+
+    public SymbolSpec NoTracking()
+    {
+        Query.AsNoTracking();
+        return this;
+    }
 }

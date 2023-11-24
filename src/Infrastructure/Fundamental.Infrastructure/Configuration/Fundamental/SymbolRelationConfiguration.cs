@@ -21,6 +21,8 @@ public class SymbolRelationConfiguration : EntityTypeConfigurationBase<SymbolRel
         builder.HasOne(x => x.Child)
             .WithMany(x => x.InvestorSymbols)
             .HasForeignKey("ChildId")
-            .IsRequired();
+            .IsRequired()
+            .OnDelete(DeleteBehavior.NoAction)
+            ;
     }
 }
