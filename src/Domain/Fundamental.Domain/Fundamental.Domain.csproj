@@ -16,4 +16,8 @@
         <PackageReference Include="ErrorOr" Version="1.2.1" />
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Prices\Enums\" />
+    </ItemGroup>
 </Project>

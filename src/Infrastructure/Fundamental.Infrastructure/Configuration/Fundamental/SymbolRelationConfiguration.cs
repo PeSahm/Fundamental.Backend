@@ -8,6 +8,8 @@ public class SymbolRelationConfiguration : EntityTypeConfigurationBase<SymbolRel
 {
     protected override void ExtraConfigure(EntityTypeBuilder<SymbolRelation> builder)
     {
+        builder.ToTable("SymbolRelations", "shd");
+
         builder.Property(x => x.Ratio)
             .HasColumnType("float")
             .HasColumnName("Ratio")

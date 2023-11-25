@@ -8,7 +8,7 @@ public class SymbolConfiguration : EntityTypeConfigurationBase<Symbol>
 {
     protected override void ExtraConfigure(EntityTypeBuilder<Symbol> builder)
     {
-        builder.ToTable("Symbols", "shd");
+        builder.ToTable("Symbol", "shd");
 
         builder.Property(x => x.Isin)
             .HasColumnType("varchar(12)")
