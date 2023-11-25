@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fundamental.Migrations.Fundamental
 {
     [DbContext(typeof(FundamentalDbContext))]
-    [Migration("20231124103938_AddSymbolRelationTables")]
-    partial class AddSymbolRelationTables
+    [Migration("20231125173931_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,114 @@ namespace Fundamental.Migrations.Fundamental
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("Fundamental.Domain.Prices.Entities.ClosePrice", b =>
+                {
+                    b.Property<long>("_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnOrder(0);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("_id"), 1L, 1);
+
+                    b.Property<long>("Close")
+                        .HasColumnType("bigint")
+                        .HasColumnName("Close")
+                        .HasColumnOrder(4);
+
+                    b.Property<long>("CloseAdjusted")
+                        .HasColumnType("bigint")
+                        .HasColumnName("CloseAdjusted")
+                        .HasColumnOrder(9);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("date")
+                        .HasColumnName("Date")
+                        .HasColumnOrder(3);
+
+                    b.Property<long>("High")
+                        .HasColumnType("bigint")
+                        .HasColumnName("High")
+                        .HasColumnOrder(6);
+
+                    b.Property<long>("HighAdjusted")
+                        .HasColumnType("bigint")
+                        .HasColumnName("HighAdjusted")
+                        .HasColumnOrder(11);
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(1);
+
+                    b.Property<long>("Last")
+                        .HasColumnType("bigint")
+                        .HasColumnName("Last")
+                        .HasColumnOrder(8);
+
+                    b.Property<long>("LastAdjusted")
+                        .HasColumnType("bigint")
+                        .HasColumnName("LastAdjusted")
+                        .HasColumnOrder(13);
+
+                    b.Property<long>("Low")
+                        .HasColumnType("bigint")
+                        .HasColumnName("Low")
+                        .HasColumnOrder(7);
+
+                    b.Property<long>("LowAdjusted")
+                        .HasColumnType("bigint")
+                        .HasColumnName("LowAdjusted")
+                        .HasColumnOrder(12);
+
+                    b.Property<long>("Open")
+                        .HasColumnType("bigint")
+                        .HasColumnName("Open")
+                        .HasColumnOrder(5);
+
+                    b.Property<long>("OpenAdjusted")
+                        .HasColumnType("bigint")
+                        .HasColumnName("OpenAdjusted")
+                        .HasColumnOrder(10);
+
+                    b.Property<long>("Quantity")
+                        .HasColumnType("bigint")
+                        .HasColumnName("Quantity")
+                        .HasColumnOrder(15);
+
+                    b.Property<long>("SymbolId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("ModifiedAt");
+
+                    b.Property<long>("Value")
+                        .HasColumnType("bigint")
+                        .HasColumnName("Value")
+                        .HasColumnOrder(16);
+
+                    b.Property<long>("Volume")
+                        .HasColumnType("bigint")
+                        .HasColumnName("Volume")
+                        .HasColumnOrder(14);
+
+                    b.HasKey("_id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("SymbolId");
+
+                    b.HasIndex("Date", "SymbolId")
+                        .IsUnique();
+
+                    b.ToTable("ClosePrice", "shd");
+                });
 
             modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.Symbol", b =>
                 {
@@ -118,7 +226,7 @@ namespace Fundamental.Migrations.Fundamental
 
                     b.HasIndex("Name");
 
-                    b.ToTable("Symbols", "shd");
+                    b.ToTable("Symbol", "shd");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.SymbolRelation", b =>
@@ -162,7 +270,18 @@ namespace Fundamental.Migrations.Fundamental
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("SymbolRelations");
+                    b.ToTable("SymbolRelations", "shd");
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.Prices.Entities.ClosePrice", b =>
+                {
+                    b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Symbol")
+                        .WithMany()
+                        .HasForeignKey("SymbolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Symbol");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.SymbolRelation", b =>
