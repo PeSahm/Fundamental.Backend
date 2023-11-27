@@ -1,6 +1,6 @@
 ﻿using Fundamental.Application.Services;
-using Fundamental.Domain.Exceptions;
-using Fundamental.Domain.ValueObjects;
+using Fundamental.Domain.Common.Exceptions;
+using Fundamental.Domain.Common.ValueObjects;
 using Microsoft.AspNetCore.Http;
 
 namespace Fundamental.Infrastructure.Services;

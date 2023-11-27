@@ -3,7 +3,7 @@ using Fundamental.ErrorHandling.Abstracts;
 using Fundamental.ErrorHandling.Enums;
 using Fundamental.ErrorHandling.Interfaces;
 
-namespace Fundamental.Domain.Exceptions;
+namespace Fundamental.Domain.Common.Exceptions;
 
 [Serializable]
 public class InvalidIpAddressException : AppException, ICodedException

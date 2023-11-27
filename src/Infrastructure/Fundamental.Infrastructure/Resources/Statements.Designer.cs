@@ -21,14 +21,14 @@ namespace Fundamental.Infrastructure.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class SymbolsErrors {
+    internal class Statements {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal SymbolsErrors() {
+        internal Statements() {
         }
         
         /// <summary>
@@ -38,7 +38,7 @@ namespace Fundamental.Infrastructure.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Fundamental.Infrastructure.Resources.SymbolsErrors", typeof(SymbolsErrors).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Fundamental.Infrastructure.Resources.Statements", typeof(Statements).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -60,47 +60,29 @@ namespace Fundamental.Infrastructure.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Investor isin is invalid..
+        ///   Looks up a localized string similar to The symbol not found.
         /// </summary>
-        internal static string _11_399_101 {
+        internal static string _13_399_101 {
             get {
-                return ResourceManager.GetString("11_399_101", resourceCulture);
+                return ResourceManager.GetString("13_399_101", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Investment isin is invalid..
+        ///   Looks up a localized string similar to The traceno already exists..
         /// </summary>
-        internal static string _11_399_102 {
+        internal static string _13_399_102 {
             get {
-                return ResourceManager.GetString("11_399_102", resourceCulture);
+                return ResourceManager.GetString("13_399_102", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please enter valid ratio..
+        ///   Looks up a localized string similar to A statement with the same year and month exists..
         /// </summary>
-        internal static string _11_399_103 {
+        internal static string _13_399_103 {
             get {
-                return ResourceManager.GetString("11_399_103", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This relation already added. .
-        /// </summary>
-        internal static string _11_399_104 {
-            get {
-                return ResourceManager.GetString("11_399_104", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The symbol that you requested is not valid..
-        /// </summary>
-        internal static string _11_999_101 {
-            get {
-                return ResourceManager.GetString("11_999_101", resourceCulture);
+                return ResourceManager.GetString("13_399_103", resourceCulture);
             }
         }
     }

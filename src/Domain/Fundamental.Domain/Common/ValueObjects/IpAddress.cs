@@ -1,10 +1,10 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 using Fundamental.Domain.Common.BaseTypes;
-using Fundamental.Domain.Enums;
-using Fundamental.Domain.Exceptions;
+using Fundamental.Domain.Common.Enums;
+using Fundamental.Domain.Common.Exceptions;
 
-namespace Fundamental.Domain.ValueObjects;
+namespace Fundamental.Domain.Common.ValueObjects;
 
 public class IpAddress : ValueObject
 {

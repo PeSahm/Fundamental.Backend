@@ -18,6 +18,9 @@ public enum CommonErrorCode
     [ErrorType(BackendErrorType.ApplicationFailure)]
     InvalidIpAddress = 603,
 
+    [ErrorType(BackendErrorType.ApplicationFailure)]
+    InvalidYearEndMonth = 604,
+
     AuthTokenGenerationFailure = 606,
 
     [ErrorType(BackendErrorType.ApplicationFailure)]
