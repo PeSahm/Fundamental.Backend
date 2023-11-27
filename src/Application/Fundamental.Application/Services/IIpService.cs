@@ -1,4 +1,4 @@
-﻿using Fundamental.Domain.ValueObjects;
+﻿using Fundamental.Domain.Common.ValueObjects;
 
 namespace Fundamental.Application.Services;
 

@@ -33,12 +33,21 @@
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>SymbolsErrors.Designer.cs</LastGenOutput>
       </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Statements.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Statements.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
     </ItemGroup>
     <ItemGroup>
       <Compile Update="Resources\SymbolsErrors.Designer.cs">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>SymbolsErrors.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Statements.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Statements.resx</DependentUpon>
       </Compile>
     </ItemGroup>
 

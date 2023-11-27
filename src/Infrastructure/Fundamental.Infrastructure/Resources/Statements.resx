@@ -18,19 +18,13 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-    <data name="11_999_101" xml:space="preserve">
-        <value>The symbol that you requested is not valid.</value>
+    <data name="13_399_101" xml:space="preserve">
+        <value>The symbol not found</value>
     </data>
-    <data name="11_399_101" xml:space="preserve">
-        <value>Investor isin is invalid.</value>
+    <data name="13_399_102" xml:space="preserve">
+        <value>The traceno already exists.</value>
     </data>
-    <data name="11_399_102" xml:space="preserve">
-        <value>Investment isin is invalid.</value>
-    </data>
-    <data name="11_399_103" xml:space="preserve">
-        <value>Please enter valid ratio.</value>
-    </data>
-    <data name="11_399_104" xml:space="preserve">
-        <value>This relation already added. </value>
+    <data name="13_399_103" xml:space="preserve">
+        <value>A statement with the same year and month exists.</value>
     </data>
 </root>
