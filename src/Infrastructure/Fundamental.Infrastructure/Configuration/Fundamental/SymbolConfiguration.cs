@@ -77,7 +77,6 @@ public class SymbolConfiguration : EntityTypeConfigurationBase<Symbol>
         builder.Property(x => x.ProductType)
             .HasColumnName("ProductType")
             .HasColumnType("smallint")
-            .HasDefaultValueSql("1")
             .IsRequired();
     }
 }

@@ -3,10 +3,17 @@
     <PropertyGroup>
         <IsPackable>true</IsPackable>
         <PackageId>Fundamental.ErrorHandling</PackageId>
-        <TargetFramework>net6.0</TargetFramework>
+      <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <LangVersion>10</LangVersion>
         <RootNamespace>Fundamental.ErrorHandling</RootNamespace>
     </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Update="SonarAnalyzer.CSharp" Version="9.14.0.81108">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
 </Project>

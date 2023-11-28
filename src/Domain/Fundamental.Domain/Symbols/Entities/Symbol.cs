@@ -20,7 +20,7 @@ public class Symbol : BaseEntity<Guid>
         string sectorCode,
         string subSectorCode,
         DateTime createdAt
-        )
+    )
     {
         Id = id;
         Isin = isin;
@@ -55,7 +55,11 @@ public class Symbol : BaseEntity<Guid>
     public string SectorCode { get; private set; }
     public string SubSectorCode { get; private set; }
 
-    public ProductType ProductType { get; private set; }
+    public ProductType ProductType { get; private set; } = ProductType.Stock;
+
+    public ICollection<SymbolRelation> InvestmentSymbols { get; private set; } = new List<SymbolRelation>();
+
+    public ICollection<SymbolRelation> InvestorSymbols { get; private set; } = new List<SymbolRelation>();
 
     public void SetProductType(ProductType productType, DateTime updatedAt)
     {
@@ -67,8 +71,4 @@ public class Symbol : BaseEntity<Guid>
     {
         InvestmentSymbols.Add(symbolRelation);
     }
-
-    public ICollection<SymbolRelation> InvestmentSymbols { get; private set; } = new List<SymbolRelation>();
-
-    public ICollection<SymbolRelation> InvestorSymbols { get; private set; } = new List<SymbolRelation>();
 }

@@ -32,11 +32,11 @@ public class IpService : IIpService
         IpAddress? ipAddress = null;
         bool isValidIp = !string.IsNullOrWhiteSpace(ip) && IpAddress.TryCreate(ip, out ipAddress);
 
-        if (isValidIp is false || ipAddress is null)
+        if (!isValidIp)
         {
             throw new InvalidIpAddressException(ip);
         }
 
-        return ipAddress;
+        return ipAddress!;
     }
 }

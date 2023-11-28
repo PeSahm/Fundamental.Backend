@@ -17,7 +17,18 @@ public static class ConfigurationExtensions
     }
 
     public static PropertyBuilder<TProperty> UseCurrencyColumn<TProperty>(
-        this PropertyBuilder<TProperty> builder, string columnName = "Currency")
+        this PropertyBuilder<TProperty> builder,
+        string columnName = "Currency"
+    )
+    {
+        return builder.HasColumnName(columnName)
+            .HasConversion<CurrencyConverter>();
+    }
+
+    public static ComplexTypePropertyBuilder UseCurrencyColumn(
+        this ComplexTypePropertyBuilder builder,
+        string columnName = "Currency"
+    )
     {
         return builder.HasColumnName(columnName)
             .HasConversion<CurrencyConverter>();

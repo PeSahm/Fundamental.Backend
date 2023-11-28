@@ -42,13 +42,13 @@ public class IpAddress : ValueObject
     {
         bool isValidIp = IPAddress.TryParse(ip, out IPAddress? address);
 
-        if (!isValidIp || address is null)
+        if (!isValidIp)
         {
             ipAddress = null;
             return false;
         }
 
-        ipAddress = From(address);
+        ipAddress = From(address!);
         return true;
     }
 

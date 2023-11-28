@@ -17,7 +17,8 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
 
     public ConfigureSwaggerOptions(
         IConfiguration configuration,
-        IApiDescriptionGroupCollectionProvider apiDescriptionGroupCollectionProvider)
+        IApiDescriptionGroupCollectionProvider apiDescriptionGroupCollectionProvider
+    )
     {
         _configuration = configuration;
         _apiDescriptionGroupCollectionProvider = apiDescriptionGroupCollectionProvider;
@@ -30,18 +31,19 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
         // add swagger document for every API group discovered
         foreach (ApiDescriptionGroup apiDescriptionGroup in _apiDescriptionGroupCollectionProvider.ApiDescriptionGroups.Items)
         {
-            options.SwaggerDoc(apiDescriptionGroup.GroupName, CreateVersionInfo(apiDescriptionGroup.Items.First()));
+            options.SwaggerDoc(apiDescriptionGroup.GroupName, CreateVersionInfo(apiDescriptionGroup.Items[0]));
         }
 
-        options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
-        {
-            Name = "Authorization",
-            Type = SecuritySchemeType.ApiKey,
-            Scheme = JwtBearerDefaults.AuthenticationScheme,
-            BearerFormat = "JWT",
-            In = ParameterLocation.Header,
-            Description = "JWT Authorization header using the Bearer scheme.",
-        });
+        options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme,
+            new OpenApiSecurityScheme
+            {
+                Name = "Authorization",
+                Type = SecuritySchemeType.ApiKey,
+                Scheme = JwtBearerDefaults.AuthenticationScheme,
+                BearerFormat = "JWT",
+                In = ParameterLocation.Header,
+                Description = "JWT Authorization header using the Bearer scheme.",
+            });
         options.AddSecurityRequirement(new OpenApiSecurityRequirement
         {
             {
@@ -52,7 +54,7 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
                 new string[] { }
             }
         });
-        string server = _configuration.GetValue<string>("Server");
+        string? server = _configuration.GetValue<string>("Server");
         options.AddServer(new OpenApiServer { Url = server });
 
         options.EnableAnnotations();

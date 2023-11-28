@@ -1,10 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿#nullable disable
 
-#nullable disable
+using Fundamental.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Fundamental.Migrations.Fundamental
 {
-    public partial class AlterFinancialStatementTables : Migration
+    [DbContext(typeof(FundamentalDbContext))]
+    [Migration("20231127205225_AlterFinancialStatementTables")]
+    public class AlterFinancialStatementTables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
