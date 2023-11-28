@@ -1,0 +1,71 @@
+﻿using Fundamental.Domain.Common.BaseTypes;
+using Fundamental.Domain.Common.Enums;
+using Fundamental.Domain.Common.ValueObjects;
+using Fundamental.Domain.Statements.ValueObjects;
+using Fundamental.Domain.Symbols.Entities;
+
+namespace Fundamental.Domain.Statements.Entities;
+
+public class MonthlyActivity : BaseEntity<Guid>
+{
+    public MonthlyActivity(
+        Guid id,
+        Symbol symbol,
+        ulong traceNo,
+        string uri,
+        FiscalYear fiscalYear,
+        IsoCurrency currency,
+        StatementMonth yearEndMonth,
+        StatementMonth reportMonth,
+        CodalMoney saleBeforeCurrentMonth,
+        CodalMoney saleCurrentMonth,
+        CodalMoney saleIncludeCurrentMonth,
+        CodalMoney saleLastYear,
+        bool hasSubCompanySale,
+        DateTime createdAt
+    )
+    {
+        Id = id;
+        Symbol = symbol;
+        TraceNo = traceNo;
+        Uri = uri;
+        FiscalYear = fiscalYear;
+        Currency = currency;
+        YearEndMonth = yearEndMonth;
+        ReportMonth = reportMonth;
+        SaleBeforeCurrentMonth = saleBeforeCurrentMonth;
+        SaleCurrentMonth = saleCurrentMonth;
+        SaleIncludeCurrentMonth = saleIncludeCurrentMonth;
+        SaleLastYear = saleLastYear;
+        HasSubCompanySale = hasSubCompanySale;
+        CreatedAt = createdAt;
+    }
+
+    protected MonthlyActivity()
+    {
+    }
+
+    public Symbol Symbol { get; private set; }
+
+    public ulong TraceNo { get; private set; }
+
+    public string Uri { get; private set; }
+
+    public FiscalYear FiscalYear { get; private set; }
+
+    public IsoCurrency Currency { get; private set; } = IsoCurrency.IRR;
+
+    public StatementMonth YearEndMonth { get; private set; }
+
+    public StatementMonth ReportMonth { get; private set; }
+
+    public Money SaleBeforeCurrentMonth { get; private set; }
+
+    public Money SaleCurrentMonth { get; private set; }
+
+    public Money SaleIncludeCurrentMonth { get; private set; }
+
+    public Money SaleLastYear { get; private set; }
+
+    public bool HasSubCompanySale { get; private set; }
+}

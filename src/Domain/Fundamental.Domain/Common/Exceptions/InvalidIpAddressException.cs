@@ -1,11 +1,9 @@
-﻿using System.Runtime.Serialization;
-using Fundamental.ErrorHandling.Abstracts;
+﻿using Fundamental.ErrorHandling.Abstracts;
 using Fundamental.ErrorHandling.Enums;
 using Fundamental.ErrorHandling.Interfaces;
 
 namespace Fundamental.Domain.Common.Exceptions;
 
-[Serializable]
 public class InvalidIpAddressException : AppException, ICodedException
 {
     public InvalidIpAddressException(string? ipAddress)
@@ -15,13 +13,6 @@ public class InvalidIpAddressException : AppException, ICodedException
 
     public InvalidIpAddressException(string? ipAddress, Exception innerException)
         : base($"{ipAddress} is not a valid IP address.", innerException)
-    {
-    }
-
-    protected InvalidIpAddressException(
-        SerializationInfo info,
-        StreamingContext context)
-        : base(info, context)
     {
     }
 

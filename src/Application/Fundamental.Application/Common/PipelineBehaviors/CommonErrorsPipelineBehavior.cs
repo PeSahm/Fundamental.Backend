@@ -20,7 +20,8 @@ public class CommonErrorsPipelineBehavior<TRequest, TResponse> : IPipelineBehavi
 
     public CommonErrorsPipelineBehavior(
         ILogger<CommonErrorsPipelineBehavior<TRequest, TResponse>> logger,
-        IRequestValidator<TRequest> requestValidator)
+        IRequestValidator<TRequest> requestValidator
+    )
     {
         _logger = logger;
         _requestValidator = requestValidator;
@@ -44,7 +45,7 @@ public class CommonErrorsPipelineBehavior<TRequest, TResponse> : IPipelineBehavi
                     request,
                     new Dictionary<string, string>
                     {
-                        { "message", errorList.First().ErrorMessage },
+                        { "message", errorList[0].ErrorMessage },
                     }
                 ),
             };
