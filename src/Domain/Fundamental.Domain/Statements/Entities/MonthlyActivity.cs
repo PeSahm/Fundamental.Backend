@@ -14,7 +14,6 @@ public class MonthlyActivity : BaseEntity<Guid>
         ulong traceNo,
         string uri,
         FiscalYear fiscalYear,
-        IsoCurrency currency,
         StatementMonth yearEndMonth,
         StatementMonth reportMonth,
         CodalMoney saleBeforeCurrentMonth,
@@ -30,7 +29,6 @@ public class MonthlyActivity : BaseEntity<Guid>
         TraceNo = traceNo;
         Uri = uri;
         FiscalYear = fiscalYear;
-        Currency = currency;
         YearEndMonth = yearEndMonth;
         ReportMonth = reportMonth;
         SaleBeforeCurrentMonth = saleBeforeCurrentMonth;

@@ -1,0 +1,81 @@
+﻿using Fundamental.Application.Statements.Specifications;
+using Fundamental.Application.Symbols.Specifications;
+using Fundamental.Domain.Common.ValueObjects;
+using Fundamental.Domain.Repositories.Base;
+using Fundamental.Domain.Statements.Entities;
+using Fundamental.Domain.Symbols.Entities;
+using Fundamental.ErrorHandling;
+using MediatR;
+
+namespace Fundamental.Application.Statements.Commands.AddMonthlyActivity;
+
+public sealed class AddMonthlyActivityCommandHandler : IRequestHandler<AddMonthlyActivityRequest, Response>
+{
+    private readonly IRepository<MonthlyActivity> _monthlyActivityRepository;
+    private readonly IRepository<Symbol> _symbolRepository;
+    private readonly IUnitOfWork _unitOfWork;
+
+    public AddMonthlyActivityCommandHandler(
+        IRepository<MonthlyActivity> monthlyActivityRepository,
+        IRepository<Symbol> symbolRepository,
+        IUnitOfWork unitOfWork
+    )
+    {
+        _monthlyActivityRepository = monthlyActivityRepository;
+        _symbolRepository = symbolRepository;
+        _unitOfWork = unitOfWork;
+    }
+
+    public async Task<Response> Handle(AddMonthlyActivityRequest request, CancellationToken cancellationToken)
+    {
+        Symbol? symbol = await _symbolRepository.FirstOrDefaultAsync(
+            new SymbolSpec().WhereIsin(request.Isin),
+            cancellationToken);
+
+        if (symbol is null)
+        {
+            return AddMonthlyActivityErrorCodes.SymbolNotFound;
+        }
+
+        bool tracingNumberExists = await _monthlyActivityRepository.AnyAsync(
+            new MonthlyActivitySpec().WhereTraceNo(request.TraceNo),
+            cancellationToken);
+
+        if (tracingNumberExists)
+        {
+            return AddMonthlyActivityErrorCodes.DuplicateTraceNo;
+        }
+
+        bool statementExists = await _monthlyActivityRepository.AnyAsync(
+            new MonthlyActivitySpec()
+                .WhereSymbol(request.Isin)
+                .WhereFiscalYear(request.FiscalYear)
+                .WhereReportMonth(request.ReportMonth),
+            cancellationToken);
+
+        if (statementExists)
+        {
+            return AddMonthlyActivityErrorCodes.DuplicateStatement;
+        }
+
+        MonthlyActivity statement = new MonthlyActivity(
+            Guid.NewGuid(),
+            symbol,
+            request.TraceNo,
+            request.Uri,
+            request.FiscalYear,
+            request.YearEndMonth,
+            request.ReportMonth,
+            new CodalMoney(request.SaleBeforeCurrentMonth),
+            new CodalMoney(request.SaleCurrentMonth),
+            new CodalMoney(request.SaleIncludeCurrentMonth),
+            new CodalMoney(request.SaleLastYear),
+            request.HasSubCompanySale,
+            DateTime.Now
+        );
+
+        _monthlyActivityRepository.Add(statement);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        return Response.Successful();
+    }
+}
