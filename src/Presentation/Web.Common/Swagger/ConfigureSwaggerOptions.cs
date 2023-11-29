@@ -34,7 +34,8 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
             options.SwaggerDoc(apiDescriptionGroup.GroupName, CreateVersionInfo(apiDescriptionGroup.Items[0]));
         }
 
-        options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme,
+        options.AddSecurityDefinition(
+            JwtBearerDefaults.AuthenticationScheme,
             new OpenApiSecurityScheme
             {
                 Name = "Authorization",

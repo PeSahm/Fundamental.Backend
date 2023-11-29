@@ -22,4 +22,10 @@ public class FinancialStatementSpec : Specification<FinancialStatement>
         Query.Where(x => x.ReportMonth.Month == requestReportMonth);
         return this;
     }
+
+    public FinancialStatementSpec WhereSymbol(string isin)
+    {
+        Query.Where(x => x.Symbol.Isin == isin);
+        return this;
+    }
 }

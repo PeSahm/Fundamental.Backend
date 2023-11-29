@@ -25,9 +25,9 @@ builder.Services.AddControllers(options =>
 builder.Services.AddDbContexts(builder.Configuration);
 builder.AddServices();
 
-builder.Host.ConfigureAppConfiguration(b => b
+builder.Configuration
     .AddJsonFile("appsettings.Override.json", optional: true, reloadOnChange: true)
-    .AddEnvironmentVariables());
+    .AddEnvironmentVariables();
 
 builder.Services.AddHttpContextAccessor();
 builder.Host.UseSerilog((context, serviceProvider, configuration) =>
@@ -57,14 +57,17 @@ builder.Services.AddValidatorsFromAssemblies(new List<Assembly> { typeof(Applica
 
 builder.Services.AddCors(options =>
 {
-    string[] origins = builder.Configuration.GetSection("CorsOrigins").Get<string[]>();
+    string[]? origins = builder.Configuration.GetSection("CorsOrigins").Get<string[]>();
     options.AddDefaultPolicy(corsPolicyBuilder =>
     {
-        corsPolicyBuilder.WithOrigins(origins)
-            .AllowAnyMethod()
-            .AllowAnyHeader()
-            .SetPreflightMaxAge(TimeSpan.FromHours(1))
-            .SetIsOriginAllowedToAllowWildcardSubdomains();
+        if (origins != null)
+        {
+            corsPolicyBuilder.WithOrigins(origins)
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetPreflightMaxAge(TimeSpan.FromHours(1))
+                .SetIsOriginAllowedToAllowWildcardSubdomains();
+        }
     });
 });
 WebApplication app = builder.Build();

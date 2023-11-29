@@ -48,6 +48,7 @@ public class AddFinancialStatementCommandHandler : IRequestHandler<AddFinancialS
 
         bool statementExists = await _statementRepository.AnyAsync(
             new FinancialStatementSpec()
+                .WhereSymbol(request.Isin)
                 .WhereFiscalYear(request.FiscalYear)
                 .WhereReportMonth(request.ReportMonth),
             cancellationToken);
