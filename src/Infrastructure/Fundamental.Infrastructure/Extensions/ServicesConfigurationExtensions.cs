@@ -2,6 +2,7 @@
 using Fundamental.Application.Common.Validators;
 using Fundamental.Application.Services;
 using Fundamental.Application.Symbols.Queries.GetSymbols;
+using Fundamental.Application.Utilities.Services;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.Infrastructure.Persistence;
 using Fundamental.Infrastructure.Persistence.Repositories.Base;
@@ -19,13 +20,15 @@ public static class ServicesConfigurationExtensions
         builder.Services.AddScoped(typeof(IRepository<>), typeof(FundamentalRepository<>));
         builder.Services.AddScoped<IUnitOfWork>(provider => provider.GetService<FundamentalDbContext>()!);
         builder.Services.AddScoped(typeof(IRequestValidator<>), typeof(RequestValidator<>));
+        builder.Services.AddScoped<ICustomerErrorMessagesService, CustomerErrorMessagesService>();
+
         builder.Services.AddSingleton<IIpService, IpService>();
 
         builder.Services.AddMediatR(
             cfg =>
             {
-                 cfg.AddOpenBehavior(typeof(CommonErrorsPipelineBehavior<,>));
-                 cfg.RegisterServicesFromAssemblies(typeof(GetSymbolsQueryHandler).Assembly);
+                cfg.AddOpenBehavior(typeof(CommonErrorsPipelineBehavior<,>));
+                cfg.RegisterServicesFromAssemblies(typeof(GetSymbolsQueryHandler).Assembly);
             });
     }
 }

@@ -13,7 +13,7 @@ public class FrontendClientTypeSchemaFilter : ISchemaFilter
         {
             schema.Enum = new List<IOpenApiAny>
             {
-                new OpenApiString("mobile"),
+                new OpenApiString("admin"),
                 new OpenApiString("web"),
             };
         }
