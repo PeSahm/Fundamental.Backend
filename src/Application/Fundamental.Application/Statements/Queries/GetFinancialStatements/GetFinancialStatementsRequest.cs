@@ -9,6 +9,6 @@ namespace Fundamental.Application.Statements.Queries.GetFinancialStatements;
 [HandlerCode(HandlerCode.GetFinancialStatements)]
 public record GetFinancialStatementsRequest(
     string[] IsinList,
-    int? Year,
-    int? ReportMonth
+    ushort? Year,
+    ushort? ReportMonth
 ) : PagingRequest, IRequest<Response<Paginated<GetFinancialStatementsResultItem>>>;

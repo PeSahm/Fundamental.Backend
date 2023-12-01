@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Statements.Queries.GetFinancialStatements;
+﻿using Fundamental.Application.Statements.Queries.GetMonthlyActivities;
 using Fundamental.Application.Statements.Repositories;
 using Fundamental.Domain.Common.Dto;
 using Fundamental.Domain.Common.ValueObjects;
@@ -9,21 +9,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Fundamental.Infrastructure.Repositories;
 
-public class FinancialStatementsReadRepository : IFinancialStatementsReadRepository
+public class MonthlyActivityRepository : IMonthlyActivityRepository
 {
     private readonly FundamentalDbContext _dbContext;
 
-    public FinancialStatementsReadRepository(FundamentalDbContext dbContext)
+    public MonthlyActivityRepository(FundamentalDbContext dbContext)
     {
         _dbContext = dbContext;
     }
 
-    public Task<Paginated<GetFinancialStatementsResultItem>> GetFinancialStatementsAsync(
-        GetFinancialStatementsRequest request,
-        CancellationToken cancellationToken = default
+    public async Task<Paginated<GetMonthlyActivitiesResultItem>> GetMonthlyActivitiesAsync(
+        GetMonthlyActivitiesRequest request,
+        CancellationToken cancellationToken
     )
     {
-        IQueryable<FinancialStatement> query = _dbContext.FinancialStatements.AsNoTracking();
+        IQueryable<MonthlyActivity> query = _dbContext.MonthlyActivities.AsNoTracking();
 
         if (request is { IsinList: not null } && request.IsinList.Length != 0)
         {
@@ -40,25 +40,19 @@ public class FinancialStatementsReadRepository : IFinancialStatementsReadReposit
             query = query.Where(x => x.ReportMonth.Month == request.ReportMonth);
         }
 
-        return query.Select(x => new GetFinancialStatementsResultItem(
+        return await query.Select(x => new GetMonthlyActivitiesResultItem(
             x.Symbol.Isin,
             x.Symbol.Name,
             x.Symbol.Title,
-            x.TraceNo,
             x.Uri,
             x.FiscalYear,
             x.YearEndMonth,
             x.ReportMonth,
-            (CodalMoney)x.OperatingIncome,
-            (CodalMoney)x.GrossProfit,
-            (CodalMoney)x.OperatingProfit,
-            (CodalMoney)x.BankInterestIncome,
-            (CodalMoney)x.InvestmentIncome,
-            (CodalMoney)x.NetProfit,
-            (CodalMoney)x.Expense,
-            (CodalMoney)x.Asset,
-            (CodalMoney)x.OwnersEquity,
-            (CodalMoney)x.Receivables
+            (CodalMoney)x.SaleBeforeCurrentMonth,
+            (CodalMoney)x.SaleCurrentMonth,
+            (CodalMoney)x.SaleIncludeCurrentMonth,
+            (CodalMoney)x.SaleLastYear,
+            x.HasSubCompanySale
         )).ToPagingListAsync(request, cancellationToken);
     }
 }

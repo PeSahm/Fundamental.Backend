@@ -5,7 +5,7 @@ namespace Fundamental.Domain.Statements.ValueObjects;
 
 public class StatementMonth : ValueObject
 {
-    public StatementMonth(int month)
+    public StatementMonth(ushort month)
     {
         if (month is < 1 or > 12)
         {
@@ -15,16 +15,16 @@ public class StatementMonth : ValueObject
         Month = month;
     }
 
-    public int Month { get; }
+    public ushort Month { get; }
 
-    public static implicit operator int(StatementMonth month)
+    public static implicit operator ushort(StatementMonth month)
     {
         return month.Month;
     }
 
-    public static implicit operator StatementMonth(int month)
+    public static implicit operator StatementMonth(ushort month)
     {
-        return new(month);
+        return new StatementMonth(month);
     }
 
     protected override IEnumerable<object> GetEqualityComponents()
