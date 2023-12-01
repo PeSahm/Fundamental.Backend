@@ -3,6 +3,7 @@ using Fundamental.Application.Common.Validators;
 using Fundamental.Application.Services;
 using Fundamental.Application.Statements.Repositories;
 using Fundamental.Application.Symbols.Queries.GetSymbols;
+using Fundamental.Application.Symbols.Repositories;
 using Fundamental.Application.Utilities.Services;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.Infrastructure.Persistence;
@@ -38,5 +39,6 @@ public static class ServicesConfigurationExtensions
     {
         builder.Services.AddScoped<IFinancialStatementsReadRepository, FinancialStatementsReadRepository>();
         builder.Services.AddScoped<IMonthlyActivityRepository, MonthlyActivityRepository>();
+        builder.Services.AddScoped<ISymbolRelationRepository, SymbolRelationRepository>();
     }
 }
