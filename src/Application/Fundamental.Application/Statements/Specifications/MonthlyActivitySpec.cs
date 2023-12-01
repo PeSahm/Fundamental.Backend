@@ -46,4 +46,10 @@ public sealed class MonthlyActivitySpec : Specification<MonthlyActivity>
 
         return select;
     }
+
+    public MonthlyActivitySpec WhereIdNot(Guid id)
+    {
+        Query.Where(x => x.Id != id);
+        return this;
+    }
 }

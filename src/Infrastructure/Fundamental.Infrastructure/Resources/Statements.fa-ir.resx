@@ -51,4 +51,16 @@
     <data name="13_393_104" xml:space="preserve">
         <value>رکوردی با شناسه مورد نظر یافت نشد.</value>
     </data>
+    <data name="13_392_101" xml:space="preserve">
+        <value>نماد یافت نشد.</value>
+    </data>
+    <data name="13_392_102" xml:space="preserve">
+        <value>کد یکتای مجمع تکراری است.</value>
+    </data>
+    <data name="13_392_103" xml:space="preserve">
+        <value>برای این نماد یک مجمع با سال و ماه درخواست شده از قبل ثبت شده است.</value>
+    </data>
+    <data name="13_392_104" xml:space="preserve">
+        <value>رکوردی با شناسه مورد نظر یافت نشد.</value>
+    </data>
 </root>
