@@ -86,4 +86,43 @@ public class FinancialStatement : BaseEntity<Guid>
     public Money OwnersEquity { get; private set; }
 
     public Money Receivables { get; private set; }
+
+    public void Update(
+        Symbol symbol,
+        ulong traceNo,
+        string uri,
+        FiscalYear fiscalYear,
+        StatementMonth yearEndMonth,
+        StatementMonth reportMonth,
+        CodalMoney operatingIncome,
+        CodalMoney grossProfit,
+        CodalMoney operatingProfit,
+        CodalMoney bankInterestIncome,
+        CodalMoney investmentIncome,
+        CodalMoney netProfit,
+        CodalMoney expense,
+        CodalMoney asset,
+        CodalMoney ownersEquity,
+        CodalMoney receivables,
+        DateTime updatedAt
+    )
+    {
+        Symbol = symbol;
+        TraceNo = traceNo;
+        Uri = uri;
+        FiscalYear = fiscalYear;
+        YearEndMonth = yearEndMonth;
+        ReportMonth = reportMonth;
+        OperatingIncome = operatingIncome;
+        GrossProfit = grossProfit;
+        OperatingProfit = operatingProfit;
+        BankInterestIncome = bankInterestIncome;
+        InvestmentIncome = investmentIncome;
+        NetProfit = netProfit;
+        Expense = expense;
+        Asset = asset;
+        OwnersEquity = ownersEquity;
+        Receivables = receivables;
+        UpdatedAt = updatedAt;
+    }
 }

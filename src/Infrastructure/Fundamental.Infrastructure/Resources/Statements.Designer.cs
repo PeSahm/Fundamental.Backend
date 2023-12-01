@@ -60,6 +60,42 @@ namespace Fundamental.Infrastructure.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The symbol not found.
+        /// </summary>
+        internal static string _13_393_101 {
+            get {
+                return ResourceManager.GetString("13_393_101", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The traceno already exists..
+        /// </summary>
+        internal static string _13_393_102 {
+            get {
+                return ResourceManager.GetString("13_393_102", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A statement with the same year and month exists..
+        /// </summary>
+        internal static string _13_393_103 {
+            get {
+                return ResourceManager.GetString("13_393_103", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Statement Id in invalid..
+        /// </summary>
+        internal static string _13_393_104 {
+            get {
+                return ResourceManager.GetString("13_393_104", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Monthly Activity not found..
         /// </summary>
         internal static string _13_394_101 {

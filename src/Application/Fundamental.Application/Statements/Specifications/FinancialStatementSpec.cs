@@ -46,4 +46,10 @@ public class FinancialStatementSpec : Specification<FinancialStatement>
         Query.Where(x => x.Id == requestId);
         return this;
     }
+
+    public FinancialStatementSpec WhereIdNot(Guid requestId)
+    {
+        Query.Where(x => x.Id != requestId);
+        return this;
+    }
 }

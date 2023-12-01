@@ -60,6 +60,15 @@ namespace Fundamental.Infrastructure.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Symbol relation not found..
+        /// </summary>
+        internal static string _11_307_101 {
+            get {
+                return ResourceManager.GetString("11_307_101", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Investor isin is invalid..
         /// </summary>
         internal static string _11_399_101 {

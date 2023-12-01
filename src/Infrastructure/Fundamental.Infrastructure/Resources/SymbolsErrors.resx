@@ -33,4 +33,7 @@
     <data name="11_399_104" xml:space="preserve">
         <value>This relation already added. </value>
     </data>
+    <data name="11_307_101" xml:space="preserve">
+        <value>Symbol relation not found.</value>
+    </data>
 </root>
