@@ -1,11 +1,13 @@
 ﻿using Fundamental.Application.Common.PipelineBehaviors;
 using Fundamental.Application.Common.Validators;
 using Fundamental.Application.Services;
+using Fundamental.Application.Statements.Repositories;
 using Fundamental.Application.Symbols.Queries.GetSymbols;
 using Fundamental.Application.Utilities.Services;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.Infrastructure.Persistence;
 using Fundamental.Infrastructure.Persistence.Repositories.Base;
+using Fundamental.Infrastructure.Repositories;
 using Fundamental.Infrastructure.Services;
 using Fundamental.Infrastructure.Validators;
 using Microsoft.AspNetCore.Builder;
@@ -30,5 +32,10 @@ public static class ServicesConfigurationExtensions
                 cfg.AddOpenBehavior(typeof(CommonErrorsPipelineBehavior<,>));
                 cfg.RegisterServicesFromAssemblies(typeof(GetSymbolsQueryHandler).Assembly);
             });
+    }
+
+    public static void AddReadRepositories(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddScoped<IFinancialStatementsReadRepository, FinancialStatementsReadRepository>();
     }
 }

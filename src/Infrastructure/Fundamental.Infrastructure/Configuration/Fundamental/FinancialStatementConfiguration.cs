@@ -25,7 +25,7 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
             .HasColumnType("VARCHAR(512)")
             .IsRequired();
 
-        builder.OwnsOne(
+        builder.ComplexProperty(
             x => x.FiscalYear,
             navigationBuilder =>
             {

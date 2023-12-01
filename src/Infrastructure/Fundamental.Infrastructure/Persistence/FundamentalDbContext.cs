@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Fundamental.Domain.Repositories.Base;
+using Fundamental.Domain.Statements.Entities;
 using Fundamental.Domain.Symbols.Entities;
 using Fundamental.Infrastructure.Configuration.Fundamental;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,10 @@ public class FundamentalDbContext : DbContext, IUnitOfWork
     public DbSet<Symbol> Symbols { get; set; } = null!;
 
     public DbSet<SymbolRelation> SymbolRelations { get; set; } = null!;
+
+    public DbSet<FinancialStatement> FinancialStatements { get; set; } = null!;
+
+    public DbSet<MonthlyActivity> MonthlyActivities { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
