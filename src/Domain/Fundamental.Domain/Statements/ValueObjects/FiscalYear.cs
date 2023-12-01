@@ -4,9 +4,7 @@ namespace Fundamental.Domain.Statements.ValueObjects;
 
 public class FiscalYear : ValueObject
 {
-    public int Year { get; }
-
-    public FiscalYear(int year)
+    public FiscalYear(ushort year)
     {
         Year = year;
     }
@@ -15,9 +13,16 @@ public class FiscalYear : ValueObject
     {
     }
 
-    public static implicit operator FiscalYear(int year)
+    public ushort Year { get; }
+
+    public static implicit operator FiscalYear(ushort year)
     {
         return new FiscalYear(year);
+    }
+
+    public static implicit operator ushort(FiscalYear year)
+    {
+        return year.Year;
     }
 
     protected override IEnumerable<object> GetEqualityComponents()
