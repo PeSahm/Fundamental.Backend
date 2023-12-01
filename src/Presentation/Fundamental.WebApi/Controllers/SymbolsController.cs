@@ -5,31 +5,30 @@ using Fundamental.ErrorHandling;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Fundamental.WebApi.Controllers
+namespace Fundamental.WebApi.Controllers;
+
+[ApiController]
+[Route("symbols")]
+[ApiVersion("1.0")]
+[TranslateResultToActionResult]
+public class SymbolsController : ControllerBase
 {
-    [ApiController]
-    [Route("symbols")]
-    [ApiVersion("1.0")]
-    [TranslateResultToActionResult]
-    public class SymbolsController : ControllerBase
+    private readonly IMediator _mediator;
+
+    public SymbolsController(IMediator mediator)
     {
-        private readonly IMediator _mediator;
+        _mediator = mediator;
+    }
 
-        public SymbolsController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
+    [HttpGet]
+    public async Task<Response<List<GetSymbolsResultDto>>> GetSymbols([FromQuery] GetSymbolsRequest request)
+    {
+        return await _mediator.Send(request);
+    }
 
-        [HttpGet]
-        public async Task<Response<List<GetSymbolsResultDto>>> GetSymbols([FromQuery]GetSymbolsRequest request)
-        {
-            return await _mediator.Send(request);
-        }
-
-        [HttpPost("relation")]
-        public async Task<Response> AddSymbolRelation([FromQuery]AddSymbolRelationRequest request)
-        {
-            return await _mediator.Send(request);
-        }
+    [HttpPost("relation")]
+    public async Task<Response> AddSymbolRelation([FromQuery] AddSymbolRelationRequest request)
+    {
+        return await _mediator.Send(request);
     }
 }

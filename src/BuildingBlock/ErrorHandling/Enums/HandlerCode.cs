@@ -3,6 +3,7 @@
 public enum HandlerCode : ushort
 {
     GetSymbols = 11_999,
+    GetSymbolRelations = 11_398,
     AddSymbolRelationship = 11_399,
 
     GetMonthlyActivityById = 13_394,
