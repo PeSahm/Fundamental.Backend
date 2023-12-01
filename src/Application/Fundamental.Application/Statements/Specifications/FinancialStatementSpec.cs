@@ -29,9 +29,9 @@ public class FinancialStatementSpec : Specification<FinancialStatement>
         return this;
     }
 
-    public FinancialStatementPagedSpec Select()
+    public FinancialStatementResultItemSpec Select()
     {
-        FinancialStatementPagedSpec select = new();
+        FinancialStatementResultItemSpec select = new();
 
         foreach (WhereExpressionInfo<FinancialStatement> whereExpression in WhereExpressions)
         {
@@ -39,5 +39,11 @@ public class FinancialStatementSpec : Specification<FinancialStatement>
         }
 
         return select;
+    }
+
+    public FinancialStatementSpec WhereId(Guid requestId)
+    {
+        Query.Where(x => x.Id == requestId);
+        return this;
     }
 }

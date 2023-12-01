@@ -60,6 +60,24 @@ namespace Fundamental.Infrastructure.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Monthly Activity not found..
+        /// </summary>
+        internal static string _13_394_101 {
+            get {
+                return ResourceManager.GetString("13_394_101", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Financial Statement not found..
+        /// </summary>
+        internal static string _13_395_101 {
+            get {
+                return ResourceManager.GetString("13_395_101", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The symbol not found.
         /// </summary>
         internal static string _13_398_101 {

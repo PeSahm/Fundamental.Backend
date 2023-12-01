@@ -4,11 +4,12 @@ using Fundamental.Domain.Statements.Entities;
 
 namespace Fundamental.Application.Statements.Specifications;
 
-public sealed class FinancialStatementPagedSpec : Specification<FinancialStatement, GetFinancialStatementsResultItem>
+public sealed class FinancialStatementResultItemSpec : Specification<FinancialStatement, GetFinancialStatementsResultItem>
 {
-    public FinancialStatementPagedSpec()
+    public FinancialStatementResultItemSpec()
     {
         Query.Select(x => new GetFinancialStatementsResultItem(
+            x.Id,
             x.Symbol.Isin,
             x.Symbol.Name,
             x.Symbol.Title,

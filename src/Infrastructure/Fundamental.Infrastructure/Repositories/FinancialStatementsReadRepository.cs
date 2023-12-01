@@ -41,6 +41,7 @@ public class FinancialStatementsReadRepository : IFinancialStatementsReadReposit
         }
 
         return query.Select(x => new GetFinancialStatementsResultItem(
+            x.Id,
             x.Symbol.Isin,
             x.Symbol.Name,
             x.Symbol.Title,

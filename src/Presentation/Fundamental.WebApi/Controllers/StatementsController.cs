@@ -1,8 +1,10 @@
 using ErrorHandling.AspNetCore;
 using Fundamental.Application.Statements.Commands.AddFinancialStatement;
+using Fundamental.Application.Statements.Queries.GetFinancialStatementById;
 using Fundamental.Application.Statements.Queries.GetFinancialStatements;
 using Fundamental.Domain.Common.Dto;
 using Fundamental.ErrorHandling;
+using Fundamental.Web.Common.Swagger;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,11 +30,20 @@ namespace Fundamental.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<Response<Paginated<GetFinancialStatementsResultItem>>> AddStatement(
+        public async Task<Response<Paginated<GetFinancialStatementsResultItem>>> GetFinancialStatements(
             [FromQuery] GetFinancialStatementsRequest request
         )
         {
             return await _mediator.Send(request);
+        }
+
+        [HttpGet("{id}:guid")]
+        [SwaggerRequestType(typeof(GetFinancialStatementByIdRequest))]
+        public async Task<Response<GetFinancialStatementsResultItem>> GetFinancialStatement(
+            [FromRoute] Guid id
+        )
+        {
+            return await _mediator.Send(new GetFinancialStatementByIdRequest(id));
         }
     }
 }

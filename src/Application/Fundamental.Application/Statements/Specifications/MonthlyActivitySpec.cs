@@ -3,7 +3,7 @@ using Fundamental.Domain.Statements.Entities;
 
 namespace Fundamental.Application.Statements.Specifications;
 
-public class MonthlyActivitySpec : Specification<MonthlyActivity>
+public sealed class MonthlyActivitySpec : Specification<MonthlyActivity>
 {
     public MonthlyActivitySpec WhereTraceNo(ulong requestTraceNo)
     {
@@ -27,5 +27,23 @@ public class MonthlyActivitySpec : Specification<MonthlyActivity>
     {
         Query.Where(x => x.Symbol.Isin == isin);
         return this;
+    }
+
+    public MonthlyActivitySpec WhereId(Guid id)
+    {
+        Query.Where(x => x.Id == id);
+        return this;
+    }
+
+    public MonthlyActivityResultItemSpec Select()
+    {
+        MonthlyActivityResultItemSpec select = new();
+
+        foreach (WhereExpressionInfo<MonthlyActivity> whereExpression in WhereExpressions)
+        {
+            select.Query.Where(whereExpression.Filter);
+        }
+
+        return select;
     }
 }

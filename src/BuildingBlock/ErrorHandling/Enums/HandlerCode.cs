@@ -5,8 +5,10 @@ public enum HandlerCode : ushort
     GetSymbols = 11_999,
     AddSymbolRelationship = 11_399,
 
-    GetMonthlyActivities = 13_996,
-    GetFinancialStatements = 13_997,
+    GetMonthlyActivityById = 13_394,
+    GetFinancialStatementById = 13_395,
+    GetMonthlyActivities = 13_396,
+    GetFinancialStatements = 13_397,
     AddMonthlyActivity = 13_398,
     AddFinancialStatement = 13_399,
 
