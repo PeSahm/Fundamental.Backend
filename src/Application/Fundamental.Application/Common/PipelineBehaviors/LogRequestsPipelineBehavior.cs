@@ -16,7 +16,7 @@ public class LogRequestsPipelineBehavior<TRequest, TResponse> : IPipelineBehavio
 
     public LogRequestsPipelineBehavior(
         ILogger<LogRequestsPipelineBehavior<TRequest, TResponse>> logger
-        )
+    )
     {
         _logger = logger;
     }
@@ -45,7 +45,7 @@ public class LogRequestsPipelineBehavior<TRequest, TResponse> : IPipelineBehavio
                 "HANDLER.RESPONSE.FAILURE --- {HandlerCode} ({HandlerName}) --- ErrorCode: {ErrorCode}",
                 handlerNumber,
                 handlerCode,
-                ErrorCodeHelper.Format(response.Error!.Value.Code));
+                response.Error!.Value.Code);
         }
 
         return response;

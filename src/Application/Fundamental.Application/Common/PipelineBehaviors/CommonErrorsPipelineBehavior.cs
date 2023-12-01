@@ -53,7 +53,7 @@ public class CommonErrorsPipelineBehavior<TRequest, TResponse> : IPipelineBehavi
                 "HANDLER.ERROR.VALIDATION --- {HandlerCode} ({HandlerName}) --- ErrorCode: {ErrorCode}\n    {@Errors}",
                 handlerNumber,
                 handlerCode,
-                ErrorCodeHelper.Format(response.Error.Value.Code),
+                response.Error.Value.Code,
                 errorList);
 
             return response;
@@ -91,7 +91,7 @@ public class CommonErrorsPipelineBehavior<TRequest, TResponse> : IPipelineBehavi
         return response;
     }
 
-    private void LogError(string name, Exception e, HandlerCode handlerCode, string handlerNumber, int errorCode)
+    private void LogError(string name, Exception e, HandlerCode handlerCode, string handlerNumber, string errorCode)
     {
         _logger.LogError(
             e,
@@ -99,6 +99,6 @@ public class CommonErrorsPipelineBehavior<TRequest, TResponse> : IPipelineBehavi
             name,
             handlerNumber,
             handlerCode,
-            ErrorCodeHelper.Format(errorCode));
+            errorCode);
     }
 }

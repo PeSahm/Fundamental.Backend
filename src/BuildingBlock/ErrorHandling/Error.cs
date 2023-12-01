@@ -9,9 +9,11 @@ namespace Fundamental.ErrorHandling;
 /// </summary>
 public readonly record struct Error
 {
+    private readonly int _code;
+
     private Error(int code, BackendErrorType backendType, Dictionary<string, string>? values = null)
     {
-        Code = code;
+        _code = code;
         BackendType = backendType;
         Values = values;
     }
@@ -19,7 +21,7 @@ public readonly record struct Error
     /// <summary>
     /// Gets the unique error code.
     /// </summary>
-    public int Code { get; }
+    public string Code => ErrorCodeHelper.Format(_code);
 
     /// <summary>
     /// Gets <see cref="BackendErrorType"/> of the error.
