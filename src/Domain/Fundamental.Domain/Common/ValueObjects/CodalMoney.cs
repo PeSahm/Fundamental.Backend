@@ -13,4 +13,6 @@ public record CodalMoney(decimal Value)
     public static implicit operator CodalMoney(SignedMoney money) => new(money.Value / CODAL_MONEY_MULTIPLIER);
 
     public static implicit operator decimal(CodalMoney money) => money.Value;
+
+    public static implicit operator CodalMoney(decimal money) => new(money);
 }

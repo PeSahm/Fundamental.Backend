@@ -30,4 +30,7 @@
     <data name="11_999_101" xml:space="preserve">
         <value>نماد نامعتبر است.</value>
     </data>
+    <data name="11_307_101" xml:space="preserve">
+        <value>رکوردی با شناسه مورد نظر یافت نشد.</value>
+    </data>
 </root>

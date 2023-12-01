@@ -1,9 +1,12 @@
 using ErrorHandling.AspNetCore;
+using Fundamental.Application.Common.Extensions;
 using Fundamental.Application.Statements.Commands.AddFinancialStatement;
+using Fundamental.Application.Statements.Commands.UpdateFinancialStatement;
 using Fundamental.Application.Statements.Queries.GetFinancialStatementById;
 using Fundamental.Application.Statements.Queries.GetFinancialStatements;
 using Fundamental.Domain.Common.Dto;
 using Fundamental.ErrorHandling;
+using Fundamental.ErrorHandling.Enums;
 using Fundamental.Web.Common.Swagger;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +29,17 @@ namespace Fundamental.WebApi.Controllers
         [HttpPost]
         public async Task<Response> AddStatement([FromBody] AddFinancialStatementRequest request)
         {
+            return await _mediator.Send(request);
+        }
+
+        [HttpPut("{id}:guid")]
+        public async Task<Response> UpdateStatement([FromBody] UpdateFinancialStatementRequest request, [FromRoute] Guid id)
+        {
+            if (id != request.Id)
+            {
+                return CommonErrorCode.DifferentRouteAndBodyIds.ForRequest(request);
+            }
+
             return await _mediator.Send(request);
         }
 

@@ -49,4 +49,7 @@ public enum CommonErrorCode
 
     [ErrorType(BackendErrorType.Security)]
     ModelBindingFailed = 804,
+
+    [ErrorType(BackendErrorType.Security)]
+    DifferentRouteAndBodyIds = 807,
 }
