@@ -41,6 +41,7 @@ public class MonthlyActivityRepository : IMonthlyActivityRepository
         }
 
         return await query.Select(x => new GetMonthlyActivitiesResultItem(
+            x.Id,
             x.Symbol.Isin,
             x.Symbol.Name,
             x.Symbol.Title,

@@ -1,6 +1,7 @@
 ﻿namespace Fundamental.Application.Statements.Queries.GetMonthlyActivities;
 
 public record GetMonthlyActivitiesResultItem(
+    Guid Id,
     string Isin,
     string Symbol,
     string Title,

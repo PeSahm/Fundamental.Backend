@@ -36,4 +36,10 @@
     <data name="13_398_103" xml:space="preserve">
         <value>A statement with the same year and month exists.</value>
     </data>
+    <data name="13_395_101" xml:space="preserve">
+        <value>Financial Statement not found.</value>
+    </data>
+    <data name="13_394_101" xml:space="preserve">
+        <value>Monthly Activity not found.</value>
+    </data>
 </root>

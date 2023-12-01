@@ -1,6 +1,7 @@
 ﻿namespace Fundamental.Application.Statements.Queries.GetFinancialStatements;
 
 public record GetFinancialStatementsResultItem(
+    Guid Id,
     string Isin,
     string Symbol,
     string Title,
