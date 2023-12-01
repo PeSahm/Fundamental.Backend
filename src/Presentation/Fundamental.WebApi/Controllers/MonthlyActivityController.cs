@@ -1,9 +1,12 @@
 ﻿using ErrorHandling.AspNetCore;
+using Fundamental.Application.Common.Extensions;
 using Fundamental.Application.Statements.Commands.AddMonthlyActivity;
+using Fundamental.Application.Statements.Commands.UpdateMonthlyActivity;
 using Fundamental.Application.Statements.Queries.GetMonthlyActivities;
 using Fundamental.Application.Statements.Queries.GetMonthlyActivityById;
 using Fundamental.Domain.Common.Dto;
 using Fundamental.ErrorHandling;
+using Fundamental.ErrorHandling.Enums;
 using Fundamental.Web.Common.Swagger;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +29,17 @@ namespace Fundamental.WebApi.Controllers
         [HttpPost]
         public async Task<Response> AddStatement([FromBody] AddMonthlyActivityRequest request)
         {
+            return await _mediator.Send(request);
+        }
+
+        [HttpPut("{id}:guid")]
+        public async Task<Response> UpdateStatement([FromBody] UpdateMonthlyActivityRequest request, [FromRoute] Guid id)
+        {
+            if (id != request.Id)
+            {
+                return CommonErrorCode.DifferentRouteAndBodyIds.ForRequest(request);
+            }
+
             return await _mediator.Send(request);
         }
 
