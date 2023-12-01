@@ -22,6 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Common\Dto\" />
       <Folder Include="Prices\Enums\" />
     </ItemGroup>
 </Project>

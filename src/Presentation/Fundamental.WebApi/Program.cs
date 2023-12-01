@@ -8,6 +8,7 @@ using Fundamental.Web.Common.Extensions;
 using Fundamental.WebApi.Extensions;
 using Fundamental.WebApi.Middlewares;
 using Fundamental.WebApi.Swagger;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -21,9 +22,12 @@ builder.Services.AddControllers(options =>
     })
     .AddJsonOptions(x => x.JsonSerializerOptions.Converters.Add(new DateTimeConverter()))
     .ConfigureCustomApiBehaviorOptions();
+builder.Services.Configure<ApiBehaviorOptions>(options
+    => options.SuppressModelStateInvalidFilter = true);
 
 builder.Services.AddDbContexts(builder.Configuration);
 builder.AddServices();
+builder.AddReadRepositories();
 
 builder.Configuration
     .AddJsonFile("appsettings.Override.json", optional: true, reloadOnChange: true)

@@ -18,7 +18,8 @@ public class GetCustomerErrorMessagesValidator : AbstractValidator<GetCustomerEr
 
     private static bool CultureExists(string c)
     {
-        return CultureInfo.GetCultures(CultureTypes.AllCultures)
-            .Any(c2 => c2.Name.Equals(c, StringComparison.InvariantCultureIgnoreCase));
+        return Array.Exists(
+            CultureInfo.GetCultures(CultureTypes.AllCultures),
+            c2 => c2.Name.Equals(c, StringComparison.InvariantCultureIgnoreCase));
     }
 }

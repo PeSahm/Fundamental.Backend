@@ -28,4 +28,16 @@ public class FinancialStatementSpec : Specification<FinancialStatement>
         Query.Where(x => x.Symbol.Isin == isin);
         return this;
     }
+
+    public FinancialStatementPagedSpec Select()
+    {
+        FinancialStatementPagedSpec select = new();
+
+        foreach (WhereExpressionInfo<FinancialStatement> whereExpression in WhereExpressions)
+        {
+            select.Query.Where(whereExpression.Filter);
+        }
+
+        return select;
+    }
 }
