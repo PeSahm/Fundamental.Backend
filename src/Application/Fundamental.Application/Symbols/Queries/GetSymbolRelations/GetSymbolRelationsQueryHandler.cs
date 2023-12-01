@@ -3,7 +3,7 @@ using Fundamental.Domain.Common.Dto;
 using Fundamental.ErrorHandling;
 using MediatR;
 
-namespace Fundamental.Application.Symbols.Queries;
+namespace Fundamental.Application.Symbols.Queries.GetSymbolRelations;
 
 public sealed class
     GetSymbolRelationsQueryHandler : IRequestHandler<GetSymbolRelationsRequest, Response<Paginated<GetSymbolRelationsResultItem>>>
