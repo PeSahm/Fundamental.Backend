@@ -1,5 +1,4 @@
 using ErrorHandling.AspNetCore;
-using Fundamental.Application.Symbols.Commands.AddSymbolRelation;
 using Fundamental.Application.Symbols.Queries.GetSymbols;
 using Fundamental.ErrorHandling;
 using MediatR;
@@ -22,12 +21,6 @@ public class SymbolsController : ControllerBase
 
     [HttpGet]
     public async Task<Response<List<GetSymbolsResultDto>>> GetSymbols([FromQuery] GetSymbolsRequest request)
-    {
-        return await _mediator.Send(request);
-    }
-
-    [HttpPost("relation")]
-    public async Task<Response> AddSymbolRelation([FromQuery] AddSymbolRelationRequest request)
     {
         return await _mediator.Send(request);
     }
