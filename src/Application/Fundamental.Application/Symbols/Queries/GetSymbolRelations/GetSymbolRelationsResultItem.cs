@@ -1,6 +1,7 @@
-﻿namespace Fundamental.Application.Symbols.Queries;
+﻿namespace Fundamental.Application.Symbols.Queries.GetSymbolRelations;
 
 public sealed record GetSymbolRelationsResultItem(
+    Guid Id,
     string InvestorIsin,
     string InvestorSymbol,
     string InvestorTitle,

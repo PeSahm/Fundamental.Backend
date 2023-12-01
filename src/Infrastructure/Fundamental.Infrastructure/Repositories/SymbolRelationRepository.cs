@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Symbols.Queries;
+﻿using Fundamental.Application.Symbols.Queries.GetSymbolRelations;
 using Fundamental.Application.Symbols.Repositories;
 using Fundamental.Domain.Common.Dto;
 using Fundamental.Domain.Symbols.Entities;
@@ -29,7 +29,13 @@ public class SymbolRelationRepository : ISymbolRelationRepository
             query = query.Where(x => x.Parent.Isin == request.InvestorIsin);
         }
 
+        if (!string.IsNullOrWhiteSpace(request.InvestmentIsin))
+        {
+            query = query.Where(x => x.Child.Isin == request.InvestmentIsin);
+        }
+
         return await query.Select(x => new GetSymbolRelationsResultItem(
+            x.Id,
             x.Parent.Isin,
             x.Parent.Name,
             x.Parent.Title,

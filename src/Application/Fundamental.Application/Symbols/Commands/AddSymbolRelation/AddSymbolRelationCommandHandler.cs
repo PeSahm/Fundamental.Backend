@@ -46,7 +46,7 @@ public sealed class AddSymbolRelationCommandHandler : IRequestHandler<AddSymbolR
         }
 
         bool hasRelation = await _symbolRelationRepository.AnyAsync(
-            new SymbolRelationSpecification()
+            new SymbolRelationSpec()
                 .WhereParentIsin(request.Investor)
                 .WhereChildIsin(request.Investment),
             cancellationToken);
