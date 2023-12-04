@@ -32,7 +32,7 @@ namespace Fundamental.WebApi.Controllers
             return await _mediator.Send(request);
         }
 
-        [HttpPut("{id}:guid")]
+        [HttpPut("{id}")]
         public async Task<Response> UpdateStatement([FromBody] UpdateMonthlyActivityRequest request, [FromRoute] Guid id)
         {
             if (id != request.Id)
@@ -51,7 +51,7 @@ namespace Fundamental.WebApi.Controllers
             return await _mediator.Send(request);
         }
 
-        [HttpGet("{id}:guid")]
+        [HttpGet("{id}")]
         [SwaggerRequestType(typeof(GetMonthlyActivityByIdRequest))]
         public async Task<Response<GetMonthlyActivitiesResultItem>> GetMonthlyActivity(
             [FromRoute] Guid id
