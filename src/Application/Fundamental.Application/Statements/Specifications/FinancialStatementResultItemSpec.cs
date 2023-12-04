@@ -19,16 +19,16 @@ public sealed class FinancialStatementResultItemSpec : Specification<FinancialSt
             x.FiscalYear.Year,
             x.YearEndMonth.Month,
             x.ReportMonth.Month,
-            (CodalMoney)x.OperatingIncome.Value,
-            (CodalMoney)x.GrossProfit.Value,
-            (CodalMoney)x.OperatingProfit.Value,
-            (CodalMoney)x.BankInterestIncome.Value,
-            (CodalMoney)x.InvestmentIncome.Value,
-            (CodalMoney)x.NetProfit.Value,
-            (CodalMoney)x.Expense.Value,
-            (CodalMoney)x.Asset.Value,
-            (CodalMoney)x.OwnersEquity.Value,
-            (CodalMoney)x.Receivables.Value
+            (CodalMoney)x.OperatingIncome,
+            (CodalMoney)x.GrossProfit,
+            (CodalMoney)x.OperatingProfit,
+            (CodalMoney)x.BankInterestIncome,
+            (CodalMoney)x.InvestmentIncome,
+            (CodalMoney)x.NetProfit,
+            (CodalMoney)x.Expense,
+            (CodalMoney)x.Asset,
+            (CodalMoney)x.OwnersEquity,
+            (CodalMoney)x.Receivables
         ));
     }
 }

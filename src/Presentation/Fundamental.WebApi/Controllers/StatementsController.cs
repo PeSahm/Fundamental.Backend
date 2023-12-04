@@ -32,7 +32,7 @@ namespace Fundamental.WebApi.Controllers
             return await _mediator.Send(request);
         }
 
-        [HttpPut("{id}:guid")]
+        [HttpPut("{id}")]
         public async Task<Response> UpdateStatement([FromBody] UpdateFinancialStatementRequest request, [FromRoute] Guid id)
         {
             if (id != request.Id)
@@ -51,7 +51,7 @@ namespace Fundamental.WebApi.Controllers
             return await _mediator.Send(request);
         }
 
-        [HttpGet("{id}:guid")]
+        [HttpGet("{id}")]
         [SwaggerRequestType(typeof(GetFinancialStatementByIdRequest))]
         public async Task<Response<GetFinancialStatementsResultItem>> GetFinancialStatement(
             [FromRoute] Guid id
