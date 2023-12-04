@@ -22,7 +22,8 @@ public sealed class MonthlyActivityResultItemSpec : Specification<MonthlyActivit
             (CodalMoney)x.SaleCurrentMonth,
             (CodalMoney)x.SaleIncludeCurrentMonth,
             (CodalMoney)x.SaleLastYear,
-            x.HasSubCompanySale
+            x.HasSubCompanySale,
+            x.TraceNo
         ));
     }
 }
