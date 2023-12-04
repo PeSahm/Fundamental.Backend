@@ -13,5 +13,6 @@ public record GetMonthlyActivitiesResultItem(
     decimal SaleCurrentMonth,
     decimal SaleIncludeCurrentMonth,
     decimal SaleLastYear,
-    bool HasSubCompanySale
+    bool HasSubCompanySale,
+    ulong TraceNo
 );

@@ -53,7 +53,8 @@ public class MonthlyActivityRepository : IMonthlyActivityRepository
             (CodalMoney)x.SaleCurrentMonth,
             (CodalMoney)x.SaleIncludeCurrentMonth,
             (CodalMoney)x.SaleLastYear,
-            x.HasSubCompanySale
+            x.HasSubCompanySale,
+            x.TraceNo
         )).ToPagingListAsync(request, cancellationToken);
     }
 }
