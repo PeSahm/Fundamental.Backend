@@ -1,5 +1,6 @@
 ﻿using Ardalis.Specification;
 using Fundamental.Application.Statements.Queries.GetFinancialStatements;
+using Fundamental.Domain.Common.ValueObjects;
 using Fundamental.Domain.Statements.Entities;
 
 namespace Fundamental.Application.Statements.Specifications;
@@ -18,16 +19,16 @@ public sealed class FinancialStatementResultItemSpec : Specification<FinancialSt
             x.FiscalYear.Year,
             x.YearEndMonth.Month,
             x.ReportMonth.Month,
-            x.OperatingIncome.Value,
-            x.GrossProfit.Value,
-            x.OperatingProfit.Value,
-            x.BankInterestIncome.Value,
-            x.InvestmentIncome.Value,
-            x.NetProfit.Value,
-            x.Expense.Value,
-            x.Asset.Value,
-            x.OwnersEquity.Value,
-            x.Receivables.Value
+            (CodalMoney)x.OperatingIncome.Value,
+            (CodalMoney)x.GrossProfit.Value,
+            (CodalMoney)x.OperatingProfit.Value,
+            (CodalMoney)x.BankInterestIncome.Value,
+            (CodalMoney)x.InvestmentIncome.Value,
+            (CodalMoney)x.NetProfit.Value,
+            (CodalMoney)x.Expense.Value,
+            (CodalMoney)x.Asset.Value,
+            (CodalMoney)x.OwnersEquity.Value,
+            (CodalMoney)x.Receivables.Value
         ));
     }
 }
