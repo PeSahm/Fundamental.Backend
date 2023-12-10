@@ -6,4 +6,4 @@ using MediatR;
 namespace Fundamental.Application.Codal.Commands.UpdateMonthlyActivityData;
 
 [HandlerCode(HandlerCode.UpdateMonthlyActivityData)]
-public sealed record UpdateMonthlyActivityDataRequest : IRequest<Response>;
+public sealed record UpdateMonthlyActivityDataRequest(int Days) : IRequest<Response>;

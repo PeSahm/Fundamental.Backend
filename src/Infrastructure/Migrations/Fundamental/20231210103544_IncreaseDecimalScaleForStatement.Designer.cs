@@ -13,8 +13,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fundamental.Migrations.Fundamental
 {
     [DbContext(typeof(FundamentalDbContext))]
-    [Migration("20231205034917_IncreaseDecimalScale")]
-    partial class IncreaseDecimalScale
+    [Migration("20231210103544_IncreaseDecimalScaleForStatement")]
+    partial class IncreaseDecimalScaleForStatement
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -511,7 +511,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("Currency");
 
                             b1.Property<decimal>("Value")
-                                .HasPrecision(18, 3)
+                                .HasPrecision(36, 10)
                                 .HasColumnType("decimal")
                                 .HasColumnName("Asset");
 
@@ -535,7 +535,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("Currency");
 
                             b1.Property<decimal>("Value")
-                                .HasPrecision(18, 3)
+                                .HasPrecision(36, 10)
                                 .HasColumnType("decimal")
                                 .HasColumnName("BankInterestIncome");
 
@@ -559,7 +559,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("Currency");
 
                             b1.Property<decimal>("Value")
-                                .HasPrecision(18, 3)
+                                .HasPrecision(36, 10)
                                 .HasColumnType("decimal")
                                 .HasColumnName("Expense");
 
@@ -583,7 +583,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("Currency");
 
                             b1.Property<decimal>("Value")
-                                .HasPrecision(18, 3)
+                                .HasPrecision(36, 10)
                                 .HasColumnType("decimal")
                                 .HasColumnName("GrossProfit");
 
@@ -607,7 +607,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("Currency");
 
                             b1.Property<decimal>("Value")
-                                .HasPrecision(18, 3)
+                                .HasPrecision(36, 10)
                                 .HasColumnType("decimal")
                                 .HasColumnName("InvestmentIncome");
 
@@ -631,7 +631,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("Currency");
 
                             b1.Property<decimal>("Value")
-                                .HasPrecision(18, 3)
+                                .HasPrecision(36, 10)
                                 .HasColumnType("decimal")
                                 .HasColumnName("NetProfit");
 
@@ -655,7 +655,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("Currency");
 
                             b1.Property<decimal>("Value")
-                                .HasPrecision(18, 3)
+                                .HasPrecision(36, 10)
                                 .HasColumnType("decimal")
                                 .HasColumnName("OperatingIncome");
 
@@ -679,7 +679,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("Currency");
 
                             b1.Property<decimal>("Value")
-                                .HasPrecision(18, 3)
+                                .HasPrecision(36, 10)
                                 .HasColumnType("decimal")
                                 .HasColumnName("OperatingProfit");
 
@@ -703,7 +703,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("Currency");
 
                             b1.Property<decimal>("Value")
-                                .HasPrecision(18, 3)
+                                .HasPrecision(36, 10)
                                 .HasColumnType("decimal")
                                 .HasColumnName("OwnersEquity");
 
@@ -727,7 +727,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("Currency");
 
                             b1.Property<decimal>("Value")
-                                .HasPrecision(18, 3)
+                                .HasPrecision(36, 10)
                                 .HasColumnType("decimal")
                                 .HasColumnName("Receivables");
 

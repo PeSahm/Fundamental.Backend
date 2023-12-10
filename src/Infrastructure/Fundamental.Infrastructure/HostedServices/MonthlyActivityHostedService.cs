@@ -19,10 +19,15 @@ public class MonthlyActivityHostedService : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        _logger.LogInformation("MonthlyActivityHostedService is starting");
-        using IServiceScope scope = _serviceScopeFactory.CreateScope();
-        IMediator mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-        await mediator.Send(new UpdateMonthlyActivityDataRequest(), stoppingToken);
-        _logger.LogInformation("MonthlyActivityHostedService is stopping");
+        PeriodicTimer periodicTimer = new PeriodicTimer(TimeSpan.FromMinutes(10));
+
+        while (await periodicTimer.WaitForNextTickAsync(stoppingToken))
+        {
+            _logger.LogInformation("MonthlyActivityHostedService is starting");
+            using IServiceScope scope = _serviceScopeFactory.CreateScope();
+            IMediator mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+            await mediator.Send(new UpdateMonthlyActivityDataRequest(-7), stoppingToken);
+            _logger.LogInformation("MonthlyActivityHostedService is stopping");
+        }
     }
 }
