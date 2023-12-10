@@ -508,7 +508,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("Currency");
 
                             b1.Property<decimal>("Value")
-                                .HasPrecision(18, 3)
+                                .HasPrecision(36, 10)
                                 .HasColumnType("decimal")
                                 .HasColumnName("Asset");
 
@@ -532,7 +532,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("Currency");
 
                             b1.Property<decimal>("Value")
-                                .HasPrecision(18, 3)
+                                .HasPrecision(36, 10)
                                 .HasColumnType("decimal")
                                 .HasColumnName("BankInterestIncome");
 
@@ -556,7 +556,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("Currency");
 
                             b1.Property<decimal>("Value")
-                                .HasPrecision(18, 3)
+                                .HasPrecision(36, 10)
                                 .HasColumnType("decimal")
                                 .HasColumnName("Expense");
 
@@ -580,7 +580,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("Currency");
 
                             b1.Property<decimal>("Value")
-                                .HasPrecision(18, 3)
+                                .HasPrecision(36, 10)
                                 .HasColumnType("decimal")
                                 .HasColumnName("GrossProfit");
 
@@ -604,7 +604,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("Currency");
 
                             b1.Property<decimal>("Value")
-                                .HasPrecision(18, 3)
+                                .HasPrecision(36, 10)
                                 .HasColumnType("decimal")
                                 .HasColumnName("InvestmentIncome");
 
@@ -628,7 +628,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("Currency");
 
                             b1.Property<decimal>("Value")
-                                .HasPrecision(18, 3)
+                                .HasPrecision(36, 10)
                                 .HasColumnType("decimal")
                                 .HasColumnName("NetProfit");
 
@@ -652,7 +652,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("Currency");
 
                             b1.Property<decimal>("Value")
-                                .HasPrecision(18, 3)
+                                .HasPrecision(36, 10)
                                 .HasColumnType("decimal")
                                 .HasColumnName("OperatingIncome");
 
@@ -676,7 +676,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("Currency");
 
                             b1.Property<decimal>("Value")
-                                .HasPrecision(18, 3)
+                                .HasPrecision(36, 10)
                                 .HasColumnType("decimal")
                                 .HasColumnName("OperatingProfit");
 
@@ -700,7 +700,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("Currency");
 
                             b1.Property<decimal>("Value")
-                                .HasPrecision(18, 3)
+                                .HasPrecision(36, 10)
                                 .HasColumnType("decimal")
                                 .HasColumnName("OwnersEquity");
 
@@ -724,7 +724,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("Currency");
 
                             b1.Property<decimal>("Value")
-                                .HasPrecision(18, 3)
+                                .HasPrecision(36, 10)
                                 .HasColumnType("decimal")
                                 .HasColumnName("Receivables");
 

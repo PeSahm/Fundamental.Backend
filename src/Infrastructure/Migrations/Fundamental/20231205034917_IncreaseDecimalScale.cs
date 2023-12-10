@@ -1,11 +1,14 @@
 ﻿#nullable disable
 
+using Fundamental.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Fundamental.Migrations.Fundamental
 {
-    /// <inheritdoc />
-    public partial class IncreaseDecimalScale : Migration
+    [DbContext(typeof(FundamentalDbContext))]
+    [Migration("20231205034917_IncreaseDecimalScale")]
+    public class IncreaseDecimalScale : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

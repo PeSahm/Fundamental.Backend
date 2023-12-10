@@ -18,7 +18,7 @@ public sealed class UpdateMonthlyActivityDataCommandHandler : IRequestHandler<Up
     public async Task<Response> Handle(UpdateMonthlyActivityDataRequest request, CancellationToken cancellationToken)
     {
         List<GetStatementResponse> monthlyActivities =
-            await _codalService.GetMonthlyActivities(new DateTime(2022, 10, 24), ReportingType.Production, cancellationToken);
+            await _codalService.GetMonthlyActivities(DateTime.Now.AddDays(request.Days), ReportingType.Production, cancellationToken);
 
         foreach (GetStatementResponse monthlyActivity in monthlyActivities)
         {
