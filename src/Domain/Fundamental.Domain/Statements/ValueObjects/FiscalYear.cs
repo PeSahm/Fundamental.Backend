@@ -9,6 +9,11 @@ public class FiscalYear : ValueObject
         Year = year;
     }
 
+    public FiscalYear(int year)
+    {
+        Year = (ushort)year;
+    }
+
     protected FiscalYear()
     {
     }
@@ -16,6 +21,11 @@ public class FiscalYear : ValueObject
     public ushort Year { get; }
 
     public static implicit operator FiscalYear(ushort year)
+    {
+        return new FiscalYear(year);
+    }
+
+    public static implicit operator FiscalYear(int year)
     {
         return new FiscalYear(year);
     }

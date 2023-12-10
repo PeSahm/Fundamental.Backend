@@ -173,6 +173,15 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnType("VARCHAR(512)")
                         .HasColumnName("Uri");
 
+                    b.ComplexProperty<Dictionary<string, object>>("FiscalYear", "Fundamental.Domain.Statements.Entities.FinancialStatement.FiscalYear#FiscalYear", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<short>("Year")
+                                .HasColumnType("SMALLINT")
+                                .HasColumnName("FiscalYear");
+                        });
+
                     b.HasKey("_id");
 
                     b.HasIndex("Id")
@@ -257,7 +266,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("Currency");
 
                             b1.Property<decimal>("Value")
-                                .HasPrecision(18, 3)
+                                .HasPrecision(36, 10)
                                 .HasColumnType("decimal")
                                 .HasColumnName("SaleBeforeCurrentMonth");
                         });
@@ -273,7 +282,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("Currency");
 
                             b1.Property<decimal>("Value")
-                                .HasPrecision(18, 3)
+                                .HasPrecision(36, 10)
                                 .HasColumnType("decimal")
                                 .HasColumnName("SaleCurrentMonth");
                         });
@@ -289,7 +298,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("Currency");
 
                             b1.Property<decimal>("Value")
-                                .HasPrecision(18, 3)
+                                .HasPrecision(36, 10)
                                 .HasColumnType("decimal")
                                 .HasColumnName("SaleIncludeCurrentMonth");
                         });
@@ -305,7 +314,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("Currency");
 
                             b1.Property<decimal>("Value")
-                                .HasPrecision(18, 3)
+                                .HasPrecision(36, 10)
                                 .HasColumnType("decimal")
                                 .HasColumnName("SaleLastYear");
                         });
@@ -761,23 +770,6 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasForeignKey("FinancialStatement_id");
                         });
 
-                    b.OwnsOne("Fundamental.Domain.Statements.ValueObjects.FiscalYear", "FiscalYear", b1 =>
-                        {
-                            b1.Property<long>("FinancialStatement_id")
-                                .HasColumnType("bigint");
-
-                            b1.Property<short>("Year")
-                                .HasColumnType("SMALLINT")
-                                .HasColumnName("FiscalYear");
-
-                            b1.HasKey("FinancialStatement_id");
-
-                            b1.ToTable("FinancialStatements", "fs");
-
-                            b1.WithOwner()
-                                .HasForeignKey("FinancialStatement_id");
-                        });
-
                     b.Navigation("Asset")
                         .IsRequired();
 
@@ -785,9 +777,6 @@ namespace Fundamental.Migrations.Fundamental
                         .IsRequired();
 
                     b.Navigation("Expense")
-                        .IsRequired();
-
-                    b.Navigation("FiscalYear")
                         .IsRequired();
 
                     b.Navigation("GrossProfit")

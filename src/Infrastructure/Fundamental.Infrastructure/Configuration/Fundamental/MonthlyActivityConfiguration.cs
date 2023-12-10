@@ -65,7 +65,7 @@ public class MonthlyActivityConfiguration : EntityTypeConfigurationBase<MonthlyA
                 navigationBuilder.Property(x => x.Value)
                     .HasColumnName("SaleBeforeCurrentMonth")
                     .HasColumnType("decimal")
-                    .HasPrecision(18, 3)
+                    .HasPrecision(36, 10)
                     .IsRequired();
 
                 navigationBuilder.Property(x => x.Currency)
@@ -79,7 +79,7 @@ public class MonthlyActivityConfiguration : EntityTypeConfigurationBase<MonthlyA
                 navigationBuilder.Property(x => x.Value)
                     .HasColumnName("SaleCurrentMonth")
                     .HasColumnType("decimal")
-                    .HasPrecision(18, 3)
+                    .HasPrecision(36, 10)
                     .IsRequired();
 
                 navigationBuilder.Property(x => x.Currency)
@@ -93,7 +93,7 @@ public class MonthlyActivityConfiguration : EntityTypeConfigurationBase<MonthlyA
                 navigationBuilder.Property(x => x.Value)
                     .HasColumnName("SaleIncludeCurrentMonth")
                     .HasColumnType("decimal")
-                    .HasPrecision(18, 3)
+                    .HasPrecision(36, 10)
                     .IsRequired();
 
                 navigationBuilder.Property(x => x.Currency)
@@ -107,7 +107,7 @@ public class MonthlyActivityConfiguration : EntityTypeConfigurationBase<MonthlyA
                 navigationBuilder.Property(x => x.Value)
                     .HasColumnName("SaleLastYear")
                     .HasColumnType("decimal")
-                    .HasPrecision(18, 3)
+                    .HasPrecision(36, 10)
                     .IsRequired();
 
                 navigationBuilder.Property(x => x.Currency)
