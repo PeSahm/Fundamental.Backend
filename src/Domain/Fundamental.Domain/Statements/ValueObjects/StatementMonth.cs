@@ -15,6 +15,16 @@ public class StatementMonth : ValueObject
         Month = month;
     }
 
+    public StatementMonth(int month)
+    {
+        if (month is < 1 or > 12)
+        {
+            throw new InvalidStatementMonthException(month);
+        }
+
+        Month = (ushort)month;
+    }
+
     public ushort Month { get; }
 
     public static implicit operator ushort(StatementMonth month)
@@ -23,6 +33,11 @@ public class StatementMonth : ValueObject
     }
 
     public static implicit operator StatementMonth(ushort month)
+    {
+        return new StatementMonth(month);
+    }
+
+    public static implicit operator StatementMonth(int month)
     {
         return new StatementMonth(month);
     }

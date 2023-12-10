@@ -20,14 +20,21 @@ builder.Services.AddControllers(options =>
     {
         options.AddDefaultResultConvention();
     })
-    .AddJsonOptions(x => x.JsonSerializerOptions.Converters.Add(new DateTimeConverter()))
+    .AddJsonOptions(x =>
+    {
+        x.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
+        x.JsonSerializerOptions.Converters.Add(new SaleColumnIdConvertor());
+    })
     .ConfigureCustomApiBehaviorOptions();
 builder.Services.Configure<ApiBehaviorOptions>(options
     => options.SuppressModelStateInvalidFilter = true);
 
 builder.Services.AddDbContexts(builder.Configuration);
 builder.AddServices();
+builder.AddOptions();
+builder.Services.AddCustomHttpClient(builder.Configuration);
 builder.AddReadRepositories();
+builder.Services.AddHostedServices();
 
 builder.Configuration
     .AddJsonFile("appsettings.Override.json", optional: true, reloadOnChange: true)
