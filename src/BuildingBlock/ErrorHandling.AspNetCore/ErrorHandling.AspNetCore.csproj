@@ -5,6 +5,7 @@
     <Summary>Adds ASP.NET Core filters that translate from Result to ActionResult.</Summary>
     <PackageTags>result pattern web api aspnetcore mvc</PackageTags>
     <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>12</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

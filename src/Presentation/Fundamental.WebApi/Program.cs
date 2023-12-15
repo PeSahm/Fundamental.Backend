@@ -35,7 +35,7 @@ builder.AddOptions();
 builder.Services.AddCustomHttpClient(builder.Configuration);
 builder.AddReadRepositories();
 builder.Services.AddHostedServices();
-
+builder.Services.AddCodalServices();
 builder.Configuration
     .AddJsonFile("appsettings.Override.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables();

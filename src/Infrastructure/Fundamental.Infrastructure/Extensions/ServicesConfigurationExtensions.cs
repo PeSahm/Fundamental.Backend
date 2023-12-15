@@ -14,6 +14,9 @@ using Fundamental.Infrastructure.Persistence.Repositories.Base;
 using Fundamental.Infrastructure.Repositories;
 using Fundamental.Infrastructure.Services;
 using Fundamental.Infrastructure.Services.Codal;
+using Fundamental.Infrastructure.Services.Codal.Detectors;
+using Fundamental.Infrastructure.Services.Codal.Factories;
+using Fundamental.Infrastructure.Services.Codal.Processors.MonthlyActivities;
 using Fundamental.Infrastructure.Validators;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +26,14 @@ namespace Fundamental.Infrastructure.Extensions;
 
 public static class ServicesConfigurationExtensions
 {
+    public static void AddCodalServices(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddScoped<ICodalVersionDetectorFactory, CodalVersionDetectorFactory>();
+        serviceCollection.AddScoped<ICodalProcessorFactory, CodalProcessorFactory>();
+        serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, MonthlyActivityDetector>();
+        serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, MonthlyActivityV4Processor>();
+    }
+
     public static void AddServices(this WebApplicationBuilder builder)
     {
         builder.Services.AddScoped(typeof(IRepository<>), typeof(FundamentalRepository<>));
