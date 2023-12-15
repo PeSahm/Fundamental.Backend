@@ -11,10 +11,10 @@ public class CodalBalanceSheet
     public string Version { get; set; }
 
     [JsonProperty("balanceSheet")]
-    public BalanceSheet BalanceSheet { get; set; }
+    public BalanceSheetDto BalanceSheet { get; set; }
 }
 
-public class BalanceSheet
+public class BalanceSheetDto
 {
     [JsonProperty("yearData")]
     public List<YearDatum> YearData { get; set; }

@@ -13,5 +13,5 @@ public interface ICodalService
         CancellationToken cancellationToken = default
     );
 
-    Task UpsertMonthlyActivities(GetStatementResponse statement, CancellationToken cancellationToken = default);
+    Task ProcessCodal(GetStatementResponse statement, CancellationToken cancellationToken = default);
 }

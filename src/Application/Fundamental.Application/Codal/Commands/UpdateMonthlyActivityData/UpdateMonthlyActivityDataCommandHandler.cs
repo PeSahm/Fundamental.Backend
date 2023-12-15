@@ -29,7 +29,7 @@ public sealed class UpdateMonthlyActivityDataCommandHandler : IRequestHandler<Up
         {
             try
             {
-                await _codalService.UpsertMonthlyActivities(monthlyActivity, cancellationToken);
+                await _codalService.ProcessCodal(monthlyActivity, cancellationToken);
             }
             catch (Exception e)
             {
