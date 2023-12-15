@@ -12,25 +12,16 @@ using Microsoft.Extensions.Options;
 
 namespace Fundamental.Infrastructure.Services.Codal;
 
-public class CodalService : ICodalService
+public class CodalService(
+    IHttpClientFactory httpClientFactory,
+    IOptions<MdpOption> monthlyActivityOption,
+    ILogger<CodalService> logger,
+    IServiceScopeFactory serviceScopeFactory
+)
+    : ICodalService
 {
-    private readonly ILogger _logger;
-    private readonly HttpClient _mdpClient;
-    private readonly MdpOption _mdpOption;
-    private readonly IServiceScopeFactory _serviceScopeFactory;
-
-    public CodalService(
-        IHttpClientFactory httpClientFactory,
-        IOptions<MdpOption> monthlyActivityOption,
-        ILogger<CodalService> logger,
-        IServiceScopeFactory serviceScopeFactory
-    )
-    {
-        _logger = logger;
-        _serviceScopeFactory = serviceScopeFactory;
-        _mdpOption = monthlyActivityOption.Value;
-        _mdpClient = httpClientFactory.CreateClient(HttpClients.MDP);
-    }
+    private readonly HttpClient _mdpClient = httpClientFactory.CreateClient(HttpClients.MDP);
+    private readonly MdpOption _mdpOption = monthlyActivityOption.Value;
 
     public async Task<List<GetStatementResponse>> GetStatements(
         DateTime fromDate,
@@ -55,35 +46,38 @@ public class CodalService : ICodalService
         return response?.Result ?? new();
     }
 
-    public async Task UpsertMonthlyActivities(GetStatementResponse statement, CancellationToken cancellationToken = default)
+    public async Task ProcessCodal(GetStatementResponse statement, CancellationToken cancellationToken = default)
     {
         HttpResponseMessage response =
             await _mdpClient.GetAsync(
-                requestUri: $"{_mdpOption.StatementJson}/{statement.TracingNo}",
+                requestUri: new StringBuilder()
+                    .Append(_mdpOption.StatementJson)
+                    .Append('/')
+                    .Append(statement.TracingNo).ToString(),
                 cancellationToken: cancellationToken);
 
         if (!response.IsSuccessStatusCode)
         {
-            _logger.LogError(message: "Failed to get statement json for trace no {@TraceNo}", args: statement.TracingNo);
+            logger.LogError(message: "Failed to get statement json for trace no {@TraceNo}", args: statement.TracingNo);
             return;
         }
 
-        GetStatementJsonResponse? model =
+        GetStatementJsonResponse? jsonData =
             await response.Content.ReadFromJsonAsync<GetStatementJsonResponse>(cancellationToken: cancellationToken);
 
-        if (model is null)
+        if (jsonData is null)
         {
-            _logger.LogError(message: "Failed to deserialize statement json for trace no {@TraceNo}", args: statement.TracingNo);
+            logger.LogError(message: "Failed to deserialize statement json for trace no {@TraceNo}", args: statement.TracingNo);
             return;
         }
 
-        using IServiceScope scope = _serviceScopeFactory.CreateScope();
+        using IServiceScope scope = serviceScopeFactory.CreateScope();
 
         ICodalProcessorFactory codalProcessorFactory = scope.ServiceProvider.GetRequiredService<ICodalProcessorFactory>();
 
         ICodalProcessor processor =
-            codalProcessorFactory.GetCodalProcessor(model.Json, statement.ReportingType, LetterType.MonthlyActivity);
+            codalProcessorFactory.GetCodalProcessor(jsonData.Json, statement.ReportingType, statement.Type);
 
-        await processor.Process(statement, model, cancellationToken);
+        await processor.Process(statement, jsonData, cancellationToken);
     }
 }

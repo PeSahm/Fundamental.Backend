@@ -11,13 +11,13 @@ public class CodalIncomeStatement
     public string Version { get; set; }
 
     [JsonProperty("incomeStatement")]
-    public IncomeStatement IncomeStatement { get; set; }
+    public IncomeStatementDto IncomeStatement { get; set; }
 
     [JsonProperty("incomeStatementdesc")]
     public IncomeStatementdesc IncomeStatementDesc { get; set; }
 }
 
-public class IncomeStatement
+public class IncomeStatementDto
 {
     [JsonProperty("yearData")]
     public List<YearDatum> YearData { get; set; }
