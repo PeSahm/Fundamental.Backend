@@ -9,7 +9,7 @@ namespace Fundamental.Application.Codal.Dto.MonthlyActivities.V4;
 public class CodalMonthlyActivity
 {
     [JsonProperty("monthlyActivity")]
-    public MonthlyActivity MonthlyActivity { get; set; }
+    public MonthlyActivityDto MonthlyActivity { get; set; }
 
     [JsonProperty("listedCapital")]
     public decimal ListedCapital { get; set; }
@@ -18,7 +18,7 @@ public class CodalMonthlyActivity
     public decimal UnauthorizedCapital { get; set; }
 }
 
-public class MonthlyActivity
+public class MonthlyActivityDto
 {
     [JsonProperty("version")]
     public string Version { get; set; }

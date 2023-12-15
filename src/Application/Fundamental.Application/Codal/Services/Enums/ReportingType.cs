@@ -2,6 +2,9 @@
 
 namespace Fundamental.Application.Codal.Services.Enums;
 
+/// <summary>
+/// انواع صنعت.
+/// </summary>
 public enum ReportingType
 {
     [Description("تولیدی")]
@@ -28,6 +31,6 @@ public enum ReportingType
     [Description("حمل و نقل دریایی")]
     MaritimeTransportation = 1000007,
 
-    [Description("فعلا نامشخص")]
-    UnKnown1 = 1000009
+    [Description("نامشخص")]
+    UnKnown = -1
 }

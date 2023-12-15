@@ -5,6 +5,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <RootNamespace>Fundamental.BuildingBlock</RootNamespace>
+      <LangVersion>12</LangVersion>
     </PropertyGroup>
 
   <ItemGroup>

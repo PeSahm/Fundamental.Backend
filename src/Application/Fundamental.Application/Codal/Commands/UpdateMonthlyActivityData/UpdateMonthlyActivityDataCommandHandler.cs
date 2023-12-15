@@ -1,6 +1,7 @@
 ﻿using Fundamental.Application.Codal.Services;
 using Fundamental.Application.Codal.Services.Enums;
 using Fundamental.Application.Codal.Services.Models;
+using Fundamental.Domain.Statements.Enums;
 using Fundamental.ErrorHandling;
 using MediatR;
 
@@ -18,7 +19,11 @@ public sealed class UpdateMonthlyActivityDataCommandHandler : IRequestHandler<Up
     public async Task<Response> Handle(UpdateMonthlyActivityDataRequest request, CancellationToken cancellationToken)
     {
         List<GetStatementResponse> monthlyActivities =
-            await _codalService.GetMonthlyActivities(DateTime.Now.AddDays(request.Days), ReportingType.Production, cancellationToken);
+            await _codalService.GetStatements(
+                DateTime.Now.AddDays(request.Days),
+                ReportingType.Production,
+                LetterType.MonthlyActivity,
+                cancellationToken);
 
         foreach (GetStatementResponse monthlyActivity in monthlyActivities)
         {
