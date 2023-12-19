@@ -1,6 +1,6 @@
 {
     "platform": "netcore",
-    "app": "fundamental-endpoint",
+    "app": "fundamental-api",
     "port": 443,
     "netcore": {
         "version": "8.0",
