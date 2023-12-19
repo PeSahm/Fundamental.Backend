@@ -16,6 +16,7 @@ using Fundamental.Infrastructure.Services;
 using Fundamental.Infrastructure.Services.Codal;
 using Fundamental.Infrastructure.Services.Codal.Detectors;
 using Fundamental.Infrastructure.Services.Codal.Factories;
+using Fundamental.Infrastructure.Services.Codal.Processors.BalanceSheets;
 using Fundamental.Infrastructure.Services.Codal.Processors.MonthlyActivities;
 using Fundamental.Infrastructure.Validators;
 using Microsoft.AspNetCore.Builder;
@@ -31,7 +32,10 @@ public static class ServicesConfigurationExtensions
         serviceCollection.AddScoped<ICodalVersionDetectorFactory, CodalVersionDetectorFactory>();
         serviceCollection.AddScoped<ICodalProcessorFactory, CodalProcessorFactory>();
         serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, MonthlyActivityDetector>();
+        serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, BalanceSheetDetector>();
+
         serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, MonthlyActivityV4Processor>();
+        serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, BalanceSheetV5Processor>();
     }
 
     public static void AddServices(this WebApplicationBuilder builder)
