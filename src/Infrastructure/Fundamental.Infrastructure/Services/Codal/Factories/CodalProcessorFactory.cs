@@ -10,12 +10,14 @@ public class CodalProcessorFactory(IServiceProvider serviceProvider) : ICodalPro
     public ICodalProcessor GetCodalProcessor(
         string json,
         ReportingType reportingType,
-        LetterType letterType
+        LetterType letterType,
+        LetterPart letterPart
     )
     {
-        ICodalVersionDetector versionDetector = serviceProvider.GetRequiredKeyedService<ICodalVersionDetector>(reportingType, letterType);
+        ICodalVersionDetector versionDetector =
+            serviceProvider.GetRequiredKeyedService<ICodalVersionDetector>(reportingType, letterType, letterPart);
         CodalVersion statementVersion = versionDetector.DetectVersion(json);
 
-        return serviceProvider.GetRequiredKeyedService<ICodalProcessor>(reportingType, letterType, statementVersion);
+        return serviceProvider.GetRequiredKeyedService<ICodalProcessor>(reportingType, letterType, statementVersion, letterPart);
     }
 }

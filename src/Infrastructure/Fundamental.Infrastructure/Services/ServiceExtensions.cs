@@ -15,15 +15,21 @@ public static class ServiceExtensions
     /// <param name="provider">The <see cref="IServiceProvider"/> to retrieve the service object from.</param>
     /// <param name="reportingType">Codal Reporting Type. </param>
     /// <param name="letterType">Codal Letter Type. </param>
+    /// <param name="letterPart">Different part of a report. </param>
     /// <returns>A service object of type <typeparamref name="T"/> or null if there is no such service.</returns>
-    public static T GetRequiredKeyedService<T>(this IServiceProvider provider, ReportingType reportingType, LetterType letterType)
+    public static T GetRequiredKeyedService<T>(
+        this IServiceProvider provider,
+        ReportingType reportingType,
+        LetterType letterType,
+        LetterPart letterPart
+    )
         where T : ICodalVersionDetector
     {
         ArgumentException.ThrowIfNullOrWhiteSpace("provider");
 
         if (provider is IKeyedServiceProvider keyedServiceProvider)
         {
-            return (T)keyedServiceProvider.GetRequiredKeyedService(typeof(T), VersionDetectorKey(reportingType, letterType));
+            return (T)keyedServiceProvider.GetRequiredKeyedService(typeof(T), VersionDetectorKey(reportingType, letterType, letterPart));
         }
 
         throw new InvalidOperationException("Keyed Services Not Supported");
@@ -33,7 +39,8 @@ public static class ServiceExtensions
         this IServiceProvider provider,
         ReportingType reportingType,
         LetterType letterType,
-        CodalVersion version
+        CodalVersion version,
+        LetterPart letterPart
     )
         where T : ICodalProcessor
     {
@@ -41,7 +48,9 @@ public static class ServiceExtensions
 
         if (provider is IKeyedServiceProvider keyedServiceProvider)
         {
-            return (T)keyedServiceProvider.GetRequiredKeyedService(typeof(T), CodalProcessorKey(reportingType, letterType, version));
+            return (T)keyedServiceProvider.GetRequiredKeyedService(
+                typeof(T),
+                CodalProcessorKey(reportingType, letterType, version, letterPart));
         }
 
         throw new InvalidOperationException("Keyed Services Not Supported");
@@ -63,8 +72,9 @@ public static class ServiceExtensions
         where TService : ICodalVersionDetector
         where TImplementation : class, TService
     {
-        return services.AddKeyedScoped(typeof(TService),
-            VersionDetectorKey(TImplementation.ReportingType, TImplementation.LetterType),
+        return services.AddKeyedScoped(
+            typeof(TService),
+            VersionDetectorKey(TImplementation.ReportingType, TImplementation.LetterType, TImplementation.LetterPart),
             typeof(TImplementation));
     }
 
@@ -84,18 +94,23 @@ public static class ServiceExtensions
         where TService : ICodalProcessor
         where TImplementation : class, TService
     {
-        return services.AddKeyedScoped(typeof(TService),
-            CodalProcessorKey(TImplementation.ReportingType, TImplementation.LetterType, TImplementation.CodalVersion),
+        return services.AddKeyedScoped(
+            typeof(TService),
+            CodalProcessorKey(
+                TImplementation.ReportingType,
+                TImplementation.LetterType,
+                TImplementation.CodalVersion,
+                TImplementation.LetterPart),
             typeof(TImplementation));
     }
 
-    private static string VersionDetectorKey(ReportingType reportingType, LetterType letterType)
+    private static string VersionDetectorKey(ReportingType reportingType, LetterType letterType, LetterPart letterPart)
     {
-        return $"{reportingType}-{letterType}";
+        return $"{reportingType}-{letterType}-{letterPart}";
     }
 
-    private static string CodalProcessorKey(ReportingType reportingType, LetterType letterType, CodalVersion version)
+    private static string CodalProcessorKey(ReportingType reportingType, LetterType letterType, CodalVersion version, LetterPart letterPart)
     {
-        return $"{reportingType}-{letterType}-{version}";
+        return $"{reportingType}-{letterType}-{version}-{letterPart}";
     }
 }

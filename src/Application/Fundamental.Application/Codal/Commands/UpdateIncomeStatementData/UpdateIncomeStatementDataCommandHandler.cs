@@ -1,4 +1,5 @@
-﻿using Fundamental.Application.Codal.Services;
+﻿using Fundamental.Application.Codal.Enums;
+using Fundamental.Application.Codal.Services;
 using Fundamental.Application.Codal.Services.Enums;
 using Fundamental.Application.Codal.Services.Models;
 using Fundamental.Domain.Statements.Enums;
@@ -7,7 +8,7 @@ using MediatR;
 
 namespace Fundamental.Application.Codal.Commands.UpdateIncomeStatementData;
 
-public class UpdateIncomeStatementDataCommandHandler(ICodalService codalService)
+public sealed class UpdateIncomeStatementDataCommandHandler(ICodalService codalService)
     : IRequestHandler<UpdateIncomeStatementDataRequest, Response>
 {
     public async Task<Response> Handle(UpdateIncomeStatementDataRequest request, CancellationToken cancellationToken)
@@ -23,7 +24,7 @@ public class UpdateIncomeStatementDataCommandHandler(ICodalService codalService)
         {
             try
             {
-                await codalService.ProcessCodal(balanceSheet, cancellationToken);
+                await codalService.ProcessCodal(balanceSheet, LetterPart.IncomeStatement, cancellationToken);
             }
             catch (Exception e)
             {

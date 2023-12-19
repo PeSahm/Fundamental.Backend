@@ -74,7 +74,11 @@ public class IncomeStatementConfiguration : EntityTypeConfigurationBase<IncomeSt
 
         builder.Property(x => x.Row).IsRequired();
 
-        builder.Property(x => x.Description).HasMaxLength(256).IsRequired();
+        builder.Property(x => x.CodalRow).IsRequired();
+
+        builder.Property(x => x.CodalCategory).IsRequired();
+
+        builder.Property(x => x.Description).HasMaxLength(256).IsRequired(false);
 
         builder.Property(x => x.IsAudited).IsRequired();
     }

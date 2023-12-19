@@ -5,16 +5,16 @@ using Fundamental.Domain.Statements.Enums;
 
 namespace Fundamental.Infrastructure.Services.Codal.Detectors;
 
-public class MonthlyActivityDetector : ICodalVersionDetector
+public class IncomeStatementDetector : ICodalVersionDetector
 {
     public CodalVersion DetectVersion(string json)
     {
-        return CodalVersion.V4;
+        return CodalVersion.V7;
     }
 
     public static ReportingType ReportingType => ReportingType.Production;
 
-    public static LetterType LetterType => LetterType.MonthlyActivity;
+    public static LetterType LetterType => LetterType.InterimStatement;
 
-    public static LetterPart LetterPart => LetterPart.NotSpecified;
+    public static LetterPart LetterPart => LetterPart.IncomeStatement;
 }

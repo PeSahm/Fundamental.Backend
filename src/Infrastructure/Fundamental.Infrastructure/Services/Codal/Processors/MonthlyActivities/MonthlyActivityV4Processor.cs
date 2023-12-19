@@ -25,6 +25,8 @@ public class MonthlyActivityV4Processor(
 
     public static CodalVersion CodalVersion => CodalVersion.V4;
 
+    public static LetterPart LetterPart => LetterPart.NotSpecified;
+
     public async Task Process(GetStatementResponse statement, GetStatementJsonResponse model, CancellationToken cancellationToken)
     {
         JsonSerializerSettings setting = new();

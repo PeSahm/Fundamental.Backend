@@ -17,6 +17,7 @@ using Fundamental.Infrastructure.Services.Codal;
 using Fundamental.Infrastructure.Services.Codal.Detectors;
 using Fundamental.Infrastructure.Services.Codal.Factories;
 using Fundamental.Infrastructure.Services.Codal.Processors.BalanceSheets;
+using Fundamental.Infrastructure.Services.Codal.Processors.IncomeStatements;
 using Fundamental.Infrastructure.Services.Codal.Processors.MonthlyActivities;
 using Fundamental.Infrastructure.Validators;
 using Microsoft.AspNetCore.Builder;
@@ -33,9 +34,11 @@ public static class ServicesConfigurationExtensions
         serviceCollection.AddScoped<ICodalProcessorFactory, CodalProcessorFactory>();
         serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, MonthlyActivityDetector>();
         serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, BalanceSheetDetector>();
+        serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, IncomeStatementDetector>();
 
         serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, MonthlyActivityV4Processor>();
         serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, BalanceSheetV5Processor>();
+        serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, IncomeStatementsV7Processor>();
     }
 
     public static void AddServices(this WebApplicationBuilder builder)
@@ -81,6 +84,6 @@ public static class ServicesConfigurationExtensions
 
     public static void AddHostedServices(this IServiceCollection builder)
     {
-        builder.AddHostedService<MonthlyActivityHostedService>();
+        builder.AddHostedService<CodalHostedService>();
     }
 }

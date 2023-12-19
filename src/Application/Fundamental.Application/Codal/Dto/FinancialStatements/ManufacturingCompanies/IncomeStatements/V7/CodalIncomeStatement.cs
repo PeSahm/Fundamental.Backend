@@ -24,6 +24,16 @@ public class IncomeStatementDto
 
     [JsonProperty("rowItems")]
     public List<RowItem> RowItems { get; set; }
+
+    public void AddCustomRowItems()
+    {
+        int row = 1;
+
+        foreach (RowItem rowItem in RowItems)
+        {
+            rowItem.RowNumber = row++;
+        }
+    }
 }
 
 public class IncomeStatementdesc
@@ -32,22 +42,45 @@ public class IncomeStatementdesc
     public List<RowItem> RowItems { get; set; }
 }
 
-public class Root
+public class RootCodalIncomeStatement
 {
     [JsonProperty("incomeStatement")]
-    public CodalIncomeStatement IncomeStatement { get; set; }
+    public CodalIncomeStatement CodalIncomeStatement { get; set; }
 
     [JsonProperty("listedCapital")]
     public string ListedCapital { get; set; }
 
     [JsonProperty("unauthorizedCapital")]
     public string UnauthorizedCapital { get; set; }
+
+    public bool IsValidReport()
+    {
+        if (CodalIncomeStatement is null)
+        {
+            return false;
+        }
+
+        YearDatum? yearDatum = CodalIncomeStatement.IncomeStatement.YearData
+            .FirstOrDefault(x => x.ColumnId == ColumnId.ThisPeriodData);
+
+        if (yearDatum is null)
+        {
+            return false;
+        }
+
+        if (yearDatum.FiscalYear is null || yearDatum.FiscalMonth is null || yearDatum.ReportMonth is null)
+        {
+            return false;
+        }
+
+        return true;
+    }
 }
 
 public class RowItem
 {
     [JsonProperty("rowCode")]
-    public RowCode RowCode { get; set; }
+    public int RowCode { get; set; }
 
     [JsonProperty("oldFieldName")]
     public string OldFieldName { get; set; }
@@ -76,7 +109,32 @@ public class RowItem
     [JsonProperty("value_9411")]
     public string Value9411 { get; set; }
 
-    public CustomRowCode CustomRowCode { get; set; }
+    public int RowNumber { get; set; }
+
+    public string? GetDescription()
+    {
+        if (string.IsNullOrWhiteSpace(Value9041))
+        {
+            return null;
+        }
+
+        return Value9041.NormalizePersianText(
+            PersianNormalizers.ApplyPersianYeKe
+        );
+    }
+
+    public decimal GetValue(ColumnId columnId)
+    {
+        string propertyName = $"Value{(int)columnId}";
+        object? thisValue = GetType().GetProperties().FirstOrDefault(x => x.Name == propertyName)?.GetValue(this);
+
+        if (thisValue is null)
+        {
+            return 0;
+        }
+
+        return decimal.TryParse(thisValue.ToString(), out decimal res) ? res : 0;
+    }
 }
 
 public class YearDatum

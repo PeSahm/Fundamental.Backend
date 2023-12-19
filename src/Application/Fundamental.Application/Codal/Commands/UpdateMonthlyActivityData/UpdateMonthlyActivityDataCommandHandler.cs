@@ -1,4 +1,5 @@
-﻿using Fundamental.Application.Codal.Services;
+﻿using Fundamental.Application.Codal.Enums;
+using Fundamental.Application.Codal.Services;
 using Fundamental.Application.Codal.Services.Enums;
 using Fundamental.Application.Codal.Services.Models;
 using Fundamental.Domain.Statements.Enums;
@@ -29,7 +30,7 @@ public sealed class UpdateMonthlyActivityDataCommandHandler : IRequestHandler<Up
         {
             try
             {
-                await _codalService.ProcessCodal(monthlyActivity, cancellationToken);
+                await _codalService.ProcessCodal(monthlyActivity, LetterPart.NotSpecified, cancellationToken);
             }
             catch (Exception e)
             {
