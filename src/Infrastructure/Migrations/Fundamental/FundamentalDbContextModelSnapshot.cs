@@ -140,6 +140,12 @@ namespace Fundamental.Migrations.Fundamental
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("_id"));
 
+                    b.Property<int>("CodalCategory")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CodalRow")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime")
                         .HasColumnName("CreatedAt");
@@ -153,7 +159,6 @@ namespace Fundamental.Migrations.Fundamental
                         .IsFixedLength();
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 

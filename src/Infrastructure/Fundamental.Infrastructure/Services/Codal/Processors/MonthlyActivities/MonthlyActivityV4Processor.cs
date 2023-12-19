@@ -37,9 +37,6 @@ public class MonthlyActivityV4Processor(
             return;
         }
 
-        using IServiceScope scope = serviceScopeFactory.CreateScope();
-        await using FundamentalDbContext dbContext = scope.ServiceProvider.GetRequiredService<FundamentalDbContext>();
-
         if (saleDate.MonthlyActivity.ProductionAndSales.YearData.Count == 0)
         {
             return;
@@ -57,6 +54,9 @@ public class MonthlyActivityV4Processor(
         {
             return;
         }
+
+        using IServiceScope scope = serviceScopeFactory.CreateScope();
+        await using FundamentalDbContext dbContext = scope.ServiceProvider.GetRequiredService<FundamentalDbContext>();
 
         MonthlyActivity? existingStatement = await dbContext.MonthlyActivities
             .FirstOrDefaultAsync(

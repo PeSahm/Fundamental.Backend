@@ -26,6 +26,9 @@ public class FundamentalDbContext : DbContext, IUnitOfWork
 
     public DbSet<MonthlyActivity> MonthlyActivities { get; set; } = null!;
 
+    public DbSet<BalanceSheet> BalanceSheets { get; set; }
+
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(

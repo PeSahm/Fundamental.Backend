@@ -12,7 +12,7 @@ public class BalanceSheetDetector : ICodalVersionDetector
         return CodalVersion.V5;
     }
 
-    public static ReportingType ReportingType => ReportingType.Services;
+    public static ReportingType ReportingType => ReportingType.Production;
 
     public static LetterType LetterType => LetterType.InterimStatement;
 }

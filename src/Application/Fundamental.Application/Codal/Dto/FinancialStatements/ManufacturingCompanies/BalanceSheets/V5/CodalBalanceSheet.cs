@@ -20,10 +20,20 @@ public class BalanceSheetDto
     public List<YearDatum> YearData { get; set; }
 
     [JsonProperty("rowItems")]
-    public List<RowItem> RowItems { get; set; }
+    public List<RowItem> RowItems { get; set; } = new List<RowItem>();
+
+    public void AddCustomRowItems()
+    {
+        int row = 1;
+
+        foreach (RowItem rowItem in RowItems)
+        {
+            rowItem.RowNumber = row++;
+        }
+    }
 }
 
-public class Root
+public class RootCodalBalanceSheet
 {
     [JsonProperty("listedCapital")]
     public string ListedCapital { get; set; }
@@ -32,7 +42,30 @@ public class Root
     public string UnauthorizedCapital { get; set; }
 
     [JsonProperty("balanceSheet")]
-    public CodalBalanceSheet BalanceSheet { get; set; }
+    public CodalBalanceSheet? BalanceSheetData { get; set; }
+
+    public bool IsValidReport()
+    {
+        if (BalanceSheetData is null)
+        {
+            return false;
+        }
+
+        YearDatum? yearDatum = BalanceSheetData.BalanceSheet.YearData
+            .FirstOrDefault(x => x.ColumnId == ColumnId.ThisPeriodData);
+
+        if (yearDatum is null)
+        {
+            return false;
+        }
+
+        if (yearDatum.FiscalYear is null || yearDatum.FiscalMonth is null || yearDatum.ReportMonth is null)
+        {
+            return false;
+        }
+
+        return true;
+    }
 }
 
 public class RowItem
@@ -64,7 +97,33 @@ public class RowItem
     [JsonProperty("value_8995")]
     public string Value8995 { get; set; }
 
-    public CustomRowCode CustomRowCode { get; set; }
+    public int RowNumber { get; set; }
+
+
+    public string? GetDescription()
+    {
+        if (string.IsNullOrWhiteSpace(Value8991))
+        {
+            return null;
+        }
+
+        return Value8991.NormalizePersianText(
+            PersianNormalizers.ApplyPersianYeKe
+        );
+    }
+
+    public decimal GetValue(ColumnId columnId)
+    {
+        string propertyName = $"Value{(int)columnId}";
+        object? thisValue = GetType().GetProperties().FirstOrDefault(x => x.Name == propertyName)?.GetValue(this);
+
+        if (thisValue is null)
+        {
+            return 0;
+        }
+
+        return decimal.Parse(thisValue.ToString() ?? "0");
+    }
 }
 
 public class YearDatum
@@ -97,19 +156,6 @@ public class YearDatum
     public int? ReportYear => PeriodEndToDateGeorgian.GetPersianYear(false);
 
     public int? ReportMonth => PeriodEndToDateGeorgian.GetPersianMonth(false);
-
-    public decimal GetValue(ColumnId columnId)
-    {
-        string propertyName = $"Value{(int)columnId}";
-        object? thisValue = GetType().GetProperties().FirstOrDefault(x => x.Name == propertyName)?.GetValue(this);
-
-        if (thisValue is null)
-        {
-            return 0;
-        }
-
-        return decimal.Parse(thisValue.ToString() ?? "0");
-    }
 }
 
 #pragma warning restore SA1649
