@@ -9,6 +9,8 @@ public interface ICodalVersionDetector
 {
     static virtual ReportingType ReportingType => ReportingType.UnKnown;
     static virtual LetterType LetterType => LetterType.UnKnown;
+    static virtual LetterPart LetterPart => LetterPart.NotSpecified;
+
 
     /// <summary>
     /// Detect Codal Json version based of letter type and reportingType

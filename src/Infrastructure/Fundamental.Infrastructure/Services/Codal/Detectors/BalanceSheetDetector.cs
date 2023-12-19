@@ -15,4 +15,6 @@ public class BalanceSheetDetector : ICodalVersionDetector
     public static ReportingType ReportingType => ReportingType.Production;
 
     public static LetterType LetterType => LetterType.InterimStatement;
+
+    public static LetterPart LetterPart => LetterPart.BalanceSheet;
 }

@@ -1,4 +1,5 @@
-﻿using Fundamental.Application.Codal.Services.Enums;
+﻿using Fundamental.Application.Codal.Enums;
+using Fundamental.Application.Codal.Services.Enums;
 using Fundamental.Application.Codal.Services.Models;
 using Fundamental.Domain.Statements.Enums;
 
@@ -13,5 +14,5 @@ public interface ICodalService
         CancellationToken cancellationToken = default
     );
 
-    Task ProcessCodal(GetStatementResponse statement, CancellationToken cancellationToken = default);
+    Task ProcessCodal(GetStatementResponse statement, LetterPart letterPart, CancellationToken cancellationToken = default);
 }

@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Codal.Dto.FinancialStatements.ManufacturingCompanies.BalanceSheets.V5;
+﻿using Fundamental.Application.Codal.Dto.FinancialStatements.ManufacturingCompanies.IncomeStatements.V7;
 using Fundamental.Application.Codal.Enums;
 using Fundamental.Application.Codal.Services;
 using Fundamental.Application.Codal.Services.Enums;
@@ -12,14 +12,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Fundamental.Infrastructure.Services.Codal.Processors.BalanceSheets;
+namespace Fundamental.Infrastructure.Services.Codal.Processors.IncomeStatements;
 
-public sealed class BalanceSheetV5Processor(IServiceScopeFactory serviceScopeFactory) : ICodalProcessor
+public sealed class IncomeStatementsV7Processor(IServiceScopeFactory serviceScopeFactory) : ICodalProcessor
 {
     public static ReportingType ReportingType => ReportingType.Production;
     public static LetterType LetterType => LetterType.InterimStatement;
-    public static CodalVersion CodalVersion => CodalVersion.V5;
-    public static LetterPart LetterPart => LetterPart.BalanceSheet;
+    public static CodalVersion CodalVersion => CodalVersion.V7;
+    public static LetterPart LetterPart => LetterPart.IncomeStatement;
 
     public async Task Process(GetStatementResponse statement, GetStatementJsonResponse model, CancellationToken cancellationToken)
     {
@@ -32,7 +32,7 @@ public sealed class BalanceSheetV5Processor(IServiceScopeFactory serviceScopeFac
         [
             "listedCapital",
             "unauthorizedCapital",
-            "balanceSheet"
+            "incomeStatement"
         ];
 
         List<JProperty> properties = jObject.Properties().ToList();
@@ -46,12 +46,12 @@ public sealed class BalanceSheetV5Processor(IServiceScopeFactory serviceScopeFac
         }
 
         // Deserialize the filtered JSON into your model
-        RootCodalBalanceSheet? codalBalanceSheetRoot = jObject.ToObject<RootCodalBalanceSheet>(new JsonSerializer
+        RootCodalIncomeStatement? codalBalanceSheetRoot = jObject.ToObject<RootCodalIncomeStatement>(new JsonSerializer
         {
             NullValueHandling = NullValueHandling.Ignore
         });
 
-        if (codalBalanceSheetRoot?.BalanceSheetData is null)
+        if (codalBalanceSheetRoot?.CodalIncomeStatement is null)
         {
             return;
         }
@@ -61,21 +61,21 @@ public sealed class BalanceSheetV5Processor(IServiceScopeFactory serviceScopeFac
             return;
         }
 
-        BalanceSheetDto balanceSheetDto = codalBalanceSheetRoot.BalanceSheetData.BalanceSheet;
+        IncomeStatementDto incomeStatementDto = codalBalanceSheetRoot.CodalIncomeStatement.IncomeStatement;
 
-        balanceSheetDto.AddCustomRowItems();
+        incomeStatementDto.AddCustomRowItems();
 
         using IServiceScope scope = serviceScopeFactory.CreateScope();
         await using FundamentalDbContext dbContext = scope.ServiceProvider.GetRequiredService<FundamentalDbContext>();
 
-        foreach (YearDatum yearDatum in balanceSheetDto.YearData)
+        foreach (YearDatum yearDatum in incomeStatementDto.YearData)
         {
             Symbol symbol =
                 await dbContext.Symbols.FirstAsync(
                     predicate: x => x.Isin == statement.Isin,
                     cancellationToken: cancellationToken);
 
-            if (await dbContext.BalanceSheets
+            if (await dbContext.IncomeStatements
                     .AnyAsync(
                         x =>
                             x.Symbol.Isin == statement.Isin &&
@@ -87,9 +87,9 @@ public sealed class BalanceSheetV5Processor(IServiceScopeFactory serviceScopeFac
                 continue;
             }
 
-            foreach (RowItem rowItem in balanceSheetDto.RowItems)
+            foreach (RowItem rowItem in incomeStatementDto.RowItems)
             {
-                BalanceSheet balanceSheet = new(
+                IncomeStatement incomeStatement = new(
                     Guid.NewGuid(),
                     symbol,
                     statement.TracingNo,
@@ -99,13 +99,13 @@ public sealed class BalanceSheetV5Processor(IServiceScopeFactory serviceScopeFac
                     reportMonth: yearDatum.ReportMonth!.Value,
                     row: rowItem.RowNumber,
                     (int)rowItem.RowCode,
-                    (int)rowItem.Category,
+                    rowItem.Category,
                     rowItem.GetDescription(),
                     rowItem.GetValue(yearDatum.ColumnId),
                     yearDatum.IsAudited,
                     DateTime.Now
                 );
-                dbContext.BalanceSheets.Add(balanceSheet);
+                dbContext.IncomeStatements.Add(incomeStatement);
             }
         }
 

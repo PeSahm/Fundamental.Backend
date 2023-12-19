@@ -1,4 +1,5 @@
-﻿using Fundamental.Application.Codal.Services;
+﻿using Fundamental.Application.Codal.Enums;
+using Fundamental.Application.Codal.Services;
 using Fundamental.Application.Codal.Services.Enums;
 using Fundamental.Application.Codal.Services.Models;
 using Fundamental.Domain.Statements.Enums;
@@ -22,7 +23,7 @@ public class UpdateBalanceSheetDataCommandHandler(ICodalService codalService) : 
         {
             try
             {
-                await codalService.ProcessCodal(balanceSheet, cancellationToken);
+                await codalService.ProcessCodal(balanceSheet, LetterPart.BalanceSheet, cancellationToken);
             }
             catch (Exception e)
             {

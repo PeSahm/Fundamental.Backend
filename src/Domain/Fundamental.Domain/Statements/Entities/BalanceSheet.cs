@@ -64,6 +64,7 @@ public class BalanceSheet : BaseEntity<Guid>
     public int CodalRow { get; private set; }
 
     public int CodalCategory { get; set; }
+
     public string? Description { get; private set; }
 
     public SignedMoney Value { get; private set; }
