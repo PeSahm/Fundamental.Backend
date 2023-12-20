@@ -61,7 +61,7 @@ public class RootCodalIncomeStatement
         }
 
         YearDatum? yearDatum = CodalIncomeStatement.IncomeStatement.YearData
-            .FirstOrDefault(x => x.ColumnId == ColumnId.ThisPeriodData);
+            .Find(x => x.ColumnId == ColumnId.ThisPeriodData);
 
         if (yearDatum is null)
         {
@@ -126,7 +126,7 @@ public class RowItem
     public decimal GetValue(ColumnId columnId)
     {
         string propertyName = $"Value{(int)columnId}";
-        object? thisValue = GetType().GetProperties().FirstOrDefault(x => x.Name == propertyName)?.GetValue(this);
+        object? thisValue = Array.Find(GetType().GetProperties(), info => info.Name == propertyName)?.GetValue(this);
 
         if (thisValue is null)
         {
@@ -171,7 +171,7 @@ public class YearDatum
     public decimal GetValue(ColumnId columnId)
     {
         string propertyName = $"Value{(int)columnId}";
-        object? thisValue = GetType().GetProperties().FirstOrDefault(x => x.Name == propertyName)?.GetValue(this);
+        object? thisValue = Array.Find(GetType().GetProperties(), info => info.Name == propertyName)?.GetValue(this);
 
         if (thisValue is null)
         {

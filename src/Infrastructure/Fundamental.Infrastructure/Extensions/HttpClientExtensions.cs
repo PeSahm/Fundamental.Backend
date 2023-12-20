@@ -15,7 +15,8 @@ public static class HttpClientExtensions
 
     private static void AddMdpHttpClient(IServiceCollection services, IConfiguration configuration)
     {
-        services.AddHttpClient(HttpClients.MDP,
+        services.AddHttpClient(
+            HttpClients.MDP,
             client =>
             {
                 client.BaseAddress = new Uri(configuration.GetValue<string>("Mdp:url")!);

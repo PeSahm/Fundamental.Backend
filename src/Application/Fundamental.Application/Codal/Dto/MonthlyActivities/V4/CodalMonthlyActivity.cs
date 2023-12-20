@@ -149,7 +149,7 @@ public class RowItem
     public decimal GetValue(SaleColumnId columnId)
     {
         string propertyName = $"Value{(int)columnId}";
-        object? thisValue = GetType().GetProperties().FirstOrDefault(x => x.Name == propertyName)?.GetValue(this);
+        object? thisValue = Array.Find(GetType().GetProperties(), info => info.Name == propertyName);
 
         if (thisValue is null)
         {

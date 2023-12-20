@@ -66,8 +66,9 @@ public static class ApiBehaviorOptionsExtensions
             requestType = requestTypeAttribute.Type;
         }
 
-        requestType ??= methodInfo.GetParameters()
-            .FirstOrDefault(p => p.ParameterType.IsAssignableTo(typeof(IBaseRequest)))?.ParameterType;
+        requestType ??= Array.Find(
+            methodInfo.GetParameters(),
+            p => p.ParameterType.IsAssignableTo(typeof(IBaseRequest)))?.ParameterType;
         return requestType?.GetCustomAttribute<HandlerCodeAttribute>()?.HandlerCode;
     }
 

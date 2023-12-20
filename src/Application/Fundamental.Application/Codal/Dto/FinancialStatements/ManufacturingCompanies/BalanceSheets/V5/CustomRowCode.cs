@@ -4,40 +4,40 @@ namespace Fundamental.Application.Codal.Dto.FinancialStatements.ManufacturingCom
 
 public static class CustomRowCode
 {
-    [Description("سایر دارایی‌ها")]
+    [Description("سایر دارایی ها")]
     public static int OtherAssets => 18;
 
-    [Description("جمع دارایی‌های غیرجاری")]
+    [Description("جمع دارایی های غیر جاری")]
     public static int TotalNonCurrentAssets => 19;
 
-    [Description("دارایی‌های جاری")]
+    [Description("دارایی های جاری")]
     public static int CurrentAssets => 3;
 
-    [Description("سفارشات و پیش‌پرداخت‌ها")]
+    [Description("سفارشات و پیش پرداخت ها")]
     public static int OrdersAndPrepayments => 9;
 
     [Description("موجودی مواد و کالا")]
     public static int Inventory => 8;
 
-    [Description("دریافتنی‌های تجاری و سایر دریافتنی‌ها")]
+    [Description("دریافتنی های تجاری و سایر دریافتنی ها")]
     public static int TradeAndOtherReceivables => 44;
 
-    [Description("سرمایه‌گذاری‌های کوتاه‌مدت")]
+    [Description("سرمایه گذاری های کوتاه مدت")]
     public static int ShortTermInvestments => 5;
 
     [Description("موجودی نقد")]
     public static int Cash => 4;
 
-    [Description("دارایی‌های نگهداری شده برای فروش")]
+    [Description("دارایی های نگه داری شده برای فروش")]
     public static int AssetsHeldForSale => 10;
 
-    [Description("جمع دارایی‌های جاری")]
+    [Description("جمع دارایی های جاری")]
     public static int TotalCurrentAssets => 11;
 
-    [Description("جمع دارایی‌ها")]
+    [Description("جمع دارایی ها")]
     public static int TotalAssets => 33;
 
-    [Description("حقوق مالکانه و بدهی‌ها")]
+    [Description("حقوق مالکانه و بدهی ها")]
     public static int EquityAndLiabilities => 35;
 
     [Description("حقوق مالکانه")]
@@ -58,13 +58,13 @@ public static class CustomRowCode
     [Description("اندوخته قانونی")]
     public static int LegalReserve => 25;
 
-    [Description("ساير اندوخته‌ها")]
+    [Description("سایر اندوخته ها")]
     public static int OtherReserves => 26;
 
-    [Description("دارایی‌ها")]
+    [Description("دارایی ها")]
     public static int Assets => 2;
 
-    [Description("مازاد تجدیدارزيابی دارایی‌ها")]
+    [Description("مازاد تجدید ارزیابی دارایی ها")]
     public static int RevaluationSurplus => 28;
 
     [Description("تفاوت تسعیر ارز عملیات خارجی")]
@@ -79,13 +79,13 @@ public static class CustomRowCode
     [Description("جمع حقوق مالکانه")]
     public static int TotalEquity => 39;
 
-    [Description("بدهی‌ها")]
+    [Description("بدهی ها")]
     public static int Liabilities => 40;
 
-    [Description("بدهی‌های غیرجاری")]
+    [Description("بدهی های غیر جاری")]
     public static int NonCurrentLiabilities => 13;
 
-    [Description("پرداختنی‌های بلندمدت")]
+    [Description("پرداختنی های بلند مدت")]
     public static int LongTermPayables => 14;
 
     [Description("تسهیلات مالی بلندمدت")]
@@ -94,16 +94,16 @@ public static class CustomRowCode
     [Description("ذخیره مزایای پایان خدمت کارکنان")]
     public static int EmployeeEndOfServiceBenefits => 17;
 
-    [Description("دارايی‌های غیرجاری")]
+    [Description("دارایی های غیر جاری")]
     public static int NonCurrentAssets => 12;
 
-    [Description("جمع بدهی‌های غیرجاری")]
+    [Description("جمع بدهی های غیر جاری")]
     public static int TotalNonCurrentLiabilities => 18;
 
-    [Description("بدهی‌های جاری")]
+    [Description("بدهی های جاری")]
     public static int CurrentLiabilities => 3;
 
-    [Description("پرداختنی‌های تجاری و سایر پرداختنی‌ها")]
+    [Description("پرداختنی های تجاری و سایر پرداختنی ها")]
     public static int TradeAndOtherPayables => 41;
 
     [Description("مالیات پرداختنی")]
@@ -118,30 +118,30 @@ public static class CustomRowCode
     [Description("ذخایر")]
     public static int Provisions => 9;
 
-    [Description("پیش‌دریافت‌ها")]
+    [Description("پیش دریافت ها")]
     public static int AdvancesReceived => 10;
 
-    [Description("بدهی‌های ‌مرتبط ‌با دارایی‌های نگهداری‌‌شده برای ‌فروش")]
+    [Description("بدهی های مربوط به دارایی های نگه داری شده برای فروش")]
     public static int LiabilitiesRelatedToAssetsHeldForSale => 11;
 
-    [Description("دارایی‌های ثابت مشهود")]
+    [Description("دارایی های ثابت مشهود")]
     public static int TangibleFixedAssets => 17;
 
-    [Description("جمع بدهی‌های جاری")]
+    [Description("جمع بدهی های جاری")]
     public static int TotalCurrentLiabilities => 12;
 
-    [Description("جمع بدهی‌ها")]
+    [Description("جمع بدهی ها")]
     public static int TotalLiabilities => 19;
 
-    [Description("جمع حقوق مالکانه و بدهی‌ها")]
+    [Description("جمع حقوق مالکانه و بدهی ها")]
     public static int TotalEquityAndLiabilities => 43;
 
-    [Description("سرمایه‌گذاری در املاک")]
+    [Description("سرمایه گذاری در املاک")]
     public static int InvestmentInProperties => 15;
 
-    [Description("دارایی‌های نامشهود")]
+    [Description("دارایی های نامشهود")]
     public static int IntangibleAssets => 16;
 
-    [Description("سرمایه‌گذاری‌های بلندمدت")]
+    [Description("سرمایه گذاری های بلند مدت")]
     public static int LongTermInvestments => 14;
 }
