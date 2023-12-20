@@ -14,5 +14,6 @@ public record GetMonthlyActivitiesResultItem(
     decimal SaleIncludeCurrentMonth,
     decimal SaleLastYear,
     bool HasSubCompanySale,
-    ulong TraceNo
+    ulong TraceNo,
+    DateTime CreatedAt
 );

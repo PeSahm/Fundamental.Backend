@@ -19,5 +19,6 @@ public record GetFinancialStatementsResultItem(
     decimal Expense,
     decimal Asset,
     decimal OwnersEquity,
-    decimal Receivables
+    decimal Receivables,
+    DateTime CreatedAt
 );

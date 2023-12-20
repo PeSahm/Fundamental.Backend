@@ -41,20 +41,23 @@ public class MonthlyActivityRepository : IMonthlyActivityRepository
         }
 
         return await query.Select(x => new GetMonthlyActivitiesResultItem(
-            x.Id,
-            x.Symbol.Isin,
-            x.Symbol.Name,
-            x.Symbol.Title,
-            x.Uri,
-            x.FiscalYear,
-            x.YearEndMonth,
-            x.ReportMonth,
-            (CodalMoney)x.SaleBeforeCurrentMonth,
-            (CodalMoney)x.SaleCurrentMonth,
-            (CodalMoney)x.SaleIncludeCurrentMonth,
-            (CodalMoney)x.SaleLastYear,
-            x.HasSubCompanySale,
-            x.TraceNo
-        )).ToPagingListAsync(request, cancellationToken);
+                x.Id,
+                x.Symbol.Isin,
+                x.Symbol.Name,
+                x.Symbol.Title,
+                x.Uri,
+                x.FiscalYear,
+                x.YearEndMonth,
+                x.ReportMonth,
+                (CodalMoney)x.SaleBeforeCurrentMonth,
+                (CodalMoney)x.SaleCurrentMonth,
+                (CodalMoney)x.SaleIncludeCurrentMonth,
+                (CodalMoney)x.SaleLastYear,
+                x.HasSubCompanySale,
+                x.TraceNo,
+                x.CreatedAt
+            ))
+            .OrderByDescending(x => x.CreatedAt)
+            .ToPagingListAsync(request, cancellationToken);
     }
 }

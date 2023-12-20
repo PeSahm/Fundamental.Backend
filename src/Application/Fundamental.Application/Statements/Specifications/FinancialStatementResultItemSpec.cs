@@ -28,7 +28,8 @@ public sealed class FinancialStatementResultItemSpec : Specification<FinancialSt
             (CodalMoney)x.Expense,
             (CodalMoney)x.Asset,
             (CodalMoney)x.OwnersEquity,
-            (CodalMoney)x.Receivables
+            (CodalMoney)x.Receivables,
+            x.CreatedAt
         ));
     }
 }

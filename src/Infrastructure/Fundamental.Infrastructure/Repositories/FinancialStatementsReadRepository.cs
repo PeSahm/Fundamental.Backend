@@ -41,25 +41,28 @@ public class FinancialStatementsReadRepository : IFinancialStatementsReadReposit
         }
 
         return query.Select(x => new GetFinancialStatementsResultItem(
-            x.Id,
-            x.Symbol.Isin,
-            x.Symbol.Name,
-            x.Symbol.Title,
-            x.TraceNo,
-            x.Uri,
-            x.FiscalYear,
-            x.YearEndMonth,
-            x.ReportMonth,
-            (CodalMoney)x.OperatingIncome,
-            (CodalMoney)x.GrossProfit,
-            (CodalMoney)x.OperatingProfit,
-            (CodalMoney)x.BankInterestIncome,
-            (CodalMoney)x.InvestmentIncome,
-            (CodalMoney)x.NetProfit,
-            (CodalMoney)x.Expense,
-            (CodalMoney)x.Asset,
-            (CodalMoney)x.OwnersEquity,
-            (CodalMoney)x.Receivables
-        )).ToPagingListAsync(request, cancellationToken);
+                x.Id,
+                x.Symbol.Isin,
+                x.Symbol.Name,
+                x.Symbol.Title,
+                x.TraceNo,
+                x.Uri,
+                x.FiscalYear,
+                x.YearEndMonth,
+                x.ReportMonth,
+                (CodalMoney)x.OperatingIncome,
+                (CodalMoney)x.GrossProfit,
+                (CodalMoney)x.OperatingProfit,
+                (CodalMoney)x.BankInterestIncome,
+                (CodalMoney)x.InvestmentIncome,
+                (CodalMoney)x.NetProfit,
+                (CodalMoney)x.Expense,
+                (CodalMoney)x.Asset,
+                (CodalMoney)x.OwnersEquity,
+                (CodalMoney)x.Receivables,
+                x.CreatedAt
+            ))
+            .OrderByDescending(x => x.CreatedAt)
+            .ToPagingListAsync(request, cancellationToken);
     }
 }
