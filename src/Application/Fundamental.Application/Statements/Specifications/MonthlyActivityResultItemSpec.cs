@@ -9,22 +9,23 @@ public sealed class MonthlyActivityResultItemSpec : Specification<MonthlyActivit
 {
     public MonthlyActivityResultItemSpec()
     {
-        Query.Select(x => new GetMonthlyActivitiesResultItem(
-            x.Id,
-            x.Symbol.Isin,
-            x.Symbol.Name,
-            x.Symbol.Title,
-            x.Uri,
-            x.FiscalYear,
-            x.YearEndMonth,
-            x.ReportMonth,
-            (CodalMoney)x.SaleBeforeCurrentMonth,
-            (CodalMoney)x.SaleCurrentMonth,
-            (CodalMoney)x.SaleIncludeCurrentMonth,
-            (CodalMoney)x.SaleLastYear,
-            x.HasSubCompanySale,
-            x.TraceNo,
-            x.CreatedAt
-        ));
+        Query.Select(x => new GetMonthlyActivitiesResultItem
+        {
+            Id = x.Id,
+            Isin = x.Symbol.Isin,
+            Symbol = x.Symbol.Name,
+            Title = x.Symbol.Title,
+            Uri = x.Uri,
+            FiscalYear = x.FiscalYear,
+            YearEndMonth = x.YearEndMonth,
+            ReportMonth = x.ReportMonth,
+            SaleBeforeCurrentMonth = (CodalMoney)x.SaleBeforeCurrentMonth,
+            SaleCurrentMonth = (CodalMoney)x.SaleCurrentMonth,
+            SaleIncludeCurrentMonth = (CodalMoney)x.SaleIncludeCurrentMonth,
+            SaleLastYear = (CodalMoney)x.SaleLastYear,
+            HasSubCompanySale = x.HasSubCompanySale,
+            TraceNo = x.TraceNo,
+            CreatedAt = x.CreatedAt
+        });
     }
 }
