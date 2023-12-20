@@ -22,9 +22,10 @@ public static class DbContextConfigurationExtensions
                 )
 #if DEBUG
                 .LogTo(Console.WriteLine)
-#endif
                 .EnableSensitiveDataLogging()
                 .EnableDetailedErrors());
+#endif
+
         return services;
     }
 }
