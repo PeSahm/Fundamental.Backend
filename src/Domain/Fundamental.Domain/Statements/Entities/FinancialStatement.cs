@@ -47,6 +47,7 @@ public class FinancialStatement : BaseEntity<Guid>
         OwnersEquity = ownersEquity;
         Receivables = receivables;
         CreatedAt = createdAt;
+        UpdatedAt = createdAt;
     }
 
     protected FinancialStatement()

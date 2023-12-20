@@ -25,7 +25,8 @@ public sealed class MonthlyActivityResultItemSpec : Specification<MonthlyActivit
             SaleLastYear = (CodalMoney)x.SaleLastYear,
             HasSubCompanySale = x.HasSubCompanySale,
             TraceNo = x.TraceNo,
-            CreatedAt = x.CreatedAt
+            CreatedAt = x.CreatedAt,
+            UpdatedAt = x.UpdatedAt
         });
     }
 }

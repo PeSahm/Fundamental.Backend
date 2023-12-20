@@ -30,7 +30,8 @@ public sealed class FinancialStatementResultItemSpec : Specification<FinancialSt
             Asset = (CodalMoney)x.Asset,
             OwnersEquity = (CodalMoney)x.OwnersEquity,
             Receivables = (CodalMoney)x.Receivables,
-            CreatedAt = x.CreatedAt
+            CreatedAt = x.CreatedAt,
+            UpdatedAt = x.UpdatedAt
         });
     }
 }
