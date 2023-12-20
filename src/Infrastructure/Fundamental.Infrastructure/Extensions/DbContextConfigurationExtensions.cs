@@ -23,9 +23,8 @@ public static class DbContextConfigurationExtensions
 #if DEBUG
                 .LogTo(Console.WriteLine)
                 .EnableSensitiveDataLogging()
-                .EnableDetailedErrors());
 #endif
-
+                .EnableDetailedErrors());
         return services;
     }
 }
