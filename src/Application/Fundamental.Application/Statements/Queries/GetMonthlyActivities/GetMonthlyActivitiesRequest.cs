@@ -1,4 +1,5 @@
 ﻿using Fundamental.Domain.Common.Dto;
+using Fundamental.ErrorHandling;
 using Fundamental.ErrorHandling.Attributes;
 using Fundamental.ErrorHandling.Enums;
 using MediatR;
@@ -10,4 +11,4 @@ public record GetMonthlyActivitiesRequest(
     string[] IsinList,
     int? Year,
     int? ReportMonth
-) : PagingRequest, IRequest<Paginated<GetMonthlyActivitiesResultItem>>;
+) : PagingRequest, IRequest<Response<Paginated<GetMonthlyActivitiesResultItem>>>;

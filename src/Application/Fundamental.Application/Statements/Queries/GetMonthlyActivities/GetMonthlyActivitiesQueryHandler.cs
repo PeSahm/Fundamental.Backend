@@ -1,24 +1,19 @@
 ﻿using Fundamental.Application.Statements.Repositories;
 using Fundamental.Domain.Common.Dto;
+using Fundamental.ErrorHandling;
 using MediatR;
 
 namespace Fundamental.Application.Statements.Queries.GetMonthlyActivities;
 
 public sealed class
-    GetMonthlyActivitiesQueryHandler : IRequestHandler<GetMonthlyActivitiesRequest, Paginated<GetMonthlyActivitiesResultItem>>
+    GetMonthlyActivitiesQueryHandler(IMonthlyActivityRepository monthlyActivityRepository)
+    : IRequestHandler<GetMonthlyActivitiesRequest, Response<Paginated<GetMonthlyActivitiesResultItem>>>
 {
-    private readonly IMonthlyActivityRepository _monthlyActivityRepository;
-
-    public GetMonthlyActivitiesQueryHandler(IMonthlyActivityRepository monthlyActivityRepository)
-    {
-        _monthlyActivityRepository = monthlyActivityRepository;
-    }
-
-    public async Task<Paginated<GetMonthlyActivitiesResultItem>> Handle(
+    public async Task<Response<Paginated<GetMonthlyActivitiesResultItem>>> Handle(
         GetMonthlyActivitiesRequest request,
         CancellationToken cancellationToken
     )
     {
-        return await _monthlyActivityRepository.GetMonthlyActivitiesAsync(request, cancellationToken);
+        return await monthlyActivityRepository.GetMonthlyActivitiesAsync(request, cancellationToken);
     }
 }
