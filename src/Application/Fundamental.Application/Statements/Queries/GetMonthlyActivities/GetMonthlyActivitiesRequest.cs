@@ -9,6 +9,6 @@ namespace Fundamental.Application.Statements.Queries.GetMonthlyActivities;
 [HandlerCode(HandlerCode.GetMonthlyActivities)]
 public record GetMonthlyActivitiesRequest(
     string[] IsinList,
-    int? Year,
-    int? ReportMonth
+    ushort? Year,
+    ushort? ReportMonth
 ) : PagingRequest, IRequest<Response<Paginated<GetMonthlyActivitiesResultItem>>>;

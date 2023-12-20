@@ -1,19 +1,20 @@
 ﻿namespace Fundamental.Application.Statements.Queries.GetMonthlyActivities;
 
-public record GetMonthlyActivitiesResultItem(
-    Guid Id,
-    string Isin,
-    string Symbol,
-    string Title,
-    string Uri,
-    ushort FiscalYear,
-    ushort YearEndMonth,
-    ushort ReportMonth,
-    decimal SaleBeforeCurrentMonth,
-    decimal SaleCurrentMonth,
-    decimal SaleIncludeCurrentMonth,
-    decimal SaleLastYear,
-    bool HasSubCompanySale,
-    ulong TraceNo,
-    DateTime CreatedAt
-);
+public class GetMonthlyActivitiesResultItem
+{
+    public Guid Id { get; set; }
+    public string Isin { get; set; }
+    public string Symbol { get; set; }
+    public string Title { get; set; }
+    public string Uri { get; set; }
+    public ushort FiscalYear { get; set; }
+    public ushort YearEndMonth { get; set; }
+    public ushort ReportMonth { get; set; }
+    public decimal SaleBeforeCurrentMonth { get; set; }
+    public decimal SaleCurrentMonth { get; set; }
+    public decimal SaleIncludeCurrentMonth { get; set; }
+    public decimal SaleLastYear { get; set; }
+    public bool HasSubCompanySale { get; set; }
+    public ulong TraceNo { get; set; }
+    public DateTime CreatedAt { get; set; }
+}

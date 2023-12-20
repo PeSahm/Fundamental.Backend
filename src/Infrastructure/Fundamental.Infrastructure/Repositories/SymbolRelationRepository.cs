@@ -34,15 +34,16 @@ public class SymbolRelationRepository : ISymbolRelationRepository
             query = query.Where(x => x.Child.Isin == request.InvestmentIsin);
         }
 
-        return await query.Select(x => new GetSymbolRelationsResultItem(
-            x.Id,
-            x.Parent.Isin,
-            x.Parent.Name,
-            x.Parent.Title,
-            x.Child.Isin,
-            x.Child.Name,
-            x.Child.Title,
-            x.Ratio
-        )).ToPagingListAsync(request, cancellationToken);
+        return await query.Select(x => new GetSymbolRelationsResultItem
+            {
+                Id = x.Id,
+                InvestorIsin = x.Parent.Isin,
+                InvestorSymbol = x.Parent.Name,
+                InvestorTitle = x.Parent.Title,
+                InvestmentSymbol = x.Child.Name,
+                InvestmentTitle = x.Child.Title,
+                Ratio = x.Ratio
+            })
+            .ToPagingListAsync(request, "InvestorIsin desc", cancellationToken);
     }
 }

@@ -1,12 +1,12 @@
 ﻿namespace Fundamental.Application.Symbols.Queries.GetSymbolRelations;
 
-public sealed record GetSymbolRelationsResultItem(
-    Guid Id,
-    string InvestorIsin,
-    string InvestorSymbol,
-    string InvestorTitle,
-    string InvestmentIsin,
-    string InvestmentSymbol,
-    string InvestmentTitle,
-    float Ratio
-);
+public sealed class GetSymbolRelationsResultItem
+{
+    public Guid Id { get; init; }
+    public string InvestorIsin { get; init; }
+    public string InvestorSymbol { get; init; }
+    public string InvestorTitle { get; init; }
+    public string InvestmentSymbol { get; init; }
+    public string InvestmentTitle { get; init; }
+    public float Ratio { get; init; }
+}

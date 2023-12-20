@@ -1,4 +1,5 @@
 ﻿using Fundamental.Domain.Common.Dto;
+using Gridify;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fundamental.Infrastructure.Extensions;
@@ -21,20 +22,26 @@ public static class PaginationExtensions
         this IQueryable<T> queryable,
         int pageSize,
         int pageNumber,
+        string defaultSort = "",
         CancellationToken cancellationToken = default
     )
     {
-        return await queryable.ToPagingListAsync(new PagingRequest(pageSize, pageNumber), cancellationToken);
+        return await queryable.ToPagingListAsync(new PagingRequest(pageSize, pageNumber), defaultSort, cancellationToken);
     }
 
     public static async Task<Paginated<T>> ToPagingListAsync<T>(
         this IQueryable<T> queryable,
         PagingRequest request,
+        string defaultSort = "",
         CancellationToken cancellationToken = default
     )
     {
+        List<T> res = await queryable
+            .ApplyOrderingAndPaging(new GridifyQuery(request.PageNumber, request.PageSize, string.Empty, request.OrderBy ?? defaultSort))
+            .ToListAsync(cancellationToken: cancellationToken);
+
         return new Paginated<T>(
-            await queryable.AsPaging(request).ToListAsync(cancellationToken),
+            res,
             await queryable.GetPagingMetaData(request, cancellationToken)
         );
     }
