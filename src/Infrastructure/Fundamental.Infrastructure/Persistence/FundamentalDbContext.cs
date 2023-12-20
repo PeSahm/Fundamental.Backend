@@ -28,9 +28,7 @@ public class FundamentalDbContext : DbContext, IUnitOfWork
 
     public DbSet<BalanceSheet> BalanceSheets { get; set; }
 
-
     public DbSet<IncomeStatement> IncomeStatements { get; set; }
-
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

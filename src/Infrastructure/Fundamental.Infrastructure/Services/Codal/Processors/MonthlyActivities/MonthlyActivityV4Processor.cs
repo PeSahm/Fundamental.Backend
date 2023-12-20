@@ -45,7 +45,7 @@ public class MonthlyActivityV4Processor(
         }
 
         YearDatum? yearDatum = saleDate.MonthlyActivity.ProductionAndSales.YearData
-            .FirstOrDefault(x => x.ColumnId == SaleColumnId.SaleThisMonth);
+            .Find(x => x.ColumnId == SaleColumnId.SaleThisMonth);
 
         if (yearDatum is null)
         {

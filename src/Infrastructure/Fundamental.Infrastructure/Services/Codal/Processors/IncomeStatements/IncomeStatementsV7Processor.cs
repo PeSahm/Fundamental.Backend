@@ -98,7 +98,7 @@ public sealed class IncomeStatementsV7Processor(IServiceScopeFactory serviceScop
                     yearEndMonth: yearDatum.FiscalMonth!.Value,
                     reportMonth: yearDatum.ReportMonth!.Value,
                     row: rowItem.RowNumber,
-                    (int)rowItem.RowCode,
+                    rowItem.RowCode,
                     rowItem.Category,
                     rowItem.GetDescription(),
                     rowItem.GetValue(yearDatum.ColumnId),

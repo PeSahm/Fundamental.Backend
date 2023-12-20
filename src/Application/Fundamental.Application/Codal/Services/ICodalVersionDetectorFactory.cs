@@ -9,6 +9,6 @@ public interface ICodalVersionDetectorFactory
     ICodalVersionDetector GetCodalVersionDetector(
         ReportingType reportingType,
         LetterType letterType,
-        LetterPart letterPart = LetterPart.NotSpecified
+        LetterPart letterPart
     );
 }
