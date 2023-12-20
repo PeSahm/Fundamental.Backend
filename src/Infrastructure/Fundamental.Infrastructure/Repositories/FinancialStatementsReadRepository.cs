@@ -61,8 +61,9 @@ public class FinancialStatementsReadRepository : IFinancialStatementsReadReposit
                 Asset = (CodalMoney)x.Asset,
                 OwnersEquity = (CodalMoney)x.OwnersEquity,
                 Receivables = (CodalMoney)x.Receivables,
-                CreatedAt = x.CreatedAt
+                CreatedAt = x.CreatedAt,
+                UpdatedAt = x.UpdatedAt
             })
-            .ToPagingListAsync(request, "CreatedAt desc", cancellationToken);
+            .ToPagingListAsync(request, "UpdatedAt desc", cancellationToken);
     }
 }

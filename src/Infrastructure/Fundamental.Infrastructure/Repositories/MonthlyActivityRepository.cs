@@ -56,8 +56,9 @@ public class MonthlyActivityRepository : IMonthlyActivityRepository
                 SaleLastYear = (CodalMoney)x.SaleLastYear,
                 HasSubCompanySale = x.HasSubCompanySale,
                 TraceNo = x.TraceNo,
-                CreatedAt = x.CreatedAt
+                CreatedAt = x.CreatedAt,
+                UpdatedAt = x.UpdatedAt
             })
-            .ToPagingListAsync(request, "CreatedAt desc", cancellationToken);
+            .ToPagingListAsync(request, "UpdatedAt desc", cancellationToken);
     }
 }

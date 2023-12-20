@@ -37,6 +37,7 @@ public class MonthlyActivity : BaseEntity<Guid>
         SaleLastYear = saleLastYear;
         HasSubCompanySale = hasSubCompanySale;
         CreatedAt = createdAt;
+        UpdatedAt = createdAt;
     }
 
     protected MonthlyActivity()

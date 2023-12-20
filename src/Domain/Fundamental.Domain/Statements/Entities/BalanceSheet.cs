@@ -39,6 +39,7 @@ public class BalanceSheet : BaseEntity<Guid>
         Value = value;
         IsAudited = isAudited;
         CreatedAt = createdAt;
+        UpdatedAt = createdAt;
     }
 
     protected BalanceSheet()
