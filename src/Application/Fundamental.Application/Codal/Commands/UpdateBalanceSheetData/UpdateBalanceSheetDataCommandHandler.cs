@@ -5,10 +5,12 @@ using Fundamental.Application.Codal.Services.Models;
 using Fundamental.Domain.Statements.Enums;
 using Fundamental.ErrorHandling;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Fundamental.Application.Codal.Commands.UpdateBalanceSheetData;
 
-public class UpdateBalanceSheetDataCommandHandler(ICodalService codalService) : IRequestHandler<UpdateBalanceSheetDataRequest, Response>
+public class UpdateBalanceSheetDataCommandHandler(ICodalService codalService, ILogger<UpdateBalanceSheetDataCommandHandler> logger)
+    : IRequestHandler<UpdateBalanceSheetDataRequest, Response>
 {
     public async Task<Response> Handle(UpdateBalanceSheetDataRequest request, CancellationToken cancellationToken)
     {
@@ -27,7 +29,7 @@ public class UpdateBalanceSheetDataCommandHandler(ICodalService codalService) : 
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                logger.LogError(e, "Error processing balanceSheets codal for {@Model}", balanceSheet);
             }
         }
 
