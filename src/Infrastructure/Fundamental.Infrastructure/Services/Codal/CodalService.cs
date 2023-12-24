@@ -49,44 +49,36 @@ public class CodalService(
 
     public async Task ProcessCodal(GetStatementResponse statement, LetterPart letterPart, CancellationToken cancellationToken = default)
     {
-        try
+        HttpResponseMessage response =
+            await _mdpClient.GetAsync(
+                requestUri: new StringBuilder()
+                    .Append(_mdpOption.StatementJson)
+                    .Append('/')
+                    .Append(statement.TracingNo).ToString(),
+                cancellationToken: cancellationToken);
+
+        if (!response.IsSuccessStatusCode)
         {
-            HttpResponseMessage response =
-                await _mdpClient.GetAsync(
-                    requestUri: new StringBuilder()
-                        .Append(_mdpOption.StatementJson)
-                        .Append('/')
-                        .Append(statement.TracingNo).ToString(),
-                    cancellationToken: cancellationToken);
-
-            if (!response.IsSuccessStatusCode)
-            {
-                logger.LogError(message: "Failed to get statement json for trace no {@TraceNo}", args: statement.TracingNo);
-                return;
-            }
-
-            GetStatementJsonResponse? jsonData =
-                await response.Content.ReadFromJsonAsync<GetStatementJsonResponse>(cancellationToken: cancellationToken);
-
-            if (jsonData is null)
-            {
-                logger.LogError(message: "Failed to deserialize statement json for trace no {@TraceNo}", args: statement.TracingNo);
-                return;
-            }
-
-            using IServiceScope scope = serviceScopeFactory.CreateScope();
-
-            ICodalProcessorFactory codalProcessorFactory = scope.ServiceProvider.GetRequiredService<ICodalProcessorFactory>();
-
-            ICodalProcessor processor =
-                codalProcessorFactory.GetCodalProcessor(jsonData.Json, statement.ReportingType, statement.Type, letterPart);
-
-            await processor.Process(statement, jsonData, cancellationToken);
+            logger.LogError(message: "Failed to get statement json for trace no {@TraceNo}", args: statement.TracingNo);
+            return;
         }
-        catch (Exception e)
+
+        GetStatementJsonResponse? jsonData =
+            await response.Content.ReadFromJsonAsync<GetStatementJsonResponse>(cancellationToken: cancellationToken);
+
+        if (jsonData is null)
         {
-            Console.WriteLine(e);
-            throw;
+            logger.LogError(message: "Failed to deserialize statement json for trace no {@TraceNo}", args: statement.TracingNo);
+            return;
         }
+
+        using IServiceScope scope = serviceScopeFactory.CreateScope();
+
+        ICodalProcessorFactory codalProcessorFactory = scope.ServiceProvider.GetRequiredService<ICodalProcessorFactory>();
+
+        ICodalProcessor processor =
+            codalProcessorFactory.GetCodalProcessor(jsonData.Json, statement.ReportingType, statement.Type, letterPart);
+
+        await processor.Process(statement, jsonData, cancellationToken);
     }
 }

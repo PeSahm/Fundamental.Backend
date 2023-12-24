@@ -30,6 +30,8 @@ public class FundamentalDbContext : DbContext, IUnitOfWork
 
     public DbSet<IncomeStatement> IncomeStatements { get; set; }
 
+    public DbSet<NonOperationIncomeAndExpense> NonOperationIncomeAndExpenses { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(

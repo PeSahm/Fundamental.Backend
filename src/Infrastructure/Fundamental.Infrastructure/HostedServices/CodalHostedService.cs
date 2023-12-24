@@ -1,6 +1,7 @@
 ﻿using Fundamental.Application.Codal.Commands.UpdateBalanceSheetData;
 using Fundamental.Application.Codal.Commands.UpdateIncomeStatementData;
 using Fundamental.Application.Codal.Commands.UpdateMonthlyActivityData;
+using Fundamental.Application.Codal.Commands.UpdateNonOperationIncomeAndExpenseData;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -20,6 +21,7 @@ public class CodalHostedService(ILogger<CodalHostedService> logger, IServiceScop
             logger.LogInformation("MonthlyActivityHostedService is starting");
             using IServiceScope scope = serviceScopeFactory.CreateScope();
             IMediator mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+            await mediator.Send(new UpdateNonOperationIncomeAndExpensesDataRequest(-7), stoppingToken);
             await mediator.Send(new UpdateIncomeStatementDataRequest(-7), stoppingToken);
             await mediator.Send(new UpdateBalanceSheetDataRequest(-7), stoppingToken);
             await mediator.Send(new UpdateMonthlyActivityDataRequest(-7), stoppingToken);

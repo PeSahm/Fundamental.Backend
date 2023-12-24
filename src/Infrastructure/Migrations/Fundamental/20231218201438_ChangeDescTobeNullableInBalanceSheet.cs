@@ -1,11 +1,14 @@
 ﻿#nullable disable
 
+using Fundamental.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Fundamental.Migrations.Fundamental
 {
-    /// <inheritdoc />
-    public partial class ChangeDescTobeNullableInBalanceSheet : Migration
+    [DbContext(typeof(FundamentalDbContext))]
+    [Migration("20231218201438_ChangeDescTobeNullableInBalanceSheet")]
+    public class ChangeDescTobeNullableInBalanceSheet : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

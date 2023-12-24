@@ -7,15 +7,14 @@ using Fundamental.ErrorHandling;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Fundamental.Application.Codal.Commands.UpdateIncomeStatementData;
+namespace Fundamental.Application.Codal.Commands.UpdateNonOperationIncomeAndExpenseData;
 
-public sealed class UpdateIncomeStatementDataCommandHandler(
+public class UpdateNonOperationIncomeAndExpensesDataCommandHandler(
     ICodalService codalService,
-    ILogger<UpdateIncomeStatementDataCommandHandler> logger
-)
-    : IRequestHandler<UpdateIncomeStatementDataRequest, Response>
+    ILogger<UpdateNonOperationIncomeAndExpensesDataCommandHandler> logger
+) : IRequestHandler<UpdateNonOperationIncomeAndExpensesDataRequest, Response>
 {
-    public async Task<Response> Handle(UpdateIncomeStatementDataRequest request, CancellationToken cancellationToken)
+    public async Task<Response> Handle(UpdateNonOperationIncomeAndExpensesDataRequest request, CancellationToken cancellationToken)
     {
         List<GetStatementResponse> statements =
             await codalService.GetStatements(
@@ -24,15 +23,15 @@ public sealed class UpdateIncomeStatementDataCommandHandler(
                 LetterType.InterimStatement,
                 cancellationToken);
 
-        foreach (GetStatementResponse incomeStatement in statements)
+        foreach (GetStatementResponse nonOperationIncomeAndExpenses in statements)
         {
             try
             {
-                await codalService.ProcessCodal(incomeStatement, LetterPart.IncomeStatement, cancellationToken);
+                await codalService.ProcessCodal(nonOperationIncomeAndExpenses, LetterPart.NonOperationIncomeAndExpenses, cancellationToken);
             }
             catch (Exception e)
             {
-                logger.LogError(e, "Error processing IncomeStatement codal for {@Model}", incomeStatement);
+                logger.LogError(e, "Error processing NonOperationIncomeAndExpenses codal for {@Model}", nonOperationIncomeAndExpenses);
             }
         }
 
