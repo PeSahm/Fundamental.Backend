@@ -8,6 +8,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
       <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.0" />
       <PackageReference Include="Serilog.Sinks.Seq" Version="6.0.0"/>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0"/>
@@ -20,6 +24,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\BuildingBlock\ErrorHandling.AspNetCore\ErrorHandling.AspNetCore.csproj" />
       <ProjectReference Include="..\..\Infrastructure\Fundamental.Infrastructure\Fundamental.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\Infrastructure\Migrations\Migrations.csproj"/>
       <ProjectReference Include="..\Web.Common\Web.Common.csproj" />
     </ItemGroup>
     <ItemGroup>
