@@ -33,6 +33,8 @@ public class FundamentalDbContext : DbContext, IUnitOfWork
 
     public DbSet<BalanceSheetSort> CodalRowOrders { get; set; }
 
+    public DbSet<IncomeStatementSort> IncomeStatementSorts { get; set; }
+
     public DbSet<NonOperationIncomeAndExpense> NonOperationIncomeAndExpenses { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

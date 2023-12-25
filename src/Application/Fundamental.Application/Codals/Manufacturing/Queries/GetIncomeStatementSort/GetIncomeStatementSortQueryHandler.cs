@@ -1,0 +1,22 @@
+﻿using Fundamental.Application.Codals.Manufacturing.Specifications;
+using Fundamental.Domain.Codals.Manufacturing.Entities;
+using Fundamental.Domain.Repositories.Base;
+using Fundamental.ErrorHandling;
+using MediatR;
+
+namespace Fundamental.Application.Codals.Manufacturing.Queries.GetIncomeStatementSort;
+
+public sealed class GetIncomeStatementSortQueryHandler(IRepository<IncomeStatementSort> repository)
+    : IRequestHandler<GetIncomeStatementSortRequest, Response<List<GetIncomeStatementSortResultDto>>>
+{
+    public async Task<Response<List<GetIncomeStatementSortResultDto>>> Handle(
+        GetIncomeStatementSortRequest request,
+        CancellationToken cancellationToken
+    )
+    {
+        List<GetIncomeStatementSortResultDto> rows =
+            await repository.ListAsync(IncomeStatementSortSpec.GetValidSpecifications(), cancellationToken);
+
+        return rows;
+    }
+}

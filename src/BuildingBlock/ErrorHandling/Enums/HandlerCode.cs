@@ -11,6 +11,8 @@ public enum HandlerCode : ushort
     UpdateIncomeStatementData = 13_197,
     UpdateBalanceSheetData = 13_198,
     UpdateMonthlyActivityData = 13_199,
+
+    GetIncomeStatementSortList = 13_388,
     GetBalanceSheetSortList = 13_389,
     GetBalanceSheet = 13_390,
     AddBalanceSheet = 13_391,
