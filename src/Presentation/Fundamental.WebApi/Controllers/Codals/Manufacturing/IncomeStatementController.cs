@@ -1,4 +1,5 @@
 ﻿using ErrorHandling.AspNetCore;
+using Fundamental.Application.Codals.Manufacturing.Commands.AddIncomeStatement;
 using Fundamental.Application.Codals.Manufacturing.Queries.GetIncomeStatements;
 using Fundamental.Domain.Common.Dto;
 using Fundamental.ErrorHandling;
@@ -14,6 +15,12 @@ namespace Fundamental.WebApi.Controllers.Codals.Manufacturing;
 [Area("Manufacturing")]
 public class IncomeStatementController(ISender mediator) : ControllerBase
 {
+    [HttpPost]
+    public async Task<Response> AddIncomeStatement([FromBody] AddIncomeStatementRequest request)
+    {
+        return await mediator.Send(request);
+    }
+
     [HttpGet]
     public async Task<Response<Paginated<GetIncomeStatementsResultDto>>> GetIncomeStatement([FromQuery] GetIncomeStatementsRequest request)
     {
