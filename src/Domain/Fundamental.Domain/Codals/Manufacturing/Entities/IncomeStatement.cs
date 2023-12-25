@@ -18,7 +18,6 @@ public class IncomeStatement : BaseEntity<Guid>
         StatementMonth reportMonth,
         ushort row,
         ushort codalRow,
-        ushort codalCategory,
         string? description,
         CodalMoney value,
         bool isAudited,
@@ -33,7 +32,6 @@ public class IncomeStatement : BaseEntity<Guid>
         YearEndMonth = yearEndMonth;
         ReportMonth = reportMonth;
         Row = row;
-        CodalCategory = codalCategory;
         CodalRow = codalRow;
         Description = description;
         Value = value;
