@@ -16,9 +16,9 @@ public class IncomeStatement : BaseEntity<Guid>
         FiscalYear fiscalYear,
         StatementMonth yearEndMonth,
         StatementMonth reportMonth,
-        int row,
-        int codalRow,
-        int codalCategory,
+        ushort row,
+        ushort codalRow,
+        ushort codalCategory,
         string? description,
         CodalMoney value,
         bool isAudited,
@@ -60,11 +60,11 @@ public class IncomeStatement : BaseEntity<Guid>
 
     public StatementMonth ReportMonth { get; private set; }
 
-    public int Row { get; private set; }
+    public ushort Row { get; private set; }
 
-    public int CodalRow { get; private set; }
+    public ushort CodalRow { get; private set; }
 
-    public int CodalCategory { get; set; }
+    public ushort CodalCategory { get; set; }
     public string? Description { get; private set; }
 
     public SignedMoney Value { get; private set; }
@@ -78,7 +78,7 @@ public class IncomeStatement : BaseEntity<Guid>
         FiscalYear fiscalYear,
         StatementMonth yearEndMonth,
         StatementMonth reportMonth,
-        int row,
+        ushort row,
         string description,
         CodalMoney value,
         bool isAudited,

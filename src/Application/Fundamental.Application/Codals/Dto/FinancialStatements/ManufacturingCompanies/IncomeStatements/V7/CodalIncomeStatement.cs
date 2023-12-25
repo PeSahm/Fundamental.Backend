@@ -27,7 +27,7 @@ public class IncomeStatementDto
 
     public void AddCustomRowItems()
     {
-        int row = 1;
+        ushort row = 1;
 
         foreach (RowItem rowItem in RowItems)
         {
@@ -80,13 +80,13 @@ public class RootCodalIncomeStatement
 public class RowItem
 {
     [JsonProperty("rowCode")]
-    public int RowCode { get; set; }
+    public ushort RowCode { get; set; }
 
     [JsonProperty("oldFieldName")]
     public string OldFieldName { get; set; }
 
     [JsonProperty("category")]
-    public int Category { get; set; }
+    public ushort Category { get; set; }
 
     [JsonProperty("rowType")]
     public string RowType { get; set; }
@@ -109,7 +109,7 @@ public class RowItem
     [JsonProperty("value_9411")]
     public string Value9411 { get; set; }
 
-    public int RowNumber { get; set; }
+    public ushort RowNumber { get; set; }
 
     public string? GetDescription()
     {

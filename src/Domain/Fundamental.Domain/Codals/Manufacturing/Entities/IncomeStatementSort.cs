@@ -8,25 +8,24 @@ using Fundamental.Domain.Common.Exceptions;
 
 namespace Fundamental.Domain.Codals.Manufacturing.Entities;
 
-public sealed class BalanceSheetSort : BaseEntity<Guid>
+public sealed class IncomeStatementSort : BaseEntity<Guid>
 {
-    public BalanceSheetSort(
+    public IncomeStatementSort(
         Guid id,
         ushort order,
         ushort codalRow,
-        BalanceSheetCategory category,
+        string description,
         DateTime createdAt
     )
     {
         Id = id;
         Order = order;
-        Category = category;
         SetCodaRow(codalRow);
-        Description = GetDescription(codalRow, category);
+        Description = description;
         CreatedAt = createdAt;
     }
 
-    private BalanceSheetSort()
+    private IncomeStatementSort()
     {
     }
 
@@ -36,11 +35,9 @@ public sealed class BalanceSheetSort : BaseEntity<Guid>
 
     public string Description { get; private set; }
 
-    public BalanceSheetCategory Category { get; private set; }
-
     public static bool CheckCodalRow(ushort codalRow)
     {
-        foreach (PropertyInfo property in typeof(BalanceSheetRow).GetProperties())
+        foreach (PropertyInfo property in typeof(IncomeStatementRow).GetProperties())
         {
             if ((ushort)(property.GetValue(null) ?? 0) == codalRow)
             {
@@ -51,24 +48,24 @@ public sealed class BalanceSheetSort : BaseEntity<Guid>
         return false;
     }
 
-    public static string GetDescription(ushort value, BalanceSheetCategory category)
+    public static string GetDescription(ushort value, ushort row)
     {
-        foreach (PropertyInfo property in typeof(BalanceSheetRow).GetProperties())
+        foreach (PropertyInfo property in typeof(IncomeStatementRow).GetProperties())
         {
+            IncomeStatementRowAttribute? rowAttr = property.GetCustomAttribute<IncomeStatementRowAttribute>();
+
+            if (rowAttr is null)
+            {
+                continue;
+            }
+
+            if (rowAttr.Row != row)
+            {
+                continue;
+            }
+
             if ((ushort)(property.GetValue(null) ?? 0) == value)
             {
-                BalanceSheetCategoryAttribute? categoryAttribute = property.GetCustomAttribute<BalanceSheetCategoryAttribute>();
-
-                if (categoryAttribute is null)
-                {
-                    continue;
-                }
-
-                if (categoryAttribute.BalanceSheetCategory != category)
-                {
-                    continue;
-                }
-
                 DescriptionAttribute? attr = property.GetCustomAttribute<DescriptionAttribute>();
 
                 return attr?.Description.ApplyCorrectYeKe() ?? string.Empty;
@@ -82,7 +79,7 @@ public sealed class BalanceSheetSort : BaseEntity<Guid>
     {
         if (!CheckCodalRow(codalRow))
         {
-            throw new InvalidBalanceSheetRowCodeException(codalRow);
+            throw new InvalidIncomeStatementRowCodeException(codalRow);
         }
 
         CodalRow = codalRow;

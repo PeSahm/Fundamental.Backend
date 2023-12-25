@@ -55,4 +55,7 @@ public enum CommonErrorCode
 
     [ErrorType(BackendErrorType.BusinessLogic)]
     InvalidCodalBalanceSheetRow = 808,
+
+    [ErrorType(BackendErrorType.BusinessLogic)]
+    InvalidCodalIncomeStatementRow = 809,
 }
