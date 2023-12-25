@@ -1,25 +1,19 @@
-﻿using Fundamental.Application.Codal.Options;
-using Fundamental.Application.Codal.Services;
+﻿using Fundamental.Application.Codals.Options;
+using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Common.PipelineBehaviors;
 using Fundamental.Application.Common.Validators;
 using Fundamental.Application.Services;
-using Fundamental.Application.Statements.Repositories;
 using Fundamental.Application.Symbols.Queries.GetSymbols;
 using Fundamental.Application.Symbols.Repositories;
 using Fundamental.Application.Utilities.Services;
 using Fundamental.Domain.Repositories.Base;
-using Fundamental.Infrastructure.HostedServices;
+using Fundamental.Infrastructure.Extensions.Codals.Manufacturing;
 using Fundamental.Infrastructure.Persistence;
 using Fundamental.Infrastructure.Persistence.Repositories.Base;
 using Fundamental.Infrastructure.Repositories;
 using Fundamental.Infrastructure.Services;
-using Fundamental.Infrastructure.Services.Codal;
-using Fundamental.Infrastructure.Services.Codal.Detectors;
-using Fundamental.Infrastructure.Services.Codal.Factories;
-using Fundamental.Infrastructure.Services.Codal.Processors.BalanceSheets;
-using Fundamental.Infrastructure.Services.Codal.Processors.IncomeStatements;
-using Fundamental.Infrastructure.Services.Codal.Processors.InterpretativeReportSummaryPages5;
-using Fundamental.Infrastructure.Services.Codal.Processors.MonthlyActivities;
+using Fundamental.Infrastructure.Services.Codals;
+using Fundamental.Infrastructure.Services.Codals.Factories;
 using Fundamental.Infrastructure.Validators;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -33,15 +27,7 @@ public static class ServicesConfigurationExtensions
     {
         serviceCollection.AddScoped<ICodalVersionDetectorFactory, CodalVersionDetectorFactory>();
         serviceCollection.AddScoped<ICodalProcessorFactory, CodalProcessorFactory>();
-        serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, MonthlyActivityDetector>();
-        serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, BalanceSheetDetector>();
-        serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, IncomeStatementDetector>();
-        serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, NonOperationIncomeAndExpensesDetector>();
-
-        serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, MonthlyActivityV4Processor>();
-        serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, BalanceSheetV5Processor>();
-        serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, IncomeStatementsV7Processor>();
-        serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, NonOperationIncomeAndExpensesV2Processor>();
+        serviceCollection.AddManufacturingCodalServices();
     }
 
     public static void AddServices(this WebApplicationBuilder builder)
@@ -69,10 +55,8 @@ public static class ServicesConfigurationExtensions
 
     public static void AddReadRepositories(this WebApplicationBuilder builder)
     {
-        builder.Services.AddScoped<IFinancialStatementsReadRepository, FinancialStatementsReadRepository>();
-        builder.Services.AddScoped<IMonthlyActivityRepository, MonthlyActivityRepository>();
         builder.Services.AddScoped<ISymbolRelationRepository, SymbolRelationRepository>();
-        builder.Services.AddScoped<IBalanceSheetReadRepository, BalanceSheetReadRepository>();
+        builder.AddManufacturingReadRepositories();
     }
 
     public static IServiceCollection AddPartialOptions<TOptions>(
@@ -88,6 +72,6 @@ public static class ServicesConfigurationExtensions
 
     public static void AddHostedServices(this IServiceCollection builder)
     {
-        builder.AddHostedService<CodalHostedService>();
+        builder.AddManufacturingHostedServices();
     }
 }
