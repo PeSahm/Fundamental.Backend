@@ -39,6 +39,7 @@ public sealed class NonOperationIncomeAndExpense : BaseEntity<Guid>
         PreviousPeriod = previousPeriod;
         ForecastPeriod = forecastPeriod;
         CreatedAt = createdAt;
+        UpdatedAt = createdAt;
     }
 
     private NonOperationIncomeAndExpense()

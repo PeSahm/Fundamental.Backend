@@ -72,11 +72,17 @@ public class BalanceSheetConfiguration : EntityTypeConfigurationBase<BalanceShee
                     .UseCurrencyColumn();
             });
 
-        builder.Property(x => x.Row).IsRequired();
+        builder.Property(x => x.Row)
+            .HasColumnType("SMALLINT")
+            .IsRequired();
 
-        builder.Property(x => x.CodalRow).IsRequired();
+        builder.Property(x => x.CodalRow)
+            .HasColumnType("SMALLINT")
+            .IsRequired();
 
-        builder.Property(x => x.CodalCategory).IsRequired();
+        builder.Property(x => x.CodalCategory)
+            .HasColumnType("SMALLINT")
+            .IsRequired();
 
         builder.Property(x => x.Description).HasMaxLength(256).IsRequired(false);
 

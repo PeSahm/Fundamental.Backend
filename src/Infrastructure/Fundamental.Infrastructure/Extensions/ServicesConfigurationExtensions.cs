@@ -72,6 +72,7 @@ public static class ServicesConfigurationExtensions
         builder.Services.AddScoped<IFinancialStatementsReadRepository, FinancialStatementsReadRepository>();
         builder.Services.AddScoped<IMonthlyActivityRepository, MonthlyActivityRepository>();
         builder.Services.AddScoped<ISymbolRelationRepository, SymbolRelationRepository>();
+        builder.Services.AddScoped<IBalanceSheetReadRepository, BalanceSheetReadRepository>();
     }
 
     public static IServiceCollection AddPartialOptions<TOptions>(

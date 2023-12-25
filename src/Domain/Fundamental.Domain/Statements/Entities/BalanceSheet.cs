@@ -1,4 +1,5 @@
-﻿using Fundamental.Domain.Common.BaseTypes;
+﻿using Fundamental.Domain.Codals.Enums;
+using Fundamental.Domain.Common.BaseTypes;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Common.ValueObjects;
 using Fundamental.Domain.Statements.ValueObjects;
@@ -16,9 +17,9 @@ public class BalanceSheet : BaseEntity<Guid>
         FiscalYear fiscalYear,
         StatementMonth yearEndMonth,
         StatementMonth reportMonth,
-        int row,
-        int codalRow,
-        int codalCategory,
+        ushort row,
+        ushort codalRow,
+        BalanceSheetCategory codalCategory,
         string? description,
         CodalMoney value,
         bool isAudited,
@@ -60,11 +61,11 @@ public class BalanceSheet : BaseEntity<Guid>
 
     public StatementMonth ReportMonth { get; private set; }
 
-    public int Row { get; private set; }
+    public ushort Row { get; private set; }
 
-    public int CodalRow { get; private set; }
+    public ushort CodalRow { get; private set; }
 
-    public int CodalCategory { get; set; }
+    public BalanceSheetCategory CodalCategory { get; set; }
 
     public string? Description { get; private set; }
 
@@ -79,7 +80,7 @@ public class BalanceSheet : BaseEntity<Guid>
         FiscalYear fiscalYear,
         StatementMonth yearEndMonth,
         StatementMonth reportMonth,
-        int row,
+        ushort row,
         string description,
         CodalMoney value,
         bool isAudited,

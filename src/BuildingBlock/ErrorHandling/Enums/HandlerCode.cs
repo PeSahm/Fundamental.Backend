@@ -7,10 +7,14 @@ public enum HandlerCode : ushort
     GetSymbolRelations = 11_398,
     AddSymbolRelationship = 11_399,
 
+    GetBalanceSheetSortList = 12_399,
+
     UpdateNonOperationIncomeAndExpenses = 13_196,
     UpdateIncomeStatementData = 13_197,
     UpdateBalanceSheetData = 13_198,
     UpdateMonthlyActivityData = 13_199,
+    GetBalanceSheet = 13_390,
+    AddBalanceSheet = 13_391,
     UpdateMonthlyActivity = 13_392,
     UpdateFinancialStatement = 13_393,
     GetMonthlyActivityById = 13_394,

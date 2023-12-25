@@ -149,14 +149,14 @@ public class RowItem
     public decimal GetValue(SaleColumnId columnId)
     {
         string propertyName = $"Value{(int)columnId}";
-        object? thisValue = Array.Find(GetType().GetProperties(), info => info.Name == propertyName);
+        object? thisValue = Array.Find(GetType().GetProperties(), info => info.Name == propertyName)?.GetValue(this);
 
         if (thisValue is null)
         {
             return 0;
         }
 
-        return decimal.Parse(thisValue.ToString() ?? "0");
+        return decimal.TryParse(thisValue.ToString(), out decimal res) ? res : 0;
     }
 }
 

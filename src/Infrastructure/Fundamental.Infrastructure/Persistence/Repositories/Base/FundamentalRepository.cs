@@ -1,10 +1,4 @@
 ﻿namespace Fundamental.Infrastructure.Persistence.Repositories.Base;
 
-public class FundamentalRepository<TEntity> : Repository<TEntity>
-    where TEntity : class
-{
-    public FundamentalRepository(FundamentalDbContext context)
-        : base(context)
-    {
-    }
-}
+public class FundamentalRepository<TEntity>(FundamentalDbContext context) : Repository<TEntity>(context)
+    where TEntity : class;
