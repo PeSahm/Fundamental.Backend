@@ -8,7 +8,7 @@ public class IncomeStatementConfiguration : EntityTypeConfigurationBase<IncomeSt
 {
     protected override void ExtraConfigure(EntityTypeBuilder<IncomeStatement> builder)
     {
-        builder.ToTable("IncomeStatement", "manufacturing");
+        builder.ToTable("IncomeStatement", "fs");
 
         builder.HasOne(x => x.Symbol)
             .WithMany()
