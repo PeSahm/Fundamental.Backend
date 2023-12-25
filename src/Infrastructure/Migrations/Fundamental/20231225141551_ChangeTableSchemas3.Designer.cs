@@ -13,8 +13,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fundamental.Migrations.Fundamental
 {
     [DbContext(typeof(FundamentalDbContext))]
-    [Migration("20231225140721_ChangeTableSchemas2")]
-    partial class ChangeTableSchemas2
+    [Migration("20231225141551_ChangeTableSchemas3")]
+    partial class ChangeTableSchemas3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -231,7 +231,7 @@ namespace Fundamental.Migrations.Fundamental
                     b.HasIndex("Category", "CodalRow")
                         .IsUnique();
 
-                    b.ToTable("BalanceSheetSort", "fundamental");
+                    b.ToTable("BalanceSheetSort", "manufacturing");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.IncomeStatement", b =>

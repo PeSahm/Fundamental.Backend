@@ -228,7 +228,7 @@ namespace Fundamental.Migrations.Fundamental
                     b.HasIndex("Category", "CodalRow")
                         .IsUnique();
 
-                    b.ToTable("BalanceSheetSort", "fundamental");
+                    b.ToTable("BalanceSheetSort", "manufacturing");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.IncomeStatement", b =>
