@@ -228,7 +228,7 @@ namespace Fundamental.Migrations.Fundamental
                     b.HasIndex("Category", "CodalRow")
                         .IsUnique();
 
-                    b.ToTable("BalanceSheet", "sort");
+                    b.ToTable("BalanceSheetSort", "fundamental");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.IncomeStatement", b =>
@@ -823,7 +823,7 @@ namespace Fundamental.Migrations.Fundamental
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("Fundamental.Domain.Codals.FinancialStatement.Asset#Fundamental.Domain.Common.ValueObjects.Money", "Asset", b1 =>
+                    b.OwnsOne("Fundamental.Domain.Common.ValueObjects.Money", "Asset", b1 =>
                         {
                             b1.Property<long>("FinancialStatement_id")
                                 .HasColumnType("bigint");
@@ -847,7 +847,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasForeignKey("FinancialStatement_id");
                         });
 
-                    b.OwnsOne("Fundamental.Domain.Codals.FinancialStatement.BankInterestIncome#Fundamental.Domain.Common.ValueObjects.Money", "BankInterestIncome", b1 =>
+                    b.OwnsOne("Fundamental.Domain.Common.ValueObjects.Money", "BankInterestIncome", b1 =>
                         {
                             b1.Property<long>("FinancialStatement_id")
                                 .HasColumnType("bigint");
@@ -871,7 +871,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasForeignKey("FinancialStatement_id");
                         });
 
-                    b.OwnsOne("Fundamental.Domain.Codals.FinancialStatement.Expense#Fundamental.Domain.Common.ValueObjects.Money", "Expense", b1 =>
+                    b.OwnsOne("Fundamental.Domain.Common.ValueObjects.Money", "Expense", b1 =>
                         {
                             b1.Property<long>("FinancialStatement_id")
                                 .HasColumnType("bigint");
@@ -895,7 +895,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasForeignKey("FinancialStatement_id");
                         });
 
-                    b.OwnsOne("Fundamental.Domain.Codals.FinancialStatement.GrossProfit#Fundamental.Domain.Common.ValueObjects.SignedMoney", "GrossProfit", b1 =>
+                    b.OwnsOne("Fundamental.Domain.Common.ValueObjects.SignedMoney", "GrossProfit", b1 =>
                         {
                             b1.Property<long>("FinancialStatement_id")
                                 .HasColumnType("bigint");
@@ -919,7 +919,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasForeignKey("FinancialStatement_id");
                         });
 
-                    b.OwnsOne("Fundamental.Domain.Codals.FinancialStatement.InvestmentIncome#Fundamental.Domain.Common.ValueObjects.SignedMoney", "InvestmentIncome", b1 =>
+                    b.OwnsOne("Fundamental.Domain.Common.ValueObjects.SignedMoney", "InvestmentIncome", b1 =>
                         {
                             b1.Property<long>("FinancialStatement_id")
                                 .HasColumnType("bigint");
@@ -943,7 +943,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasForeignKey("FinancialStatement_id");
                         });
 
-                    b.OwnsOne("Fundamental.Domain.Codals.FinancialStatement.NetProfit#Fundamental.Domain.Common.ValueObjects.Money", "NetProfit", b1 =>
+                    b.OwnsOne("Fundamental.Domain.Common.ValueObjects.Money", "NetProfit", b1 =>
                         {
                             b1.Property<long>("FinancialStatement_id")
                                 .HasColumnType("bigint");
@@ -967,7 +967,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasForeignKey("FinancialStatement_id");
                         });
 
-                    b.OwnsOne("Fundamental.Domain.Codals.FinancialStatement.OperatingIncome#Fundamental.Domain.Common.ValueObjects.Money", "OperatingIncome", b1 =>
+                    b.OwnsOne("Fundamental.Domain.Common.ValueObjects.Money", "OperatingIncome", b1 =>
                         {
                             b1.Property<long>("FinancialStatement_id")
                                 .HasColumnType("bigint");
@@ -991,7 +991,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasForeignKey("FinancialStatement_id");
                         });
 
-                    b.OwnsOne("Fundamental.Domain.Codals.FinancialStatement.OperatingProfit#Fundamental.Domain.Common.ValueObjects.SignedMoney", "OperatingProfit", b1 =>
+                    b.OwnsOne("Fundamental.Domain.Common.ValueObjects.SignedMoney", "OperatingProfit", b1 =>
                         {
                             b1.Property<long>("FinancialStatement_id")
                                 .HasColumnType("bigint");
@@ -1015,7 +1015,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasForeignKey("FinancialStatement_id");
                         });
 
-                    b.OwnsOne("Fundamental.Domain.Codals.FinancialStatement.OwnersEquity#Fundamental.Domain.Common.ValueObjects.Money", "OwnersEquity", b1 =>
+                    b.OwnsOne("Fundamental.Domain.Common.ValueObjects.Money", "OwnersEquity", b1 =>
                         {
                             b1.Property<long>("FinancialStatement_id")
                                 .HasColumnType("bigint");
@@ -1039,7 +1039,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasForeignKey("FinancialStatement_id");
                         });
 
-                    b.OwnsOne("Fundamental.Domain.Codals.FinancialStatement.Receivables#Fundamental.Domain.Common.ValueObjects.Money", "Receivables", b1 =>
+                    b.OwnsOne("Fundamental.Domain.Common.ValueObjects.Money", "Receivables", b1 =>
                         {
                             b1.Property<long>("FinancialStatement_id")
                                 .HasColumnType("bigint");
@@ -1063,7 +1063,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasForeignKey("FinancialStatement_id");
                         });
 
-                    b.OwnsOne("Fundamental.Domain.Codals.FinancialStatement.ReportMonth#Fundamental.Domain.Codals.ValueObjects.StatementMonth", "ReportMonth", b1 =>
+                    b.OwnsOne("Fundamental.Domain.Codals.ValueObjects.StatementMonth", "ReportMonth", b1 =>
                         {
                             b1.Property<long>("FinancialStatement_id")
                                 .HasColumnType("bigint");
@@ -1080,7 +1080,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasForeignKey("FinancialStatement_id");
                         });
 
-                    b.OwnsOne("Fundamental.Domain.Codals.FinancialStatement.YearEndMonth#Fundamental.Domain.Codals.ValueObjects.StatementMonth", "YearEndMonth", b1 =>
+                    b.OwnsOne("Fundamental.Domain.Codals.ValueObjects.StatementMonth", "YearEndMonth", b1 =>
                         {
                             b1.Property<long>("FinancialStatement_id")
                                 .HasColumnType("bigint");
@@ -1144,7 +1144,7 @@ namespace Fundamental.Migrations.Fundamental
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("Fundamental.Domain.Codals.Manufacturing.Entities.BalanceSheet.ReportMonth#Fundamental.Domain.Codals.ValueObjects.StatementMonth", "ReportMonth", b1 =>
+                    b.OwnsOne("Fundamental.Domain.Codals.ValueObjects.StatementMonth", "ReportMonth", b1 =>
                         {
                             b1.Property<long>("BalanceSheet_id")
                                 .HasColumnType("bigint");
@@ -1161,7 +1161,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasForeignKey("BalanceSheet_id");
                         });
 
-                    b.OwnsOne("Fundamental.Domain.Codals.Manufacturing.Entities.BalanceSheet.YearEndMonth#Fundamental.Domain.Codals.ValueObjects.StatementMonth", "YearEndMonth", b1 =>
+                    b.OwnsOne("Fundamental.Domain.Codals.ValueObjects.StatementMonth", "YearEndMonth", b1 =>
                         {
                             b1.Property<long>("BalanceSheet_id")
                                 .HasColumnType("bigint");
@@ -1195,7 +1195,7 @@ namespace Fundamental.Migrations.Fundamental
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("Fundamental.Domain.Codals.Manufacturing.Entities.IncomeStatement.ReportMonth#Fundamental.Domain.Codals.ValueObjects.StatementMonth", "ReportMonth", b1 =>
+                    b.OwnsOne("Fundamental.Domain.Codals.ValueObjects.StatementMonth", "ReportMonth", b1 =>
                         {
                             b1.Property<long>("IncomeStatement_id")
                                 .HasColumnType("bigint");
@@ -1212,7 +1212,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasForeignKey("IncomeStatement_id");
                         });
 
-                    b.OwnsOne("Fundamental.Domain.Codals.Manufacturing.Entities.IncomeStatement.YearEndMonth#Fundamental.Domain.Codals.ValueObjects.StatementMonth", "YearEndMonth", b1 =>
+                    b.OwnsOne("Fundamental.Domain.Codals.ValueObjects.StatementMonth", "YearEndMonth", b1 =>
                         {
                             b1.Property<long>("IncomeStatement_id")
                                 .HasColumnType("bigint");
@@ -1257,7 +1257,7 @@ namespace Fundamental.Migrations.Fundamental
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("Fundamental.Domain.Codals.Manufacturing.Entities.NonOperationIncomeAndExpense.ReportMonth#Fundamental.Domain.Codals.ValueObjects.StatementMonth", "ReportMonth", b1 =>
+                    b.OwnsOne("Fundamental.Domain.Codals.ValueObjects.StatementMonth", "ReportMonth", b1 =>
                         {
                             b1.Property<long>("NonOperationIncomeAndExpense_id")
                                 .HasColumnType("bigint");
@@ -1274,7 +1274,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasForeignKey("NonOperationIncomeAndExpense_id");
                         });
 
-                    b.OwnsOne("Fundamental.Domain.Codals.Manufacturing.Entities.NonOperationIncomeAndExpense.YearEndMonth#Fundamental.Domain.Codals.ValueObjects.StatementMonth", "YearEndMonth", b1 =>
+                    b.OwnsOne("Fundamental.Domain.Codals.ValueObjects.StatementMonth", "YearEndMonth", b1 =>
                         {
                             b1.Property<long>("NonOperationIncomeAndExpense_id")
                                 .HasColumnType("bigint");
