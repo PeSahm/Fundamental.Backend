@@ -8,7 +8,7 @@ public class NonOperationIncomeAndExpenseConfiguration : EntityTypeConfiguration
 {
     protected override void ExtraConfigure(EntityTypeBuilder<NonOperationIncomeAndExpense> builder)
     {
-        builder.ToTable("NonOperationIncomeAndExpense", "fs");
+        builder.ToTable("NonOperationIncomeAndExpense", "manufacturing");
 
         builder.HasOne(x => x.Symbol)
             .WithMany()

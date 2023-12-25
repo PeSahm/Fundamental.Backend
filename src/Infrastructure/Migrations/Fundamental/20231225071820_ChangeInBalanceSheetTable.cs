@@ -1,11 +1,14 @@
 ﻿#nullable disable
 
+using Fundamental.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Fundamental.Migrations.Fundamental
 {
-    /// <inheritdoc />
-    public partial class ChangeInBalanceSheetTable : Migration
+    [DbContext(typeof(FundamentalDbContext))]
+    [Migration("20231225071820_ChangeInBalanceSheetTable")]
+    public class ChangeInBalanceSheetTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
