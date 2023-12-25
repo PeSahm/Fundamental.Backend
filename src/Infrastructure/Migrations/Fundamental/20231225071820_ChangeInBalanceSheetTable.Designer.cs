@@ -13,8 +13,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fundamental.Migrations.Fundamental
 {
     [DbContext(typeof(FundamentalDbContext))]
-    [Migration("20231223195921_NoneOperationalIncomeTable")]
-    partial class NoneOperationalIncomeTable
+    [Migration("20231225071820_ChangeInBalanceSheetTable")]
+    partial class ChangeInBalanceSheetTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,6 +25,60 @@ namespace Fundamental.Migrations.Fundamental
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Fundamental.Domain.Codals.Entities.BalanceSheetSort", b =>
+                {
+                    b.Property<long>("_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnOrder(0);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("_id"));
+
+                    b.Property<short>("Category")
+                        .HasColumnType("SMALLINT")
+                        .HasColumnName("Category");
+
+                    b.Property<short>("CodalRow")
+                        .HasColumnType("SMALLINT")
+                        .HasColumnName("CodalRow");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)")
+                        .HasColumnName("Description");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(1);
+
+                    b.Property<short>("Order")
+                        .HasColumnType("SMALLINT")
+                        .HasColumnName("Order");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("ModifiedAt");
+
+                    b.HasKey("_id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("Order")
+                        .IsUnique();
+
+                    b.HasIndex("Category", "CodalRow")
+                        .IsUnique();
+
+                    b.ToTable("BalanceSheet", "sort");
+                });
 
             modelBuilder.Entity("Fundamental.Domain.Prices.Entities.ClosePrice", b =>
                 {
@@ -143,11 +197,11 @@ namespace Fundamental.Migrations.Fundamental
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("_id"));
 
-                    b.Property<int>("CodalCategory")
-                        .HasColumnType("int");
+                    b.Property<short>("CodalCategory")
+                        .HasColumnType("SMALLINT");
 
-                    b.Property<int>("CodalRow")
-                        .HasColumnType("int");
+                    b.Property<short>("CodalRow")
+                        .HasColumnType("SMALLINT");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime")
@@ -173,8 +227,8 @@ namespace Fundamental.Migrations.Fundamental
                     b.Property<bool>("IsAudited")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Row")
-                        .HasColumnType("int");
+                    b.Property<short>("Row")
+                        .HasColumnType("SMALLINT");
 
                     b.Property<long>("SymbolId")
                         .HasColumnType("bigint");

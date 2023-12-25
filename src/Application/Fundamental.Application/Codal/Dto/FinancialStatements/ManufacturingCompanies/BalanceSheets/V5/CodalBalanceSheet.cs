@@ -24,7 +24,7 @@ public class BalanceSheetDto
 
     public void AddCustomRowItems()
     {
-        int row = 1;
+        ushort row = 1;
 
         foreach (RowItem rowItem in RowItems)
         {
@@ -97,7 +97,7 @@ public class RowItem
     [JsonProperty("value_8995")]
     public string Value8995 { get; set; }
 
-    public int RowNumber { get; set; }
+    public ushort RowNumber { get; set; }
 
     public string? GetDescription()
     {

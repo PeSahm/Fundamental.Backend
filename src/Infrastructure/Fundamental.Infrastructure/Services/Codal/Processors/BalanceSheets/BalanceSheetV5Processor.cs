@@ -3,6 +3,7 @@ using Fundamental.Application.Codal.Enums;
 using Fundamental.Application.Codal.Services;
 using Fundamental.Application.Codal.Services.Enums;
 using Fundamental.Application.Codal.Services.Models;
+using Fundamental.Domain.Codals.Enums;
 using Fundamental.Domain.Statements.Entities;
 using Fundamental.Domain.Statements.Enums;
 using Fundamental.Domain.Symbols.Entities;
@@ -98,8 +99,8 @@ public sealed class BalanceSheetV5Processor(IServiceScopeFactory serviceScopeFac
                     yearEndMonth: yearDatum.FiscalMonth!.Value,
                     reportMonth: yearDatum.ReportMonth!.Value,
                     row: rowItem.RowNumber,
-                    (int)rowItem.RowCode,
-                    (int)rowItem.Category,
+                    (ushort)rowItem.RowCode,
+                    rowItem.Category == Category.Assets ? BalanceSheetCategory.Assets : BalanceSheetCategory.Liability,
                     rowItem.GetDescription(),
                     rowItem.GetValue(yearDatum.ColumnId),
                     yearDatum.IsAudited,

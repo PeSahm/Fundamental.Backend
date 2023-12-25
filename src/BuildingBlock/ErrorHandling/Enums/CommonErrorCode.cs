@@ -52,4 +52,7 @@ public enum CommonErrorCode
 
     [ErrorType(BackendErrorType.Security)]
     DifferentRouteAndBodyIds = 807,
+
+    [ErrorType(BackendErrorType.BusinessLogic)]
+    InvalidCodalBalanceSheetRow = 808,
 }
