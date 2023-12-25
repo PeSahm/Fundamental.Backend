@@ -106,7 +106,7 @@ public static class IncomeStatementRow
     [Description("سود (زیان) خالص هر سهم – ریال")]
     [IncomeStatementRow(22)]
 
-    public static ushort EarningsPerShareAfterTax => 21;
+    public static ushort EarningsPerShareAfterTax => 41;
 
     [Description("سرمایه")]
     [IncomeStatementRow(23)]
