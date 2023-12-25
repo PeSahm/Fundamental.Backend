@@ -1,10 +1,10 @@
-﻿using Fundamental.Domain.Common.BaseTypes;
+﻿using Fundamental.Domain.Codals.ValueObjects;
+using Fundamental.Domain.Common.BaseTypes;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Common.ValueObjects;
-using Fundamental.Domain.Statements.ValueObjects;
 using Fundamental.Domain.Symbols.Entities;
 
-namespace Fundamental.Domain.Statements.Entities;
+namespace Fundamental.Domain.Codals;
 
 public class FinancialStatement : BaseEntity<Guid>
 {

@@ -1,8 +1,8 @@
-﻿using Fundamental.Domain.Statements.Entities;
+﻿using Fundamental.Domain.Codals;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Fundamental.Infrastructure.Configuration.Fundamental;
+namespace Fundamental.Infrastructure.Configuration.Fundamental.Codals;
 
 public class FinancialStatementConfiguration : EntityTypeConfigurationBase<FinancialStatement>
 {
