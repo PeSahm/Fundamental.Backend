@@ -1,9 +1,9 @@
 using ErrorHandling.AspNetCore;
+using Fundamental.Application.Codals.Manufacturing.Commands.AddFinancialStatement;
+using Fundamental.Application.Codals.Manufacturing.Commands.UpdateFinancialStatement;
+using Fundamental.Application.Codals.Manufacturing.Queries.GetFinancialStatementById;
+using Fundamental.Application.Codals.Manufacturing.Queries.GetFinancialStatements;
 using Fundamental.Application.Common.Extensions;
-using Fundamental.Application.Statements.Commands.AddFinancialStatement;
-using Fundamental.Application.Statements.Commands.UpdateFinancialStatement;
-using Fundamental.Application.Statements.Queries.GetFinancialStatementById;
-using Fundamental.Application.Statements.Queries.GetFinancialStatements;
 using Fundamental.Domain.Common.Dto;
 using Fundamental.ErrorHandling;
 using Fundamental.ErrorHandling.Enums;

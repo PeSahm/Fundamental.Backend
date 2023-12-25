@@ -1,7 +1,7 @@
-﻿using Fundamental.Application.Codal.Enums;
-using Fundamental.Application.Codal.Services;
-using Fundamental.Application.Codal.Services.Enums;
-using Fundamental.Domain.Statements.Enums;
+﻿using Fundamental.Application.Codals.Enums;
+using Fundamental.Application.Codals.Services;
+using Fundamental.Application.Codals.Services.Enums;
+using Fundamental.Domain.Common.Enums;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Fundamental.Infrastructure.Services;

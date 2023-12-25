@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-using Fundamental.Application.Codal.Dto.MonthlyActivities.V4.Enums;
+using Fundamental.Application.Codals.Dto.MonthlyActivities.V4.Enums;
 
 namespace Fundamental.Infrastructure.Serialization;
 

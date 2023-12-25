@@ -1,4 +1,4 @@
-﻿using Fundamental.Domain.Codals.Enums;
+﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
 
 namespace Fundamental.Domain.Attributes;
 

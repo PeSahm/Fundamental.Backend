@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
-using Fundamental.Domain.Codals.Entities;
+using Fundamental.Domain.Codals;
+using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Repositories.Base;
-using Fundamental.Domain.Statements.Entities;
 using Fundamental.Domain.Symbols.Entities;
 using Fundamental.Infrastructure.Configuration.Fundamental;
 using Microsoft.EntityFrameworkCore;
@@ -30,7 +30,6 @@ public class FundamentalDbContext : DbContext, IUnitOfWork
     public DbSet<BalanceSheet> BalanceSheets { get; set; }
 
     public DbSet<IncomeStatement> IncomeStatements { get; set; }
-
 
     public DbSet<BalanceSheetSort> CodalRowOrders { get; set; }
 

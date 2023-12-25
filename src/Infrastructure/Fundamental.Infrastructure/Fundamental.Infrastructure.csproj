@@ -13,6 +13,7 @@
 
     <ItemGroup>
       <Folder Include="Persistence\Interceptors\" />
+      <Folder Include="Services\Codals\Manufactering\"/>
     </ItemGroup>
     <ItemGroup>
       <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="8.0.0" />
