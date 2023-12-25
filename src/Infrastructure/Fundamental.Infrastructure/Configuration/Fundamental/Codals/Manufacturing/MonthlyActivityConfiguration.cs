@@ -8,7 +8,7 @@ public class MonthlyActivityConfiguration : EntityTypeConfigurationBase<MonthlyA
 {
     protected override void ExtraConfigure(EntityTypeBuilder<MonthlyActivity> builder)
     {
-        builder.ToTable("MonthlyActivities", "fs");
+        builder.ToTable("MonthlyActivities", "manufacturing");
 
         builder.HasOne(x => x.Symbol)
             .WithMany()

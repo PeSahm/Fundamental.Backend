@@ -13,8 +13,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fundamental.Migrations.Fundamental
 {
     [DbContext(typeof(FundamentalDbContext))]
-    [Migration("20231225071820_ChangeInBalanceSheetTable")]
-    partial class ChangeInBalanceSheetTable
+    [Migration("20231225135601_ChangeTableSchemas1")]
+    partial class ChangeTableSchemas1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,7 +26,161 @@ namespace Fundamental.Migrations.Fundamental
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Fundamental.Domain.Codals.Entities.BalanceSheetSort", b =>
+            modelBuilder.Entity("Fundamental.Domain.Codals.FinancialStatement", b =>
+                {
+                    b.Property<long>("_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnOrder(0);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("_id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasMaxLength(3)
+                        .HasColumnType("char(3)")
+                        .HasColumnName("Currency")
+                        .IsFixedLength();
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(1);
+
+                    b.Property<long>("SymbolId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TraceNo")
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("TraceNo");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("ModifiedAt");
+
+                    b.Property<string>("Uri")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(512)")
+                        .HasColumnName("Uri");
+
+                    b.ComplexProperty<Dictionary<string, object>>("FiscalYear", "Fundamental.Domain.Codals.FinancialStatement.FiscalYear#FiscalYear", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<short>("Year")
+                                .HasColumnType("SMALLINT")
+                                .HasColumnName("FiscalYear");
+                        });
+
+                    b.HasKey("_id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("SymbolId");
+
+                    b.ToTable("FinancialStatements", "fs");
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.BalanceSheet", b =>
+                {
+                    b.Property<long>("_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnOrder(0);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("_id"));
+
+                    b.Property<short>("CodalCategory")
+                        .HasColumnType("SMALLINT");
+
+                    b.Property<short>("CodalRow")
+                        .HasColumnType("SMALLINT");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasMaxLength(3)
+                        .HasColumnType("char(3)")
+                        .HasColumnName("Currency")
+                        .IsFixedLength();
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(1);
+
+                    b.Property<bool>("IsAudited")
+                        .HasColumnType("bit");
+
+                    b.Property<short>("Row")
+                        .HasColumnType("SMALLINT");
+
+                    b.Property<long>("SymbolId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TraceNo")
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("TraceNo");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("ModifiedAt");
+
+                    b.Property<string>("Uri")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(512)")
+                        .HasColumnName("Uri");
+
+                    b.ComplexProperty<Dictionary<string, object>>("FiscalYear", "Fundamental.Domain.Codals.Manufacturing.Entities.BalanceSheet.FiscalYear#FiscalYear", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<short>("Year")
+                                .HasColumnType("SMALLINT")
+                                .HasColumnName("FiscalYear");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("Value", "Fundamental.Domain.Codals.Manufacturing.Entities.BalanceSheet.Value#SignedMoney", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("Value");
+                        });
+
+                    b.HasKey("_id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("SymbolId");
+
+                    b.ToTable("BalanceSheet", "manufacturing");
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.BalanceSheetSort", b =>
                 {
                     b.Property<long>("_id")
                         .ValueGeneratedOnAdd()
@@ -78,6 +232,343 @@ namespace Fundamental.Migrations.Fundamental
                         .IsUnique();
 
                     b.ToTable("BalanceSheet", "sort");
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.IncomeStatement", b =>
+                {
+                    b.Property<long>("_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnOrder(0);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("_id"));
+
+                    b.Property<int>("CodalCategory")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CodalRow")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasMaxLength(3)
+                        .HasColumnType("char(3)")
+                        .HasColumnName("Currency")
+                        .IsFixedLength();
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(1);
+
+                    b.Property<bool>("IsAudited")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Row")
+                        .HasColumnType("int");
+
+                    b.Property<long>("SymbolId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TraceNo")
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("TraceNo");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("ModifiedAt");
+
+                    b.Property<string>("Uri")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(512)")
+                        .HasColumnName("Uri");
+
+                    b.ComplexProperty<Dictionary<string, object>>("FiscalYear", "Fundamental.Domain.Codals.Manufacturing.Entities.IncomeStatement.FiscalYear#FiscalYear", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<short>("Year")
+                                .HasColumnType("SMALLINT")
+                                .HasColumnName("FiscalYear");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("Value", "Fundamental.Domain.Codals.Manufacturing.Entities.IncomeStatement.Value#SignedMoney", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("Value");
+                        });
+
+                    b.HasKey("_id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("SymbolId");
+
+                    b.ToTable("IncomeStatement", "manufacturing");
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.MonthlyActivity", b =>
+                {
+                    b.Property<long>("_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnOrder(0);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("_id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasMaxLength(3)
+                        .HasColumnType("char(3)")
+                        .HasColumnName("Currency")
+                        .IsFixedLength();
+
+                    b.Property<bool>("HasSubCompanySale")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(1);
+
+                    b.Property<long>("SymbolId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TraceNo")
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("TraceNo");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("ModifiedAt");
+
+                    b.Property<string>("Uri")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(512)")
+                        .HasColumnName("Uri");
+
+                    b.ComplexProperty<Dictionary<string, object>>("FiscalYear", "Fundamental.Domain.Codals.Manufacturing.Entities.MonthlyActivity.FiscalYear#FiscalYear", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<short>("Year")
+                                .HasColumnType("SMALLINT")
+                                .HasColumnName("FiscalYear");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("ReportMonth", "Fundamental.Domain.Codals.Manufacturing.Entities.MonthlyActivity.ReportMonth#StatementMonth", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<byte>("Month")
+                                .HasColumnType("TINYINT")
+                                .HasColumnName("ReportMonth");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("SaleBeforeCurrentMonth", "Fundamental.Domain.Codals.Manufacturing.Entities.MonthlyActivity.SaleBeforeCurrentMonth#Money", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("SaleBeforeCurrentMonth");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("SaleCurrentMonth", "Fundamental.Domain.Codals.Manufacturing.Entities.MonthlyActivity.SaleCurrentMonth#Money", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("SaleCurrentMonth");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("SaleIncludeCurrentMonth", "Fundamental.Domain.Codals.Manufacturing.Entities.MonthlyActivity.SaleIncludeCurrentMonth#Money", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("SaleIncludeCurrentMonth");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("SaleLastYear", "Fundamental.Domain.Codals.Manufacturing.Entities.MonthlyActivity.SaleLastYear#Money", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("SaleLastYear");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("YearEndMonth", "Fundamental.Domain.Codals.Manufacturing.Entities.MonthlyActivity.YearEndMonth#StatementMonth", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<byte>("Month")
+                                .HasColumnType("TINYINT")
+                                .HasColumnName("YearEndMonth");
+                        });
+
+                    b.HasKey("_id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("SymbolId");
+
+                    b.ToTable("MonthlyActivities", "manufacturing");
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.NonOperationIncomeAndExpense", b =>
+                {
+                    b.Property<long>("_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnOrder(0);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("_id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasMaxLength(3)
+                        .HasColumnType("char(3)")
+                        .HasColumnName("Currency")
+                        .IsFixedLength();
+
+                    b.Property<bool>("CurrentPeriod")
+                        .HasColumnType("BIT")
+                        .HasColumnName("CurrentPeriod");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<bool>("ForecastPeriod")
+                        .HasColumnType("BIT")
+                        .HasColumnName("ForecastPeriod");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(1);
+
+                    b.Property<bool>("IsAudited")
+                        .HasColumnType("BIT")
+                        .HasColumnName("IsAudited");
+
+                    b.Property<bool>("PreviousPeriod")
+                        .HasColumnType("BIT")
+                        .HasColumnName("PreviousPeriod");
+
+                    b.Property<long>("SymbolId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TraceNo")
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("TraceNo");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("ModifiedAt");
+
+                    b.Property<string>("Uri")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(512)")
+                        .HasColumnName("Uri");
+
+                    b.ComplexProperty<Dictionary<string, object>>("FiscalYear", "Fundamental.Domain.Codals.Manufacturing.Entities.NonOperationIncomeAndExpense.FiscalYear#FiscalYear", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<short>("Year")
+                                .HasColumnType("SMALLINT")
+                                .HasColumnName("FiscalYear");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("Value", "Fundamental.Domain.Codals.Manufacturing.Entities.NonOperationIncomeAndExpense.Value#SignedMoney", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("Value");
+                        });
+
+                    b.HasKey("_id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("SymbolId");
+
+                    b.ToTable("NonOperationIncomeAndExpense", "manufacturing");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Prices.Entities.ClosePrice", b =>
@@ -186,497 +677,6 @@ namespace Fundamental.Migrations.Fundamental
                         .IsUnique();
 
                     b.ToTable("ClosePrice", "shd");
-                });
-
-            modelBuilder.Entity("Fundamental.Domain.Statements.Entities.BalanceSheet", b =>
-                {
-                    b.Property<long>("_id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnOrder(0);
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("_id"));
-
-                    b.Property<short>("CodalCategory")
-                        .HasColumnType("SMALLINT");
-
-                    b.Property<short>("CodalRow")
-                        .HasColumnType("SMALLINT");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("CreatedAt");
-
-                    b.Property<string>("Currency")
-                        .IsRequired()
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasMaxLength(3)
-                        .HasColumnType("char(3)")
-                        .HasColumnName("Currency")
-                        .IsFixedLength();
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("Id")
-                        .HasColumnOrder(1);
-
-                    b.Property<bool>("IsAudited")
-                        .HasColumnType("bit");
-
-                    b.Property<short>("Row")
-                        .HasColumnType("SMALLINT");
-
-                    b.Property<long>("SymbolId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("TraceNo")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("TraceNo");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("ModifiedAt");
-
-                    b.Property<string>("Uri")
-                        .IsRequired()
-                        .HasColumnType("VARCHAR(512)")
-                        .HasColumnName("Uri");
-
-                    b.ComplexProperty<Dictionary<string, object>>("FiscalYear", "Fundamental.Domain.Statements.Entities.BalanceSheet.FiscalYear#FiscalYear", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<short>("Year")
-                                .HasColumnType("SMALLINT")
-                                .HasColumnName("FiscalYear");
-                        });
-
-                    b.ComplexProperty<Dictionary<string, object>>("Value", "Fundamental.Domain.Statements.Entities.BalanceSheet.Value#SignedMoney", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<string>("Currency")
-                                .IsRequired()
-                                .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Currency");
-
-                            b1.Property<decimal>("Value")
-                                .HasPrecision(36, 10)
-                                .HasColumnType("decimal")
-                                .HasColumnName("Value");
-                        });
-
-                    b.HasKey("_id");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.HasIndex("SymbolId");
-
-                    b.ToTable("BalanceSheet", "fs");
-                });
-
-            modelBuilder.Entity("Fundamental.Domain.Statements.Entities.FinancialStatement", b =>
-                {
-                    b.Property<long>("_id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnOrder(0);
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("_id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("CreatedAt");
-
-                    b.Property<string>("Currency")
-                        .IsRequired()
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasMaxLength(3)
-                        .HasColumnType("char(3)")
-                        .HasColumnName("Currency")
-                        .IsFixedLength();
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("Id")
-                        .HasColumnOrder(1);
-
-                    b.Property<long>("SymbolId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("TraceNo")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("TraceNo");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("ModifiedAt");
-
-                    b.Property<string>("Uri")
-                        .IsRequired()
-                        .HasColumnType("VARCHAR(512)")
-                        .HasColumnName("Uri");
-
-                    b.ComplexProperty<Dictionary<string, object>>("FiscalYear", "Fundamental.Domain.Statements.Entities.FinancialStatement.FiscalYear#FiscalYear", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<short>("Year")
-                                .HasColumnType("SMALLINT")
-                                .HasColumnName("FiscalYear");
-                        });
-
-                    b.HasKey("_id");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.HasIndex("SymbolId");
-
-                    b.ToTable("FinancialStatements", "fs");
-                });
-
-            modelBuilder.Entity("Fundamental.Domain.Statements.Entities.IncomeStatement", b =>
-                {
-                    b.Property<long>("_id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnOrder(0);
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("_id"));
-
-                    b.Property<int>("CodalCategory")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CodalRow")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("CreatedAt");
-
-                    b.Property<string>("Currency")
-                        .IsRequired()
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasMaxLength(3)
-                        .HasColumnType("char(3)")
-                        .HasColumnName("Currency")
-                        .IsFixedLength();
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("Id")
-                        .HasColumnOrder(1);
-
-                    b.Property<bool>("IsAudited")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Row")
-                        .HasColumnType("int");
-
-                    b.Property<long>("SymbolId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("TraceNo")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("TraceNo");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("ModifiedAt");
-
-                    b.Property<string>("Uri")
-                        .IsRequired()
-                        .HasColumnType("VARCHAR(512)")
-                        .HasColumnName("Uri");
-
-                    b.ComplexProperty<Dictionary<string, object>>("FiscalYear", "Fundamental.Domain.Statements.Entities.IncomeStatement.FiscalYear#FiscalYear", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<short>("Year")
-                                .HasColumnType("SMALLINT")
-                                .HasColumnName("FiscalYear");
-                        });
-
-                    b.ComplexProperty<Dictionary<string, object>>("Value", "Fundamental.Domain.Statements.Entities.IncomeStatement.Value#SignedMoney", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<string>("Currency")
-                                .IsRequired()
-                                .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Currency");
-
-                            b1.Property<decimal>("Value")
-                                .HasPrecision(36, 10)
-                                .HasColumnType("decimal")
-                                .HasColumnName("Value");
-                        });
-
-                    b.HasKey("_id");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.HasIndex("SymbolId");
-
-                    b.ToTable("IncomeStatement", "fs");
-                });
-
-            modelBuilder.Entity("Fundamental.Domain.Statements.Entities.MonthlyActivity", b =>
-                {
-                    b.Property<long>("_id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnOrder(0);
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("_id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("CreatedAt");
-
-                    b.Property<string>("Currency")
-                        .IsRequired()
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasMaxLength(3)
-                        .HasColumnType("char(3)")
-                        .HasColumnName("Currency")
-                        .IsFixedLength();
-
-                    b.Property<bool>("HasSubCompanySale")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("Id")
-                        .HasColumnOrder(1);
-
-                    b.Property<long>("SymbolId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("TraceNo")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("TraceNo");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("ModifiedAt");
-
-                    b.Property<string>("Uri")
-                        .IsRequired()
-                        .HasColumnType("VARCHAR(512)")
-                        .HasColumnName("Uri");
-
-                    b.ComplexProperty<Dictionary<string, object>>("FiscalYear", "Fundamental.Domain.Statements.Entities.MonthlyActivity.FiscalYear#FiscalYear", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<short>("Year")
-                                .HasColumnType("SMALLINT")
-                                .HasColumnName("FiscalYear");
-                        });
-
-                    b.ComplexProperty<Dictionary<string, object>>("ReportMonth", "Fundamental.Domain.Statements.Entities.MonthlyActivity.ReportMonth#StatementMonth", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<byte>("Month")
-                                .HasColumnType("TINYINT")
-                                .HasColumnName("ReportMonth");
-                        });
-
-                    b.ComplexProperty<Dictionary<string, object>>("SaleBeforeCurrentMonth", "Fundamental.Domain.Statements.Entities.MonthlyActivity.SaleBeforeCurrentMonth#Money", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<string>("Currency")
-                                .IsRequired()
-                                .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Currency");
-
-                            b1.Property<decimal>("Value")
-                                .HasPrecision(36, 10)
-                                .HasColumnType("decimal")
-                                .HasColumnName("SaleBeforeCurrentMonth");
-                        });
-
-                    b.ComplexProperty<Dictionary<string, object>>("SaleCurrentMonth", "Fundamental.Domain.Statements.Entities.MonthlyActivity.SaleCurrentMonth#Money", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<string>("Currency")
-                                .IsRequired()
-                                .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Currency");
-
-                            b1.Property<decimal>("Value")
-                                .HasPrecision(36, 10)
-                                .HasColumnType("decimal")
-                                .HasColumnName("SaleCurrentMonth");
-                        });
-
-                    b.ComplexProperty<Dictionary<string, object>>("SaleIncludeCurrentMonth", "Fundamental.Domain.Statements.Entities.MonthlyActivity.SaleIncludeCurrentMonth#Money", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<string>("Currency")
-                                .IsRequired()
-                                .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Currency");
-
-                            b1.Property<decimal>("Value")
-                                .HasPrecision(36, 10)
-                                .HasColumnType("decimal")
-                                .HasColumnName("SaleIncludeCurrentMonth");
-                        });
-
-                    b.ComplexProperty<Dictionary<string, object>>("SaleLastYear", "Fundamental.Domain.Statements.Entities.MonthlyActivity.SaleLastYear#Money", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<string>("Currency")
-                                .IsRequired()
-                                .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Currency");
-
-                            b1.Property<decimal>("Value")
-                                .HasPrecision(36, 10)
-                                .HasColumnType("decimal")
-                                .HasColumnName("SaleLastYear");
-                        });
-
-                    b.ComplexProperty<Dictionary<string, object>>("YearEndMonth", "Fundamental.Domain.Statements.Entities.MonthlyActivity.YearEndMonth#StatementMonth", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<byte>("Month")
-                                .HasColumnType("TINYINT")
-                                .HasColumnName("YearEndMonth");
-                        });
-
-                    b.HasKey("_id");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.HasIndex("SymbolId");
-
-                    b.ToTable("MonthlyActivities", "fs");
-                });
-
-            modelBuilder.Entity("Fundamental.Domain.Statements.Entities.NonOperationIncomeAndExpense", b =>
-                {
-                    b.Property<long>("_id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnOrder(0);
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("_id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("CreatedAt");
-
-                    b.Property<string>("Currency")
-                        .IsRequired()
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasMaxLength(3)
-                        .HasColumnType("char(3)")
-                        .HasColumnName("Currency")
-                        .IsFixedLength();
-
-                    b.Property<bool>("CurrentPeriod")
-                        .HasColumnType("BIT")
-                        .HasColumnName("CurrentPeriod");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(512)
-                        .HasColumnType("nvarchar(512)");
-
-                    b.Property<bool>("ForecastPeriod")
-                        .HasColumnType("BIT")
-                        .HasColumnName("ForecastPeriod");
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("Id")
-                        .HasColumnOrder(1);
-
-                    b.Property<bool>("IsAudited")
-                        .HasColumnType("BIT")
-                        .HasColumnName("IsAudited");
-
-                    b.Property<bool>("PreviousPeriod")
-                        .HasColumnType("BIT")
-                        .HasColumnName("PreviousPeriod");
-
-                    b.Property<long>("SymbolId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("TraceNo")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("TraceNo");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("ModifiedAt");
-
-                    b.Property<string>("Uri")
-                        .IsRequired()
-                        .HasColumnType("VARCHAR(512)")
-                        .HasColumnName("Uri");
-
-                    b.ComplexProperty<Dictionary<string, object>>("FiscalYear", "Fundamental.Domain.Statements.Entities.NonOperationIncomeAndExpense.FiscalYear#FiscalYear", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<short>("Year")
-                                .HasColumnType("SMALLINT")
-                                .HasColumnName("FiscalYear");
-                        });
-
-                    b.ComplexProperty<Dictionary<string, object>>("Value", "Fundamental.Domain.Statements.Entities.NonOperationIncomeAndExpense.Value#SignedMoney", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<string>("Currency")
-                                .IsRequired()
-                                .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Currency");
-
-                            b1.Property<decimal>("Value")
-                                .HasPrecision(36, 10)
-                                .HasColumnType("decimal")
-                                .HasColumnName("Value");
-                        });
-
-                    b.HasKey("_id");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.HasIndex("SymbolId");
-
-                    b.ToTable("NonOperationIncomeAndExpense", "fs");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.Symbol", b =>
@@ -818,69 +818,7 @@ namespace Fundamental.Migrations.Fundamental
                     b.ToTable("SymbolRelations", "shd");
                 });
 
-            modelBuilder.Entity("Fundamental.Domain.Prices.Entities.ClosePrice", b =>
-                {
-                    b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Symbol")
-                        .WithMany()
-                        .HasForeignKey("SymbolId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Symbol");
-                });
-
-            modelBuilder.Entity("Fundamental.Domain.Statements.Entities.BalanceSheet", b =>
-                {
-                    b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Symbol")
-                        .WithMany()
-                        .HasForeignKey("SymbolId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.OwnsOne("Fundamental.Domain.Statements.ValueObjects.StatementMonth", "ReportMonth", b1 =>
-                        {
-                            b1.Property<long>("BalanceSheet_id")
-                                .HasColumnType("bigint");
-
-                            b1.Property<byte>("Month")
-                                .HasColumnType("TINYINT")
-                                .HasColumnName("ReportMonth");
-
-                            b1.HasKey("BalanceSheet_id");
-
-                            b1.ToTable("BalanceSheet", "fs");
-
-                            b1.WithOwner()
-                                .HasForeignKey("BalanceSheet_id");
-                        });
-
-                    b.OwnsOne("Fundamental.Domain.Statements.ValueObjects.StatementMonth", "YearEndMonth", b1 =>
-                        {
-                            b1.Property<long>("BalanceSheet_id")
-                                .HasColumnType("bigint");
-
-                            b1.Property<byte>("Month")
-                                .HasColumnType("TINYINT")
-                                .HasColumnName("YearEndMonth");
-
-                            b1.HasKey("BalanceSheet_id");
-
-                            b1.ToTable("BalanceSheet", "fs");
-
-                            b1.WithOwner()
-                                .HasForeignKey("BalanceSheet_id");
-                        });
-
-                    b.Navigation("ReportMonth")
-                        .IsRequired();
-
-                    b.Navigation("Symbol");
-
-                    b.Navigation("YearEndMonth")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Fundamental.Domain.Statements.Entities.FinancialStatement", b =>
+            modelBuilder.Entity("Fundamental.Domain.Codals.FinancialStatement", b =>
                 {
                     b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Symbol")
                         .WithMany()
@@ -1128,7 +1066,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasForeignKey("FinancialStatement_id");
                         });
 
-                    b.OwnsOne("Fundamental.Domain.Statements.ValueObjects.StatementMonth", "ReportMonth", b1 =>
+                    b.OwnsOne("Fundamental.Domain.Codals.ValueObjects.StatementMonth", "ReportMonth", b1 =>
                         {
                             b1.Property<long>("FinancialStatement_id")
                                 .HasColumnType("bigint");
@@ -1145,7 +1083,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasForeignKey("FinancialStatement_id");
                         });
 
-                    b.OwnsOne("Fundamental.Domain.Statements.ValueObjects.StatementMonth", "YearEndMonth", b1 =>
+                    b.OwnsOne("Fundamental.Domain.Codals.ValueObjects.StatementMonth", "YearEndMonth", b1 =>
                         {
                             b1.Property<long>("FinancialStatement_id")
                                 .HasColumnType("bigint");
@@ -1201,7 +1139,7 @@ namespace Fundamental.Migrations.Fundamental
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Fundamental.Domain.Statements.Entities.IncomeStatement", b =>
+            modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.BalanceSheet", b =>
                 {
                     b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Symbol")
                         .WithMany()
@@ -1209,7 +1147,58 @@ namespace Fundamental.Migrations.Fundamental
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("Fundamental.Domain.Statements.ValueObjects.StatementMonth", "ReportMonth", b1 =>
+                    b.OwnsOne("Fundamental.Domain.Codals.ValueObjects.StatementMonth", "ReportMonth", b1 =>
+                        {
+                            b1.Property<long>("BalanceSheet_id")
+                                .HasColumnType("bigint");
+
+                            b1.Property<byte>("Month")
+                                .HasColumnType("TINYINT")
+                                .HasColumnName("ReportMonth");
+
+                            b1.HasKey("BalanceSheet_id");
+
+                            b1.ToTable("BalanceSheet", "manufacturing");
+
+                            b1.WithOwner()
+                                .HasForeignKey("BalanceSheet_id");
+                        });
+
+                    b.OwnsOne("Fundamental.Domain.Codals.ValueObjects.StatementMonth", "YearEndMonth", b1 =>
+                        {
+                            b1.Property<long>("BalanceSheet_id")
+                                .HasColumnType("bigint");
+
+                            b1.Property<byte>("Month")
+                                .HasColumnType("TINYINT")
+                                .HasColumnName("YearEndMonth");
+
+                            b1.HasKey("BalanceSheet_id");
+
+                            b1.ToTable("BalanceSheet", "manufacturing");
+
+                            b1.WithOwner()
+                                .HasForeignKey("BalanceSheet_id");
+                        });
+
+                    b.Navigation("ReportMonth")
+                        .IsRequired();
+
+                    b.Navigation("Symbol");
+
+                    b.Navigation("YearEndMonth")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.IncomeStatement", b =>
+                {
+                    b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Symbol")
+                        .WithMany()
+                        .HasForeignKey("SymbolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsOne("Fundamental.Domain.Codals.ValueObjects.StatementMonth", "ReportMonth", b1 =>
                         {
                             b1.Property<long>("IncomeStatement_id")
                                 .HasColumnType("bigint");
@@ -1220,13 +1209,13 @@ namespace Fundamental.Migrations.Fundamental
 
                             b1.HasKey("IncomeStatement_id");
 
-                            b1.ToTable("IncomeStatement", "fs");
+                            b1.ToTable("IncomeStatement", "manufacturing");
 
                             b1.WithOwner()
                                 .HasForeignKey("IncomeStatement_id");
                         });
 
-                    b.OwnsOne("Fundamental.Domain.Statements.ValueObjects.StatementMonth", "YearEndMonth", b1 =>
+                    b.OwnsOne("Fundamental.Domain.Codals.ValueObjects.StatementMonth", "YearEndMonth", b1 =>
                         {
                             b1.Property<long>("IncomeStatement_id")
                                 .HasColumnType("bigint");
@@ -1237,7 +1226,7 @@ namespace Fundamental.Migrations.Fundamental
 
                             b1.HasKey("IncomeStatement_id");
 
-                            b1.ToTable("IncomeStatement", "fs");
+                            b1.ToTable("IncomeStatement", "manufacturing");
 
                             b1.WithOwner()
                                 .HasForeignKey("IncomeStatement_id");
@@ -1252,7 +1241,7 @@ namespace Fundamental.Migrations.Fundamental
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Fundamental.Domain.Statements.Entities.MonthlyActivity", b =>
+            modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.MonthlyActivity", b =>
                 {
                     b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Symbol")
                         .WithMany()
@@ -1263,7 +1252,7 @@ namespace Fundamental.Migrations.Fundamental
                     b.Navigation("Symbol");
                 });
 
-            modelBuilder.Entity("Fundamental.Domain.Statements.Entities.NonOperationIncomeAndExpense", b =>
+            modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.NonOperationIncomeAndExpense", b =>
                 {
                     b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Symbol")
                         .WithMany()
@@ -1271,7 +1260,7 @@ namespace Fundamental.Migrations.Fundamental
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("Fundamental.Domain.Statements.ValueObjects.StatementMonth", "ReportMonth", b1 =>
+                    b.OwnsOne("Fundamental.Domain.Codals.ValueObjects.StatementMonth", "ReportMonth", b1 =>
                         {
                             b1.Property<long>("NonOperationIncomeAndExpense_id")
                                 .HasColumnType("bigint");
@@ -1282,13 +1271,13 @@ namespace Fundamental.Migrations.Fundamental
 
                             b1.HasKey("NonOperationIncomeAndExpense_id");
 
-                            b1.ToTable("NonOperationIncomeAndExpense", "fs");
+                            b1.ToTable("NonOperationIncomeAndExpense", "manufacturing");
 
                             b1.WithOwner()
                                 .HasForeignKey("NonOperationIncomeAndExpense_id");
                         });
 
-                    b.OwnsOne("Fundamental.Domain.Statements.ValueObjects.StatementMonth", "YearEndMonth", b1 =>
+                    b.OwnsOne("Fundamental.Domain.Codals.ValueObjects.StatementMonth", "YearEndMonth", b1 =>
                         {
                             b1.Property<long>("NonOperationIncomeAndExpense_id")
                                 .HasColumnType("bigint");
@@ -1299,7 +1288,7 @@ namespace Fundamental.Migrations.Fundamental
 
                             b1.HasKey("NonOperationIncomeAndExpense_id");
 
-                            b1.ToTable("NonOperationIncomeAndExpense", "fs");
+                            b1.ToTable("NonOperationIncomeAndExpense", "manufacturing");
 
                             b1.WithOwner()
                                 .HasForeignKey("NonOperationIncomeAndExpense_id");
@@ -1312,6 +1301,17 @@ namespace Fundamental.Migrations.Fundamental
 
                     b.Navigation("YearEndMonth")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.Prices.Entities.ClosePrice", b =>
+                {
+                    b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Symbol")
+                        .WithMany()
+                        .HasForeignKey("SymbolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Symbol");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.SymbolRelation", b =>

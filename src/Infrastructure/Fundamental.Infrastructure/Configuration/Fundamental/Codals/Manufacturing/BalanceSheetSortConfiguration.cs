@@ -8,7 +8,7 @@ public class BalanceSheetSortConfiguration : EntityTypeConfigurationBase<Balance
 {
     protected override void ExtraConfigure(EntityTypeBuilder<BalanceSheetSort> builder)
     {
-        builder.ToTable("BalanceSheet", "sort");
+        builder.ToTable("BalanceSheetSort", "fundamental");
 
         builder.Property(x => x.Order)
             .HasColumnName("Order")

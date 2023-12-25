@@ -8,7 +8,7 @@ public class BalanceSheetConfiguration : EntityTypeConfigurationBase<BalanceShee
 {
     protected override void ExtraConfigure(EntityTypeBuilder<BalanceSheet> builder)
     {
-        builder.ToTable("BalanceSheet", "fs");
+        builder.ToTable("BalanceSheet", "manufacturing");
 
         builder.HasOne(x => x.Symbol)
             .WithMany()
