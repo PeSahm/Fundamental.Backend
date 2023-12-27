@@ -615,6 +615,202 @@ namespace Fundamental.Migrations.Fundamental
                     b.ToTable("NonOperationIncomeAndExpense", "manufacturing");
                 });
 
+            modelBuilder.Entity("Fundamental.Domain.Codals.Publisher", b =>
+                {
+                    b.Property<long>("_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnOrder(0);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("_id"));
+
+                    b.Property<string>("ActivitySubject")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<string>("AuditorName")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<string>("CodalId")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int>("CompanyType")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasMaxLength(3)
+                        .HasColumnType("char(3)")
+                        .HasColumnName("Currency")
+                        .IsFixedLength();
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<string>("ExecutiveManager")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<string>("FactoryFax")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("FactoryTel")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("FaxNo")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("FinancialManager")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<string>("FinancialYear")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int>("FundType")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(1);
+
+                    b.Property<string>("Inspector")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<int>("IsEnableSubCompany")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSupplied")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Isic")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int>("MarketType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NationalCode")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<string>("OfficeAddress")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<string>("OfficeFax")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("OfficeTel")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<long?>("ParentSymbolId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("ReportingType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ShareOfficeAddress")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<string>("ShareOfficeFax")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("ShareOfficeTel")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<int>("State")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubCompanyType")
+                        .HasColumnType("int");
+
+                    b.Property<long>("SymbolId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("TelNo")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("ModifiedAt");
+
+                    b.Property<string>("Website")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.ComplexProperty<Dictionary<string, object>>("ListedCapital", "Fundamental.Domain.Codals.Publisher.ListedCapital#Money", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("ListedCapital");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("UnauthorizedCapital", "Fundamental.Domain.Codals.Publisher.UnauthorizedCapital#Money", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("UnauthorizedCapital");
+                        });
+
+                    b.HasKey("_id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("ParentSymbolId");
+
+                    b.HasIndex("SymbolId");
+
+                    b.ToTable("Publisher");
+                });
+
             modelBuilder.Entity("Fundamental.Domain.Prices.Entities.ClosePrice", b =>
                 {
                     b.Property<long>("_id")
@@ -759,6 +955,9 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("Id")
                         .HasColumnOrder(1);
+
+                    b.Property<bool>("IsUnOfficial")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Isin")
                         .IsRequired()
@@ -1345,6 +1544,23 @@ namespace Fundamental.Migrations.Fundamental
 
                     b.Navigation("YearEndMonth")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.Codals.Publisher", b =>
+                {
+                    b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "ParentSymbol")
+                        .WithMany()
+                        .HasForeignKey("ParentSymbolId");
+
+                    b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Symbol")
+                        .WithMany()
+                        .HasForeignKey("SymbolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ParentSymbol");
+
+                    b.Navigation("Symbol");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Prices.Entities.ClosePrice", b =>

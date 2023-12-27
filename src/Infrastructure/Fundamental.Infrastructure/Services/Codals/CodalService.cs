@@ -3,7 +3,6 @@ using System.Text;
 using Fundamental.Application.Codals.Enums;
 using Fundamental.Application.Codals.Options;
 using Fundamental.Application.Codals.Services;
-using Fundamental.Application.Codals.Services.Enums;
 using Fundamental.Application.Codals.Services.Models;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Infrastructure.Common;
