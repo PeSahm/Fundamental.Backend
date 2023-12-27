@@ -55,11 +55,37 @@ public class Symbol : BaseEntity<Guid>
     public string SectorCode { get; private set; }
     public string SubSectorCode { get; private set; }
 
+    public bool IsUnOfficial { get; private set; }
+
     public ProductType ProductType { get; private set; } = ProductType.Stock;
 
     public ICollection<SymbolRelation> InvestmentSymbols { get; private set; } = new List<SymbolRelation>();
 
     public ICollection<SymbolRelation> InvestorSymbols { get; private set; } = new List<SymbolRelation>();
+
+    public static Symbol CreateByParentSymbol(Symbol parent, string postFix, DateTime updatedAt)
+    {
+        Symbol newSymbol = new Symbol(
+            Guid.NewGuid(),
+            parent.Isin,
+            parent.TseInsCode,
+            parent.EnName,
+            parent.SymbolEnName,
+            parent.Title,
+            parent.Name,
+            parent.CompanyEnCode,
+            parent.CompanyPersianName,
+            parent.CompanyIsin,
+            parent.MarketCap,
+            parent.SectorCode,
+            parent.SubSectorCode,
+            updatedAt
+        )
+        {
+            IsUnOfficial = true,
+        };
+        return newSymbol;
+    }
 
     public void SetProductType(ProductType productType, DateTime updatedAt)
     {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Fundamental.Application.Codals.Services.Enums;
+namespace Fundamental.Domain.Common.Enums;
 
 /// <summary>
 /// انواع صنعت.
