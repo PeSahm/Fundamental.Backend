@@ -66,7 +66,7 @@ public class CodalService(
         GetStatementJsonResponse? jsonData =
             await response.Content.ReadFromJsonAsync<GetStatementJsonResponse>(cancellationToken: cancellationToken);
 
-        if (jsonData is null)
+        if (string.IsNullOrWhiteSpace(jsonData?.Json))
         {
             logger.LogError(message: "Failed to deserialize statement json for trace no {@TraceNo}", args: statement.TracingNo);
             return;
