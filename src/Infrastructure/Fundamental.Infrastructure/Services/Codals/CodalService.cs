@@ -68,7 +68,6 @@ public class CodalService(
 
         if (string.IsNullOrWhiteSpace(jsonData?.Json))
         {
-            logger.LogError(message: "Failed to deserialize statement json for trace no {@TraceNo}", args: statement.TracingNo);
             return;
         }
 
