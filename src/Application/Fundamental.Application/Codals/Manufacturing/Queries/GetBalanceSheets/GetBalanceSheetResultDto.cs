@@ -5,7 +5,6 @@ namespace Fundamental.Application.Codals.Manufacturing.Queries.GetBalanceSheets;
 
 public sealed class GetBalanceSheetResultDto
 {
-    public Guid Id { get; set; }
     public string Isin { get; init; }
     public string Symbol { get; init; }
     public ulong TraceNo { get; init; }
