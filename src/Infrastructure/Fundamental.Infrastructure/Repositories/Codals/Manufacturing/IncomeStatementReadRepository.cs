@@ -2,7 +2,6 @@
 using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Common.Dto;
-using Fundamental.Domain.Common.ValueObjects;
 using Fundamental.Infrastructure.Extensions;
 using Fundamental.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -38,47 +37,21 @@ public sealed class IncomeStatementReadRepository(FundamentalDbContext dbContext
             query = query.Where(x => x.TraceNo == request.TraceNo);
         }
 
-        var result = await query.Select(x => new
-            {
-                x.Id,
-                x.Symbol.Isin,
-                Symbol = x.Symbol.Name,
-                x.Symbol.Title,
-                x.TraceNo,
-                x.Uri,
-                FiscalYear = x.FiscalYear.Year,
-                YearEndMonth = x.YearEndMonth.Month,
-                ReportMonth = x.ReportMonth.Month,
-                x.IsAudited,
-                x.Row,
-                x.CodalCategory,
-                x.CodalRow,
-                x.Value,
-                x.UpdatedAt,
-            })
-            .ToPagingListAsync(request, "TraceNo desc", cancellationToken);
-
-        List<GetIncomeStatementsResultDto> mappedResult = result.Items.GroupBy(gb => new
-                { gb.Isin, gb.TraceNo, gb.FiscalYear, gb.ReportMonth, })
+        Paginated<GetIncomeStatementsResultDto> validStatements = await query
+            .Where(x => x.ReportMonth.Month != 1)
+            .GroupBy(gb => new { gb.Symbol.Isin, FiscalYear = gb.FiscalYear.Year, ReportMonth = gb.ReportMonth.Month })
             .Select(x => new GetIncomeStatementsResultDto
             {
-                Id = x.First().Id,
                 Isin = x.Key.Isin,
-                Symbol = x.First().Symbol,
-                TraceNo = x.Key.TraceNo,
-                Uri = x.First().Uri,
+                TraceNo = x.Max(mx => mx.TraceNo),
                 FiscalYear = x.Key.FiscalYear,
-                YearEndMonth = x.First().YearEndMonth,
                 ReportMonth = x.Key.ReportMonth,
                 IsAudited = x.First().IsAudited,
-                Items = x.Select(y => new GetIncomeStatementsResultItem()
-                {
-                    Order = y.Row,
-                    CodalRow = y.CodalRow,
-                    Value = (CodalMoney)y.Value,
-                }).OrderBy(o => o.Order).ToList(),
-            }).ToList();
+                YearEndMonth = x.First().YearEndMonth.Month,
+                Symbol = x.First().Symbol.Name,
+                Uri = x.First().Uri,
+            }).ToPagingListAsync(request, "FiscalYear desc,ReportMonth desc", cancellationToken);
 
-        return new Paginated<GetIncomeStatementsResultDto>(mappedResult, result.Meta);
+        return validStatements;
     }
 }

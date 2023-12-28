@@ -16,14 +16,17 @@ namespace Fundamental.WebApi.Controllers.Codals.Manufacturing;
 public class IncomeStatementController(ISender mediator) : ControllerBase
 {
     [HttpPost]
-    public async Task<Response> AddIncomeStatement([FromBody] AddIncomeStatementRequest request)
+    public async Task<Response> AddIncomeStatement([FromBody] AddIncomeStatementRequest request, CancellationToken cancellationToken)
     {
-        return await mediator.Send(request);
+        return await mediator.Send(request, cancellationToken);
     }
 
     [HttpGet]
-    public async Task<Response<Paginated<GetIncomeStatementsResultDto>>> GetIncomeStatement([FromQuery] GetIncomeStatementsRequest request)
+    public async Task<Response<Paginated<GetIncomeStatementsResultDto>>> GetIncomeStatement(
+        [FromQuery] GetIncomeStatementsRequest request,
+        CancellationToken cancellationToken
+    )
     {
-        return await mediator.Send(request);
+        return await mediator.Send(request, cancellationToken);
     }
 }
