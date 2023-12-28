@@ -1,5 +1,6 @@
 ﻿using ErrorHandling.AspNetCore;
 using Fundamental.Application.Codals.Manufacturing.Commands.AddBalanceSheet;
+using Fundamental.Application.Codals.Manufacturing.Queries.GetBalanceSheetDetails;
 using Fundamental.Application.Codals.Manufacturing.Queries.GetBalanceSheets;
 using Fundamental.Domain.Common.Dto;
 using Fundamental.ErrorHandling;
@@ -16,14 +17,28 @@ namespace Fundamental.WebApi.Controllers.Codals.Manufacturing;
 public class BalanceSheetController(ISender mediator) : ControllerBase
 {
     [HttpPost]
-    public async Task<Response> AddBalanceSheet([FromBody] AddBalanceSheetRequest request)
+    public async Task<Response> AddBalanceSheet([FromBody] AddBalanceSheetRequest request, CancellationToken cancellationToken)
     {
-        return await mediator.Send(request);
+        return await mediator.Send(request, cancellationToken);
     }
 
     [HttpGet]
-    public async Task<Response<Paginated<GetBalanceSheetResultDto>>> GetBalanceSheets([FromQuery] GetBalanceSheetRequest request)
+    public async Task<Response<Paginated<GetBalanceSheetResultDto>>> GetBalanceSheets(
+        [FromQuery] GetBalanceSheetRequest request,
+        CancellationToken cancellationToken
+    )
     {
-        return await mediator.Send(request);
+        return await mediator.Send(request, cancellationToken);
+    }
+
+    [HttpGet("{traceNo}/{fiscalYear}/{reportMonth}/details")]
+    public async Task<Response<List<GetBalanceSheetDetailResultDto>>> GetBalanceSheetDetails(
+        [FromRoute] ulong traceNo,
+        [FromRoute] ushort fiscalYear,
+        [FromRoute] ushort reportMonth,
+        CancellationToken cancellationToken
+    )
+    {
+        return await mediator.Send(new GetBalanceSheetDetailsRequest(traceNo, fiscalYear, reportMonth), cancellationToken);
     }
 }

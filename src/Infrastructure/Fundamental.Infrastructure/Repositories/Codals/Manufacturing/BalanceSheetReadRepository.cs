@@ -2,7 +2,6 @@
 using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Common.Dto;
-using Fundamental.Domain.Common.ValueObjects;
 using Fundamental.Infrastructure.Extensions;
 using Fundamental.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -38,70 +37,21 @@ public sealed class BalanceSheetReadRepository(FundamentalDbContext dbContext) :
             query = query.Where(x => x.TraceNo == request.TraceNo);
         }
 
-        var validStatements = await query
+        Paginated<GetBalanceSheetResultDto> validStatements = await query
             .Where(x => x.ReportMonth.Month != 1)
             .GroupBy(gb => new { gb.Symbol.Isin, FiscalYear = gb.FiscalYear.Year, ReportMonth = gb.ReportMonth.Month })
-            .Select(x => new
+            .Select(x => new GetBalanceSheetResultDto
             {
-                x.Key.Isin,
+                Isin = x.Key.Isin,
                 TraceNo = x.Max(mx => mx.TraceNo),
-                x.Key.FiscalYear,
-                x.Key.ReportMonth
-            }).ToPagingListAsync(request, "TraceNo desc", cancellationToken);
+                FiscalYear = x.Key.FiscalYear,
+                ReportMonth = x.Key.ReportMonth,
+                IsAudited = x.First().IsAudited,
+                YearEndMonth = x.First().YearEndMonth.Month,
+                Symbol = x.First().Symbol.Name,
+                Uri = x.First().Uri,
+            }).ToPagingListAsync(request, "FiscalYear desc,ReportMonth desc", cancellationToken);
 
-        var result =
-            await query
-                .Where(q => validStatements.Items.Select(ss => ss.TraceNo).Contains(q.TraceNo))
-                .Select(x => new
-                {
-                    x.Id,
-                    x.Symbol.Isin,
-                    Symbol = x.Symbol.Name,
-                    x.Symbol.Title,
-                    x.TraceNo,
-                    x.Uri,
-                    FiscalYear = x.FiscalYear.Year,
-                    YearEndMonth = x.YearEndMonth.Month,
-                    ReportMonth = x.ReportMonth.Month,
-                    x.IsAudited,
-                    x.Row,
-                    x.CodalCategory,
-                    x.CodalRow,
-                    x.Value,
-                    x.UpdatedAt,
-                }).ToListAsync(cancellationToken: cancellationToken);
-
-        List<GetBalanceSheetResultDto> mappedResult = new();
-
-        foreach (var gb in validStatements.Items)
-        {
-            if (!result.Exists(x => x.TraceNo == gb.TraceNo))
-            {
-                continue;
-            }
-
-            List<GetBalanceSheetResultItem> items = result.Where(x => x.TraceNo == gb.TraceNo).Select(x => new GetBalanceSheetResultItem
-            {
-                Order = x.Row,
-                CodalRow = x.CodalRow,
-                Category = x.CodalCategory,
-                Value = (CodalMoney)x.Value,
-            }).OrderBy(o => o.Order).ToList();
-
-            mappedResult.Add(new GetBalanceSheetResultDto
-            {
-                Isin = gb.Isin,
-                Symbol = result[0].Symbol,
-                TraceNo = gb.TraceNo,
-                Uri = result[0].Uri,
-                FiscalYear = gb.FiscalYear,
-                YearEndMonth = result[0].YearEndMonth,
-                ReportMonth = gb.ReportMonth,
-                IsAudited = result[0].IsAudited,
-                Items = items,
-            });
-        }
-
-        return new Paginated<GetBalanceSheetResultDto>(mappedResult, validStatements.Meta);
+        return validStatements;
     }
 }
