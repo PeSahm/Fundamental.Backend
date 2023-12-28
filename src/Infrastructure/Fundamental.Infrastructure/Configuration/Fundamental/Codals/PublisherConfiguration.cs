@@ -8,6 +8,8 @@ public class PublisherConfiguration : EntityTypeConfigurationBase<Publisher>
 {
     protected override void ExtraConfigure(EntityTypeBuilder<Publisher> builder)
     {
+        builder.ToTable("Publisher", "fs");
+
         builder.Property(x => x.CodalId).IsRequired().HasMaxLength(128);
 
         builder.HasOne(x => x.Symbol).WithMany().HasForeignKey("SymbolId").IsRequired();
@@ -24,11 +26,11 @@ public class PublisherConfiguration : EntityTypeConfigurationBase<Publisher>
 
         builder.Property(x => x.Address).HasMaxLength(512).IsRequired(false);
 
-        builder.Property(x => x.TelNo).HasMaxLength(64).IsRequired(false);
+        builder.Property(x => x.TelNo).HasMaxLength(512).IsRequired(false);
 
-        builder.Property(x => x.FaxNo).HasMaxLength(64).IsRequired(false);
+        builder.Property(x => x.FaxNo).HasMaxLength(512).IsRequired(false);
 
-        builder.Property(x => x.ActivitySubject).HasMaxLength(512).IsRequired(false);
+        builder.Property(x => x.ActivitySubject).HasMaxLength(2048).IsRequired(false);
 
         builder.Property(x => x.OfficeAddress).HasMaxLength(512).IsRequired(false);
 
@@ -42,21 +44,21 @@ public class PublisherConfiguration : EntityTypeConfigurationBase<Publisher>
 
         builder.Property(x => x.FinancialManager).HasMaxLength(512).IsRequired(false);
 
-        builder.Property(x => x.FactoryTel).HasMaxLength(64).IsRequired(false);
+        builder.Property(x => x.FactoryTel).HasMaxLength(512).IsRequired(false);
 
-        builder.Property(x => x.FactoryFax).HasMaxLength(64).IsRequired(false);
+        builder.Property(x => x.FactoryFax).HasMaxLength(512).IsRequired(false);
 
-        builder.Property(x => x.OfficeTel).HasMaxLength(64).IsRequired(false);
+        builder.Property(x => x.OfficeTel).HasMaxLength(512).IsRequired(false);
 
-        builder.Property(x => x.OfficeFax).HasMaxLength(64).IsRequired(false);
+        builder.Property(x => x.OfficeFax).HasMaxLength(512).IsRequired(false);
 
-        builder.Property(x => x.ShareOfficeTel).HasMaxLength(64).IsRequired(false);
+        builder.Property(x => x.ShareOfficeTel).HasMaxLength(512).IsRequired(false);
 
-        builder.Property(x => x.ShareOfficeFax).HasMaxLength(64).IsRequired(false);
+        builder.Property(x => x.ShareOfficeFax).HasMaxLength(512).IsRequired(false);
 
         builder.Property(x => x.NationalCode).HasMaxLength(15).IsRequired(false);
 
-        builder.Property(x => x.FinancialYear).HasMaxLength(128).IsRequired(false);
+        builder.Property(x => x.FinancialYear).HasMaxLength(512).IsRequired(false);
 
         builder.Property(x => x.AuditorName).HasMaxLength(512).IsRequired(false);
 

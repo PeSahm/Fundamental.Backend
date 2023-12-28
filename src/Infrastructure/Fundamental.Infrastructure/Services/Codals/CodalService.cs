@@ -9,6 +9,7 @@ using Fundamental.Infrastructure.Common;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 
 namespace Fundamental.Infrastructure.Services.Codals;
 
@@ -79,5 +80,32 @@ public class CodalService(
             codalProcessorFactory.GetCodalProcessor(jsonData.Json, statement.ReportingType, statement.Type, letterPart);
 
         await processor.Process(statement, jsonData, cancellationToken);
+    }
+
+    public async Task<List<GetPublisherResponse>> GetPublishers(CancellationToken cancellationToken = default)
+    {
+        HttpResponseMessage publisherResponse = await _mdpClient.GetAsync(
+            new StringBuilder()
+                .Append(_mdpOption.Publishers)
+                .ToString(),
+            cancellationToken: cancellationToken);
+
+        if (!publisherResponse.IsSuccessStatusCode)
+        {
+            logger.LogError(message: "Failed to get publishers");
+            return new();
+        }
+
+        string stringResponse =
+            await publisherResponse.Content.ReadAsStringAsync(cancellationToken: cancellationToken);
+
+        if (string.IsNullOrWhiteSpace(stringResponse))
+        {
+            logger.LogError(message: "Failed to get publishers");
+            return new();
+        }
+
+        List<GetPublisherResponse>? publishers = JsonConvert.DeserializeObject<List<GetPublisherResponse>>(stringResponse);
+        return publishers ?? new();
     }
 }
