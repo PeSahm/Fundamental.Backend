@@ -40,14 +40,14 @@ public sealed class BalanceSheetReadRepository(FundamentalDbContext dbContext) :
 
         var validStatements = await query
             .Where(x => x.ReportMonth.Month != 1)
-            .GroupBy(gb => new { gb.Symbol.Isin, gb.FiscalYear, gb.ReportMonth })
+            .GroupBy(gb => new { gb.Symbol.Isin, FiscalYear = gb.FiscalYear.Year, ReportMonth = gb.ReportMonth.Month })
             .Select(x => new
             {
                 x.Key.Isin,
                 TraceNo = x.Max(mx => mx.TraceNo),
                 x.Key.FiscalYear,
                 x.Key.ReportMonth
-            }).ToPagingListAsync(request, "FiscalYear desc,ReportMonth desc ", cancellationToken);
+            }).ToPagingListAsync(request, "TraceNo desc", cancellationToken);
 
         var result =
             await query

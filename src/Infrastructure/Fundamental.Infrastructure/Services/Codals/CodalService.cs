@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Json;
+﻿using System.Net;
+using System.Net.Http.Json;
 using System.Text;
 using Fundamental.Application.Codals.Enums;
 using Fundamental.Application.Codals.Options;
@@ -59,14 +60,24 @@ public class CodalService(
 
         if (!response.IsSuccessStatusCode)
         {
-            logger.LogError(message: "Failed to get statement json for trace no {@TraceNo}", args: statement.TracingNo);
+            logger.LogWarning(message: "Failed to get statement json for trace no {@TraceNo}", args: statement.TracingNo);
+            return;
+        }
+
+        if (response.StatusCode == HttpStatusCode.NoContent)
+        {
             return;
         }
 
         GetStatementJsonResponse? jsonData =
             await response.Content.ReadFromJsonAsync<GetStatementJsonResponse>(cancellationToken: cancellationToken);
 
-        if (string.IsNullOrWhiteSpace(jsonData?.Json))
+        if (jsonData is null)
+        {
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(jsonData.Json))
         {
             return;
         }
