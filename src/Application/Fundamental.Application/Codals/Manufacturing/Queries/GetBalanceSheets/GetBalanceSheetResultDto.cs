@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Text.Json.Serialization;
 using DNTPersianUtils.Core;
 
 namespace Fundamental.Application.Codals.Manufacturing.Queries.GetBalanceSheets;
@@ -10,9 +11,19 @@ public sealed class GetBalanceSheetResultDto
     public ulong TraceNo { get; init; }
     public string Uri { get; init; }
     public ushort FiscalYear { get; init; }
+
+    [Newtonsoft.Json.JsonIgnore]
+    [JsonIgnore]
     public ushort YearEndMonth { get; init; }
+
     public ushort ReportMonth { get; init; }
+
+    [Newtonsoft.Json.JsonIgnore]
+    [JsonIgnore]
     public bool IsAudited { get; init; }
+
+    [Newtonsoft.Json.JsonIgnore]
+    [JsonIgnore]
     public string IsAuditedDescription => IsAudited ? "حسابرسی شده" : "حسابرسی نشده";
 
     public string Title => new StringBuilder("گزارش صورت وضعیت مالی نماد ")
@@ -25,8 +36,6 @@ public sealed class GetBalanceSheetResultDto
         .Append(' ')
         .Append(IsAuditedDescription)
         .ToString();
-
-    public List<GetBalanceSheetResultItem> Items { get; init; } = new();
 
     private int GetLastDayOfFiscalYear()
     {
