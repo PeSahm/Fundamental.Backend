@@ -27,8 +27,6 @@ public sealed class GetIncomeStatementsResultDto
         .Append(IsAuditedDescription)
         .ToString();
 
-    public List<GetIncomeStatementsResultItem> Items { get; init; } = new();
-
     private int GetLastDayOfFiscalYear()
     {
         int lastDay = $"{FiscalYear}/{YearEndMonth}/1".ToGregorianDateOnly().GetPersianMonthStartAndEndDates()!.LastDayNumber;

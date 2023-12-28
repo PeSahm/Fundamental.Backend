@@ -1,8 +1,8 @@
 ﻿using Fundamental.Domain.Codals.Manufacturing.Entities;
 
-namespace Fundamental.Application.Codals.Manufacturing.Queries.GetIncomeStatements;
+namespace Fundamental.Application.Codals.Manufacturing.Queries.GetIncomeStatementDetails;
 
-public sealed class GetIncomeStatementsResultItem
+public sealed class GetIncomeStatementDetailsResultDto
 {
     public ushort Order { get; init; }
     public ushort CodalRow { get; init; }

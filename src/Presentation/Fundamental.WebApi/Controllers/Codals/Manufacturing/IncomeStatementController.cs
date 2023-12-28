@@ -1,5 +1,6 @@
 ﻿using ErrorHandling.AspNetCore;
 using Fundamental.Application.Codals.Manufacturing.Commands.AddIncomeStatement;
+using Fundamental.Application.Codals.Manufacturing.Queries.GetIncomeStatementDetails;
 using Fundamental.Application.Codals.Manufacturing.Queries.GetIncomeStatements;
 using Fundamental.Domain.Common.Dto;
 using Fundamental.ErrorHandling;
@@ -28,5 +29,16 @@ public class IncomeStatementController(ISender mediator) : ControllerBase
     )
     {
         return await mediator.Send(request, cancellationToken);
+    }
+
+    [HttpGet("{traceNo}/{fiscalYear}/{reportMonth}/details")]
+    public async Task<Response<List<GetIncomeStatementDetailsResultDto>>> GetIncomeStatementDetails(
+        [FromRoute] ulong traceNo,
+        [FromRoute] ushort fiscalYear,
+        [FromRoute] ushort reportMonth,
+        CancellationToken cancellationToken
+    )
+    {
+        return await mediator.Send(new GetIncomeStatementDetailsRequest(traceNo, fiscalYear, reportMonth), cancellationToken);
     }
 }
