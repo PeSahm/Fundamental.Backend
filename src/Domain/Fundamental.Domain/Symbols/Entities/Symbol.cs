@@ -63,16 +63,17 @@ public class Symbol : BaseEntity<Guid>
 
     public ICollection<SymbolRelation> InvestorSymbols { get; private set; } = new List<SymbolRelation>();
 
-    public static Symbol CreateByParentSymbol(Symbol parent, string postFix, DateTime updatedAt)
+    public static Symbol CreateByParentSymbol(Symbol parent, string name, string title, DateTime updatedAt)
     {
+        string postfix = name.Replace(parent.Name, string.Empty).Trim();
         Symbol newSymbol = new Symbol(
             Guid.NewGuid(),
-            parent.Isin,
+            $"{parent.Isin}{postfix}".Trim(),
             parent.TseInsCode,
             parent.EnName,
             parent.SymbolEnName,
-            parent.Title,
-            parent.Name,
+            title,
+            name,
             parent.CompanyEnCode,
             parent.CompanyPersianName,
             parent.CompanyIsin,

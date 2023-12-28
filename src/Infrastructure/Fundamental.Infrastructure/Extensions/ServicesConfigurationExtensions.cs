@@ -8,6 +8,7 @@ using Fundamental.Application.Symbols.Repositories;
 using Fundamental.Application.Utilities.Services;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.Infrastructure.Extensions.Codals.Manufacturing;
+using Fundamental.Infrastructure.HostedServices.Codals;
 using Fundamental.Infrastructure.Persistence;
 using Fundamental.Infrastructure.Persistence.Repositories.Base;
 using Fundamental.Infrastructure.Repositories;
@@ -72,6 +73,7 @@ public static class ServicesConfigurationExtensions
 
     public static void AddHostedServices(this IServiceCollection builder)
     {
+        builder.AddHostedService<CommonCodalDataHostedService>();
         builder.AddManufacturingHostedServices();
     }
 }

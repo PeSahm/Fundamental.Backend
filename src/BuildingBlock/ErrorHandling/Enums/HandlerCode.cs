@@ -7,6 +7,7 @@ public enum HandlerCode : ushort
     GetSymbolRelations = 11_398,
     AddSymbolRelationship = 11_399,
 
+    UpdateCodalPublisher = 13_195,
     UpdateNonOperationIncomeAndExpenses = 13_196,
     UpdateIncomeStatementData = 13_197,
     UpdateBalanceSheetData = 13_198,

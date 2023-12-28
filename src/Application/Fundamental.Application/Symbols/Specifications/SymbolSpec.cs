@@ -11,6 +11,12 @@ public class SymbolSpec : Specification<Symbol>
         return this;
     }
 
+    public SymbolSpec WhereName(string name)
+    {
+        Query.Where(x => x.Name == name);
+        return this;
+    }
+
     public SymbolSpec Filter(string filter)
     {
         Query.Where(x => x.Isin.StartsWith(filter) || x.Name.StartsWith(filter) || x.Title.StartsWith(filter));

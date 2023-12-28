@@ -11,7 +11,7 @@ public class SymbolConfiguration : EntityTypeConfigurationBase<Symbol>
         builder.ToTable("Symbol", "shd");
 
         builder.Property(x => x.Isin)
-            .HasColumnType("varchar(12)")
+            .HasColumnType("varchar(15)")
             .HasColumnName("Isin")
             .IsRequired();
 

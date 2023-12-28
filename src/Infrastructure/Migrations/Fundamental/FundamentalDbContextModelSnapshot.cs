@@ -625,8 +625,8 @@ namespace Fundamental.Migrations.Fundamental
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("_id"));
 
                     b.Property<string>("ActivitySubject")
-                        .HasMaxLength(512)
-                        .HasColumnType("nvarchar(512)");
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
 
                     b.Property<string>("Address")
                         .HasMaxLength(512)
@@ -665,24 +665,24 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnType("nvarchar(512)");
 
                     b.Property<string>("FactoryFax")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
 
                     b.Property<string>("FactoryTel")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
 
                     b.Property<string>("FaxNo")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
 
                     b.Property<string>("FinancialManager")
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
 
                     b.Property<string>("FinancialYear")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
 
                     b.Property<int>("FundType")
                         .HasColumnType("int");
@@ -721,12 +721,12 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnType("nvarchar(512)");
 
                     b.Property<string>("OfficeFax")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
 
                     b.Property<string>("OfficeTel")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
 
                     b.Property<long?>("ParentSymbolId")
                         .HasColumnType("bigint");
@@ -739,12 +739,12 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnType("nvarchar(512)");
 
                     b.Property<string>("ShareOfficeFax")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
 
                     b.Property<string>("ShareOfficeTel")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
 
                     b.Property<int>("State")
                         .HasColumnType("int");
@@ -756,8 +756,8 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnType("bigint");
 
                     b.Property<string>("TelNo")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime")
@@ -808,7 +808,7 @@ namespace Fundamental.Migrations.Fundamental
 
                     b.HasIndex("SymbolId");
 
-                    b.ToTable("Publisher");
+                    b.ToTable("Publisher", "fs");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Prices.Entities.ClosePrice", b =>
@@ -961,7 +961,7 @@ namespace Fundamental.Migrations.Fundamental
 
                     b.Property<string>("Isin")
                         .IsRequired()
-                        .HasColumnType("varchar(12)")
+                        .HasColumnType("varchar(15)")
                         .HasColumnName("Isin");
 
                     b.Property<long>("MarketCap")

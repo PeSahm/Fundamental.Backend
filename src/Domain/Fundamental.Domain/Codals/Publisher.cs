@@ -7,9 +7,10 @@ namespace Fundamental.Domain.Codals;
 
 public sealed class Publisher : BaseEntity<Guid>
 {
-    public Publisher(Guid id, DateTime createdAt)
+    public Publisher(Guid id, Symbol symbol, DateTime createdAt)
     {
         Id = id;
+        Symbol = symbol;
         CreatedAt = createdAt;
     }
 
@@ -18,7 +19,7 @@ public sealed class Publisher : BaseEntity<Guid>
     }
 
     public required string CodalId { get; init; }
-    public required Symbol Symbol { get; init; }
+    public Symbol Symbol { get; private set; }
     public Symbol? ParentSymbol { get; init; }
     public string? Isic { get; init; }
     public ReportingType ReportingType { get; init; }
@@ -44,7 +45,7 @@ public sealed class Publisher : BaseEntity<Guid>
     public string? NationalCode { get; init; }
     public string? FinancialYear { get; init; }
 
-    public IsoCurrency Currency { get; private set; }
+    public IsoCurrency Currency { get; private set; } = IsoCurrency.IRR;
     public Money ListedCapital { get; init; } = Money.BaseCurrency(0);
     public string? AuditorName { get; init; }
     public EnableSubCompany IsEnableSubCompany { get; init; }
@@ -54,4 +55,9 @@ public sealed class Publisher : BaseEntity<Guid>
     public bool IsSupplied { get; init; }
     public PublisherMarketType MarketType { get; init; }
     public Money UnauthorizedCapital { get; init; } = Money.BaseCurrency(0);
+
+    public void Update(Symbol symbol)
+    {
+        Symbol = symbol;
+    }
 }

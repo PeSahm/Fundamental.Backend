@@ -7,4 +7,6 @@ public class MdpOption
     public string Statement { get; set; }
 
     public string StatementJson { get; set; }
+
+    public string Publishers { get; set; }
 }
