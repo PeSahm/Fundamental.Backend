@@ -54,7 +54,7 @@ public sealed class UpdateCodalPublisherDataCommandHandler(
 
                 if (symbol is null && parentSymbol is null)
                 {
-                    logger.LogWarning("Symbol and Parent Symbol are null for publisher {@Publisher}", publisher);
+                    logger.LogDebug("Symbol and Parent Symbol are null for publisher {@Publisher}", publisher);
                     continue;
                 }
 
@@ -121,7 +121,6 @@ public sealed class UpdateCodalPublisherDataCommandHandler(
             catch (Exception ex)
             {
                 logger.LogError(ex, "Error in Update Codal Publisher Data Job {@Publisher}", publisher);
-                continue;
             }
         }
 
