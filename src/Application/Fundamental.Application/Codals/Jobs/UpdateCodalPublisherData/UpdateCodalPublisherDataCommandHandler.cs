@@ -115,13 +115,14 @@ public sealed class UpdateCodalPublisherDataCommandHandler(
                         ParentSymbol = parentSymbol,
                     };
                     repository.Add(entity);
-                    await unitOfWork.SaveChangesAsync(cancellationToken);
                 }
             }
             catch (Exception ex)
             {
                 logger.LogError(ex, "Error in Update Codal Publisher Data Job {@Publisher}", publisher);
             }
+
+            await unitOfWork.SaveChangesAsync(cancellationToken);
         }
 
         return Response.Successful();
