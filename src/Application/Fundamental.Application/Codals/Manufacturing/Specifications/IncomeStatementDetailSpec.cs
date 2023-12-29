@@ -19,7 +19,7 @@ public class IncomeStatementDetailSpec : Specification<IncomeStatement, GetIncom
             })
             .Where(x => x.FiscalYear.Year == fiscalYear)
             .Where(x => x.ReportMonth.Month == reportMonth)
-            .Where(x => x.TraceNo < traceNo)
+            .Where(x => x.TraceNo == traceNo)
             .OrderBy(x => x.Row)
             .AsNoTracking();
         return spec;
