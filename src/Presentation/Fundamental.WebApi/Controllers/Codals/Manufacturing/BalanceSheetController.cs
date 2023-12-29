@@ -4,6 +4,7 @@ using Fundamental.Application.Codals.Manufacturing.Queries.GetBalanceSheetDetail
 using Fundamental.Application.Codals.Manufacturing.Queries.GetBalanceSheets;
 using Fundamental.Domain.Common.Dto;
 using Fundamental.ErrorHandling;
+using Fundamental.Web.Common.Swagger;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,6 +33,7 @@ public class BalanceSheetController(ISender mediator) : ControllerBase
     }
 
     [HttpGet("{traceNo}/{fiscalYear}/{reportMonth}/details")]
+    [SwaggerRequestType(typeof(GetBalanceSheetDetailsRequest))]
     public async Task<Response<List<GetBalanceSheetDetailResultDto>>> GetBalanceSheetDetails(
         [FromRoute] ulong traceNo,
         [FromRoute] ushort fiscalYear,

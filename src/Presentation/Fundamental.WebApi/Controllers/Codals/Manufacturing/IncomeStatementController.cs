@@ -4,6 +4,7 @@ using Fundamental.Application.Codals.Manufacturing.Queries.GetIncomeStatementDet
 using Fundamental.Application.Codals.Manufacturing.Queries.GetIncomeStatements;
 using Fundamental.Domain.Common.Dto;
 using Fundamental.ErrorHandling;
+using Fundamental.Web.Common.Swagger;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,6 +33,7 @@ public class IncomeStatementController(ISender mediator) : ControllerBase
     }
 
     [HttpGet("{traceNo}/{fiscalYear}/{reportMonth}/details")]
+    [SwaggerRequestType(typeof(GetIncomeStatementDetailsRequest))]
     public async Task<Response<List<GetIncomeStatementDetailsResultDto>>> GetIncomeStatementDetails(
         [FromRoute] ulong traceNo,
         [FromRoute] ushort fiscalYear,
