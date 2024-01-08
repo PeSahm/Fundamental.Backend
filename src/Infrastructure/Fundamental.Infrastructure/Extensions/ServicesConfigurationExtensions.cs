@@ -38,6 +38,7 @@ public static class ServicesConfigurationExtensions
         builder.Services.AddScoped(typeof(IRequestValidator<>), typeof(RequestValidator<>));
         builder.Services.AddScoped<ICustomerErrorMessagesService, CustomerErrorMessagesService>();
         builder.Services.AddScoped<ICodalService, CodalService>();
+        builder.Services.AddScoped<IMarketDataService, MarketDataService>();
 
         builder.Services.AddSingleton<IIpService, IpService>();
 

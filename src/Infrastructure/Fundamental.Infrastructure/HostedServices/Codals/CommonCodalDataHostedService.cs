@@ -1,4 +1,5 @@
 ﻿using Fundamental.Application.Codals.Jobs.UpdateCodalPublisherData;
+using Fundamental.Application.Symbols.Jobs.UpdateTseTmcShareHoldersData;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -15,6 +16,8 @@ public class CommonCodalDataHostedService(IServiceScopeFactory serviceScopeFacto
         {
             using IServiceScope scope = serviceScopeFactory.CreateScope();
             IMediator mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+
+            await mediator.Send(new UpdateTseTmcShareHoldersDataRequest(), stoppingToken);
             await mediator.Send(new UpdateCodalPublisherDataRequest(), stoppingToken);
         }
     }

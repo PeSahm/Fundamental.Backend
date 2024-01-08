@@ -1,0 +1,65 @@
+﻿using Fundamental.Domain.Common.BaseTypes;
+using Fundamental.Domain.Common.Enums;
+using Fundamental.Domain.Symbols.Enums;
+
+namespace Fundamental.Domain.Symbols.Entities;
+
+public class SymbolShareHolder : BaseEntity<Guid>
+{
+    public SymbolShareHolder(
+        Guid id,
+        Symbol symbol,
+        string shareHolderName,
+        decimal sharePercentage,
+        ShareHolderSource shareHolderSource,
+        DateTime createdAt
+    )
+    {
+        Id = id;
+        Symbol = symbol;
+        ShareHolderName = shareHolderName;
+        SharePercentage = sharePercentage;
+        ShareHolderSource = shareHolderSource;
+        CreatedAt = createdAt;
+    }
+
+    private SymbolShareHolder()
+    {
+    }
+
+    public Symbol Symbol { get; private set; }
+
+    public string ShareHolderName { get; private set; }
+
+    public decimal SharePercentage { get; private set; }
+
+    public ShareHolderSource ShareHolderSource { get; private set; }
+
+    public ReviewStatus ReviewStatus { get; private set; } = ReviewStatus.Pending;
+
+    public Symbol? ShareHolderSymbol { get; private set; }
+
+    public void ChangeReviewStatus(ReviewStatus reviewStatus, DateTime updatedAt)
+    {
+        ReviewStatus = reviewStatus;
+        UpdatedAt = updatedAt;
+    }
+
+    public void SetShareHolderSymbol(Symbol shareHolderSymbol, DateTime updatedAt)
+    {
+        ShareHolderSymbol = shareHolderSymbol;
+        ReviewStatus = ReviewStatus.Approved;
+        UpdatedAt = updatedAt;
+    }
+
+    public void ChangeSharePercentage(decimal sharePercentage, DateTime updatedAt)
+    {
+        if (sharePercentage == SharePercentage)
+        {
+            return;
+        }
+
+        SharePercentage = sharePercentage;
+        UpdatedAt = updatedAt;
+    }
+}

@@ -1,0 +1,36 @@
+﻿using System.Net.Http.Json;
+using System.Text;
+using Fundamental.Application.Codals.Options;
+using Fundamental.Application.Codals.Services;
+using Fundamental.Application.Codals.Services.Models.MarketDataServiceModels;
+using Fundamental.Infrastructure.Common;
+using Microsoft.Extensions.Options;
+
+namespace Fundamental.Infrastructure.Services;
+
+public class MarketDataService(
+    IHttpClientFactory httpClientFactory,
+    IOptions<MdpOption> mdpOption
+)
+    : IMarketDataService
+{
+    private readonly HttpClient _mdpClient = httpClientFactory.CreateClient(HttpClients.MDP);
+    private readonly MdpOption _mdpOption = mdpOption.Value;
+
+    public async Task<List<ShareHoldersResponse>> GetShareHoldersAsync(DateOnly date, CancellationToken cancellationToken = default)
+    {
+        List<ShareHoldersResponse>? response = await _mdpClient.GetFromJsonAsync<List<ShareHoldersResponse>>(
+            new StringBuilder()
+                .Append(_mdpOption.ShareHolders)
+                .Append('?')
+                .Append("select=Isin,Date,ShareHolderName,NumberOfShares,PerOfShares,ChangeAmount")
+                .Append('&')
+                .Append("Date")
+                .Append('=')
+                .Append($"{date:yyyy-MM-dd}")
+                .ToString(),
+            cancellationToken: cancellationToken);
+
+        return response ?? [];
+    }
+}

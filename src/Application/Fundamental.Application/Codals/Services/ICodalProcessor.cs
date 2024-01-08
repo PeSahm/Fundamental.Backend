@@ -1,5 +1,5 @@
 ﻿using Fundamental.Application.Codals.Enums;
-using Fundamental.Application.Codals.Services.Models;
+using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Common.Enums;
 
 namespace Fundamental.Application.Codals.Services;

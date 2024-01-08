@@ -13,8 +13,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fundamental.Migrations.Fundamental
 {
     [DbContext(typeof(FundamentalDbContext))]
-    [Migration("20231228085018_AddPublisherTable4")]
-    partial class AddPublisherTable4
+    [Migration("20240108192130_AddSymbolShareHolderTable")]
+    partial class AddSymbolShareHolderTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1064,6 +1064,83 @@ namespace Fundamental.Migrations.Fundamental
                     b.ToTable("SymbolRelations", "shd");
                 });
 
+            modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.SymbolShareHolder", b =>
+                {
+                    b.Property<long>("_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnOrder(0);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("_id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(1);
+
+                    b.Property<DateTime>("PeriodEnd")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("PeriodEnd");
+
+                    b.Property<DateTime>("PeriodStart")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("PeriodStart");
+
+                    b.Property<short>("ReviewStatus")
+                        .HasColumnType("SMALLINT")
+                        .HasColumnName("ReviewStatus");
+
+                    b.Property<string>("ShareHolderName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<short>("ShareHolderSource")
+                        .HasColumnType("SMALLINT");
+
+                    b.Property<long?>("ShareHolderSymbolId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("SharePercentage")
+                        .HasPrecision(18, 5)
+                        .HasColumnType("decimal(18,5)")
+                        .HasColumnName("SharePercentage");
+
+                    b.Property<long>("SymbolId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("ModifiedAt");
+
+                    b.HasKey("_id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("ShareHolderSymbolId");
+
+                    b.HasIndex("SymbolId");
+
+                    b.ToTable("SymbolShareHolder", "shd");
+
+                    b.ToTable(tb => tb.IsTemporal(ttb =>
+                            {
+                                ttb.UseHistoryTable("SymbolShareHolderHistory", "shd");
+                                ttb
+                                    .HasPeriodStart("PeriodStart")
+                                    .HasColumnName("PeriodStart");
+                                ttb
+                                    .HasPeriodEnd("PeriodEnd")
+                                    .HasColumnName("PeriodEnd");
+                            }));
+                });
+
             modelBuilder.Entity("Fundamental.Domain.Codals.FinancialStatement", b =>
                 {
                     b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Symbol")
@@ -1594,6 +1671,23 @@ namespace Fundamental.Migrations.Fundamental
                     b.Navigation("Child");
 
                     b.Navigation("Parent");
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.SymbolShareHolder", b =>
+                {
+                    b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "ShareHolderSymbol")
+                        .WithMany()
+                        .HasForeignKey("ShareHolderSymbolId");
+
+                    b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Symbol")
+                        .WithMany()
+                        .HasForeignKey("SymbolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ShareHolderSymbol");
+
+                    b.Navigation("Symbol");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.Symbol", b =>

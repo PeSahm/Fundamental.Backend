@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Fundamental.Application.Codals.Services.Models;
+namespace Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 
 public class GetPublisherResponse
 {
