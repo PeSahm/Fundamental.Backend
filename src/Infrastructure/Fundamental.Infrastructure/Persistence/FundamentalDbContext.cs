@@ -37,6 +37,8 @@ public class FundamentalDbContext : DbContext, IUnitOfWork
 
     public DbSet<NonOperationIncomeAndExpense> NonOperationIncomeAndExpenses { get; set; }
 
+    public DbSet<SymbolShareHolder> SymbolShareHolders { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(

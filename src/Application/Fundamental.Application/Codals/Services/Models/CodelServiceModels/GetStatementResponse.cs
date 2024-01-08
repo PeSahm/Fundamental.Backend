@@ -1,6 +1,6 @@
 ﻿using Fundamental.Domain.Common.Enums;
 
-namespace Fundamental.Application.Codals.Services.Models;
+namespace Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 
 public class GetStatementResponse
 {

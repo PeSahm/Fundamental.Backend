@@ -5,6 +5,7 @@ using Fundamental.Application.Codals.Enums;
 using Fundamental.Application.Codals.Options;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models;
+using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Infrastructure.Common;
 using Microsoft.Extensions.DependencyInjection;
