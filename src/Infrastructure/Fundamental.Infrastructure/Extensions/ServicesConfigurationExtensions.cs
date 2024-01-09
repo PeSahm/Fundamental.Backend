@@ -58,6 +58,7 @@ public static class ServicesConfigurationExtensions
     public static void AddReadRepositories(this WebApplicationBuilder builder)
     {
         builder.Services.AddScoped<ISymbolRelationRepository, SymbolRelationRepository>();
+        builder.Services.AddScoped<ISymbolShareHoldersReadRepository, SymbolShareHoldersReadRepository>();
         builder.AddManufacturingReadRepositories();
     }
 
