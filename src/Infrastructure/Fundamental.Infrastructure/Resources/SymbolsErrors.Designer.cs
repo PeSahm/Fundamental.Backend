@@ -69,6 +69,15 @@ namespace Fundamental.Infrastructure.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Symbol Share Holder not Found..
+        /// </summary>
+        internal static string _11_395_101 {
+            get {
+                return ResourceManager.GetString("11_395_101", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Investor isin is invalid..
         /// </summary>
         internal static string _11_399_101 {
