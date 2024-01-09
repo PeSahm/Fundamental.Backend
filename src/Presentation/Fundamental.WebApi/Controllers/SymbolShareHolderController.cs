@@ -1,7 +1,9 @@
 ﻿using ErrorHandling.AspNetCore;
+using Fundamental.Application.Symbols.Commands.RejectSymbolShareHolder;
 using Fundamental.Application.Symbols.Queries.GetSymbolShareHolders;
 using Fundamental.Domain.Common.Dto;
 using Fundamental.ErrorHandling;
+using Fundamental.Web.Common.Swagger;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,5 +21,14 @@ public class SymbolShareHolderController(ISender mediator) : ControllerBase
     )
     {
         return await mediator.Send(request);
+    }
+
+    [HttpPost("reject/{id:guid}")]
+    [SwaggerRequestType(typeof(RejectSymbolShareHolderRequest))]
+    public async Task<Response> RejectSymbolShareHolder(
+        [FromRoute] Guid id
+    )
+    {
+        return await mediator.Send(new RejectSymbolShareHolderRequest(id));
     }
 }
