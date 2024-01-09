@@ -4,6 +4,7 @@ public enum HandlerCode : ushort
 {
     UpdateTseTmcShareHoldersData = 11_199,
     GetSymbols = 11_999,
+    GetSymbolShareHolders = 11_396,
     GetSymbolRelationById = 11_397,
     GetSymbolRelations = 11_398,
     AddSymbolRelationship = 11_399,
