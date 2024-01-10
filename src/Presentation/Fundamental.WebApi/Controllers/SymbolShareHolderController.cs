@@ -1,4 +1,5 @@
 ﻿using ErrorHandling.AspNetCore;
+using Fundamental.Application.Symbols.Commands.ApproveSymbolShareHolder;
 using Fundamental.Application.Symbols.Commands.RejectSymbolShareHolder;
 using Fundamental.Application.Symbols.Queries.GetSymbolShareHolders;
 using Fundamental.Domain.Common.Dto;
@@ -30,5 +31,11 @@ public class SymbolShareHolderController(ISender mediator) : ControllerBase
     )
     {
         return await mediator.Send(new RejectSymbolShareHolderRequest(id));
+    }
+
+    [HttpPost("approve")]
+    public async Task<Response> RejectSymbolShareHolder([FromBody] ApproveSymbolShareHolderRequest request)
+    {
+        return await mediator.Send(request);
     }
 }

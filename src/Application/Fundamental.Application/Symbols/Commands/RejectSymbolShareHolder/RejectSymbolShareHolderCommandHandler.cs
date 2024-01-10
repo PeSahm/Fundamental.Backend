@@ -26,7 +26,8 @@ public sealed class RejectSymbolShareHolderCommandHandler(
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         List<SymbolShareHolder> allShareHolders = await symbolShareHolderRepository
-            .ListAsync(SymbolShareHolderSpec.WhereShareHolderName(symbolShareHolder.ShareHolderName, ReviewStatus.Pending),
+            .ListAsync(
+                SymbolShareHolderSpec.WhereShareHolderName(symbolShareHolder.ShareHolderName, ReviewStatus.Pending),
                 cancellationToken);
 
         allShareHolders.ForEach(x => x.ChangeReviewStatus(ReviewStatus.Rejected, DateTime.Now));
