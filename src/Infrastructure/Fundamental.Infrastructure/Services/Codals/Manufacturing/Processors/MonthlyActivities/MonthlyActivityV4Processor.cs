@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 
-namespace Fundamental.Infrastructure.Services.Codals.Manufactering.Processors.MonthlyActivities;
+namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.MonthlyActivities;
 
 public class MonthlyActivityV4Processor(
     IServiceScopeFactory serviceScopeFactory

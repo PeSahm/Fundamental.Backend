@@ -1,6 +1,4 @@
-﻿using Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage5Summaries.V2;
-using Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage5Summaries.V2.
-    NonOperationIncomeAndExpenses;
+﻿using Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.IncomeStatements.V7;
 using Fundamental.Application.Codals.Enums;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
@@ -13,14 +11,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Fundamental.Infrastructure.Services.Codals.Manufactering.Processors.InterpretativeReportSummaryPages5;
+namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.IncomeStatements;
 
-public class NonOperationIncomeAndExpensesV2Processor(IServiceScopeFactory serviceScopeFactory) : ICodalProcessor
+public sealed class IncomeStatementsV7Processor(IServiceScopeFactory serviceScopeFactory) : ICodalProcessor
 {
     public static ReportingType ReportingType => ReportingType.Production;
     public static LetterType LetterType => LetterType.InterimStatement;
-    public static CodalVersion CodalVersion => CodalVersion.V2;
-    public static LetterPart LetterPart => LetterPart.NonOperationIncomeAndExpenses;
+    public static CodalVersion CodalVersion => CodalVersion.V7;
+    public static LetterPart LetterPart => LetterPart.IncomeStatement;
 
     public async Task Process(GetStatementResponse statement, GetStatementJsonResponse model, CancellationToken cancellationToken)
     {
@@ -33,7 +31,7 @@ public class NonOperationIncomeAndExpensesV2Processor(IServiceScopeFactory servi
         [
             "listedCapital",
             "unauthorizedCapital",
-            "interpretativeReportSummaryPage5"
+            "incomeStatement"
         ];
 
         List<JProperty> properties = jObject.Properties().ToList();
@@ -47,43 +45,36 @@ public class NonOperationIncomeAndExpensesV2Processor(IServiceScopeFactory servi
         }
 
         // Deserialize the filtered JSON into your model
-        RootInterpretativeReportSummaryPage5? rootInterpretativeReportSummary = jObject.ToObject<RootInterpretativeReportSummaryPage5>(
-            new JsonSerializer
-            {
-                NullValueHandling = NullValueHandling.Ignore
-            });
+        RootCodalIncomeStatement? codalBalanceSheetRoot = jObject.ToObject<RootCodalIncomeStatement>(new JsonSerializer
+        {
+            NullValueHandling = NullValueHandling.Ignore
+        });
 
-        if (rootInterpretativeReportSummary?.InterpretativeReportSummaryPage5 is null)
+        if (codalBalanceSheetRoot?.CodalIncomeStatement is null)
         {
             return;
         }
 
-        if (rootInterpretativeReportSummary.InterpretativeReportSummaryPage5.NonOperationIncomeAndExpenses is null)
+        if (!codalBalanceSheetRoot.IsValidReport())
         {
             return;
         }
 
-        if (!rootInterpretativeReportSummary.InterpretativeReportSummaryPage5.NonOperationIncomeAndExpenses.IsValidReport())
-        {
-            return;
-        }
+        IncomeStatementDto incomeStatementDto = codalBalanceSheetRoot.CodalIncomeStatement.IncomeStatement;
 
-        CodalNonOperationIncomeAndExpenses? nonOperationIncomeAndExpenses =
-            rootInterpretativeReportSummary.InterpretativeReportSummaryPage5.NonOperationIncomeAndExpenses;
-
-        nonOperationIncomeAndExpenses.AddCustomRowItems();
+        incomeStatementDto.AddCustomRowItems();
 
         using IServiceScope scope = serviceScopeFactory.CreateScope();
         await using FundamentalDbContext dbContext = scope.ServiceProvider.GetRequiredService<FundamentalDbContext>();
 
-        foreach (YearDatum yearDatum in nonOperationIncomeAndExpenses.YearData)
+        foreach (YearDatum yearDatum in incomeStatementDto.YearData)
         {
             Symbol symbol =
                 await dbContext.Symbols.FirstAsync(
                     predicate: x => x.Isin == statement.Isin,
                     cancellationToken: cancellationToken);
 
-            if (await dbContext.NonOperationIncomeAndExpenses
+            if (await dbContext.IncomeStatements
                     .AnyAsync(
                         x =>
                             x.Symbol.Isin == statement.Isin &&
@@ -95,9 +86,9 @@ public class NonOperationIncomeAndExpensesV2Processor(IServiceScopeFactory servi
                 continue;
             }
 
-            foreach (RowItem rowItem in nonOperationIncomeAndExpenses.RowItems.Where(x => !string.IsNullOrWhiteSpace(x.GetDescription())))
+            foreach (RowItem rowItem in incomeStatementDto.RowItems)
             {
-                NonOperationIncomeAndExpense incomeStatement = new(
+                IncomeStatement incomeStatement = new(
                     Guid.NewGuid(),
                     symbol,
                     statement.TracingNo,
@@ -105,15 +96,14 @@ public class NonOperationIncomeAndExpensesV2Processor(IServiceScopeFactory servi
                     fiscalYear: yearDatum.FiscalYear!,
                     yearEndMonth: yearDatum.FiscalMonth!.Value,
                     reportMonth: yearDatum.ReportMonth!.Value,
+                    row: rowItem.RowNumber,
+                    rowItem.RowCode,
                     rowItem.GetDescription(),
                     rowItem.GetValue(yearDatum.ColumnId),
                     yearDatum.IsAudited,
-                    yearDatum.ColumnId == ColumnId.CurrentPeriod,
-                    yearDatum.ColumnId == ColumnId.LastAnnualPeriod,
-                    yearDatum.ColumnId == ColumnId.PredictedPeriod,
                     DateTime.Now
                 );
-                dbContext.NonOperationIncomeAndExpenses.Add(incomeStatement);
+                dbContext.IncomeStatements.Add(incomeStatement);
             }
         }
 

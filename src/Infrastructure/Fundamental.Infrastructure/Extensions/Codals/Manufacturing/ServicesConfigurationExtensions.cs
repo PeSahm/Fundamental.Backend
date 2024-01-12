@@ -3,11 +3,11 @@ using Fundamental.Application.Codals.Services;
 using Fundamental.Infrastructure.HostedServices.Codals.Manufacturing;
 using Fundamental.Infrastructure.Repositories.Codals.Manufacturing;
 using Fundamental.Infrastructure.Services;
-using Fundamental.Infrastructure.Services.Codals.Manufactering.Detectors;
-using Fundamental.Infrastructure.Services.Codals.Manufactering.Processors.BalanceSheets;
-using Fundamental.Infrastructure.Services.Codals.Manufactering.Processors.IncomeStatements;
-using Fundamental.Infrastructure.Services.Codals.Manufactering.Processors.InterpretativeReportSummaryPages5;
-using Fundamental.Infrastructure.Services.Codals.Manufactering.Processors.MonthlyActivities;
+using Fundamental.Infrastructure.Services.Codals.Manufacturing.Detectors;
+using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.BalanceSheets;
+using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.IncomeStatements;
+using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.InterpretativeReportSummaryPages5;
+using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.MonthlyActivities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
