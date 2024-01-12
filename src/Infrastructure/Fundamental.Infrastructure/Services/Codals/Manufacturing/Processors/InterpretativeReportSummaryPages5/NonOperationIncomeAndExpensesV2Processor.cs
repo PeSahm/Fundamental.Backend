@@ -1,9 +1,10 @@
-﻿using Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.BalanceSheets.V5;
+﻿using Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage5Summaries.V2;
+using Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage5Summaries.V2.
+    NonOperationIncomeAndExpenses;
 using Fundamental.Application.Codals.Enums;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
-using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
 using Fundamental.Infrastructure.Persistence;
@@ -12,14 +13,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Fundamental.Infrastructure.Services.Codals.Manufactering.Processors.BalanceSheets;
+namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.InterpretativeReportSummaryPages5;
 
-public sealed class BalanceSheetV5Processor(IServiceScopeFactory serviceScopeFactory) : ICodalProcessor
+public class NonOperationIncomeAndExpensesV2Processor(IServiceScopeFactory serviceScopeFactory) : ICodalProcessor
 {
     public static ReportingType ReportingType => ReportingType.Production;
     public static LetterType LetterType => LetterType.InterimStatement;
-    public static CodalVersion CodalVersion => CodalVersion.V5;
-    public static LetterPart LetterPart => LetterPart.BalanceSheet;
+    public static CodalVersion CodalVersion => CodalVersion.V2;
+    public static LetterPart LetterPart => LetterPart.NonOperationIncomeAndExpenses;
 
     public async Task Process(GetStatementResponse statement, GetStatementJsonResponse model, CancellationToken cancellationToken)
     {
@@ -32,7 +33,7 @@ public sealed class BalanceSheetV5Processor(IServiceScopeFactory serviceScopeFac
         [
             "listedCapital",
             "unauthorizedCapital",
-            "balanceSheet"
+            "interpretativeReportSummaryPage5"
         ];
 
         List<JProperty> properties = jObject.Properties().ToList();
@@ -46,36 +47,43 @@ public sealed class BalanceSheetV5Processor(IServiceScopeFactory serviceScopeFac
         }
 
         // Deserialize the filtered JSON into your model
-        RootCodalBalanceSheet? codalBalanceSheetRoot = jObject.ToObject<RootCodalBalanceSheet>(new JsonSerializer
-        {
-            NullValueHandling = NullValueHandling.Ignore
-        });
+        RootInterpretativeReportSummaryPage5? rootInterpretativeReportSummary = jObject.ToObject<RootInterpretativeReportSummaryPage5>(
+            new JsonSerializer
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
 
-        if (codalBalanceSheetRoot?.BalanceSheetData is null)
-        {
-            return;
-        }
-
-        if (!codalBalanceSheetRoot.IsValidReport())
+        if (rootInterpretativeReportSummary?.InterpretativeReportSummaryPage5 is null)
         {
             return;
         }
 
-        BalanceSheetDto balanceSheetDto = codalBalanceSheetRoot.BalanceSheetData.BalanceSheet;
+        if (rootInterpretativeReportSummary.InterpretativeReportSummaryPage5.NonOperationIncomeAndExpenses is null)
+        {
+            return;
+        }
 
-        balanceSheetDto.AddCustomRowItems();
+        if (!rootInterpretativeReportSummary.InterpretativeReportSummaryPage5.NonOperationIncomeAndExpenses.IsValidReport())
+        {
+            return;
+        }
+
+        CodalNonOperationIncomeAndExpenses? nonOperationIncomeAndExpenses =
+            rootInterpretativeReportSummary.InterpretativeReportSummaryPage5.NonOperationIncomeAndExpenses;
+
+        nonOperationIncomeAndExpenses.AddCustomRowItems();
 
         using IServiceScope scope = serviceScopeFactory.CreateScope();
         await using FundamentalDbContext dbContext = scope.ServiceProvider.GetRequiredService<FundamentalDbContext>();
 
-        foreach (YearDatum yearDatum in balanceSheetDto.YearData)
+        foreach (YearDatum yearDatum in nonOperationIncomeAndExpenses.YearData)
         {
             Symbol symbol =
                 await dbContext.Symbols.FirstAsync(
                     predicate: x => x.Isin == statement.Isin,
                     cancellationToken: cancellationToken);
 
-            if (await dbContext.BalanceSheets
+            if (await dbContext.NonOperationIncomeAndExpenses
                     .AnyAsync(
                         x =>
                             x.Symbol.Isin == statement.Isin &&
@@ -87,9 +95,9 @@ public sealed class BalanceSheetV5Processor(IServiceScopeFactory serviceScopeFac
                 continue;
             }
 
-            foreach (RowItem rowItem in balanceSheetDto.RowItems)
+            foreach (RowItem rowItem in nonOperationIncomeAndExpenses.RowItems.Where(x => !string.IsNullOrWhiteSpace(x.GetDescription())))
             {
-                BalanceSheet balanceSheet = new(
+                NonOperationIncomeAndExpense incomeStatement = new(
                     Guid.NewGuid(),
                     symbol,
                     statement.TracingNo,
@@ -97,15 +105,15 @@ public sealed class BalanceSheetV5Processor(IServiceScopeFactory serviceScopeFac
                     fiscalYear: yearDatum.FiscalYear!,
                     yearEndMonth: yearDatum.FiscalMonth!.Value,
                     reportMonth: yearDatum.ReportMonth!.Value,
-                    row: rowItem.RowNumber,
-                    (ushort)rowItem.RowCode,
-                    rowItem.Category == Category.Assets ? BalanceSheetCategory.Assets : BalanceSheetCategory.Liability,
                     rowItem.GetDescription(),
                     rowItem.GetValue(yearDatum.ColumnId),
                     yearDatum.IsAudited,
+                    yearDatum.ColumnId == ColumnId.CurrentPeriod,
+                    yearDatum.ColumnId == ColumnId.LastAnnualPeriod,
+                    yearDatum.ColumnId == ColumnId.PredictedPeriod,
                     DateTime.Now
                 );
-                dbContext.BalanceSheets.Add(balanceSheet);
+                dbContext.NonOperationIncomeAndExpenses.Add(incomeStatement);
             }
         }
 

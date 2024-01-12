@@ -2,7 +2,7 @@
 using Fundamental.Application.Codals.Services;
 using Fundamental.Domain.Common.Enums;
 
-namespace Fundamental.Infrastructure.Services.Codals.Manufactering.Detectors;
+namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Detectors;
 
 public class NonOperationIncomeAndExpensesDetector : ICodalVersionDetector
 {

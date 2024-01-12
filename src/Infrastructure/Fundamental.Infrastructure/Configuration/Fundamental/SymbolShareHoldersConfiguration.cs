@@ -8,7 +8,8 @@ public sealed class SymbolShareHoldersConfiguration : EntityTypeConfigurationBas
 {
     protected override void ExtraConfigure(EntityTypeBuilder<SymbolShareHolder> builder)
     {
-        builder.ToTable("SymbolShareHolder",
+        builder.ToTable(
+            "SymbolShareHolder",
             "shd",
             t => t.IsTemporal(cfg =>
             {

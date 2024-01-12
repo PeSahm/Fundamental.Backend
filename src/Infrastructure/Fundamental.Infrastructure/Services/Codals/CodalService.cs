@@ -8,6 +8,8 @@ using Fundamental.Application.Codals.Services.Models;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Infrastructure.Common;
+using Fundamental.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -45,6 +47,24 @@ public class CodalService(
                     .Append((int)letterType)
                     .ToString(),
                 cancellationToken: cancellationToken);
+        using IServiceScope scope = serviceScopeFactory.CreateScope();
+        using FundamentalDbContext context = scope.ServiceProvider.GetRequiredService<FundamentalDbContext>();
+
+        if (response?.Result is { Count: > 0 })
+        {
+            foreach (GetStatementResponse statementResponse in response.Result)
+            {
+                string? isin = await context.Publishers.AsNoTracking()
+                    .Where(x => x.CodalId == statementResponse.PublisherId.ToString())
+                    .Select(x => x.Symbol.Isin)
+                    .FirstOrDefaultAsync(cancellationToken: cancellationToken);
+
+                if (!string.IsNullOrWhiteSpace(isin))
+                {
+                    statementResponse.Isin = isin;
+                }
+            }
+        }
 
         return response?.Result ?? new();
     }

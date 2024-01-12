@@ -4,10 +4,11 @@ namespace Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 
 public class GetStatementResponse
 {
-    public DateTime PublishDate { get; set; }
+    public DateTime PublishDateMildai { get; set; }
     public ReportingType ReportingType { get; set; }
     public LetterType Type { get; set; }
     public string HtmlUrl { get; set; }
-    public string Isin { get; set; }
+    public long PublisherId { get; set; }
     public ulong TracingNo { get; set; }
+    public string? Isin { get; set; }
 }

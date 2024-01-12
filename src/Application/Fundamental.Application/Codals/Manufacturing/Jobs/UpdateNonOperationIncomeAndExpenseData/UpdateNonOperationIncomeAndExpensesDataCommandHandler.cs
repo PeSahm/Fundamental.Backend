@@ -1,4 +1,5 @@
-﻿using Fundamental.Application.Codals.Enums;
+﻿using DNTPersianUtils.Core;
+using Fundamental.Application.Codals.Enums;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Common.Enums;
@@ -17,7 +18,7 @@ public class UpdateNonOperationIncomeAndExpensesDataCommandHandler(
     {
         List<GetStatementResponse> statements =
             await codalService.GetStatements(
-                DateTime.Now.AddDays(request.Days),
+                "1400/07/19".ToGregorianDateTime()!.Value,
                 ReportingType.Production,
                 LetterType.InterimStatement,
                 cancellationToken);
