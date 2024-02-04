@@ -11,4 +11,6 @@ public class MdpOption
     public string Publishers { get; set; }
 
     public string ShareHolders { get; set; }
+
+    public string TradeHistory { get; set; }
 }

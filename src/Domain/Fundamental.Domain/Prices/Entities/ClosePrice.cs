@@ -5,11 +5,12 @@ namespace Fundamental.Domain.Prices.Entities;
 
 public class ClosePrice : BaseEntity<Guid>
 {
-    public ClosePrice(Guid id, Symbol symbol, DateTime date)
+    public ClosePrice(Guid id, Symbol symbol, DateOnly date, DateTime createdAt)
     {
         Id = id;
         Symbol = symbol;
         Date = date;
+        CreatedAt = createdAt;
     }
 
     protected ClosePrice()
@@ -17,7 +18,7 @@ public class ClosePrice : BaseEntity<Guid>
     }
 
     public Symbol Symbol { get; private set; }
-    public DateTime Date { get; private set; }
+    public DateOnly Date { get; private set; }
 
     public ulong Close { get; private set; }
 
@@ -45,28 +46,38 @@ public class ClosePrice : BaseEntity<Guid>
 
     public ulong Value { get; private set; }
 
-    public void SetPrice(ulong close, ulong open, ulong high, ulong low, ulong last)
+    public void SetPrice(ulong close, ulong open, ulong high, ulong low, ulong last, DateTime updatedAt)
     {
         Close = close;
         Open = open;
         High = high;
         Low = low;
         Last = last;
+        UpdatedAt = updatedAt;
     }
 
-    public void SetAdjustedPrice(ulong closeAdjusted, ulong openAdjusted, ulong highAdjusted, ulong lowAdjusted, ulong lastAdjusted)
+    public void SetAdjustedPrice(
+        ulong closeAdjusted,
+        ulong openAdjusted,
+        ulong highAdjusted,
+        ulong lowAdjusted,
+        ulong lastAdjusted,
+        DateTime updatedAt
+    )
     {
         CloseAdjusted = closeAdjusted;
         OpenAdjusted = openAdjusted;
         HighAdjusted = highAdjusted;
         LowAdjusted = lowAdjusted;
         LastAdjusted = lastAdjusted;
+        UpdatedAt = updatedAt;
     }
 
-    public void SetPriceStatistics(ulong volume, ulong quantity, ulong value)
+    public void SetPriceStatistics(ulong volume, ulong quantity, ulong value, DateTime updatedAt)
     {
         Volume = volume;
         Quantity = quantity;
         Value = value;
+        UpdatedAt = updatedAt;
     }
 }
