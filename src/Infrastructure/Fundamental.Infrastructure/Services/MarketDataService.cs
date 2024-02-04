@@ -33,4 +33,21 @@ public class MarketDataService(
 
         return response ?? [];
     }
+
+    public async Task<List<TradeHistoryResponse>> GetClosePricesAsync(DateOnly date, CancellationToken cancellationToken = default)
+    {
+        List<TradeHistoryResponse>? response = await _mdpClient.GetFromJsonAsync<List<TradeHistoryResponse>>(
+            new StringBuilder()
+                .Append(_mdpOption.TradeHistory)
+                .Append('?')
+                .Append("select=Isin,Date,ShareHolderName,NumberOfShares,PerOfShares,ChangeAmount")
+                .Append('&')
+                .Append("Date")
+                .Append('=')
+                .Append($"{date:yyyy-MM-dd}")
+                .ToString(),
+            cancellationToken: cancellationToken);
+
+        return response ?? [];
+    }
 }
