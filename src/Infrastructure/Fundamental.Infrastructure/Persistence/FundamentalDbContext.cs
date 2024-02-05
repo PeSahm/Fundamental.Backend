@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Fundamental.Domain.Codals;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
+using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.Domain.Symbols.Entities;
 using Fundamental.Infrastructure.Configuration.Fundamental;
@@ -43,6 +44,15 @@ public class FundamentalDbContext : DbContext, IUnitOfWork
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.HasPostgresEnum<IsoCurrency>();
+        modelBuilder.HasPostgresEnum<ReportingType>();
+        modelBuilder.HasPostgresEnum<CompanyType>();
+        modelBuilder.HasPostgresEnum<EnableSubCompany>();
+        modelBuilder.HasPostgresEnum<PublisherFundType>();
+        modelBuilder.HasPostgresEnum<PublisherSubCompanyType>();
+        modelBuilder.HasPostgresEnum<PublisherMarketType>();
+        modelBuilder.HasPostgresEnum<PublisherState>();
+
         modelBuilder.ApplyConfigurationsFromAssembly(
             Assembly.GetExecutingAssembly(),
             type => type.Namespace!.StartsWith(typeof(SymbolConfiguration).Namespace!));

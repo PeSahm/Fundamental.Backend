@@ -8,97 +8,68 @@ public class ClosePriceConfiguration : EntityTypeConfigurationBase<ClosePrice>
 {
     protected override void ExtraConfigure(EntityTypeBuilder<ClosePrice> builder)
     {
-        builder.ToTable("ClosePrice", "shd");
+        builder.ToTable("close-price", "shd");
 
         builder.HasOne(x => x.Symbol)
             .WithMany()
             .IsRequired()
-            .HasForeignKey("SymbolId");
-
-        builder.HasIndex("Date", "SymbolId").IsUnique();
+            .HasForeignKey("symbol_id");
 
         builder.Property(x => x.Date)
             .IsRequired()
-            .HasColumnName("Date")
-            .HasColumnType("date")
-            .HasColumnOrder(3);
+            .HasColumnName("date")
+            .HasColumnType(NpgsqlTypes.NpgsqlDbType.Date.ToString());
 
         builder.Property(x => x.Close)
             .IsRequired()
-            .HasColumnName("Close")
-            .HasColumnType("bigint")
-            .HasColumnOrder(4);
+            .HasColumnType("bigint");
 
         builder.Property(x => x.Open)
             .IsRequired()
-            .HasColumnName("Open")
-            .HasColumnType("bigint")
-            .HasColumnOrder(5);
+            .HasColumnType("bigint");
 
         builder.Property(x => x.High)
             .IsRequired()
-            .HasColumnName("High")
-            .HasColumnType("bigint")
-            .HasColumnOrder(6);
+            .HasColumnType("bigint");
 
         builder.Property(x => x.Low)
             .IsRequired()
-            .HasColumnName("Low")
-            .HasColumnType("bigint")
-            .HasColumnOrder(7);
+            .HasColumnType("bigint");
 
         builder.Property(x => x.Last)
             .IsRequired()
-            .HasColumnName("Last")
-            .HasColumnType("bigint")
-            .HasColumnOrder(8);
+            .HasColumnType("bigint");
 
         builder.Property(x => x.CloseAdjusted)
             .IsRequired()
-            .HasColumnName("CloseAdjusted")
-            .HasColumnType("bigint")
-            .HasColumnOrder(9);
+            .HasColumnType("bigint");
 
         builder.Property(x => x.OpenAdjusted)
             .IsRequired()
-            .HasColumnName("OpenAdjusted")
-            .HasColumnType("bigint")
-            .HasColumnOrder(10);
+            .HasColumnType("bigint");
 
         builder.Property(x => x.HighAdjusted)
             .IsRequired()
-            .HasColumnName("HighAdjusted")
-            .HasColumnType("bigint")
-            .HasColumnOrder(11);
+            .HasColumnType("bigint");
 
         builder.Property(x => x.LowAdjusted)
             .IsRequired()
-            .HasColumnName("LowAdjusted")
-            .HasColumnType("bigint")
-            .HasColumnOrder(12);
+            .HasColumnType("bigint");
 
         builder.Property(x => x.LastAdjusted)
             .IsRequired()
-            .HasColumnName("LastAdjusted")
-            .HasColumnType("bigint")
-            .HasColumnOrder(13);
+            .HasColumnType("bigint");
 
         builder.Property(x => x.Volume)
             .IsRequired()
-            .HasColumnName("Volume")
-            .HasColumnType("bigint")
-            .HasColumnOrder(14);
+            .HasColumnType("bigint");
 
         builder.Property(x => x.Quantity)
             .IsRequired()
-            .HasColumnName("Quantity")
-            .HasColumnType("bigint")
-            .HasColumnOrder(15);
+            .HasColumnType("bigint");
 
         builder.Property(x => x.Value)
             .IsRequired()
-            .HasColumnName("Value")
-            .HasColumnType("bigint")
-            .HasColumnOrder(16);
+            .HasColumnType("bigint");
     }
 }

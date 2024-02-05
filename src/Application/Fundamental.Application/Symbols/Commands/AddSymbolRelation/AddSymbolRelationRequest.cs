@@ -6,4 +6,4 @@ using MediatR;
 namespace Fundamental.Application.Symbols.Commands.AddSymbolRelation;
 
 [HandlerCode(HandlerCode.AddSymbolRelationship)]
-public sealed record AddSymbolRelationRequest(string Investor, string Investment, float Ratio) : IRequest<Response>;
+public sealed record AddSymbolRelationRequest(string Investor, string Investment, decimal Ratio) : IRequest<Response>;

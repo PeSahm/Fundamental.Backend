@@ -8,13 +8,13 @@ public class PublisherConfiguration : EntityTypeConfigurationBase<Publisher>
 {
     protected override void ExtraConfigure(EntityTypeBuilder<Publisher> builder)
     {
-        builder.ToTable("Publisher", "fs");
+        builder.ToTable("publisher", "fs");
 
         builder.Property(x => x.CodalId).IsRequired().HasMaxLength(128);
 
-        builder.HasOne(x => x.Symbol).WithMany().HasForeignKey("SymbolId").IsRequired();
+        builder.HasOne(x => x.Symbol).WithMany().HasForeignKey("symbol-id").IsRequired();
 
-        builder.HasOne(x => x.ParentSymbol).WithMany().HasForeignKey("ParentSymbolId").IsRequired(false);
+        builder.HasOne(x => x.ParentSymbol).WithMany().HasForeignKey("parent-symbol-id").IsRequired(false);
 
         builder.Property(x => x.Isic).HasMaxLength(128).IsRequired(false);
 
@@ -79,7 +79,7 @@ public class PublisherConfiguration : EntityTypeConfigurationBase<Publisher>
             amount =>
             {
                 amount.Property(money => money.Value)
-                    .HasColumnName("UnauthorizedCapital")
+                    .HasColumnName("unauthorized_capital")
                     .HasColumnType("decimal")
                     .HasPrecision(36, 10)
                     .IsRequired();
@@ -93,7 +93,7 @@ public class PublisherConfiguration : EntityTypeConfigurationBase<Publisher>
             amount =>
             {
                 amount.Property(money => money.Value)
-                    .HasColumnName("ListedCapital")
+                    .HasColumnName("listed_capital")
                     .HasColumnType("decimal")
                     .HasPrecision(36, 10)
                     .IsRequired();

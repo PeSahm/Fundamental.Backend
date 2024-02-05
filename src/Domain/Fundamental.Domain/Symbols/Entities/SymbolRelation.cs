@@ -4,7 +4,7 @@ namespace Fundamental.Domain.Symbols.Entities;
 
 public class SymbolRelation : BaseEntity<Guid>
 {
-    public SymbolRelation(Guid id, Symbol parent, Symbol child, float ratio, DateTime createdAt)
+    public SymbolRelation(Guid id, Symbol parent, Symbol child, decimal ratio, DateTime createdAt)
     {
         Id = id;
         Parent = parent;
@@ -18,6 +18,6 @@ public class SymbolRelation : BaseEntity<Guid>
     }
 
     public Symbol Parent { get; set; }
-    public float Ratio { get; set; }
+    public decimal Ratio { get; set; }
     public Symbol Child { get; set; }
 }

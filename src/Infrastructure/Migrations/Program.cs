@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
+using Npgsql;
 
 IHostBuilder? hostBuilder = Host.CreateDefaultBuilder(args)
     .ConfigureServices((hostContext, services) =>
@@ -25,6 +25,20 @@ if (args.Length > 0 && args[0] == "migrate")
 
     FundamentalDbContext appDb = scope.ServiceProvider.GetRequiredService<FundamentalDbContext>();
     appDb.Database.Migrate();
+
+    if (appDb.Database.GetDbConnection() is NpgsqlConnection npgsqlConnection)
+    {
+        await npgsqlConnection.OpenAsync();
+
+        try
+        {
+            await npgsqlConnection.ReloadTypesAsync();
+        }
+        finally
+        {
+            await npgsqlConnection.CloseAsync();
+        }
+    }
 }
 else
 {

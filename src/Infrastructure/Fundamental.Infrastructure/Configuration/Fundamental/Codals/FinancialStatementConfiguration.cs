@@ -8,21 +8,21 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
 {
     protected override void ExtraConfigure(EntityTypeBuilder<FinancialStatement> builder)
     {
-        builder.ToTable("FinancialStatements", "fs");
+        builder.ToTable("financial-statement", "fs");
 
         builder.HasOne(x => x.Symbol)
             .WithMany()
-            .HasForeignKey("SymbolId")
+            .HasForeignKey("symbol_id")
             .IsRequired();
 
         builder.Property(x => x.TraceNo)
-            .HasColumnName("TraceNo")
             .HasColumnType("BIGINT")
             .IsRequired();
 
         builder.Property(x => x.Uri)
             .HasColumnName("Uri")
-            .HasColumnType("VARCHAR(512)")
+            .HasMaxLength(512)
+            .IsUnicode(false)
             .IsRequired();
 
         builder.ComplexProperty(
@@ -30,7 +30,7 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
             navigationBuilder =>
             {
                 navigationBuilder.Property(x => x.Year)
-                    .HasColumnName("FiscalYear")
+                    .HasColumnName("fiscal_year")
                     .HasColumnType("SMALLINT")
                     .IsRequired();
             });
@@ -43,8 +43,8 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
             navigationBuilder =>
             {
                 navigationBuilder.Property(x => x.Month)
-                    .HasColumnName("YearEndMonth")
-                    .HasColumnType("TINYINT")
+                    .HasColumnName("year_end_month")
+                    .HasColumnType("smallint")
                     .IsRequired();
             });
 
@@ -53,8 +53,8 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
             navigationBuilder =>
             {
                 navigationBuilder.Property(x => x.Month)
-                    .HasColumnName("ReportMonth")
-                    .HasColumnType("TINYINT")
+                    .HasColumnName("report_month")
+                    .HasColumnType("smallint")
                     .IsRequired();
             });
 
@@ -63,7 +63,7 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
             amount =>
             {
                 amount.Property(money => money.Value)
-                    .HasColumnName("OperatingIncome")
+                    .HasColumnName("operating_income")
                     .HasColumnType("decimal")
                     .HasPrecision(36, 10)
                     .IsRequired();
@@ -77,7 +77,7 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
             amount =>
             {
                 amount.Property(money => money.Value)
-                    .HasColumnName("GrossProfit")
+                    .HasColumnName("gross_profit")
                     .HasColumnType("decimal")
                     .HasPrecision(36, 10)
                     .IsRequired();
@@ -91,7 +91,7 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
             amount =>
             {
                 amount.Property(money => money.Value)
-                    .HasColumnName("OperatingProfit")
+                    .HasColumnName("operating_profit")
                     .HasColumnType("decimal")
                     .HasPrecision(36, 10)
                     .IsRequired();
@@ -105,7 +105,7 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
             amount =>
             {
                 amount.Property(money => money.Value)
-                    .HasColumnName("BankInterestIncome")
+                    .HasColumnName("bank_interest_income")
                     .HasColumnType("decimal")
                     .HasPrecision(36, 10)
                     .IsRequired();
@@ -119,7 +119,7 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
             amount =>
             {
                 amount.Property(money => money.Value)
-                    .HasColumnName("InvestmentIncome")
+                    .HasColumnName("investment_income")
                     .HasColumnType("decimal")
                     .HasPrecision(36, 10)
                     .IsRequired();
@@ -133,7 +133,7 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
             amount =>
             {
                 amount.Property(money => money.Value)
-                    .HasColumnName("NetProfit")
+                    .HasColumnName("net_profit")
                     .HasColumnType("decimal")
                     .HasPrecision(36, 10)
                     .IsRequired();
@@ -147,7 +147,7 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
             amount =>
             {
                 amount.Property(money => money.Value)
-                    .HasColumnName("Expense")
+                    .HasColumnName("expense")
                     .HasColumnType("decimal")
                     .HasPrecision(36, 10)
                     .IsRequired();
@@ -161,7 +161,7 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
             amount =>
             {
                 amount.Property(money => money.Value)
-                    .HasColumnName("Asset")
+                    .HasColumnName("asset")
                     .HasColumnType("decimal")
                     .HasPrecision(36, 10)
                     .IsRequired();
@@ -175,7 +175,7 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
             amount =>
             {
                 amount.Property(money => money.Value)
-                    .HasColumnName("OwnersEquity")
+                    .HasColumnName("owners_equity")
                     .HasColumnType("decimal")
                     .HasPrecision(36, 10)
                     .IsRequired();
@@ -189,7 +189,7 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
             amount =>
             {
                 amount.Property(money => money.Value)
-                    .HasColumnName("Receivables")
+                    .HasColumnName("receivables")
                     .HasColumnType("decimal")
                     .HasPrecision(36, 10)
                     .IsRequired();

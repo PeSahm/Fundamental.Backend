@@ -9,20 +9,15 @@ public sealed class SymbolShareHoldersConfiguration : EntityTypeConfigurationBas
     protected override void ExtraConfigure(EntityTypeBuilder<SymbolShareHolder> builder)
     {
         builder.ToTable(
-            "SymbolShareHolder",
-            "shd",
-            t => t.IsTemporal(cfg =>
-            {
-                cfg.UseHistoryTable("SymbolShareHolderHistory", "shd");
-            }));
+            "symbol-share-holders",
+            "shd");
 
         builder.Property(x => x.ShareHolderName)
-            .HasColumnType("nvarchar(512)")
+            .HasMaxLength(512)
             .IsRequired();
 
         builder.Property(x => x.SharePercentage)
             .HasPrecision(18, 5)
-            .HasColumnName("SharePercentage")
             .IsRequired();
 
         builder.Property(x => x.ShareHolderSource)
@@ -31,17 +26,16 @@ public sealed class SymbolShareHoldersConfiguration : EntityTypeConfigurationBas
 
         builder.Property(x => x.ReviewStatus)
             .HasColumnType("SMALLINT")
-            .HasColumnName("ReviewStatus")
             .IsRequired();
 
         builder.HasOne(x => x.Symbol)
             .WithMany()
-            .HasForeignKey("SymbolId")
+            .HasForeignKey("symbol-id")
             .IsRequired();
 
         builder.HasOne(x => x.ShareHolderSymbol)
             .WithMany()
-            .HasForeignKey("ShareHolderSymbolId")
+            .HasForeignKey("share-holder-symbol-id")
             .IsRequired(false);
     }
 }

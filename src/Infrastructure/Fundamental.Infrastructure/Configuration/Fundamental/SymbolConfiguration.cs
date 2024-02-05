@@ -8,74 +8,66 @@ public class SymbolConfiguration : EntityTypeConfigurationBase<Symbol>
 {
     protected override void ExtraConfigure(EntityTypeBuilder<Symbol> builder)
     {
-        builder.ToTable("Symbol", "shd");
+        builder.ToTable("symbol", "shd");
 
         builder.Property(x => x.Isin)
-            .HasColumnType("varchar(15)")
-            .HasColumnName("Isin")
+            .HasMaxLength(15)
+            .IsUnicode(false)
             .IsRequired();
 
         builder.HasIndex(x => x.Isin).IsUnique();
 
         builder.Property(x => x.TseInsCode)
-            .HasColumnType("varchar(40)")
-            .HasColumnName("TseInsCode")
+            .HasMaxLength(40)
+            .IsUnicode(false)
             .IsRequired();
 
         builder.Property(x => x.EnName)
-            .HasColumnType("varchar(100)")
-            .HasColumnName("EnName")
+            .HasMaxLength(100)
+            .IsUnicode(false)
             .IsRequired();
 
         builder.Property(x => x.SymbolEnName)
-            .HasColumnType("varchar(100)")
-            .HasColumnName("SymbolEnName")
+            .HasMaxLength(100)
+            .IsUnicode(false)
             .IsRequired();
 
         builder.Property(x => x.Title)
-            .HasColumnType("nvarchar(100)")
-            .HasColumnName("Title")
+            .HasMaxLength(100)
             .IsRequired();
 
         builder.Property(x => x.Name)
-            .HasColumnType("nvarchar(100)")
-            .HasColumnName("Name")
+            .HasMaxLength(100)
             .IsRequired();
 
         builder.HasIndex(x => x.Name);
 
         builder.Property(x => x.CompanyEnCode)
-            .HasColumnType("nvarchar(100)")
-            .HasColumnName("CompanyEnCode")
+            .HasMaxLength(100)
+            .IsUnicode(false)
             .IsRequired();
 
         builder.Property(x => x.CompanyPersianName)
-            .HasColumnType("nvarchar(100)")
-            .HasColumnName("CompanyPersianName")
+            .HasMaxLength(100)
             .IsRequired();
 
         builder.Property(x => x.CompanyIsin)
-            .HasColumnType("nvarchar(100)")
-            .HasColumnName("CompanyIsin")
+            .HasMaxLength(100)
             .IsRequired(false);
 
         builder.Property(x => x.MarketCap)
             .HasColumnType("bigint")
-            .HasColumnName("MarketCap")
             .IsRequired();
 
         builder.Property(x => x.SectorCode)
-            .HasColumnType("varchar(50)")
-            .HasColumnName("SectorCode")
+            .HasMaxLength(50)
             .IsRequired(false);
 
         builder.Property(x => x.SubSectorCode)
-            .HasColumnType("varchar(50)")
-            .HasColumnName("SubSectorCode")
+            .HasMaxLength(50)
             .IsRequired(false);
 
         builder.Property(x => x.ProductType)
-            .HasColumnName("ProductType")
             .HasColumnType("smallint")
             .IsRequired();
     }
