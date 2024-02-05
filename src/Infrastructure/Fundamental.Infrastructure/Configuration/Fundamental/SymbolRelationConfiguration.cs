@@ -8,21 +8,20 @@ public class SymbolRelationConfiguration : EntityTypeConfigurationBase<SymbolRel
 {
     protected override void ExtraConfigure(EntityTypeBuilder<SymbolRelation> builder)
     {
-        builder.ToTable("SymbolRelations", "shd");
+        builder.ToTable("symbol-relation", "shd");
 
         builder.Property(x => x.Ratio)
-            .HasColumnType("float")
-            .HasColumnName("Ratio")
+            .HasPrecision(18, 3)
             .IsRequired();
 
         builder.HasOne(x => x.Parent)
             .WithMany(x => x.InvestmentSymbols)
-            .HasForeignKey("ParentId")
+            .HasForeignKey("parent-id")
             .IsRequired();
 
         builder.HasOne(x => x.Child)
             .WithMany(x => x.InvestorSymbols)
-            .HasForeignKey("ChildId")
+            .HasForeignKey("child-id")
             .IsRequired()
             .OnDelete(DeleteBehavior.NoAction)
             ;

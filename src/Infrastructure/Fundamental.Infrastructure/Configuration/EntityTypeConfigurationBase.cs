@@ -12,6 +12,7 @@ public abstract class EntityTypeConfigurationBase<TEntity> : IEntityTypeConfigur
         builder.Property<ulong>("_id")
             .HasColumnType("bigint")
             .ValueGeneratedOnAdd()
+            .UseIdentityAlwaysColumn()
             .HasColumnOrder(0)
             .UseIdentityColumn()
             ;
@@ -26,11 +27,11 @@ public abstract class EntityTypeConfigurationBase<TEntity> : IEntityTypeConfigur
         builder.HasIndex(x => x.Id).IsUnique();
 
         builder.Property(e => e.CreatedAt)
-            .HasColumnType("datetime")
+            .HasColumnType(NpgsqlTypes.NpgsqlDbType.Timestamp.ToString())
             .HasColumnName("CreatedAt");
 
         builder.Property(x => x.UpdatedAt)
-            .HasColumnType("datetime")
+            .HasColumnType(NpgsqlTypes.NpgsqlDbType.Timestamp.ToString())
             .HasColumnName("ModifiedAt");
 
         ExtraConfigure(builder);

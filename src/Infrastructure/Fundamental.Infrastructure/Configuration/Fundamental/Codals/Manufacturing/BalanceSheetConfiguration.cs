@@ -8,21 +8,20 @@ public class BalanceSheetConfiguration : EntityTypeConfigurationBase<BalanceShee
 {
     protected override void ExtraConfigure(EntityTypeBuilder<BalanceSheet> builder)
     {
-        builder.ToTable("BalanceSheet", "manufacturing");
+        builder.ToTable("balance-sheet", "manufacturing");
 
         builder.HasOne(x => x.Symbol)
             .WithMany()
-            .HasForeignKey("SymbolId")
+            .HasForeignKey("symbol-id")
             .IsRequired();
 
         builder.Property(x => x.TraceNo)
-            .HasColumnName("TraceNo")
             .HasColumnType("BIGINT")
             .IsRequired();
 
         builder.Property(x => x.Uri)
-            .HasColumnName("Uri")
-            .HasColumnType("VARCHAR(512)")
+            .HasMaxLength(512)
+            .IsUnicode(true)
             .IsRequired();
 
         builder.ComplexProperty(
@@ -30,7 +29,7 @@ public class BalanceSheetConfiguration : EntityTypeConfigurationBase<BalanceShee
             navigationBuilder =>
             {
                 navigationBuilder.Property(x => x.Year)
-                    .HasColumnName("FiscalYear")
+                    .HasColumnName("fiscal-year")
                     .HasColumnType("SMALLINT")
                     .IsRequired();
             });
@@ -43,8 +42,8 @@ public class BalanceSheetConfiguration : EntityTypeConfigurationBase<BalanceShee
             navigationBuilder =>
             {
                 navigationBuilder.Property(x => x.Month)
-                    .HasColumnName("YearEndMonth")
-                    .HasColumnType("TINYINT")
+                    .HasColumnName("year-end-month")
+                    .HasColumnType("smallint")
                     .IsRequired();
             });
 
@@ -53,8 +52,8 @@ public class BalanceSheetConfiguration : EntityTypeConfigurationBase<BalanceShee
             navigationBuilder =>
             {
                 navigationBuilder.Property(x => x.Month)
-                    .HasColumnName("ReportMonth")
-                    .HasColumnType("TINYINT")
+                    .HasColumnName("report-month")
+                    .HasColumnType("smallint")
                     .IsRequired();
             });
 
@@ -63,7 +62,7 @@ public class BalanceSheetConfiguration : EntityTypeConfigurationBase<BalanceShee
             amount =>
             {
                 amount.Property(money => money.Value)
-                    .HasColumnName("Value")
+                    .HasColumnName("value")
                     .HasColumnType("decimal")
                     .HasPrecision(36, 10)
                     .IsRequired();

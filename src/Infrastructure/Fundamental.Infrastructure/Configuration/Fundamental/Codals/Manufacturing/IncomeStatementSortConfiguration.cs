@@ -8,20 +8,17 @@ public sealed class IncomeStatementSortConfiguration : EntityTypeConfigurationBa
 {
     protected override void ExtraConfigure(EntityTypeBuilder<IncomeStatementSort> builder)
     {
-        builder.ToTable("IncomeStatementSort", "manufacturing");
+        builder.ToTable("income-statement-sort", "manufacturing");
 
         builder.Property(x => x.Order)
-            .HasColumnName("Order")
             .HasColumnType("SMALLINT")
             .IsRequired();
 
         builder.Property(x => x.CodalRow)
-            .HasColumnName("CodalRow")
             .HasColumnType("SMALLINT")
             .IsRequired();
 
         builder.Property(x => x.Description)
-            .HasColumnName("Description")
             .HasMaxLength(512)
             .IsRequired();
 

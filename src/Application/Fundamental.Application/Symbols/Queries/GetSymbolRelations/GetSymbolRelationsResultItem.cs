@@ -8,5 +8,5 @@ public sealed class GetSymbolRelationsResultItem
     public string InvestorTitle { get; init; }
     public string InvestmentSymbol { get; init; }
     public string InvestmentTitle { get; init; }
-    public float Ratio { get; init; }
+    public decimal Ratio { get; init; }
 }

@@ -8,21 +8,19 @@ public class IncomeStatementConfiguration : EntityTypeConfigurationBase<IncomeSt
 {
     protected override void ExtraConfigure(EntityTypeBuilder<IncomeStatement> builder)
     {
-        builder.ToTable("IncomeStatement", "manufacturing");
-
+        builder.ToTable("income-statement", "manufacturing");
         builder.HasOne(x => x.Symbol)
             .WithMany()
-            .HasForeignKey("SymbolId")
+            .HasForeignKey("symbol-id")
             .IsRequired();
 
         builder.Property(x => x.TraceNo)
-            .HasColumnName("TraceNo")
             .HasColumnType("BIGINT")
             .IsRequired();
 
         builder.Property(x => x.Uri)
-            .HasColumnName("Uri")
-            .HasColumnType("VARCHAR(512)")
+            .HasMaxLength(512)
+            .IsUnicode(false)
             .IsRequired();
 
         builder.ComplexProperty(
@@ -30,7 +28,7 @@ public class IncomeStatementConfiguration : EntityTypeConfigurationBase<IncomeSt
             navigationBuilder =>
             {
                 navigationBuilder.Property(x => x.Year)
-                    .HasColumnName("FiscalYear")
+                    .HasColumnName("fiscal-year")
                     .HasColumnType("SMALLINT")
                     .IsRequired();
             });
@@ -43,8 +41,8 @@ public class IncomeStatementConfiguration : EntityTypeConfigurationBase<IncomeSt
             navigationBuilder =>
             {
                 navigationBuilder.Property(x => x.Month)
-                    .HasColumnName("YearEndMonth")
-                    .HasColumnType("TINYINT")
+                    .HasColumnName("year-end-month")
+                    .HasColumnType("smallint")
                     .IsRequired();
             });
 
@@ -53,8 +51,8 @@ public class IncomeStatementConfiguration : EntityTypeConfigurationBase<IncomeSt
             navigationBuilder =>
             {
                 navigationBuilder.Property(x => x.Month)
-                    .HasColumnName("ReportMonth")
-                    .HasColumnType("TINYINT")
+                    .HasColumnName("report-month")
+                    .HasColumnType("smallint")
                     .IsRequired();
             });
 
@@ -63,7 +61,6 @@ public class IncomeStatementConfiguration : EntityTypeConfigurationBase<IncomeSt
             amount =>
             {
                 amount.Property(money => money.Value)
-                    .HasColumnName("Value")
                     .HasColumnType("decimal")
                     .HasPrecision(36, 10)
                     .IsRequired();

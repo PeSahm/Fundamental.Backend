@@ -8,21 +8,20 @@ public class MonthlyActivityConfiguration : EntityTypeConfigurationBase<MonthlyA
 {
     protected override void ExtraConfigure(EntityTypeBuilder<MonthlyActivity> builder)
     {
-        builder.ToTable("MonthlyActivities", "manufacturing");
+        builder.ToTable("monthly-activity", "manufacturing");
 
         builder.HasOne(x => x.Symbol)
             .WithMany()
-            .HasForeignKey("SymbolId")
+            .HasForeignKey("symbol_id")
             .IsRequired();
 
         builder.Property(x => x.TraceNo)
-            .HasColumnName("TraceNo")
             .HasColumnType("BIGINT")
             .IsRequired();
 
         builder.Property(x => x.Uri)
-            .HasColumnName("Uri")
-            .HasColumnType("VARCHAR(512)")
+            .HasMaxLength(512)
+            .IsUnicode(false)
             .IsRequired();
 
         builder.ComplexProperty(
@@ -30,7 +29,7 @@ public class MonthlyActivityConfiguration : EntityTypeConfigurationBase<MonthlyA
             navigationBuilder =>
             {
                 navigationBuilder.Property(x => x.Year)
-                    .HasColumnName("FiscalYear")
+                    .HasColumnName("fiscal_year")
                     .HasColumnType("SMALLINT")
                     .IsRequired();
             });
@@ -43,8 +42,8 @@ public class MonthlyActivityConfiguration : EntityTypeConfigurationBase<MonthlyA
             navigationBuilder =>
             {
                 navigationBuilder.Property(x => x.Month)
-                    .HasColumnName("YearEndMonth")
-                    .HasColumnType("TINYINT")
+                    .HasColumnName("year_end_month")
+                    .HasColumnType("smallint")
                     .IsRequired();
             });
 
@@ -53,8 +52,8 @@ public class MonthlyActivityConfiguration : EntityTypeConfigurationBase<MonthlyA
             navigationBuilder =>
             {
                 navigationBuilder.Property(x => x.Month)
-                    .HasColumnName("ReportMonth")
-                    .HasColumnType("TINYINT")
+                    .HasColumnName("report_month")
+                    .HasColumnType("smallint")
                     .IsRequired();
             });
 
@@ -63,7 +62,7 @@ public class MonthlyActivityConfiguration : EntityTypeConfigurationBase<MonthlyA
             navigationBuilder =>
             {
                 navigationBuilder.Property(x => x.Value)
-                    .HasColumnName("SaleBeforeCurrentMonth")
+                    .HasColumnName("sale_before_current_month")
                     .HasColumnType("decimal")
                     .HasPrecision(36, 10)
                     .IsRequired();
@@ -77,7 +76,7 @@ public class MonthlyActivityConfiguration : EntityTypeConfigurationBase<MonthlyA
             navigationBuilder =>
             {
                 navigationBuilder.Property(x => x.Value)
-                    .HasColumnName("SaleCurrentMonth")
+                    .HasColumnName("sale_current_month")
                     .HasColumnType("decimal")
                     .HasPrecision(36, 10)
                     .IsRequired();
@@ -91,7 +90,7 @@ public class MonthlyActivityConfiguration : EntityTypeConfigurationBase<MonthlyA
             navigationBuilder =>
             {
                 navigationBuilder.Property(x => x.Value)
-                    .HasColumnName("SaleIncludeCurrentMonth")
+                    .HasColumnName("sale_include_current_month")
                     .HasColumnType("decimal")
                     .HasPrecision(36, 10)
                     .IsRequired();
@@ -105,7 +104,7 @@ public class MonthlyActivityConfiguration : EntityTypeConfigurationBase<MonthlyA
             navigationBuilder =>
             {
                 navigationBuilder.Property(x => x.Value)
-                    .HasColumnName("SaleLastYear")
+                    .HasColumnName("sale_last_year")
                     .HasColumnType("decimal")
                     .HasPrecision(36, 10)
                     .IsRequired();

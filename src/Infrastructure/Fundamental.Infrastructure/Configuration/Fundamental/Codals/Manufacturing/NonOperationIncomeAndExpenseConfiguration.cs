@@ -8,21 +8,21 @@ public class NonOperationIncomeAndExpenseConfiguration : EntityTypeConfiguration
 {
     protected override void ExtraConfigure(EntityTypeBuilder<NonOperationIncomeAndExpense> builder)
     {
-        builder.ToTable("NonOperationIncomeAndExpense", "manufacturing");
+        builder.ToTable("non-operation-income-expense", "manufacturing");
 
         builder.HasOne(x => x.Symbol)
             .WithMany()
-            .HasForeignKey("SymbolId")
+            .HasForeignKey("symbol_id")
             .IsRequired();
 
         builder.Property(x => x.TraceNo)
-            .HasColumnName("TraceNo")
             .HasColumnType("BIGINT")
             .IsRequired();
 
         builder.Property(x => x.Uri)
             .HasColumnName("Uri")
-            .HasColumnType("VARCHAR(512)")
+            .HasMaxLength(512)
+            .IsUnicode(false)
             .IsRequired();
 
         builder.ComplexProperty(
@@ -30,7 +30,7 @@ public class NonOperationIncomeAndExpenseConfiguration : EntityTypeConfiguration
             navigationBuilder =>
             {
                 navigationBuilder.Property(x => x.Year)
-                    .HasColumnName("FiscalYear")
+                    .HasColumnName("fiscal_year")
                     .HasColumnType("SMALLINT")
                     .IsRequired();
             });
@@ -43,8 +43,8 @@ public class NonOperationIncomeAndExpenseConfiguration : EntityTypeConfiguration
             navigationBuilder =>
             {
                 navigationBuilder.Property(x => x.Month)
-                    .HasColumnName("YearEndMonth")
-                    .HasColumnType("TINYINT")
+                    .HasColumnName("year_end_month")
+                    .HasColumnType("smallint")
                     .IsRequired();
             });
 
@@ -53,8 +53,8 @@ public class NonOperationIncomeAndExpenseConfiguration : EntityTypeConfiguration
             navigationBuilder =>
             {
                 navigationBuilder.Property(x => x.Month)
-                    .HasColumnName("ReportMonth")
-                    .HasColumnType("TINYINT")
+                    .HasColumnName("report_month")
+                    .HasColumnType("smallint")
                     .IsRequired();
             });
 
@@ -67,7 +67,7 @@ public class NonOperationIncomeAndExpenseConfiguration : EntityTypeConfiguration
             navigationBuilder =>
             {
                 navigationBuilder.Property(x => x.Value)
-                    .HasColumnName("Value")
+                    .HasColumnName("value")
                     .HasColumnType("decimal")
                     .HasPrecision(36, 10)
                     .IsRequired();
@@ -77,23 +77,15 @@ public class NonOperationIncomeAndExpenseConfiguration : EntityTypeConfiguration
             });
 
         builder.Property(x => x.IsAudited)
-            .HasColumnName("IsAudited")
-            .HasColumnType("BIT")
             .IsRequired();
 
         builder.Property(x => x.CurrentPeriod)
-            .HasColumnName("CurrentPeriod")
-            .HasColumnType("BIT")
             .IsRequired();
 
         builder.Property(x => x.PreviousPeriod)
-            .HasColumnName("PreviousPeriod")
-            .HasColumnType("BIT")
             .IsRequired();
 
         builder.Property(x => x.ForecastPeriod)
-            .HasColumnName("ForecastPeriod")
-            .HasColumnType("BIT")
             .IsRequired();
     }
 }

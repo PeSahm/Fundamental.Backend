@@ -11,13 +11,13 @@
       <ProjectReference Include="..\..\Domain\Fundamental.Domain\Fundamental.Domain.csproj" />
     </ItemGroup>
     <ItemGroup>
-      <PackageReference Include="DNTPersianUtils.Core" Version="5.8.1" />
+      <PackageReference Include="DNTPersianUtils.Core" Version="5.9.0"/>
       <PackageReference Include="MediatR" Version="12.2.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
-      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.8.1" />
+      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.0"/>
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
-      <PackageReference Update="SonarAnalyzer.CSharp" Version="9.14.0.81108">
+      <PackageReference Update="SonarAnalyzer.CSharp" Version="9.19.0.84025">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       </PackageReference>
