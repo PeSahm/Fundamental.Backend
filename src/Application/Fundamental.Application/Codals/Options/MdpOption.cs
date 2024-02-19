@@ -13,4 +13,6 @@ public class MdpOption
     public string ShareHolders { get; set; }
 
     public string TradeHistory { get; set; }
+
+    public string Symbol { get; set; }
 }

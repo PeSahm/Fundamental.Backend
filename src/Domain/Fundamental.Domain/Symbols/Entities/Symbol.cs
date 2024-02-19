@@ -19,6 +19,7 @@ public class Symbol : BaseEntity<Guid>
         ulong marketCap,
         string sectorCode,
         string subSectorCode,
+        ProductType productType,
         DateTime createdAt
     )
     {
@@ -35,6 +36,7 @@ public class Symbol : BaseEntity<Guid>
         MarketCap = marketCap;
         SectorCode = sectorCode;
         SubSectorCode = subSectorCode;
+        ProductType = productType;
         CreatedAt = createdAt;
     }
 
@@ -57,7 +59,7 @@ public class Symbol : BaseEntity<Guid>
 
     public bool IsUnOfficial { get; private set; }
 
-    public ProductType ProductType { get; private set; } = ProductType.Stock;
+    public ProductType ProductType { get; private set; } = ProductType.Equity;
 
     public ICollection<SymbolRelation> InvestmentSymbols { get; private set; } = new List<SymbolRelation>();
 
@@ -80,6 +82,7 @@ public class Symbol : BaseEntity<Guid>
             parent.MarketCap,
             parent.SectorCode,
             parent.SubSectorCode,
+            parent.ProductType,
             updatedAt
         )
         {
@@ -88,14 +91,39 @@ public class Symbol : BaseEntity<Guid>
         return newSymbol;
     }
 
-    public void SetProductType(ProductType productType, DateTime updatedAt)
-    {
-        ProductType = productType;
-        UpdatedAt = updatedAt;
-    }
-
     public void AddInvestmentSymbol(SymbolRelation symbolRelation)
     {
         InvestmentSymbols.Add(symbolRelation);
+    }
+
+    public void Update(
+        string tseInsCode,
+        string enName,
+        string symbolEnName,
+        string title,
+        string name,
+        string companyEnCode,
+        string companyPersianName,
+        string? companyIsin,
+        ulong marketCap,
+        string sectorCode,
+        string subSectorCode,
+        ProductType productType,
+        DateTime updatedAt
+    )
+    {
+        TseInsCode = tseInsCode;
+        EnName = enName;
+        SymbolEnName = symbolEnName;
+        Title = title;
+        Name = name;
+        CompanyEnCode = companyEnCode;
+        CompanyPersianName = companyPersianName;
+        CompanyIsin = companyIsin;
+        MarketCap = marketCap;
+        SectorCode = sectorCode;
+        SubSectorCode = subSectorCode;
+        ProductType = productType;
+        UpdatedAt = updatedAt;
     }
 }
