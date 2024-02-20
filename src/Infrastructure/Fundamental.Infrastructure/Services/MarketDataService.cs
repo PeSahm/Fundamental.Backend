@@ -41,9 +41,11 @@ public class MarketDataService(
             new StringBuilder()
                 .Append(_mdpOption.TradeHistory)
                 .Append('?')
-                .Append("select=Isin,Date,ShareHolderName,NumberOfShares,PerOfShares,ChangeAmount")
+                .Append("select=Isin,TradeDate,OpenPrice,HighPrice,LowPrice,ClosePrice,LastPrice,OpenPriceAdj," +
+                        "HighPriceAdj,LowPriceAdj,ClosePriceAdj,LastPriceAdj,TradeVolume,TradeValue,TradeQuantity," +
+                        "ClosingPriceChange,ClosingPriceChangePercent,PrevClosePrice,PrevClosePriceAdj")
                 .Append('&')
-                .Append("Date")
+                .Append("TradeDate")
                 .Append('=')
                 .Append($"{date:yyyy-MM-dd}")
                 .ToString(),
