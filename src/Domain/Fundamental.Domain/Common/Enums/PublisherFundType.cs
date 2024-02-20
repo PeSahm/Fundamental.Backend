@@ -7,6 +7,9 @@ public enum PublisherFundType
     [Description("نامشخص")]
     UnKnown = -1,
 
+    [Description("صندوق نیست")]
+    NotAFund = 0,
+
     [Description("صندوق سرمایه گذاری زمین و ساختمان")]
     RealEstate = 1,
 

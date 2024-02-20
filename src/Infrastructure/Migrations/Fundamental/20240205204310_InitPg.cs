@@ -1,13 +1,16 @@
 ﻿#nullable disable
 
 using Fundamental.Domain.Common.Enums;
+using Fundamental.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Fundamental.Migrations.Fundamental
 {
-    /// <inheritdoc />
-    public partial class InitPg : Migration
+    [DbContext(typeof(FundamentalDbContext))]
+    [Migration("20240205204310_InitPg")]
+    public class InitPg : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
