@@ -14,25 +14,25 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fundamental.Migrations.Fundamental
 {
     [DbContext(typeof(FundamentalDbContext))]
-    [Migration("20240205204310_InitPg")]
-    partial class InitPg
+    [Migration("20240220041314_ChangeInPublisherEnum2")]
+    partial class ChangeInPublisherEnum2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.1")
+                .HasAnnotation("ProductVersion", "8.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "company_type", new[] { "none_financial_institution", "public_investment_and_holding", "financial_institutions", "subsidiary_financial_institutions", "intermediary_institutions", "investment_funds", "basket_companies", "investment_advisory_companies", "financial_information_processing_companies", "capital_supply_companies", "associations", "central_asset_management_company", "rating_institutions", "article44", "brokers", "government_companies", "exempt_companies" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "company_type", new[] { "none_financial_institution", "public_investment_and_holding", "financial_institutions", "subsidiary_financial_institutions", "intermediary_institutions", "investment_funds", "basket_companies", "investment_advisory_companies", "financial_information_processing_companies", "capital_supply_companies", "associations", "central_asset_management_company", "rating_institutions", "article44", "brokers", "government_companies", "exempt_companies", "un_known1" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "enable_sub_company", new[] { "in_active", "active", "accepted" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "iso_currency", new[] { "irr", "usd", "eur" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "publisher_fund_type", new[] { "un_known", "real_estate", "fixed_income", "mixed", "equity", "project", "venture", "market_making", "commodity", "diversified" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "publisher_fund_type", new[] { "un_known", "not_a_fund", "real_estate", "fixed_income", "mixed", "equity", "project", "venture", "market_making", "commodity", "diversified" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "publisher_market_type", new[] { "none", "first", "second", "base", "small_and_medium" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "publisher_state", new[] { "register_in_ime", "register_in_irenex", "register_in_tse", "register_in_ifb", "registered_not_accepted", "not_registered" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "publisher_sub_company_type", new[] { "normal", "liquidation", "has_foreign_currency_unit", "has_foreign_currency_unit_and_foreign_auditor" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "reporting_type", new[] { "production", "structural", "investment", "bank", "leasing", "services", "insurance", "maritime_transportation", "un_known" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "publisher_sub_company_type", new[] { "un_known", "normal", "liquidation", "has_foreign_currency_unit", "has_foreign_currency_unit_and_foreign_auditor", "un_known1", "un_known2", "un_known3", "un_known4", "un_known5", "un_known6" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "reporting_type", new[] { "production", "structural", "investment", "bank", "leasing", "services", "insurance", "maritime_transportation", "agriculture", "capital_provision", "un_known" });
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("Fundamental.Domain.Codals.FinancialStatement", b =>

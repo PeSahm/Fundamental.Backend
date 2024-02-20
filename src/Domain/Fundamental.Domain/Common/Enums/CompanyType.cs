@@ -54,4 +54,6 @@ public enum CompanyType
 
     [Description("شرکت های معاف از ثبت")]
     ExemptCompanies = 16,
+
+    UnKnown1 = 17
 }

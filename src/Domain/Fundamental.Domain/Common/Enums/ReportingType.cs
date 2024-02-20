@@ -31,6 +31,12 @@ public enum ReportingType
     [Description("حمل و نقل دریایی")]
     MaritimeTransportation = 1000007,
 
+    [Description("کشاورزی")]
+    Agriculture = 1000008,
+
+    [Description("تامین سرمایه")]
+    CapitalProvision = 1000009,
+
     [Description("نامشخص")]
     UnKnown = -1
 }
