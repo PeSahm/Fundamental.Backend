@@ -20,6 +20,7 @@ public static class HttpClientExtensions
             client =>
             {
                 client.BaseAddress = new Uri(configuration.GetValue<string>("Mdp:url")!);
+                client.Timeout = Timeout.InfiniteTimeSpan;
             });
     }
 }

@@ -6,6 +6,7 @@ using Fundamental.Application.Codals.Options;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
+using Fundamental.Application.Common.Extensions;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Infrastructure.Common;
 using Fundamental.Infrastructure.Persistence;
@@ -99,6 +100,11 @@ public class CodalService(
         }
 
         if (string.IsNullOrWhiteSpace(jsonData.Json))
+        {
+            return;
+        }
+
+        if (!jsonData.Json.IsValidJson())
         {
             return;
         }

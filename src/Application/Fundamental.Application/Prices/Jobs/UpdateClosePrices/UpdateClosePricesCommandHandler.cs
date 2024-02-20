@@ -17,11 +17,11 @@ public sealed class UpdateClosePricesCommandHandler(
     IMarketDataService marketDataService,
     IUnitOfWork unitOfWork
 )
-    : IRequestHandler<UpdateClosePricesRequest, Response>
+    : IRequestHandler<UpdateClosePricesDataCommand, Response>
 {
-    public async Task<Response> Handle(UpdateClosePricesRequest request, CancellationToken cancellationToken)
+    public async Task<Response> Handle(UpdateClosePricesDataCommand dataCommand, CancellationToken cancellationToken)
     {
-        DateOnly fromDate = DateTime.Now.AddDays(-1 * request.Days).ToDateOnly();
+        DateOnly fromDate = DateTime.Now.AddDays(-1 * dataCommand.Days).ToDateOnly();
         DateOnly toDate = DateTime.Now.AddDays(1).ToDateOnly();
 
         while (fromDate <= toDate)
