@@ -3,15 +3,22 @@ using Fundamental.Application.Prices.Jobs.UpdateClosePrices;
 using Fundamental.Application.Symbols.Jobs.UpdateSymbolData;
 using Fundamental.Application.Symbols.Jobs.UpdateTseTmcShareHoldersData;
 using MediatR;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace Fundamental.Infrastructure.HostedServices.Codals;
 
-public class CommonCodalDataHostedService(IServiceScopeFactory serviceScopeFactory) : BackgroundService
+public class CommonCodalDataHostedService(IServiceScopeFactory serviceScopeFactory, IConfiguration configuration) : BackgroundService
 {
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
+        if (!configuration.GetValue<bool>("JobEnabled"))
+        {
+            await Task.CompletedTask;
+            return;
+        }
+
         PeriodicTimer periodicTimer = new(TimeSpan.FromMinutes(10));
 
         while (await periodicTimer.WaitForNextTickAsync(stoppingToken))

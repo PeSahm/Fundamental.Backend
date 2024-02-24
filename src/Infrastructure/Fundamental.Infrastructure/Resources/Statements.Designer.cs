@@ -60,6 +60,15 @@ namespace Fundamental.Infrastructure.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid StatementId.
+        /// </summary>
+        internal static string _13_383_101 {
+            get {
+                return ResourceManager.GetString("13_383_101", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The symbol not found.
         /// </summary>
         internal static string _13_392_101 {

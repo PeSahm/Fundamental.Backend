@@ -111,6 +111,7 @@ public class NonOperationIncomeAndExpensesV2Processor(IServiceScopeFactory servi
                     yearDatum.ColumnId == ColumnId.CurrentPeriod,
                     yearDatum.ColumnId == ColumnId.LastAnnualPeriod,
                     yearDatum.ColumnId == ColumnId.PredictedPeriod,
+                    yearDatum.ColumnId == ColumnId.YearlyPredicatePeriod,
                     DateTime.Now
                 );
                 dbContext.NonOperationIncomeAndExpenses.Add(incomeStatement);

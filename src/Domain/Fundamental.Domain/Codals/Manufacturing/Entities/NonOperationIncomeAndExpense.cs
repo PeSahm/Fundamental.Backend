@@ -22,6 +22,7 @@ public sealed class NonOperationIncomeAndExpense : BaseEntity<Guid>
         bool currentPeriod,
         bool previousPeriod,
         bool forecastPeriod,
+        bool yearlyForecastPeriod,
         DateTime createdAt
     )
     {
@@ -38,6 +39,7 @@ public sealed class NonOperationIncomeAndExpense : BaseEntity<Guid>
         CurrentPeriod = currentPeriod;
         PreviousPeriod = previousPeriod;
         ForecastPeriod = forecastPeriod;
+        YearlyForecastPeriod = yearlyForecastPeriod;
         CreatedAt = createdAt;
         UpdatedAt = createdAt;
     }
@@ -71,4 +73,6 @@ public sealed class NonOperationIncomeAndExpense : BaseEntity<Guid>
     public bool PreviousPeriod { get; private set; }
 
     public bool ForecastPeriod { get; private set; }
+
+    public bool YearlyForecastPeriod { get; set; }
 }

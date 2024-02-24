@@ -580,7 +580,6 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnName("current_period");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(512)
                         .HasColumnType("character varying(512)")
                         .HasColumnName("description");
@@ -616,6 +615,12 @@ namespace Fundamental.Migrations.Fundamental
                         .IsUnicode(false)
                         .HasColumnType("character varying(512)")
                         .HasColumnName("Uri");
+
+                    b.Property<bool>("YearlyForecastPeriod")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasColumnName("yearly_forecast_period")
+                        .HasDefaultValueSql("false");
 
                     b.Property<long>("symbol_id")
                         .HasColumnType("bigint")

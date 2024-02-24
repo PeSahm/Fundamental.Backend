@@ -60,6 +60,11 @@ public class RootCodalIncomeStatement
             return false;
         }
 
+        if (CodalIncomeStatement.IncomeStatement.YearData is null)
+        {
+            return false;
+        }
+
         YearDatum? yearDatum = CodalIncomeStatement.IncomeStatement.YearData
             .Find(x => x.ColumnId == ColumnId.ThisPeriodData);
 
