@@ -59,7 +59,7 @@ public class NonOperationIncomeAndExpenseConfiguration : EntityTypeConfiguration
             });
 
         builder.Property(x => x.Description)
-            .IsRequired()
+            .IsRequired(false)
             .HasMaxLength(512);
 
         builder.ComplexProperty(
@@ -87,5 +87,9 @@ public class NonOperationIncomeAndExpenseConfiguration : EntityTypeConfiguration
 
         builder.Property(x => x.ForecastPeriod)
             .IsRequired();
+
+        builder.Property(x => x.YearlyForecastPeriod)
+            .IsRequired()
+            .HasDefaultValueSql("false");
     }
 }

@@ -70,6 +70,38 @@ public class CodalService(
         return response?.Result ?? new();
     }
 
+    public async Task<GetStatementResponse?> GetStatementByTraceNo(ulong traceNo, CancellationToken cancellationToken = default)
+    {
+        MdpPagedResponse<GetStatementResponse>? response =
+            await _mdpClient.GetFromJsonAsync<MdpPagedResponse<GetStatementResponse>>(
+                new StringBuilder()
+                    .Append(_mdpOption.Statement)
+                    .Append("?TraceNo=")
+                    .Append(traceNo)
+                    .ToString(),
+                cancellationToken: cancellationToken);
+        using IServiceScope scope = serviceScopeFactory.CreateScope();
+        using FundamentalDbContext context = scope.ServiceProvider.GetRequiredService<FundamentalDbContext>();
+
+        if (response?.Result is { Count: > 0 })
+        {
+            foreach (GetStatementResponse statementResponse in response.Result)
+            {
+                string? isin = await context.Publishers.AsNoTracking()
+                    .Where(x => x.CodalId == statementResponse.PublisherId.ToString())
+                    .Select(x => x.Symbol.Isin)
+                    .FirstOrDefaultAsync(cancellationToken: cancellationToken);
+
+                if (!string.IsNullOrWhiteSpace(isin))
+                {
+                    statementResponse.Isin = isin;
+                }
+            }
+        }
+
+        return response?.Result?.FirstOrDefault();
+    }
+
     public async Task ProcessCodal(GetStatementResponse statement, LetterPart letterPart, CancellationToken cancellationToken = default)
     {
         HttpResponseMessage response =

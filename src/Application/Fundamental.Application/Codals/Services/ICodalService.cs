@@ -13,6 +13,11 @@ public interface ICodalService
         CancellationToken cancellationToken = default
     );
 
+    Task<GetStatementResponse?> GetStatementByTraceNo(
+        ulong traceNo,
+        CancellationToken cancellationToken = default
+    );
+
     Task ProcessCodal(GetStatementResponse statement, LetterPart letterPart, CancellationToken cancellationToken = default);
 
     Task<List<GetPublisherResponse>> GetPublishers(CancellationToken cancellationToken = default);

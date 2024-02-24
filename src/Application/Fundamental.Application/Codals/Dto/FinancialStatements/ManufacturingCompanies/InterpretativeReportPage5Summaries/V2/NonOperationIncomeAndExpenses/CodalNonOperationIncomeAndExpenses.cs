@@ -120,7 +120,10 @@ public class YearDatum
     [JsonProperty("isAudited")]
     public bool IsAudited { get; set; }
 
-    public DateOnly? YearEndToDateGeorgian => YearEndToDate.ToGregorianDateOnly();
+    public DateOnly? YearEndToDateGeorgian => ColumnId == ColumnId.YearlyPredicatePeriod
+        ? PeriodEndToDate.ToGregorianDateOnly()
+        : YearEndToDate.ToGregorianDateOnly();
+
     public DateOnly? PeriodEndToDateGeorgian => PeriodEndToDate.ToGregorianDateOnly();
     public int? FiscalYear => YearEndToDateGeorgian.GetPersianYear(false);
 
@@ -136,6 +139,7 @@ public enum ColumnId
     CurrentPeriod = 2453,
     LastAnnualPeriod = 2452,
     PredictedPeriod = 2454,
+    YearlyPredicatePeriod = 2455
 }
 
 #pragma warning restore SA1649

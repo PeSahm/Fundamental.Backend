@@ -14,8 +14,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fundamental.Migrations.Fundamental
 {
     [DbContext(typeof(FundamentalDbContext))]
-    [Migration("20240220041314_ChangeInPublisherEnum2")]
-    partial class ChangeInPublisherEnum2
+    [Migration("20240224210052_AddYearlyForecastInNoneOperationalTable")]
+    partial class AddYearlyForecastInNoneOperationalTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -583,7 +583,6 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnName("current_period");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(512)
                         .HasColumnType("character varying(512)")
                         .HasColumnName("description");
@@ -619,6 +618,12 @@ namespace Fundamental.Migrations.Fundamental
                         .IsUnicode(false)
                         .HasColumnType("character varying(512)")
                         .HasColumnName("Uri");
+
+                    b.Property<bool>("YearlyForecastPeriod")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasColumnName("yearly_forecast_period")
+                        .HasDefaultValueSql("false");
 
                     b.Property<long>("symbol_id")
                         .HasColumnType("bigint")

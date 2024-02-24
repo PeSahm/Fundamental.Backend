@@ -1,5 +1,6 @@
 using ErrorHandling.AspNetCore;
 using Fundamental.Application.Codals.Manufacturing.Commands.AddFinancialStatement;
+using Fundamental.Application.Codals.Manufacturing.Commands.ForceUpdateStatements;
 using Fundamental.Application.Codals.Manufacturing.Commands.UpdateFinancialStatement;
 using Fundamental.Application.Codals.Manufacturing.Queries.GetFinancialStatementById;
 using Fundamental.Application.Codals.Manufacturing.Queries.GetFinancialStatements;
@@ -28,6 +29,12 @@ namespace Fundamental.WebApi.Controllers
 
         [HttpPost]
         public async Task<Response> AddStatement([FromBody] AddFinancialStatementRequest request)
+        {
+            return await _mediator.Send(request);
+        }
+
+        [HttpPost("force-update")]
+        public async Task<Response> ForceUpdateStatement([FromBody] ForceUpdateStatementRequest request)
         {
             return await _mediator.Send(request);
         }

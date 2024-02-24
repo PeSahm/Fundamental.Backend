@@ -1,11 +1,14 @@
 ﻿#nullable disable
 
+using Fundamental.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Fundamental.Migrations.Fundamental
 {
-    /// <inheritdoc />
-    public partial class ChangeInPublisherEnum2 : Migration
+    [DbContext(typeof(FundamentalDbContext))]
+    [Migration("20240220041314_ChangeInPublisherEnum2")]
+    public class ChangeInPublisherEnum2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
