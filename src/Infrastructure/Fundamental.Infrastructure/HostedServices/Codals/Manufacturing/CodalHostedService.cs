@@ -15,7 +15,7 @@ public class CodalHostedService(ILogger<CodalHostedService> logger, IServiceScop
 {
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        if (configuration.GetValue<bool>("JobEnabled"))
+        if (!configuration.GetValue<bool>("JobEnabled"))
         {
             await Task.CompletedTask;
             return;
