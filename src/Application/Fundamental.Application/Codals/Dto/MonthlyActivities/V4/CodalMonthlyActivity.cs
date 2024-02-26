@@ -9,7 +9,7 @@ namespace Fundamental.Application.Codals.Dto.MonthlyActivities.V4;
 public class CodalMonthlyActivity
 {
     [JsonProperty("monthlyActivity")]
-    public MonthlyActivityDto MonthlyActivity { get; set; }
+    public MonthlyActivityDto? MonthlyActivity { get; set; }
 
     [JsonProperty("listedCapital")]
     public decimal ListedCapital { get; set; }
@@ -24,7 +24,7 @@ public class MonthlyActivityDto
     public string Version { get; set; }
 
     [JsonProperty("productionAndSales")]
-    public ProductionAndSales ProductionAndSales { get; set; }
+    public ProductionAndSales? ProductionAndSales { get; set; }
 
     [JsonProperty("productMonthlyActivityDesc1")]
     public ProductMonthlyActivityDesc1 ProductMonthlyActivityDesc1 { get; set; }

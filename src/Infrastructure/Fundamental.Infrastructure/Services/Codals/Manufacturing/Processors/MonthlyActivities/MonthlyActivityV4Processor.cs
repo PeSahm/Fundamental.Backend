@@ -38,6 +38,16 @@ public class MonthlyActivityV4Processor(
             return;
         }
 
+        if (saleDate.MonthlyActivity is null)
+        {
+            return;
+        }
+
+        if (saleDate.MonthlyActivity.ProductionAndSales is null)
+        {
+            return;
+        }
+
         if (saleDate.MonthlyActivity.ProductionAndSales.YearData.Count == 0)
         {
             return;

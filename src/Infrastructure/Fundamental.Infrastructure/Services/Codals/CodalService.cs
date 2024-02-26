@@ -141,6 +141,11 @@ public class CodalService(
             return;
         }
 
+        if (string.IsNullOrEmpty(statement.Isin))
+        {
+            return;
+        }
+
         using IServiceScope scope = serviceScopeFactory.CreateScope();
 
         ICodalProcessorFactory codalProcessorFactory = scope.ServiceProvider.GetRequiredService<ICodalProcessorFactory>();
