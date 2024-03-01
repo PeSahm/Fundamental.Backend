@@ -58,16 +58,7 @@ public class IncomeStatementConfiguration : EntityTypeConfigurationBase<IncomeSt
 
         builder.ComplexProperty(
             x => x.Value,
-            amount =>
-            {
-                amount.Property(money => money.Value)
-                    .HasColumnType("decimal")
-                    .HasPrecision(36, 10)
-                    .IsRequired();
-
-                amount.Property(money => money.Currency)
-                    .UseCurrencyColumn();
-            });
+            amount => amount.UseSignedCodalMoney());
 
         builder.Property(x => x.Row).IsRequired();
 

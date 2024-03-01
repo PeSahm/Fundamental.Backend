@@ -2,7 +2,6 @@
 using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Common.Dto;
-using Fundamental.Domain.Common.ValueObjects;
 using Fundamental.Infrastructure.Extensions;
 using Fundamental.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -50,10 +49,10 @@ public class MonthlyActivityRepository : IMonthlyActivityRepository
                 FiscalYear = x.FiscalYear,
                 YearEndMonth = x.YearEndMonth,
                 ReportMonth = x.ReportMonth,
-                SaleBeforeCurrentMonth = (CodalMoney)x.SaleBeforeCurrentMonth,
-                SaleCurrentMonth = (CodalMoney)x.SaleCurrentMonth,
-                SaleIncludeCurrentMonth = (CodalMoney)x.SaleIncludeCurrentMonth,
-                SaleLastYear = (CodalMoney)x.SaleLastYear,
+                SaleBeforeCurrentMonth = x.SaleBeforeCurrentMonth,
+                SaleCurrentMonth = x.SaleCurrentMonth,
+                SaleIncludeCurrentMonth = x.SaleIncludeCurrentMonth,
+                SaleLastYear = x.SaleLastYear,
                 HasSubCompanySale = x.HasSubCompanySale,
                 TraceNo = x.TraceNo,
                 CreatedAt = x.CreatedAt,

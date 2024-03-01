@@ -19,7 +19,7 @@ public class IncomeStatement : BaseEntity<Guid>
         ushort row,
         ushort codalRow,
         string? description,
-        CodalMoney value,
+        SignedCodalMoney value,
         bool isAudited,
         DateTime createdAt
     )
@@ -65,7 +65,7 @@ public class IncomeStatement : BaseEntity<Guid>
     public ushort CodalCategory { get; set; }
     public string? Description { get; private set; }
 
-    public SignedMoney Value { get; private set; }
+    public SignedCodalMoney Value { get; private set; }
 
     public bool IsAudited { get; private set; }
 
@@ -78,7 +78,7 @@ public class IncomeStatement : BaseEntity<Guid>
         StatementMonth reportMonth,
         ushort row,
         string description,
-        CodalMoney value,
+        SignedCodalMoney value,
         bool isAudited,
         DateTime updatedAt
     )

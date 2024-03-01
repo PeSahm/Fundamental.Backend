@@ -1,37 +1,27 @@
-using Fundamental.Domain.Common.Enums;
+﻿using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Common.Exceptions;
 
 namespace Fundamental.Domain.Common.ValueObjects;
 
-public sealed class CodalMoney
+public class SignedCodalMoney
 {
     private const decimal CODAL_MONEY_MULTIPLIER = 1_000_000;
 
     private decimal _value;
 
-    public CodalMoney(decimal amount, IsoCurrency currency)
+    public SignedCodalMoney(decimal amount, IsoCurrency currency)
     {
-        if (amount < 0)
-        {
-            throw new InvalidMoneyAmountException(amount);
-        }
-
         Value = amount;
         Currency = currency;
     }
 
-    public CodalMoney(decimal amount)
+    public SignedCodalMoney(decimal amount)
     {
-        if (amount < 0)
-        {
-            throw new InvalidMoneyAmountException(amount);
-        }
-
         Value = amount;
         Currency = AppConfig.BASE_CURRENCY;
     }
 
-    private CodalMoney()
+    private SignedCodalMoney()
     {
     }
 
@@ -43,27 +33,27 @@ public sealed class CodalMoney
 
     public IsoCurrency Currency { get; }
 
-    public static CodalMoney operator +(CodalMoney a, CodalMoney b)
+    public static SignedCodalMoney operator +(SignedCodalMoney a, SignedCodalMoney b)
     {
         if (a.Currency != b.Currency)
         {
             throw new MoneyCurrencyIsIncompatibleException(a.Currency, b.Currency);
         }
 
-        return new CodalMoney(a.Value + b.Value, a.Currency);
+        return new SignedCodalMoney(a.Value + b.Value, a.Currency);
     }
 
-    public static CodalMoney operator -(CodalMoney a, CodalMoney b)
+    public static SignedCodalMoney operator -(SignedCodalMoney a, SignedCodalMoney b)
     {
         if (a.Currency != b.Currency)
         {
             throw new MoneyCurrencyIsIncompatibleException(a.Currency, b.Currency);
         }
 
-        return new CodalMoney(a.Value - b.Value, a.Currency);
+        return new SignedCodalMoney(a.Value - b.Value, a.Currency);
     }
 
-    public bool GreaterThan(CodalMoney other)
+    public bool GreaterThan(SignedCodalMoney other)
     {
         if (Currency != other.Currency)
         {
@@ -73,7 +63,7 @@ public sealed class CodalMoney
         return Value > other.Value;
     }
 
-    public bool GreaterThanOrEqual(CodalMoney other)
+    public bool GreaterThanOrEqual(SignedCodalMoney other)
     {
         if (Currency != other.Currency)
         {
@@ -83,7 +73,7 @@ public sealed class CodalMoney
         return Value == other.Value || GreaterThan(other);
     }
 
-    public bool LessThan(CodalMoney other)
+    public bool LessThan(SignedCodalMoney other)
     {
         if (Currency != other.Currency)
         {
@@ -93,7 +83,7 @@ public sealed class CodalMoney
         return Value < other.Value;
     }
 
-    public bool LessThanOrEqual(CodalMoney other)
+    public bool LessThanOrEqual(SignedCodalMoney other)
     {
         if (Currency != other.Currency)
         {
@@ -103,19 +93,19 @@ public sealed class CodalMoney
         return Value == other.Value || LessThan(other);
     }
 
-    public static CodalMoney operator *(decimal a, CodalMoney b)
+    public static SignedCodalMoney operator *(decimal a, SignedCodalMoney b)
     {
-        return new CodalMoney(b.Value * a, b.Currency);
+        return new SignedCodalMoney(b.Value * a, b.Currency);
     }
 
-    public static CodalMoney operator *(CodalMoney a, decimal b)
+    public static SignedCodalMoney operator *(SignedCodalMoney a, decimal b)
     {
-        return new CodalMoney(a.Value * b, a.Currency);
+        return new SignedCodalMoney(a.Value * b, a.Currency);
     }
 
-    public static CodalMoney BaseCurrency(decimal amount)
+    public static SignedCodalMoney BaseCurrency(decimal amount)
     {
-        return new CodalMoney(amount, AppConfig.BASE_CURRENCY);
+        return new SignedCodalMoney(amount, AppConfig.BASE_CURRENCY);
     }
 
     public override string ToString()
@@ -133,7 +123,11 @@ public sealed class CodalMoney
         return $"{Value.ToString($"F{places}")} {Currency.ToString()}";
     }
 
-    public static implicit operator decimal(CodalMoney money) => money.Value;
+    public static implicit operator decimal(SignedCodalMoney money) => money.Value;
 
-    public static implicit operator CodalMoney(decimal money) => new(money);
+    public static implicit operator SignedCodalMoney(decimal money) => new(money);
+
+    // public static implicit operator CodalMoney(SignedCodalMoney money) => new(money.Value, money.Currency);
+    //
+    // public static implicit operator SignedCodalMoney(CodalMoney money) => new(money.Value, money.Currency);
 }

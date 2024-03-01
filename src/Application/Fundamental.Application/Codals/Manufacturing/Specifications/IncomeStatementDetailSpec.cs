@@ -1,7 +1,6 @@
 ﻿using Ardalis.Specification;
 using Fundamental.Application.Codals.Manufacturing.Queries.GetIncomeStatementDetails;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
-using Fundamental.Domain.Common.ValueObjects;
 
 namespace Fundamental.Application.Codals.Manufacturing.Specifications;
 
@@ -15,7 +14,7 @@ public class IncomeStatementDetailSpec : Specification<IncomeStatement, GetIncom
             {
                 Order = x.Row,
                 CodalRow = x.CodalRow,
-                Value = (CodalMoney)x.Value,
+                Value = x.Value,
             })
             .Where(x => x.FiscalYear.Year == fiscalYear)
             .Where(x => x.ReportMonth.Month == reportMonth)
