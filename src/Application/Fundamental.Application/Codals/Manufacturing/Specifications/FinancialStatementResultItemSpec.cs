@@ -1,7 +1,6 @@
 ﻿using Ardalis.Specification;
 using Fundamental.Application.Codals.Manufacturing.Queries.GetFinancialStatements;
 using Fundamental.Domain.Codals;
-using Fundamental.Domain.Common.ValueObjects;
 
 namespace Fundamental.Application.Codals.Manufacturing.Specifications;
 
@@ -20,16 +19,16 @@ public sealed class FinancialStatementResultItemSpec : Specification<FinancialSt
             FiscalYear = x.FiscalYear.Year,
             YearEndMonth = x.FiscalYear.Year,
             ReportMonth = x.ReportMonth.Month,
-            OperatingIncome = (CodalMoney)x.OperatingIncome,
-            GrossProfit = (CodalMoney)x.GrossProfit,
-            OperatingProfit = (CodalMoney)x.OperatingProfit,
-            BankInterestIncome = (CodalMoney)x.BankInterestIncome,
-            InvestmentIncome = (CodalMoney)x.InvestmentIncome,
-            NetProfit = (CodalMoney)x.NetProfit,
-            Expense = (CodalMoney)x.Expense,
-            Asset = (CodalMoney)x.Asset,
-            OwnersEquity = (CodalMoney)x.OwnersEquity,
-            Receivables = (CodalMoney)x.Receivables,
+            OperatingIncome = x.OperatingIncome,
+            GrossProfit = x.GrossProfit,
+            OperatingProfit = x.OperatingProfit,
+            BankInterestIncome = x.BankInterestIncome,
+            InvestmentIncome = x.InvestmentIncome,
+            NetProfit = x.NetProfit,
+            Expense = x.Expense,
+            Asset = x.Asset,
+            OwnersEquity = x.OwnersEquity,
+            Receivables = x.Receivables,
             CreatedAt = x.CreatedAt,
             UpdatedAt = x.UpdatedAt
         });

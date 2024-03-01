@@ -58,13 +58,13 @@ public class MonthlyActivity : BaseEntity<Guid>
 
     public StatementMonth ReportMonth { get; private set; }
 
-    public Money SaleBeforeCurrentMonth { get; private set; }
+    public CodalMoney SaleBeforeCurrentMonth { get; private set; }
 
-    public Money SaleCurrentMonth { get; private set; }
+    public CodalMoney SaleCurrentMonth { get; private set; }
 
-    public Money SaleIncludeCurrentMonth { get; private set; }
+    public CodalMoney SaleIncludeCurrentMonth { get; private set; }
 
-    public Money SaleLastYear { get; private set; }
+    public CodalMoney SaleLastYear { get; private set; }
 
     public bool HasSubCompanySale { get; private set; }
 

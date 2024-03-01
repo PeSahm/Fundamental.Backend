@@ -59,59 +59,19 @@ public class MonthlyActivityConfiguration : EntityTypeConfigurationBase<MonthlyA
 
         builder.ComplexProperty(
             x => x.SaleBeforeCurrentMonth,
-            navigationBuilder =>
-            {
-                navigationBuilder.Property(x => x.Value)
-                    .HasColumnName("sale_before_current_month")
-                    .HasColumnType("decimal")
-                    .HasPrecision(36, 10)
-                    .IsRequired();
-
-                navigationBuilder.Property(x => x.Currency)
-                    .UseCurrencyColumn();
-            });
+            navigationBuilder => navigationBuilder.UseCodalMoney());
 
         builder.ComplexProperty(
             x => x.SaleCurrentMonth,
-            navigationBuilder =>
-            {
-                navigationBuilder.Property(x => x.Value)
-                    .HasColumnName("sale_current_month")
-                    .HasColumnType("decimal")
-                    .HasPrecision(36, 10)
-                    .IsRequired();
-
-                navigationBuilder.Property(x => x.Currency)
-                    .UseCurrencyColumn();
-            });
+            navigationBuilder => navigationBuilder.UseCodalMoney());
 
         builder.ComplexProperty(
             x => x.SaleIncludeCurrentMonth,
-            navigationBuilder =>
-            {
-                navigationBuilder.Property(x => x.Value)
-                    .HasColumnName("sale_include_current_month")
-                    .HasColumnType("decimal")
-                    .HasPrecision(36, 10)
-                    .IsRequired();
-
-                navigationBuilder.Property(x => x.Currency)
-                    .UseCurrencyColumn();
-            });
+            navigationBuilder => navigationBuilder.UseCodalMoney());
 
         builder.ComplexProperty(
             x => x.SaleLastYear,
-            navigationBuilder =>
-            {
-                navigationBuilder.Property(x => x.Value)
-                    .HasColumnName("sale_last_year")
-                    .HasColumnType("decimal")
-                    .HasPrecision(36, 10)
-                    .IsRequired();
-
-                navigationBuilder.Property(x => x.Currency)
-                    .UseCurrencyColumn();
-            });
+            navigationBuilder => navigationBuilder.UseCodalMoney());
 
         builder.Property(x => x.HasSubCompanySale)
             .IsRequired();

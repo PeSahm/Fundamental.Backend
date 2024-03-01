@@ -16,16 +16,16 @@ public class FinancialStatement : BaseEntity<Guid>
         FiscalYear fiscalYear,
         StatementMonth yearEndMonth,
         StatementMonth reportMonth,
-        Money operatingIncome,
-        SignedMoney grossProfit,
-        SignedMoney operatingProfit,
-        Money bankInterestIncome,
-        SignedMoney investmentIncome,
-        Money netProfit,
-        Money expense,
-        Money asset,
-        Money ownersEquity,
-        Money receivables,
+        CodalMoney operatingIncome,
+        SignedCodalMoney grossProfit,
+        SignedCodalMoney operatingProfit,
+        CodalMoney bankInterestIncome,
+        SignedCodalMoney investmentIncome,
+        CodalMoney netProfit,
+        CodalMoney expense,
+        CodalMoney asset,
+        CodalMoney ownersEquity,
+        CodalMoney receivables,
         DateTime createdAt
     )
     {
@@ -68,25 +68,25 @@ public class FinancialStatement : BaseEntity<Guid>
 
     public StatementMonth ReportMonth { get; private set; }
 
-    public Money OperatingIncome { get; private set; }
+    public CodalMoney OperatingIncome { get; private set; }
 
-    public SignedMoney GrossProfit { get; private set; }
+    public SignedCodalMoney GrossProfit { get; private set; }
 
-    public SignedMoney OperatingProfit { get; private set; }
+    public SignedCodalMoney OperatingProfit { get; private set; }
 
-    public Money BankInterestIncome { get; private set; }
+    public CodalMoney BankInterestIncome { get; private set; }
 
-    public SignedMoney InvestmentIncome { get; private set; }
+    public SignedCodalMoney InvestmentIncome { get; private set; }
 
-    public Money NetProfit { get; set; }
+    public CodalMoney NetProfit { get; set; }
 
-    public Money Expense { get; private set; }
+    public CodalMoney Expense { get; private set; }
 
-    public Money Asset { get; private set; }
+    public CodalMoney Asset { get; private set; }
 
-    public Money OwnersEquity { get; private set; }
+    public CodalMoney OwnersEquity { get; private set; }
 
-    public Money Receivables { get; private set; }
+    public CodalMoney Receivables { get; private set; }
 
     public void Update(
         Symbol symbol,
@@ -96,10 +96,10 @@ public class FinancialStatement : BaseEntity<Guid>
         StatementMonth yearEndMonth,
         StatementMonth reportMonth,
         CodalMoney operatingIncome,
-        CodalMoney grossProfit,
-        CodalMoney operatingProfit,
+        SignedCodalMoney grossProfit,
+        SignedCodalMoney operatingProfit,
         CodalMoney bankInterestIncome,
-        CodalMoney investmentIncome,
+        SignedCodalMoney investmentIncome,
         CodalMoney netProfit,
         CodalMoney expense,
         CodalMoney asset,

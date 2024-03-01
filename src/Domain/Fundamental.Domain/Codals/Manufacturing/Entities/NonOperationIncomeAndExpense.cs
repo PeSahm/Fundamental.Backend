@@ -17,7 +17,7 @@ public sealed class NonOperationIncomeAndExpense : BaseEntity<Guid>
         StatementMonth yearEndMonth,
         StatementMonth reportMonth,
         string? description,
-        CodalMoney value,
+        SignedCodalMoney value,
         bool isAudited,
         bool currentPeriod,
         bool previousPeriod,
@@ -64,7 +64,7 @@ public sealed class NonOperationIncomeAndExpense : BaseEntity<Guid>
 
     public string? Description { get; private set; }
 
-    public SignedMoney Value { get; private set; }
+    public SignedCodalMoney Value { get; private set; }
 
     public bool IsAudited { get; private set; }
 

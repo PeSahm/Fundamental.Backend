@@ -60,16 +60,8 @@ public class BalanceSheetConfiguration : EntityTypeConfigurationBase<BalanceShee
         builder.ComplexProperty(
             x => x.Value,
             amount =>
-            {
-                amount.Property(money => money.Value)
-                    .HasColumnName("value")
-                    .HasColumnType("decimal")
-                    .HasPrecision(36, 10)
-                    .IsRequired();
-
-                amount.Property(money => money.Currency)
-                    .UseCurrencyColumn();
-            });
+                amount.UseSignedCodalMoney()
+        );
 
         builder.Property(x => x.Row)
             .HasColumnType("SMALLINT")

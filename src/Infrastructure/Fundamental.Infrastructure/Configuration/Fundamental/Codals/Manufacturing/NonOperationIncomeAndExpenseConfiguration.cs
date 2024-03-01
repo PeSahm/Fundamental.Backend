@@ -64,17 +64,7 @@ public class NonOperationIncomeAndExpenseConfiguration : EntityTypeConfiguration
 
         builder.ComplexProperty(
             x => x.Value,
-            navigationBuilder =>
-            {
-                navigationBuilder.Property(x => x.Value)
-                    .HasColumnName("value")
-                    .HasColumnType("decimal")
-                    .HasPrecision(36, 10)
-                    .IsRequired();
-
-                navigationBuilder.Property(x => x.Currency)
-                    .UseCurrencyColumn();
-            });
+            navigationBuilder => navigationBuilder.UseSignedCodalMoney());
 
         builder.Property(x => x.IsAudited)
             .IsRequired();

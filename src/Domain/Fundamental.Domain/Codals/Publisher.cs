@@ -46,7 +46,7 @@ public sealed class Publisher : BaseEntity<Guid>
     public string? FinancialYear { get; init; }
 
     public IsoCurrency Currency { get; private set; } = IsoCurrency.IRR;
-    public Money ListedCapital { get; init; } = Money.BaseCurrency(0);
+    public CodalMoney ListedCapital { get; init; } = CodalMoney.BaseCurrency(0);
     public string? AuditorName { get; init; }
     public EnableSubCompany IsEnableSubCompany { get; init; }
     public bool IsEnabled { get; init; }
@@ -54,7 +54,7 @@ public sealed class Publisher : BaseEntity<Guid>
     public PublisherSubCompanyType SubCompanyType { get; init; }
     public bool IsSupplied { get; init; }
     public PublisherMarketType MarketType { get; init; }
-    public Money UnauthorizedCapital { get; init; } = Money.BaseCurrency(0);
+    public CodalMoney UnauthorizedCapital { get; init; } = CodalMoney.BaseCurrency(0);
 
     public void Update(Symbol symbol)
     {

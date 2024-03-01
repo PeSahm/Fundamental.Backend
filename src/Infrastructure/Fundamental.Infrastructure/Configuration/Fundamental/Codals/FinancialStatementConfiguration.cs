@@ -58,144 +58,44 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
                     .IsRequired();
             });
 
-        builder.OwnsOne(
+        builder.ComplexProperty(
             x => x.OperatingIncome,
-            amount =>
-            {
-                amount.Property(money => money.Value)
-                    .HasColumnName("operating_income")
-                    .HasColumnType("decimal")
-                    .HasPrecision(36, 10)
-                    .IsRequired();
+            navigationBuilder => navigationBuilder.UseCodalMoney());
 
-                amount.Property(money => money.Currency)
-                    .UseCurrencyColumn();
-            });
-
-        builder.OwnsOne(
+        builder.ComplexProperty(
             x => x.GrossProfit,
-            amount =>
-            {
-                amount.Property(money => money.Value)
-                    .HasColumnName("gross_profit")
-                    .HasColumnType("decimal")
-                    .HasPrecision(36, 10)
-                    .IsRequired();
+            navigationBuilder => navigationBuilder.UseSignedCodalMoney());
 
-                amount.Property(money => money.Currency)
-                    .UseCurrencyColumn();
-            });
-
-        builder.OwnsOne(
+        builder.ComplexProperty(
             x => x.OperatingProfit,
-            amount =>
-            {
-                amount.Property(money => money.Value)
-                    .HasColumnName("operating_profit")
-                    .HasColumnType("decimal")
-                    .HasPrecision(36, 10)
-                    .IsRequired();
+            navigationBuilder => navigationBuilder.UseSignedCodalMoney());
 
-                amount.Property(money => money.Currency)
-                    .UseCurrencyColumn();
-            });
-
-        builder.OwnsOne(
+        builder.ComplexProperty(
             x => x.BankInterestIncome,
-            amount =>
-            {
-                amount.Property(money => money.Value)
-                    .HasColumnName("bank_interest_income")
-                    .HasColumnType("decimal")
-                    .HasPrecision(36, 10)
-                    .IsRequired();
+            navigationBuilder => navigationBuilder.UseCodalMoney());
 
-                amount.Property(money => money.Currency)
-                    .UseCurrencyColumn();
-            });
-
-        builder.OwnsOne(
+        builder.ComplexProperty(
             x => x.InvestmentIncome,
-            amount =>
-            {
-                amount.Property(money => money.Value)
-                    .HasColumnName("investment_income")
-                    .HasColumnType("decimal")
-                    .HasPrecision(36, 10)
-                    .IsRequired();
+            navigationBuilder => navigationBuilder.UseSignedCodalMoney());
 
-                amount.Property(money => money.Currency)
-                    .UseCurrencyColumn();
-            });
-
-        builder.OwnsOne(
+        builder.ComplexProperty(
             x => x.NetProfit,
-            amount =>
-            {
-                amount.Property(money => money.Value)
-                    .HasColumnName("net_profit")
-                    .HasColumnType("decimal")
-                    .HasPrecision(36, 10)
-                    .IsRequired();
+            navigationBuilder => navigationBuilder.UseCodalMoney());
 
-                amount.Property(money => money.Currency)
-                    .UseCurrencyColumn();
-            });
-
-        builder.OwnsOne(
+        builder.ComplexProperty(
             x => x.Expense,
-            amount =>
-            {
-                amount.Property(money => money.Value)
-                    .HasColumnName("expense")
-                    .HasColumnType("decimal")
-                    .HasPrecision(36, 10)
-                    .IsRequired();
+            navigationBuilder => navigationBuilder.UseCodalMoney());
 
-                amount.Property(money => money.Currency)
-                    .UseCurrencyColumn();
-            });
-
-        builder.OwnsOne(
+        builder.ComplexProperty(
             x => x.Asset,
-            amount =>
-            {
-                amount.Property(money => money.Value)
-                    .HasColumnName("asset")
-                    .HasColumnType("decimal")
-                    .HasPrecision(36, 10)
-                    .IsRequired();
+            navigationBuilder => navigationBuilder.UseCodalMoney());
 
-                amount.Property(money => money.Currency)
-                    .UseCurrencyColumn();
-            });
-
-        builder.OwnsOne(
+        builder.ComplexProperty(
             x => x.OwnersEquity,
-            amount =>
-            {
-                amount.Property(money => money.Value)
-                    .HasColumnName("owners_equity")
-                    .HasColumnType("decimal")
-                    .HasPrecision(36, 10)
-                    .IsRequired();
+            navigationBuilder => navigationBuilder.UseCodalMoney());
 
-                amount.Property(money => money.Currency)
-                    .UseCurrencyColumn();
-            });
-
-        builder.OwnsOne(
+        builder.ComplexProperty(
             x => x.Receivables,
-            amount =>
-            {
-                amount.Property(money => money.Value)
-                    .HasColumnName("receivables")
-                    .HasColumnType("decimal")
-                    .HasPrecision(36, 10)
-                    .IsRequired();
-
-                amount.Property(money => money.Currency)
-                    .UseCurrencyColumn();
-            });
+            navigationBuilder => navigationBuilder.UseCodalMoney());
     }
 }

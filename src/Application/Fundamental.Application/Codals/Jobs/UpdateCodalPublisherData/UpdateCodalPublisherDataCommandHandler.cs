@@ -5,7 +5,6 @@ using Fundamental.Application.Common.Extensions;
 using Fundamental.Application.Symbols.Specifications;
 using Fundamental.Domain.Codals;
 using Fundamental.Domain.Common.Enums;
-using Fundamental.Domain.Common.ValueObjects;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.Domain.Symbols.Entities;
 using Fundamental.ErrorHandling;
@@ -103,7 +102,7 @@ public sealed class UpdateCodalPublisherDataCommandHandler(
                         ShareOfficeFax = publisher.ShareOfficeFax.Safe(),
                         NationalCode = publisher.NationalCode.Safe(),
                         FinancialYear = publisher.FinancialYear.Safe(),
-                        ListedCapital = (CodalMoney)publisher.ListedCapital,
+                        ListedCapital = publisher.ListedCapital,
                         AuditorName = publisher.AuditorName.Safe(),
                         IsEnableSubCompany = (EnableSubCompany)publisher.IsEnableSubCompany,
                         IsEnabled = publisher.IsEnabled,
@@ -111,7 +110,7 @@ public sealed class UpdateCodalPublisherDataCommandHandler(
                         SubCompanyType = (PublisherSubCompanyType)publisher.SubCompanyType,
                         IsSupplied = publisher.IsSupplied,
                         MarketType = (PublisherMarketType)publisher.MarketType,
-                        UnauthorizedCapital = (CodalMoney)publisher.UnauthorizedCapital,
+                        UnauthorizedCapital = publisher.UnauthorizedCapital,
                         ParentSymbol = parentSymbol,
                     };
                     repository.Add(entity);

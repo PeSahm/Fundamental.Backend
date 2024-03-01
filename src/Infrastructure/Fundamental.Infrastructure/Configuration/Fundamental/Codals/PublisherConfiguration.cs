@@ -76,31 +76,11 @@ public class PublisherConfiguration : EntityTypeConfigurationBase<Publisher>
 
         builder.ComplexProperty(
             x => x.UnauthorizedCapital,
-            amount =>
-            {
-                amount.Property(money => money.Value)
-                    .HasColumnName("unauthorized_capital")
-                    .HasColumnType("decimal")
-                    .HasPrecision(36, 10)
-                    .IsRequired();
-
-                amount.Property(money => money.Currency)
-                    .UseCurrencyColumn();
-            });
+            navigationBuilder => navigationBuilder.UseCodalMoney());
 
         builder.ComplexProperty(
             x => x.ListedCapital,
-            amount =>
-            {
-                amount.Property(money => money.Value)
-                    .HasColumnName("listed_capital")
-                    .HasColumnType("decimal")
-                    .HasPrecision(36, 10)
-                    .IsRequired();
-
-                amount.Property(money => money.Currency)
-                    .UseCurrencyColumn();
-            });
+            navigationBuilder => navigationBuilder.UseCodalMoney());
 
         builder.Property(x => x.State).IsRequired();
 
