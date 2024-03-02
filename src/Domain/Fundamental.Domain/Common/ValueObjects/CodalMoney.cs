@@ -5,8 +5,6 @@ namespace Fundamental.Domain.Common.ValueObjects;
 
 public sealed class CodalMoney
 {
-    private const decimal CODAL_MONEY_MULTIPLIER = 1_000_000;
-
     private decimal _value;
 
     public CodalMoney(decimal amount, IsoCurrency currency)
@@ -16,8 +14,9 @@ public sealed class CodalMoney
             throw new InvalidMoneyAmountException(amount);
         }
 
-        Value = amount;
+        _value = amount * CodalMoneyMultiplier;
         Currency = currency;
+        SetInternally = false;
     }
 
     public CodalMoney(decimal amount)
@@ -27,21 +26,26 @@ public sealed class CodalMoney
             throw new InvalidMoneyAmountException(amount);
         }
 
-        Value = amount;
+        _value = amount * CodalMoneyMultiplier;
         Currency = AppConfig.BASE_CURRENCY;
+        SetInternally = false;
     }
 
     private CodalMoney()
     {
+        SetInternally = true;
     }
 
-    public decimal Value
+    public static decimal CodalMoneyMultiplier => 1_000_000;
+
+    private bool SetInternally { get; set; }
+
+    public decimal Value => SetInternally ? _value : _value / CodalMoneyMultiplier;
+
+    public IsoCurrency Currency
     {
-        get => _value / CODAL_MONEY_MULTIPLIER;
-        set => _value = value * CODAL_MONEY_MULTIPLIER;
+        get;
     }
-
-    public IsoCurrency Currency { get; }
 
     public static CodalMoney operator +(CodalMoney a, CodalMoney b)
     {
@@ -133,7 +137,7 @@ public sealed class CodalMoney
         return $"{Value.ToString($"F{places}")} {Currency.ToString()}";
     }
 
-    public static implicit operator decimal(CodalMoney money) => money.Value;
+    public static implicit operator decimal(CodalMoney money) => money._value;
 
     public static implicit operator CodalMoney(decimal money) => new(money);
 }

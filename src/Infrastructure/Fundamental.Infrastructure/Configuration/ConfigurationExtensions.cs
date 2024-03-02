@@ -1,6 +1,7 @@
 ﻿using Fundamental.Domain.Common.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Npgsql.NameTranslation;
 
 namespace Fundamental.Infrastructure.Configuration;
 
@@ -31,8 +32,8 @@ public static class ConfigurationExtensions
     public static void UseSignedCodalMoney(this ComplexPropertyBuilder<SignedCodalMoney> builder)
     {
         builder.Property(money => money.Value)
-            .HasField("_value")
-            .HasColumnName(builder.Metadata.Name)
+            .HasColumnName(NpgsqlSnakeCaseNameTranslator.ConvertToSnakeCase(builder.Metadata.Name))
+            .HasConversion(x => x, x => x / SignedCodalMoney.CodalMoneyMultiplier)
             .HasColumnType("decimal")
             .HasPrecision(36, 10)
             .IsRequired();
@@ -44,8 +45,9 @@ public static class ConfigurationExtensions
     public static void UseCodalMoney(this ComplexPropertyBuilder<CodalMoney> builder)
     {
         builder.Property(money => money.Value)
+            .HasColumnName(NpgsqlSnakeCaseNameTranslator.ConvertToSnakeCase(builder.Metadata.Name))
             .HasField("_value")
-            .HasColumnName(builder.Metadata.Name)
+            .HasConversion(x => x, x => x / CodalMoney.CodalMoneyMultiplier)
             .HasColumnType("decimal")
             .HasPrecision(36, 10)
             .IsRequired();

@@ -14,8 +14,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fundamental.Migrations.Fundamental
 {
     [DbContext(typeof(FundamentalDbContext))]
-    [Migration("20240224210052_AddYearlyForecastInNoneOperationalTable")]
-    partial class AddYearlyForecastInNoneOperationalTable
+    [Migration("20240301200259_ChangeCodalMoneyValueObject")]
+    partial class ChangeCodalMoneyValueObject
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -78,6 +78,51 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnType("bigint")
                         .HasColumnName("symbol_id");
 
+                    b.ComplexProperty<Dictionary<string, object>>("Asset", "Fundamental.Domain.Codals.FinancialStatement.Asset#CodalMoney", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<IsoCurrency>("Currency")
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("iso_currency")
+                                .HasColumnName("currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("asset");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("BankInterestIncome", "Fundamental.Domain.Codals.FinancialStatement.BankInterestIncome#CodalMoney", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<IsoCurrency>("Currency")
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("iso_currency")
+                                .HasColumnName("currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("bank_interest_income");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("Expense", "Fundamental.Domain.Codals.FinancialStatement.Expense#CodalMoney", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<IsoCurrency>("Currency")
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("iso_currency")
+                                .HasColumnName("currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("expense");
+                        });
+
                     b.ComplexProperty<Dictionary<string, object>>("FiscalYear", "Fundamental.Domain.Codals.FinancialStatement.FiscalYear#FiscalYear", b1 =>
                         {
                             b1.IsRequired();
@@ -85,6 +130,111 @@ namespace Fundamental.Migrations.Fundamental
                             b1.Property<short>("Year")
                                 .HasColumnType("SMALLINT")
                                 .HasColumnName("fiscal_year");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("GrossProfit", "Fundamental.Domain.Codals.FinancialStatement.GrossProfit#SignedCodalMoney", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<IsoCurrency>("Currency")
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("iso_currency")
+                                .HasColumnName("currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("gross_profit");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("InvestmentIncome", "Fundamental.Domain.Codals.FinancialStatement.InvestmentIncome#SignedCodalMoney", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<IsoCurrency>("Currency")
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("iso_currency")
+                                .HasColumnName("currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("investment_income");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("NetProfit", "Fundamental.Domain.Codals.FinancialStatement.NetProfit#CodalMoney", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<IsoCurrency>("Currency")
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("iso_currency")
+                                .HasColumnName("currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("net_profit");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("OperatingIncome", "Fundamental.Domain.Codals.FinancialStatement.OperatingIncome#CodalMoney", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<IsoCurrency>("Currency")
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("iso_currency")
+                                .HasColumnName("currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("operating_income");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("OperatingProfit", "Fundamental.Domain.Codals.FinancialStatement.OperatingProfit#SignedCodalMoney", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<IsoCurrency>("Currency")
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("iso_currency")
+                                .HasColumnName("currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("operating_profit");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("OwnersEquity", "Fundamental.Domain.Codals.FinancialStatement.OwnersEquity#CodalMoney", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<IsoCurrency>("Currency")
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("iso_currency")
+                                .HasColumnName("currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("owners_equity");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("Receivables", "Fundamental.Domain.Codals.FinancialStatement.Receivables#CodalMoney", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<IsoCurrency>("Currency")
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("iso_currency")
+                                .HasColumnName("currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("receivables");
                         });
 
                     b.HasKey("_id")
@@ -173,7 +323,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("fiscal-year");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("Value", "Fundamental.Domain.Codals.Manufacturing.Entities.BalanceSheet.Value#SignedMoney", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("Value", "Fundamental.Domain.Codals.Manufacturing.Entities.BalanceSheet.Value#SignedCodalMoney", b1 =>
                         {
                             b1.IsRequired();
 
@@ -333,7 +483,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("fiscal-year");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("Value", "Fundamental.Domain.Codals.Manufacturing.Entities.IncomeStatement.Value#SignedMoney", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("Value", "Fundamental.Domain.Codals.Manufacturing.Entities.IncomeStatement.Value#SignedCodalMoney", b1 =>
                         {
                             b1.IsRequired();
 
@@ -345,7 +495,7 @@ namespace Fundamental.Migrations.Fundamental
                             b1.Property<decimal>("Value")
                                 .HasPrecision(36, 10)
                                 .HasColumnType("decimal")
-                                .HasColumnName("value_value");
+                                .HasColumnName("value");
                         });
 
                     b.HasKey("_id")
@@ -477,7 +627,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("report_month");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("SaleBeforeCurrentMonth", "Fundamental.Domain.Codals.Manufacturing.Entities.MonthlyActivity.SaleBeforeCurrentMonth#Money", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("SaleBeforeCurrentMonth", "Fundamental.Domain.Codals.Manufacturing.Entities.MonthlyActivity.SaleBeforeCurrentMonth#CodalMoney", b1 =>
                         {
                             b1.IsRequired();
 
@@ -492,7 +642,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("sale_before_current_month");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("SaleCurrentMonth", "Fundamental.Domain.Codals.Manufacturing.Entities.MonthlyActivity.SaleCurrentMonth#Money", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("SaleCurrentMonth", "Fundamental.Domain.Codals.Manufacturing.Entities.MonthlyActivity.SaleCurrentMonth#CodalMoney", b1 =>
                         {
                             b1.IsRequired();
 
@@ -507,7 +657,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("sale_current_month");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("SaleIncludeCurrentMonth", "Fundamental.Domain.Codals.Manufacturing.Entities.MonthlyActivity.SaleIncludeCurrentMonth#Money", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("SaleIncludeCurrentMonth", "Fundamental.Domain.Codals.Manufacturing.Entities.MonthlyActivity.SaleIncludeCurrentMonth#CodalMoney", b1 =>
                         {
                             b1.IsRequired();
 
@@ -522,7 +672,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("sale_include_current_month");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("SaleLastYear", "Fundamental.Domain.Codals.Manufacturing.Entities.MonthlyActivity.SaleLastYear#Money", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("SaleLastYear", "Fundamental.Domain.Codals.Manufacturing.Entities.MonthlyActivity.SaleLastYear#CodalMoney", b1 =>
                         {
                             b1.IsRequired();
 
@@ -638,7 +788,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("fiscal_year");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("Value", "Fundamental.Domain.Codals.Manufacturing.Entities.NonOperationIncomeAndExpense.Value#SignedMoney", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("Value", "Fundamental.Domain.Codals.Manufacturing.Entities.NonOperationIncomeAndExpense.Value#SignedCodalMoney", b1 =>
                         {
                             b1.IsRequired();
 
@@ -849,7 +999,7 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnType("bigint")
                         .HasColumnName("symbol_id");
 
-                    b.ComplexProperty<Dictionary<string, object>>("ListedCapital", "Fundamental.Domain.Codals.Publisher.ListedCapital#Money", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("ListedCapital", "Fundamental.Domain.Codals.Publisher.ListedCapital#CodalMoney", b1 =>
                         {
                             b1.IsRequired();
 
@@ -864,7 +1014,7 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("listed_capital");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("UnauthorizedCapital", "Fundamental.Domain.Codals.Publisher.UnauthorizedCapital#Money", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("UnauthorizedCapital", "Fundamental.Domain.Codals.Publisher.UnauthorizedCapital#CodalMoney", b1 =>
                         {
                             b1.IsRequired();
 
@@ -1238,256 +1388,6 @@ namespace Fundamental.Migrations.Fundamental
                         .IsRequired()
                         .HasConstraintName("fk_financial_statement_symbols_symbol_id");
 
-                    b.OwnsOne("Fundamental.Domain.Common.ValueObjects.Money", "Asset", b1 =>
-                        {
-                            b1.Property<long>("FinancialStatement_id")
-                                .HasColumnType("bigint")
-                                .HasColumnName("_id");
-
-                            b1.Property<IsoCurrency>("Currency")
-                                .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("iso_currency")
-                                .HasColumnName("currency");
-
-                            b1.Property<decimal>("Value")
-                                .HasPrecision(36, 10)
-                                .HasColumnType("decimal")
-                                .HasColumnName("asset");
-
-                            b1.HasKey("FinancialStatement_id");
-
-                            b1.ToTable("financial-statement", "fs");
-
-                            b1.WithOwner()
-                                .HasForeignKey("FinancialStatement_id")
-                                .HasConstraintName("fk_financial_statement_financial_statement__id");
-                        });
-
-                    b.OwnsOne("Fundamental.Domain.Common.ValueObjects.Money", "BankInterestIncome", b1 =>
-                        {
-                            b1.Property<long>("FinancialStatement_id")
-                                .HasColumnType("bigint")
-                                .HasColumnName("_id");
-
-                            b1.Property<IsoCurrency>("Currency")
-                                .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("iso_currency")
-                                .HasColumnName("currency");
-
-                            b1.Property<decimal>("Value")
-                                .HasPrecision(36, 10)
-                                .HasColumnType("decimal")
-                                .HasColumnName("bank_interest_income");
-
-                            b1.HasKey("FinancialStatement_id");
-
-                            b1.ToTable("financial-statement", "fs");
-
-                            b1.WithOwner()
-                                .HasForeignKey("FinancialStatement_id")
-                                .HasConstraintName("fk_financial_statement_financial_statement__id");
-                        });
-
-                    b.OwnsOne("Fundamental.Domain.Common.ValueObjects.Money", "Expense", b1 =>
-                        {
-                            b1.Property<long>("FinancialStatement_id")
-                                .HasColumnType("bigint")
-                                .HasColumnName("_id");
-
-                            b1.Property<IsoCurrency>("Currency")
-                                .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("iso_currency")
-                                .HasColumnName("currency");
-
-                            b1.Property<decimal>("Value")
-                                .HasPrecision(36, 10)
-                                .HasColumnType("decimal")
-                                .HasColumnName("expense");
-
-                            b1.HasKey("FinancialStatement_id");
-
-                            b1.ToTable("financial-statement", "fs");
-
-                            b1.WithOwner()
-                                .HasForeignKey("FinancialStatement_id")
-                                .HasConstraintName("fk_financial_statement_financial_statement__id");
-                        });
-
-                    b.OwnsOne("Fundamental.Domain.Common.ValueObjects.SignedMoney", "GrossProfit", b1 =>
-                        {
-                            b1.Property<long>("FinancialStatement_id")
-                                .HasColumnType("bigint")
-                                .HasColumnName("_id");
-
-                            b1.Property<IsoCurrency>("Currency")
-                                .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("iso_currency")
-                                .HasColumnName("currency");
-
-                            b1.Property<decimal>("Value")
-                                .HasPrecision(36, 10)
-                                .HasColumnType("decimal")
-                                .HasColumnName("gross_profit");
-
-                            b1.HasKey("FinancialStatement_id");
-
-                            b1.ToTable("financial-statement", "fs");
-
-                            b1.WithOwner()
-                                .HasForeignKey("FinancialStatement_id")
-                                .HasConstraintName("fk_financial_statement_financial_statement__id");
-                        });
-
-                    b.OwnsOne("Fundamental.Domain.Common.ValueObjects.SignedMoney", "InvestmentIncome", b1 =>
-                        {
-                            b1.Property<long>("FinancialStatement_id")
-                                .HasColumnType("bigint")
-                                .HasColumnName("_id");
-
-                            b1.Property<IsoCurrency>("Currency")
-                                .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("iso_currency")
-                                .HasColumnName("currency");
-
-                            b1.Property<decimal>("Value")
-                                .HasPrecision(36, 10)
-                                .HasColumnType("decimal")
-                                .HasColumnName("investment_income");
-
-                            b1.HasKey("FinancialStatement_id");
-
-                            b1.ToTable("financial-statement", "fs");
-
-                            b1.WithOwner()
-                                .HasForeignKey("FinancialStatement_id")
-                                .HasConstraintName("fk_financial_statement_financial_statement__id");
-                        });
-
-                    b.OwnsOne("Fundamental.Domain.Common.ValueObjects.Money", "NetProfit", b1 =>
-                        {
-                            b1.Property<long>("FinancialStatement_id")
-                                .HasColumnType("bigint")
-                                .HasColumnName("_id");
-
-                            b1.Property<IsoCurrency>("Currency")
-                                .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("iso_currency")
-                                .HasColumnName("currency");
-
-                            b1.Property<decimal>("Value")
-                                .HasPrecision(36, 10)
-                                .HasColumnType("decimal")
-                                .HasColumnName("net_profit");
-
-                            b1.HasKey("FinancialStatement_id");
-
-                            b1.ToTable("financial-statement", "fs");
-
-                            b1.WithOwner()
-                                .HasForeignKey("FinancialStatement_id")
-                                .HasConstraintName("fk_financial_statement_financial_statement__id");
-                        });
-
-                    b.OwnsOne("Fundamental.Domain.Common.ValueObjects.Money", "OperatingIncome", b1 =>
-                        {
-                            b1.Property<long>("FinancialStatement_id")
-                                .HasColumnType("bigint")
-                                .HasColumnName("_id");
-
-                            b1.Property<IsoCurrency>("Currency")
-                                .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("iso_currency")
-                                .HasColumnName("currency");
-
-                            b1.Property<decimal>("Value")
-                                .HasPrecision(36, 10)
-                                .HasColumnType("decimal")
-                                .HasColumnName("operating_income");
-
-                            b1.HasKey("FinancialStatement_id");
-
-                            b1.ToTable("financial-statement", "fs");
-
-                            b1.WithOwner()
-                                .HasForeignKey("FinancialStatement_id")
-                                .HasConstraintName("fk_financial_statement_financial_statement__id");
-                        });
-
-                    b.OwnsOne("Fundamental.Domain.Common.ValueObjects.SignedMoney", "OperatingProfit", b1 =>
-                        {
-                            b1.Property<long>("FinancialStatement_id")
-                                .HasColumnType("bigint")
-                                .HasColumnName("_id");
-
-                            b1.Property<IsoCurrency>("Currency")
-                                .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("iso_currency")
-                                .HasColumnName("currency");
-
-                            b1.Property<decimal>("Value")
-                                .HasPrecision(36, 10)
-                                .HasColumnType("decimal")
-                                .HasColumnName("operating_profit");
-
-                            b1.HasKey("FinancialStatement_id");
-
-                            b1.ToTable("financial-statement", "fs");
-
-                            b1.WithOwner()
-                                .HasForeignKey("FinancialStatement_id")
-                                .HasConstraintName("fk_financial_statement_financial_statement__id");
-                        });
-
-                    b.OwnsOne("Fundamental.Domain.Common.ValueObjects.Money", "OwnersEquity", b1 =>
-                        {
-                            b1.Property<long>("FinancialStatement_id")
-                                .HasColumnType("bigint")
-                                .HasColumnName("_id");
-
-                            b1.Property<IsoCurrency>("Currency")
-                                .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("iso_currency")
-                                .HasColumnName("currency");
-
-                            b1.Property<decimal>("Value")
-                                .HasPrecision(36, 10)
-                                .HasColumnType("decimal")
-                                .HasColumnName("owners_equity");
-
-                            b1.HasKey("FinancialStatement_id");
-
-                            b1.ToTable("financial-statement", "fs");
-
-                            b1.WithOwner()
-                                .HasForeignKey("FinancialStatement_id")
-                                .HasConstraintName("fk_financial_statement_financial_statement__id");
-                        });
-
-                    b.OwnsOne("Fundamental.Domain.Common.ValueObjects.Money", "Receivables", b1 =>
-                        {
-                            b1.Property<long>("FinancialStatement_id")
-                                .HasColumnType("bigint")
-                                .HasColumnName("_id");
-
-                            b1.Property<IsoCurrency>("Currency")
-                                .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("iso_currency")
-                                .HasColumnName("currency");
-
-                            b1.Property<decimal>("Value")
-                                .HasPrecision(36, 10)
-                                .HasColumnType("decimal")
-                                .HasColumnName("receivables");
-
-                            b1.HasKey("FinancialStatement_id");
-
-                            b1.ToTable("financial-statement", "fs");
-
-                            b1.WithOwner()
-                                .HasForeignKey("FinancialStatement_id")
-                                .HasConstraintName("fk_financial_statement_financial_statement__id");
-                        });
-
                     b.OwnsOne("Fundamental.Domain.Codals.ValueObjects.StatementMonth", "ReportMonth", b1 =>
                         {
                             b1.Property<long>("FinancialStatement_id")
@@ -1525,36 +1425,6 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasForeignKey("FinancialStatement_id")
                                 .HasConstraintName("fk_financial_statement_financial_statement__id");
                         });
-
-                    b.Navigation("Asset")
-                        .IsRequired();
-
-                    b.Navigation("BankInterestIncome")
-                        .IsRequired();
-
-                    b.Navigation("Expense")
-                        .IsRequired();
-
-                    b.Navigation("GrossProfit")
-                        .IsRequired();
-
-                    b.Navigation("InvestmentIncome")
-                        .IsRequired();
-
-                    b.Navigation("NetProfit")
-                        .IsRequired();
-
-                    b.Navigation("OperatingIncome")
-                        .IsRequired();
-
-                    b.Navigation("OperatingProfit")
-                        .IsRequired();
-
-                    b.Navigation("OwnersEquity")
-                        .IsRequired();
-
-                    b.Navigation("Receivables")
-                        .IsRequired();
 
                     b.Navigation("ReportMonth")
                         .IsRequired();

@@ -1,11 +1,14 @@
 ﻿#nullable disable
 
+using Fundamental.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Fundamental.Migrations.Fundamental
 {
-    /// <inheritdoc />
-    public partial class AddYearlyForecastInNoneOperationalTable : Migration
+    [DbContext(typeof(FundamentalDbContext))]
+    [Migration("20240224210052_AddYearlyForecastInNoneOperationalTable")]
+    public class AddYearlyForecastInNoneOperationalTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
