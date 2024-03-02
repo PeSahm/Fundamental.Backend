@@ -18,7 +18,7 @@ public sealed class MonthlyActivityResultItemSpec : Specification<MonthlyActivit
             FiscalYear = x.FiscalYear,
             YearEndMonth = x.YearEndMonth,
             ReportMonth = x.ReportMonth,
-            SaleBeforeCurrentMonth = x.SaleBeforeCurrentMonth,
+            SaleBeforeCurrentMonth = x.SaleBeforeCurrentMonth.Value,
             SaleCurrentMonth = x.SaleCurrentMonth,
             SaleIncludeCurrentMonth = x.SaleIncludeCurrentMonth,
             SaleLastYear = x.SaleLastYear,

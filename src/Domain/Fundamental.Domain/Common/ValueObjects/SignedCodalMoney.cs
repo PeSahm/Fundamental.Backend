@@ -5,31 +5,29 @@ namespace Fundamental.Domain.Common.ValueObjects;
 
 public class SignedCodalMoney
 {
-    private const decimal CODAL_MONEY_MULTIPLIER = 1_000_000;
-
     private decimal _value;
 
     public SignedCodalMoney(decimal amount, IsoCurrency currency)
     {
-        Value = amount;
+        _value = amount * CodalMoneyMultiplier;
         Currency = currency;
     }
 
     public SignedCodalMoney(decimal amount)
     {
-        Value = amount;
+        _value = amount * CodalMoneyMultiplier;
         Currency = AppConfig.BASE_CURRENCY;
     }
 
     private SignedCodalMoney()
     {
+        SetInternally = true;
     }
 
-    public decimal Value
-    {
-        get => _value / CODAL_MONEY_MULTIPLIER;
-        set => _value = value * CODAL_MONEY_MULTIPLIER;
-    }
+    public static decimal CodalMoneyMultiplier => 1_000_000;
+    private bool SetInternally { get; set; }
+
+    public decimal Value => SetInternally ? _value : _value / CodalMoneyMultiplier;
 
     public IsoCurrency Currency { get; }
 
@@ -124,7 +122,6 @@ public class SignedCodalMoney
     }
 
     public static implicit operator decimal(SignedCodalMoney money) => money.Value;
-
     public static implicit operator SignedCodalMoney(decimal money) => new(money);
 
     // public static implicit operator CodalMoney(SignedCodalMoney money) => new(money.Value, money.Currency);
