@@ -4,6 +4,7 @@ using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.Domain.Symbols.Entities;
+using Fundamental.Infrastructure.Configuration.ExAreas;
 using Fundamental.Infrastructure.Configuration.Fundamental;
 using Microsoft.EntityFrameworkCore;
 
@@ -55,6 +56,8 @@ public class FundamentalDbContext : DbContext, IUnitOfWork
 
         modelBuilder.ApplyConfigurationsFromAssembly(
             Assembly.GetExecutingAssembly(),
-            type => type.Namespace!.StartsWith(typeof(SymbolConfiguration).Namespace!));
+            type => type.Namespace!.StartsWith(typeof(SymbolConfiguration).Namespace!) ||
+                    type.Namespace!.StartsWith(typeof(FairConfiguration).Namespace!)
+        );
     }
 }
