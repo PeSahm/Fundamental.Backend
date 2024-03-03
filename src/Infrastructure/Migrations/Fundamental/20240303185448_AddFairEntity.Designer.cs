@@ -14,8 +14,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fundamental.Migrations.Fundamental
 {
     [DbContext(typeof(FundamentalDbContext))]
-    [Migration("20240301200259_ChangeCodalMoneyValueObject")]
-    partial class ChangeCodalMoneyValueObject
+    [Migration("20240303185448_AddFairEntity")]
+    partial class AddFairEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1043,6 +1043,44 @@ namespace Fundamental.Migrations.Fundamental
                         .HasDatabaseName("ix_publisher_symbol_id");
 
                     b.ToTable("publisher", "fs");
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.ExAreas.Entities.Fair", b =>
+                {
+                    b.Property<long>("_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("_id")
+                        .HasColumnOrder(0);
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("_id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("Timestamp")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(1);
+
+                    b.Property<string>("Json")
+                        .IsRequired()
+                        .HasColumnType("jsonb")
+                        .HasColumnName("json");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("Timestamp")
+                        .HasColumnName("ModifiedAt");
+
+                    b.HasKey("_id")
+                        .HasName("pk_fair");
+
+                    b.HasIndex("Id")
+                        .IsUnique()
+                        .HasDatabaseName("ix_fair_id");
+
+                    b.ToTable("fair", "ex_areas");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Prices.Entities.ClosePrice", b =>

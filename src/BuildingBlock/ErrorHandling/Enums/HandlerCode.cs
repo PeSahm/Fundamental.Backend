@@ -39,4 +39,6 @@ public enum HandlerCode : ushort
     AddFinancialStatement = 13_399,
 
     GetCustomerErrorMessages = 17_999,
+
+    SaveFair = 19_999,
 }

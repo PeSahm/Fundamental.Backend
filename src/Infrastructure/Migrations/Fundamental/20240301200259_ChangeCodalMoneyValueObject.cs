@@ -1,11 +1,14 @@
 ﻿#nullable disable
 
+using Fundamental.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Fundamental.Migrations.Fundamental
 {
-    /// <inheritdoc />
-    public partial class ChangeCodalMoneyValueObject : Migration
+    [DbContext(typeof(FundamentalDbContext))]
+    [Migration("20240301200259_ChangeCodalMoneyValueObject")]
+    public class ChangeCodalMoneyValueObject : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
