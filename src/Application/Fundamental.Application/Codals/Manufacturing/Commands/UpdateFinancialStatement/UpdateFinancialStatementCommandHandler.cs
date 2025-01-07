@@ -1,6 +1,6 @@
 ﻿using Fundamental.Application.Codals.Manufacturing.Specifications;
 using Fundamental.Application.Symbols.Specifications;
-using Fundamental.Domain.Codals;
+using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.Domain.Symbols.Entities;
 using Fundamental.ErrorHandling;

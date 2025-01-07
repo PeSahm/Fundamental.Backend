@@ -1,8 +1,7 @@
 ﻿using Fundamental.Application.Codals.Manufacturing.Queries.GetFinancialStatements;
 using Fundamental.Application.Codals.Manufacturing.Repositories;
-using Fundamental.Domain.Codals;
+using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Common.Dto;
-using Fundamental.Infrastructure.Extensions;
 using Fundamental.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
