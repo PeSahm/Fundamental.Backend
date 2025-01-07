@@ -27,6 +27,18 @@ public class StatementMonth : ValueObject
 
     public ushort Month { get; }
 
+    public StatementMonth AdjustedMonth(StatementMonth yearEndMonth)
+    {
+        int adjustedMonthValue = (this + (12 - yearEndMonth)) % 12;
+
+        if (adjustedMonthValue == 0)
+        {
+            adjustedMonthValue = 12;
+        }
+
+        return new StatementMonth(adjustedMonthValue);
+    }
+
     public static implicit operator ushort(StatementMonth month)
     {
         return month.Month;

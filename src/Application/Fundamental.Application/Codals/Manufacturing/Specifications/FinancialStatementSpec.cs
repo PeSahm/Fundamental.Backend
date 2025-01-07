@@ -1,5 +1,5 @@
 ﻿using Ardalis.Specification;
-using Fundamental.Domain.Codals;
+using Fundamental.Domain.Codals.Manufacturing.Entities;
 
 namespace Fundamental.Application.Codals.Manufacturing.Specifications;
 
