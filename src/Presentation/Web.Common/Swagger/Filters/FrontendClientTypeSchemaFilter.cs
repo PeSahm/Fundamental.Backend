@@ -15,6 +15,7 @@ public class FrontendClientTypeSchemaFilter : ISchemaFilter
             {
                 new OpenApiString("admin"),
                 new OpenApiString("web"),
+                new OpenApiString("job"),
             };
         }
     }

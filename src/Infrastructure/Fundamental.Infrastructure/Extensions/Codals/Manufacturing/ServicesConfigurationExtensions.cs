@@ -30,7 +30,6 @@ public static class ServicesConfigurationExtensions
 
     public static void AddManufacturingReadRepositories(this WebApplicationBuilder builder)
     {
-        builder.Services.AddScoped<IFinancialStatementsReadRepository, FinancialStatementsReadRepository>();
         builder.Services.AddScoped<IMonthlyActivityRepository, MonthlyActivityRepository>();
         builder.Services.AddScoped<IBalanceSheetReadRepository, BalanceSheetReadRepository>();
         builder.Services.AddScoped<IIncomeStatementsReadRepository, IncomeStatementReadRepository>();

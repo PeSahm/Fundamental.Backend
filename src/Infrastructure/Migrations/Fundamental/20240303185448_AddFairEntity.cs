@@ -1,12 +1,16 @@
 ﻿#nullable disable
 
+using Fundamental.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Fundamental.Migrations.Fundamental
 {
     /// <inheritdoc />
-    public partial class AddFairEntity : Migration
+    [DbContext(typeof(FundamentalDbContext))]
+    [Migration("20240303185448_AddFairEntity")]
+    public class AddFairEntity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
