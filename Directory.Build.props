@@ -41,18 +41,18 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="!'$(IsDbMigrations)'">
-		<None Include="$(MSBuildThisFileDirectory)Analyzers\Analyzers.ruleset" Link="Properties\Analyzers.ruleset" />
+		<None Include="$(MSBuildThisFileDirectory)analyzers\Analyzers.ruleset" Link="Properties\Analyzers.ruleset" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(IsTests)'">
-		<None Include="$(MSBuildThisFileDirectory)Analyzers\TestingAnalyzers.ruleset" Link="Properties\TestingAnalyzers.ruleset" />
+		<None Include="$(MSBuildThisFileDirectory)analyzers\TestingAnalyzers.ruleset" Link="Properties\TestingAnalyzers.ruleset" />
 	</ItemGroup>
 
     <PropertyGroup Condition="!'$(IsDbMigrations)'">
-        <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)Analyzers\Analyzers.ruleset</CodeAnalysisRuleSet>
+        <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)analyzers\Analyzers.ruleset</CodeAnalysisRuleSet>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(IsTests)'">
-        <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)Analyzers\TestingAnalyzers.ruleset</CodeAnalysisRuleSet>
+        <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)analyzers\TestingAnalyzers.ruleset</CodeAnalysisRuleSet>
     </PropertyGroup>
 </Project>
