@@ -1,5 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35521.163 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0C86B15F-1EF2-48DA-843E-7A8D1C753943}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fundamental.Domain", "src\Domain\Fundamental.Domain\Fundamental.Domain.csproj", "{3ADE6D04-F59C-4458-AD26-412D89A49643}"
@@ -33,6 +36,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ErrorHandling.AspNetCore", "src\BuildingBlock\ErrorHandling.AspNetCore\ErrorHandling.AspNetCore.csproj", "{7E4F24B3-B6F8-4807-8957-5F881945A62B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Migrations", "src\Infrastructure\Migrations\Migrations.csproj", "{CE71847B-0A5D-45F4-BA4D-8C1A5C0428C8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{FDB0CF81-23A8-4428-8FA8-F27615360250}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{C650329A-D80D-40CE-B8F5-5A428F0DD74D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.UnitTests", "tests\UnitTests\Domain.UnitTests\Domain.UnitTests.csproj", "{7346F2A5-1F57-419A-8B81-5067073C0469}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -76,6 +85,13 @@ Global
 		{CE71847B-0A5D-45F4-BA4D-8C1A5C0428C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE71847B-0A5D-45F4-BA4D-8C1A5C0428C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE71847B-0A5D-45F4-BA4D-8C1A5C0428C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7346F2A5-1F57-419A-8B81-5067073C0469}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7346F2A5-1F57-419A-8B81-5067073C0469}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7346F2A5-1F57-419A-8B81-5067073C0469}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7346F2A5-1F57-419A-8B81-5067073C0469}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3ADE6D04-F59C-4458-AD26-412D89A49643} = {0C86B15F-1EF2-48DA-843E-7A8D1C753943}
@@ -87,5 +103,7 @@ Global
 		{3C99AABB-18D6-440B-A67C-DFE4A6BB30FC} = {0C86B15F-1EF2-48DA-843E-7A8D1C753943}
 		{7E4F24B3-B6F8-4807-8957-5F881945A62B} = {0C86B15F-1EF2-48DA-843E-7A8D1C753943}
 		{CE71847B-0A5D-45F4-BA4D-8C1A5C0428C8} = {0C86B15F-1EF2-48DA-843E-7A8D1C753943}
+		{C650329A-D80D-40CE-B8F5-5A428F0DD74D} = {FDB0CF81-23A8-4428-8FA8-F27615360250}
+		{7346F2A5-1F57-419A-8B81-5067073C0469} = {FDB0CF81-23A8-4428-8FA8-F27615360250}
 	EndGlobalSection
 EndGlobal

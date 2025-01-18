@@ -8,15 +8,8 @@ using Microsoft.Extensions.Options;
 
 namespace Fundamental.WebApi.Swagger;
 
-public class CustomerApiDescriptionProvider : IApiDescriptionProvider
+public class CustomerApiDescriptionProvider(IOptions<ApiExplorerOptions> options) : IApiDescriptionProvider
 {
-    private readonly IOptions<ApiExplorerOptions> _options;
-
-    public CustomerApiDescriptionProvider(IOptions<ApiExplorerOptions> options)
-    {
-        _options = options;
-    }
-
     public int Order => -1;
 
     public void OnProvidersExecuting(ApiDescriptionProviderContext context)
@@ -26,7 +19,7 @@ public class CustomerApiDescriptionProvider : IApiDescriptionProvider
 
     public void OnProvidersExecuted(ApiDescriptionProviderContext context)
     {
-        string format = _options.Value.GroupNameFormat;
+        string format = options.Value.GroupNameFormat;
         CultureInfo culture = CultureInfo.CurrentCulture;
         IList<ApiDescription> contextResults = context.Results;
         List<ApiDescription> newResults = new();
@@ -43,7 +36,7 @@ public class CustomerApiDescriptionProvider : IApiDescriptionProvider
 
                 switch (clientCode)
                 {
-                    case Client.CustomerWeb or Client.AdminWeb:
+                    case Client.CustomerWeb or Client.AdminWeb or Client.CodalJob:
                         apiDescription.GroupName = $"{clientCode}-{version}";
                         newResults.Add(apiDescription);
                         break;

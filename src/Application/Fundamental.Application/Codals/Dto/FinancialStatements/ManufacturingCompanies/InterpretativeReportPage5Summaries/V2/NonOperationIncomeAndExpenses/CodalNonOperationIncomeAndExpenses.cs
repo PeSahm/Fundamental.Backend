@@ -72,6 +72,9 @@ public class RowItem
     [JsonProperty("value_2454")]
     public string Value2454 { get; set; }
 
+    [JsonProperty("value_2455")]
+    public string Value2455 { get; set; }
+
     public int RowNumber { get; set; }
 
     public string? GetDescription()
@@ -126,11 +129,8 @@ public class YearDatum
 
     public DateOnly? PeriodEndToDateGeorgian => PeriodEndToDate.ToGregorianDateOnly();
     public int? FiscalYear => YearEndToDateGeorgian.GetPersianYear(false);
-
     public int? FiscalMonth => YearEndToDateGeorgian.GetPersianMonth(false);
-
     public int? ReportYear => PeriodEndToDateGeorgian.GetPersianYear(false);
-
     public int? ReportMonth => PeriodEndToDateGeorgian.GetPersianMonth(false);
 }
 
