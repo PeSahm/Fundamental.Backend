@@ -2,6 +2,9 @@
     "app": "fundamental-api",
     "port": 5000,
     "platform": "dotnet",
+    "build": {
+        "location": "germany"
+    },
     "dotnet": {
         "version": "8.0",
         "finalDllName": "Fundamental.WebApi",
