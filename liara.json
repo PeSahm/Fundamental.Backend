@@ -1,8 +1,8 @@
 {
-    "platform": "netcore",
     "app": "fundamental-api",
-    "port": 443,
-    "netcore": {
+    "port": 5000,
+    "platform": "dotnet",
+    "dotnet": {
         "version": "8.0",
         "finalDllName": "Fundamental.WebApi",
         "csprojectFile": "src/Presentation/Fundamental.WebApi"
