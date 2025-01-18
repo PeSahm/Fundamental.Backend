@@ -1,4 +1,5 @@
-﻿using Fundamental.Domain.Codals.ValueObjects;
+﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
+using Fundamental.Domain.Codals.ValueObjects;
 using Fundamental.Domain.Common.BaseTypes;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Common.ValueObjects;
@@ -37,7 +38,7 @@ public class FinancialStatement : BaseEntity<Guid>
     public decimal MarketValue { get; private set; }
 
     /// <summary>
-    /// سال مالی
+    /// سال مالی.
     /// </summary>
     public FiscalYear FiscalYear { get; private set; }
 
@@ -501,10 +502,10 @@ public class FinancialStatement : BaseEntity<Guid>
     {
         return month.Month switch
         {
-            3 => Season.Spring,
-            6 => Season.Summer,
-            9 => Season.Fall,
-            _ => Season.Winter,
+            3 => Season.SPRING,
+            6 => Season.SUMMER,
+            9 => Season.FALL,
+            _ => Season.WINTER,
         };
     }
 
@@ -514,16 +515,16 @@ public class FinancialStatement : BaseEntity<Guid>
 
         switch (session)
         {
-            case Season.Spring:
+            case Season.SPRING:
                 SpringOperationIncome = OperationalIncome;
                 break;
-            case Season.Summer:
+            case Season.SUMMER:
                 SummerOperationIncome = OperationalIncome;
                 break;
-            case Season.Fall:
+            case Season.FALL:
                 FallOperationIncome = OperationalIncome;
                 break;
-            case Season.Winter:
+            case Season.WINTER:
                 WinterOperationIncome = OperationalIncome;
                 break;
         }
@@ -532,12 +533,4 @@ public class FinancialStatement : BaseEntity<Guid>
 
 public sealed class SubCompanyNetProfit
 {
-}
-
-public enum Season
-{
-    Spring = 1,
-    Summer = 2,
-    Fall = 3,
-    Winter = 4
 }

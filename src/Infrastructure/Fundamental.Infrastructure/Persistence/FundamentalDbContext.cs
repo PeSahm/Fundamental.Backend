@@ -25,8 +25,6 @@ public class FundamentalDbContext : DbContext, IUnitOfWork
 
     public DbSet<SymbolRelation> SymbolRelations { get; set; } = null!;
 
-    public DbSet<FinancialStatement> FinancialStatements { get; set; } = null!;
-
     public DbSet<MonthlyActivity> MonthlyActivities { get; set; } = null!;
 
     public DbSet<BalanceSheet> BalanceSheets { get; set; }
