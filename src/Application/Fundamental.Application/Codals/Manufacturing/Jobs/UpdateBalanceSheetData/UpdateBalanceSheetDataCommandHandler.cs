@@ -27,6 +27,10 @@ public class UpdateBalanceSheetDataCommandHandler(ICodalService codalService, IL
             {
                 await codalService.ProcessCodal(balanceSheet, LetterPart.BalanceSheet, cancellationToken);
             }
+            catch (TaskCanceledException)
+            {
+                // Ignore the task cancellation exception
+            }
             catch (Exception e)
             {
                 logger.LogError(e, "Error processing balanceSheets codal for {@Model}", balanceSheet);
