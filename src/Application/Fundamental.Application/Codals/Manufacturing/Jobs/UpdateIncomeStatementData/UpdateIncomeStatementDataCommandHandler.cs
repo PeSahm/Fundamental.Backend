@@ -30,6 +30,10 @@ public sealed class UpdateIncomeStatementDataCommandHandler(
             {
                 await codalService.ProcessCodal(incomeStatement, LetterPart.IncomeStatement, cancellationToken);
             }
+            catch (TaskCanceledException)
+            {
+                // Ignore the task cancellation exception
+            }
             catch (Exception e)
             {
                 logger.LogError(e, "Error processing IncomeStatement codal for {@Model}", incomeStatement);

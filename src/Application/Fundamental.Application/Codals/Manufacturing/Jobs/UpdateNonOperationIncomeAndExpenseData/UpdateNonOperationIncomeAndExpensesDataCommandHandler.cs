@@ -29,6 +29,10 @@ public class UpdateNonOperationIncomeAndExpensesDataCommandHandler(
             {
                 await codalService.ProcessCodal(nonOperationIncomeAndExpenses, LetterPart.NonOperationIncomeAndExpenses, cancellationToken);
             }
+            catch (TaskCanceledException)
+            {
+                // Ignore the task cancellation exception
+            }
             catch (Exception e)
             {
                 logger.LogError(e, "Error processing NonOperationIncomeAndExpenses codal for {@Model}", nonOperationIncomeAndExpenses);

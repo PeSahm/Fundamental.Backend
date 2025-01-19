@@ -12,10 +12,10 @@ namespace Fundamental.WebApi.Controllers.Codals.Manufacturing;
 [ApiVersion("1.0")]
 [TranslateResultToActionResult]
 [Area("Manufacturing")]
-public class NonOperationIncome(IMediator mediator) : ControllerBase
+public class NonOperationIncomeController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    public async Task<Response<Paginated<GetNonOperationIncomesResultItem>>> GetNoneOperationalIncoms(
+    public async Task<Response<Paginated<GetNonOperationIncomesResultItem>>> GetNoneOperationalIncomes(
         [FromQuery] GetNonOperationIncomesRequest request
     )
     {

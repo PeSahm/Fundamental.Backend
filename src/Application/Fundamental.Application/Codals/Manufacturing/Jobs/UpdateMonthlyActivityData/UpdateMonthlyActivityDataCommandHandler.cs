@@ -30,6 +30,10 @@ public sealed class UpdateMonthlyActivityDataCommandHandler(
             {
                 await codalService.ProcessCodal(monthlyActivity, LetterPart.NotSpecified, cancellationToken);
             }
+            catch (TaskCanceledException)
+            {
+                // Ignore the task cancellation exception
+            }
             catch (Exception e)
             {
                 logger.LogError(e, "Error processing monthlyActivity codal for {@Model}", monthlyActivity);
