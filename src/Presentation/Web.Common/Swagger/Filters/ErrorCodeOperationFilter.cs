@@ -14,10 +14,10 @@ namespace Fundamental.Web.Common.Swagger.Filters;
 
 public class ErrorCodeOperationFilter : IOperationFilter
 {
-    private readonly Dictionary<HandlerCode, Type> _handlerCodes;
-    private readonly Dictionary<string, string> _errorMessages;
-    private readonly bool _useAllOfToExtendReferenceSchemas;
     private readonly Dictionary<string, OpenApiSchema> _deletedSchemas = new();
+    private readonly Dictionary<string, string> _errorMessages;
+    private readonly Dictionary<HandlerCode, Type> _handlerCodes;
+    private readonly bool _useAllOfToExtendReferenceSchemas;
 
     public ErrorCodeOperationFilter(SchemaGeneratorOptions options)
     {
@@ -48,12 +48,35 @@ public class ErrorCodeOperationFilter : IOperationFilter
         }
     }
 
+    private static void SetOperationResponseSchema(OpenApiOperation operation, OpenApiSchema specificResponseSchema)
+    {
+        foreach (KeyValuePair<string, OpenApiResponse> openApiResponse in operation.Responses)
+        {
+            foreach (KeyValuePair<string, OpenApiMediaType> openApiMediaType in openApiResponse.Value.Content)
+            {
+                openApiMediaType.Value.Schema = specificResponseSchema;
+            }
+        }
+    }
+
+    private static OpenApiSchema GetRawErrorSchema(OperationFilterContext context)
+    {
+        if (!context.SchemaRepository.Schemas.TryGetValue("Error", out OpenApiSchema? errorSchema))
+        {
+            context.SchemaGenerator.GenerateSchema(typeof(Error), context.SchemaRepository);
+            errorSchema = context.SchemaRepository.Schemas["Error"];
+        }
+
+        return errorSchema;
+    }
+
     private void OverrideResponseSchema(
         OpenApiOperation operation,
         OperationFilterContext context,
         Type errorCodesEnumType,
         string requestName,
-        string responseName)
+        string responseName
+    )
     {
         OpenApiSchema rawErrorSchema = GetRawErrorSchema(context);
 
@@ -78,23 +101,13 @@ public class ErrorCodeOperationFilter : IOperationFilter
         }
     }
 
-    private void SetOperationResponseSchema(OpenApiOperation operation, OpenApiSchema specificResponseSchema)
-    {
-        foreach (KeyValuePair<string, OpenApiResponse> openApiResponse in operation.Responses)
-        {
-            foreach (KeyValuePair<string, OpenApiMediaType> openApiMediaType in openApiResponse.Value.Content)
-            {
-                openApiMediaType.Value.Schema = specificResponseSchema;
-            }
-        }
-    }
-
     private OpenApiSchema RenameResponseSchema(
         OperationFilterContext context,
         OpenApiSchema responseSchema,
         OpenApiSchema errorSchema,
         string requestName,
-        string responseName)
+        string responseName
+    )
     {
         context.SchemaRepository.Schemas.Remove(responseName);
         _deletedSchemas.TryAdd(responseName, responseSchema);
@@ -118,7 +131,8 @@ public class ErrorCodeOperationFilter : IOperationFilter
         OperationFilterContext context,
         OpenApiSchema responseSchema,
         OpenApiSchema errorSchema,
-        string requestName)
+        string requestName
+    )
     {
         OpenApiSchema complexResponseSchema = new(responseSchema);
         complexResponseSchema.Properties["error"] = errorSchema;
@@ -140,7 +154,8 @@ public class ErrorCodeOperationFilter : IOperationFilter
         OperationFilterContext context,
         OpenApiSchema rawErrorSchema,
         Type errorCodesEnumType,
-        string requestName)
+        string requestName
+    )
     {
         OpenApiSchema errorSchema = new(rawErrorSchema);
         OpenApiSchema errorCodesEnumSchema = context.SchemaGenerator.GenerateSchema(errorCodesEnumType, context.SchemaRepository);
@@ -158,17 +173,6 @@ public class ErrorCodeOperationFilter : IOperationFilter
 
         OpenApiSchema errorSchemaReference = context.SchemaRepository.AddDefinition(schemaKey, errorSchema);
         return errorSchemaReference;
-    }
-
-    private OpenApiSchema GetRawErrorSchema(OperationFilterContext context)
-    {
-        if (!context.SchemaRepository.Schemas.TryGetValue("Error", out OpenApiSchema? errorSchema))
-        {
-            context.SchemaGenerator.GenerateSchema(typeof(Error), context.SchemaRepository);
-            errorSchema = context.SchemaRepository.Schemas["Error"];
-        }
-
-        return errorSchema;
     }
 
     private OpenApiSchema WrapWithAllOfSchemaType(OpenApiSchema schema, bool nullable = false)

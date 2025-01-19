@@ -1,6 +1,6 @@
 ﻿namespace Fundamental.Application.Codals.Manufacturing.Queries.GetMonthlyActivities;
 
-public class GetMonthlyActivitiesResultItem
+public sealed class GetMonthlyActivitiesResultItem
 {
     public Guid Id { get; init; }
     public string Isin { get; init; }

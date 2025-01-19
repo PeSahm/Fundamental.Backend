@@ -123,7 +123,9 @@ public class MonthlyActivityV4Processor(
         await dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    private RowItem GetSumRecord(CodalMonthlyActivity saleDate) =>
-        saleDate.MonthlyActivity.ProductionAndSales.RowItems.First(predicate: x =>
+    private RowItem GetSumRecord(CodalMonthlyActivity saleDate)
+    {
+        return saleDate.MonthlyActivity.ProductionAndSales.RowItems.First(predicate: x =>
             x is { RowCode: RowCode.TotalSum, Category: Category.Sum });
+    }
 }

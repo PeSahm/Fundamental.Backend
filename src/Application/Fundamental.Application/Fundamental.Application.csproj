@@ -16,11 +16,7 @@
       <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
       <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.0"/>
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-        <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
-      <PackageReference Update="SonarAnalyzer.CSharp" Version="9.19.0.84025">
-        <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-      </PackageReference>
+      <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
     </ItemGroup>
   <ItemGroup>
     <Folder Include="Codals\Manufacturing\"/>

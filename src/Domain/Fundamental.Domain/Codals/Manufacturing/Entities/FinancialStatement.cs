@@ -334,7 +334,7 @@ public class FinancialStatement : BaseEntity<Guid>
         SaleAverageLastYearSamePeriod = saleLastYearSamePeriod.Average(x => x.Value);
     }
 
-    private void Calculate()
+    public void Calculate()
     {
         CalculateMarketValue();
         CalculateGrossMargin();
@@ -529,8 +529,4 @@ public class FinancialStatement : BaseEntity<Guid>
                 break;
         }
     }
-}
-
-public sealed class SubCompanyNetProfit
-{
 }
