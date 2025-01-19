@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace Fundamental.Web.Common.Filters;
 
+[AttributeUsage(AttributeTargets.Method)]
 public class DevelopmentOnlyAttribute : ActionFilterAttribute
 {
     public override void OnActionExecuting(ActionExecutingContext context)

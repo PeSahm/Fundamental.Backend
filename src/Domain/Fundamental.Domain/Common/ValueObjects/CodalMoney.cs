@@ -5,7 +5,7 @@ namespace Fundamental.Domain.Common.ValueObjects;
 
 public sealed class CodalMoney
 {
-    private decimal _value;
+    private readonly decimal _value;
 
     public CodalMoney(decimal amount, IsoCurrency currency)
     {
@@ -38,14 +38,14 @@ public sealed class CodalMoney
 
     public static decimal CodalMoneyMultiplier => 1_000_000;
 
-    private bool SetInternally { get; set; }
-
     public decimal Value => SetInternally ? _value : _value / CodalMoneyMultiplier;
 
     public IsoCurrency Currency
     {
         get;
     }
+
+    private bool SetInternally { get; set; }
 
     public static CodalMoney operator +(CodalMoney a, CodalMoney b)
     {

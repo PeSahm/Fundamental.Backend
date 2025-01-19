@@ -5,7 +5,7 @@ namespace Fundamental.Domain.Common.ValueObjects;
 
 public class SignedCodalMoney
 {
-    private decimal _value;
+    private readonly decimal _value;
 
     public SignedCodalMoney(decimal amount, IsoCurrency currency)
     {
@@ -19,17 +19,21 @@ public class SignedCodalMoney
         Currency = AppConfig.BASE_CURRENCY;
     }
 
+    // public static implicit operator CodalMoney(SignedCodalMoney money) => new(money.Value, money.Currency);
+    //
+    // public static implicit operator SignedCodalMoney(CodalMoney money) => new(money.Value, money.Currency);
+
     private SignedCodalMoney()
     {
         SetInternally = true;
     }
 
     public static decimal CodalMoneyMultiplier => 1_000_000;
-    private bool SetInternally { get; set; }
-
     public decimal Value => SetInternally ? _value : _value / CodalMoneyMultiplier;
 
     public IsoCurrency Currency { get; }
+
+    private bool SetInternally { get; set; }
 
     public static SignedCodalMoney operator +(SignedCodalMoney a, SignedCodalMoney b)
     {
@@ -123,8 +127,4 @@ public class SignedCodalMoney
 
     public static implicit operator decimal(SignedCodalMoney money) => money.Value;
     public static implicit operator SignedCodalMoney(decimal money) => new(money);
-
-    // public static implicit operator CodalMoney(SignedCodalMoney money) => new(money.Value, money.Currency);
-    //
-    // public static implicit operator SignedCodalMoney(CodalMoney money) => new(money.Value, money.Currency);
 }
