@@ -1,6 +1,6 @@
 ﻿<Project>
 	<PropertyGroup>
-		<LangVersion>10.0</LangVersion>
+        <LangVersion>13.0</LangVersion>
         <Nullable>enable</Nullable>
 		<IsUnitTests>$(MSBuildProjectName.EndsWith('UnitTests'))</IsUnitTests>
 		<IsTests>$(MSBuildProjectName.EndsWith('Tests'))</IsTests>

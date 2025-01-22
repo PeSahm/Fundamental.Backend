@@ -15,7 +15,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.InterpretativeReportSummaryPages5;
 
-public class NonOperationIncomeAndExpensesV2Processor(IServiceScopeFactory serviceScopeFactory) : ICodalProcessor
+public sealed class NonOperationIncomeAndExpensesV2Processor(IServiceScopeFactory serviceScopeFactory) : ICodalProcessor
 {
     public static ReportingType ReportingType => ReportingType.Production;
     public static LetterType LetterType => LetterType.InterimStatement;

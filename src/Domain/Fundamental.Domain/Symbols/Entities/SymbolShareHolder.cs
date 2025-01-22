@@ -60,6 +60,7 @@ public class SymbolShareHolder : BaseEntity<Guid>
         }
 
         SharePercentage = sharePercentage;
+        ReviewStatus = ReviewStatus.Pending;
         UpdatedAt = updatedAt;
     }
 }

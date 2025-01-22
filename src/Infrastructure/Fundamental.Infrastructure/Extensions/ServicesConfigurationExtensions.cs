@@ -3,6 +3,7 @@ using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Common.PipelineBehaviors;
 using Fundamental.Application.Common.Validators;
 using Fundamental.Application.Services;
+using Fundamental.Application.Symbols;
 using Fundamental.Application.Symbols.Queries.GetSymbols;
 using Fundamental.Application.Symbols.Repositories;
 using Fundamental.Application.Utilities.Services;
@@ -15,6 +16,7 @@ using Fundamental.Infrastructure.Repositories;
 using Fundamental.Infrastructure.Services;
 using Fundamental.Infrastructure.Services.Codals;
 using Fundamental.Infrastructure.Services.Codals.Factories;
+using Fundamental.Infrastructure.Services.Symbols;
 using Fundamental.Infrastructure.Validators;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -39,6 +41,7 @@ public static class ServicesConfigurationExtensions
         builder.Services.AddScoped<ICustomerErrorMessagesService, CustomerErrorMessagesService>();
         builder.Services.AddScoped<ICodalService, CodalService>();
         builder.Services.AddScoped<IMarketDataService, MarketDataService>();
+        builder.Services.AddScoped<IShareHoldersService, ShareHoldersService>();
 
         builder.Services.AddSingleton<IIpService, IpService>();
 

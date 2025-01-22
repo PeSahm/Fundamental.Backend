@@ -2,6 +2,7 @@
 using Fundamental.Application.Codals.Manufacturing.Jobs.UpdateIncomeStatementData;
 using Fundamental.Application.Codals.Manufacturing.Jobs.UpdateMonthlyActivityData;
 using Fundamental.Application.Codals.Manufacturing.Jobs.UpdateNonOperationIncomeAndExpenseData;
+using Fundamental.Application.Codals.Manufacturing.Jobs.UpdateTheStatusOfViableCompanyData;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,6 +29,7 @@ public class CodalHostedService(ILogger<CodalHostedService> logger, IServiceScop
             logger.LogInformation("Codal Manufacturing job is starting");
             using IServiceScope scope = serviceScopeFactory.CreateScope();
             IMediator mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+            await mediator.Send(new UpdateTheStatusOfViableCompanyDataReqeust(), stoppingToken);
             await mediator.Send(new UpdateNonOperationIncomeAndExpensesDataRequest(-7), stoppingToken);
             await mediator.Send(new UpdateIncomeStatementDataRequest(-7), stoppingToken);
             await mediator.Send(new UpdateBalanceSheetDataRequest(-7), stoppingToken);

@@ -6,5 +6,10 @@ public enum LetterPart
     BalanceSheet = 1,
     IncomeStatement = 2,
     InterpretativeReportSummaryPage5 = 3,
-    NonOperationIncomeAndExpenses = 4
+    NonOperationIncomeAndExpenses = 4,
+
+    /// <summary>
+    /// شرکت های سرمایه پذیر
+    /// </summary>
+    TheStatusOfViableCompanies = 5
 }

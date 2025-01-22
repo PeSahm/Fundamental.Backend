@@ -1,6 +1,7 @@
 ﻿using Ardalis.Specification;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
+using Fundamental.Domain.Symbols.Enums;
 
 namespace Fundamental.Application.Symbols.Specifications;
 
@@ -10,6 +11,14 @@ public sealed class SymbolShareHolderSpec : Specification<SymbolShareHolder>
     {
         SymbolShareHolderSpec spec = new();
         spec.Query.Where(x => x.Symbol.Isin == isin);
+        return spec;
+    }
+
+    public static SymbolShareHolderSpec WhereIsinAndShareHolder(string isin, ShareHolderSource holderSource)
+    {
+        SymbolShareHolderSpec spec = new();
+        spec.Query.Where(x => x.Symbol.Isin == isin)
+            .Where(x => x.ShareHolderSource == holderSource);
         return spec;
     }
 
