@@ -11,6 +11,7 @@ public enum HandlerCode : ushort
     GetSymbolRelations = 11_398,
     AddSymbolRelationship = 11_399,
 
+    UpdateTheStatusOfViableCompany = 13_192,
     ExecuteStatementJobRequest = 13_193,
     UpdateSymbolData = 13_194,
     UpdateCodalPublisher = 13_195,

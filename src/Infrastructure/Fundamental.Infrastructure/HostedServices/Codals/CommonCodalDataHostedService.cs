@@ -15,7 +15,6 @@ public class CommonCodalDataHostedService(IServiceScopeFactory serviceScopeFacto
     {
         if (!configuration.GetValue<bool>("JobEnabled"))
         {
-            await Task.CompletedTask;
             return;
         }
 
