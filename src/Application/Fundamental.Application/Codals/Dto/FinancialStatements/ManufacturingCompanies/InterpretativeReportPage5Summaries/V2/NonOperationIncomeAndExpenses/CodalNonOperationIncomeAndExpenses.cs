@@ -132,6 +132,11 @@ public class YearDatum
     public int? FiscalMonth => YearEndToDateGeorgian.GetPersianMonth(false);
     public int? ReportYear => PeriodEndToDateGeorgian.GetPersianYear(false);
     public int? ReportMonth => PeriodEndToDateGeorgian.GetPersianMonth(false);
+
+    public bool IsValid()
+    {
+        return FiscalYear.HasValue;
+    }
 }
 
 public enum ColumnId
