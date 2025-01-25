@@ -6,4 +6,4 @@ using MediatR;
 namespace Fundamental.Application.Symbols.Queries.GetSymbols;
 
 [HandlerCode(HandlerCode.GetSymbols)]
-public sealed record GetSymbolsRequest(string Filter) : IRequest<Response<List<GetSymbolsResultDto>>>;
+public sealed record GetSymbolsRequest(string Filter, bool ShowOfficialSymbolsOnly = true) : IRequest<Response<List<GetSymbolsResultDto>>>;

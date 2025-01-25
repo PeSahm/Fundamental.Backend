@@ -20,6 +20,7 @@ public sealed class GetSymbolsQueryHandler : IRequestHandler<GetSymbolsRequest, 
         List<GetSymbolsResultDto> symbols = await _symbolRepository.ListAsync(
             new SymbolSpec()
                 .Filter(request.Filter)
+                .ShowOfficialSymbols(request.ShowOfficialSymbolsOnly)
                 .Select(),
             cancellationToken);
 
