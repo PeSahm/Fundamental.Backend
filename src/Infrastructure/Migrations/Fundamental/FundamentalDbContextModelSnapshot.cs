@@ -19,7 +19,7 @@ namespace Fundamental.Migrations.Fundamental
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.2")
+                .HasAnnotation("ProductVersion", "8.0.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "company_type", new[] { "none_financial_institution", "public_investment_and_holding", "financial_institutions", "subsidiary_financial_institutions", "intermediary_institutions", "investment_funds", "basket_companies", "investment_advisory_companies", "financial_information_processing_companies", "capital_supply_companies", "associations", "central_asset_management_company", "rating_institutions", "article44", "brokers", "government_companies", "exempt_companies", "un_known1" });
@@ -596,6 +596,78 @@ namespace Fundamental.Migrations.Fundamental
                         .HasDatabaseName("ix_non_operation_income_expense_symbol_id");
 
                     b.ToTable("non-operation-income-expense", "manufacturing");
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.StockOwnership", b =>
+                {
+                    b.Property<long>("_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("_id")
+                        .HasColumnOrder(0);
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("_id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("Timestamp")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(1);
+
+                    b.Property<decimal>("OwnershipPercentage")
+                        .HasColumnType("decimal(4, 2)")
+                        .HasColumnName("ownership_percentage");
+
+                    b.Property<string>("SubsidiarySymbolName")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .IsUnicode(true)
+                        .HasColumnType("character varying(512)")
+                        .HasColumnName("subsidiary_symbol_name");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("Timestamp")
+                        .HasColumnName("ModifiedAt");
+
+                    b.Property<long>("parent_symbol_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("parent_symbol_id");
+
+                    b.Property<long?>("subsidiary_symbol_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("subsidiary_symbol_id");
+
+                    b.ComplexProperty<Dictionary<string, object>>("CostPrice", "Fundamental.Domain.Codals.Manufacturing.Entities.StockOwnership.CostPrice#SignedCodalMoney", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<IsoCurrency>("Currency")
+                                .HasColumnType("iso_currency")
+                                .HasColumnName("currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("cost_price");
+                        });
+
+                    b.HasKey("_id")
+                        .HasName("pk_stock_ownership");
+
+                    b.HasIndex("Id")
+                        .IsUnique()
+                        .HasDatabaseName("ix_stock_ownership_id");
+
+                    b.HasIndex("parent_symbol_id")
+                        .HasDatabaseName("ix_stock_ownership_parent_symbol_id");
+
+                    b.HasIndex("subsidiary_symbol_id")
+                        .HasDatabaseName("ix_stock_ownership_subsidiary_symbol_id");
+
+                    b.ToTable("stock_ownership", "manufacturing");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Codals.Publisher", b =>
@@ -1377,6 +1449,25 @@ namespace Fundamental.Migrations.Fundamental
 
                     b.Navigation("YearEndMonth")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.StockOwnership", b =>
+                {
+                    b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "ParentSymbol")
+                        .WithMany()
+                        .HasForeignKey("parent_symbol_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_stock_ownership_symbols_parent_symbol_id");
+
+                    b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "SubsidiarySymbol")
+                        .WithMany()
+                        .HasForeignKey("subsidiary_symbol_id")
+                        .HasConstraintName("fk_stock_ownership_symbols_subsidiary_symbol_id");
+
+                    b.Navigation("ParentSymbol");
+
+                    b.Navigation("SubsidiarySymbol");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Codals.Publisher", b =>

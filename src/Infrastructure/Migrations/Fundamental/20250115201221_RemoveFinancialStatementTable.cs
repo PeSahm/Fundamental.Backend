@@ -1,13 +1,17 @@
 ﻿#nullable disable
 
 using Fundamental.Domain.Common.Enums;
+using Fundamental.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Fundamental.Migrations.Fundamental
 {
     /// <inheritdoc />
-    public partial class RemoveFinancialStatementTable : Migration
+    [DbContext(typeof(FundamentalDbContext))]
+    [Migration("20250115201221_RemoveFinancialStatementTable")]
+    public class RemoveFinancialStatementTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
