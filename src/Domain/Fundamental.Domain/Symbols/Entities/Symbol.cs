@@ -68,7 +68,7 @@ public class Symbol : BaseEntity<Guid>
     public static Symbol CreateByParentSymbol(Symbol parent, string name, string title, DateTime updatedAt)
     {
         string postfix = name.Replace(parent.Name, string.Empty).Trim();
-        Symbol newSymbol = new Symbol(
+        Symbol newSymbol = new(
             Guid.NewGuid(),
             $"{parent.Isin}{postfix}".Trim(),
             parent.TseInsCode,

@@ -23,6 +23,20 @@ public class SymbolSpec : Specification<Symbol>
         return this;
     }
 
+    public SymbolSpec ShowOfficialSymbols(bool showOfficialSymbolsOnly)
+    {
+        if (showOfficialSymbolsOnly)
+        {
+            Query.Where(x => !x.IsUnOfficial);
+        }
+        else
+        {
+            Query.Where(x => x.IsUnOfficial);
+        }
+
+        return this;
+    }
+
     public SymbolsResultDtoSpec Select()
     {
         SymbolsResultDtoSpec select = new();
