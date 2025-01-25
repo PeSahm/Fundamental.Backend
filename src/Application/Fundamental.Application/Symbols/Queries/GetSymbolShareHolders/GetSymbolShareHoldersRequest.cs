@@ -9,6 +9,6 @@ using MediatR;
 namespace Fundamental.Application.Symbols.Queries.GetSymbolShareHolders;
 
 [HandlerCode(HandlerCode.GetSymbolShareHolders)]
-public sealed record GetSymbolShareHoldersRequest(string? Isin, ShareHolderSource? Source, ReviewStatus? ReviewStatus) :
+public sealed record GetSymbolShareHoldersRequest(string? Isin, ReviewStatus? ReviewStatus) :
     PagingRequest,
     IRequest<Response<Paginated<GetSymbolShareHoldersResultDto>>>;

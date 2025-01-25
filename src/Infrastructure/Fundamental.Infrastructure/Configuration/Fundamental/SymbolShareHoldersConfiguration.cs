@@ -20,10 +20,6 @@ public sealed class SymbolShareHoldersConfiguration : EntityTypeConfigurationBas
             .HasPrecision(18, 5)
             .IsRequired();
 
-        builder.Property(x => x.ShareHolderSource)
-            .HasColumnType("SMALLINT")
-            .IsRequired();
-
         builder.Property(x => x.ReviewStatus)
             .HasColumnType("SMALLINT")
             .IsRequired();

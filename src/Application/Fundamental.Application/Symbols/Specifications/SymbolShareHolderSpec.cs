@@ -14,14 +14,6 @@ public sealed class SymbolShareHolderSpec : Specification<SymbolShareHolder>
         return spec;
     }
 
-    public static SymbolShareHolderSpec WhereIsinAndShareHolder(string isin, ShareHolderSource holderSource)
-    {
-        SymbolShareHolderSpec spec = new();
-        spec.Query.Where(x => x.Symbol.Isin == isin)
-            .Where(x => x.ShareHolderSource == holderSource);
-        return spec;
-    }
-
     public static SymbolShareHolderSpec WhereId(Guid id)
     {
         SymbolShareHolderSpec spec = new();
