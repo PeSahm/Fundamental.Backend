@@ -60,13 +60,11 @@ public class TheStatusOfViableCompaniesV2Processor(
 
         if (rootInterpretativeReportSummary?.InterpretativeReportSummaryPage4 is null)
         {
-            logger.LogWarning("InterpretativeReportSummaryPage4 is null for Statement {@Statement}", statement);
             return;
         }
 
         if (rootInterpretativeReportSummary.InterpretativeReportSummaryPage4.TheStatusOfViableCompanies is null)
         {
-            logger.LogWarning("TheStatusOfViableCompanies is null for Statement {@Statement}", statement);
             return;
         }
 
