@@ -5,7 +5,6 @@ using Fundamental.Application.Symbols.Specifications;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.Domain.Symbols.Entities;
-using Fundamental.Domain.Symbols.Enums;
 
 namespace Fundamental.Infrastructure.Services.Symbols;
 
@@ -17,7 +16,6 @@ public class ShareHoldersService(
 {
     public async Task CreateShareHolders(
         List<ShareHoldersResponse> shareHolders,
-        ShareHolderSource shareHolderSource,
         CancellationToken cancellationToken = default
     )
     {
@@ -29,9 +27,8 @@ public class ShareHoldersService(
         {
             List<SymbolShareHolder> currentShareHolders =
                 await repository.ListAsync(
-                    SymbolShareHolderSpec.WhereIsinAndShareHolder(
-                        shareHoldersResponses.Key,
-                        shareHolderSource),
+                    SymbolShareHolderSpec.WhereIsin(
+                        shareHoldersResponses.Key),
                     cancellationToken);
 
             foreach (ShareHoldersResponse shareHolder in shareHoldersResponses)
@@ -70,7 +67,6 @@ public class ShareHoldersService(
                         symbol,
                         shareHolder.ShareHolderName.Safe()!,
                         shareHolder.Percent,
-                        shareHolderSource,
                         DateTime.Now
                     );
                     repository.Add(symbolShareHolder);

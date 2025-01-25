@@ -7,7 +7,6 @@ public interface IShareHoldersService
 {
     Task CreateShareHolders(
         List<ShareHoldersResponse> shareHolders,
-        ShareHolderSource shareHolderSource,
         CancellationToken cancellationToken = default
     );
 }

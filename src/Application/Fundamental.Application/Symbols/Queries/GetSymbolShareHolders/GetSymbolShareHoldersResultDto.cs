@@ -11,11 +11,7 @@ public sealed class GetSymbolShareHoldersResultDto
     public required string SymbolName { get; init; } = null!;
     public required string ShareHolderName { get; init; } = null!;
     public required decimal SharePercentage { get; init; }
-    public required ShareHolderSource ShareHolderSource { get; init; }
-
-    public string ShareHolderSourceName => ShareHolderSource.ToString();
     public required ReviewStatus ReviewStatus { get; init; }
-
     public string? ReviewStatusName => ReviewStatus.GetDescription();
     public string? ShareHolderSymbolIsin { get; init; }
     public string? ShareHolderSymbolName { get; init; }

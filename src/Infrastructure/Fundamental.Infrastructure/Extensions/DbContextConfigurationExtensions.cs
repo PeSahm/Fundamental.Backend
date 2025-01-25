@@ -25,6 +25,7 @@ public static class DbContextConfigurationExtensions
         dataSourceBuilder.MapEnum<PublisherSubCompanyType>();
         dataSourceBuilder.MapEnum<PublisherMarketType>();
         dataSourceBuilder.MapEnum<PublisherState>();
+        dataSourceBuilder.MapEnum<ReviewStatus>();
         NpgsqlDataSource dataSource = dataSourceBuilder.Build();
 
         services.AddDbContext<FundamentalDbContext>(

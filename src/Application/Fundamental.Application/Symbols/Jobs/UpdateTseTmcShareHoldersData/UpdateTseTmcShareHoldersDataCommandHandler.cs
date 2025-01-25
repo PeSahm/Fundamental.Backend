@@ -1,6 +1,5 @@
 ﻿using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.MarketDataServiceModels;
-using Fundamental.Domain.Symbols.Enums;
 using Fundamental.ErrorHandling;
 using MediatR;
 
@@ -16,7 +15,7 @@ public sealed class UpdateTseTmcShareHoldersDataCommandHandler(
         List<ShareHoldersResponse> shareHolders =
             await marketDataService.GetShareHoldersAsync(DateOnly.FromDateTime(DateTime.Now.AddDays(-1)), cancellationToken);
 
-        await shareHoldersService.CreateShareHolders(shareHolders, ShareHolderSource.Tsetmc, cancellationToken);
+        await shareHoldersService.CreateShareHolders(shareHolders, cancellationToken);
 
         return Response.Successful();
     }

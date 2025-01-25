@@ -11,7 +11,6 @@ public class SymbolShareHolder : BaseEntity<Guid>
         Symbol symbol,
         string shareHolderName,
         decimal sharePercentage,
-        ShareHolderSource shareHolderSource,
         DateTime createdAt
     )
     {
@@ -19,7 +18,6 @@ public class SymbolShareHolder : BaseEntity<Guid>
         Symbol = symbol;
         ShareHolderName = shareHolderName;
         SharePercentage = sharePercentage;
-        ShareHolderSource = shareHolderSource;
         CreatedAt = createdAt;
     }
 
@@ -32,8 +30,6 @@ public class SymbolShareHolder : BaseEntity<Guid>
     public string ShareHolderName { get; private set; }
 
     public decimal SharePercentage { get; private set; }
-
-    public ShareHolderSource ShareHolderSource { get; private set; }
 
     public ReviewStatus ReviewStatus { get; private set; } = ReviewStatus.Pending;
 

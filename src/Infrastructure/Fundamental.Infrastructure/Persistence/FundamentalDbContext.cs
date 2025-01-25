@@ -51,6 +51,7 @@ public class FundamentalDbContext : DbContext, IUnitOfWork
         modelBuilder.HasPostgresEnum<PublisherSubCompanyType>();
         modelBuilder.HasPostgresEnum<PublisherMarketType>();
         modelBuilder.HasPostgresEnum<PublisherState>();
+        modelBuilder.HasPostgresEnum<ReviewStatus>();
 
         modelBuilder.ApplyConfigurationsFromAssembly(
             Assembly.GetExecutingAssembly(),

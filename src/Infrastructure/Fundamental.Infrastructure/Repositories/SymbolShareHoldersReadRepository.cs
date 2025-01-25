@@ -22,7 +22,6 @@ public class SymbolShareHoldersReadRepository(FundamentalDbContext dbContext) : 
                 ShareHolderName = x.ShareHolderName,
                 ReviewStatus = x.ReviewStatus,
                 SharePercentage = x.SharePercentage,
-                ShareHolderSource = x.ShareHolderSource,
                 ShareHolderSymbolIsin = x.ShareHolderSymbol!.Isin,
                 ShareHolderSymbolName = x.ShareHolderSymbol!.Name
             });
@@ -35,11 +34,6 @@ public class SymbolShareHoldersReadRepository(FundamentalDbContext dbContext) : 
         if (request.ReviewStatus.HasValue)
         {
             query = query.Where(x => x.ReviewStatus == request.ReviewStatus);
-        }
-
-        if (request.Source.HasValue)
-        {
-            query = query.Where(x => x.ShareHolderSource == request.Source);
         }
 
         return query.ToPagingListAsync(request, "ReviewStatus asc", cancellationToken);
