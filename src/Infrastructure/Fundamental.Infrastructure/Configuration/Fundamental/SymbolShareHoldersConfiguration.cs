@@ -21,7 +21,6 @@ public sealed class SymbolShareHoldersConfiguration : EntityTypeConfigurationBas
             .IsRequired();
 
         builder.Property(x => x.ReviewStatus)
-            .HasColumnType("SMALLINT")
             .IsRequired();
 
         builder.HasOne(x => x.Symbol)

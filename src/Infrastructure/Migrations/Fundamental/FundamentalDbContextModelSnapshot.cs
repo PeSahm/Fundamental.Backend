@@ -30,6 +30,7 @@ namespace Fundamental.Migrations.Fundamental
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "publisher_state", new[] { "register_in_ime", "register_in_irenex", "register_in_tse", "register_in_ifb", "registered_not_accepted", "not_registered" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "publisher_sub_company_type", new[] { "un_known", "normal", "liquidation", "has_foreign_currency_unit", "has_foreign_currency_unit_and_foreign_auditor", "un_known1", "un_known2", "un_known3", "un_known4", "un_known5", "un_known6" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "reporting_type", new[] { "production", "structural", "investment", "bank", "leasing", "services", "insurance", "maritime_transportation", "agriculture", "capital_provision", "un_known" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "review_status", new[] { "pending", "rejected", "approved" });
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.BalanceSheet", b =>
@@ -1224,8 +1225,8 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnName("Id")
                         .HasColumnOrder(1);
 
-                    b.Property<short>("ReviewStatus")
-                        .HasColumnType("SMALLINT")
+                    b.Property<ReviewStatus>("ReviewStatus")
+                        .HasColumnType("review_status")
                         .HasColumnName("review_status");
 
                     b.Property<string>("ShareHolderName")
@@ -1233,10 +1234,6 @@ namespace Fundamental.Migrations.Fundamental
                         .HasMaxLength(512)
                         .HasColumnType("character varying(512)")
                         .HasColumnName("share_holder_name");
-
-                    b.Property<short>("ShareHolderSource")
-                        .HasColumnType("SMALLINT")
-                        .HasColumnName("share_holder_source");
 
                     b.Property<decimal>("SharePercentage")
                         .HasPrecision(18, 5)
