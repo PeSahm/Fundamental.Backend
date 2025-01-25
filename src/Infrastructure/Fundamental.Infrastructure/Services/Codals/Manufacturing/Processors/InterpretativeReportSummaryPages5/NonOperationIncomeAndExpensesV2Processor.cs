@@ -78,6 +78,11 @@ public sealed class NonOperationIncomeAndExpensesV2Processor(IServiceScopeFactor
 
         foreach (YearDatum yearDatum in nonOperationIncomeAndExpenses.YearData)
         {
+            if (!yearDatum.IsValid())
+            {
+                continue;
+            }
+
             Symbol symbol =
                 await dbContext.Symbols.FirstAsync(
                     predicate: x => x.Isin == statement.Isin,
