@@ -3,7 +3,7 @@ using Fundamental.Domain.Symbols.Entities;
 
 namespace Fundamental.Application.Symbols.Specifications;
 
-public class SymbolSpec : Specification<Symbol>
+public sealed class SymbolSpec : Specification<Symbol>
 {
     public SymbolSpec WhereIsin(string isin)
     {
