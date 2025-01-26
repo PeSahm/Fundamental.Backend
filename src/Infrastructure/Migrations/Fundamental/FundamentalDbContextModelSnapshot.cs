@@ -619,7 +619,8 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnOrder(1);
 
                     b.Property<decimal>("OwnershipPercentage")
-                        .HasColumnType("decimal(4, 2)")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal")
                         .HasColumnName("ownership_percentage");
 
                     b.Property<string>("SubsidiarySymbolName")

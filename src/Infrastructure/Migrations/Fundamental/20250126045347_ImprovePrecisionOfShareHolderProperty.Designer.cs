@@ -14,8 +14,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fundamental.Migrations.Fundamental
 {
     [DbContext(typeof(FundamentalDbContext))]
-    [Migration("20250125220755_ChangeReviewStatusToEnum")]
-    partial class ChangeReviewStatusToEnum
+    [Migration("20250126045347_ImprovePrecisionOfShareHolderProperty")]
+    partial class ImprovePrecisionOfShareHolderProperty
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -622,7 +622,8 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnOrder(1);
 
                     b.Property<decimal>("OwnershipPercentage")
-                        .HasColumnType("decimal(4, 2)")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal")
                         .HasColumnName("ownership_percentage");
 
                     b.Property<string>("SubsidiarySymbolName")

@@ -23,7 +23,8 @@ public class StockOwnershipConfiguration : EntityTypeConfigurationBase<StockOwne
 
         builder.Property(x => x.OwnershipPercentage)
             .HasColumnName("ownership_percentage")
-            .HasColumnType("decimal(4, 2)")
+            .HasPrecision(5, 2)
+            .HasColumnType("decimal")
             .IsRequired();
 
         builder.ComplexProperty(
