@@ -14,9 +14,8 @@
 
     <ItemGroup>
       <PackageReference Include="Ardalis.Specification" Version="8.0.0" />
-      <PackageReference Include="DNTPersianUtils.Core" Version="5.9.0"/>
-      <PackageReference Include="ErrorOr" Version="1.10.0"/>
-      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
+      <PackageReference Include="DNTPersianUtils.Core" Version="6.4.0" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2" />
       <PackageReference Update="SonarAnalyzer.CSharp" Version="9.19.0.84025">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
