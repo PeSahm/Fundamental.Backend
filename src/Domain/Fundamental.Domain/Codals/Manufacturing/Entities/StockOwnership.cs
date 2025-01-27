@@ -54,6 +54,7 @@ public sealed class StockOwnership : BaseEntity<Guid>
     public StockOwnership SetSubsidiarySymbol(Symbol subsidiarySymbol, DateTime updatedAt)
     {
         SubsidiarySymbol = subsidiarySymbol;
+        ReviewStatus = ReviewStatus.Approved;
         UpdatedAt = updatedAt;
         return this;
     }

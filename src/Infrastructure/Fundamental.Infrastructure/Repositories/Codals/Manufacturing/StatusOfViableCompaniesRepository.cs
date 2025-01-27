@@ -17,6 +17,7 @@ public sealed class StatusOfViableCompaniesRepository(FundamentalDbContext dbCon
         IQueryable<GetStatusOfViableCompaniesResultDto> query = dbContext.StockOwnership
             .Select(x => new GetStatusOfViableCompaniesResultDto
             {
+                Id = x.Id,
                 CostPrice = x.CostPrice.Value,
                 OwnershipPercentage = x.OwnershipPercentage,
                 ReviewStatus = x.ReviewStatus,

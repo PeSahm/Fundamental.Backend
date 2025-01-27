@@ -66,4 +66,10 @@
     <data name="13_383_101" xml:space="preserve">
         <value>مجمع مورد نظر یافت نشد.</value>
     </data>
+    <data name="13_381_101" xml:space="preserve">
+        <value>شناسه رکورد موردنظر یافت نشد.</value>
+    </data>
+    <data name="13_381_102" xml:space="preserve">
+        <value>نماد شرکت سرمایه پذیر معتبر نیست.</value>
+    </data>
 </root>

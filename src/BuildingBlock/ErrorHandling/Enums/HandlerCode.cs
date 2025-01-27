@@ -22,6 +22,8 @@ public enum HandlerCode : ushort
 
     UpdateClosePrices = 14_100,
 
+    RejectStatusOfViableCompany = 13_380,
+    ApproveStatusOfViableCompany = 13_381,
     GetGetStatusOfViableCompanies = 13_382,
     ForceUpdateStatements = 13_383,
     GetIncomeStatementDetails = 13_384,
