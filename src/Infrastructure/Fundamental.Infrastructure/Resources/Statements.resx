@@ -69,4 +69,10 @@
     <data name="13_383_101" xml:space="preserve">
         <value>Invalid StatementId</value>
     </data>
+    <data name="13_381_101" xml:space="preserve">
+        <value>Invalid Id</value>
+    </data>
+    <data name="13_381_102" xml:space="preserve">
+        <value>The symbol not found</value>
+    </data>
 </root>

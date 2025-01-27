@@ -6,6 +6,7 @@ namespace Fundamental.Application.Codals.Manufacturing.Queries.GetStatusOfViable
 
 public sealed class GetStatusOfViableCompaniesResultDto
 {
+    public required Guid Id { get; init; }
     public required string ParentSymbolIsin { get; init; }
 
     public required string PatentSymbol { get; init; }
