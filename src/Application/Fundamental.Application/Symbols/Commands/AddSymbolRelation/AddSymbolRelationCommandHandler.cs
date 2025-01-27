@@ -6,26 +6,15 @@ using MediatR;
 
 namespace Fundamental.Application.Symbols.Commands.AddSymbolRelation;
 
-public sealed class AddSymbolRelationCommandHandler : IRequestHandler<AddSymbolRelationRequest, Response>
+public sealed class AddSymbolRelationCommandHandler(
+    IUnitOfWork unitOfWork,
+    IRepository repository
+)
+    : IRequestHandler<AddSymbolRelationRequest, Response>
 {
-    private readonly IRepository<SymbolRelation> _symbolRelationRepository;
-    private readonly IRepository<Symbol> _symbolRepository;
-    private readonly IUnitOfWork _unitOfWork;
-
-    public AddSymbolRelationCommandHandler(
-        IRepository<SymbolRelation> symbolRelationRepository,
-        IUnitOfWork unitOfWork,
-        IRepository<Symbol> symbolRepository
-    )
-    {
-        _symbolRelationRepository = symbolRelationRepository;
-        _unitOfWork = unitOfWork;
-        _symbolRepository = symbolRepository;
-    }
-
     public async Task<Response> Handle(AddSymbolRelationRequest request, CancellationToken cancellationToken)
     {
-        Symbol? investor = await _symbolRepository.FirstOrDefaultAsync(
+        Symbol? investor = await repository.FirstOrDefaultAsync(
             new SymbolSpec()
                 .WhereIsin(request.Investor),
             cancellationToken);
@@ -35,7 +24,7 @@ public sealed class AddSymbolRelationCommandHandler : IRequestHandler<AddSymbolR
             return AddSymbolRelationRequestErrorCodes.InvestorIsInvalid;
         }
 
-        Symbol? investment = await _symbolRepository.FirstOrDefaultAsync(
+        Symbol? investment = await repository.FirstOrDefaultAsync(
             new SymbolSpec()
                 .WhereIsin(request.Investment),
             cancellationToken);
@@ -45,7 +34,7 @@ public sealed class AddSymbolRelationCommandHandler : IRequestHandler<AddSymbolR
             return AddSymbolRelationRequestErrorCodes.InvestmentIsInvalid;
         }
 
-        bool hasRelation = await _symbolRelationRepository.AnyAsync(
+        bool hasRelation = await repository.AnyAsync(
             new SymbolRelationSpec()
                 .WhereParentIsin(request.Investor)
                 .WhereChildIsin(request.Investment),
@@ -62,9 +51,9 @@ public sealed class AddSymbolRelationCommandHandler : IRequestHandler<AddSymbolR
         }
 
         SymbolRelation symbolRelation = new SymbolRelation(Guid.NewGuid(), investor, investment, request.Ratio, DateTime.Now);
-        _symbolRelationRepository.Add(symbolRelation);
+        repository.Add(symbolRelation);
 
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
         return Response.Successful();
     }
 }

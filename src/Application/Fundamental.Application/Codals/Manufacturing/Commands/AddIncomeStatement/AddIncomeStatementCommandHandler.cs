@@ -10,16 +10,14 @@ using MediatR;
 namespace Fundamental.Application.Codals.Manufacturing.Commands.AddIncomeStatement;
 
 public sealed class AddIncomeStatementCommandHandler(
-    IRepository<IncomeStatement> incomeStatementRepository,
-    IRepository<IncomeStatementSort> incomeStatementSortRepository,
-    IRepository<Symbol> symbolRepository,
+    IRepository repository,
     IUnitOfWork unitOfWork
 )
     : IRequestHandler<AddIncomeStatementRequest, Response>
 {
     public async Task<Response> Handle(AddIncomeStatementRequest request, CancellationToken cancellationToken)
     {
-        Symbol? symbol = await symbolRepository.FirstOrDefaultAsync(
+        Symbol? symbol = await repository.FirstOrDefaultAsync(
             new SymbolSpec().WhereIsin(request.Isin),
             cancellationToken);
 
@@ -28,7 +26,7 @@ public sealed class AddIncomeStatementCommandHandler(
             return AddIncomeStatementErrorCodes.SymbolNotFound;
         }
 
-        bool tracingNumberExists = await incomeStatementRepository.AnyAsync(
+        bool tracingNumberExists = await repository.AnyAsync(
             IncomeStatementSpec.WithTraceNo(request.TraceNo),
             cancellationToken);
 
@@ -37,7 +35,7 @@ public sealed class AddIncomeStatementCommandHandler(
             return AddIncomeStatementErrorCodes.DuplicateTraceNo;
         }
 
-        bool statementExists = await incomeStatementRepository.AnyAsync(
+        bool statementExists = await repository.AnyAsync(
             IncomeStatementSpec.Where(request.TraceNo, request.Isin, request.FiscalYear, request.ReportMonth),
             cancellationToken);
 
@@ -47,7 +45,7 @@ public sealed class AddIncomeStatementCommandHandler(
         }
 
         List<GetIncomeStatementSortResultDto> codaRows =
-            await incomeStatementSortRepository.ListAsync(IncomeStatementSortSpec.GetValidSpecifications(), cancellationToken);
+            await repository.ListAsync(IncomeStatementSortSpec.GetValidSpecifications(), cancellationToken);
 
         foreach (GetIncomeStatementSortResultDto sheetItem in codaRows)
         {
@@ -81,7 +79,7 @@ public sealed class AddIncomeStatementCommandHandler(
                 request.IsAudited,
                 DateTime.UtcNow
             );
-            incomeStatementRepository.Add(incomeStatement);
+            repository.Add(incomeStatement);
         }
 
         await unitOfWork.SaveChangesAsync(cancellationToken);

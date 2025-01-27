@@ -10,16 +10,14 @@ using MediatR;
 namespace Fundamental.Application.Codals.Manufacturing.Commands.AddBalanceSheet;
 
 public sealed class AddBalanceSheetCommandHandler(
-    IRepository<BalanceSheet> balanceSheetRepository,
-    IRepository<BalanceSheetSort> balanceSheetSortRepository,
-    IRepository<Symbol> symbolRepository,
+    IRepository repository,
     IUnitOfWork unitOfWork
 )
     : IRequestHandler<AddBalanceSheetRequest, Response>
 {
     public async Task<Response> Handle(AddBalanceSheetRequest request, CancellationToken cancellationToken)
     {
-        Symbol? symbol = await symbolRepository.FirstOrDefaultAsync(
+        Symbol? symbol = await repository.FirstOrDefaultAsync(
             new SymbolSpec().WhereIsin(request.Isin),
             cancellationToken);
 
@@ -28,7 +26,7 @@ public sealed class AddBalanceSheetCommandHandler(
             return AddBalanceSheetErrorCodes.SymbolNotFound;
         }
 
-        bool tracingNumberExists = await balanceSheetRepository.AnyAsync(
+        bool tracingNumberExists = await repository.AnyAsync(
             BalanceSheetSpec.WithTraceNo(request.TraceNo),
             cancellationToken);
 
@@ -37,7 +35,7 @@ public sealed class AddBalanceSheetCommandHandler(
             return AddBalanceSheetErrorCodes.DuplicateTraceNo;
         }
 
-        bool statementExists = await balanceSheetRepository.AnyAsync(
+        bool statementExists = await repository.AnyAsync(
             BalanceSheetSpec.Where(request.TraceNo, request.Isin, request.FiscalYear, request.ReportMonth),
             cancellationToken);
 
@@ -47,7 +45,7 @@ public sealed class AddBalanceSheetCommandHandler(
         }
 
         List<GetBalanceSheetSortResultDto> codaRows =
-            await balanceSheetSortRepository.ListAsync(BalanceSheetSortSpec.GetValidSpecifications(), cancellationToken);
+            await repository.ListAsync(BalanceSheetSortSpec.GetValidSpecifications(), cancellationToken);
 
         foreach (GetBalanceSheetSortResultDto sheetItem in codaRows)
         {
@@ -82,7 +80,7 @@ public sealed class AddBalanceSheetCommandHandler(
                 request.IsAudited,
                 DateTime.Now
             );
-            balanceSheetRepository.Add(balanceSheet);
+            repository.Add(balanceSheet);
         }
 
         await unitOfWork.SaveChangesAsync(cancellationToken);

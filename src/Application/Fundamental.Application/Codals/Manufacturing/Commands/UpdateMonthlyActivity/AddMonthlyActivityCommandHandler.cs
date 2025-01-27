@@ -8,26 +8,15 @@ using MediatR;
 
 namespace Fundamental.Application.Codals.Manufacturing.Commands.UpdateMonthlyActivity;
 
-public sealed class AddMonthlyActivityCommandHandler : IRequestHandler<UpdateMonthlyActivityRequest, Response>
+public sealed class AddMonthlyActivityCommandHandler(
+    IRepository repository,
+    IUnitOfWork unitOfWork
+)
+    : IRequestHandler<UpdateMonthlyActivityRequest, Response>
 {
-    private readonly IRepository<MonthlyActivity> _monthlyActivityRepository;
-    private readonly IRepository<Symbol> _symbolRepository;
-    private readonly IUnitOfWork _unitOfWork;
-
-    public AddMonthlyActivityCommandHandler(
-        IRepository<MonthlyActivity> monthlyActivityRepository,
-        IRepository<Symbol> symbolRepository,
-        IUnitOfWork unitOfWork
-    )
-    {
-        _monthlyActivityRepository = monthlyActivityRepository;
-        _symbolRepository = symbolRepository;
-        _unitOfWork = unitOfWork;
-    }
-
     public async Task<Response> Handle(UpdateMonthlyActivityRequest request, CancellationToken cancellationToken)
     {
-        MonthlyActivity? theStatement = await _monthlyActivityRepository.FirstOrDefaultAsync(
+        MonthlyActivity? theStatement = await repository.FirstOrDefaultAsync(
             new MonthlyActivitySpec()
                 .WhereId(request.Id),
             cancellationToken);
@@ -37,7 +26,7 @@ public sealed class AddMonthlyActivityCommandHandler : IRequestHandler<UpdateMon
             return UpdateMonthlyActivityErrorCodes.MonthlyActivityNotFound;
         }
 
-        Symbol? symbol = await _symbolRepository.FirstOrDefaultAsync(
+        Symbol? symbol = await repository.FirstOrDefaultAsync(
             new SymbolSpec().WhereIsin(request.Isin),
             cancellationToken);
 
@@ -46,7 +35,7 @@ public sealed class AddMonthlyActivityCommandHandler : IRequestHandler<UpdateMon
             return UpdateMonthlyActivityErrorCodes.SymbolNotFound;
         }
 
-        bool tracingNumberExists = await _monthlyActivityRepository.AnyAsync(
+        bool tracingNumberExists = await repository.AnyAsync(
             new MonthlyActivitySpec()
                 .WhereTraceNo(request.TraceNo)
                 .WhereIdNot(request.Id),
@@ -57,7 +46,7 @@ public sealed class AddMonthlyActivityCommandHandler : IRequestHandler<UpdateMon
             return UpdateMonthlyActivityErrorCodes.DuplicateTraceNo;
         }
 
-        bool statementExists = await _monthlyActivityRepository.AnyAsync(
+        bool statementExists = await repository.AnyAsync(
             new MonthlyActivitySpec()
                 .WhereSymbol(request.Isin)
                 .WhereFiscalYear(request.FiscalYear)
@@ -84,7 +73,7 @@ public sealed class AddMonthlyActivityCommandHandler : IRequestHandler<UpdateMon
             request.HasSubCompanySale,
             DateTime.Now
         );
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
         return Response.Successful();
     }
 }
