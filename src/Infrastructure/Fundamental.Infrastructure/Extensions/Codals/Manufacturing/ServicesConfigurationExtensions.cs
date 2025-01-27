@@ -37,6 +37,7 @@ public static class ServicesConfigurationExtensions
         builder.Services.AddScoped<IBalanceSheetReadRepository, BalanceSheetReadRepository>();
         builder.Services.AddScoped<IIncomeStatementsReadRepository, IncomeStatementReadRepository>();
         builder.Services.AddScoped<INonOperationIncomesRepository, NonOperationIncomesRepository>();
+        builder.Services.AddScoped<IStatusOfViableCompaniesRepository, StatusOfViableCompaniesRepository>();
     }
 
     public static void AddManufacturingHostedServices(this IServiceCollection builder)

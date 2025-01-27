@@ -41,6 +41,8 @@ public class FundamentalDbContext : DbContext, IUnitOfWork
 
     public DbSet<SymbolShareHolder> SymbolShareHolders { get; set; }
 
+    public DbSet<StockOwnership> StockOwnership { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasPostgresEnum<IsoCurrency>();
