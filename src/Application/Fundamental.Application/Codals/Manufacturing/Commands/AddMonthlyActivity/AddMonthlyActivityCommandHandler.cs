@@ -9,26 +9,15 @@ using MediatR;
 
 namespace Fundamental.Application.Codals.Manufacturing.Commands.AddMonthlyActivity;
 
-public sealed class AddMonthlyActivityCommandHandler : IRequestHandler<AddMonthlyActivityRequest, Response>
+public sealed class AddMonthlyActivityCommandHandler(
+    IRepository repository,
+    IUnitOfWork unitOfWork
+)
+    : IRequestHandler<AddMonthlyActivityRequest, Response>
 {
-    private readonly IRepository<MonthlyActivity> _monthlyActivityRepository;
-    private readonly IRepository<Symbol> _symbolRepository;
-    private readonly IUnitOfWork _unitOfWork;
-
-    public AddMonthlyActivityCommandHandler(
-        IRepository<MonthlyActivity> monthlyActivityRepository,
-        IRepository<Symbol> symbolRepository,
-        IUnitOfWork unitOfWork
-    )
-    {
-        _monthlyActivityRepository = monthlyActivityRepository;
-        _symbolRepository = symbolRepository;
-        _unitOfWork = unitOfWork;
-    }
-
     public async Task<Response> Handle(AddMonthlyActivityRequest request, CancellationToken cancellationToken)
     {
-        Symbol? symbol = await _symbolRepository.FirstOrDefaultAsync(
+        Symbol? symbol = await repository.FirstOrDefaultAsync(
             new SymbolSpec().WhereIsin(request.Isin),
             cancellationToken);
 
@@ -37,7 +26,7 @@ public sealed class AddMonthlyActivityCommandHandler : IRequestHandler<AddMonthl
             return AddMonthlyActivityErrorCodes.SymbolNotFound;
         }
 
-        bool tracingNumberExists = await _monthlyActivityRepository.AnyAsync(
+        bool tracingNumberExists = await repository.AnyAsync(
             new MonthlyActivitySpec().WhereTraceNo(request.TraceNo),
             cancellationToken);
 
@@ -46,7 +35,7 @@ public sealed class AddMonthlyActivityCommandHandler : IRequestHandler<AddMonthl
             return AddMonthlyActivityErrorCodes.DuplicateTraceNo;
         }
 
-        bool statementExists = await _monthlyActivityRepository.AnyAsync(
+        bool statementExists = await repository.AnyAsync(
             new MonthlyActivitySpec()
                 .WhereSymbol(request.Isin)
                 .WhereFiscalYear(request.FiscalYear)
@@ -74,8 +63,8 @@ public sealed class AddMonthlyActivityCommandHandler : IRequestHandler<AddMonthl
             DateTime.Now
         );
 
-        _monthlyActivityRepository.Add(statement);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        repository.Add(statement);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
         return Response.Successful();
     }
 }

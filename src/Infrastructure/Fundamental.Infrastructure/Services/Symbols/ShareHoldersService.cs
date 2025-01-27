@@ -9,8 +9,7 @@ using Fundamental.Domain.Symbols.Entities;
 namespace Fundamental.Infrastructure.Services.Symbols;
 
 public class ShareHoldersService(
-    IRepository<SymbolShareHolder> repository,
-    IRepository<Symbol> symbolRepository,
+    IRepository repository,
     IUnitOfWork unitOfWork
 ) : IShareHoldersService
 {
@@ -55,7 +54,7 @@ public class ShareHoldersService(
                 else
                 {
                     Symbol? symbol =
-                        await symbolRepository.FirstOrDefaultAsync(new SymbolSpec().WhereIsin(shareHolder.Isin), cancellationToken);
+                        await repository.FirstOrDefaultAsync(new SymbolSpec().WhereIsin(shareHolder.Isin), cancellationToken);
 
                     if (symbol is null)
                     {

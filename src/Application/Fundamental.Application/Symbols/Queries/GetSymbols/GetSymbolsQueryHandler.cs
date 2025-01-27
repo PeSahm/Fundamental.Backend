@@ -6,18 +6,12 @@ using MediatR;
 
 namespace Fundamental.Application.Symbols.Queries.GetSymbols;
 
-public sealed class GetSymbolsQueryHandler : IRequestHandler<GetSymbolsRequest, Response<List<GetSymbolsResultDto>>>
+public sealed class GetSymbolsQueryHandler(IRepository repository)
+    : IRequestHandler<GetSymbolsRequest, Response<List<GetSymbolsResultDto>>>
 {
-    private readonly IRepository<Symbol> _symbolRepository;
-
-    public GetSymbolsQueryHandler(IRepository<Symbol> symbolRepository)
-    {
-        _symbolRepository = symbolRepository;
-    }
-
     public async Task<Response<List<GetSymbolsResultDto>>> Handle(GetSymbolsRequest request, CancellationToken cancellationToken)
     {
-        List<GetSymbolsResultDto> symbols = await _symbolRepository.ListAsync(
+        List<GetSymbolsResultDto> symbols = await repository.ListAsync(
             new SymbolSpec()
                 .Filter(request.Filter)
                 .ShowOfficialSymbols(request.ShowOfficialSymbolsOnly)

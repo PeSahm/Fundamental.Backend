@@ -9,14 +9,13 @@ namespace Fundamental.Application.Symbols.Commands.ApproveSymbolShareHolder;
 
 public sealed class ApproveSymbolShareHolderCommandHandler(
     IUnitOfWork unitOfWork,
-    IRepository<Symbol> symbolRepository,
-    IRepository<SymbolShareHolder> shareHolderRepository
+    IRepository repository
 )
     : IRequestHandler<ApproveSymbolShareHolderRequest, Response>
 {
     public async Task<Response> Handle(ApproveSymbolShareHolderRequest request, CancellationToken cancellationToken)
     {
-        Symbol? symbol = await symbolRepository.FirstOrDefaultAsync(new SymbolSpec().WhereIsin(request.ShareHolderIsin), cancellationToken);
+        Symbol? symbol = await repository.FirstOrDefaultAsync(new SymbolSpec().WhereIsin(request.ShareHolderIsin), cancellationToken);
 
         if (symbol is null)
         {
@@ -24,7 +23,7 @@ public sealed class ApproveSymbolShareHolderCommandHandler(
         }
 
         SymbolShareHolder? shareHolder =
-            await shareHolderRepository.FirstOrDefaultAsync(SymbolShareHolderSpec.WhereId(request.Id), cancellationToken);
+            await repository.FirstOrDefaultAsync(SymbolShareHolderSpec.WhereId(request.Id), cancellationToken);
 
         if (shareHolder is null)
         {
@@ -35,7 +34,7 @@ public sealed class ApproveSymbolShareHolderCommandHandler(
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        List<SymbolShareHolder> allShareHolders = await shareHolderRepository
+        List<SymbolShareHolder> allShareHolders = await repository
             .ListAsync(SymbolShareHolderSpec.WhereShareHolderName(shareHolder.ShareHolderName, ReviewStatus.Pending), cancellationToken);
 
         allShareHolders.ForEach(x => x.SetShareHolderSymbol(symbol, DateTime.Now));

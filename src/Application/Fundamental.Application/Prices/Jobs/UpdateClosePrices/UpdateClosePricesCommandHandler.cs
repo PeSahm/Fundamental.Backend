@@ -12,8 +12,7 @@ using MediatR;
 namespace Fundamental.Application.Prices.Jobs.UpdateClosePrices;
 
 public sealed class UpdateClosePricesCommandHandler(
-    IRepository<ClosePrice> closePriceRepository,
-    IRepository<Symbol> symbolRepository,
+    IRepository repository,
     IMarketDataService marketDataService,
     IUnitOfWork unitOfWork
 )
@@ -32,7 +31,7 @@ public sealed class UpdateClosePricesCommandHandler(
             {
                 foreach (TradeHistoryResponse price in prices)
                 {
-                    bool symbolExists = await symbolRepository.AnyAsync(new SymbolSpec().WhereIsin(price.Isin), cancellationToken);
+                    bool symbolExists = await repository.AnyAsync(new SymbolSpec().WhereIsin(price.Isin), cancellationToken);
 
                     if (!symbolExists)
                     {
@@ -40,16 +39,16 @@ public sealed class UpdateClosePricesCommandHandler(
                     }
 
                     Symbol symbol =
-                        (await symbolRepository.FirstOrDefaultAsync(new SymbolSpec().WhereIsin(price.Isin), cancellationToken))!;
+                        (await repository.FirstOrDefaultAsync(new SymbolSpec().WhereIsin(price.Isin), cancellationToken))!;
 
                     ClosePrice? closePrice =
-                        await closePriceRepository.FirstOrDefaultAsync(ClosePriceSpec.Where(price.Isin, fromDate), cancellationToken);
+                        await repository.FirstOrDefaultAsync(ClosePriceSpec.Where(price.Isin, fromDate), cancellationToken);
 
                     if (closePrice is null)
                     {
                         closePrice = new ClosePrice(Guid.NewGuid(), symbol, fromDate, DateTime.Now);
                         AddPriceDetails(closePrice, price);
-                        closePriceRepository.Add(closePrice);
+                        repository.Add(closePrice);
                     }
                     else
                     {

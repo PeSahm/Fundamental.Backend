@@ -80,10 +80,9 @@ public class TheStatusOfViableCompaniesV2Processor(
 
         using IServiceScope scope = serviceScopeFactory.CreateScope();
         IUnitOfWork unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-        IRepository<StockOwnership> stockOwnershipRepository = scope.ServiceProvider.GetRequiredService<IRepository<StockOwnership>>();
-        IRepository<Symbol> symbolRepository = scope.ServiceProvider.GetRequiredService<IRepository<Symbol>>();
+        IRepository repository = scope.ServiceProvider.GetRequiredService<IRepository>();
 
-        Symbol? parentSymbol = await symbolRepository.FirstOrDefaultAsync(new SymbolSpec().WhereIsin(statement.Isin!), cancellationToken);
+        Symbol? parentSymbol = await repository.FirstOrDefaultAsync(new SymbolSpec().WhereIsin(statement.Isin!), cancellationToken);
 
         if (parentSymbol is null)
         {
@@ -94,7 +93,7 @@ public class TheStatusOfViableCompaniesV2Processor(
         foreach (RowItem childCompany in rootInterpretativeReportSummary.InterpretativeReportSummaryPage4.TheStatusOfViableCompanies
                      .RowItems.Where(x => !string.IsNullOrWhiteSpace(x.GetDescription())))
         {
-            StockOwnership? existsOwnerShip = await stockOwnershipRepository.FirstOrDefaultAsync(
+            StockOwnership? existsOwnerShip = await repository.FirstOrDefaultAsync(
                 new StockOwnershipSpec().WhereParentSymbolId(parentSymbol.Id)
                     .WhereSubsidiarySymbolName(childCompany.GetDescription()!.Safe()!),
                 cancellationToken);
@@ -119,7 +118,7 @@ public class TheStatusOfViableCompaniesV2Processor(
                     statement.TracingNo,
                     DateTime.Now
                 );
-                stockOwnershipRepository.Add(stockOwnership);
+                repository.Add(stockOwnership);
             }
         }
 

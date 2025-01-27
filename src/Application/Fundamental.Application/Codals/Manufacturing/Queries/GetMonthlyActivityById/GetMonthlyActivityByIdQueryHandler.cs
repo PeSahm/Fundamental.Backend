@@ -8,21 +8,15 @@ using MediatR;
 namespace Fundamental.Application.Codals.Manufacturing.Queries.GetMonthlyActivityById;
 
 public sealed class
-    GetMonthlyActivityByIdQueryHandler : IRequestHandler<GetMonthlyActivityByIdRequest, Response<GetMonthlyActivitiesResultItem>>
+    GetMonthlyActivityByIdQueryHandler(IRepository repository)
+    : IRequestHandler<GetMonthlyActivityByIdRequest, Response<GetMonthlyActivitiesResultItem>>
 {
-    private readonly IRepository<MonthlyActivity> _repository;
-
-    public GetMonthlyActivityByIdQueryHandler(IRepository<MonthlyActivity> repository)
-    {
-        _repository = repository;
-    }
-
     public async Task<Response<GetMonthlyActivitiesResultItem>> Handle(
         GetMonthlyActivityByIdRequest request,
         CancellationToken cancellationToken
     )
     {
-        GetMonthlyActivitiesResultItem? result = await _repository.FirstOrDefaultAsync(
+        GetMonthlyActivitiesResultItem? result = await repository.FirstOrDefaultAsync(
             new MonthlyActivitySpec()
                 .WhereId(request.Id)
                 .Select(),

@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Fundamental.Application.Codals.Manufacturing.Queries.GetIncomeStatementSort;
 
-public sealed class GetIncomeStatementSortQueryHandler(IRepository<IncomeStatementSort> repository)
+public sealed class GetIncomeStatementSortQueryHandler(IRepository repository)
     : IRequestHandler<GetIncomeStatementSortRequest, Response<List<GetIncomeStatementSortResultDto>>>
 {
     public async Task<Response<List<GetIncomeStatementSortResultDto>>> Handle(

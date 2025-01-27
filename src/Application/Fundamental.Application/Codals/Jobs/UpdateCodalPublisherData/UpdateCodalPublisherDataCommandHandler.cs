@@ -16,8 +16,7 @@ namespace Fundamental.Application.Codals.Jobs.UpdateCodalPublisherData;
 public sealed class UpdateCodalPublisherDataCommandHandler(
     ICodalService codalService,
     ILogger<UpdateCodalPublisherDataCommandHandler> logger,
-    IRepository<Publisher> repository,
-    IRepository<Symbol> symbolRepository,
+    IRepository repository,
     IUnitOfWork unitOfWork
 ) : IRequestHandler<UpdateCodalPublisherDataRequest, Response>
 {
@@ -35,12 +34,12 @@ public sealed class UpdateCodalPublisherDataCommandHandler(
 
                 if (!string.IsNullOrWhiteSpace(publisher.IsinCode))
                 {
-                    symbol = await symbolRepository.FirstOrDefaultAsync(new SymbolSpec().WhereIsin(publisher.IsinCode), cancellationToken);
+                    symbol = await repository.FirstOrDefaultAsync(new SymbolSpec().WhereIsin(publisher.IsinCode), cancellationToken);
                 }
 
                 if (symbol is null)
                 {
-                    symbol = await symbolRepository.FirstOrDefaultAsync(
+                    symbol = await repository.FirstOrDefaultAsync(
                         new SymbolSpec().WhereName(publisher.DisplayedSymbol),
                         cancellationToken);
                 }
@@ -48,7 +47,7 @@ public sealed class UpdateCodalPublisherDataCommandHandler(
                 if (!string.IsNullOrWhiteSpace(publisher.Parent))
                 {
                     parentSymbol =
-                        await symbolRepository.FirstOrDefaultAsync(new SymbolSpec().WhereName(publisher.Parent), cancellationToken);
+                        await repository.FirstOrDefaultAsync(new SymbolSpec().WhereName(publisher.Parent), cancellationToken);
                 }
 
                 if (symbol is null && parentSymbol is null)
@@ -60,7 +59,7 @@ public sealed class UpdateCodalPublisherDataCommandHandler(
                 if (symbol is null)
                 {
                     symbol = Symbol.CreateByParentSymbol(parentSymbol!, publisher.DisplayedSymbol, publisher.Name, DateTime.Now);
-                    symbolRepository.Add(symbol);
+                    repository.Add(symbol);
                     await unitOfWork.SaveChangesAsync(cancellationToken);
                 }
 

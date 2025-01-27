@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Fundamental.Application.Fairs.Commands.SaveFairs;
 
-public sealed class SaveFairCommandHandler(IRepository<Fair> repository, IUnitOfWork unitOfWork)
+public sealed class SaveFairCommandHandler(IRepository repository, IUnitOfWork unitOfWork)
     : IRequestHandler<SaveFairRequest, Response>
 {
     public async Task<Response> Handle(SaveFairRequest request, CancellationToken cancellationToken)

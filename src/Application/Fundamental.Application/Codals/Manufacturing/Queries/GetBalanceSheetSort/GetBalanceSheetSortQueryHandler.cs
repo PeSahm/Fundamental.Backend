@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Fundamental.Application.Codals.Manufacturing.Queries.GetBalanceSheetSort;
 
-public sealed class GetBalanceSheetSortQueryHandler(IRepository<BalanceSheetSort> repository)
+public sealed class GetBalanceSheetSortQueryHandler(IRepository repository)
     : IRequestHandler<GetBalanceSheetSortRequest, Response<List<GetBalanceSheetSortResultDto>>>
 {
     public async Task<Response<List<GetBalanceSheetSortResultDto>>> Handle(

@@ -35,7 +35,6 @@ public static class ServicesConfigurationExtensions
 
     public static void AddServices(this WebApplicationBuilder builder)
     {
-        builder.Services.AddScoped(typeof(IRepository<>), typeof(FundamentalRepository<>));
         builder.Services.AddScoped<IUnitOfWork>(provider => provider.GetService<FundamentalDbContext>()!);
         builder.Services.AddScoped(typeof(IRequestValidator<>), typeof(RequestValidator<>));
         builder.Services.AddScoped<ICustomerErrorMessagesService, CustomerErrorMessagesService>();
@@ -60,6 +59,7 @@ public static class ServicesConfigurationExtensions
 
     public static void AddReadRepositories(this WebApplicationBuilder builder)
     {
+        builder.Services.AddScoped<IRepository, FundamentalRepository>();
         builder.Services.AddScoped<ISymbolRelationRepository, SymbolRelationRepository>();
         builder.Services.AddScoped<ISymbolShareHoldersReadRepository, SymbolShareHoldersReadRepository>();
         builder.AddManufacturingReadRepositories();

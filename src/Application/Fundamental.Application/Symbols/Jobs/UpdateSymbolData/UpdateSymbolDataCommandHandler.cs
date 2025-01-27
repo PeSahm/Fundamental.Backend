@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 namespace Fundamental.Application.Symbols.Jobs.UpdateSymbolData;
 
 public sealed class UpdateSymbolDataCommandHandler(
-    IRepository<Symbol> repository,
+    IRepository repository,
     IMarketDataService marketDataService,
     IUnitOfWork unitOfWork,
     ILogger<UpdateSymbolDataCommandHandler> logger
