@@ -1,4 +1,5 @@
 ﻿using Fundamental.Domain.Codals.Manufacturing.Entities;
+using Fundamental.Domain.Common.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -34,6 +35,15 @@ public class StockOwnershipConfiguration : EntityTypeConfigurationBase<StockOwne
         builder.HasOne(x => x.SubsidiarySymbol)
             .WithMany()
             .HasForeignKey("subsidiary_symbol_id")
+            .IsRequired(false);
+
+        builder.Property(x => x.ReviewStatus).IsRequired()
+            .HasColumnName("review_status")
+            .HasDefaultValue(ReviewStatus.Pending)
+            .HasSentinel(ReviewStatus.Pending);
+
+        builder.Property(x => x.TraceNo)
+            .HasColumnName("trace_no")
             .IsRequired(false);
     }
 }
