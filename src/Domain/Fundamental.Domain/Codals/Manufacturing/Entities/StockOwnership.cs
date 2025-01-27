@@ -49,7 +49,11 @@ public sealed class StockOwnership : BaseEntity<Guid>
         DateTime updatedAt
     )
     {
-        OwnershipPercentage = ownershipPercentage;
+        if (ownershipPercentage <= 100)
+        {
+            OwnershipPercentage = ownershipPercentage;
+        }
+
         CostPrice = costPrice;
         UpdatedAt = updatedAt;
     }
