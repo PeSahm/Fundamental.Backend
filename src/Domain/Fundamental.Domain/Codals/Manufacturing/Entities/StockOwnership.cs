@@ -20,7 +20,12 @@ public sealed class StockOwnership : BaseEntity<Guid>
         Id = id;
         ParentSymbol = parentSymbol;
         SubsidiarySymbolName = subsidiarySymbolName;
-        OwnershipPercentage = ownershipPercentage;
+
+        if (ownershipPercentage <= 100)
+        {
+            OwnershipPercentage = ownershipPercentage;
+        }
+
         CostPrice = costPrice;
         TraceNo = traceNo;
         CreatedAt = createdAt;
