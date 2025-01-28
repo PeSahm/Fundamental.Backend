@@ -1,11 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Fundamental.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace Fundamental.Migrations.Fundamental
 {
     /// <inheritdoc />
-    public partial class ImprovePrecisionOfShareHolderProperty : Migration
+    [DbContext(typeof(FundamentalDbContext))]
+    [Migration("20250126045347_ImprovePrecisionOfShareHolderProperty")]
+    public class ImprovePrecisionOfShareHolderProperty : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

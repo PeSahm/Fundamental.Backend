@@ -7,6 +7,7 @@ using Fundamental.Domain.Symbols.Entities;
 using Fundamental.Infrastructure.Configuration.ExAreas;
 using Fundamental.Infrastructure.Configuration.Fundamental;
 using Microsoft.EntityFrameworkCore;
+using Index = Fundamental.Domain.Symbols.Entities.Index;
 
 namespace Fundamental.Infrastructure.Persistence;
 
@@ -42,6 +43,8 @@ public class FundamentalDbContext : DbContext, IUnitOfWork
     public DbSet<SymbolShareHolder> SymbolShareHolders { get; set; }
 
     public DbSet<StockOwnership> StockOwnership { get; set; }
+
+    public DbSet<Index> Indices { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

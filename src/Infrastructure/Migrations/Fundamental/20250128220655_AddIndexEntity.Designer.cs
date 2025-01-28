@@ -14,8 +14,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fundamental.Migrations.Fundamental
 {
     [DbContext(typeof(FundamentalDbContext))]
-    [Migration("20250126045347_ImprovePrecisionOfShareHolderProperty")]
-    partial class ImprovePrecisionOfShareHolderProperty
+    [Migration("20250128220655_AddIndexEntity")]
+    partial class AddIndexEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -626,12 +626,22 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnType("decimal")
                         .HasColumnName("ownership_percentage");
 
+                    b.Property<ReviewStatus>("ReviewStatus")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("review_status")
+                        .HasDefaultValue(ReviewStatus.Pending)
+                        .HasColumnName("review_status");
+
                     b.Property<string>("SubsidiarySymbolName")
                         .IsRequired()
                         .HasMaxLength(512)
                         .IsUnicode(true)
                         .HasColumnType("character varying(512)")
                         .HasColumnName("subsidiary_symbol_name");
+
+                    b.Property<decimal?>("TraceNo")
+                        .HasColumnType("numeric(20,0)")
+                        .HasColumnName("trace_no");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("Timestamp")
@@ -1036,6 +1046,78 @@ namespace Fundamental.Migrations.Fundamental
                         .HasDatabaseName("ix_close_price_symbol_id");
 
                     b.ToTable("close-price", "shd");
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.Index", b =>
+                {
+                    b.Property<long>("_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("_id")
+                        .HasColumnOrder(0);
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("_id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("Timestamp")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date")
+                        .HasColumnName("date");
+
+                    b.Property<decimal>("High")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)")
+                        .HasColumnName("high");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(1);
+
+                    b.Property<decimal>("Low")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)")
+                        .HasColumnName("low");
+
+                    b.Property<decimal>("Open")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)")
+                        .HasColumnName("open");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("Timestamp")
+                        .HasColumnName("ModifiedAt");
+
+                    b.Property<decimal>("Value")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)")
+                        .HasColumnName("volume");
+
+                    b.Property<decimal>("Volume")
+                        .HasColumnType("numeric")
+                        .HasColumnName("volume");
+
+                    b.Property<long>("symbol_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("symbol_id");
+
+                    b.HasKey("_id")
+                        .HasName("pk_indices");
+
+                    b.HasIndex("Id")
+                        .IsUnique()
+                        .HasDatabaseName("ix_indices_id");
+
+                    b.HasIndex("symbol_id")
+                        .HasDatabaseName("ix_indices_symbol_id");
+
+                    b.ToTable("indices", "shd", t =>
+                        {
+                            t.Property("Volume")
+                                .HasColumnName("volume1");
+                        });
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.Symbol", b =>
@@ -1498,6 +1580,18 @@ namespace Fundamental.Migrations.Fundamental
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_close_price_symbols_symbol_id");
+
+                    b.Navigation("Symbol");
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.Index", b =>
+                {
+                    b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Symbol")
+                        .WithMany()
+                        .HasForeignKey("symbol_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_indices_symbols_symbol_id");
 
                     b.Navigation("Symbol");
                 });
