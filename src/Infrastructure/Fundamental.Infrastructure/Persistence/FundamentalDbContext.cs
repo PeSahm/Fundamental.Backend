@@ -4,6 +4,7 @@ using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.Domain.Symbols.Entities;
+using Fundamental.Domain.Symbols.Enums;
 using Fundamental.Infrastructure.Configuration.ExAreas;
 using Fundamental.Infrastructure.Configuration.Fundamental;
 using Microsoft.EntityFrameworkCore;
@@ -57,6 +58,9 @@ public class FundamentalDbContext : DbContext, IUnitOfWork
         modelBuilder.HasPostgresEnum<PublisherMarketType>();
         modelBuilder.HasPostgresEnum<PublisherState>();
         modelBuilder.HasPostgresEnum<ReviewStatus>();
+        modelBuilder.HasPostgresEnum<ProductType>();
+        modelBuilder.HasPostgresEnum<ExchangeType>();
+        modelBuilder.HasPostgresEnum<EtfType>();
 
         modelBuilder.ApplyConfigurationsFromAssembly(
             Assembly.GetExecutingAssembly(),

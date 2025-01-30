@@ -1,4 +1,5 @@
 ﻿using Fundamental.Domain.Common.Enums;
+using Fundamental.Domain.Symbols.Enums;
 using Fundamental.Infrastructure.Persistence;
 using Gridify;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +16,7 @@ public static class DbContextConfigurationExtensions
     public static IServiceCollection AddDbContexts(this IServiceCollection services, IConfiguration configuration)
     {
         GridifyGlobalConfiguration.EnableEntityFrameworkCompatibilityLayer();
-        NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder(configuration.GetConnectionString("FundamentalDbContext"));
+        NpgsqlDataSourceBuilder dataSourceBuilder = new(configuration.GetConnectionString("FundamentalDbContext"));
         dataSourceBuilder.UseNodaTime();
         dataSourceBuilder.MapEnum<IsoCurrency>();
         dataSourceBuilder.MapEnum<ReportingType>();
@@ -26,6 +27,10 @@ public static class DbContextConfigurationExtensions
         dataSourceBuilder.MapEnum<PublisherMarketType>();
         dataSourceBuilder.MapEnum<PublisherState>();
         dataSourceBuilder.MapEnum<ReviewStatus>();
+        dataSourceBuilder.MapEnum<ProductType>();
+        dataSourceBuilder.MapEnum<ExchangeType>();
+        dataSourceBuilder.MapEnum<EtfType>();
+
         NpgsqlDataSource dataSource = dataSourceBuilder.Build();
 
         services.AddDbContext<FundamentalDbContext>(

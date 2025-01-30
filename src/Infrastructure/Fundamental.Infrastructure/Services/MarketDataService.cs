@@ -72,7 +72,10 @@ public class MarketDataService(
                     "CompanyIsin,MarketCap," +
                     "SectorCode," +
                     "SubSectorCode," +
-                    "SymbolCustomExtension.ProductType")
+                    "SymbolCustomExtension.ProductType" +
+                    "SymbolCustomExtension.CustomExchangeType" +
+                    "SymbolCustomExtension.EtfType"
+                    )
                 .Append('&')
                 .Append("status")
                 .Append('=')
