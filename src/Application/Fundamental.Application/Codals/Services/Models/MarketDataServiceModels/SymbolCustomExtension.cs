@@ -6,7 +6,7 @@ public sealed class SymbolCustomExtension
 {
     public ProductType? ProductType { get; set; }
 
-    public ExchangeType? ExchangeType { get; set; }
+    public ExchangeType? CustomExchangeType { get; set; }
 
     public EtfType? EtfType { get; set; }
 }

@@ -43,7 +43,7 @@ public sealed class UpdateSymbolDataCommandHandler(
                     symbol.SectorCode,
                     symbol.SubSectorCode,
                     symbol.SymbolCustomExtension.ProductType.Value,
-                    symbol.SymbolCustomExtension.ExchangeType,
+                    symbol.SymbolCustomExtension.CustomExchangeType,
                     symbol.SymbolCustomExtension.EtfType,
                     DateTime.Now
                 );
@@ -65,7 +65,7 @@ public sealed class UpdateSymbolDataCommandHandler(
                 symbol.SectorCode,
                 symbol.SubSectorCode,
                 symbol.SymbolCustomExtension.ProductType.Value,
-                symbol.SymbolCustomExtension.ExchangeType,
+                symbol.SymbolCustomExtension.CustomExchangeType,
                 symbol.SymbolCustomExtension.EtfType,
                 DateTime.Now
             );
