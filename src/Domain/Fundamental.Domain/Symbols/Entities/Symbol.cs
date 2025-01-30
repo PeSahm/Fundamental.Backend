@@ -20,6 +20,8 @@ public class Symbol : BaseEntity<Guid>
         string sectorCode,
         string subSectorCode,
         ProductType productType,
+        ExchangeType? exchangeType,
+        EtfType? etfType,
         DateTime createdAt
     )
     {
@@ -37,6 +39,10 @@ public class Symbol : BaseEntity<Guid>
         SectorCode = sectorCode;
         SubSectorCode = subSectorCode;
         ProductType = productType;
+        ProductType2 = productType;
+        ExchangeType = exchangeType ?? ExchangeType.None;
+        EtfType = etfType;
+
         CreatedAt = createdAt;
     }
 
@@ -61,6 +67,12 @@ public class Symbol : BaseEntity<Guid>
 
     public ProductType ProductType { get; private set; } = ProductType.Equity;
 
+    public ProductType ProductType2 { get; private set; } = ProductType.Equity;
+
+    public ExchangeType ExchangeType { get; private set; } = ExchangeType.None;
+
+    public EtfType? EtfType { get; private set; }
+
     public ICollection<SymbolRelation> InvestmentSymbols { get; private set; } = new List<SymbolRelation>();
 
     public ICollection<SymbolRelation> InvestorSymbols { get; private set; } = new List<SymbolRelation>();
@@ -83,6 +95,8 @@ public class Symbol : BaseEntity<Guid>
             parent.SectorCode,
             parent.SubSectorCode,
             parent.ProductType,
+            parent.ExchangeType,
+            parent.EtfType,
             updatedAt
         )
         {
@@ -109,6 +123,8 @@ public class Symbol : BaseEntity<Guid>
         string sectorCode,
         string subSectorCode,
         ProductType productType,
+        ExchangeType? exchangeType,
+        EtfType? etfType,
         DateTime updatedAt
     )
     {
@@ -124,6 +140,9 @@ public class Symbol : BaseEntity<Guid>
         SectorCode = sectorCode;
         SubSectorCode = subSectorCode;
         ProductType = productType;
+        ProductType2 = productType;
+        ExchangeType = exchangeType ?? ExchangeType.None;
+        EtfType = etfType;
         UpdatedAt = updatedAt;
     }
 }

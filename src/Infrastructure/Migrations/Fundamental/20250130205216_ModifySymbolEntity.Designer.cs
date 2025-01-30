@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Fundamental.Domain.Common.Enums;
+using Fundamental.Domain.Symbols.Enums;
 using Fundamental.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -14,8 +15,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fundamental.Migrations.Fundamental
 {
     [DbContext(typeof(FundamentalDbContext))]
-    [Migration("20250127190813_AddNewPropertiesToStockOwnershipEntity")]
-    partial class AddNewPropertiesToStockOwnershipEntity
+    [Migration("20250130205216_ModifySymbolEntity")]
+    partial class ModifySymbolEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,7 +28,10 @@ namespace Fundamental.Migrations.Fundamental
 
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "company_type", new[] { "none_financial_institution", "public_investment_and_holding", "financial_institutions", "subsidiary_financial_institutions", "intermediary_institutions", "investment_funds", "basket_companies", "investment_advisory_companies", "financial_information_processing_companies", "capital_supply_companies", "associations", "central_asset_management_company", "rating_institutions", "article44", "brokers", "government_companies", "exempt_companies", "un_known1" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "enable_sub_company", new[] { "in_active", "active", "accepted" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "etf_type", new[] { "fixed_income", "mixed_income", "equity", "land_buildings_and_projects", "gold", "vc_and_private_funds" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "exchange_type", new[] { "tse", "ifb", "irenex", "ime", "none" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "iso_currency", new[] { "irr", "usd", "eur" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "product_type", new[] { "equity", "fund", "bond", "option_sell", "index", "forward", "etf", "vc", "futures", "certificate_of_deposit", "coupon", "mbs", "gold_coin", "option_buy", "energy_electricity", "intellectual_property", "ime_certificate", "ime_certificate_agriculture", "ime_certificate_glass", "other", "all" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "publisher_fund_type", new[] { "un_known", "not_a_fund", "real_estate", "fixed_income", "mixed", "equity", "project", "venture", "market_making", "commodity", "diversified" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "publisher_market_type", new[] { "none", "first", "second", "base", "small_and_medium" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "publisher_state", new[] { "register_in_ime", "register_in_irenex", "register_in_tse", "register_in_ifb", "registered_not_accepted", "not_registered" });
@@ -1048,6 +1052,78 @@ namespace Fundamental.Migrations.Fundamental
                     b.ToTable("close-price", "shd");
                 });
 
+            modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.Index", b =>
+                {
+                    b.Property<long>("_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("_id")
+                        .HasColumnOrder(0);
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("_id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("Timestamp")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date")
+                        .HasColumnName("date");
+
+                    b.Property<decimal>("High")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)")
+                        .HasColumnName("high");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(1);
+
+                    b.Property<decimal>("Low")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)")
+                        .HasColumnName("low");
+
+                    b.Property<decimal>("Open")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)")
+                        .HasColumnName("open");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("Timestamp")
+                        .HasColumnName("ModifiedAt");
+
+                    b.Property<decimal>("Value")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)")
+                        .HasColumnName("volume");
+
+                    b.Property<decimal>("Volume")
+                        .HasColumnType("numeric")
+                        .HasColumnName("volume");
+
+                    b.Property<long>("symbol_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("symbol_id");
+
+                    b.HasKey("_id")
+                        .HasName("pk_indices");
+
+                    b.HasIndex("Id")
+                        .IsUnique()
+                        .HasDatabaseName("ix_indices_id");
+
+                    b.HasIndex("symbol_id")
+                        .HasDatabaseName("ix_indices_symbol_id");
+
+                    b.ToTable("indices", "shd", t =>
+                        {
+                            t.Property("Volume")
+                                .HasColumnName("volume1");
+                        });
+                });
+
             modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.Symbol", b =>
                 {
                     b.Property<long>("_id")
@@ -1087,6 +1163,16 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnType("character varying(100)")
                         .HasColumnName("en_name");
 
+                    b.Property<EtfType?>("EtfType")
+                        .HasColumnType("etf_type")
+                        .HasColumnName("etf_type");
+
+                    b.Property<ExchangeType>("ExchangeType")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("exchange_type")
+                        .HasDefaultValue(ExchangeType.None)
+                        .HasColumnName("exchange_type");
+
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid")
                         .HasColumnName("Id")
@@ -1116,6 +1202,12 @@ namespace Fundamental.Migrations.Fundamental
                     b.Property<short>("ProductType")
                         .HasColumnType("smallint")
                         .HasColumnName("product_type");
+
+                    b.Property<ProductType>("ProductType2")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("product_type")
+                        .HasDefaultValue(ProductType.All)
+                        .HasColumnName("product_type2");
 
                     b.Property<string>("SectorCode")
                         .HasMaxLength(50)
@@ -1508,6 +1600,18 @@ namespace Fundamental.Migrations.Fundamental
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_close_price_symbols_symbol_id");
+
+                    b.Navigation("Symbol");
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.Index", b =>
+                {
+                    b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Symbol")
+                        .WithMany()
+                        .HasForeignKey("symbol_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_indices_symbols_symbol_id");
 
                     b.Navigation("Symbol");
                 });

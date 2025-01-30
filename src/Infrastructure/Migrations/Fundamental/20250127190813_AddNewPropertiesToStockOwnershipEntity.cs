@@ -1,4 +1,6 @@
 ﻿using Fundamental.Domain.Common.Enums;
+using Fundamental.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -6,7 +8,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Fundamental.Migrations.Fundamental
 {
     /// <inheritdoc />
-    public partial class AddNewPropertiesToStockOwnershipEntity : Migration
+    [DbContext(typeof(FundamentalDbContext))]
+    [Migration("20250127190813_AddNewPropertiesToStockOwnershipEntity")]
+    public class AddNewPropertiesToStockOwnershipEntity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

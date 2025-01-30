@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Fundamental.Domain.Common.Enums;
+using Fundamental.Domain.Symbols.Enums;
 using Fundamental.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -24,7 +25,10 @@ namespace Fundamental.Migrations.Fundamental
 
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "company_type", new[] { "none_financial_institution", "public_investment_and_holding", "financial_institutions", "subsidiary_financial_institutions", "intermediary_institutions", "investment_funds", "basket_companies", "investment_advisory_companies", "financial_information_processing_companies", "capital_supply_companies", "associations", "central_asset_management_company", "rating_institutions", "article44", "brokers", "government_companies", "exempt_companies", "un_known1" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "enable_sub_company", new[] { "in_active", "active", "accepted" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "etf_type", new[] { "fixed_income", "mixed_income", "equity", "land_buildings_and_projects", "gold", "vc_and_private_funds" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "exchange_type", new[] { "tse", "ifb", "irenex", "ime", "none" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "iso_currency", new[] { "irr", "usd", "eur" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "product_type", new[] { "equity", "fund", "bond", "option_sell", "index", "forward", "etf", "vc", "futures", "certificate_of_deposit", "coupon", "mbs", "gold_coin", "option_buy", "energy_electricity", "intellectual_property", "ime_certificate", "ime_certificate_agriculture", "ime_certificate_glass", "other", "all" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "publisher_fund_type", new[] { "un_known", "not_a_fund", "real_estate", "fixed_income", "mixed", "equity", "project", "venture", "market_making", "commodity", "diversified" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "publisher_market_type", new[] { "none", "first", "second", "base", "small_and_medium" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "publisher_state", new[] { "register_in_ime", "register_in_irenex", "register_in_tse", "register_in_ifb", "registered_not_accepted", "not_registered" });
@@ -1156,6 +1160,16 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnType("character varying(100)")
                         .HasColumnName("en_name");
 
+                    b.Property<EtfType?>("EtfType")
+                        .HasColumnType("etf_type")
+                        .HasColumnName("etf_type");
+
+                    b.Property<ExchangeType>("ExchangeType")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("exchange_type")
+                        .HasDefaultValue(ExchangeType.None)
+                        .HasColumnName("exchange_type");
+
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid")
                         .HasColumnName("Id")
@@ -1185,6 +1199,12 @@ namespace Fundamental.Migrations.Fundamental
                     b.Property<short>("ProductType")
                         .HasColumnType("smallint")
                         .HasColumnName("product_type");
+
+                    b.Property<ProductType>("ProductType2")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("product_type")
+                        .HasDefaultValue(ProductType.All)
+                        .HasColumnName("product_type2");
 
                     b.Property<string>("SectorCode")
                         .HasMaxLength(50)

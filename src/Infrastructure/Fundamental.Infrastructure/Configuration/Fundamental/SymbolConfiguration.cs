@@ -1,4 +1,5 @@
 ﻿using Fundamental.Domain.Symbols.Entities;
+using Fundamental.Domain.Symbols.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -70,5 +71,18 @@ public class SymbolConfiguration : EntityTypeConfigurationBase<Symbol>
         builder.Property(x => x.ProductType)
             .HasColumnType("smallint")
             .IsRequired();
+
+        builder.Property(x => x.ProductType2)
+            .HasDefaultValue(ProductType.All)
+            .HasSentinel(ProductType.All)
+            .IsRequired();
+
+        builder.Property(x => x.ExchangeType)
+            .HasDefaultValue(ExchangeType.None)
+            .HasSentinel(ExchangeType.None)
+            .IsRequired();
+
+        builder.Property(x => x.EtfType)
+            .IsRequired(false);
     }
 }
