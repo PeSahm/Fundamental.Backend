@@ -47,6 +47,8 @@ public class FundamentalDbContext : DbContext, IUnitOfWork
 
     public DbSet<Index> Indices { get; set; }
 
+    public DbSet<IndexCompany> IndexCompanies { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasPostgresEnum<IsoCurrency>();

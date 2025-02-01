@@ -15,8 +15,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fundamental.Migrations.Fundamental
 {
     [DbContext(typeof(FundamentalDbContext))]
-    [Migration("20250201192746_RemoveVolumeFromIndexEntity")]
-    partial class RemoveVolumeFromIndexEntity
+    [Migration("20250201212706_AddIndexCompanyEntity")]
+    partial class AddIndexCompanyEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1116,6 +1116,53 @@ namespace Fundamental.Migrations.Fundamental
                     b.ToTable("indices", "shd");
                 });
 
+            modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.IndexCompany", b =>
+                {
+                    b.Property<long>("_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("_id")
+                        .HasColumnOrder(0);
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("_id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("Timestamp")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(1);
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("Timestamp")
+                        .HasColumnName("ModifiedAt");
+
+                    b.Property<long>("company_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("company_id");
+
+                    b.Property<long>("index_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("index_id");
+
+                    b.HasKey("_id")
+                        .HasName("pk_index_company");
+
+                    b.HasIndex("Id")
+                        .IsUnique()
+                        .HasDatabaseName("ix_index_company_id");
+
+                    b.HasIndex("company_id")
+                        .HasDatabaseName("ix_index_company_company_id");
+
+                    b.HasIndex("index_id")
+                        .HasDatabaseName("ix_index_company_index_id");
+
+                    b.ToTable("index_company", "shd");
+                });
+
             modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.Symbol", b =>
                 {
                     b.Property<long>("_id")
@@ -1606,6 +1653,27 @@ namespace Fundamental.Migrations.Fundamental
                         .HasConstraintName("fk_indices_symbols_symbol_id");
 
                     b.Navigation("Symbol");
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.IndexCompany", b =>
+                {
+                    b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Company")
+                        .WithMany()
+                        .HasForeignKey("company_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_index_company_symbols_company_id");
+
+                    b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Index")
+                        .WithMany()
+                        .HasForeignKey("index_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_index_company_symbols_index_id");
+
+                    b.Navigation("Company");
+
+                    b.Navigation("Index");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.SymbolRelation", b =>
