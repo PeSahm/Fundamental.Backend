@@ -1,7 +1,11 @@
-﻿using Ardalis.Specification;
+﻿using System.Data;
+using System.Linq.Expressions;
+using Ardalis.Specification;
 using Ardalis.Specification.EntityFrameworkCore;
 using Fundamental.Domain.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
+using RepoDb;
 
 namespace Fundamental.Infrastructure.Persistence.Repositories.Base;
 
@@ -134,6 +138,44 @@ public abstract class RepositoryBase : IRepository
     {
         return await _dbContext.Set<T>().AnyAsync(cancellationToken);
     }
+
+    public async Task<int> BulkMergeAsync<T, TResult>(
+        string tableName,
+        IEnumerable<T> entities,
+        Expression<Func<T, TResult>>? qualifiers = null,
+        IDbTransaction? transaction = null,
+        CancellationToken cancellationToken = default
+    )
+        where T : class
+    {
+        return await BulkMergeAsync(tableName, entities, Field.Parse(qualifiers), transaction, cancellationToken);
+    }
+
+    public async Task<int> BulkMergeAsync<T>(
+        string tableName,
+        IEnumerable<T> entities,
+        IEnumerable<Field> fields,
+        IDbTransaction? transaction = null,
+        CancellationToken cancellationToken = default
+    )
+        where T : class
+    {
+        IDbConnection connection = _dbContext.Database.GetDbConnection();
+
+        if (connection is NpgsqlConnection pgCn)
+        {
+            NpgsqlTransaction? pgtr = transaction as NpgsqlTransaction;
+            return await pgCn.BinaryBulkMergeAsync(
+                tableName,
+                entities,
+                fields,
+                bulkCopyTimeout: 60 * 60,
+                batchSize: 5000,
+                transaction: pgtr,
+                cancellationToken: cancellationToken);
+        }
+
+        return -1;    }
 
     /// <summary>
     /// Filters the entities  of <typeparamref name="T"/>, to those that match the encapsulated query logic of the
