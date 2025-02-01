@@ -1,4 +1,7 @@
-﻿using Ardalis.Specification;
+﻿using System.Data;
+using System.Linq.Expressions;
+using Ardalis.Specification;
+using RepoDb;
 
 namespace Fundamental.Domain.Repositories.Base;
 
@@ -175,5 +178,23 @@ public interface IReadRepository
     /// source sequence contains any elements; otherwise, false.
     /// </returns>
     Task<bool> AnyAsync<T>(CancellationToken cancellationToken = default)
+        where T : class;
+
+    Task<int> BulkMergeAsync<T, TResult>(
+        string tableName,
+        IEnumerable<T> entities,
+        Expression<Func<T, TResult>>? qualifiers = null,
+        IDbTransaction? transaction = null,
+        CancellationToken cancellationToken = default
+    )
+        where T : class;
+
+    Task<int> BulkMergeAsync<T>(
+        string tableName,
+        IEnumerable<T> entities,
+        IEnumerable<Field> fields,
+        IDbTransaction? transaction = null,
+        CancellationToken cancellationToken = default
+    )
         where T : class;
 }
