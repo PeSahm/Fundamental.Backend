@@ -12,7 +12,6 @@ public class Index : BaseEntity<Guid>
         decimal high,
         decimal low,
         decimal value,
-        decimal volume,
         DateTime createdAt
     )
     {
@@ -23,7 +22,6 @@ public class Index : BaseEntity<Guid>
         High = high;
         Low = low;
         Value = value;
-        Volume = volume;
         CreatedAt = createdAt;
     }
 
@@ -37,7 +35,6 @@ public class Index : BaseEntity<Guid>
     public decimal High { get; private set; }
     public decimal Low { get; private set; }
     public decimal Value { get; private set; }
-    public decimal Volume { get; private set; }
 
     public decimal GetChange(Index previousIndex)
     {
@@ -53,14 +50,13 @@ public class Index : BaseEntity<Guid>
         decimal open,
         decimal high,
         decimal low,
-        decimal value,
-        decimal volume
+        decimal value
     )
     {
         Open = open;
         High = high;
         Low = low;
         Value = value;
-        Volume = volume;
+        UpdatedAt = DateTime.Now;
     }
 }

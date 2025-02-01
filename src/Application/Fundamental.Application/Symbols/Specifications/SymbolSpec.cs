@@ -1,13 +1,20 @@
 ﻿using Ardalis.Specification;
+using Fundamental.BuildingBlock.Extensions;
 using Fundamental.Domain.Symbols.Entities;
 
 namespace Fundamental.Application.Symbols.Specifications;
 
 public sealed class SymbolSpec : Specification<Symbol>
 {
-    public SymbolSpec WhereIsin(string isin)
+    public SymbolSpec WhereIsin(string isin, bool cacheResult = false)
     {
         Query.Where(x => x.Isin == isin);
+
+        if (cacheResult)
+        {
+            Query.EnableCache(nameof(SymbolSpec), "Isin", isin);
+        }
+
         return this;
     }
 
@@ -20,6 +27,12 @@ public sealed class SymbolSpec : Specification<Symbol>
     public SymbolSpec Filter(string filter)
     {
         Query.Where(x => x.Isin.StartsWith(filter) || x.Name.StartsWith(filter) || x.Title.StartsWith(filter));
+        return this;
+    }
+
+    public new SymbolSpec AsNoTracking()
+    {
+        Query.AsNoTracking();
         return this;
     }
 
@@ -40,16 +53,11 @@ public sealed class SymbolSpec : Specification<Symbol>
     public SymbolsResultDtoSpec Select()
     {
         SymbolsResultDtoSpec select = new();
-
-        foreach (WhereExpressionInfo<Symbol> whereExpression in WhereExpressions)
-        {
-            select.Query.Where(whereExpression.Filter);
-        }
-
+        select.LoadSpecification(this);
         return select;
     }
 
-    public SymbolSpec NoTracking()
+    public new SymbolSpec NoTracking()
     {
         Query.AsNoTracking();
         return this;

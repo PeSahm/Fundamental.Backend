@@ -15,4 +15,6 @@ public class MdpOption
     public string TradeHistory { get; set; }
 
     public string Symbol { get; set; }
+
+    public string Index { get; set; }
 }
