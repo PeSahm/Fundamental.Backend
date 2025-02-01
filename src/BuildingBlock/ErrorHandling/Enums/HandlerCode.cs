@@ -2,6 +2,7 @@
 
 public enum HandlerCode : ushort
 {
+    UpdateIndexData = 11_198,
     UpdateTseTmcShareHoldersData = 11_199,
     GetSymbols = 11_999,
     ApproveSymbolShareHolder = 11_394,
