@@ -1,5 +1,6 @@
 ﻿using Fundamental.Application.Codals.Jobs.UpdateCodalPublisherData;
 using Fundamental.Application.Prices.Jobs.UpdateClosePrices;
+using Fundamental.Application.Symbols.Jobs.UpdateIndexData;
 using Fundamental.Application.Symbols.Jobs.UpdateSymbolData;
 using Fundamental.Application.Symbols.Jobs.UpdateTseTmcShareHoldersData;
 using MediatR;
@@ -25,7 +26,7 @@ public class CommonCodalDataHostedService(IServiceScopeFactory serviceScopeFacto
             using IServiceScope scope = serviceScopeFactory.CreateScope();
             IMediator mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 
-            await mediator.Send(new UpdateClosePricesDataCommand(1), stoppingToken);
+            await mediator.Send(new UpdateIndexDataCommand(), stoppingToken);
             await mediator.Send(new UpdateClosePricesDataCommand(4), stoppingToken);
             await mediator.Send(new UpdateSymbolDataCommand(), stoppingToken);
             await mediator.Send(new UpdateTseTmcShareHoldersDataRequest(), stoppingToken);

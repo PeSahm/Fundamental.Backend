@@ -5,6 +5,7 @@ using Fundamental.Application.Symbols.Models;
 using Fundamental.Application.Symbols.Specifications;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.Domain.Symbols.Entities;
+using Fundamental.Domain.Symbols.Enums;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Index = Fundamental.Domain.Symbols.Entities.Index;
@@ -20,60 +21,54 @@ public sealed class UpdateIndexDataCommandHandler(
 {
     public async Task Handle(UpdateIndexDataCommand request, CancellationToken cancellationToken)
     {
-        DateOnly fromDate = "1380/01/01".ToGregorianDateOnly() ?? DateTime.Now.ToDateOnly();
+        DateOnly fromDate = "1370/01/01".ToGregorianDateOnly() ?? DateTime.Now.ToDateOnly();
 
         List<SimpleIndex> simpleIndices = await repository.ListAsync(new SimpleIndexSpec(), cancellationToken);
+        List<Symbol> symbols = await repository.ListAsync(
+            new SymbolSpec().WhereProductType(ProductType.Index),
+            cancellationToken);
 
-        while (fromDate < DateTime.Now.Date.ToDateOnly())
+        IndexResponse indices = await marketDataService.GetIndicesAsync(fromDate, cancellationToken);
+
+        foreach (IndexResponseItem index in indices.Result)
         {
-            List<IndexResponse> indices = await marketDataService.GetIndicesAsync(fromDate, cancellationToken);
+            Symbol? indexSymbol = symbols.FirstOrDefault(x => x.Isin == index.Isin);
 
-            foreach (IndexResponse index in indices)
+            if (indexSymbol is null)
             {
-                Symbol? indexSymbol = await repository.FirstOrDefaultAsync(
-                    new SymbolSpec()
-                        .AsNoTracking()
-                        .WhereIsin(index.Isin, true),
+                logger.LogWarning("Index symbol not found for {Isin}", index.Isin);
+                continue;
+            }
+
+            if (simpleIndices.Exists(x => x.Isin == index.Isin && x.Date == fromDate))
+            {
+                Index? existingIndex = await repository.FirstOrDefaultAsync(
+                    new IndexSpec().WhereIsin(index.Isin)
+                        .WhereDate(fromDate),
                     cancellationToken);
 
-                if (indexSymbol is null)
+                if (existingIndex is null)
                 {
-                    logger.LogWarning("Index symbol not found for {Isin}", index.Isin);
                     continue;
                 }
 
-                if (simpleIndices.Exists(x => x.Isin == index.Isin && x.Date == fromDate))
-                {
-                    Index? existingIndex = await repository.FirstOrDefaultAsync(
-                        new IndexSpec().WhereIsin(index.Isin)
-                            .WhereDate(fromDate),
-                        cancellationToken);
-
-                    if (existingIndex is null)
-                    {
-                        continue;
-                    }
-
-                    existingIndex.UpdateIndex(index.Open, index.High, index.Low, index.Value);
-                }
-                else
-                {
-                    Index newIndex = new(
-                        Guid.NewGuid(),
-                        indexSymbol,
-                        fromDate,
-                        index.Open,
-                        index.High,
-                        index.Low,
-                        index.Value,
-                        DateTime.Now
-                    );
-
-                    repository.Add(newIndex);
-                }
+                existingIndex.UpdateIndex(index.Open, index.High, index.Low, index.Value);
             }
+            else
+            {
+                Index newIndex = new(
+                    Guid.NewGuid(),
+                    indexSymbol,
+                    index.Date.ToDateOnly(),
+                    index.Open,
+                    index.High,
+                    index.Low,
+                    index.Value,
+                    DateTime.Now
+                );
 
-            fromDate = fromDate.AddDays(1);
+                repository.Add(newIndex);
+            }
         }
 
         await unitOfWork.SaveChangesAsync(cancellationToken);

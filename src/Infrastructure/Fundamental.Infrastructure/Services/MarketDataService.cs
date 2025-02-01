@@ -90,7 +90,7 @@ public class MarketDataService(
         return JsonConvert.DeserializeObject<List<SymbolResponse>>(response) ?? [];
     }
 
-    public async Task<List<IndexResponse>> GetIndicesAsync(DateOnly fromDate, CancellationToken cancellationToken = default)
+    public async Task<IndexResponse> GetIndicesAsync(DateOnly fromDate, CancellationToken cancellationToken = default)
     {
         string url = new StringBuilder()
             .Append(_mdpOption.Index)
@@ -100,10 +100,11 @@ public class MarketDataService(
             .Append('&')
             .Append("Page=1")
             .Append('&')
-            .Append("Take=100000")
+            .Append("Take=1000000")
             .ToString();
 
-        string response = await _mdpClient.GetStringAsync(url, cancellationToken);
-        return JsonConvert.DeserializeObject<List<IndexResponse>>(response) ?? [];
+        HttpResponseMessage response = await _mdpClient.GetAsync(url, cancellationToken);
+        response.EnsureSuccessStatusCode();
+        return JsonConvert.DeserializeObject<IndexResponse>(await response.Content.ReadAsStringAsync(cancellationToken)) ?? new();
     }
 }
