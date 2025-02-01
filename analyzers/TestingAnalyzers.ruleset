@@ -71,6 +71,7 @@ Microsoft.CodeAnalysis.FxCopAnalyzers - https://github.com/dotnet/roslyn-analyze
     <Rule Id="SA1629" Action="None" />
     <Rule Id="SA1633" Action="None" />
     <Rule Id="SA1649" Action="None" />
+    <Rule Id="SA600" Action="None"/>
   </Rules>
   <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
     <Rule Id="CA1012" Action="None" />
