@@ -3,6 +3,7 @@ using System.Text;
 using Fundamental.Application.Codals.Options;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.MarketDataServiceModels;
+using Fundamental.Domain.Symbols.Entities;
 using Fundamental.Infrastructure.Common;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -11,12 +12,15 @@ namespace Fundamental.Infrastructure.Services;
 
 public class MarketDataService(
     IHttpClientFactory httpClientFactory,
-    IOptions<MdpOption> mdpOption
+    IOptions<MdpOption> mdpOption,
+    IOptions<TseTmcOption> tseTmcOption
 )
     : IMarketDataService
 {
     private readonly HttpClient _mdpClient = httpClientFactory.CreateClient(HttpClients.MDP);
+    private readonly HttpClient _tseTmcClient = httpClientFactory.CreateClient(HttpClients.TSE_TMC);
     private readonly MdpOption _mdpOption = mdpOption.Value;
+    private readonly TseTmcOption _tseTmcOption = tseTmcOption.Value;
 
     public async Task<List<ShareHoldersResponse>> GetShareHoldersAsync(DateOnly date, CancellationToken cancellationToken = default)
     {
@@ -106,5 +110,17 @@ public class MarketDataService(
         HttpResponseMessage response = await _mdpClient.GetAsync(url, cancellationToken);
         response.EnsureSuccessStatusCode();
         return JsonConvert.DeserializeObject<IndexResponse>(await response.Content.ReadAsStringAsync(cancellationToken)) ?? new();
+    }
+
+    public async Task<IndexCompanyResponse> GetIndexCompanies(Symbol index, CancellationToken cancellationToken = default)
+    {
+        string url = new StringBuilder()
+            .Append(_tseTmcOption.IndexCompany)
+            .Append('/')
+            .Append(index.TseInsCode)
+            .ToString();
+        HttpResponseMessage response = await _tseTmcClient.GetAsync(url, cancellationToken);
+        response.EnsureSuccessStatusCode();
+        return JsonConvert.DeserializeObject<IndexCompanyResponse>(await response.Content.ReadAsStringAsync(cancellationToken)) ?? new();
     }
 }
