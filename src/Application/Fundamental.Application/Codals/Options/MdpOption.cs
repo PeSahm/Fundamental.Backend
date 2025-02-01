@@ -1,6 +1,6 @@
 ﻿namespace Fundamental.Application.Codals.Options;
 
-public class MdpOption
+public sealed class MdpOption
 {
     public string Url { get; set; } = default!;
 
