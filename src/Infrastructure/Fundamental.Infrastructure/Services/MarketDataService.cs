@@ -56,7 +56,7 @@ public class MarketDataService(
 
     public async Task<List<SymbolResponse>> GetSymbolsAsync(CancellationToken cancellationToken = default)
     {
-        string? response = await _mdpClient.GetStringAsync(
+        string response = await _mdpClient.GetStringAsync(
             new StringBuilder()
                 .Append(_mdpOption.Symbol)
                 .Append('?')
@@ -75,7 +75,7 @@ public class MarketDataService(
                     "SymbolCustomExtension.ProductType" +
                     "SymbolCustomExtension.CustomExchangeType" +
                     "SymbolCustomExtension.EtfType"
-                    )
+                )
                 .Append('&')
                 .Append("status")
                 .Append('=')
@@ -88,5 +88,22 @@ public class MarketDataService(
             cancellationToken: cancellationToken);
 
         return JsonConvert.DeserializeObject<List<SymbolResponse>>(response) ?? [];
+    }
+
+    public async Task<List<IndexResponse>> GetIndicesAsync(DateOnly fromDate, CancellationToken cancellationToken = default)
+    {
+        string url = new StringBuilder()
+            .Append(_mdpOption.Index)
+            .Append('?')
+            .Append("FromDate=")
+            .Append(fromDate.ToString("yyyy-MM-dd"))
+            .Append('&')
+            .Append("Page=1")
+            .Append('&')
+            .Append("Take=100000")
+            .ToString();
+
+        string response = await _mdpClient.GetStringAsync(url, cancellationToken);
+        return JsonConvert.DeserializeObject<List<IndexResponse>>(response) ?? [];
     }
 }

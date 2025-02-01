@@ -38,10 +38,5 @@ public class IndexConfiguration : EntityTypeConfigurationBase<Index>
             .IsRequired()
             .HasPrecision(18, 2)
             .HasColumnName("value");
-
-        builder.Property(x => x.Value)
-            .IsRequired()
-            .HasPrecision(18, 2)
-            .HasColumnName("volume");
     }
 }

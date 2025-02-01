@@ -9,4 +9,6 @@ public interface IMarketDataService
     Task<List<TradeHistoryResponse>> GetClosePricesAsync(DateOnly date, CancellationToken cancellationToken = default);
 
     Task<List<SymbolResponse>> GetSymbolsAsync(CancellationToken cancellationToken = default);
+
+    Task<List<IndexResponse>> GetIndicesAsync(DateOnly fromDate, CancellationToken cancellationToken = default);
 }
