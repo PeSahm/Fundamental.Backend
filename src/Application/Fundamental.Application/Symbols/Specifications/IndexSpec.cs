@@ -24,6 +24,12 @@ public class IndexSpec : Specification<Index>
         return this;
     }
 
+    public new IndexSpec AsNoTracking()
+    {
+        Query.AsNoTracking();
+        return this;
+    }
+
     public SimpleIndexSpec SelectSimpleIndex()
     {
         SimpleIndexSpec simpleIndexSpec = new();
