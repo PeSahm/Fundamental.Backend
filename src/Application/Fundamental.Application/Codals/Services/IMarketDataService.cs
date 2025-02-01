@@ -10,5 +10,5 @@ public interface IMarketDataService
 
     Task<List<SymbolResponse>> GetSymbolsAsync(CancellationToken cancellationToken = default);
 
-    Task<List<IndexResponse>> GetIndicesAsync(DateOnly fromDate, CancellationToken cancellationToken = default);
+    Task<IndexResponse> GetIndicesAsync(DateOnly fromDate, CancellationToken cancellationToken = default);
 }
