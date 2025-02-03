@@ -17,6 +17,8 @@ public sealed class GetStatusOfViableCompaniesResultDto
 
     public required decimal OwnershipPercentage { get; init; }
 
+    public required decimal? OwnershipPercentageProvidedByAdmin { get; init; }
+
     public required decimal CostPrice { get; set; }
 
     public string? SubsidiarySymbolIsin { get; init; }
