@@ -56,7 +56,6 @@ public static class ServicesConfigurationExtensions
     {
         builder.Services.AddPartialOptions<MdpOption>("Mdp", builder.Configuration);
         builder.Services.AddPartialOptions<TseTmcOption>("TseTmc", builder.Configuration);
-
     }
 
     public static void AddReadRepositories(this WebApplicationBuilder builder)

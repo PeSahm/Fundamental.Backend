@@ -6,4 +6,4 @@ using MediatR;
 namespace Fundamental.Application.Codals.Manufacturing.Commands.ApproveStatusOfViableCompany;
 
 [HandlerCode(HandlerCode.ApproveStatusOfViableCompany)]
-public sealed record ApproveStatusOfViableCompanyRequest(Guid Id, string SubsidiaryIsin) : IRequest<Response>;
+public sealed record ApproveStatusOfViableCompanyRequest(Guid Id, string SubsidiaryIsin, decimal Percentage) : IRequest<Response>;

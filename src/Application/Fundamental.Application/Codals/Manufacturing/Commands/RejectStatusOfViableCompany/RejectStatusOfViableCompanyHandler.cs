@@ -20,7 +20,7 @@ public sealed class RejectStatusOfViableCompanyHandler(IRepository repository, I
             return RejectStatusOfViableCompanyErrorCodes.NotFound;
         }
 
-        symbolShareHolder.SetReviewStatus(ReviewStatus.Rejected, DateTime.Now);
+        symbolShareHolder.Reject(DateTime.Now);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         List<StockOwnership> allShareHolders = await repository
@@ -29,7 +29,7 @@ public sealed class RejectStatusOfViableCompanyHandler(IRepository repository, I
                     .WhereReviewStatus(ReviewStatus.Pending),
                 cancellationToken);
 
-        allShareHolders.ForEach(x => x.SetReviewStatus(ReviewStatus.Rejected, DateTime.Now));
+        allShareHolders.ForEach(x => x.Reject(DateTime.Now));
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 

@@ -175,7 +175,8 @@ public abstract class RepositoryBase : IRepository
                 cancellationToken: cancellationToken);
         }
 
-        return -1;    }
+        return -1;
+    }
 
     /// <summary>
     /// Filters the entities  of <typeparamref name="T"/>, to those that match the encapsulated query logic of the
