@@ -25,6 +25,8 @@ public sealed class GetStatusOfViableCompaniesResultDto
 
     public string? ReviewStatusName => ReviewStatus.GetDescription();
 
+    public required string? Url { get; init; }
+
     [JsonIgnore]
     public DateTime? CreatedAt { get; init; }
 }

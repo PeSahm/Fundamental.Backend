@@ -104,6 +104,7 @@ public class TheStatusOfViableCompaniesV2Processor(
                     childCompany.GetValue(ColumnId.CurrentOwnershipPercentage),
                     childCompany.GetValue(ColumnId.CurrentCostBasis),
                     statement.TracingNo,
+                    statement.HtmlUrl,
                     DateTime.Now
                 );
             }
@@ -116,6 +117,7 @@ public class TheStatusOfViableCompaniesV2Processor(
                     childCompany.GetValue(ColumnId.CurrentOwnershipPercentage),
                     childCompany.GetValue(ColumnId.CurrentCostBasis),
                     statement.TracingNo,
+                    statement.HtmlUrl,
                     DateTime.Now
                 );
                 repository.Add(stockOwnership);

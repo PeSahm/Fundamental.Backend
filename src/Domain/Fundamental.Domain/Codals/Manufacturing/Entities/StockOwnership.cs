@@ -14,6 +14,7 @@ public sealed class StockOwnership : BaseEntity<Guid>
         decimal ownershipPercentage,
         SignedCodalMoney costPrice,
         ulong traceNo,
+        string url,
         DateTime createdAt
     )
     {
@@ -28,6 +29,7 @@ public sealed class StockOwnership : BaseEntity<Guid>
 
         CostPrice = costPrice;
         TraceNo = traceNo;
+        Url = url;
         CreatedAt = createdAt;
     }
 
@@ -49,6 +51,8 @@ public sealed class StockOwnership : BaseEntity<Guid>
 
     public ulong? TraceNo { get; private set; }
 
+    public string? Url { get; set; }
+
     public StockOwnership SetReviewStatus(ReviewStatus reviewStatus, DateTime updatedAt)
     {
         ReviewStatus = reviewStatus;
@@ -68,6 +72,7 @@ public sealed class StockOwnership : BaseEntity<Guid>
         decimal ownershipPercentage,
         SignedCodalMoney costPrice,
         ulong traceNo,
+        string url,
         DateTime updatedAt
     )
     {
@@ -83,6 +88,9 @@ public sealed class StockOwnership : BaseEntity<Guid>
 
         CostPrice = costPrice;
         UpdatedAt = updatedAt;
+        TraceNo = traceNo;
+        Url = url;
+
         return this;
     }
 }

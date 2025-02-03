@@ -1,4 +1,6 @@
 ﻿using System;
+using Fundamental.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -7,7 +9,9 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fundamental.Migrations.Fundamental
 {
     /// <inheritdoc />
-    public partial class AddIndexCompanyEntity : Migration
+    [DbContext(typeof(FundamentalDbContext))]
+    [Migration("20250201212706_AddIndexCompanyEntity")]
+    public class AddIndexCompanyEntity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
