@@ -29,7 +29,13 @@ public sealed class ApproveStatusOfViableCompanyHandler(IRepository repository, 
             return ApproveStatusOfViableCompanyErrorCodes.IdIsNotValid;
         }
 
-        ownership.SetSubsidiarySymbol(symbol, DateTime.Now);
+        if (request.Percentage is > 100 or <= 0)
+        {
+            return ApproveStatusOfViableCompanyErrorCodes.InvalidPercentage;
+        }
+
+        ownership.SetSubsidiarySymbol(symbol, DateTime.Now)
+            .SetOwnershipPercentageProvidedByAdmin(request.Percentage, DateTime.Now);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 

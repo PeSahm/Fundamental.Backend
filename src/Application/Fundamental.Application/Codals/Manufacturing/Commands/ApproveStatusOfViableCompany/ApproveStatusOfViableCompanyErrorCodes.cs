@@ -11,4 +11,7 @@ public enum ApproveStatusOfViableCompanyErrorCodes
 
     [ErrorType(BackendErrorType.Security)]
     SubsidiaryIsinIsNotValid = 13_381_102,
+
+    [ErrorType(BackendErrorType.Security)]
+    InvalidPercentage = 13_381_103
 }

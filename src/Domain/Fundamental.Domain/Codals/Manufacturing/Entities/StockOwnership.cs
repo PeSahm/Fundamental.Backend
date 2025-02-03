@@ -21,12 +21,7 @@ public sealed class StockOwnership : BaseEntity<Guid>
         Id = id;
         ParentSymbol = parentSymbol;
         SubsidiarySymbolName = subsidiarySymbolName;
-
-        if (ownershipPercentage <= 100)
-        {
-            OwnershipPercentage = ownershipPercentage;
-        }
-
+        OwnershipPercentage = ownershipPercentage;
         CostPrice = costPrice;
         TraceNo = traceNo;
         Url = url;
@@ -41,9 +36,11 @@ public sealed class StockOwnership : BaseEntity<Guid>
 
     public string SubsidiarySymbolName { get; private set; }
 
-    public decimal OwnershipPercentage { get; set; }
+    public decimal OwnershipPercentage { get; private set; }
 
-    public SignedCodalMoney CostPrice { get; set; }
+    public decimal? OwnershipPercentageProvidedByAdmin { get; private set; }
+
+    public SignedCodalMoney CostPrice { get; private set; }
 
     public Symbol? SubsidiarySymbol { get; private set; }
 
@@ -51,19 +48,26 @@ public sealed class StockOwnership : BaseEntity<Guid>
 
     public ulong? TraceNo { get; private set; }
 
-    public string? Url { get; set; }
+    public string? Url { get; private set; }
 
-    public StockOwnership SetReviewStatus(ReviewStatus reviewStatus, DateTime updatedAt)
+    public StockOwnership Reject(DateTime updatedAt)
     {
-        ReviewStatus = reviewStatus;
+        ReviewStatus = ReviewStatus.Rejected;
         UpdatedAt = updatedAt;
+        return this;
+    }
+
+    public StockOwnership SetOwnershipPercentageProvidedByAdmin(decimal ownershipPercentage, DateTime updatedAt)
+    {
+        OwnershipPercentageProvidedByAdmin = ownershipPercentage;
+        UpdatedAt = updatedAt;
+        ReviewStatus = ReviewStatus.Approved;
         return this;
     }
 
     public StockOwnership SetSubsidiarySymbol(Symbol subsidiarySymbol, DateTime updatedAt)
     {
         SubsidiarySymbol = subsidiarySymbol;
-        ReviewStatus = ReviewStatus.Approved;
         UpdatedAt = updatedAt;
         return this;
     }
@@ -76,17 +80,28 @@ public sealed class StockOwnership : BaseEntity<Guid>
         DateTime updatedAt
     )
     {
-        if (traceNo < TraceNo)
+        if (traceNo <= TraceNo)
         {
             return this;
         }
 
-        if (ownershipPercentage <= 100)
+        if (ReviewStatus == ReviewStatus.Rejected)
         {
+            UpdatedAt = updatedAt;
+            TraceNo = traceNo;
+            Url = url;
             OwnershipPercentage = ownershipPercentage;
+            CostPrice = costPrice;
+            return this;
         }
 
-        CostPrice = costPrice;
+        if (ownershipPercentage != OwnershipPercentage)
+        {
+            ReviewStatus = ReviewStatus.Pending;
+            OwnershipPercentage = ownershipPercentage;
+            CostPrice = costPrice;
+        }
+
         UpdatedAt = updatedAt;
         TraceNo = traceNo;
         Url = url;
