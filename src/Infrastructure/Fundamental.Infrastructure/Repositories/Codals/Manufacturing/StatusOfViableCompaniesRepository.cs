@@ -20,6 +20,7 @@ public sealed class StatusOfViableCompaniesRepository(FundamentalDbContext dbCon
                 Id = x.Id,
                 CostPrice = x.CostPrice.Value,
                 OwnershipPercentage = x.OwnershipPercentage,
+                OwnershipPercentageProvidedByAdmin = x.OwnershipPercentageProvidedByAdmin,
                 ReviewStatus = x.ReviewStatus,
                 PatentSymbol = x.ParentSymbol.Name,
                 ParentSymbolIsin = x.ParentSymbol.Isin,
