@@ -45,5 +45,11 @@ public class StockOwnershipConfiguration : EntityTypeConfigurationBase<StockOwne
         builder.Property(x => x.TraceNo)
             .HasColumnName("trace_no")
             .IsRequired(false);
+
+        builder.Property(x => x.Url)
+            .HasColumnName("url")
+            .HasMaxLength(512)
+            .IsUnicode()
+            .IsRequired(false);
     }
 }

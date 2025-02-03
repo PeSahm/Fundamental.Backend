@@ -15,8 +15,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fundamental.Migrations.Fundamental
 {
     [DbContext(typeof(FundamentalDbContext))]
-    [Migration("20250201212706_AddIndexCompanyEntity")]
-    partial class AddIndexCompanyEntity
+    [Migration("20250203203654_AddUrlToStockOwnershipEntity")]
+    partial class AddUrlToStockOwnershipEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -650,6 +650,12 @@ namespace Fundamental.Migrations.Fundamental
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("Timestamp")
                         .HasColumnName("ModifiedAt");
+
+                    b.Property<string>("Url")
+                        .HasMaxLength(512)
+                        .IsUnicode(true)
+                        .HasColumnType("character varying(512)")
+                        .HasColumnName("url");
 
                     b.Property<long>("parent_symbol_id")
                         .HasColumnType("bigint")

@@ -648,6 +648,12 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnType("Timestamp")
                         .HasColumnName("ModifiedAt");
 
+                    b.Property<string>("Url")
+                        .HasMaxLength(512)
+                        .IsUnicode(true)
+                        .HasColumnType("character varying(512)")
+                        .HasColumnName("url");
+
                     b.Property<long>("parent_symbol_id")
                         .HasColumnType("bigint")
                         .HasColumnName("parent_symbol_id");
