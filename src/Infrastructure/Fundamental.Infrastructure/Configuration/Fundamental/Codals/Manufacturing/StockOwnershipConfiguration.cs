@@ -24,7 +24,7 @@ public class StockOwnershipConfiguration : EntityTypeConfigurationBase<StockOwne
 
         builder.Property(x => x.OwnershipPercentage)
             .HasColumnName("ownership_percentage")
-            .HasPrecision(5, 2)
+            .HasPrecision(18, 4)
             .HasColumnType("decimal")
             .IsRequired();
 
@@ -51,5 +51,11 @@ public class StockOwnershipConfiguration : EntityTypeConfigurationBase<StockOwne
             .HasMaxLength(512)
             .IsUnicode()
             .IsRequired(false);
+
+        builder.Property(x => x.OwnershipPercentageProvidedByAdmin)
+            .HasColumnName("ownership_percentage_provided_by_admin")
+            .HasPrecision(18, 4)
+            .HasColumnType("decimal")
+            .IsRequired();
     }
 }

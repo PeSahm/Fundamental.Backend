@@ -623,9 +623,15 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnOrder(1);
 
                     b.Property<decimal>("OwnershipPercentage")
-                        .HasPrecision(5, 2)
+                        .HasPrecision(18, 4)
                         .HasColumnType("decimal")
                         .HasColumnName("ownership_percentage");
+
+                    b.Property<decimal?>("OwnershipPercentageProvidedByAdmin")
+                        .IsRequired()
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal")
+                        .HasColumnName("ownership_percentage_provided_by_admin");
 
                     b.Property<ReviewStatus>("ReviewStatus")
                         .ValueGeneratedOnAdd()
