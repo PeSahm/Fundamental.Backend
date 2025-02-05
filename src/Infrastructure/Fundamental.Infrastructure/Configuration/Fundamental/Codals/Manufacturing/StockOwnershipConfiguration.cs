@@ -56,6 +56,6 @@ public class StockOwnershipConfiguration : EntityTypeConfigurationBase<StockOwne
             .HasColumnName("ownership_percentage_provided_by_admin")
             .HasPrecision(18, 4)
             .HasColumnType("decimal")
-            .IsRequired();
+            .IsRequired(false);
     }
 }
