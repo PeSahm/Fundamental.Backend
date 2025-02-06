@@ -15,6 +15,7 @@ public sealed class StatusOfViableCompaniesRepository(FundamentalDbContext dbCon
     )
     {
         IQueryable<GetStatusOfViableCompaniesResultDto> query = dbContext.StockOwnership
+            .Where(x => x.TraceNo == dbContext.BalanceSheets.Where(b => b.Symbol.Id == x.ParentSymbol.Id).Max(t => t.TraceNo))
             .Select(x => new GetStatusOfViableCompaniesResultDto
             {
                 Id = x.Id,
