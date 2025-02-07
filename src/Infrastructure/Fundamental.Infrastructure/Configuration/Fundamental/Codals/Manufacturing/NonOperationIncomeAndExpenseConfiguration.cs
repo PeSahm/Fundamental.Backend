@@ -1,4 +1,5 @@
 ﻿using Fundamental.Domain.Codals.Manufacturing.Entities;
+using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -81,5 +82,9 @@ public class NonOperationIncomeAndExpenseConfiguration : EntityTypeConfiguration
         builder.Property(x => x.YearlyForecastPeriod)
             .IsRequired()
             .HasDefaultValueSql("false");
+
+        builder.Property(x => x.Tags).HasColumnName("tags")
+            .HasDefaultValue(new List<NoneOperationalIncomeTag>())
+            .HasSentinel(new List<NoneOperationalIncomeTag>());
     }
 }

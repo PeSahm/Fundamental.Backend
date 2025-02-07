@@ -1,4 +1,5 @@
-﻿using Fundamental.Domain.Common.Enums;
+﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
+using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Enums;
 using Fundamental.Infrastructure.Persistence;
 using Gridify;
@@ -30,6 +31,7 @@ public static class DbContextConfigurationExtensions
         dataSourceBuilder.MapEnum<ProductType>();
         dataSourceBuilder.MapEnum<ExchangeType>();
         dataSourceBuilder.MapEnum<EtfType>();
+        dataSourceBuilder.MapEnum<NoneOperationalIncomeTag>();
 
         NpgsqlDataSource dataSource = dataSourceBuilder.Build();
 
