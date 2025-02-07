@@ -7,10 +7,9 @@
 		<IsDbMigrations>$(MSBuildProjectName.EndsWith('Migrations'))</IsDbMigrations>
 		<InvariantGlobalization>false</InvariantGlobalization>
 		<IsPackable>false</IsPackable>
-		<Authors>UltraTone Development Team</Authors>
-        <Company>UltraTone</Company>
-        <Copyright>UltraTone</Copyright>
-		<Product>UltraTone Platform</Product>
+		<Authors>PeSahm Development Team</Authors>
+        <Copyright>Mostafa Esmaeili And Amir Mehrizi </Copyright>
+		<Product>Fundamental Platform</Product>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="!'$(IsDbMigrations)'">
