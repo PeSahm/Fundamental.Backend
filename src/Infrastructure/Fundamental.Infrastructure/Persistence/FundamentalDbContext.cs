@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Fundamental.Domain.Codals;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
+using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.Domain.Symbols.Entities;
@@ -63,6 +64,7 @@ public class FundamentalDbContext : DbContext, IUnitOfWork
         modelBuilder.HasPostgresEnum<ProductType>();
         modelBuilder.HasPostgresEnum<ExchangeType>();
         modelBuilder.HasPostgresEnum<EtfType>();
+        modelBuilder.HasPostgresEnum<NoneOperationalIncomeTag>();
 
         modelBuilder.ApplyConfigurationsFromAssembly(
             Assembly.GetExecutingAssembly(),

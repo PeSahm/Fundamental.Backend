@@ -1,4 +1,5 @@
-﻿using Fundamental.Domain.Codals.ValueObjects;
+﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
+using Fundamental.Domain.Codals.ValueObjects;
 using Fundamental.Domain.Common.BaseTypes;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Common.ValueObjects;
@@ -75,4 +76,49 @@ public sealed class NonOperationIncomeAndExpense : BaseEntity<Guid>
     public bool ForecastPeriod { get; private set; }
 
     public bool YearlyForecastPeriod { get; set; }
+
+    public NonOperationIncomeAndExpense AddTag(NoneOperationalIncomeTag tagType)
+    {
+        if (Tags.Exists(t => t == tagType))
+        {
+            return this;
+        }
+
+        Tags.Add(tagType);
+        return this;
+    }
+
+    public NonOperationIncomeAndExpense AddTags(params NoneOperationalIncomeTag[] tags)
+    {
+        foreach (NoneOperationalIncomeTag tag in tags)
+        {
+            AddTag(tag);
+        }
+
+        return this;
+    }
+
+    public NonOperationIncomeAndExpense RemoveTag(NoneOperationalIncomeTag tagType)
+    {
+        if (!Tags.Exists(t => t == tagType))
+        {
+            return this;
+        }
+
+        NoneOperationalIncomeTag tagToRemove = Tags.Find(t => t == tagType);
+        Tags.Remove(tagToRemove);
+        return this;
+    }
+
+    public NonOperationIncomeAndExpense RemoveTags(params NoneOperationalIncomeTag[] tags)
+    {
+        foreach (NoneOperationalIncomeTag tag in tags)
+        {
+            RemoveTag(tag);
+        }
+
+        return this;
+    }
+
+    public List<NoneOperationalIncomeTag> Tags { get; set; } = new();
 }

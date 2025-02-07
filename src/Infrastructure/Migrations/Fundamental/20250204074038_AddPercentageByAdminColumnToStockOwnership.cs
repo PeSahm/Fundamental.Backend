@@ -1,11 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Fundamental.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace Fundamental.Migrations.Fundamental
 {
     /// <inheritdoc />
-    public partial class AddPercentageByAdminColumnToStockOwnership : Migration
+    [DbContext(typeof(FundamentalDbContext))]
+    [Migration("20250204074038_AddPercentageByAdminColumnToStockOwnership")]
+    public class AddPercentageByAdminColumnToStockOwnership : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
