@@ -1,4 +1,6 @@
-﻿namespace Fundamental.Application.Codals.Manufacturing.Queries.GetNonOperationIncomes;
+﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
+
+namespace Fundamental.Application.Codals.Manufacturing.Queries.GetNonOperationIncomes;
 
 public sealed class GetNonOperationIncomesResultItem
 {
@@ -25,4 +27,6 @@ public sealed class GetNonOperationIncomesResultItem
     public required decimal Value { get; set; }
 
     public bool IsAudited { get; set; }
+
+    public List<NoneOperationalIncomeTag> Tags { get; set; } = new();
 }
