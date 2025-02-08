@@ -77,48 +77,14 @@ public sealed class NonOperationIncomeAndExpense : BaseEntity<Guid>
 
     public bool YearlyForecastPeriod { get; set; }
 
-    public NonOperationIncomeAndExpense AddTag(NoneOperationalIncomeTag tagType)
-    {
-        if (Tags.Exists(t => t == tagType))
-        {
-            return this;
-        }
+    private readonly List<NoneOperationalIncomeTag> _tags = new();
 
-        Tags.Add(tagType);
+    public NonOperationIncomeAndExpense UpdateTags(NoneOperationalIncomeTag[] tags)
+    {
+        _tags.Clear();
+        _tags.AddRange(tags);
         return this;
     }
 
-    public NonOperationIncomeAndExpense AddTags(params NoneOperationalIncomeTag[] tags)
-    {
-        foreach (NoneOperationalIncomeTag tag in tags)
-        {
-            AddTag(tag);
-        }
-
-        return this;
-    }
-
-    public NonOperationIncomeAndExpense RemoveTag(NoneOperationalIncomeTag tagType)
-    {
-        if (!Tags.Exists(t => t == tagType))
-        {
-            return this;
-        }
-
-        NoneOperationalIncomeTag tagToRemove = Tags.Find(t => t == tagType);
-        Tags.Remove(tagToRemove);
-        return this;
-    }
-
-    public NonOperationIncomeAndExpense RemoveTags(params NoneOperationalIncomeTag[] tags)
-    {
-        foreach (NoneOperationalIncomeTag tag in tags)
-        {
-            RemoveTag(tag);
-        }
-
-        return this;
-    }
-
-    public List<NoneOperationalIncomeTag> Tags { get; set; } = new();
+    public List<NoneOperationalIncomeTag> Tags => _tags;
 }
