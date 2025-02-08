@@ -84,6 +84,8 @@ public class NonOperationIncomeAndExpenseConfiguration : EntityTypeConfiguration
             .HasDefaultValueSql("false");
 
         builder.Property(x => x.Tags).HasColumnName("tags")
+            .HasField("_tags")
+            .UsePropertyAccessMode(PropertyAccessMode.Field)
             .HasDefaultValue(new List<NoneOperationalIncomeTag>())
             .HasSentinel(new List<NoneOperationalIncomeTag>());
     }
