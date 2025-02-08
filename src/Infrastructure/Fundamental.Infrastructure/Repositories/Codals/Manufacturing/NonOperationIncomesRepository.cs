@@ -59,7 +59,8 @@ public sealed class NonOperationIncomesRepository(FundamentalDbContext dbContext
                 TraceNo = x.TraceNo,
                 Value = x.Value.Value,
                 Description = x.Description,
-                IsAudited = x.IsAudited
+                IsAudited = x.IsAudited,
+                Tags = x.Tags
             })
             .ToPagingListAsync(request, "TraceNo desc", cancellationToken);
         return result;
