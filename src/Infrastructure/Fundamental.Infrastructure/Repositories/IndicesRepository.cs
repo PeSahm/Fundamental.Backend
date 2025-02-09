@@ -27,8 +27,19 @@ public class IndicesRepository(FundamentalDbContext fundamentalDbContext) : IInd
             query = query.Where(x => x.Date <= request.To);
         }
 
-        List<Index> data = await query.OrderBy(x => x.Date)
-            .AsNoTracking()
+        var data = await query.OrderBy(x => x.Date)
+            .Include(x => x.Symbol)
+            .Select(x => new
+            {
+                x.Date,
+                x.Value,
+                Symbol = new
+                {
+                    x.Symbol.Name,
+                    x.Symbol.TseInsCode,
+                    x.Symbol.Title,
+                }
+            })
             .ToListAsync(cancellationToken: cancellationToken);
 
         if (data.Count == 0)
@@ -49,8 +60,8 @@ public class IndicesRepository(FundamentalDbContext fundamentalDbContext) : IInd
             Data = data.Select(x => new GetIndicesResulItem
             {
                 Value = x.Value,
-                Date = x.Date
-            }).ToList()
+                Date = x.Date,
+            }).ToList(),
         }.CalculatePercentage();
     }
 }
