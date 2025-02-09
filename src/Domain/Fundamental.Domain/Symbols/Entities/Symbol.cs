@@ -1,4 +1,5 @@
-﻿using Fundamental.Domain.Common.BaseTypes;
+﻿using Fundamental.BuildingBlock;
+using Fundamental.Domain.Common.BaseTypes;
 using Fundamental.Domain.Symbols.Enums;
 
 namespace Fundamental.Domain.Symbols.Entities;
@@ -44,6 +45,11 @@ public class Symbol : BaseEntity<Guid>
         EtfType = etfType;
 
         CreatedAt = createdAt;
+
+        if (productType is ProductType.Index)
+        {
+            Name = Title = Isin.CorrectIndicesName("Index");
+        }
     }
 
     protected Symbol()
@@ -144,5 +150,10 @@ public class Symbol : BaseEntity<Guid>
         ExchangeType = exchangeType ?? ExchangeType.None;
         EtfType = etfType;
         UpdatedAt = updatedAt;
+
+        if (productType is ProductType.Index)
+        {
+            Name = Title = Isin.CorrectIndicesName(name);
+        }
     }
 }
