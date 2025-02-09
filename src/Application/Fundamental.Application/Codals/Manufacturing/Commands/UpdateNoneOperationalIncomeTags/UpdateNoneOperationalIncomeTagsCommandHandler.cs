@@ -20,6 +20,11 @@ public sealed class UpdateNoneOperationalIncomeTagsCommandHandler(IRepository re
         }
 
         entity.UpdateTags(request.Tags.ToArray());
+
+        List<NonOperationIncomeAndExpense> similarEntities =
+            await repository.ListAsync(new NonOperationIncomeAndExpenseSpec().GetByDescription(entity.Description), cancellationToken);
+
+        similarEntities.ForEach(x => x.UpdateTags(request.Tags.ToArray()));
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Response.Successful();

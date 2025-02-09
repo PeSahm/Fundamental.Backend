@@ -10,4 +10,10 @@ public class NonOperationIncomeAndExpenseSpec : Specification<NonOperationIncome
         Query.Where(x => x.Id == id);
         return this;
     }
+
+    public NonOperationIncomeAndExpenseSpec GetByDescription(string? entityDescription)
+    {
+        Query.Where(x => x.Description == entityDescription);
+        return this;
+    }
 }
