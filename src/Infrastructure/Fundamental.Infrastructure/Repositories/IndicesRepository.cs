@@ -28,6 +28,7 @@ public class IndicesRepository(FundamentalDbContext fundamentalDbContext) : IInd
         }
 
         List<Index> data = await query.OrderBy(x => x.Date)
+            .AsNoTracking()
             .ToListAsync(cancellationToken: cancellationToken);
 
         if (data.Count == 0)
