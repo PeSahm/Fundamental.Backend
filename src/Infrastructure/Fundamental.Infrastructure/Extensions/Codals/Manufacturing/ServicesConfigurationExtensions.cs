@@ -1,6 +1,8 @@
 ﻿using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Application.Codals.Services;
+using Fundamental.Application.Symbols.Repositories;
 using Fundamental.Infrastructure.HostedServices.Codals.Manufacturing;
+using Fundamental.Infrastructure.Repositories;
 using Fundamental.Infrastructure.Repositories.Codals.Manufacturing;
 using Fundamental.Infrastructure.Services;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Detectors;
@@ -38,6 +40,7 @@ public static class ServicesConfigurationExtensions
         builder.Services.AddScoped<IIncomeStatementsReadRepository, IncomeStatementReadRepository>();
         builder.Services.AddScoped<INonOperationIncomesRepository, NonOperationIncomesRepository>();
         builder.Services.AddScoped<IStatusOfViableCompaniesRepository, StatusOfViableCompaniesRepository>();
+        builder.Services.AddScoped<IIndicesRepository, IndicesRepository>();
     }
 
     public static void AddManufacturingHostedServices(this IServiceCollection builder)

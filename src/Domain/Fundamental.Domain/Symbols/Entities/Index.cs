@@ -36,14 +36,14 @@ public class Index : BaseEntity<Guid>
     public decimal Low { get; private set; }
     public decimal Value { get; private set; }
 
-    public decimal GetChange(Index previousIndex)
-    {
-        return Value - previousIndex.Value;
-    }
-
     public decimal GetChangePercentage(Index previousIndex)
     {
         return (GetChange(previousIndex) / previousIndex.Value) * 100;
+    }
+
+    public decimal GetChange(Index previousIndex)
+    {
+        return Value - previousIndex.Value;
     }
 
     public void UpdateIndex(
@@ -59,4 +59,5 @@ public class Index : BaseEntity<Guid>
         Value = value;
         UpdatedAt = DateTime.Now;
     }
+
 }
