@@ -38,5 +38,10 @@ public class IndexConfiguration : EntityTypeConfigurationBase<Index>
             .IsRequired()
             .HasPrecision(18, 2)
             .HasColumnName("value");
+
+        builder.HasIndex("Date", "symbol_id")
+            .HasDatabaseName("ix_indices_date_symbol_id")
+            .IsDescending(true, false)
+            .IsUnique();
     }
 }
