@@ -29,7 +29,7 @@ public sealed class ApproveStatusOfViableCompanyHandler(IRepository repository, 
             return ApproveStatusOfViableCompanyErrorCodes.IdIsNotValid;
         }
 
-        if (request.Percentage is > 100 or <= 0)
+        if (request.Percentage is > 100 or < 0)
         {
             return ApproveStatusOfViableCompanyErrorCodes.InvalidPercentage;
         }
