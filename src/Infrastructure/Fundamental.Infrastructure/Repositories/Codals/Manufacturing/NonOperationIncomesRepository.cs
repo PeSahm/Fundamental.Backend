@@ -46,6 +46,11 @@ public sealed class NonOperationIncomesRepository(FundamentalDbContext dbContext
             query = query.Where(x => x.ReportMonth.Month == request.ReportMonth);
         }
 
+        if (request.OnlyTagged)
+        {
+            query = query.Where(x => x.Tags.Any());
+        }
+
         Paginated<GetNonOperationIncomesResultItem> result = await query.Select(x => new GetNonOperationIncomesResultItem
             {
                 Id = x.Id,
