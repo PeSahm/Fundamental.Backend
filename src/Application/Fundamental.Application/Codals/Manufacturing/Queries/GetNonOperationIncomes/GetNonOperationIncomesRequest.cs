@@ -9,6 +9,7 @@ namespace Fundamental.Application.Codals.Manufacturing.Queries.GetNonOperationIn
 [HandlerCode(HandlerCode.GetNonOperationIncomes)]
 public sealed record GetNonOperationIncomesRequest(
     string[] IsinList,
+    bool OnlyTagged,
     ushort? Year,
     ushort? ReportMonth
 ) : PagingRequest, IRequest<Response<Paginated<GetNonOperationIncomesResultItem>>>;
