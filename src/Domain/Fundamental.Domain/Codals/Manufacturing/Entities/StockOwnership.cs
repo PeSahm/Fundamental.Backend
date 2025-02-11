@@ -80,15 +80,9 @@ public sealed class StockOwnership : BaseEntity<Guid>
         DateTime updatedAt
     )
     {
-        if (traceNo <= TraceNo)
-        {
-            return this;
-        }
-
         if (ReviewStatus == ReviewStatus.Rejected)
         {
             UpdatedAt = updatedAt;
-            TraceNo = traceNo;
             Url = url;
             OwnershipPercentage = ownershipPercentage;
             CostPrice = costPrice;
@@ -103,7 +97,6 @@ public sealed class StockOwnership : BaseEntity<Guid>
         }
 
         UpdatedAt = updatedAt;
-        TraceNo = traceNo;
         Url = url;
 
         return this;

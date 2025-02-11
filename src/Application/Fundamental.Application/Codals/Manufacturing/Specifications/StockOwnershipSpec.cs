@@ -29,4 +29,10 @@ public sealed class StockOwnershipSpec : Specification<StockOwnership>
         Query.Where(x => x.Id == requestId);
         return this;
     }
+
+    public StockOwnershipSpec WhereTraceNo(ulong traceNo)
+    {
+        Query.Where(x => x.TraceNo == traceNo);
+        return this;
+    }
 }
