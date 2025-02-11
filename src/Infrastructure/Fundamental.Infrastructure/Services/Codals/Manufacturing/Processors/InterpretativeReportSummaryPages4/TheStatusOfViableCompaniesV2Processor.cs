@@ -94,8 +94,10 @@ public class TheStatusOfViableCompaniesV2Processor(
                      .RowItems.Where(x => !string.IsNullOrWhiteSpace(x.GetDescription())))
         {
             StockOwnership? existsOwnerShip = await repository.FirstOrDefaultAsync(
-                new StockOwnershipSpec().WhereParentSymbolId(parentSymbol.Id)
-                    .WhereSubsidiarySymbolName(childCompany.GetDescription()!.Safe()!),
+                new StockOwnershipSpec()
+                    .WhereParentSymbolId(parentSymbol.Id)
+                    .WhereSubsidiarySymbolName(childCompany.GetDescription()!.Safe()!)
+                    .WhereTraceNo(statement.TracingNo),
                 cancellationToken);
 
             if (existsOwnerShip is not null)
