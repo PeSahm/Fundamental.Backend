@@ -4,6 +4,7 @@ using Fundamental.Domain.Common.Dto;
 using Fundamental.ErrorHandling;
 using Fundamental.Infrastructure.Extensions;
 using Fundamental.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace Fundamental.Infrastructure.Repositories.Codals.Manufacturing;
 
@@ -15,7 +16,9 @@ public sealed class StatusOfViableCompaniesRepository(FundamentalDbContext dbCon
     )
     {
         IQueryable<GetStatusOfViableCompaniesResultDto> query = dbContext.StockOwnership
-            .Where(x => x.TraceNo == dbContext.BalanceSheets.Where(b => b.Symbol.Id == x.ParentSymbol.Id).Max(t => t.TraceNo))
+            .Where(x => x.TraceNo == dbContext.BalanceSheets
+                .Where(b => EF.Property<Guid>(b, "symbol-id") == EF.Property<Guid>(x, "parent_symbol_id"))
+                .Max(t => t.TraceNo))
             .Select(x => new GetStatusOfViableCompaniesResultDto
             {
                 Id = x.Id,
