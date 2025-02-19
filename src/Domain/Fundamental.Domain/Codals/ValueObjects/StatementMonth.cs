@@ -5,6 +5,9 @@ namespace Fundamental.Domain.Codals.ValueObjects;
 
 public class StatementMonth : ValueObject
 {
+    private bool IsEmpty = false;
+
+    public static StatementMonth Empty => new StatementMonth();
     public StatementMonth(ushort month)
     {
         if (month is < 1 or > 12)
@@ -25,6 +28,11 @@ public class StatementMonth : ValueObject
         Month = (ushort)month;
     }
 
+    private StatementMonth()
+    {
+        IsEmpty = true;
+    }
+
     public ushort Month { get; }
 
     public StatementMonth AdjustedMonth(StatementMonth yearEndMonth)
@@ -37,6 +45,11 @@ public class StatementMonth : ValueObject
         }
 
         return new StatementMonth(adjustedMonthValue);
+    }
+
+    public bool IsEmptyStatementMonth()
+    {
+        return IsEmpty;
     }
 
     public static implicit operator ushort(StatementMonth month)

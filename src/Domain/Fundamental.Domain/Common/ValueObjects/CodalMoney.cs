@@ -3,9 +3,11 @@ using Fundamental.Domain.Common.Exceptions;
 
 namespace Fundamental.Domain.Common.ValueObjects;
 
-public sealed class CodalMoney
+public sealed class CodalMoney : IEquatable<CodalMoney>
 {
     private readonly decimal _value;
+
+    public static CodalMoney Empty => new();
 
     public CodalMoney(decimal amount, IsoCurrency currency)
     {
@@ -140,4 +142,29 @@ public sealed class CodalMoney
     public static implicit operator decimal(CodalMoney money) => money._value;
 
     public static implicit operator CodalMoney(decimal money) => new(money);
+
+    public bool Equals(CodalMoney? other)
+    {
+        if (other is null)
+        {
+            return false;
+        }
+
+        if (ReferenceEquals(this, other))
+        {
+            return true;
+        }
+
+        return _value == other._value && Currency == other.Currency;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return ReferenceEquals(this, obj) || (obj is CodalMoney other && Equals(other));
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(_value, (int)Currency);
+    }
 }
