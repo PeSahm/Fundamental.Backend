@@ -9,10 +9,13 @@ namespace Fundamental.Domain.Codals.Manufacturing.Entities;
 
 public class FinancialStatement : BaseEntity<Guid>
 {
-    public FinancialStatement(
+    internal FinancialStatement(
         Guid id,
         Symbol symbol,
         IsoCurrency currency,
+        ulong traceNo,
+        FiscalYear fiscalYear,
+        StatementMonth yearEndMonth,
         DateTime createdAt
     )
     {
@@ -20,6 +23,9 @@ public class FinancialStatement : BaseEntity<Guid>
         Symbol = symbol;
         CreatedAt = createdAt;
         Currency = currency;
+        TraceNo = traceNo;
+        FiscalYear = fiscalYear;
+        YearEndMonth = yearEndMonth;
         UpdatedAt = createdAt;
     }
 
@@ -29,13 +35,7 @@ public class FinancialStatement : BaseEntity<Guid>
 
     public Symbol Symbol { get; private set; }
 
-    public decimal LastClosePrice { get; private set; }
-
-    public DateOnly LastClosePriceDate { get; private set; }
-
-    public decimal MarketCap { get; private set; }
-
-    public decimal MarketValue { get; private set; }
+    public ulong TraceNo { get; private set; }
 
     /// <summary>
     /// سال مالی.
@@ -47,261 +47,265 @@ public class FinancialStatement : BaseEntity<Guid>
     /// <summary>
     /// ماه آخر سال مالی
     /// </summary>
-    public StatementMonth YearEndMonth { get; private set; }
+    public StatementMonth YearEndMonth { get; private set; } = StatementMonth.Empty;
+
+    public decimal LastClosePrice { get; private set; }
+
+    public DateOnly LastClosePriceDate { get; private set; }
+
+    public decimal MarketCap { get; private set; }
+
+    public decimal MarketValue { get; private set; }
+
 
     /// <summary>
     /// مال گزارش صورت وضعیت مالی
     /// </summary>
-    public StatementMonth ReportMonth { get; private set; }
+    public StatementMonth ReportMonth { get; private set; } = StatementMonth.Empty;
 
     /// <summary>
     /// ماه گزارش فروش
     /// </summary>
-    public StatementMonth SaleMonth { get; private set; }
+    public StatementMonth SaleMonth { get; private set; } = StatementMonth.Empty;
 
     /// <summary>
     /// درآمد عملیاتی
     /// </summary>
-    public SignedCodalMoney OperationalIncome { get; set; }
+    public SignedCodalMoney OperationalIncome { get; private set; } = SignedCodalMoney.Empty;
 
     /// <summary>
     /// درآمد عملیاتی ماه بهار
     /// </summary>
-
-    public SignedCodalMoney SpringOperationIncome { get; set; }
+    public SignedCodalMoney SpringOperationIncome { get; private set; } = SignedCodalMoney.Empty;
 
     /// <summary>
     /// درآمد عملیاتی ماه تابستان
     /// </summary>
-
-    public SignedCodalMoney SummerOperationIncome { get; set; }
+    public SignedCodalMoney SummerOperationIncome { get; private set; } = SignedCodalMoney.Empty;
 
     /// <summary>
     /// درآمد عملیاتی ماه پاییز
     /// </summary>
-    public SignedCodalMoney FallOperationIncome { get; set; }
+    public SignedCodalMoney FallOperationIncome { get; private set; } = SignedCodalMoney.Empty;
 
     /// <summary>
     /// درامد عملیاتی ماه زمستان
     /// </summary>
-    public SignedCodalMoney WinterOperationIncome { get; set; }
+    public SignedCodalMoney WinterOperationIncome { get; private set; } = SignedCodalMoney.Empty;
 
     /// <summary>
     /// سود و زیان ناخالص
     /// </summary>
-    public SignedCodalMoney GrossProfitOrLoss { get; set; }
+    public SignedCodalMoney GrossProfitOrLoss { get; private set; } = SignedCodalMoney.Empty;
 
     /// <summary>
     /// سود زیان عملیاتی
     /// </summary>
-    public SignedCodalMoney OperationalProfitOrLoss { get; set; }
+    public SignedCodalMoney OperationalProfitOrLoss { get; private set; } = SignedCodalMoney.Empty;
 
     /// <summary>
     /// سود سپردا بانکی
     /// </summary>
-    public SignedCodalMoney BankInterest { get; set; }
+    public List<NonOperationIncomeAndExpense> NonOperationIncomeAndExpenses { get; private set; } = new();
 
     /// <summary>
     ///  شرکت های سرمایه پذیر
     /// </summary>
-    public List<SubCompanyNetProfit> InvestmentsProfits { get; set; }
+    public List<StockOwnership> InvestmentsProfits { get; private set; } = new();
 
     /// <summary>
-    /// سود سرمایه گذاری ها
+    ///  درآمدهای غیر عملیاتی
     /// </summary>
-    public CodalMoney InvestmentsProfit { get; set; }
+    public SignedCodalMoney NoneOperationalProfit { get; private set; } = SignedCodalMoney.Empty;
 
     /// <summary>
     /// هزینه ها
     /// </summary>
-    public CodalMoney Costs { get; private set; }
+    public CodalMoney Costs { get; private set; } = CodalMoney.Empty;
 
     /// <summary>
     /// سود و زیان خالص
     /// </summary>
-    public SignedCodalMoney NetProfitOrLoss { get; set; }
+    public SignedCodalMoney NetProfitOrLoss { get; private set; } = SignedCodalMoney.Empty;
 
     /// <summary>
     /// فروش ماه جاری
     /// </summary>
-    public CodalMoney Sale { get; set; }
+    public CodalMoney Sale { get; private set; } = CodalMoney.Empty;
 
     /// <summary>
     ///  فروش اول سال مالی تا ماه قبل سال جاری
     /// </summary>
-    public CodalMoney SaleBeforeThisMonth { get; set; }
+    public CodalMoney SaleBeforeThisMonth { get; private set; } = CodalMoney.Empty;
 
     /// <summary>
     /// فروش مدت مشابه سال گذشته
     /// </summary>
-    public CodalMoney SaleLastYearSamePeriod { get; set; }
+    public CodalMoney SaleLastYearSamePeriod { get; private set; } = CodalMoney.Empty;
 
     /// <summary>
     /// فروش کل تا این ماه
     /// </summary>
-    public CodalMoney TotalSale { get; private set; }
+    public CodalMoney TotalSale { get; private set; } = CodalMoney.Empty;
 
     /// <summary>
     /// میانگین فروش از اول سال تا ماه قبل سال جاری
     /// </summary>
-    public CodalMoney SaleAverageExcludeThisPeriod { get; set; }
+    public CodalMoney SaleAverageExcludeThisPeriod { get; private set; } = CodalMoney.Empty;
 
     /// <summary>
     /// میانگین فروش مدت مشابه سال قبل
     /// </summary>
-    public CodalMoney SaleAverageLastYearSamePeriod { get; set; }
+    public CodalMoney SaleAverageLastYearSamePeriod { get; private set; } = CodalMoney.Empty;
 
     /// <summary>
     /// نسبت فروش آخرین ماه به میانگین سال جاری
     /// </summary>
-    public decimal ThisPeriodSaleRatio { get; set; }
+    public decimal ThisPeriodSaleRatio { get; private set; }
 
     /// <summary>
     /// نسبت فروش به مد ت مشابه سال قبل
     /// </summary>
-    public decimal ThisPeriodSaleRatioWithLastYear { get; set; }
+    public decimal ThisPeriodSaleRatioWithLastYear { get; private set; }
 
     /// <summary>
     /// /حاشیه سود ناخالص
     /// </summary>
-    public decimal GrossMargin { get; set; }
+    public decimal GrossMargin { get; private set; }
 
     /// <summary>
     /// حاشیه سود عملیاتی
     /// </summary>
-    public decimal OperationalMargin { get; set; }
+    public decimal OperationalMargin { get; private set; }
 
     /// <summary>
     /// حاشیه سود خالص
     /// </summary>
-    public decimal NetMargin { get; set; }
+    public decimal NetMargin { get; private set; }
 
     /// <summary>
     /// پیش بینی فروش
     /// </summary>
-    public CodalMoney ForecastSale { get; set; }
+    public CodalMoney ForecastSale { get; private set; } = CodalMoney.Empty;
 
     /// <summary>
     /// پیش بینی سود عملیاتی
     /// </summary>
-    public CodalMoney ForecastOperationalProfit { get; set; }
+    public CodalMoney ForecastOperationalProfit { get; private set; } = CodalMoney.Empty;
 
     /// <summary>
     /// پیش بینی سود غیر عملیاتی
     /// </summary>
-    public CodalMoney ForecastNoneOperationalProfit { get; set; }
+    public CodalMoney ForecastNoneOperationalProfit { get; private set; } = CodalMoney.Empty;
 
     /// <summary>
     /// پیشبینی سود کل
     /// </summary>
-    public CodalMoney ForecastTotalProfit { get; set; }
+    public CodalMoney ForecastTotalProfit { get; private set; } = CodalMoney.Empty;
 
     /// <summary>
     /// ارزش بازار هدف
     /// </summary>
-    public decimal TargetMarketValue { get; set; }
+    public decimal TargetMarketValue { get; private set; }
 
     /// <summary>
     /// قیمت هدف
     /// </summary>
-    public decimal TargetPrice { get; set; }
+    public decimal TargetPrice { get; private set; }
 
     /// <summary>
     /// قیمت خرید
     /// </summary>
-    public decimal OptimalBuyPrice { get; set; }
+    public decimal OptimalBuyPrice { get; private set; }
 
-    public decimal Pe { get; set; }
+    public decimal Pe { get; private set; }
 
-    public decimal Ps { get; set; }
+    public decimal Ps { get; private set; }
 
     /// <summary>
     /// دارایی ها
     /// </summary>
-    public CodalMoney Assets { get; set; }
+    public CodalMoney Assets { get; private set; } = CodalMoney.Empty;
 
     /// <summary>
     /// حقوق مالکانه
     /// </summary>
-    public CodalMoney OwnersEquity { get; set; }
+    public CodalMoney OwnersEquity { get; private set; } = CodalMoney.Empty;
 
     /// <summary>
     /// نسبت حقوق مالکانه
     /// </summary>
-    public decimal OwnersEquityRatio { get; set; }
+    public decimal OwnersEquityRatio { get; private set; }
 
-    public decimal Pa { get; set; }
+    public decimal Pa { get; private set; }
 
-    public decimal Pb { get; set; }
+    public decimal Pb { get; private set; }
 
     /// <summary>
     /// دريافتني‌هاي تجاري و ساير دريافتني‌ها
     /// </summary>
-    public CodalMoney Receivables { get; set; }
+    public CodalMoney Receivables { get; private set; } = CodalMoney.Empty;
 
     /// <summary>
     /// نسبت مطالبات
     /// </summary>
-    public decimal ReceivableRatio { get; set; }
+    public decimal ReceivableRatio { get; private set; }
 
     /// <summary>
     /// سود خالص مدت مشابه سال قبل
     /// </summary>
-    public SignedCodalMoney LastYearNetProfitOrLoss { get; set; }
+    public SignedCodalMoney LastYearNetProfitOrLoss { get; private set; } = SignedCodalMoney.Empty;
 
     /// <summary>
     /// نسبت رشد سود خالص نسبت سال قبل
     /// </summary>
-    public decimal NetProfitGrowthRatio { get; set; }
+    public decimal NetProfitGrowthRatio { get; private set; }
 
-    public decimal Peg { get; set; }
+    public decimal Peg { get; private set; }
 
-    public CodalMoney DpsLastYear { get; set; }
+    public CodalMoney DpsLastYear { get; private set; } = CodalMoney.Empty;
 
-    public CodalMoney DpsTwoYearsAgo { get; set; }
+    public CodalMoney DpsTwoYearsAgo { get; private set; } = CodalMoney.Empty;
 
-    public CodalMoney DpsRatioLastYear { get; set; }
+    public CodalMoney DpsRatioLastYear { get; private set; } = CodalMoney.Empty;
 
-    public CodalMoney DpsRatioTwoYearsAgo { get; set; }
+    public CodalMoney DpsRatioTwoYearsAgo { get; private set; } = CodalMoney.Empty;
 
     public FinancialStatement SetLastClosePrice(decimal lastClosePrice, DateOnly lastClosePriceDate)
     {
         LastClosePrice = lastClosePrice;
         LastClosePriceDate = lastClosePriceDate;
+        Calculate();
         return this;
     }
 
     public FinancialStatement SetMarketCap(decimal marketCap)
     {
         MarketCap = marketCap;
+        Calculate();
+
         return this;
     }
 
     public FinancialStatement SetIncomeStatement(
-        FiscalYear fiscalYear,
-        StatementMonth yearEndMonth,
         StatementMonth reportMonth,
         SignedCodalMoney operationalIncome,
         SignedCodalMoney grossProfitOrLoss,
         SignedCodalMoney operationalProfitOrLoss,
-        SignedCodalMoney bankInterest,
-        List<SubCompanyNetProfit> investmentsProfits,
-        CodalMoney investmentsProfit,
+        SignedCodalMoney noneOperationalProfit,
         CodalMoney costs,
         SignedCodalMoney netProfitOrLoss
     )
     {
-        FiscalYear = fiscalYear;
-        YearEndMonth = yearEndMonth;
         ReportMonth = reportMonth;
         OperationalIncome = operationalIncome;
         GrossProfitOrLoss = grossProfitOrLoss;
         OperationalProfitOrLoss = operationalProfitOrLoss;
-        BankInterest = bankInterest;
-        InvestmentsProfits = investmentsProfits;
-        InvestmentsProfit = investmentsProfit;
+        NoneOperationalProfit = noneOperationalProfit;
         Costs = costs;
         NetProfitOrLoss = netProfitOrLoss;
+        Calculate();
+
         return this;
     }
 
@@ -316,14 +320,16 @@ public class FinancialStatement : BaseEntity<Guid>
         OwnersEquity = ownersEquity;
         Receivables = receivables;
         LastYearNetProfitOrLoss = lastYearNetProfit;
+        Calculate();
+
         return this;
     }
 
-    public void SetSale(
+    public FinancialStatement SetSale(
         CodalMoney sale,
         StatementMonth saleMonth,
-        List<CodalMoney> saleBeforeThisMonth,
-        List<CodalMoney> saleLastYearSamePeriod
+        CodalMoney saleBeforeThisMonth,
+        CodalMoney saleLastYearSamePeriod
     )
     {
         Sale = sale;
@@ -332,6 +338,8 @@ public class FinancialStatement : BaseEntity<Guid>
         SaleLastYearSamePeriod = saleLastYearSamePeriod.Sum(x => x.Value);
         SaleAverageExcludeThisPeriod = saleBeforeThisMonth.Average(x => x.Value);
         SaleAverageLastYearSamePeriod = saleLastYearSamePeriod.Average(x => x.Value);
+        Calculate();
+        return this;
     }
 
     public void Calculate()
@@ -361,8 +369,8 @@ public class FinancialStatement : BaseEntity<Guid>
 
     private void CalculateSaleRatio()
     {
-        ThisPeriodSaleRatio = Sale.Value / SaleBeforeThisMonth;
-        ThisPeriodSaleRatioWithLastYear = Sale.Value / SaleLastYearSamePeriod;
+        ThisPeriodSaleRatio = SaleBeforeThisMonth == 0 ? 0 : Sale.Value / SaleBeforeThisMonth;
+        ThisPeriodSaleRatioWithLastYear = SaleLastYearSamePeriod == 0 ? 0 : Sale.Value / SaleLastYearSamePeriod;
     }
 
     /// <summary>
@@ -378,7 +386,7 @@ public class FinancialStatement : BaseEntity<Guid>
     /// </summary>
     private void CalculateGrossMargin()
     {
-        GrossMargin = GrossProfitOrLoss / OperationalIncome;
+        GrossMargin = OperationalIncome == 0 ? 0 : GrossProfitOrLoss / OperationalIncome;
     }
 
     /// <summary>
@@ -386,7 +394,7 @@ public class FinancialStatement : BaseEntity<Guid>
     /// </summary>
     private void CalculateOperationalMargin()
     {
-        OperationalMargin = OperationalProfitOrLoss / OperationalIncome;
+        OperationalMargin = OperationalIncome == 0 ? 0 : OperationalProfitOrLoss / OperationalIncome;
     }
 
     /// <summary>
@@ -394,7 +402,7 @@ public class FinancialStatement : BaseEntity<Guid>
     /// </summary>
     private void CalculateNetMargin()
     {
-        NetMargin = NetProfitOrLoss / OperationalIncome;
+        NetMargin = OperationalIncome == 0 ? 0 : NetProfitOrLoss / OperationalIncome;
     }
 
     /// <summary>
@@ -402,7 +410,7 @@ public class FinancialStatement : BaseEntity<Guid>
     /// </summary>
     private void CalculateForecastSale()
     {
-        ForecastSale = TotalSale / ReportMonth.AdjustedMonth(YearEndMonth) * 12;
+        ForecastSale = ReportMonth.IsEmptyStatementMonth() ? 0 : TotalSale / ReportMonth.AdjustedMonth(YearEndMonth) * 12;
     }
 
     /// <summary>
@@ -418,7 +426,18 @@ public class FinancialStatement : BaseEntity<Guid>
     /// </summary>
     private void CalculateForecastNoneOperationalProfit()
     {
-        ForecastNoneOperationalProfit = BankInterest / ReportMonth.AdjustedMonth(YearEndMonth) * 12;
+        if (!NonOperationIncomeAndExpenses.Any())
+        {
+            ForecastNoneOperationalProfit = ReportMonth.IsEmptyStatementMonth()
+                ? 0
+                : NoneOperationalProfit / ReportMonth.AdjustedMonth(YearEndMonth) * 12;
+            return;
+        }
+
+        decimal profit = NonOperationIncomeAndExpenses.Where(x => x.Tags.Any())
+            .Sum(x => x.Value.Value);
+
+        ForecastNoneOperationalProfit = ReportMonth.IsEmptyStatementMonth() ? 0 : profit / ReportMonth.AdjustedMonth(YearEndMonth) * 12;
     }
 
     /// <summary>
@@ -443,7 +462,7 @@ public class FinancialStatement : BaseEntity<Guid>
     /// </summary>
     private void CalculateTargetPrice()
     {
-        TargetPrice = TargetMarketValue / MarketCap;
+        TargetPrice = MarketCap == 0 ? 0 : TargetMarketValue / MarketCap;
     }
 
     /// <summary>
@@ -451,17 +470,17 @@ public class FinancialStatement : BaseEntity<Guid>
     /// </summary>
     private void CalculateOptimalBuyPrice()
     {
-        OptimalBuyPrice = (ForecastTotalProfit * 4.4M) / MarketCap;
+        OptimalBuyPrice = MarketCap == 0 ? 0 : (ForecastTotalProfit * 4.4M) / MarketCap;
     }
 
     private void CalculatePe()
     {
-        Pe = MarketValue / ForecastTotalProfit;
+        Pe = ForecastTotalProfit == 0 ? 0 : MarketValue / ForecastTotalProfit;
     }
 
     private void CalculatePs()
     {
-        Ps = MarketValue / ForecastSale;
+        Ps = ForecastSale == 0 ? 0 : MarketValue / ForecastSale;
     }
 
     /// <summary>
@@ -469,17 +488,17 @@ public class FinancialStatement : BaseEntity<Guid>
     /// </summary>
     private void CalculateOwnersEquityRatio()
     {
-        OwnersEquityRatio = OwnersEquity / Assets;
+        OwnersEquityRatio = Assets == 0 ? 0 : OwnersEquity / Assets;
     }
 
     private void CalculatePa()
     {
-        Pa = MarketValue / Assets;
+        Pa = Assets == 0 ? 0 : MarketValue / Assets;
     }
 
     private void CalculatePb()
     {
-        Pb = MarketValue / OwnersEquity;
+        Pb = OwnersEquity == 0 ? 0 : MarketValue / OwnersEquity;
     }
 
     /// <summary>
@@ -487,7 +506,7 @@ public class FinancialStatement : BaseEntity<Guid>
     /// </summary>
     private void CalculateReceivableRatio()
     {
-        ReceivableRatio = Receivables / Assets;
+        ReceivableRatio = Assets == 0 ? 0 : Receivables / Assets;
     }
 
     /// <summary>
@@ -495,7 +514,7 @@ public class FinancialStatement : BaseEntity<Guid>
     /// </summary>
     private void CalculateNetProfitGrowthRatio()
     {
-        NetProfitGrowthRatio = NetProfitOrLoss / LastYearNetProfitOrLoss;
+        NetProfitGrowthRatio = LastYearNetProfitOrLoss == 0 ? 0 : NetProfitOrLoss / LastYearNetProfitOrLoss;
     }
 
     private Season GetSession(StatementMonth month)
