@@ -334,10 +334,14 @@ public class FinancialStatement : BaseEntity<Guid>
     {
         Sale = sale;
         SaleMonth = saleMonth;
-        SaleBeforeThisMonth = saleBeforeThisMonth.Sum(x => x.Value);
-        SaleLastYearSamePeriod = saleLastYearSamePeriod.Sum(x => x.Value);
-        SaleAverageExcludeThisPeriod = saleBeforeThisMonth.Average(x => x.Value);
-        SaleAverageLastYearSamePeriod = saleLastYearSamePeriod.Average(x => x.Value);
+        SaleBeforeThisMonth = saleBeforeThisMonth;
+        SaleLastYearSamePeriod = saleLastYearSamePeriod;
+        SaleAverageExcludeThisPeriod = saleMonth.AdjustedMonth(YearEndMonth) == 1
+            ? saleMonth
+            : saleBeforeThisMonth / (saleMonth.AdjustedMonth(YearEndMonth) - 1);
+        SaleAverageLastYearSamePeriod = saleMonth.AdjustedMonth(YearEndMonth) == 1
+            ? saleMonth
+            : saleLastYearSamePeriod / (saleMonth.AdjustedMonth(YearEndMonth) - 1);
         Calculate();
         return this;
     }

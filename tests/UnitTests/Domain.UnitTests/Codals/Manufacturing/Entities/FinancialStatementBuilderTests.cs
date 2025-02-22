@@ -32,8 +32,10 @@ public class FinancialStatementBuilderTests
         SignedCodalMoney netProfitOrLoss = new SignedCodalMoney(400000m);
         CodalMoney sale = new CodalMoney(6000000m);
         StatementMonth saleMonth = new StatementMonth(6);
-        List<CodalMoney> saleBeforeThisMonth = new List<CodalMoney> { new CodalMoney(5000000m) };
-        List<CodalMoney> saleLastYearSamePeriod = new List<CodalMoney> { new CodalMoney(4000000m) };
+        CodalMoney saleBeforeThisMonth = new CodalMoney(5000000m);
+        CodalMoney saleLastYearSamePeriod = new CodalMoney(4000000m);
+        CodalMoney ExpectedAvgSaleBeforeThisMonth = new CodalMoney(5000000m) / (saleMonth - 1);
+        CodalMoney ExpectedAvggSaleLastYearSamePeriod = new CodalMoney(4000000m) / (saleMonth - 1);
         CodalMoney assets = new CodalMoney(1000000m);
         CodalMoney ownersEquity = new CodalMoney(500000m);
         CodalMoney receivables = new CodalMoney(200000m);
@@ -50,7 +52,13 @@ public class FinancialStatementBuilderTests
             .SetCreatedAt(createdAt)
             .SetLastClosePrice(lastClosePrice, lastClosePriceDate)
             .SetMarketCap(marketCap)
-            .SetIncomeStatement( reportMonth, operationalIncome, grossProfitOrLoss, operationalProfitOrLoss, noneOperationalProfit, costs, netProfitOrLoss)
+            .SetIncomeStatement(reportMonth,
+                operationalIncome,
+                grossProfitOrLoss,
+                operationalProfitOrLoss,
+                noneOperationalProfit,
+                costs,
+                netProfitOrLoss)
             .SetSale(sale, saleMonth, saleBeforeThisMonth, saleLastYearSamePeriod)
             .SetFinancialPosition(assets, ownersEquity, receivables, lastYearNetProfit)
             .Build();
@@ -74,10 +82,12 @@ public class FinancialStatementBuilderTests
         Assert.Equal(netProfitOrLoss, financialStatement.NetProfitOrLoss);
         Assert.Equal(sale, financialStatement.Sale);
         Assert.Equal(saleMonth, financialStatement.SaleMonth);
-        Assert.Equal(saleBeforeThisMonth.Sum(x => x.Value), financialStatement.SaleBeforeThisMonth.Value);
-        Assert.Equal(saleLastYearSamePeriod.Sum(x => x.Value), financialStatement.SaleLastYearSamePeriod.Value);
-        Assert.Equal(saleBeforeThisMonth.Average(x => x.Value), financialStatement.SaleAverageExcludeThisPeriod.Value);
-        Assert.Equal(saleLastYearSamePeriod.Average(x => x.Value), financialStatement.SaleAverageLastYearSamePeriod.Value);
+        Assert.Equal(saleBeforeThisMonth.Value, financialStatement.SaleBeforeThisMonth.Value);
+        Assert.Equal(saleLastYearSamePeriod.Value, financialStatement.SaleLastYearSamePeriod.Value);
+
+        Assert.Equal(ExpectedAvgSaleBeforeThisMonth.Value, financialStatement.SaleAverageExcludeThisPeriod.Value);
+        Assert.Equal(ExpectedAvggSaleLastYearSamePeriod.Value, financialStatement.SaleAverageLastYearSamePeriod.Value);
+
         Assert.Equal(assets, financialStatement.Assets);
         Assert.Equal(ownersEquity, financialStatement.OwnersEquity);
         Assert.Equal(receivables, financialStatement.Receivables);

@@ -82,8 +82,8 @@ public class FinancialStatementTest
                 NetProfitOrLoss = new SignedCodalMoney(37_506_894),
                 Sale = new CodalMoney(8_353_110),
                 SaleMonth = new StatementMonth(7),
-                SaleBeforeThisMonth = new List<CodalMoney> { new CodalMoney(89_882_304) },
-                SaleLastYearSamePeriod = new List<CodalMoney> { new CodalMoney(73_517_290) },
+                SaleBeforeThisMonth = new CodalMoney(89_882_304),
+                SaleLastYearSamePeriod = new CodalMoney(73_517_290),
                 Assets = new CodalMoney(174_236_766),
                 OwnersEquity = new CodalMoney(64_398_016),
                 Receivables = new CodalMoney(70_615_376),
@@ -95,32 +95,6 @@ public class FinancialStatementTest
                 ExpectedSaleAverageExcludeThisPeriod = new CodalMoney(14980384)
             }
         };
-    }
-
-    public class FinancialStatementTestCase
-    {
-        public decimal LastClosePrice { get; set; }
-        public decimal MarketCap { get; set; }
-        public decimal ExpectedMarketValue { get; set; }
-        public SignedCodalMoney OperationalIncome { get; set; }
-        public SignedCodalMoney GrossProfitOrLoss { get; set; }
-        public SignedCodalMoney OperationalProfitOrLoss { get; set; }
-        public SignedCodalMoney NoneOperationalProfit { get; set; }
-        public CodalMoney Costs { get; set; }
-        public SignedCodalMoney NetProfitOrLoss { get; set; }
-        public CodalMoney Sale { get; set; }
-        public StatementMonth SaleMonth { get; set; }
-        public List<CodalMoney> SaleBeforeThisMonth { get; set; }
-        public List<CodalMoney> SaleLastYearSamePeriod { get; set; }
-        public CodalMoney Assets { get; set; }
-        public CodalMoney OwnersEquity { get; set; }
-        public CodalMoney Receivables { get; set; }
-        public SignedCodalMoney LastYearNetProfit { get; set; }
-        public SignedCodalMoney ExpectedSpringOperationalIncome { get; set; }
-        public SignedCodalMoney ExpectedSummerOperationalIncome { get; set; }
-        public SignedCodalMoney ExpectedFallOperationalIncome { get; set; }
-        public SignedCodalMoney ExpectedWinterOperationalIncome { get; set; }
-        public CodalMoney ExpectedSaleAverageExcludeThisPeriod { get; set; }
     }
 
     private FinancialStatement CreateFinancialStatement(FinancialStatementTestCase testCase)
@@ -156,5 +130,31 @@ public class FinancialStatementTest
             .SetSale(testCase.Sale, testCase.SaleMonth, testCase.SaleBeforeThisMonth, testCase.SaleLastYearSamePeriod)
             .SetFinancialPosition(testCase.Assets, testCase.OwnersEquity, testCase.Receivables, testCase.LastYearNetProfit)
             .Build();
+    }
+
+    public class FinancialStatementTestCase
+    {
+        public decimal LastClosePrice { get; set; }
+        public decimal MarketCap { get; set; }
+        public decimal ExpectedMarketValue { get; set; }
+        public SignedCodalMoney OperationalIncome { get; set; }
+        public SignedCodalMoney GrossProfitOrLoss { get; set; }
+        public SignedCodalMoney OperationalProfitOrLoss { get; set; }
+        public SignedCodalMoney NoneOperationalProfit { get; set; }
+        public CodalMoney Costs { get; set; }
+        public SignedCodalMoney NetProfitOrLoss { get; set; }
+        public CodalMoney Sale { get; set; }
+        public StatementMonth SaleMonth { get; set; }
+        public CodalMoney SaleBeforeThisMonth { get; set; }
+        public CodalMoney SaleLastYearSamePeriod { get; set; }
+        public CodalMoney Assets { get; set; }
+        public CodalMoney OwnersEquity { get; set; }
+        public CodalMoney Receivables { get; set; }
+        public SignedCodalMoney LastYearNetProfit { get; set; }
+        public SignedCodalMoney ExpectedSpringOperationalIncome { get; set; }
+        public SignedCodalMoney ExpectedSummerOperationalIncome { get; set; }
+        public SignedCodalMoney ExpectedFallOperationalIncome { get; set; }
+        public SignedCodalMoney ExpectedWinterOperationalIncome { get; set; }
+        public CodalMoney ExpectedSaleAverageExcludeThisPeriod { get; set; }
     }
 }
