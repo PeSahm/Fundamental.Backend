@@ -10,65 +10,35 @@ public class FinancialStatementBuilder :
     IFinancialStatementBuilder, ISetSymbol, ISetCurrency, ISetCreatedAt, ISetLastClosePrice, ISetTraceNo, ISetFiscalYear, ISetYearEndMonth,
     ISetMarketCap, ISetIncomeStatement, ISetSale, ISetFinancialPosition, IBuild
 {
-    private Guid _id;
-    private Symbol _symbol;
-    private IsoCurrency _currency;
+    private CodalMoney _assets;
+    private CodalMoney _costs;
     private DateTime _createdAt;
-    private ulong _traceNo;
+    private IsoCurrency _currency;
     private FiscalYear _fiscalYear;
-    private StatementMonth _yearEndMonth;
+    private SignedCodalMoney _grossProfitOrLoss;
+    private Guid _id;
     private decimal _lastClosePrice;
     private DateOnly _lastClosePriceDate;
+    private SignedCodalMoney _lastYearNetProfit;
     private decimal _marketCap;
-    private StatementMonth _reportMonth;
-    private SignedCodalMoney _operationalIncome;
-    private SignedCodalMoney _grossProfitOrLoss;
-    private SignedCodalMoney _operationalProfitOrLoss;
-    private SignedCodalMoney _noneOperationalProfit;
-    private CodalMoney _costs;
     private SignedCodalMoney _netProfitOrLoss;
-    private CodalMoney _sale;
-    private StatementMonth _saleMonth;
-    private List<CodalMoney> _saleBeforeThisMonth;
-    private List<CodalMoney> _saleLastYearSamePeriod;
-    private CodalMoney _assets;
+    private SignedCodalMoney _noneOperationalProfit;
+    private SignedCodalMoney _operationalIncome;
+    private SignedCodalMoney _operationalProfitOrLoss;
     private CodalMoney _ownersEquity;
     private CodalMoney _receivables;
-    private SignedCodalMoney _lastYearNetProfit;
+    private StatementMonth _reportMonth;
+    private CodalMoney _sale;
+    private CodalMoney _saleBeforeThisMonth;
+    private CodalMoney _saleLastYearSamePeriod;
+    private StatementMonth _saleMonth;
+    private Symbol _symbol;
+    private ulong _traceNo;
+    private StatementMonth _yearEndMonth;
 
     public ISetSymbol SetId(Guid id)
     {
         _id = id;
-        return this;
-    }
-
-    public ISetCurrency SetSymbol(Symbol symbol)
-    {
-        _symbol = symbol;
-        return this;
-    }
-
-    public ISetTraceNo SetCurrency(IsoCurrency currency)
-    {
-        _currency = currency;
-        return this;
-    }
-
-    public ISetFiscalYear SetTraceNo(ulong traceNo)
-    {
-        _traceNo = traceNo;
-        return this;
-    }
-
-    public ISetYearEndMonth SetFiscalYear(FiscalYear fiscalYear)
-    {
-        _fiscalYear = fiscalYear;
-        return this;
-    }
-
-    public ISetCreatedAt SetYearEndMonth(StatementMonth yearEndMonth)
-    {
-        _yearEndMonth = yearEndMonth;
         return this;
     }
 
@@ -78,16 +48,29 @@ public class FinancialStatementBuilder :
         return this;
     }
 
-    public ISetMarketCap SetLastClosePrice(decimal lastClosePrice, DateOnly lastClosePriceDate)
+    public ISetTraceNo SetCurrency(IsoCurrency currency)
     {
-        _lastClosePrice = lastClosePrice;
-        _lastClosePriceDate = lastClosePriceDate;
+        _currency = currency;
         return this;
     }
 
-    public ISetIncomeStatement SetMarketCap(decimal marketCap)
+    public IBuild SetFinancialPosition(
+        CodalMoney assets,
+        CodalMoney ownersEquity,
+        CodalMoney receivables,
+        SignedCodalMoney lastYearNetProfit
+    )
     {
-        _marketCap = marketCap;
+        _assets = assets;
+        _ownersEquity = ownersEquity;
+        _receivables = receivables;
+        _lastYearNetProfit = lastYearNetProfit;
+        return this;
+    }
+
+    public ISetYearEndMonth SetFiscalYear(FiscalYear fiscalYear)
+    {
+        _fiscalYear = fiscalYear;
         return this;
     }
 
@@ -111,31 +94,10 @@ public class FinancialStatementBuilder :
         return this;
     }
 
-    public ISetFinancialPosition SetSale(
-        CodalMoney sale,
-        StatementMonth saleMonth,
-        List<CodalMoney> saleBeforeThisMonth,
-        List<CodalMoney> saleLastYearSamePeriod
-    )
+    public ISetMarketCap SetLastClosePrice(decimal lastClosePrice, DateOnly lastClosePriceDate)
     {
-        _sale = sale;
-        _saleMonth = saleMonth;
-        _saleBeforeThisMonth = saleBeforeThisMonth;
-        _saleLastYearSamePeriod = saleLastYearSamePeriod;
-        return this;
-    }
-
-    public IBuild SetFinancialPosition(
-        CodalMoney assets,
-        CodalMoney ownersEquity,
-        CodalMoney receivables,
-        SignedCodalMoney lastYearNetProfit
-    )
-    {
-        _assets = assets;
-        _ownersEquity = ownersEquity;
-        _receivables = receivables;
-        _lastYearNetProfit = lastYearNetProfit;
+        _lastClosePrice = lastClosePrice;
+        _lastClosePriceDate = lastClosePriceDate;
         return this;
     }
 
@@ -158,5 +120,43 @@ public class FinancialStatementBuilder :
         financialStatement.SetSale(_sale, _saleMonth, _saleBeforeThisMonth, _saleLastYearSamePeriod);
 
         return financialStatement;
+    }
+
+    public ISetIncomeStatement SetMarketCap(decimal marketCap)
+    {
+        _marketCap = marketCap;
+        return this;
+    }
+
+    public ISetFinancialPosition SetSale(
+        CodalMoney sale,
+        StatementMonth saleMonth,
+        CodalMoney saleBeforeThisMonth,
+        CodalMoney saleLastYearSamePeriod
+    )
+    {
+        _sale = sale;
+        _saleMonth = saleMonth;
+        _saleBeforeThisMonth = saleBeforeThisMonth;
+        _saleLastYearSamePeriod = saleLastYearSamePeriod;
+        return this;
+    }
+
+    public ISetCurrency SetSymbol(Symbol symbol)
+    {
+        _symbol = symbol;
+        return this;
+    }
+
+    public ISetFiscalYear SetTraceNo(ulong traceNo)
+    {
+        _traceNo = traceNo;
+        return this;
+    }
+
+    public ISetCreatedAt SetYearEndMonth(StatementMonth yearEndMonth)
+    {
+        _yearEndMonth = yearEndMonth;
+        return this;
     }
 }

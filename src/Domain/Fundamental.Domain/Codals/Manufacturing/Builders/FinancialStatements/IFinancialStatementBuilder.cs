@@ -73,8 +73,8 @@ public interface ISetSale
     ISetFinancialPosition SetSale(
         CodalMoney sale,
         StatementMonth saleMonth,
-        List<CodalMoney> saleBeforeThisMonth,
-        List<CodalMoney> saleLastYearSamePeriod
+        CodalMoney saleBeforeThisMonth,
+        CodalMoney saleLastYearSamePeriod
     );
 
     FinancialStatement Build();
