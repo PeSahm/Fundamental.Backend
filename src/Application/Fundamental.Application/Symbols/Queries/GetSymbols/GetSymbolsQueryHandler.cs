@@ -1,4 +1,5 @@
-﻿using Fundamental.Application.Symbols.Specifications;
+﻿using Fundamental.Application.Common.Extensions;
+using Fundamental.Application.Symbols.Specifications;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.Domain.Symbols.Entities;
 using Fundamental.ErrorHandling;
@@ -13,7 +14,7 @@ public sealed class GetSymbolsQueryHandler(IRepository repository)
     {
         List<GetSymbolsResultDto> symbols = await repository.ListAsync(
             new SymbolSpec()
-                .Filter(request.Filter)
+                .Filter(request.Filter.Safe()!)
                 .ShowOfficialSymbols(request.ShowOfficialSymbolsOnly)
                 .Select(),
             cancellationToken);
