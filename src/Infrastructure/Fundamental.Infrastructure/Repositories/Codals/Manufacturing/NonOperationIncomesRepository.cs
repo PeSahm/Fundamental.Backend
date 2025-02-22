@@ -1,6 +1,7 @@
 ﻿using Fundamental.Application.Codals.Manufacturing.Queries.GetNonOperationIncomes;
 using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
+using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Dto;
 using Fundamental.ErrorHandling;
 using Fundamental.Infrastructure.Extensions;
@@ -46,10 +47,12 @@ public sealed class NonOperationIncomesRepository(FundamentalDbContext dbContext
             query = query.Where(x => x.ReportMonth.Month == request.ReportMonth);
         }
 
-        if (request.OnlyTagged)
+        query = request.TagStatus switch
         {
-            query = query.Where(x => x.Tags.Any());
-        }
+            NoneOperationalIncomeTagStatus.Tagged => query.Where(x => x.Tags.Any()),
+            NoneOperationalIncomeTagStatus.Untagged => query.Where(x => !x.Tags.Any()),
+            _ => query,
+        };
 
         Paginated<GetNonOperationIncomesResultItem> result = await query.Select(x => new GetNonOperationIncomesResultItem
             {

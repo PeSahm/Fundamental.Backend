@@ -1,4 +1,5 @@
-﻿using Fundamental.Domain.Common.Dto;
+﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
+using Fundamental.Domain.Common.Dto;
 using Fundamental.ErrorHandling;
 using Fundamental.ErrorHandling.Attributes;
 using Fundamental.ErrorHandling.Enums;
@@ -9,7 +10,7 @@ namespace Fundamental.Application.Codals.Manufacturing.Queries.GetNonOperationIn
 [HandlerCode(HandlerCode.GetNonOperationIncomes)]
 public sealed record GetNonOperationIncomesRequest(
     string[] IsinList,
-    bool OnlyTagged,
+    NoneOperationalIncomeTagStatus? TagStatus,
     ushort? Year,
     ushort? ReportMonth
 ) : PagingRequest, IRequest<Response<Paginated<GetNonOperationIncomesResultItem>>>;
