@@ -45,7 +45,7 @@ public class FinancialStatement : BaseEntity<Guid>
     public IsoCurrency Currency { get; private set; } = IsoCurrency.IRR;
 
     /// <summary>
-    /// ماه آخر سال مالی
+    /// ماه آخر سال مالی.
     /// </summary>
     public StatementMonth YearEndMonth { get; private set; } = StatementMonth.Empty;
 
@@ -57,29 +57,28 @@ public class FinancialStatement : BaseEntity<Guid>
 
     public decimal MarketValue { get; private set; }
 
-
     /// <summary>
-    /// مال گزارش صورت وضعیت مالی
+    /// مال گزارش صورت وضعیت مالی.
     /// </summary>
     public StatementMonth ReportMonth { get; private set; } = StatementMonth.Empty;
 
     /// <summary>
-    /// ماه گزارش فروش
+    /// ماه گزارش فروش.
     /// </summary>
     public StatementMonth SaleMonth { get; private set; } = StatementMonth.Empty;
 
     /// <summary>
-    /// درآمد عملیاتی
+    /// درآمد عملیاتی.
     /// </summary>
     public SignedCodalMoney OperationalIncome { get; private set; } = SignedCodalMoney.Empty;
 
     /// <summary>
-    /// درآمد عملیاتی ماه بهار
+    /// درآمد عملیاتی ماه بهار.
     /// </summary>
     public SignedCodalMoney SpringOperationIncome { get; private set; } = SignedCodalMoney.Empty;
 
     /// <summary>
-    /// درآمد عملیاتی ماه تابستان
+    /// درآمد عملیاتی ماه تابستان.
     /// </summary>
     public SignedCodalMoney SummerOperationIncome { get; private set; } = SignedCodalMoney.Empty;
 
@@ -338,10 +337,12 @@ public class FinancialStatement : BaseEntity<Guid>
         SaleLastYearSamePeriod = saleLastYearSamePeriod;
         SaleAverageExcludeThisPeriod = saleMonth.AdjustedMonth(YearEndMonth) == 1
             ? saleMonth
-            : saleBeforeThisMonth / (saleMonth.AdjustedMonth(YearEndMonth) - 1);
+            : Math.Ceiling(saleBeforeThisMonth / (saleMonth.AdjustedMonth(YearEndMonth) - 1));
         SaleAverageLastYearSamePeriod = saleMonth.AdjustedMonth(YearEndMonth) == 1
             ? saleMonth
-            : saleLastYearSamePeriod / (saleMonth.AdjustedMonth(YearEndMonth) - 1);
+            : Math.Ceiling(saleLastYearSamePeriod / saleMonth.AdjustedMonth(YearEndMonth));
+
+        TotalSale = SaleBeforeThisMonth + Sale;
         Calculate();
         return this;
     }
@@ -373,8 +374,9 @@ public class FinancialStatement : BaseEntity<Guid>
 
     private void CalculateSaleRatio()
     {
-        ThisPeriodSaleRatio = SaleBeforeThisMonth == 0 ? 0 : Sale.Value / SaleBeforeThisMonth;
-        ThisPeriodSaleRatioWithLastYear = SaleLastYearSamePeriod == 0 ? 0 : Sale.Value / SaleLastYearSamePeriod;
+        ThisPeriodSaleRatio = Math.Round((SaleBeforeThisMonth == 0 ? 0 : Sale.Value / SaleAverageExcludeThisPeriod) * 100, 2);
+        ThisPeriodSaleRatioWithLastYear =
+            Math.Round((SaleLastYearSamePeriod == 0 ? 0 : Sale.Value / SaleAverageLastYearSamePeriod) * 100, 2);
     }
 
     /// <summary>
@@ -390,7 +392,7 @@ public class FinancialStatement : BaseEntity<Guid>
     /// </summary>
     private void CalculateGrossMargin()
     {
-        GrossMargin = OperationalIncome == 0 ? 0 : GrossProfitOrLoss / OperationalIncome;
+        GrossMargin = OperationalIncome == 0 ? 0 : Math.Round(GrossProfitOrLoss / OperationalIncome, 2);
     }
 
     /// <summary>
@@ -398,7 +400,7 @@ public class FinancialStatement : BaseEntity<Guid>
     /// </summary>
     private void CalculateOperationalMargin()
     {
-        OperationalMargin = OperationalIncome == 0 ? 0 : OperationalProfitOrLoss / OperationalIncome;
+        OperationalMargin = OperationalIncome == 0 ? 0 : Math.Round(OperationalProfitOrLoss / OperationalIncome, 2);
     }
 
     /// <summary>
@@ -406,7 +408,7 @@ public class FinancialStatement : BaseEntity<Guid>
     /// </summary>
     private void CalculateNetMargin()
     {
-        NetMargin = OperationalIncome == 0 ? 0 : NetProfitOrLoss / OperationalIncome;
+        NetMargin = OperationalIncome == 0 ? 0 : Math.Round(NetProfitOrLoss / OperationalIncome, 4);
     }
 
     /// <summary>
@@ -414,7 +416,7 @@ public class FinancialStatement : BaseEntity<Guid>
     /// </summary>
     private void CalculateForecastSale()
     {
-        ForecastSale = ReportMonth.IsEmptyStatementMonth() ? 0 : TotalSale / ReportMonth.AdjustedMonth(YearEndMonth) * 12;
+        ForecastSale = ReportMonth.IsEmptyStatementMonth() ? 0 : Math.Round(TotalSale / SaleMonth.AdjustedMonth(YearEndMonth) * 12);
     }
 
     /// <summary>
@@ -422,7 +424,7 @@ public class FinancialStatement : BaseEntity<Guid>
     /// </summary>
     private void CalculateForecastOperationalProfit()
     {
-        ForecastOperationalProfit = ForecastSale.Value * OperationalMargin;
+        ForecastOperationalProfit = Math.Round(ForecastSale.Value * OperationalMargin);
     }
 
     /// <summary>
@@ -434,7 +436,7 @@ public class FinancialStatement : BaseEntity<Guid>
         {
             ForecastNoneOperationalProfit = ReportMonth.IsEmptyStatementMonth()
                 ? 0
-                : NoneOperationalProfit / ReportMonth.AdjustedMonth(YearEndMonth) * 12;
+                : Math.Round(NoneOperationalProfit / ReportMonth.AdjustedMonth(YearEndMonth) * 12);
             return;
         }
 
@@ -458,7 +460,7 @@ public class FinancialStatement : BaseEntity<Guid>
     /// </summary>
     private void CalculateTargetMarketValue()
     {
-        TargetMarketValue = ForecastTotalProfit * 7;
+        TargetMarketValue = ForecastTotalProfit.RealValue * 7;
     }
 
     /// <summary>
@@ -466,7 +468,7 @@ public class FinancialStatement : BaseEntity<Guid>
     /// </summary>
     private void CalculateTargetPrice()
     {
-        TargetPrice = MarketCap == 0 ? 0 : TargetMarketValue / MarketCap;
+        TargetPrice = MarketCap == 0 ? 0 : Math.Truncate(TargetMarketValue / MarketCap);
     }
 
     /// <summary>
@@ -474,17 +476,17 @@ public class FinancialStatement : BaseEntity<Guid>
     /// </summary>
     private void CalculateOptimalBuyPrice()
     {
-        OptimalBuyPrice = MarketCap == 0 ? 0 : (ForecastTotalProfit * 4.4M) / MarketCap;
+        OptimalBuyPrice = MarketCap == 0 ? 0 : Math.Truncate((ForecastTotalProfit.RealValue * 4.4M) / MarketCap);
     }
 
     private void CalculatePe()
     {
-        Pe = ForecastTotalProfit == 0 ? 0 : MarketValue / ForecastTotalProfit;
+        Pe = ForecastTotalProfit == 0 ? 0 : Math.Round(MarketValue / ForecastTotalProfit.RealValue, 2);
     }
 
     private void CalculatePs()
     {
-        Ps = ForecastSale == 0 ? 0 : MarketValue / ForecastSale;
+        Ps = ForecastSale == 0 ? 0 : Math.Round(MarketValue / ForecastSale.RealValue, 2);
     }
 
     /// <summary>
@@ -492,17 +494,17 @@ public class FinancialStatement : BaseEntity<Guid>
     /// </summary>
     private void CalculateOwnersEquityRatio()
     {
-        OwnersEquityRatio = Assets == 0 ? 0 : OwnersEquity / Assets;
+        OwnersEquityRatio = Assets == 0 ? 0 : Math.Round((OwnersEquity / Assets) * 100, 2);
     }
 
     private void CalculatePa()
     {
-        Pa = Assets == 0 ? 0 : MarketValue / Assets;
+        Pa = Assets == 0 ? 0 : Math.Round(MarketValue / Assets.RealValue, 2);
     }
 
     private void CalculatePb()
     {
-        Pb = OwnersEquity == 0 ? 0 : MarketValue / OwnersEquity;
+        Pb = OwnersEquity == 0 ? 0 : Math.Round(MarketValue / OwnersEquity.RealValue, 2);
     }
 
     /// <summary>
@@ -510,7 +512,7 @@ public class FinancialStatement : BaseEntity<Guid>
     /// </summary>
     private void CalculateReceivableRatio()
     {
-        ReceivableRatio = Assets == 0 ? 0 : Receivables / Assets;
+        ReceivableRatio = Assets == 0 ? 0 : Math.Round((Receivables / Assets) * 100, 2);
     }
 
     /// <summary>
@@ -518,7 +520,7 @@ public class FinancialStatement : BaseEntity<Guid>
     /// </summary>
     private void CalculateNetProfitGrowthRatio()
     {
-        NetProfitGrowthRatio = LastYearNetProfitOrLoss == 0 ? 0 : NetProfitOrLoss / LastYearNetProfitOrLoss;
+        NetProfitGrowthRatio = LastYearNetProfitOrLoss == 0 ? 0 : Math.Round((NetProfitOrLoss / LastYearNetProfitOrLoss) * 100);
     }
 
     private Season GetSession(StatementMonth month)
