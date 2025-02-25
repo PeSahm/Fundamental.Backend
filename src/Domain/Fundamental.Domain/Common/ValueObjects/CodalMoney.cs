@@ -42,6 +42,8 @@ public sealed class CodalMoney : IEquatable<CodalMoney>
 
     public decimal Value => SetInternally ? _value : _value / CodalMoneyMultiplier;
 
+    public decimal RealValue => _value;
+
     public IsoCurrency Currency
     {
         get;
@@ -139,7 +141,7 @@ public sealed class CodalMoney : IEquatable<CodalMoney>
         return $"{Value.ToString($"F{places}")} {Currency.ToString()}";
     }
 
-    public static implicit operator decimal(CodalMoney money) => money._value;
+    public static implicit operator decimal(CodalMoney money) => money.Value;
 
     public static implicit operator CodalMoney(decimal money) => new(money);
 

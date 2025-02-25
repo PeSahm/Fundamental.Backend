@@ -34,8 +34,8 @@ public class FinancialStatementBuilderTests
         StatementMonth saleMonth = new StatementMonth(6);
         CodalMoney saleBeforeThisMonth = new CodalMoney(5000000m);
         CodalMoney saleLastYearSamePeriod = new CodalMoney(4000000m);
-        CodalMoney ExpectedAvgSaleBeforeThisMonth = new CodalMoney(5000000m) / (saleMonth - 1);
-        CodalMoney ExpectedAvggSaleLastYearSamePeriod = new CodalMoney(4000000m) / (saleMonth - 1);
+        CodalMoney expectedAvgSaleBeforeThisMonth = new CodalMoney(5000000m) / (saleMonth - 1);
+        CodalMoney expectedAvggSaleLastYearSamePeriod = Math.Ceiling(new CodalMoney(4000000m) / saleMonth);
         CodalMoney assets = new CodalMoney(1000000m);
         CodalMoney ownersEquity = new CodalMoney(500000m);
         CodalMoney receivables = new CodalMoney(200000m);
@@ -52,7 +52,8 @@ public class FinancialStatementBuilderTests
             .SetCreatedAt(createdAt)
             .SetLastClosePrice(lastClosePrice, lastClosePriceDate)
             .SetMarketCap(marketCap)
-            .SetIncomeStatement(reportMonth,
+            .SetIncomeStatement(
+                reportMonth,
                 operationalIncome,
                 grossProfitOrLoss,
                 operationalProfitOrLoss,
@@ -85,8 +86,8 @@ public class FinancialStatementBuilderTests
         Assert.Equal(saleBeforeThisMonth.Value, financialStatement.SaleBeforeThisMonth.Value);
         Assert.Equal(saleLastYearSamePeriod.Value, financialStatement.SaleLastYearSamePeriod.Value);
 
-        Assert.Equal(ExpectedAvgSaleBeforeThisMonth.Value, financialStatement.SaleAverageExcludeThisPeriod.Value);
-        Assert.Equal(ExpectedAvggSaleLastYearSamePeriod.Value, financialStatement.SaleAverageLastYearSamePeriod.Value);
+        Assert.Equal(expectedAvgSaleBeforeThisMonth.Value, financialStatement.SaleAverageExcludeThisPeriod.Value);
+        Assert.Equal(expectedAvggSaleLastYearSamePeriod.Value, financialStatement.SaleAverageLastYearSamePeriod.Value);
 
         Assert.Equal(assets, financialStatement.Assets);
         Assert.Equal(ownersEquity, financialStatement.OwnersEquity);
