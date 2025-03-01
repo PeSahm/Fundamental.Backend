@@ -21,7 +21,7 @@ public class BalanceSheetConfiguration : EntityTypeConfigurationBase<BalanceShee
 
         builder.Property(x => x.Uri)
             .HasMaxLength(512)
-            .IsUnicode(true)
+            .IsUnicode()
             .IsRequired();
 
         builder.ComplexProperty(
@@ -81,7 +81,7 @@ public class BalanceSheetConfiguration : EntityTypeConfigurationBase<BalanceShee
 
         builder.HasOne(x => x.FinancialStatement)
             .WithOne()
-            .HasForeignKey("financial-statement-id")
+            .HasForeignKey<BalanceSheet>("financial-statement-id")
             .IsRequired(false);
     }
 }
