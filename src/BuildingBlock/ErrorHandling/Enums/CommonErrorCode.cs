@@ -58,4 +58,7 @@ public enum CommonErrorCode
 
     [ErrorType(BackendErrorType.BusinessLogic)]
     InvalidCodalIncomeStatementRow = 809,
+
+    [ErrorType(BackendErrorType.BusinessLogic)]
+    TheTracenoIsNotMatched = 810,
 }

@@ -59,5 +59,4 @@ public class Index : BaseEntity<Guid>
         Value = value;
         UpdatedAt = DateTime.Now;
     }
-
 }

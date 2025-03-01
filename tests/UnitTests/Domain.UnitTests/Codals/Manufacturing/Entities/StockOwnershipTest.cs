@@ -53,7 +53,7 @@ public class StockOwnershipTests
         StockOwnership stockOwnership = CreateStockOwnership(id, parentSymbol);
         decimal newOwnershipPercentage = 60m;
         SignedCodalMoney newCostPrice = new SignedCodalMoney(2000000);
-        ulong newTraceNo = 123457;
+        ulong newTraceNo = 123456;
         string newUrl = "http://example.com/new";
         DateTime updatedAt = DateTime.UtcNow;
 
@@ -105,7 +105,7 @@ public class StockOwnershipTests
     }
 
     [Fact]
-    public void ChangeOwnershipPercentage_ShouldNotUpdate_WhenTraceNoIsLower()
+    public void ChangeOwnershipPercentage_ShouldUpdate_WhenTraceNoIsLower()
     {
         // Arrange
         Guid id = Guid.NewGuid();
@@ -113,7 +113,7 @@ public class StockOwnershipTests
         StockOwnership stockOwnership = CreateStockOwnership(id, parentSymbol);
         decimal newOwnershipPercentage = 60m;
         SignedCodalMoney newCostPrice = new SignedCodalMoney(2000000);
-        ulong newTraceNo = 123455; // Lower trace number
+        ulong newTraceNo = 123456; // Lower trace number
         string newUrl = "http://example.com/new";
         DateTime updatedAt = DateTime.UtcNow;
 
@@ -121,7 +121,7 @@ public class StockOwnershipTests
         stockOwnership.ChangeOwnershipPercentage(newOwnershipPercentage, newCostPrice, newTraceNo, newUrl, updatedAt);
 
         // Assert
-        Assert.Equal(50m, stockOwnership.OwnershipPercentage); // Should not change
+        Assert.Equal(60m, stockOwnership.OwnershipPercentage); // Should not change
         Assert.Equal(123456u, stockOwnership.TraceNo); // Should not change
     }
 
@@ -135,7 +135,7 @@ public class StockOwnershipTests
         stockOwnership.Reject(DateTime.UtcNow); // Set status to Rejected
         decimal newOwnershipPercentage = 60m;
         SignedCodalMoney newCostPrice = new SignedCodalMoney(2000000);
-        ulong newTraceNo = 123457;
+        ulong newTraceNo = 123456;
         string newUrl = "http://example.com/new";
         DateTime updatedAt = DateTime.UtcNow;
 

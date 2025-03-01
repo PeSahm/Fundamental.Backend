@@ -1,4 +1,5 @@
-﻿using Fundamental.Domain.Common.BaseTypes;
+﻿using Fundamental.Domain.Codals.Manufacturing.Exceptions;
+using Fundamental.Domain.Common.BaseTypes;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Common.ValueObjects;
 using Fundamental.Domain.Symbols.Entities;
@@ -80,6 +81,11 @@ public sealed class StockOwnership : BaseEntity<Guid>
         DateTime updatedAt
     )
     {
+        if (traceNo != TraceNo)
+        {
+            throw new OwnershipTraceNoMismatchException(traceNo);
+        }
+
         if (ReviewStatus == ReviewStatus.Rejected)
         {
             UpdatedAt = updatedAt;

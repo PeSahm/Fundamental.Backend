@@ -3,10 +3,11 @@ using Fundamental.Domain.Common.Exceptions;
 
 namespace Fundamental.Domain.Common.ValueObjects;
 
-public class SignedCodalMoney
+public sealed class SignedCodalMoney : IEquatable<SignedCodalMoney>
 {
     private readonly decimal _value;
 
+    public static SignedCodalMoney Empty => new();
     public SignedCodalMoney(decimal amount, IsoCurrency currency)
     {
         _value = amount * CodalMoneyMultiplier;
@@ -26,6 +27,7 @@ public class SignedCodalMoney
     private SignedCodalMoney()
     {
         SetInternally = true;
+        Currency = AppConfig.BASE_CURRENCY;
     }
 
     public static decimal CodalMoneyMultiplier => 1_000_000;
@@ -127,4 +129,44 @@ public class SignedCodalMoney
 
     public static implicit operator decimal(SignedCodalMoney money) => money.Value;
     public static implicit operator SignedCodalMoney(decimal money) => new(money);
+
+    public bool Equals(SignedCodalMoney? other)
+    {
+        if (other is null)
+        {
+            return false;
+        }
+
+        if (ReferenceEquals(this, other))
+        {
+            return true;
+        }
+
+        return _value == other._value && Currency == other.Currency;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is null)
+        {
+            return false;
+        }
+
+        if (ReferenceEquals(this, obj))
+        {
+            return true;
+        }
+
+        if (obj.GetType() != GetType())
+        {
+            return false;
+        }
+
+        return Equals((SignedCodalMoney)obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(_value, (int)Currency);
+    }
 }

@@ -6,6 +6,8 @@ namespace Fundamental.Domain.Symbols.Entities;
 
 public class Symbol : BaseEntity<Guid>
 {
+    public static Symbol Empty => new Symbol() { Name = "Empty" };
+
     public Symbol(
         Guid id,
         string isin,
