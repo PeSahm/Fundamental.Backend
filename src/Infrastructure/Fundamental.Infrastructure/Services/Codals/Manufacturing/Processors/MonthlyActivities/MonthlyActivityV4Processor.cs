@@ -125,7 +125,7 @@ public class MonthlyActivityV4Processor(
 
     private RowItem GetSumRecord(CodalMonthlyActivity saleDate)
     {
-        return saleDate.MonthlyActivity.ProductionAndSales.RowItems.First(predicate: x =>
+        return saleDate.MonthlyActivity!.ProductionAndSales!.RowItems.First(predicate: x =>
             x is { RowCode: RowCode.TotalSum, Category: Category.Sum });
     }
 }

@@ -73,6 +73,8 @@ public class BalanceSheet : BaseEntity<Guid>
 
     public bool IsAudited { get; private set; }
 
+    public FinancialStatement? FinancialStatement { get; set; }
+
     public void Update(
         Symbol symbol,
         ulong traceNo,

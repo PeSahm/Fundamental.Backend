@@ -83,137 +83,137 @@ public class FinancialStatement : BaseEntity<Guid>
     public SignedCodalMoney SummerOperationIncome { get; private set; } = SignedCodalMoney.Empty;
 
     /// <summary>
-    /// درآمد عملیاتی ماه پاییز
+    /// درآمد عملیاتی ماه پاییز.
     /// </summary>
     public SignedCodalMoney FallOperationIncome { get; private set; } = SignedCodalMoney.Empty;
 
     /// <summary>
-    /// درامد عملیاتی ماه زمستان
+    /// درامد عملیاتی ماه زمستان.
     /// </summary>
     public SignedCodalMoney WinterOperationIncome { get; private set; } = SignedCodalMoney.Empty;
 
     /// <summary>
-    /// سود و زیان ناخالص
+    /// سود و زیان ناخالص.
     /// </summary>
     public SignedCodalMoney GrossProfitOrLoss { get; private set; } = SignedCodalMoney.Empty;
 
     /// <summary>
-    /// سود زیان عملیاتی
+    /// سود زیان عملیاتی.
     /// </summary>
     public SignedCodalMoney OperationalProfitOrLoss { get; private set; } = SignedCodalMoney.Empty;
 
     /// <summary>
-    /// سود سپردا بانکی
+    /// سود سپردا بانکی.
     /// </summary>
     public List<NonOperationIncomeAndExpense> NonOperationIncomeAndExpenses { get; private set; } = new();
 
     /// <summary>
-    ///  شرکت های سرمایه پذیر
+    ///  شرکت های سرمایه پذیر.
     /// </summary>
     public List<StockOwnership> InvestmentsProfits { get; private set; } = new();
 
     /// <summary>
-    ///  درآمدهای غیر عملیاتی
+    ///  درآمدهای غیر عملیاتی.
     /// </summary>
     public SignedCodalMoney NoneOperationalProfit { get; private set; } = SignedCodalMoney.Empty;
 
     /// <summary>
-    /// هزینه ها
+    /// هزینه ها.
     /// </summary>
     public CodalMoney Costs { get; private set; } = CodalMoney.Empty;
 
     /// <summary>
-    /// سود و زیان خالص
+    /// سود و زیان خالص.
     /// </summary>
     public SignedCodalMoney NetProfitOrLoss { get; private set; } = SignedCodalMoney.Empty;
 
     /// <summary>
-    /// فروش ماه جاری
+    /// فروش ماه جاری.
     /// </summary>
     public CodalMoney Sale { get; private set; } = CodalMoney.Empty;
 
     /// <summary>
-    ///  فروش اول سال مالی تا ماه قبل سال جاری
+    ///  فروش اول سال مالی تا ماه قبل سال جاری.
     /// </summary>
     public CodalMoney SaleBeforeThisMonth { get; private set; } = CodalMoney.Empty;
 
     /// <summary>
-    /// فروش مدت مشابه سال گذشته
+    /// فروش مدت مشابه سال گذشته.
     /// </summary>
     public CodalMoney SaleLastYearSamePeriod { get; private set; } = CodalMoney.Empty;
 
     /// <summary>
-    /// فروش کل تا این ماه
+    /// فروش کل تا این ماه.
     /// </summary>
     public CodalMoney TotalSale { get; private set; } = CodalMoney.Empty;
 
     /// <summary>
-    /// میانگین فروش از اول سال تا ماه قبل سال جاری
+    /// میانگین فروش از اول سال تا ماه قبل سال جاری.
     /// </summary>
     public CodalMoney SaleAverageExcludeThisPeriod { get; private set; } = CodalMoney.Empty;
 
     /// <summary>
-    /// میانگین فروش مدت مشابه سال قبل
+    /// میانگین فروش مدت مشابه سال قبل.
     /// </summary>
     public CodalMoney SaleAverageLastYearSamePeriod { get; private set; } = CodalMoney.Empty;
 
     /// <summary>
-    /// نسبت فروش آخرین ماه به میانگین سال جاری
+    /// نسبت فروش آخرین ماه به میانگین سال جاری.
     /// </summary>
     public decimal ThisPeriodSaleRatio { get; private set; }
 
     /// <summary>
-    /// نسبت فروش به مد ت مشابه سال قبل
+    /// نسبت فروش به مد ت مشابه سال قبل.
     /// </summary>
     public decimal ThisPeriodSaleRatioWithLastYear { get; private set; }
 
     /// <summary>
-    /// /حاشیه سود ناخالص
+    /// /حاشیه سود ناخالص.
     /// </summary>
     public decimal GrossMargin { get; private set; }
 
     /// <summary>
-    /// حاشیه سود عملیاتی
+    /// حاشیه سود عملیاتی.
     /// </summary>
     public decimal OperationalMargin { get; private set; }
 
     /// <summary>
-    /// حاشیه سود خالص
+    /// حاشیه سود خالص.
     /// </summary>
     public decimal NetMargin { get; private set; }
 
     /// <summary>
-    /// پیش بینی فروش
+    /// پیش بینی فروش.
     /// </summary>
     public CodalMoney ForecastSale { get; private set; } = CodalMoney.Empty;
 
     /// <summary>
-    /// پیش بینی سود عملیاتی
+    /// پیش بینی سود عملیاتی.
     /// </summary>
     public CodalMoney ForecastOperationalProfit { get; private set; } = CodalMoney.Empty;
 
     /// <summary>
-    /// پیش بینی سود غیر عملیاتی
+    /// پیش بینی سود غیر عملیاتی.
     /// </summary>
     public CodalMoney ForecastNoneOperationalProfit { get; private set; } = CodalMoney.Empty;
 
     /// <summary>
-    /// پیشبینی سود کل
+    /// پیشبینی سود کل.
     /// </summary>
     public CodalMoney ForecastTotalProfit { get; private set; } = CodalMoney.Empty;
 
     /// <summary>
-    /// ارزش بازار هدف
+    /// ارزش بازار هدف.
     /// </summary>
     public decimal TargetMarketValue { get; private set; }
 
     /// <summary>
-    /// قیمت هدف
+    /// قیمت هدف.
     /// </summary>
     public decimal TargetPrice { get; private set; }
 
     /// <summary>
-    /// قیمت خرید
+    /// قیمت خرید.
     /// </summary>
     public decimal OptimalBuyPrice { get; private set; }
 
@@ -222,17 +222,17 @@ public class FinancialStatement : BaseEntity<Guid>
     public decimal Ps { get; private set; }
 
     /// <summary>
-    /// دارایی ها
+    /// دارایی ها.
     /// </summary>
     public CodalMoney Assets { get; private set; } = CodalMoney.Empty;
 
     /// <summary>
-    /// حقوق مالکانه
+    /// حقوق مالکانه.
     /// </summary>
     public CodalMoney OwnersEquity { get; private set; } = CodalMoney.Empty;
 
     /// <summary>
-    /// نسبت حقوق مالکانه
+    /// نسبت حقوق مالکانه.
     /// </summary>
     public decimal OwnersEquityRatio { get; private set; }
 
@@ -241,22 +241,22 @@ public class FinancialStatement : BaseEntity<Guid>
     public decimal Pb { get; private set; }
 
     /// <summary>
-    /// دريافتني‌هاي تجاري و ساير دريافتني‌ها
+    /// دريافتني‌هاي تجاري و ساير دريافتني‌ها.
     /// </summary>
     public CodalMoney Receivables { get; private set; } = CodalMoney.Empty;
 
     /// <summary>
-    /// نسبت مطالبات
+    /// نسبت مطالبات.
     /// </summary>
     public decimal ReceivableRatio { get; private set; }
 
     /// <summary>
-    /// سود خالص مدت مشابه سال قبل
+    /// سود خالص مدت مشابه سال قبل.
     /// </summary>
     public SignedCodalMoney LastYearNetProfitOrLoss { get; private set; } = SignedCodalMoney.Empty;
 
     /// <summary>
-    /// نسبت رشد سود خالص نسبت سال قبل
+    /// نسبت رشد سود خالص نسبت سال قبل.
     /// </summary>
     public decimal NetProfitGrowthRatio { get; private set; }
 
@@ -269,6 +269,8 @@ public class FinancialStatement : BaseEntity<Guid>
     public CodalMoney DpsRatioLastYear { get; private set; } = CodalMoney.Empty;
 
     public CodalMoney DpsRatioTwoYearsAgo { get; private set; } = CodalMoney.Empty;
+
+    public byte[] Version { get; private set; }
 
     public FinancialStatement SetLastClosePrice(decimal lastClosePrice, DateOnly lastClosePriceDate)
     {
@@ -380,7 +382,7 @@ public class FinancialStatement : BaseEntity<Guid>
     }
 
     /// <summary>
-    /// محاسبه ارزش بازار
+    /// محاسبه ارزش بازار.
     /// </summary>
     private void CalculateMarketValue()
     {
@@ -388,7 +390,7 @@ public class FinancialStatement : BaseEntity<Guid>
     }
 
     /// <summary>
-    /// محاسبه حاشیه سود ناخالص
+    /// محاسبه حاشیه سود ناخالص.
     /// </summary>
     private void CalculateGrossMargin()
     {
@@ -396,7 +398,7 @@ public class FinancialStatement : BaseEntity<Guid>
     }
 
     /// <summary>
-    /// محاسبه حاشیه سود عملیاتی
+    /// محاسبه حاشیه سود عملیاتی.
     /// </summary>
     private void CalculateOperationalMargin()
     {
@@ -404,7 +406,7 @@ public class FinancialStatement : BaseEntity<Guid>
     }
 
     /// <summary>
-    /// محاسبه حاشیه سود خالص
+    /// محاسبه حاشیه سود خالص.
     /// </summary>
     private void CalculateNetMargin()
     {
@@ -412,7 +414,7 @@ public class FinancialStatement : BaseEntity<Guid>
     }
 
     /// <summary>
-    /// پیش بینی فروش سالانه
+    /// پیش بینی فروش سالانه.
     /// </summary>
     private void CalculateForecastSale()
     {
@@ -420,7 +422,7 @@ public class FinancialStatement : BaseEntity<Guid>
     }
 
     /// <summary>
-    /// پیش بینی سود عملیاتی
+    /// پیش بینی سود عملیاتی.
     /// </summary>
     private void CalculateForecastOperationalProfit()
     {
@@ -428,7 +430,7 @@ public class FinancialStatement : BaseEntity<Guid>
     }
 
     /// <summary>
-    /// پیش بینی سود غیر عملیاتی
+    /// پیش بینی سود غیر عملیاتی.
     /// </summary>
     private void CalculateForecastNoneOperationalProfit()
     {
@@ -447,7 +449,7 @@ public class FinancialStatement : BaseEntity<Guid>
     }
 
     /// <summary>
-    /// پیش بینی سود کل
+    /// پیش بینی سود کل.
     /// </summary>
     private void CalculateForecastTotalProfit()
     {
@@ -456,7 +458,7 @@ public class FinancialStatement : BaseEntity<Guid>
     }
 
     /// <summary>
-    /// ارزش بازار هدف
+    /// ارزش بازار هدف.
     /// </summary>
     private void CalculateTargetMarketValue()
     {
@@ -464,7 +466,7 @@ public class FinancialStatement : BaseEntity<Guid>
     }
 
     /// <summary>
-    /// محاسبه قیمت هدف
+    /// محاسبه قیمت هدف.
     /// </summary>
     private void CalculateTargetPrice()
     {
@@ -472,7 +474,7 @@ public class FinancialStatement : BaseEntity<Guid>
     }
 
     /// <summary>
-    /// قیمت خرید
+    /// قیمت خرید.
     /// </summary>
     private void CalculateOptimalBuyPrice()
     {
@@ -490,7 +492,7 @@ public class FinancialStatement : BaseEntity<Guid>
     }
 
     /// <summary>
-    /// نسبت حقوق مالکانه
+    /// نسبت حقوق مالکانه.
     /// </summary>
     private void CalculateOwnersEquityRatio()
     {
@@ -508,7 +510,7 @@ public class FinancialStatement : BaseEntity<Guid>
     }
 
     /// <summary>
-    /// نسبت مطالبات
+    /// نسبت مطالبات.
     /// </summary>
     private void CalculateReceivableRatio()
     {
@@ -516,7 +518,7 @@ public class FinancialStatement : BaseEntity<Guid>
     }
 
     /// <summary>
-    ///سود خالص مدت مشابه سال قبل
+    /// سود خالص مدت مشابه سال قبل.
     /// </summary>
     private void CalculateNetProfitGrowthRatio()
     {

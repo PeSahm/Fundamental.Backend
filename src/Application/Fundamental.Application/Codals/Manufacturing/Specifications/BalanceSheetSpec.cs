@@ -1,9 +1,10 @@
 ﻿using Ardalis.Specification;
+using Fundamental.BuildingBlock.Extensions;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 
 namespace Fundamental.Application.Codals.Manufacturing.Specifications;
 
-public class BalanceSheetSpec : Specification<BalanceSheet>
+public sealed class BalanceSheetSpec : Specification<BalanceSheet>
 {
     public static BalanceSheetSpec WithTraceNo(ulong traceNo)
     {
@@ -24,5 +25,20 @@ public class BalanceSheetSpec : Specification<BalanceSheet>
             .Where(x => x.TraceNo < traceNo)
             .AsNoTracking();
         return spec;
+    }
+
+    public BalanceSheetSpec WhereNoFinancialStatement()
+    {
+        Query
+            .Where(x => x.FinancialStatement == null)
+            .AsNoTracking();
+        return this;
+    }
+
+    public SimpleBalanceSheetSpec ToSimpleBalanceSheetSpec()
+    {
+        SimpleBalanceSheetSpec select = new();
+        select.LoadSpecification(this);
+        return select;
     }
 }

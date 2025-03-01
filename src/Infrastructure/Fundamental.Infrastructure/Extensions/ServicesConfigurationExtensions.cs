@@ -7,6 +7,7 @@ using Fundamental.Application.Symbols;
 using Fundamental.Application.Symbols.Queries.GetSymbols;
 using Fundamental.Application.Symbols.Repositories;
 using Fundamental.Application.Utilities.Services;
+using Fundamental.Domain.Codals.Manufacturing.Builders.FinancialStatements;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.Infrastructure.Extensions.Codals.Manufacturing;
 using Fundamental.Infrastructure.HostedServices.Codals;
@@ -81,5 +82,11 @@ public static class ServicesConfigurationExtensions
     {
         builder.AddHostedService<CommonCodalDataHostedService>();
         builder.AddManufacturingHostedServices();
+    }
+
+    public static IServiceCollection AddBuilders(this IServiceCollection builder)
+    {
+        builder.AddSingleton<IFinancialStatementBuilder, FinancialStatementBuilder>();
+        return builder;
     }
 }
