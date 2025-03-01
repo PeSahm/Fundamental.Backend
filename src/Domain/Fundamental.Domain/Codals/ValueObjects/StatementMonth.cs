@@ -5,7 +5,7 @@ namespace Fundamental.Domain.Codals.ValueObjects;
 
 public class StatementMonth : ValueObject
 {
-    private bool IsEmpty = false;
+    private readonly bool _isEmpty;
 
     public static StatementMonth Empty => new StatementMonth();
     public StatementMonth(ushort month)
@@ -30,7 +30,7 @@ public class StatementMonth : ValueObject
 
     private StatementMonth()
     {
-        IsEmpty = true;
+        _isEmpty = true;
     }
 
     public ushort Month { get; }
@@ -49,7 +49,7 @@ public class StatementMonth : ValueObject
 
     public bool IsEmptyStatementMonth()
     {
-        return IsEmpty;
+        return _isEmpty;
     }
 
     public static implicit operator ushort(StatementMonth month)

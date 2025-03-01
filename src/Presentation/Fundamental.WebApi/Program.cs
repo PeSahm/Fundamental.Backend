@@ -39,6 +39,8 @@ builder.Services.AddCodalServices();
 builder.Configuration
     .AddJsonFile("appsettings.Override.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables();
+builder.Services.AddBuilders().
+    AddDbRetryPolicy();
 
 builder.Services.AddHttpContextAccessor();
 builder.Host.UseSerilog((context, serviceProvider, configuration) =>

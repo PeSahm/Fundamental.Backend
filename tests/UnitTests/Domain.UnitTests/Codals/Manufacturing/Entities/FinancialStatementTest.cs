@@ -94,7 +94,8 @@ public class FinancialStatementTest
         FinancialStatement financialStatement = CreateFinancialStatement(testCase: testCase);
 
         // Act & Assert
-        Assert.Equal(expected: testCase.ExpectedThisPeriodSaleRatioWithLastYear,
+        Assert.Equal(
+            expected: testCase.ExpectedThisPeriodSaleRatioWithLastYear,
             actual: financialStatement.ThisPeriodSaleRatioWithLastYear);
     }
 

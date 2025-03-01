@@ -78,5 +78,10 @@ public class BalanceSheetConfiguration : EntityTypeConfigurationBase<BalanceShee
         builder.Property(x => x.Description).HasMaxLength(256).IsRequired(false);
 
         builder.Property(x => x.IsAudited).IsRequired();
+
+        builder.HasOne(x => x.FinancialStatement)
+            .WithOne()
+            .HasForeignKey("financial-statement-id")
+            .IsRequired(false);
     }
 }
