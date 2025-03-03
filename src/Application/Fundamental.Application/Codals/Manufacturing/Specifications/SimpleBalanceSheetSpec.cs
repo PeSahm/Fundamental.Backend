@@ -19,4 +19,10 @@ public sealed class SimpleBalanceSheetSpec : Specification<BalanceSheet, SimpleB
             YearEndMonth = x.YearEndMonth,
         });
     }
+
+    public SimpleBalanceSheetSpec SetTop(int top)
+    {
+        Query.Take(top);
+        return this;
+    }
 }

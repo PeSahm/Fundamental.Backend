@@ -39,11 +39,15 @@ public interface ISetYearEndMonth
 public interface ISetCreatedAt
 {
     ISetLastClosePrice SetCreatedAt(DateTime createdAt);
+
 }
 
 public interface ISetLastClosePrice
 {
     ISetMarketCap SetLastClosePrice(decimal lastClosePrice, DateOnly lastClosePriceDate);
+
+    ISetIncomeStatement SetMarketCap(decimal marketCap);
+
     FinancialStatement Build();
 }
 

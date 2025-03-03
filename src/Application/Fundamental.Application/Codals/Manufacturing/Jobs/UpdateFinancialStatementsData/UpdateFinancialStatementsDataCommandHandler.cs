@@ -25,7 +25,8 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
             await repository.ListAsync(
                 new BalanceSheetSpec()
                     .WhereNoFinancialStatement()
-                    .ToSimpleBalanceSheetSpec(),
+                    .ToSimpleBalanceSheetSpec()
+                    .SetTop(10),
                 cancellationToken);
         ResiliencePipeline pipeline = pipelineProvider.GetPipeline("DbUpdateConcurrencyException");
 
@@ -45,6 +46,7 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
                 .SetFiscalYear(balanceSheet.FiscalYear)
                 .SetYearEndMonth(balanceSheet.YearEndMonth)
                 .SetCreatedAt(DateTime.Now)
+                .SetMarketCap(symbol.MarketCap)
                 .Build();
             repository.Add(fs);
         }
