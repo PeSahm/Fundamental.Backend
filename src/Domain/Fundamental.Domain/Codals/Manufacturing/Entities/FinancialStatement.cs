@@ -270,12 +270,11 @@ public class FinancialStatement : BaseEntity<Guid>
 
     public CodalMoney DpsRatioTwoYearsAgo { get; private set; } = CodalMoney.Empty;
 
-    public uint Version { get; private set; }
+    public uint ConcurrencyToken { get; private set; }
 
     public FinancialStatement SetLastClosePrice(decimal lastClosePrice, DateOnly lastClosePriceDate)
     {
         LastClosePrice = lastClosePrice;
-        // LastClosePriceDate = lastClosePriceDate;
         Calculate();
         return this;
     }

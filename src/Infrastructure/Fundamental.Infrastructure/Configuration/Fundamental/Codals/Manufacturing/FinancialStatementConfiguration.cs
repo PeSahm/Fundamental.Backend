@@ -1,6 +1,7 @@
 ﻿using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Npgsql.PostgresTypes;
 
 namespace Fundamental.Infrastructure.Configuration.Fundamental.Codals.Manufacturing;
 
@@ -267,8 +268,7 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
 
         builder.Ignore(x => x.InvestmentsProfits);
 
-        builder.Property(x => x.Version)
-            .HasColumnName("version")
+        builder.Property(x => x.ConcurrencyToken)
             .IsRowVersion();
     }
 }
