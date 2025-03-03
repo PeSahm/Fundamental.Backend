@@ -10,31 +10,31 @@ public class FinancialStatementBuilder :
     IFinancialStatementBuilder, ISetSymbol, ISetCurrency, ISetCreatedAt, ISetLastClosePrice, ISetTraceNo, ISetFiscalYear, ISetYearEndMonth,
     ISetMarketCap, ISetIncomeStatement, ISetSale, ISetFinancialPosition, IBuild
 {
-    private CodalMoney _assets;
-    private CodalMoney _costs;
+    private CodalMoney _assets = CodalMoney.Empty;
+    private CodalMoney _costs = CodalMoney.Empty;
     private DateTime _createdAt;
     private IsoCurrency _currency;
     private FiscalYear _fiscalYear;
-    private SignedCodalMoney _grossProfitOrLoss;
+    private SignedCodalMoney _grossProfitOrLoss = SignedCodalMoney.Empty;
     private Guid _id;
     private decimal _lastClosePrice;
-    private DateOnly _lastClosePriceDate;
-    private SignedCodalMoney _lastYearNetProfit;
+    private DateOnly _lastClosePriceDate = DateOnly.FromDateTime(DateTime.Now);
+    private SignedCodalMoney _lastYearNetProfit = SignedCodalMoney.Empty;
     private decimal _marketCap;
-    private SignedCodalMoney _netProfitOrLoss;
-    private SignedCodalMoney _noneOperationalProfit;
-    private SignedCodalMoney _operationalIncome;
-    private SignedCodalMoney _operationalProfitOrLoss;
-    private CodalMoney _ownersEquity;
-    private CodalMoney _receivables;
-    private StatementMonth _reportMonth;
-    private CodalMoney _sale;
-    private CodalMoney _saleBeforeThisMonth;
-    private CodalMoney _saleLastYearSamePeriod;
-    private StatementMonth _saleMonth;
+    private SignedCodalMoney _netProfitOrLoss = SignedCodalMoney.Empty;
+    private SignedCodalMoney _noneOperationalProfit = SignedCodalMoney.Empty;
+    private SignedCodalMoney _operationalIncome = SignedCodalMoney.Empty;
+    private SignedCodalMoney _operationalProfitOrLoss = SignedCodalMoney.Empty;
+    private CodalMoney _ownersEquity = CodalMoney.Empty;
+    private CodalMoney _receivables = CodalMoney.Empty;
+    private StatementMonth _reportMonth = StatementMonth.Empty;
+    private CodalMoney _sale = CodalMoney.Empty;
+    private CodalMoney _saleBeforeThisMonth = CodalMoney.Empty;
+    private CodalMoney _saleLastYearSamePeriod = CodalMoney.Empty;
+    private StatementMonth _saleMonth = StatementMonth.Empty;
     private Symbol _symbol;
     private ulong _traceNo;
-    private StatementMonth _yearEndMonth;
+    private StatementMonth _yearEndMonth = StatementMonth.Empty;
 
     public ISetSymbol SetId(Guid id)
     {

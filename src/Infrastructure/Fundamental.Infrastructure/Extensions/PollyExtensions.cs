@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
+using Polly.Retry;
 
 namespace Fundamental.Infrastructure.Extensions;
 
@@ -8,13 +9,21 @@ public static class PollyExtensions
 {
     public static IServiceCollection AddDbRetryPolicy(this IServiceCollection services)
     {
-        // If you need typed policies for specific services
-        services.AddSingleton<IAsyncPolicy<DbUpdateConcurrencyException>>(
-            Policy<DbUpdateConcurrencyException>.Handle<DbUpdateConcurrencyException>()
-                .WaitAndRetryAsync(
-                    retryCount: 3,
-                    retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))
-                    ));
+        services.AddResiliencePipeline(
+            "DbUpdateConcurrencyException",
+            (builder, context) =>
+            {
+                builder.AddRetry(new RetryStrategyOptions
+                {
+                    BackoffType = DelayBackoffType.Exponential,
+                    Delay = TimeSpan.FromSeconds(1),
+                    Name = "DbUpdateException",
+                    MaxDelay = TimeSpan.FromSeconds(10),
+                    ShouldHandle = new PredicateBuilder()
+                        .Handle<DbUpdateConcurrencyException>()
+                });
+                builder.AddTimeout(TimeSpan.FromSeconds(1));
+            });
 
         return services;
     }

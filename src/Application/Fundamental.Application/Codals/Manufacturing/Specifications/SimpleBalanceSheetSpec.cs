@@ -9,7 +9,7 @@ public sealed class SimpleBalanceSheetSpec : Specification<BalanceSheet, SimpleB
 {
     public SimpleBalanceSheetSpec()
     {
-        Query.Include(x => x.Symbol);
+        Query.AsNoTracking();
         Query.Select(x => new SimpleBalanceSheet
         {
             Isin = x.Symbol.Isin,

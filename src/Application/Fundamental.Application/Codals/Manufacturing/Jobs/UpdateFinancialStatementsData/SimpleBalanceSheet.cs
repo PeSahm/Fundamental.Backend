@@ -10,6 +10,4 @@ public sealed class SimpleBalanceSheet
     public FiscalYear FiscalYear { get; set; }
     public StatementMonth ReportMonth { get; set; }
     public StatementMonth YearEndMonth { get; set; }
-
-    public Symbol Symbol { get; set; }
 }
