@@ -32,4 +32,11 @@
     <Folder Include="Fundamental\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Fundamental\20250301221103_DeleteClosePriceDateFromFsEntity.cs" />
+    <Compile Remove="Fundamental\20250301221103_DeleteClosePriceDateFromFsEntity.Designer.cs" />
+    <Compile Remove="Fundamental\20250301215059_ChangePriceDateToBeNullable.cs" />
+    <Compile Remove="Fundamental\20250301215059_ChangePriceDateToBeNullable.Designer.cs" />
+  </ItemGroup>
+
 </Project>

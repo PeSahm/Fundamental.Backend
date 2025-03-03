@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 namespace Fundamental.Infrastructure.HostedServices.Codals.Manufacturing;
 
 public class CalculationHostedService(
-    ILogger<CodalHostedService> logger,
+    ILogger<CalculationHostedService> logger,
     IServiceScopeFactory serviceScopeFactory,
     IConfiguration configuration
 ) : BackgroundService

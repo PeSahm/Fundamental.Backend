@@ -64,9 +64,10 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
 
         builder.Property(x => x.LastClosePrice)
             .HasPrecision(18, 2);
-
-        builder.Property(x => x.LastClosePriceDate)
-            .HasColumnType("date");
+        //
+        // builder.Property(x => x.LastClosePriceDate)
+        //     .IsRequired()
+        //     .HasColumnType(NpgsqlTypes.NpgsqlDbType.Date.ToString());
 
         builder.Property(x => x.MarketCap)
             .HasPrecision(18, 2);
@@ -266,6 +267,8 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
 
         builder.Ignore(x => x.InvestmentsProfits);
 
-        builder.Property(x => x.Version).IsRowVersion();
+        builder.Property(x => x.Version)
+            .HasColumnName("version")
+            .IsRowVersion();
     }
 }
