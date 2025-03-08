@@ -27,6 +27,7 @@ public class FinancialStatement : BaseEntity<Guid>
         FiscalYear = fiscalYear;
         YearEndMonth = yearEndMonth;
         UpdatedAt = createdAt;
+        UpdatedAt = createdAt;
     }
 
     protected FinancialStatement()

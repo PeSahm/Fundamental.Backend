@@ -94,4 +94,58 @@ public class FinancialStatementBuilderTests
         Assert.Equal(receivables, financialStatement.Receivables);
         Assert.Equal(lastYearNetProfit, financialStatement.LastYearNetProfitOrLoss);
     }
+
+    [Fact]
+    public void Build_ShouldCreateFinancialStatementWithCorrectValues_InSimpleMode()
+    {
+        // Arrange
+        Guid id = Guid.NewGuid();
+        Symbol symbol = Symbol.Empty;
+        ulong traceNo = 123456;
+        IsoCurrency currency = IsoCurrency.IRR;
+        DateTime createdAt = DateTime.Now;
+        decimal lastClosePrice = 1000m;
+        DateOnly lastClosePriceDate = DateOnly.FromDateTime(DateTime.Now);
+        decimal marketCap = 500000m;
+        FiscalYear fiscalYear = new FiscalYear(2023);
+        StatementMonth yearEndMonth = new StatementMonth(12);
+        StatementMonth reportMonth = new StatementMonth(6);
+        SignedCodalMoney operationalIncome = new SignedCodalMoney(1000000m);
+        SignedCodalMoney grossProfitOrLoss = new SignedCodalMoney(500000m);
+        SignedCodalMoney operationalProfitOrLoss = new SignedCodalMoney(300000m);
+        SignedCodalMoney noneOperationalProfit = new SignedCodalMoney(200000m);
+        CodalMoney costs = new CodalMoney(100000m);
+        SignedCodalMoney netProfitOrLoss = new SignedCodalMoney(400000m);
+        CodalMoney sale = new CodalMoney(6000000m);
+        StatementMonth saleMonth = new StatementMonth(6);
+        CodalMoney saleBeforeThisMonth = new CodalMoney(5000000m);
+        CodalMoney saleLastYearSamePeriod = new CodalMoney(4000000m);
+        CodalMoney expectedAvgSaleBeforeThisMonth = new CodalMoney(5000000m) / (saleMonth - 1);
+        CodalMoney expectedAvggSaleLastYearSamePeriod = Math.Ceiling(new CodalMoney(4000000m) / saleMonth);
+        CodalMoney assets = new CodalMoney(1000000m);
+        CodalMoney ownersEquity = new CodalMoney(500000m);
+        CodalMoney receivables = new CodalMoney(200000m);
+        SignedCodalMoney lastYearNetProfit = new SignedCodalMoney(300000m);
+
+        // Act
+        FinancialStatement financialStatement = new FinancialStatementBuilder()
+            .SetId(id)
+            .SetSymbol(symbol)
+            .SetCurrency(currency)
+            .SetTraceNo(traceNo)
+            .SetFiscalYear(fiscalYear)
+            .SetYearEndMonth(yearEndMonth)
+            .SetCreatedAt(createdAt)
+            .SetMarketCap(marketCap)
+            .Build();
+
+        // Assert
+        Assert.Equal(id, financialStatement.Id);
+        Assert.Equal(symbol, financialStatement.Symbol);
+        Assert.Equal(currency, financialStatement.Currency);
+        Assert.Equal(createdAt, financialStatement.CreatedAt);
+        Assert.Equal(marketCap, financialStatement.MarketCap);
+        Assert.Equal(fiscalYear, financialStatement.FiscalYear);
+        Assert.Equal(yearEndMonth, financialStatement.YearEndMonth);
+    }
 }
