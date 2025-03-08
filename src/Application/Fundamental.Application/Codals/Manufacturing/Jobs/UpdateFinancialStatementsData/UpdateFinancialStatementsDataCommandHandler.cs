@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Codals.Manufacturing.Specifications;
+﻿using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Application.Symbols.Specifications;
 using Fundamental.Domain.Codals.Manufacturing.Builders.FinancialStatements;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
@@ -15,6 +15,7 @@ namespace Fundamental.Application.Codals.Manufacturing.Jobs.UpdateFinancialState
 
 public sealed class UpdateFinancialStatementsDataCommandHandler(
     IRepository repository,
+    IBalanceSheetReadRepository balanceSheetReadRepository,
     IUnitOfWork unitOfWork,
     ILogger<UpdateFinancialStatementsDataCommandHandler> logger,
     IFinancialStatementBuilder financialStatementBuilder,
@@ -24,13 +25,7 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
 {
     public async Task<Response> Handle(UpdateFinancialStatementsDataRequest request, CancellationToken cancellationToken)
     {
-        List<SimpleBalanceSheet> balanceSheetList =
-            await repository.ListAsync(
-                new BalanceSheetSpec()
-                    .WhereNoFinancialStatement()
-                    .ToSimpleBalanceSheetSpec()
-                    .SetTop(10),
-                cancellationToken);
+        List<SimpleBalanceSheet> balanceSheetList = await balanceSheetReadRepository.GetLastBalanceSheetDetails(cancellationToken);
         ResiliencePipeline pipeline = pipelineProvider.GetPipeline("DbUpdateConcurrencyException");
 
         foreach (SimpleBalanceSheet balanceSheet in balanceSheetList)
