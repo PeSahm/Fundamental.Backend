@@ -6,6 +6,7 @@ using Fundamental.Application.Symbols.Specifications;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.Domain.Symbols.Entities;
 using Fundamental.Domain.Symbols.Enums;
+using Fundamental.ErrorHandling;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Index = Fundamental.Domain.Symbols.Entities.Index;
@@ -17,9 +18,9 @@ public sealed class UpdateIndexDataCommandHandler(
     IMarketDataService marketDataService,
     IUnitOfWork unitOfWork,
     ILogger<UpdateIndexDataCommandHandler> logger
-) : IRequestHandler<UpdateIndexDataCommand>
+) : IRequestHandler<UpdateIndexDataCommand, Response>
 {
-    public async Task Handle(UpdateIndexDataCommand request, CancellationToken cancellationToken)
+    public async Task<Response> Handle(UpdateIndexDataCommand request, CancellationToken cancellationToken)
     {
         DateOnly fromDate = DateTime.Now.AddDays(-1 * request.Days).ToDateOnly();
 
@@ -72,5 +73,6 @@ public sealed class UpdateIndexDataCommandHandler(
         }
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
+        return Response.Successful();
     }
 }
