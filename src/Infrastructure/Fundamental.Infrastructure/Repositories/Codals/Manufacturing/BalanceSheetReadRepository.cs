@@ -55,4 +55,22 @@ public sealed class BalanceSheetReadRepository(FundamentalDbContext dbContext) :
 
         return validStatements;
     }
+
+    public Task<List<SimpleBalanceSheet>> GetLastBalanceSheetDetails(CancellationToken cancellationToken = default)
+    {
+        return dbContext.BalanceSheets
+                .AsNoTracking()
+                .Where(x => x.FinancialStatement == null)
+                .GroupBy(gb => new { gb.Symbol.Isin, FiscalYear = gb.FiscalYear.Year, ReportMonth = gb.ReportMonth.Month })
+                .Select(x => new SimpleBalanceSheet
+                {
+                    Isin = x.Key.Isin,
+                    TraceNo = x.Max(mx => mx.TraceNo),
+                    FiscalYear = x.Key.FiscalYear,
+                    ReportMonth = x.Key.ReportMonth,
+                    YearEndMonth = x.First().YearEndMonth.Month,
+                })
+                .ToListAsync(cancellationToken)
+            ;
+    }
 }
