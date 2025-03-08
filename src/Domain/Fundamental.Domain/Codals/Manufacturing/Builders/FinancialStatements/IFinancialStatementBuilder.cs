@@ -39,7 +39,6 @@ public interface ISetYearEndMonth
 public interface ISetCreatedAt
 {
     ISetLastClosePrice SetCreatedAt(DateTime createdAt);
-
 }
 
 public interface ISetLastClosePrice

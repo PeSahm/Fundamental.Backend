@@ -1,7 +1,6 @@
 ﻿using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Npgsql.PostgresTypes;
 
 namespace Fundamental.Infrastructure.Configuration.Fundamental.Codals.Manufacturing;
 
@@ -65,10 +64,6 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
 
         builder.Property(x => x.LastClosePrice)
             .HasPrecision(18, 2);
-        //
-        // builder.Property(x => x.LastClosePriceDate)
-        //     .IsRequired()
-        //     .HasColumnType(NpgsqlTypes.NpgsqlDbType.Date.ToString());
 
         builder.Property(x => x.MarketCap)
             .HasPrecision(18, 2);

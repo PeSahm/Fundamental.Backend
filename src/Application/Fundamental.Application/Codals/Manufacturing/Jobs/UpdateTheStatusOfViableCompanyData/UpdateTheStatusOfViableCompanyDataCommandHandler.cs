@@ -38,6 +38,7 @@ public sealed class UpdateTheStatusOfViableCompanyDataCommandHandler(
                 logger.LogError(e, " Error processing TheStatusOfViableCompanies codal for {@Model}", theStatusOfViableCompany);
             }
         }
+
         return Response.Successful();
     }
 }
