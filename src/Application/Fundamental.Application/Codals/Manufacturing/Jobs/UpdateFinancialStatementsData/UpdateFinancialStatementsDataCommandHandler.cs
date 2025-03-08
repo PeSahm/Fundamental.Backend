@@ -17,7 +17,6 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
     IRepository repository,
     IBalanceSheetReadRepository balanceSheetReadRepository,
     IUnitOfWork unitOfWork,
-    ILogger<UpdateFinancialStatementsDataCommandHandler> logger,
     IFinancialStatementBuilder financialStatementBuilder,
     ResiliencePipelineProvider<string> pipelineProvider
 )
