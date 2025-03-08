@@ -6,6 +6,7 @@ using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.Domain.Symbols.Entities;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using Polly;
 using Polly.Registry;
 
@@ -14,6 +15,7 @@ namespace Fundamental.Application.Codals.Manufacturing.Jobs.UpdateFinancialState
 public sealed class UpdateFinancialStatementsDataCommandHandler(
     IRepository repository,
     IUnitOfWork unitOfWork,
+    ILogger<UpdateFinancialStatementsDataCommandHandler> logger,
     IFinancialStatementBuilder financialStatementBuilder,
     ResiliencePipelineProvider<string> pipelineProvider
 )
@@ -32,7 +34,7 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
 
         foreach (SimpleBalanceSheet balanceSheet in balanceSheetList)
         {
-            Symbol? symbol = await repository.FirstOrDefaultAsync(new SymbolSpec().WhereIsin(balanceSheet.Isin), cancellationToken);
+            Symbol? symbol = await repository.FirstOrDefaultAsync(new SymbolSpec().WhereIsin(balanceSheet.Isin).ShowOfficialSymbols(true), cancellationToken);
 
             if (symbol is null)
             {
@@ -54,7 +56,7 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
         await pipeline.ExecuteAsync(
             async _ =>
             {
-                await unitOfWork.SaveChangesAsync(cancellationToken);
+                    await unitOfWork.SaveChangesAsync(cancellationToken);
             },
             cancellationToken);
     }

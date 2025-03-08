@@ -33,7 +33,7 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
                     .IsRequired();
             });
 
-        builder.OwnsOne(
+        builder.ComplexProperty(
             x => x.YearEndMonth,
             navigationBuilder =>
             {
@@ -43,7 +43,7 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
                     .IsRequired();
             });
 
-        builder.OwnsOne(
+        builder.ComplexProperty(
             x => x.ReportMonth,
             navigationBuilder =>
             {
@@ -53,7 +53,7 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
                     .IsRequired();
             });
 
-        builder.OwnsOne(
+        builder.ComplexProperty(
             x => x.SaleMonth,
             navigationBuilder =>
             {
