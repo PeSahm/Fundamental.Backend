@@ -3,6 +3,7 @@ using Fundamental.Application.Codals.Enums;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Common.Enums;
+using Fundamental.ErrorHandling;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -11,9 +12,9 @@ namespace Fundamental.Application.Codals.Manufacturing.Jobs.UpdateTheStatusOfVia
 public sealed class UpdateTheStatusOfViableCompanyDataCommandHandler(
     ICodalService codalService,
     ILogger<UpdateTheStatusOfViableCompanyDataCommandHandler> logger
-) : IRequestHandler<UpdateTheStatusOfViableCompanyDataReqeust>
+) : IRequestHandler<UpdateTheStatusOfViableCompanyDataReqeust, Response>
 {
-    public async Task Handle(UpdateTheStatusOfViableCompanyDataReqeust request, CancellationToken cancellationToken)
+    public async Task<Response> Handle(UpdateTheStatusOfViableCompanyDataReqeust request, CancellationToken cancellationToken)
     {
         List<GetStatementResponse> statements =
             await codalService.GetStatements(
@@ -37,5 +38,6 @@ public sealed class UpdateTheStatusOfViableCompanyDataCommandHandler(
                 logger.LogError(e, " Error processing TheStatusOfViableCompanies codal for {@Model}", theStatusOfViableCompany);
             }
         }
+        return Response.Successful();
     }
 }

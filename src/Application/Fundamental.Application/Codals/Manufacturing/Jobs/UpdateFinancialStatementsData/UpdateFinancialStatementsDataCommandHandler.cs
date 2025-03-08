@@ -5,6 +5,7 @@ using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.Domain.Symbols.Entities;
+using Fundamental.ErrorHandling;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Polly;
@@ -19,9 +20,9 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
     IFinancialStatementBuilder financialStatementBuilder,
     ResiliencePipelineProvider<string> pipelineProvider
 )
-    : IRequestHandler<UpdateFinancialStatementsDataRequest>
+    : IRequestHandler<UpdateFinancialStatementsDataRequest, Response>
 {
-    public async Task Handle(UpdateFinancialStatementsDataRequest request, CancellationToken cancellationToken)
+    public async Task<Response> Handle(UpdateFinancialStatementsDataRequest request, CancellationToken cancellationToken)
     {
         List<SimpleBalanceSheet> balanceSheetList =
             await repository.ListAsync(
@@ -59,5 +60,6 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
                     await unitOfWork.SaveChangesAsync(cancellationToken);
             },
             cancellationToken);
+        return Response.Successful();
     }
 }

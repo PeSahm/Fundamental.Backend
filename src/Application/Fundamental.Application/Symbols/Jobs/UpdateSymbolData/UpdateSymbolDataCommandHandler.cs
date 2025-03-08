@@ -3,6 +3,7 @@ using Fundamental.Application.Codals.Services.Models.MarketDataServiceModels;
 using Fundamental.Application.Symbols.Specifications;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.Domain.Symbols.Entities;
+using Fundamental.ErrorHandling;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -13,9 +14,9 @@ public sealed class UpdateSymbolDataCommandHandler(
     IMarketDataService marketDataService,
     IUnitOfWork unitOfWork,
     ILogger<UpdateSymbolDataCommandHandler> logger
-) : IRequestHandler<UpdateSymbolDataCommand>
+) : IRequestHandler<UpdateSymbolDataCommand, Response>
 {
-    public async Task Handle(UpdateSymbolDataCommand request, CancellationToken cancellationToken)
+    public async Task<Response> Handle(UpdateSymbolDataCommand request, CancellationToken cancellationToken)
     {
         List<SymbolResponse> symbols = await marketDataService.GetSymbolsAsync(cancellationToken);
 
@@ -73,5 +74,6 @@ public sealed class UpdateSymbolDataCommandHandler(
         }
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
+        return Response.Successful();
     }
 }
