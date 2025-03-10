@@ -1,4 +1,5 @@
-﻿using Fundamental.Application.Codals.Manufacturing.Repositories;
+﻿using Fundamental.Application.Codals.Manufacturing.EventHandlers;
+using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Symbols.Repositories;
 using Fundamental.Infrastructure.HostedServices.Codals.Manufacturing;
@@ -41,6 +42,12 @@ public static class ServicesConfigurationExtensions
         builder.Services.AddScoped<INonOperationIncomesRepository, NonOperationIncomesRepository>();
         builder.Services.AddScoped<IStatusOfViableCompaniesRepository, StatusOfViableCompaniesRepository>();
         builder.Services.AddScoped<IIndicesRepository, IndicesRepository>();
+        builder.Services.AddScoped<IFinancialStatementReadRepository, FinancialStatementReadRepository>();
+    }
+
+    public static void AddManufacturingEventDispatcher(this IServiceCollection builder)
+    {
+        builder.AddScoped<EventDataDispatcher>();
     }
 
     public static void AddManufacturingHostedServices(this IServiceCollection builder)

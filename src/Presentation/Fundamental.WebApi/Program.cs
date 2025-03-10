@@ -29,18 +29,20 @@ builder.Services.AddControllers(options =>
 builder.Services.Configure<ApiBehaviorOptions>(options
     => options.SuppressModelStateInvalidFilter = true);
 
-builder.Services.AddDbContexts(builder.Configuration);
+builder.Services.AddDbContexts(builder.Configuration)
+    .AddInterceptors();
 builder.AddServices();
 builder.AddOptions();
 builder.Services.AddCustomHttpClient(builder.Configuration);
 builder.AddReadRepositories();
 builder.Services.AddHostedServices();
 builder.Services.AddCodalServices();
+builder.Services.AddEventDispatcher();
 builder.Configuration
     .AddJsonFile("appsettings.Override.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables();
-builder.Services.AddBuilders().
-    AddDbRetryPolicy();
+builder.Services.AddBuilders().AddDbRetryPolicy();
+builder.Services.AddCap();
 
 builder.Services.AddHttpContextAccessor();
 builder.Host.UseSerilog((context, serviceProvider, configuration) =>

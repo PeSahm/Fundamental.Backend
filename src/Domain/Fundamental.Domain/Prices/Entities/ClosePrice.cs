@@ -1,4 +1,7 @@
+using System.Reflection.Metadata;
 using Fundamental.Domain.Common.BaseTypes;
+using Fundamental.Domain.Common.Constants;
+using Fundamental.Domain.Prices.Events;
 using Fundamental.Domain.Symbols.Entities;
 
 namespace Fundamental.Domain.Prices.Entities;
@@ -54,6 +57,7 @@ public class ClosePrice : BaseEntity<Guid>
         Low = low;
         Last = last;
         UpdatedAt = updatedAt;
+        AddDomainEvent(new ClosePriceUpdated(this.Symbol.Isin, close, this.Date), EventsAddress.ClosePrice.PRICE_UPDATE);
     }
 
     public void SetAdjustedPrice(

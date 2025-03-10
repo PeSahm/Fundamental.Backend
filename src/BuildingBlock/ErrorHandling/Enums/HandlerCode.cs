@@ -39,7 +39,7 @@ public enum HandlerCode : ushort
     GetBalanceSheet = 13_390,
     AddBalanceSheet = 13_391,
     UpdateMonthlyActivity = 13_392,
-    UpdateFinancialStatement = 13_393,
+    UpdateFinancialStatementClosePrice = 13_393,
     GetMonthlyActivityById = 13_394,
     GetFinancialStatementById = 13_395,
     GetMonthlyActivities = 13_396,
