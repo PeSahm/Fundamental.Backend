@@ -22,6 +22,9 @@ using Fundamental.Infrastructure.Validators;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Npgsql;
+using Savorboard.CAP.InMemoryMessageQueue;
 
 namespace Fundamental.Infrastructure.Extensions;
 
@@ -32,6 +35,12 @@ public static class ServicesConfigurationExtensions
         serviceCollection.AddScoped<ICodalVersionDetectorFactory, CodalVersionDetectorFactory>();
         serviceCollection.AddScoped<ICodalProcessorFactory, CodalProcessorFactory>();
         serviceCollection.AddManufacturingCodalServices();
+    }
+
+    public static IServiceCollection AddEventDispatcher(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddManufacturingEventDispatcher();
+        return serviceCollection;
     }
 
     public static void AddServices(this WebApplicationBuilder builder)
@@ -87,6 +96,37 @@ public static class ServicesConfigurationExtensions
     public static IServiceCollection AddBuilders(this IServiceCollection builder)
     {
         builder.AddSingleton<IFinancialStatementBuilder, FinancialStatementBuilder>();
+        return builder;
+    }
+
+    public static IServiceCollection AddCap(this IServiceCollection builder)
+    {
+        builder.AddCap(
+            options =>
+            {
+                options.UseDashboard(dashboardOptions =>
+                {
+                });
+                options.UseInMemoryMessageQueue();
+                options.UseEntityFramework<FundamentalDbContext>(efOptions =>
+                {
+                    efOptions.Schema = "cap";
+                });
+                options.Version = "1";
+                options.FailedThresholdCallback = async void (failedInfo) =>
+                {
+                    ILogger<ServiceProvider>? logger = failedInfo.ServiceProvider.GetService<ILogger<ServiceProvider>>();
+                    logger?.LogError(
+                        "Failed message threshold reached. Message: {Message}, MessageType: {MessageType}",
+                        failedInfo.Message,
+                        failedInfo.MessageType
+                    );
+                    await Task.CompletedTask;
+                };
+                options.UseStorageLock = true;
+                options.ConsumerThreadCount = 2;
+            });
+
         return builder;
     }
 }

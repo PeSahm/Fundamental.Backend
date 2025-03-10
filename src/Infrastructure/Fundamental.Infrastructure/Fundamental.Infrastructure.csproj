@@ -12,11 +12,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Persistence\Interceptors\" />
       <Folder Include="Services\Codals\Manufacturing\Calculators\" />
     </ItemGroup>
     <ItemGroup>
       <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="8.0.0" />
+      <PackageReference Include="DotNetCore.CAP.PostgreSql" Version="8.3.3" />
+      <PackageReference Include="DotNetCore.CAP.Dashboard" Version="8.3.3" />
       <PackageReference Include="EFCore.NamingConventions" Version="8.0.3"/>
       <PackageReference Include="Gridify.EntityFramework" Version="2.16.2" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.12" />
@@ -31,6 +32,7 @@
       <PackageReference Include="Polly.Contrib.WaitAndRetry" Version="1.1.1" />
       <PackageReference Include="Polly.Extensions" Version="8.5.2" />
       <PackageReference Include="RepoDb.PostgreSql.BulkOperations" Version="1.13.1" />
+      <PackageReference Include="Savorboard.CAP.InMemoryMessageQueue" Version="8.2.1" />
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.3.1" />
       <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.12" />
       <PackageReference Include="Serilog" Version="4.2.0" />

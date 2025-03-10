@@ -2,6 +2,7 @@
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Enums;
 using Fundamental.Infrastructure.Persistence;
+using Fundamental.Infrastructure.Persistence.Interceptors;
 using Gridify;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -36,19 +37,29 @@ public static class DbContextConfigurationExtensions
         NpgsqlDataSource dataSource = dataSourceBuilder.Build();
 
         services.AddDbContext<FundamentalDbContext>(
-            options => options.UseNpgsql(
-                    dataSource,
-                    b =>
-                        b.EnableRetryOnFailure()
-                            .MigrationsAssembly(MIGRATIONS_ASSEMBLY)
-                            .UseNodaTime()
-                )
-                .UseSnakeCaseNamingConvention()
+            (sp, options) =>
+            {
+                options.AddInterceptors(sp.GetRequiredService<DomainEventsInterceptor>());
+                options.UseNpgsql(
+                        dataSource,
+                        b =>
+                            b.EnableRetryOnFailure()
+                                .MigrationsAssembly(MIGRATIONS_ASSEMBLY)
+                                .UseNodaTime()
+                    )
+                    .UseSnakeCaseNamingConvention()
 #if DEBUG
-                .LogTo(Console.WriteLine)
-                .EnableSensitiveDataLogging()
+                    .LogTo(Console.WriteLine)
+                    .EnableSensitiveDataLogging()
 #endif
-                .EnableDetailedErrors());
+                    .EnableDetailedErrors();
+            });
         return services;
+    }
+
+    public static IServiceCollection AddInterceptors(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddSingleton<DomainEventsInterceptor>();
+        return serviceCollection;
     }
 }
