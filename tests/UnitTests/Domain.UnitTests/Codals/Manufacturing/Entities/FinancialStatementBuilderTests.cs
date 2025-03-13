@@ -28,7 +28,7 @@ public class FinancialStatementBuilderTests
         SignedCodalMoney grossProfitOrLoss = new SignedCodalMoney(500000m);
         SignedCodalMoney operationalProfitOrLoss = new SignedCodalMoney(300000m);
         SignedCodalMoney noneOperationalProfit = new SignedCodalMoney(200000m);
-        CodalMoney costs = new CodalMoney(100000m);
+        SignedCodalMoney costs = new SignedCodalMoney(100000m);
         SignedCodalMoney netProfitOrLoss = new SignedCodalMoney(400000m);
         CodalMoney sale = new CodalMoney(6000000m);
         StatementMonth saleMonth = new StatementMonth(6);
@@ -78,7 +78,7 @@ public class FinancialStatementBuilderTests
         Assert.Equal(grossProfitOrLoss, financialStatement.GrossProfitOrLoss);
         Assert.Equal(operationalProfitOrLoss, financialStatement.OperationalProfitOrLoss);
         Assert.Equal(noneOperationalProfit, financialStatement.NoneOperationalProfit);
-        Assert.Equal(costs, financialStatement.Costs);
+        Assert.Equal(costs.Value, financialStatement.Costs.Value);
         Assert.Equal(netProfitOrLoss, financialStatement.NetProfitOrLoss);
         Assert.Equal(sale, financialStatement.Sale);
         Assert.Equal(saleMonth, financialStatement.SaleMonth);
