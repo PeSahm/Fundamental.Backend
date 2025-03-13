@@ -357,7 +357,7 @@ public class FinancialStatementTest
                 grossProfitOrLoss: testCase.GrossProfitOrLoss,
                 operationalProfitOrLoss: testCase.OperationalProfitOrLoss,
                 noneOperationalProfit: testCase.NoneOperationalProfit,
-                costs: testCase.Costs,
+                costs: testCase.Costs.Value,
                 netProfitOrLoss: testCase.NetProfitOrLoss)
             .SetSale(
                 sale: testCase.Sale,
