@@ -80,7 +80,7 @@ public class FinancialStatementBuilder :
         SignedCodalMoney grossProfitOrLoss,
         SignedCodalMoney operationalProfitOrLoss,
         SignedCodalMoney noneOperationalProfit,
-        CodalMoney costs,
+        SignedCodalMoney costs,
         SignedCodalMoney netProfitOrLoss
     )
     {
@@ -89,7 +89,7 @@ public class FinancialStatementBuilder :
         _grossProfitOrLoss = grossProfitOrLoss;
         _operationalProfitOrLoss = operationalProfitOrLoss;
         _noneOperationalProfit = noneOperationalProfit;
-        _costs = costs;
+        _costs = costs.Value > 0 ? new CodalMoney(costs.Value) : CodalMoney.Empty;
         _netProfitOrLoss = netProfitOrLoss;
         return this;
     }

@@ -376,9 +376,9 @@ public class FinancialStatement : BaseEntity<Guid>
 
     private void CalculateSaleRatio()
     {
-        ThisPeriodSaleRatio = Math.Round((SaleBeforeThisMonth == 0 ? 0 : Sale.Value / SaleAverageExcludeThisPeriod) * 100, 2);
+        ThisPeriodSaleRatio = Math.Round((SaleBeforeThisMonth == 0 ? 0 : (Sale.Value / SaleAverageExcludeThisPeriod) - 1) * 100, 2);
         ThisPeriodSaleRatioWithLastYear =
-            Math.Round((SaleLastYearSamePeriod == 0 ? 0 : Sale.Value / SaleAverageLastYearSamePeriod) * 100, 2);
+            Math.Round((SaleLastYearSamePeriod == 0 ? 0 : (Sale.Value / SaleAverageLastYearSamePeriod) - 1) * 100, 2);
     }
 
     /// <summary>
@@ -402,7 +402,7 @@ public class FinancialStatement : BaseEntity<Guid>
     /// </summary>
     private void CalculateOperationalMargin()
     {
-        OperationalMargin = OperationalIncome == 0 ? 0 : Math.Round(OperationalProfitOrLoss / OperationalIncome, 2);
+        OperationalMargin = OperationalProfitOrLoss == 0 ? 0 : Math.Round(OperationalProfitOrLoss / OperationalIncome, 2);
     }
 
     /// <summary>
@@ -426,7 +426,7 @@ public class FinancialStatement : BaseEntity<Guid>
     /// </summary>
     private void CalculateForecastOperationalProfit()
     {
-        ForecastOperationalProfit = Math.Round(ForecastSale.Value * OperationalMargin);
+        ForecastOperationalProfit = Math.Round(ForecastSale.Value * NetMargin);
     }
 
     /// <summary>
@@ -436,6 +436,11 @@ public class FinancialStatement : BaseEntity<Guid>
     {
         if (!NonOperationIncomeAndExpenses.Any())
         {
+            if (NoneOperationalProfit.Value < 0)
+            {
+                return;
+            }
+
             ForecastNoneOperationalProfit = ReportMonth.IsEmptyStatementMonth()
                 ? 0
                 : Math.Round(NoneOperationalProfit / ReportMonth.AdjustedMonth(YearEndMonth) * 12);

@@ -27,6 +27,17 @@ public sealed class BalanceSheetSpec : Specification<BalanceSheet>
         return spec;
     }
 
+    public static BalanceSheetSpec Where(ulong traceNo, uint fiscalYear, uint reportMonth)
+    {
+        BalanceSheetSpec spec = new();
+        spec.Query
+            .Where(x => x.FiscalYear.Year == fiscalYear)
+            .Where(x => x.ReportMonth.Month == reportMonth)
+            .Where(x => x.TraceNo == traceNo)
+            .AsNoTracking();
+        return spec;
+    }
+
     public BalanceSheetSpec WhereNoFinancialStatement()
     {
         Query

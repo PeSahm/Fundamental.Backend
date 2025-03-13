@@ -64,7 +64,7 @@ public interface ISetIncomeStatement
         SignedCodalMoney grossProfitOrLoss,
         SignedCodalMoney operationalProfitOrLoss,
         SignedCodalMoney noneOperationalProfit,
-        CodalMoney costs,
+        SignedCodalMoney costs,
         SignedCodalMoney netProfitOrLoss
     );
 

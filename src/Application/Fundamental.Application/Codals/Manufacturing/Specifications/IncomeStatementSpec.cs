@@ -25,4 +25,15 @@ public class IncomeStatementSpec : Specification<IncomeStatement>
             .AsNoTracking();
         return spec;
     }
+
+    public static IncomeStatementSpec Where(ulong traceNo, uint fiscalYear, uint reportMonth)
+    {
+        IncomeStatementSpec spec = new();
+        spec.Query
+            .Where(x => x.FiscalYear.Year == fiscalYear)
+            .Where(x => x.ReportMonth.Month == reportMonth)
+            .Where(x => x.TraceNo == traceNo)
+            .AsNoTracking();
+        return spec;
+    }
 }

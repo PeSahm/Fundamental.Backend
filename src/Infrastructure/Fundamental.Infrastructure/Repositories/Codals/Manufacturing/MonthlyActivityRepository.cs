@@ -1,6 +1,7 @@
 ﻿using Fundamental.Application.Codals.Manufacturing.Queries.GetMonthlyActivities;
 using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
+using Fundamental.Domain.Codals.ValueObjects;
 using Fundamental.Domain.Common.Dto;
 using Fundamental.Infrastructure.Extensions;
 using Fundamental.Infrastructure.Persistence;
@@ -59,5 +60,15 @@ public class MonthlyActivityRepository : IMonthlyActivityRepository
                 UpdatedAt = x.UpdatedAt
             })
             .ToPagingListAsync(request, "UpdatedAt desc", cancellationToken);
+    }
+
+    public Task<MonthlyActivity?> GetLastMonthlyActivity(string isin, FiscalYear fiscalYear, CancellationToken cancellationToken)
+    {
+        return _dbContext.MonthlyActivities
+            .AsNoTracking()
+            .Where(x => x.Symbol.Isin == isin)
+            .Where(x => x.FiscalYear.Year == fiscalYear.Year)
+            .OrderByDescending(x => x.ReportMonth.Month).ThenByDescending(x => x.TraceNo)
+            .FirstOrDefaultAsync(cancellationToken);
     }
 }

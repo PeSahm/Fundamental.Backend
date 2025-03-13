@@ -24,5 +24,6 @@
     <ItemGroup>
       <Folder Include="Common\Dto\" />
       <Folder Include="Prices\Enums\" />
+      <Folder Include="Symbols\Events\" />
     </ItemGroup>
 </Project>
