@@ -40,7 +40,7 @@ public sealed class CodalMoney : IEquatable<CodalMoney>
 
     public static decimal CodalMoneyMultiplier => 1_000_000;
 
-    public decimal Value => SetInternally ? _value : _value / CodalMoneyMultiplier;
+    public decimal Value => _value / CodalMoneyMultiplier;
 
     public decimal RealValue => _value;
 

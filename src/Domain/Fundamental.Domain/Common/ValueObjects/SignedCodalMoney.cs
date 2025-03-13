@@ -20,10 +20,6 @@ public sealed class SignedCodalMoney : IEquatable<SignedCodalMoney>
         Currency = AppConfig.BASE_CURRENCY;
     }
 
-    // public static implicit operator CodalMoney(SignedCodalMoney money) => new(money.Value, money.Currency);
-    //
-    // public static implicit operator SignedCodalMoney(CodalMoney money) => new(money.Value, money.Currency);
-
     private SignedCodalMoney()
     {
         SetInternally = true;
@@ -31,7 +27,9 @@ public sealed class SignedCodalMoney : IEquatable<SignedCodalMoney>
     }
 
     public static decimal CodalMoneyMultiplier => 1_000_000;
-    public decimal Value => SetInternally ? _value : _value / CodalMoneyMultiplier;
+    public decimal Value => _value / CodalMoneyMultiplier;
+
+    public decimal RealValue => _value;
 
     public IsoCurrency Currency { get; }
 

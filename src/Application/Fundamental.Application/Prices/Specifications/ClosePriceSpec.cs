@@ -12,4 +12,14 @@ public class ClosePriceSpec : Specification<ClosePrice>
             .Where(x => x.Date == date);
         return spec;
     }
+
+    public static ClosePriceSpec WhereLast(string isin, DateOnly date)
+    {
+        ClosePriceSpec spec = new();
+        spec.Query.Where(x => x.Symbol.Isin == isin)
+            .Where(x => x.Date <= date)
+            .OrderByDescending(x => x.Date)
+            ;
+        return spec;
+    }
 }

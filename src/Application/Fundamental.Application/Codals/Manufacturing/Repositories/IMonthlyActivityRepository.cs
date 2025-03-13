@@ -1,4 +1,6 @@
 ﻿using Fundamental.Application.Codals.Manufacturing.Queries.GetMonthlyActivities;
+using Fundamental.Domain.Codals.Manufacturing.Entities;
+using Fundamental.Domain.Codals.ValueObjects;
 using Fundamental.Domain.Common.Dto;
 
 namespace Fundamental.Application.Codals.Manufacturing.Repositories;
@@ -9,4 +11,6 @@ public interface IMonthlyActivityRepository
         GetMonthlyActivitiesRequest request,
         CancellationToken cancellationToken
     );
+
+    Task<MonthlyActivity?> GetLastMonthlyActivity(string isin, FiscalYear fiscalYear, CancellationToken cancellationToken);
 }
