@@ -61,6 +61,7 @@ public interface ISetIncomeStatement
     ISetSale SetIncomeStatement(
         StatementMonth reportMonth,
         SignedCodalMoney operationalIncome,
+        SignedCodalMoney otherOperationalIncome,
         SignedCodalMoney grossProfitOrLoss,
         SignedCodalMoney operationalProfitOrLoss,
         SignedCodalMoney noneOperationalProfit,

@@ -13,4 +13,13 @@ public class PublisherSpec : Specification<Publisher>
             .Where(x => x.CodalId == codalId);
         return spec;
     }
+
+    public static PublisherSpec WhereParentIsin(string isin)
+    {
+        PublisherSpec spec = new();
+        spec.Query
+            .Include(x => x.Symbol)
+            .Where(x => x.ParentSymbol != null && x.ParentSymbol.Isin == isin);
+        return spec;
+    }
 }

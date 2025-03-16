@@ -1,7 +1,10 @@
 ﻿using Fundamental.Application.Codals.Manufacturing.Queries.GetIncomeStatements;
 using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
+using Fundamental.Domain.Codals.Manufacturing.Enums;
+using Fundamental.Domain.Codals.ValueObjects;
 using Fundamental.Domain.Common.Dto;
+using Fundamental.Domain.Common.ValueObjects;
 using Fundamental.Infrastructure.Extensions;
 using Fundamental.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -53,5 +56,27 @@ public sealed class IncomeStatementReadRepository(FundamentalDbContext dbContext
             }).ToPagingListAsync(request, "FiscalYear desc,ReportMonth desc", cancellationToken);
 
         return validStatements;
+    }
+
+    public Task<SignedCodalMoney?> GetLastIncomeStatement(
+        string isin,
+        FiscalYear fiscalYear,
+        StatementMonth statementMonth,
+        ushort incomeStatementRow,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return dbContext.IncomeStatements
+            .AsNoTracking()
+            .Where(x =>
+                x.Symbol.Isin == isin &&
+                x.FiscalYear.Year <= fiscalYear &&
+                x.ReportMonth.Month <= statementMonth)
+            .Where(x => x.CodalRow == incomeStatementRow)
+            .OrderByDescending(x => x.FiscalYear.Year)
+            .ThenByDescending(x => x.ReportMonth.Month)
+            .ThenByDescending(x => x.TraceNo)
+            .Select(x => x.Value)
+            .FirstOrDefaultAsync(cancellationToken);
     }
 }

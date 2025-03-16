@@ -74,6 +74,11 @@ public class FinancialStatement : BaseEntity<Guid>
     public SignedCodalMoney OperationalIncome { get; private set; } = SignedCodalMoney.Empty;
 
     /// <summary>
+    /// سایر درآمد های عملیاتی.
+    /// </summary>
+    public SignedCodalMoney OtherOperationalIncome { get; private set; } = SignedCodalMoney.Empty;
+
+    /// <summary>
     /// درآمد عملیاتی ماه بهار.
     /// </summary>
     public SignedCodalMoney SpringOperationIncome { get; private set; } = SignedCodalMoney.Empty;
@@ -291,6 +296,7 @@ public class FinancialStatement : BaseEntity<Guid>
     public FinancialStatement SetIncomeStatement(
         StatementMonth reportMonth,
         SignedCodalMoney operationalIncome,
+        SignedCodalMoney otherOperationalIncome,
         SignedCodalMoney grossProfitOrLoss,
         SignedCodalMoney operationalProfitOrLoss,
         SignedCodalMoney noneOperationalProfit,
@@ -301,8 +307,9 @@ public class FinancialStatement : BaseEntity<Guid>
         ReportMonth = reportMonth;
         OperationalIncome = operationalIncome;
         GrossProfitOrLoss = grossProfitOrLoss;
+        OtherOperationalIncome = otherOperationalIncome;
         OperationalProfitOrLoss = operationalProfitOrLoss;
-        NoneOperationalProfit = noneOperationalProfit;
+        NoneOperationalProfit = noneOperationalProfit.Value > 0 ? noneOperationalProfit : 0;
         Costs = costs;
         NetProfitOrLoss = netProfitOrLoss;
         Calculate();
@@ -402,7 +409,7 @@ public class FinancialStatement : BaseEntity<Guid>
     /// </summary>
     private void CalculateOperationalMargin()
     {
-        OperationalMargin = OperationalProfitOrLoss == 0 ? 0 : Math.Round(OperationalProfitOrLoss / OperationalIncome, 2);
+        OperationalMargin = OperationalIncome == 0 ? 0 : Math.Round(OperationalProfitOrLoss / OperationalIncome, 2);
     }
 
     /// <summary>
@@ -410,7 +417,9 @@ public class FinancialStatement : BaseEntity<Guid>
     /// </summary>
     private void CalculateNetMargin()
     {
-        NetMargin = OperationalIncome == 0 ? 0 : Math.Round(NetProfitOrLoss / OperationalIncome, 4);
+        NetMargin = OperationalIncome == 0
+            ? 0
+            : Math.Round((NetProfitOrLoss.Value - OtherOperationalIncome.Value - NoneOperationalProfit.Value) / OperationalIncome, 4);
     }
 
     /// <summary>
@@ -426,6 +435,11 @@ public class FinancialStatement : BaseEntity<Guid>
     /// </summary>
     private void CalculateForecastOperationalProfit()
     {
+        if (NetMargin < 0)
+        {
+            return;
+        }
+
         ForecastOperationalProfit = Math.Round(ForecastSale.Value * NetMargin);
     }
 
