@@ -25,6 +25,7 @@ public class FinancialStatementBuilderTests
         StatementMonth yearEndMonth = new StatementMonth(12);
         StatementMonth reportMonth = new StatementMonth(6);
         SignedCodalMoney operationalIncome = new SignedCodalMoney(1000000m);
+        SignedCodalMoney otherOperationalIncome = new SignedCodalMoney(0m);
         SignedCodalMoney grossProfitOrLoss = new SignedCodalMoney(500000m);
         SignedCodalMoney operationalProfitOrLoss = new SignedCodalMoney(300000m);
         SignedCodalMoney noneOperationalProfit = new SignedCodalMoney(200000m);
@@ -55,6 +56,7 @@ public class FinancialStatementBuilderTests
             .SetIncomeStatement(
                 reportMonth,
                 operationalIncome,
+                otherOperationalIncome,
                 grossProfitOrLoss,
                 operationalProfitOrLoss,
                 noneOperationalProfit,

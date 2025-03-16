@@ -354,6 +354,7 @@ public class FinancialStatementTest
             .SetIncomeStatement(
                 reportMonth: reportMonth,
                 operationalIncome: testCase.OperationalIncome,
+                SignedCodalMoney.Empty,
                 grossProfitOrLoss: testCase.GrossProfitOrLoss,
                 operationalProfitOrLoss: testCase.OperationalProfitOrLoss,
                 noneOperationalProfit: testCase.NoneOperationalProfit,

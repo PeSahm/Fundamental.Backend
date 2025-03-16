@@ -39,7 +39,13 @@ public static class DbContextConfigurationExtensions
         services.AddDbContext<FundamentalDbContext>(
             (sp, options) =>
             {
-                options.AddInterceptors(sp.GetRequiredService<DomainEventsInterceptor>());
+                DomainEventsInterceptor? domainEventsInterceptor = sp.GetService<DomainEventsInterceptor>();
+
+                if (domainEventsInterceptor is not null)
+                {
+                    options.AddInterceptors(sp.GetRequiredService<DomainEventsInterceptor>());
+                }
+
                 options.UseNpgsql(
                         dataSource,
                         b =>

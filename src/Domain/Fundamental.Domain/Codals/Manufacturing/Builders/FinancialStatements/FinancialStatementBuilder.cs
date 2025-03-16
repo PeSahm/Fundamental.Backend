@@ -24,6 +24,7 @@ public class FinancialStatementBuilder :
     private SignedCodalMoney _netProfitOrLoss = SignedCodalMoney.Empty;
     private SignedCodalMoney _noneOperationalProfit = SignedCodalMoney.Empty;
     private SignedCodalMoney _operationalIncome = SignedCodalMoney.Empty;
+    private SignedCodalMoney _otherOperationalIncome = SignedCodalMoney.Empty;
     private SignedCodalMoney _operationalProfitOrLoss = SignedCodalMoney.Empty;
     private CodalMoney _ownersEquity = CodalMoney.Empty;
     private CodalMoney _receivables = CodalMoney.Empty;
@@ -77,6 +78,7 @@ public class FinancialStatementBuilder :
     public ISetSale SetIncomeStatement(
         StatementMonth reportMonth,
         SignedCodalMoney operationalIncome,
+        SignedCodalMoney otherOperationalIncome,
         SignedCodalMoney grossProfitOrLoss,
         SignedCodalMoney operationalProfitOrLoss,
         SignedCodalMoney noneOperationalProfit,
@@ -86,6 +88,7 @@ public class FinancialStatementBuilder :
     {
         _reportMonth = reportMonth;
         _operationalIncome = operationalIncome;
+        _otherOperationalIncome = otherOperationalIncome;
         _grossProfitOrLoss = grossProfitOrLoss;
         _operationalProfitOrLoss = operationalProfitOrLoss;
         _noneOperationalProfit = noneOperationalProfit;
@@ -110,6 +113,7 @@ public class FinancialStatementBuilder :
                 .SetIncomeStatement(
                     _reportMonth,
                     _operationalIncome,
+                    _otherOperationalIncome,
                     _grossProfitOrLoss,
                     _operationalProfitOrLoss,
                     _noneOperationalProfit,

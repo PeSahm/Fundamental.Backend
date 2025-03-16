@@ -13,6 +13,7 @@ public sealed class CodalMoney : IEquatable<CodalMoney>
     {
         if (amount < 0)
         {
+            return;
             throw new InvalidMoneyAmountException(amount);
         }
 
@@ -25,6 +26,7 @@ public sealed class CodalMoney : IEquatable<CodalMoney>
     {
         if (amount < 0)
         {
+            return;
             throw new InvalidMoneyAmountException(amount);
         }
 
@@ -40,9 +42,9 @@ public sealed class CodalMoney : IEquatable<CodalMoney>
 
     public static decimal CodalMoneyMultiplier => 1_000_000;
 
-    public decimal Value => _value / CodalMoneyMultiplier;
+    public decimal Value => _value >= 0 ? _value / CodalMoneyMultiplier : 0;
 
-    public decimal RealValue => _value;
+    public decimal RealValue => _value >= 0 ? _value : 0;
 
     public IsoCurrency Currency
     {
