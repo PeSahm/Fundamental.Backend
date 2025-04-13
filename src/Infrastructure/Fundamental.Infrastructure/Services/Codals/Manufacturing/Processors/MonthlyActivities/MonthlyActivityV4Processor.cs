@@ -3,7 +3,9 @@ using Fundamental.Application.Codals.Dto.MonthlyActivities.V4.Enums;
 using Fundamental.Application.Codals.Enums;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
+using Fundamental.BuildingBlock;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
+using Fundamental.Domain.Common.Constants;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
 using Fundamental.Infrastructure.Persistence;
@@ -66,6 +68,20 @@ public class MonthlyActivityV4Processor(
             return;
         }
 
+        SymbolExtensions.SalesInfo extraInfo = new SymbolExtensions.SalesInfo();
+
+        if (statement.Isin != null && statement.Isin.Equals(IranCapitalMarket.FezarIsin, StringComparison.OrdinalIgnoreCase))
+        {
+            extraInfo =
+                SymbolExtensions.ExtractFezarInfo(
+                    string.Join(
+                        ',',
+                        saleDate.MonthlyActivity.ProductMonthlyActivityDesc1
+                            .RowItems.Select(x => x.Value11991).ToList()
+                    )
+                );
+        }
+
         using IServiceScope scope = serviceScopeFactory.CreateScope();
         await using FundamentalDbContext dbContext = scope.ServiceProvider.GetRequiredService<FundamentalDbContext>();
 
@@ -95,6 +111,7 @@ public class MonthlyActivityV4Processor(
                 GetSumRecord(saleDate).GetValue(SaleColumnId.SaleAmountInclusiveThisMonth),
                 GetSumRecord(saleDate).GetValue(SaleColumnId.SaleAmountPrevYear),
                 false,
+                [extraInfo],
                 DateTime.Now
             );
             dbContext.Add(monthlyActivity);
@@ -115,6 +132,7 @@ public class MonthlyActivityV4Processor(
                     GetSumRecord(saleDate).GetValue(SaleColumnId.SaleAmountInclusiveThisMonth),
                     GetSumRecord(saleDate).GetValue(SaleColumnId.SaleAmountPrevYear),
                     false,
+                    [extraInfo],
                     DateTime.Now
                 );
             }

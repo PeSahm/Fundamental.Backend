@@ -1,5 +1,6 @@
 ﻿using Fundamental.Application.Codals.Manufacturing.Specifications;
 using Fundamental.Application.Symbols.Specifications;
+using Fundamental.BuildingBlock;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Common.ValueObjects;
 using Fundamental.Domain.Repositories.Base;
@@ -60,6 +61,7 @@ public sealed class AddMonthlyActivityCommandHandler(
             new CodalMoney(request.SaleIncludeCurrentMonth),
             new CodalMoney(request.SaleLastYear),
             request.HasSubCompanySale,
+            new List<SymbolExtensions.SalesInfo>(),
             DateTime.Now
         );
 

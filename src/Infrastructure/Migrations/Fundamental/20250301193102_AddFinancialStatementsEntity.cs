@@ -1,16 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#nullable disable
+
 using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Enums;
+using Fundamental.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-
-#nullable disable
 
 namespace Fundamental.Migrations.Fundamental
 {
     /// <inheritdoc />
-    public partial class AddFinancialStatementsEntity : Migration
+    [DbContext(typeof(FundamentalDbContext))]
+    [Migration("20250301193102_AddFinancialStatementsEntity")]
+    public class AddFinancialStatementsEntity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -52,7 +54,8 @@ namespace Fundamental.Migrations.Fundamental
                     reportmonth = table.Column<short>(name: "report-month", type: "smallint", nullable: false),
                     salemonth = table.Column<short>(name: "sale-month", type: "smallint", nullable: false),
                     this_period_sale_ratio = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
-                    this_period_sale_ratio_with_last_year = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    this_period_sale_ratio_with_last_year =
+                        table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
                     gross_margin = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
                     operational_margin = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
                     net_margin = table.Column<decimal>(type: "numeric(18,4)", precision: 18, scale: 4, nullable: false),
@@ -76,7 +79,8 @@ namespace Fundamental.Migrations.Fundamental
                     dps_two_years_ago = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
                     fall_operation_income = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
                     fiscalyear = table.Column<short>(name: "fiscal-year", type: "SMALLINT", nullable: false),
-                    forecast_none_operational_profit = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
+                    forecast_none_operational_profit =
+                        table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
                     forecast_operational_profit = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
                     forecast_sale = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
                     forecast_total_profit = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
@@ -89,8 +93,10 @@ namespace Fundamental.Migrations.Fundamental
                     owners_equity = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
                     receivables = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
                     sale = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
-                    sale_average_exclude_this_period = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
-                    sale_average_last_year_same_period = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
+                    sale_average_exclude_this_period =
+                        table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
+                    sale_average_last_year_same_period =
+                        table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
                     sale_before_this_month = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
                     sale_last_year_same_period = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
                     spring_operation_income = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),

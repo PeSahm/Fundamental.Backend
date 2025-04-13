@@ -75,5 +75,12 @@ public class MonthlyActivityConfiguration : EntityTypeConfigurationBase<MonthlyA
 
         builder.Property(x => x.HasSubCompanySale)
             .IsRequired();
+
+        builder.OwnsMany(
+            x => x.ExtraSalesInfos,
+            navigationBuilder =>
+            {
+                navigationBuilder.ToJson("extra_sales_infos");
+            });
     }
 }

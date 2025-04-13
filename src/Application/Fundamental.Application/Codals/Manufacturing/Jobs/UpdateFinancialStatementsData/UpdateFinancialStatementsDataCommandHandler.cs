@@ -42,7 +42,8 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
         foreach (SimpleBalanceSheet headerData in balanceSheetList)
         {
             Symbol? symbol = await repository.FirstOrDefaultAsync(
-                new SymbolSpec().WhereIsin(headerData.Isin).ShowOfficialSymbols(true), cancellationToken);
+                new SymbolSpec().WhereIsin(headerData.Isin).ShowOfficialSymbols(true),
+                cancellationToken);
 
             if (symbol is null)
             {
@@ -65,6 +66,7 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
                     cancellationToken);
             MonthlyActivity? monthlyActivities =
                 await monthlyActivityRepository.GetLastMonthlyActivity(symbol.Isin, headerData.FiscalYear, cancellationToken);
+
             ClosePrice? closePrice = await repository.FirstOrDefaultAsync(ClosePriceSpec.WhereLast(symbol.Isin, today), cancellationToken);
 
             List<IncomeStatement> lastYearIncomeStatement =
@@ -99,7 +101,7 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
                     continue;
                 }
 
-                addedOperationalRevenue += thePublisherIncome;
+                // addedOperationalRevenue += thePublisherIncome;
             }
 
             SignedCodalMoney allOperationalIncome = incomeStatements.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.Sales)?.Value ??
@@ -121,11 +123,15 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
                 .SetIncomeStatement(
                     headerData.ReportMonth,
                     allOperationalIncome,
-                    incomeStatements.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.OtherOperatingRevenue)?.Value ?? SignedCodalMoney.Empty,
+                    incomeStatements.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.OtherOperatingRevenue)?.Value ??
+                    SignedCodalMoney.Empty,
                     incomeStatements.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.GrossProfitLoss)?.Value ?? SignedCodalMoney.Empty,
-                    incomeStatements.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.OperatingProfitLoss)?.Value ?? SignedCodalMoney.Empty,
-                    incomeStatements.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.OtherNoneOperationalIncomeOrExpense)?.Value ?? SignedCodalMoney.Empty,
-                    incomeStatements.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.OtherNoneOperationalIncomeOrExpense)?.Value.Value ?? CodalMoney.Empty,
+                    incomeStatements.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.OperatingProfitLoss)?.Value ??
+                    SignedCodalMoney.Empty,
+                    incomeStatements.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.OtherNoneOperationalIncomeOrExpense)?.Value ??
+                    SignedCodalMoney.Empty,
+                    incomeStatements.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.OtherNoneOperationalIncomeOrExpense)?.Value
+                        .Value ?? CodalMoney.Empty,
                     incomeStatements.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.NetIncomeLoss)?.Value ?? SignedCodalMoney.Empty
                 )
                 .SetSale(
@@ -136,10 +142,16 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
                 )
                 .SetFinancialPosition(
                     balanceSheets.FirstOrDefault(x =>
-                        x.CodalCategory == BalanceSheetCategory.Assets && x.CodalRow == BalanceSheetRow.TotalAssets)?.Value.Value ?? CodalMoney.Empty,
-                    balanceSheets.FirstOrDefault(x => x.CodalCategory == BalanceSheetCategory.Liability && x.CodalRow == BalanceSheetRow.TotalEquity)?.Value.Value ?? CodalMoney.Empty,
-                    balanceSheets.FirstOrDefault(x => x.CodalCategory == BalanceSheetCategory.Assets && x.CodalRow == BalanceSheetRow.TradeAndOtherReceivables)?.Value.Value ?? CodalMoney.Empty,
-                    lastYearIncomeStatement.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.NetIncomeLoss)?.Value ?? SignedCodalMoney.Empty
+                        x.CodalCategory == BalanceSheetCategory.Assets && x.CodalRow == BalanceSheetRow.TotalAssets)?.Value.Value ??
+                    CodalMoney.Empty,
+                    balanceSheets.FirstOrDefault(x =>
+                        x.CodalCategory == BalanceSheetCategory.Liability && x.CodalRow == BalanceSheetRow.TotalEquity)?.Value.Value ??
+                    CodalMoney.Empty,
+                    balanceSheets.FirstOrDefault(x =>
+                            x.CodalCategory == BalanceSheetCategory.Assets && x.CodalRow == BalanceSheetRow.TradeAndOtherReceivables)?.Value
+                        .Value ?? CodalMoney.Empty,
+                    lastYearIncomeStatement.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.NetIncomeLoss)?.Value ??
+                    SignedCodalMoney.Empty
                 )
                 .Build();
             repository.Add(fs);

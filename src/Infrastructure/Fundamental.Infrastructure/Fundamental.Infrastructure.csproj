@@ -10,10 +10,6 @@
     <ItemGroup>
       <ProjectReference Include="..\..\Application\Fundamental.Application\Fundamental.Application.csproj" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Services\Codals\Manufacturing\Calculators\" />
-    </ItemGroup>
     <ItemGroup>
       <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="8.0.0" />
       <PackageReference Include="DotNetCore.CAP.PostgreSql" Version="8.3.3" />
