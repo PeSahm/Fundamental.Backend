@@ -1,30 +1,16 @@
 ﻿#nullable disable
 
 using Fundamental.Domain.Codals.Manufacturing.Enums;
-using Fundamental.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Fundamental.Migrations.Fundamental
 {
     /// <inheritdoc />
-    [DbContext(typeof(FundamentalDbContext))]
-    [Migration("20250303204547_SetBetterConcurrencyTokensIfFsEntity")]
-    public class SetBetterConcurrencyTokensIfFsEntity : Migration
+    public partial class AddExtraInfoJsonColumnsToMonthlyActivity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "last_close_price_date",
-                schema: "manufacturing",
-                table: "financial-statement");
-
-            migrationBuilder.DropColumn(
-                name: "version",
-                schema: "manufacturing",
-                table: "financial-statement");
-
             migrationBuilder.AlterColumn<List<NoneOperationalIncomeTag>>(
                 name: "tags",
                 schema: "manufacturing",
@@ -36,23 +22,21 @@ namespace Fundamental.Migrations.Fundamental
                 oldType: "none_operational_income_tag[]",
                 oldDefaultValue: new List<NoneOperationalIncomeTag>());
 
-            migrationBuilder.AddColumn<uint>(
-                name: "xmin",
+            migrationBuilder.AddColumn<string>(
+                name: "extra_sales_infos",
                 schema: "manufacturing",
-                table: "financial-statement",
-                type: "xid",
-                rowVersion: true,
-                nullable: false,
-                defaultValue: 0u);
+                table: "monthly-activity",
+                type: "jsonb",
+                nullable: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "xmin",
+                name: "extra_sales_infos",
                 schema: "manufacturing",
-                table: "financial-statement");
+                table: "monthly-activity");
 
             migrationBuilder.AlterColumn<List<NoneOperationalIncomeTag>>(
                 name: "tags",
@@ -64,23 +48,6 @@ namespace Fundamental.Migrations.Fundamental
                 oldClrType: typeof(List<NoneOperationalIncomeTag>),
                 oldType: "none_operational_income_tag[]",
                 oldDefaultValue: new List<NoneOperationalIncomeTag>());
-
-            migrationBuilder.AddColumn<DateOnly>(
-                name: "last_close_price_date",
-                schema: "manufacturing",
-                table: "financial-statement",
-                type: "date",
-                nullable: false,
-                defaultValue: new DateOnly(1, 1, 1));
-
-            migrationBuilder.AddColumn<byte[]>(
-                name: "version",
-                schema: "manufacturing",
-                table: "financial-statement",
-                type: "bytea",
-                rowVersion: true,
-                nullable: false,
-                defaultValue: new byte[0]);
         }
     }
 }

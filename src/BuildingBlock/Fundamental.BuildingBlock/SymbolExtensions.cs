@@ -1,4 +1,8 @@
-﻿namespace Fundamental.BuildingBlock;
+﻿using System.Globalization;
+using System.Text.RegularExpressions;
+using DNTPersianUtils.Core;
+
+namespace Fundamental.BuildingBlock;
 
 public static class SymbolExtensions
 {
@@ -113,4 +117,107 @@ public static class SymbolExtensions
 
         _ => @default,
     };
+
+    // Main method to extract sales information
+    public static SalesInfo ExtractFezarInfo(string reportText)
+    {
+        SalesInfo salesInfo = new SalesInfo();
+
+        // Extract report date
+        Match dateMatch = Regex.Match(reportText, @"منتهی به (\d{4}/\d{2}/\d{2})");
+
+        if (dateMatch.Success)
+        {
+            string persianDate = dateMatch.Groups[1].Value.ToEnglishNumbers();
+            string[] dateParts = persianDate.Split('/');
+            salesInfo.Year = int.Parse(dateParts[0]);
+            salesInfo.Month = int.Parse(dateParts[1]);
+            salesInfo.ReportDate = ConvertPersianToGregorianDate(persianDate);
+        }
+
+        // Extract Persian month name
+        salesInfo.PersianMonthName = ExtractPersianMonthName(reportText);
+
+        // Extract monthly sales amount
+        Match monthlySalesMatch = Regex.Match(
+            reportText,
+            @"در (.+?) ماه \d{4} مبلغ ([\d,،]+) میلیارد ریال است");
+
+        if (monthlySalesMatch.Success)
+        {
+            salesInfo.MonthlySales = ParsePersianAmount(monthlySalesMatch.Groups[2].Value) * 1000;
+        }
+
+// Extract cumulative sales amount
+        Match cumulativeSalesMatch = Regex.Match(
+            reportText,
+            @"تا پایان .+?(?:ماه)? \d{4} مبلغ ([\d,،]+) میلیارد ریال است");
+
+        if (!cumulativeSalesMatch.Success)
+        {
+            // Try alternative pattern where month and "ماه" are combined without a space
+            cumulativeSalesMatch = Regex.Match(
+                reportText,
+                @"تا پایان .+?ماه \d{4} مبلغ ([\d,،]+) میلیارد ریال است");
+        }
+
+        if (cumulativeSalesMatch.Success)
+        {
+            salesInfo.CumulativeSales = ParsePersianAmount(cumulativeSalesMatch.Groups[1].Value) * 1000;
+        }
+
+        return salesInfo;
+    }
+
+    // Process a batch of reports
+    public static List<SalesInfo> ExtractFezarInfo(List<string> reports)
+    {
+        List<SalesInfo> results = new List<SalesInfo>();
+
+        foreach (string report in reports)
+        {
+            SalesInfo salesInfo = ExtractFezarInfo(report);
+            results.Add(salesInfo);
+        }
+
+        return results;
+    }
+
+    // Helper method to parse Persian numbers and commas
+    private static decimal ParsePersianAmount(string amountStr)
+    {
+        amountStr = amountStr.ToEnglishNumbers();
+
+        // Replace Persian commas with standard commas
+        amountStr = amountStr.Replace('،', ',');
+
+        // Remove all commas
+        amountStr = amountStr.Replace(",", string.Empty);
+
+        return decimal.Parse(amountStr, CultureInfo.InvariantCulture);
+    }
+
+    // Helper method to extract Persian month name
+    private static string ExtractPersianMonthName(string text)
+    {
+        Match monthMatch = Regex.Match(text, @"(?:در|پایان) (شهریور|مهر|آبان|آذر|دی|بهمن|اسفند|فروردین|اردیبهشت|خرداد|تیر|مرداد) ماه");
+        return monthMatch.Success ? monthMatch.Groups[1].Value : string.Empty;
+    }
+
+    // Helper method to convert Persian date to Gregorian
+    private static DateTime ConvertPersianToGregorianDate(string persianDate)
+    {
+        return persianDate.ToGregorianDateTime() ?? DateTime.Now;
+    }
+
+    // Models to store extracted data
+    public class SalesInfo
+    {
+        public DateTime ReportDate { get; set; }
+        public int Year { get; set; }
+        public int Month { get; set; }
+        public decimal MonthlySales { get; set; }
+        public decimal CumulativeSales { get; set; }
+        public string PersianMonthName { get; set; }
+    }
 }

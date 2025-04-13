@@ -1,4 +1,5 @@
-﻿using Fundamental.Domain.Codals.ValueObjects;
+﻿using Fundamental.BuildingBlock;
+using Fundamental.Domain.Codals.ValueObjects;
 using Fundamental.Domain.Common.BaseTypes;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Common.ValueObjects;
@@ -21,6 +22,7 @@ public class MonthlyActivity : BaseEntity<Guid>
         CodalMoney saleIncludeCurrentMonth,
         CodalMoney saleLastYear,
         bool hasSubCompanySale,
+        List<SymbolExtensions.SalesInfo> extraSalesInfos,
         DateTime createdAt
     )
     {
@@ -36,6 +38,7 @@ public class MonthlyActivity : BaseEntity<Guid>
         SaleIncludeCurrentMonth = saleIncludeCurrentMonth;
         SaleLastYear = saleLastYear;
         HasSubCompanySale = hasSubCompanySale;
+        ExtraSalesInfos = extraSalesInfos;
         CreatedAt = createdAt;
         UpdatedAt = createdAt;
     }
@@ -68,6 +71,8 @@ public class MonthlyActivity : BaseEntity<Guid>
 
     public bool HasSubCompanySale { get; private set; }
 
+    public List<SymbolExtensions.SalesInfo> ExtraSalesInfos { get; private set; } = new();
+
     public void Update(
         Symbol symbol,
         ulong traceNo,
@@ -80,6 +85,7 @@ public class MonthlyActivity : BaseEntity<Guid>
         CodalMoney saleIncludeCurrentMonth,
         CodalMoney saleLastYear,
         bool hasSubCompanySale,
+        List<SymbolExtensions.SalesInfo> extraSalesInfos,
         DateTime updatedAt
     )
     {
@@ -94,6 +100,7 @@ public class MonthlyActivity : BaseEntity<Guid>
         SaleIncludeCurrentMonth = saleIncludeCurrentMonth;
         SaleLastYear = saleLastYear;
         HasSubCompanySale = hasSubCompanySale;
+        ExtraSalesInfos = extraSalesInfos;
         UpdatedAt = updatedAt;
     }
 }

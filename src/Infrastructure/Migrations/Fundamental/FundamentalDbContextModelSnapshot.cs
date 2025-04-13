@@ -2203,6 +2203,48 @@ namespace Fundamental.Migrations.Fundamental
                         .IsRequired()
                         .HasConstraintName("fk_monthly_activity_symbols_symbol_id");
 
+                    b.OwnsMany("Fundamental.BuildingBlock.SymbolExtensions+SalesInfo", "ExtraSalesInfos", b1 =>
+                        {
+                            b1.Property<long>("MonthlyActivity_id")
+                                .HasColumnType("bigint");
+
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer");
+
+                            b1.Property<decimal>("CumulativeSales")
+                                .HasColumnType("numeric");
+
+                            b1.Property<int>("Month")
+                                .HasColumnType("integer");
+
+                            b1.Property<decimal>("MonthlySales")
+                                .HasColumnType("numeric");
+
+                            b1.Property<string>("PersianMonthName")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<DateTime>("ReportDate")
+                                .HasColumnType("timestamp with time zone");
+
+                            b1.Property<int>("Year")
+                                .HasColumnType("integer");
+
+                            b1.HasKey("MonthlyActivity_id", "Id")
+                                .HasName("pk_monthly_activity");
+
+                            b1.ToTable("monthly-activity", "manufacturing");
+
+                            b1.ToJson("extra_sales_infos");
+
+                            b1.WithOwner()
+                                .HasForeignKey("MonthlyActivity_id")
+                                .HasConstraintName("fk_monthly_activity_monthly_activity_monthly_activity_id");
+                        });
+
+                    b.Navigation("ExtraSalesInfos");
+
                     b.Navigation("Symbol");
                 });
 

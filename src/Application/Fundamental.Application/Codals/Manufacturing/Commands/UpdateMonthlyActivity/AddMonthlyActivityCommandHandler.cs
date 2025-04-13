@@ -1,5 +1,6 @@
 ﻿using Fundamental.Application.Codals.Manufacturing.Specifications;
 using Fundamental.Application.Symbols.Specifications;
+using Fundamental.BuildingBlock;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.Domain.Symbols.Entities;
@@ -71,6 +72,7 @@ public sealed class AddMonthlyActivityCommandHandler(
             request.SaleIncludeCurrentMonth,
             request.SaleLastYear,
             request.HasSubCompanySale,
+            new List<SymbolExtensions.SalesInfo>(),
             DateTime.Now
         );
         await unitOfWork.SaveChangesAsync(cancellationToken);
