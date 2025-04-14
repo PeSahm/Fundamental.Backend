@@ -25,6 +25,7 @@ public enum HandlerCode : ushort
 
     UpdateClosePrices = 14_100,
 
+    UpdateFinancialStatementSales = 13_377,
     GetFinancialStatementsData = 13_378,
     UpdateNoneOperationalIncomeTags = 13_379,
     RejectStatusOfViableCompany = 13_380,
