@@ -1,6 +1,8 @@
 ﻿using Fundamental.BuildingBlock;
+using Fundamental.Domain.Codals.Manufacturing.Events;
 using Fundamental.Domain.Codals.ValueObjects;
 using Fundamental.Domain.Common.BaseTypes;
+using Fundamental.Domain.Common.Constants;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Common.ValueObjects;
 using Fundamental.Domain.Symbols.Entities;
@@ -41,6 +43,18 @@ public class MonthlyActivity : BaseEntity<Guid>
         ExtraSalesInfos = extraSalesInfos;
         CreatedAt = createdAt;
         UpdatedAt = createdAt;
+
+        AddDomainEvent(
+            new MonthlyActivityUpdated(
+                Symbol.Isin,
+                ReportMonth,
+                FiscalYear,
+                SaleCurrentMonth,
+                SaleBeforeCurrentMonth,
+                SaleLastYear
+            ),
+            EventsAddress.MonthlyActivity.MONTHLY_ACTIVITY_UPDATE
+        );
     }
 
     protected MonthlyActivity()
@@ -102,5 +116,17 @@ public class MonthlyActivity : BaseEntity<Guid>
         HasSubCompanySale = hasSubCompanySale;
         ExtraSalesInfos = extraSalesInfos;
         UpdatedAt = updatedAt;
+
+        AddDomainEvent(
+            new MonthlyActivityUpdated(
+                Symbol.Isin,
+                ReportMonth,
+                FiscalYear,
+                SaleCurrentMonth,
+                SaleBeforeCurrentMonth,
+                SaleLastYear
+            ),
+            EventsAddress.MonthlyActivity.MONTHLY_ACTIVITY_UPDATE
+        );
     }
 }

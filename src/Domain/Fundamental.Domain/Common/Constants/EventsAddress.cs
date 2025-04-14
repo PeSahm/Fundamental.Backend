@@ -12,4 +12,9 @@ public static class EventsAddress
     {
         public const string FINANCIAL_STATEMENT_EVENT_GROUP = "FinancialStatement";
     }
+
+    public static class MonthlyActivity
+    {
+        public const string MONTHLY_ACTIVITY_UPDATE = "monthly-activity.monthly-activity-update";
+    }
 }
