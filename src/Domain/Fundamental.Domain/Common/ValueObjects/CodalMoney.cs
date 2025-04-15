@@ -46,10 +46,7 @@ public sealed class CodalMoney : IEquatable<CodalMoney>
 
     public decimal RealValue => _value >= 0 ? _value : 0;
 
-    public IsoCurrency Currency
-    {
-        get;
-    }
+    public IsoCurrency Currency { get; private set; } = AppConfig.BASE_CURRENCY;
 
     private bool SetInternally { get; set; }
 
