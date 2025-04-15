@@ -63,13 +63,13 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
             });
 
         builder.Property(x => x.LastClosePrice)
-            .HasPrecision(18, 2);
+            .HasPrecision(36, 10);
 
         builder.Property(x => x.MarketCap)
-            .HasPrecision(18, 2);
+            .HasPrecision(36, 10);
 
         builder.Property(x => x.MarketValue)
-            .HasPrecision(18, 2);
+            .HasPrecision(36, 10);
 
         builder.ComplexProperty(
             x => x.OperationalIncome,
@@ -158,19 +158,19 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
         );
 
         builder.Property(x => x.ThisPeriodSaleRatio)
-            .HasPrecision(18, 2);
+            .HasPrecision(36, 10);
 
         builder.Property(x => x.ThisPeriodSaleRatioWithLastYear)
-            .HasPrecision(18, 2);
+            .HasPrecision(36, 10);
 
         builder.Property(x => x.GrossMargin)
-            .HasPrecision(18, 2);
+            .HasPrecision(36, 10);
 
         builder.Property(x => x.OperationalMargin)
-            .HasPrecision(18, 2);
+            .HasPrecision(36, 10);
 
         builder.Property(x => x.NetMargin)
-            .HasPrecision(18, 4);
+            .HasPrecision(36, 10);
 
         builder.ComplexProperty(
             x => x.ForecastSale,
@@ -193,19 +193,19 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
         );
 
         builder.Property(x => x.TargetMarketValue)
-            .HasPrecision(18, 2);
+            .HasPrecision(36, 10);
 
         builder.Property(x => x.TargetPrice)
-            .HasPrecision(18, 2);
+            .HasPrecision(36, 10);
 
         builder.Property(x => x.OptimalBuyPrice)
-            .HasPrecision(18, 2);
+            .HasPrecision(36, 10);
 
         builder.Property(x => x.Pe)
-            .HasPrecision(18, 2);
+            .HasPrecision(36, 10);
 
         builder.Property(x => x.Ps)
-            .HasPrecision(18, 2);
+            .HasPrecision(36, 10);
 
         builder.ComplexProperty(
             x => x.Assets,
@@ -218,13 +218,13 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
         );
 
         builder.Property(x => x.OwnersEquityRatio)
-            .HasPrecision(18, 2);
+            .HasPrecision(36, 10);
 
         builder.Property(x => x.Pa)
-            .HasPrecision(18, 2);
+            .HasPrecision(36, 10);
 
         builder.Property(x => x.Pb)
-            .HasPrecision(18, 2);
+            .HasPrecision(36, 10);
 
         builder.ComplexProperty(
             x => x.Receivables,
@@ -232,7 +232,7 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
         );
 
         builder.Property(x => x.ReceivableRatio)
-            .HasPrecision(18, 2);
+            .HasPrecision(36, 10);
 
         builder.ComplexProperty(
             x => x.LastYearNetProfitOrLoss,
@@ -240,10 +240,10 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
         );
 
         builder.Property(x => x.NetProfitGrowthRatio)
-            .HasPrecision(18, 2);
+            .HasPrecision(36, 10);
 
         builder.Property(x => x.Peg)
-            .HasPrecision(18, 2);
+            .HasPrecision(36, 10);
 
         builder.ComplexProperty(
             x => x.DpsLastYear,
