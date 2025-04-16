@@ -27,11 +27,11 @@ public abstract class EntityTypeConfigurationBase<TEntity> : IEntityTypeConfigur
         builder.HasIndex(x => x.Id).IsUnique();
 
         builder.Property(e => e.CreatedAt)
-            .HasColumnType(NpgsqlTypes.NpgsqlDbType.Timestamp.ToString())
+            .HasColumnType("timestamp with time zone")
             .HasColumnName("CreatedAt");
 
         builder.Property(x => x.UpdatedAt)
-            .HasColumnType(NpgsqlTypes.NpgsqlDbType.Timestamp.ToString())
+            .HasColumnType("timestamp with time zone")
             .HasColumnName("ModifiedAt");
 
         ExtraConfigure(builder);
