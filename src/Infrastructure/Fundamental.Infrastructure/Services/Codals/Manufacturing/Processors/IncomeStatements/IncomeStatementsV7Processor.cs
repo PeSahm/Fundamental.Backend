@@ -69,6 +69,11 @@ public sealed class IncomeStatementsV7Processor(IServiceScopeFactory serviceScop
 
         foreach (YearDatum yearDatum in incomeStatementDto.YearData)
         {
+            if (yearDatum.FiscalYear == null || yearDatum.FiscalMonth == null || yearDatum.ReportMonth == null)
+            {
+                continue; // Skip this record if any required date fields are null
+            }
+
             Symbol symbol =
                 await dbContext.Symbols.FirstAsync(
                     predicate: x => x.Isin == statement.Isin,
@@ -93,9 +98,9 @@ public sealed class IncomeStatementsV7Processor(IServiceScopeFactory serviceScop
                     symbol,
                     statement.TracingNo,
                     statement.HtmlUrl,
-                    fiscalYear: yearDatum.FiscalYear!,
-                    yearEndMonth: yearDatum.FiscalMonth!.Value,
-                    reportMonth: yearDatum.ReportMonth!.Value,
+                    fiscalYear: yearDatum.FiscalYear.Value,
+                    yearEndMonth: yearDatum.FiscalMonth.Value,
+                    reportMonth: yearDatum.ReportMonth.Value,
                     row: rowItem.RowNumber,
                     rowItem.RowCode,
                     rowItem.GetDescription(),
