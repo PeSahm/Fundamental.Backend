@@ -24,7 +24,6 @@ public sealed class UpdateSymbolDataCommandHandler(
         {
             if (symbol.SymbolCustomExtension.ProductType is null)
             {
-                logger.LogWarning("ProductType is null for symbol {Symbol}", symbol.Isin);
                 continue;
             }
 

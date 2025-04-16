@@ -71,6 +71,13 @@ public class CommonErrorsPipelineBehavior<TRequest, TResponse>(
             };
             LogError("HANDLER.ERROR.DATABASE", e, handlerCode, handlerNumber, response.Error.Value.Code);
         }
+        catch (Exception e) when (e.InnerException is TaskCanceledException)
+        {
+            response = new TResponse
+            {
+                Success = false, Error = CommonErrorCode.DatabaseError.ForRequest(request),
+            };
+        }
         catch (Exception e)
         {
             response = new TResponse
