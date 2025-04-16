@@ -27,8 +27,6 @@ public sealed class UpdateCodalPublisherDataCommandHandler(
 
         foreach (GetPublisherResponse publisher in publishers)
         {
-            try
-            {
                 Symbol? symbol = null;
                 Symbol? parentSymbol = null;
 
@@ -114,13 +112,8 @@ public sealed class UpdateCodalPublisherDataCommandHandler(
                     };
                     repository.Add(entity);
                 }
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "Error in Update Codal Publisher Data Job {@Publisher}", publisher);
-            }
 
-            await unitOfWork.SaveChangesAsync(cancellationToken);
+                await unitOfWork.SaveChangesAsync(cancellationToken);
         }
 
         return Response.Successful();
