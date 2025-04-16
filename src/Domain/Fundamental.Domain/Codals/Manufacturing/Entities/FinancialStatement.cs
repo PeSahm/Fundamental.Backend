@@ -21,13 +21,12 @@ public class FinancialStatement : BaseEntity<Guid>
     {
         Id = id;
         Symbol = symbol;
-        CreatedAt = createdAt;
+        CreatedAt = createdAt.ToUniversalTime();
         Currency = currency;
         TraceNo = traceNo;
         FiscalYear = fiscalYear;
         YearEndMonth = yearEndMonth;
-        UpdatedAt = createdAt;
-        UpdatedAt = createdAt;
+        UpdatedAt = createdAt.ToUniversalTime();
     }
 
     protected FinancialStatement()

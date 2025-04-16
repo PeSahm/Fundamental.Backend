@@ -13,7 +13,8 @@ public class ClosePrice : BaseEntity<Guid>
         Id = id;
         Symbol = symbol;
         Date = date;
-        CreatedAt = createdAt;
+        CreatedAt = createdAt.ToUniversalTime();
+        UpdatedAt = createdAt.ToUniversalTime();
     }
 
     protected ClosePrice()
@@ -56,7 +57,7 @@ public class ClosePrice : BaseEntity<Guid>
         High = high;
         Low = low;
         Last = last;
-        UpdatedAt = updatedAt;
+        UpdatedAt = updatedAt.ToUniversalTime();
         AddDomainEvent(new ClosePriceUpdated(this.Symbol.Isin, close, this.Date), EventsAddress.ClosePrice.PRICE_UPDATE);
     }
 
@@ -74,7 +75,7 @@ public class ClosePrice : BaseEntity<Guid>
         HighAdjusted = highAdjusted;
         LowAdjusted = lowAdjusted;
         LastAdjusted = lastAdjusted;
-        UpdatedAt = updatedAt;
+        UpdatedAt = updatedAt.ToUniversalTime();
     }
 
     public void SetPriceStatistics(ulong volume, ulong quantity, ulong value, DateTime updatedAt)
@@ -82,6 +83,6 @@ public class ClosePrice : BaseEntity<Guid>
         Volume = volume;
         Quantity = quantity;
         Value = value;
-        UpdatedAt = updatedAt;
+        UpdatedAt = updatedAt.ToUniversalTime();
     }
 }
