@@ -21,7 +21,6 @@ namespace Fundamental.Infrastructure.Services.Codals;
 public class CodalService(
     IHttpClientFactory httpClientFactory,
     IOptions<MdpOption> monthlyActivityOption,
-    ILogger<CodalService> logger,
     IServiceScopeFactory serviceScopeFactory
 )
     : ICodalService
@@ -120,7 +119,6 @@ public class CodalService(
 
         if (!response.IsSuccessStatusCode)
         {
-            logger.LogWarning(message: "Failed to get statement json for trace no {@TraceNo}", args: statement.TracingNo);
             return;
         }
 
@@ -130,11 +128,9 @@ public class CodalService(
         }
 
         string rawJson = await response.Content.ReadAsStringAsync(cancellationToken);
-        logger.LogDebug("Received JSON content for trace no {TraceNo}: {Json}", statement.TracingNo, rawJson);
 
         if (!rawJson.IsValidJson())
         {
-            logger.LogError("Invalid JSON received for trace no {TraceNo}: {Json}", statement.TracingNo, rawJson);
             return;
         }
 
@@ -152,7 +148,6 @@ public class CodalService(
 
         if (!jsonData.Json.IsValidJson())
         {
-            logger.LogError("Invalid nested JSON content for trace no {TraceNo}: {Json}", statement.TracingNo, jsonData.Json);
             return;
         }
 
@@ -181,7 +176,6 @@ public class CodalService(
 
         if (!publisherResponse.IsSuccessStatusCode)
         {
-            logger.LogError(message: "Failed to get publishers");
             return new();
         }
 
@@ -190,7 +184,6 @@ public class CodalService(
 
         if (string.IsNullOrWhiteSpace(stringResponse))
         {
-            logger.LogError(message: "Failed to get publishers");
             return new();
         }
 
