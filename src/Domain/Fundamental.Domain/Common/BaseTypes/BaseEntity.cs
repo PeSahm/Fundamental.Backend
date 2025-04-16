@@ -25,6 +25,22 @@ public abstract class BaseEntity<TId> : IHaveEvent
     }
 
     public TId Id { get; protected set; }
-    public DateTime CreatedAt { get; protected set; }
-    public DateTime? UpdatedAt { get; protected set; }
+
+    private DateTime _createdAt;
+    public DateTime CreatedAt
+    {
+        get => _createdAt;
+        protected set => _createdAt = value.Kind == DateTimeKind.Unspecified ? 
+            DateTime.SpecifyKind(value, DateTimeKind.Utc) : 
+            value.ToUniversalTime();
+    }
+
+    private DateTime? _updatedAt;
+    public DateTime? UpdatedAt
+    {
+        get => _updatedAt;
+        protected set => _updatedAt = value?.Kind == DateTimeKind.Unspecified ? 
+            DateTime.SpecifyKind(value.Value, DateTimeKind.Utc) : 
+            value?.ToUniversalTime();
+    }
 }

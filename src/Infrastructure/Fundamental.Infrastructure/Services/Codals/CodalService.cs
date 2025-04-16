@@ -36,6 +36,12 @@ public class CodalService(
         CancellationToken cancellationToken = default
     )
     {
+        // Ensure fromDate is in UTC
+        if (fromDate.Kind != DateTimeKind.Utc)
+        {
+            fromDate = DateTime.SpecifyKind(fromDate, DateTimeKind.Utc);
+        }
+
         MdpPagedResponse<GetStatementResponse>? response =
             await _mdpClient.GetFromJsonAsync<MdpPagedResponse<GetStatementResponse>>(
                 new StringBuilder()

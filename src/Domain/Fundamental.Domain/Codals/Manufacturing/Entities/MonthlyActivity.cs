@@ -41,8 +41,8 @@ public class MonthlyActivity : BaseEntity<Guid>
         SaleLastYear = saleLastYear;
         HasSubCompanySale = hasSubCompanySale;
         ExtraSalesInfos = extraSalesInfos;
-        CreatedAt = createdAt;
-        UpdatedAt = createdAt;
+        CreatedAt = createdAt.ToUniversalTime();
+        UpdatedAt = createdAt.ToUniversalTime();
 
         AddDomainEvent(
             new MonthlyActivityUpdated(
@@ -115,7 +115,7 @@ public class MonthlyActivity : BaseEntity<Guid>
         SaleLastYear = saleLastYear;
         HasSubCompanySale = hasSubCompanySale;
         ExtraSalesInfos = extraSalesInfos;
-        UpdatedAt = updatedAt;
+        UpdatedAt = updatedAt.ToUniversalTime();
 
         AddDomainEvent(
             new MonthlyActivityUpdated(
