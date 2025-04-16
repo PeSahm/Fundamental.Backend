@@ -25,7 +25,6 @@ public sealed class UpdateFsClosePriceRequestCommandHandler(
 
         if (fs is null)
         {
-            logger.LogWarning("Financial statement not found for ISIN: {Isin} on date: {Date}", request.Event.Isin, request.Event.Date);
             return UpdateFsClosePriceErrorCodes.StatemtentNotFound;
         }
 
