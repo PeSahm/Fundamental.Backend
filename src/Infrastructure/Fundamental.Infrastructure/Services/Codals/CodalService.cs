@@ -123,8 +123,16 @@ public class CodalService(
             return;
         }
 
-        GetStatementJsonResponse? jsonData =
-            await response.Content.ReadFromJsonAsync<GetStatementJsonResponse>(cancellationToken: cancellationToken);
+        string rawJson = await response.Content.ReadAsStringAsync(cancellationToken);
+        logger.LogDebug("Received JSON content for trace no {TraceNo}: {Json}", statement.TracingNo, rawJson);
+
+        if (!rawJson.IsValidJson())
+        {
+            logger.LogError("Invalid JSON received for trace no {TraceNo}: {Json}", statement.TracingNo, rawJson);
+            return;
+        }
+
+        GetStatementJsonResponse? jsonData = await response.Content.ReadFromJsonAsync<GetStatementJsonResponse>(cancellationToken: cancellationToken);
 
         if (jsonData is null)
         {
@@ -138,6 +146,7 @@ public class CodalService(
 
         if (!jsonData.Json.IsValidJson())
         {
+            logger.LogError("Invalid nested JSON content for trace no {TraceNo}: {Json}", statement.TracingNo, jsonData.Json);
             return;
         }
 
