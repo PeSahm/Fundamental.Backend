@@ -37,15 +37,14 @@ public sealed class UpdateIndexDataCommandHandler(
 
             if (indexSymbol is null)
             {
-                logger.LogWarning("Index symbol not found for {Isin}", index.Isin);
                 continue;
             }
 
-            if (simpleIndices.Exists(x => x.Isin == index.Isin && x.Date == fromDate))
+            if (simpleIndices.Exists(x => x.Isin == index.Isin && x.Date == index.Date.ToDateOnly()))
             {
                 Index? existingIndex = await repository.FirstOrDefaultAsync(
                     new IndexSpec().WhereIsin(index.Isin)
-                        .WhereDate(fromDate),
+                        .WhereDate(index.Date.ToDateOnly()),
                     cancellationToken);
 
                 if (existingIndex is null)
