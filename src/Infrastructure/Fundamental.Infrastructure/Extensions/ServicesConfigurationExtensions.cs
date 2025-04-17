@@ -14,6 +14,7 @@ using Fundamental.Infrastructure.HostedServices.Codals;
 using Fundamental.Infrastructure.Persistence;
 using Fundamental.Infrastructure.Persistence.Repositories.Base;
 using Fundamental.Infrastructure.Repositories;
+using Fundamental.Infrastructure.Serialization;
 using Fundamental.Infrastructure.Services;
 using Fundamental.Infrastructure.Services.Codals;
 using Fundamental.Infrastructure.Services.Codals.Factories;
@@ -125,6 +126,11 @@ public static class ServicesConfigurationExtensions
                 };
                 options.UseStorageLock = true;
                 options.ConsumerThreadCount = 2;
+                options.JsonSerializerOptions.Converters.Add(new StatementMonthJsonConverter());
+                options.JsonSerializerOptions.Converters.Add(new FiscalYearJsonConverter());
+                options.JsonSerializerOptions.Converters.Add(new CodalMoneyJsonConverter());
+                options.JsonSerializerOptions.Converters.Add(new MonthlyActivityUpdatedJsonConverter());
+                options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
             });
 
         return builder;
