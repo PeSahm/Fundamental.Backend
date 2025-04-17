@@ -24,6 +24,9 @@ builder.Services.AddControllers(options =>
     {
         x.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
         x.JsonSerializerOptions.Converters.Add(new SaleColumnIdConvertor());
+        x.JsonSerializerOptions.Converters.Add(new StatementMonthJsonConverter());
+        x.JsonSerializerOptions.Converters.Add(new FiscalYearJsonConverter());
+        x.JsonSerializerOptions.Converters.Add(new CodalMoneyJsonConverter());
     })
     .ConfigureCustomApiBehaviorOptions();
 builder.Services.Configure<ApiBehaviorOptions>(options
