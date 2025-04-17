@@ -132,7 +132,7 @@ public static class SymbolExtensions
             string[] dateParts = persianDate.Split('/');
             salesInfo.Year = int.Parse(dateParts[0]);
             salesInfo.Month = int.Parse(dateParts[1]);
-            salesInfo.ReportDate = ConvertPersianToGregorianDate(persianDate);
+            salesInfo.ReportDate = ConvertPersianToGregorianDate(persianDate).ToUniversalTime();
         }
 
         // Extract Persian month name
