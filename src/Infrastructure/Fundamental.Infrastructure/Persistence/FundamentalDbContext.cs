@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Coravel.Pro.EntityFramework;
 using Fundamental.Domain.Codals;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
@@ -13,7 +14,7 @@ using Index = Fundamental.Domain.Symbols.Entities.Index;
 
 namespace Fundamental.Infrastructure.Persistence;
 
-public class FundamentalDbContext : DbContext, IUnitOfWork
+public class FundamentalDbContext : DbContext, IUnitOfWork, ICoravelProDbContext
 {
     public FundamentalDbContext()
     {
@@ -54,24 +55,14 @@ public class FundamentalDbContext : DbContext, IUnitOfWork
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // modelBuilder.HasPostgresEnum<IsoCurrency>();
-        // modelBuilder.HasPostgresEnum<ReportingType>();
-        // modelBuilder.HasPostgresEnum<CompanyType>();
-        // modelBuilder.HasPostgresEnum<EnableSubCompany>();
-        // modelBuilder.HasPostgresEnum<PublisherFundType>();
-        // modelBuilder.HasPostgresEnum<PublisherSubCompanyType>();
-        // modelBuilder.HasPostgresEnum<PublisherMarketType>();
-        // modelBuilder.HasPostgresEnum<PublisherState>();
-        // modelBuilder.HasPostgresEnum<ReviewStatus>();
-        // modelBuilder.HasPostgresEnum<ProductType>();
-        // modelBuilder.HasPostgresEnum<ExchangeType>();
-        // modelBuilder.HasPostgresEnum<EtfType>();
-        // modelBuilder.HasPostgresEnum<NoneOperationalIncomeTag>();
-
         modelBuilder.ApplyConfigurationsFromAssembly(
             Assembly.GetExecutingAssembly(),
             type => type.Namespace!.StartsWith(typeof(SymbolConfiguration).Namespace!) ||
                     type.Namespace!.StartsWith(typeof(FairConfiguration).Namespace!)
         );
     }
+
+    public DbSet<CoravelJobHistory> Coravel_JobHistory { get; set; }
+    public DbSet<CoravelScheduledJob> Coravel_ScheduledJobs { get; set; }
+    public DbSet<CoravelScheduledJobHistory> Coravel_ScheduledJobHistory { get; set; }
 }

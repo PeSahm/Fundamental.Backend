@@ -1,8 +1,10 @@
 using System.Reflection;
+using Coravel.Pro;
 using ErrorHandling.AspNetCore;
 using FluentValidation;
 using Fundamental.Application;
 using Fundamental.Infrastructure.Extensions;
+using Fundamental.Infrastructure.Persistence;
 using Fundamental.Infrastructure.Serialization;
 using Fundamental.Web.Common.Extensions;
 using Fundamental.WebApi.Extensions;
@@ -46,6 +48,10 @@ builder.Configuration
     .AddEnvironmentVariables();
 builder.Services.AddBuilders().AddDbRetryPolicy();
 builder.Services.AddCap();
+
+builder.Services.AddRazorPages().AddNewtonsoftJson();
+builder.Services.AddCoravelPro(typeof(FundamentalDbContext));
+
 
 builder.Services.AddHttpContextAccessor();
 builder.Host.UseSerilog((context, serviceProvider, configuration) =>
@@ -102,4 +108,7 @@ app.UseMiddleware<ErrorLoggingMiddleware>();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapRazorPages();
+app.UseCoravelPro();
+
 await app.RunAsync();
