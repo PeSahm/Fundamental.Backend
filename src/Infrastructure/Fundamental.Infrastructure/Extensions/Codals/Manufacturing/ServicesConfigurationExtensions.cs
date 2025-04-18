@@ -49,10 +49,4 @@ public static class ServicesConfigurationExtensions
     {
         builder.AddScoped<EventDataDispatcher>();
     }
-
-    public static void AddManufacturingHostedServices(this IServiceCollection builder)
-    {
-        builder.AddHostedService<CodalHostedService>();
-        builder.AddHostedService<CalculationHostedService>();
-    }
 }
