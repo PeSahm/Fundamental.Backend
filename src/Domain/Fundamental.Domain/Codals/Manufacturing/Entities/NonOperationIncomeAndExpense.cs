@@ -77,12 +77,14 @@ public sealed class NonOperationIncomeAndExpense : BaseEntity<Guid>
 
     public bool YearlyForecastPeriod { get; set; }
 
-    public List<NoneOperationalIncomeTag> Tags { get; } = new();
+    private readonly List<NoneOperationalIncomeTag> _tags = new();
 
     public NonOperationIncomeAndExpense UpdateTags(NoneOperationalIncomeTag[] tags)
     {
-        Tags.Clear();
-        Tags.AddRange(tags);
+        _tags.Clear();
+        _tags.AddRange(tags);
         return this;
     }
+
+    public List<NoneOperationalIncomeTag> Tags => _tags;
 }
