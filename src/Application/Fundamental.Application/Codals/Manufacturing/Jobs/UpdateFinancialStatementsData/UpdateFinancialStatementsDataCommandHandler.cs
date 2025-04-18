@@ -1,10 +1,8 @@
 ﻿using DNTPersianUtils.Core;
-using Fundamental.Application.Codals.Jobs.Specifications;
 using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Application.Codals.Manufacturing.Specifications;
 using Fundamental.Application.Prices.Specifications;
 using Fundamental.Application.Symbols.Specifications;
-using Fundamental.Domain.Codals;
 using Fundamental.Domain.Codals.Manufacturing.Builders.FinancialStatements;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
@@ -25,7 +23,6 @@ namespace Fundamental.Application.Codals.Manufacturing.Jobs.UpdateFinancialState
 public sealed class UpdateFinancialStatementsDataCommandHandler(
     IRepository repository,
     IBalanceSheetReadRepository balanceSheetReadRepository,
-    IIncomeStatementsReadRepository incomeStatementsReadRepository,
     IUnitOfWork unitOfWork,
     IFinancialStatementBuilder financialStatementBuilder,
     IMonthlyActivityRepository monthlyActivityRepository,
@@ -78,30 +75,22 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
                     cancellationToken);
 
             CodalMoney addedOperationalRevenue = CodalMoney.Empty;
-            List<Publisher> subPublishers = await repository.ListAsync(PublisherSpec.WhereParentIsin(symbol.Isin), cancellationToken);
 
-            foreach (Publisher thePublisher in subPublishers)
-            {
-                SignedCodalMoney? thePublisherIncome =
-                    await incomeStatementsReadRepository.GetLastIncomeStatement(
-                        thePublisher.Symbol.Isin,
-                        headerData.FiscalYear,
-                        headerData.ReportMonth,
-                        IncomeStatementRow.OtherOperatingRevenue,
-                        cancellationToken
-                    );
+            // List<Publisher> subPublishers = await repository.ListAsync(PublisherSpec.WhereParentIsin(symbol.Isin), cancellationToken);
 
-                if (thePublisherIncome is null)
-                {
-                    continue;
-                }
-
-                if (thePublisherIncome < 0)
-                {
-                }
-
-                // addedOperationalRevenue += thePublisherIncome;
-            }
+            // foreach (Publisher thePublisher in subPublishers)
+            // {
+            //     SignedCodalMoney? thePublisherIncome =
+            //         await incomeStatementsReadRepository.GetLastIncomeStatement(
+            //             thePublisher.Symbol.Isin,
+            //             headerData.FiscalYear,
+            //             headerData.ReportMonth,
+            //             IncomeStatementRow.OtherOperatingRevenue,
+            //             cancellationToken
+            //         );
+            //
+            //     // addedOperationalRevenue += thePublisherIncome;
+            // }
 
             SignedCodalMoney allOperationalIncome = incomeStatements.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.Sales)?.Value ??
                                                     SignedCodalMoney.Empty;
@@ -122,16 +111,12 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
                 .SetIncomeStatement(
                     headerData.ReportMonth,
                     allOperationalIncome,
-                    incomeStatements.FirstOrDefault(x =>
-                        x.CodalRow == IncomeStatementRow.OtherOperatingRevenue)?.Value ?? SignedCodalMoney.Empty,
-                    incomeStatements.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.GrossProfitLoss)?.Value ?? SignedCodalMoney.Empty,
-                    incomeStatements.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.OperatingProfitLoss)?.Value ??
-                    SignedCodalMoney.Empty,
-                    incomeStatements.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.OtherNoneOperationalIncomeOrExpense)?.Value ??
-                    SignedCodalMoney.Empty,
-                    incomeStatements.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.OtherNoneOperationalIncomeOrExpense)?.Value
-                        .Value ?? CodalMoney.Empty,
-                    incomeStatements.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.NetIncomeLoss)?.Value ?? SignedCodalMoney.Empty
+                    GetOtherOperationalIncome(incomeStatements),
+                    GrossProfitOrLoss(incomeStatements),
+                    OperationalProfitOrLoss(incomeStatements),
+                    NoneOperationalProfit(incomeStatements),
+                    GetCosts(incomeStatements),
+                    NetProfitOrLoss(incomeStatements)
                 )
                 .SetSale(
                     monthlyActivities?.SaleCurrentMonth ?? CodalMoney.Empty,
@@ -140,17 +125,10 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
                     monthlyActivities?.SaleLastYear ?? CodalMoney.Empty
                 )
                 .SetFinancialPosition(
-                    balanceSheets.FirstOrDefault(x =>
-                        x.CodalCategory == BalanceSheetCategory.Assets && x.CodalRow == BalanceSheetRow.TotalAssets)?.Value.Value ??
-                    CodalMoney.Empty,
-                    balanceSheets.FirstOrDefault(x =>
-                        x.CodalCategory == BalanceSheetCategory.Liability && x.CodalRow == BalanceSheetRow.TotalEquity)?.Value.Value ??
-                    CodalMoney.Empty,
-                    balanceSheets.FirstOrDefault(x =>
-                            x.CodalCategory == BalanceSheetCategory.Assets && x.CodalRow == BalanceSheetRow.TradeAndOtherReceivables)?.Value
-                        .Value ?? CodalMoney.Empty,
-                    lastYearIncomeStatement.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.NetIncomeLoss)?.Value ??
-                    SignedCodalMoney.Empty
+                    GetAssets(balanceSheets),
+                    OwnersEquity(balanceSheets),
+                    Receivables(balanceSheets),
+                    LastYearNetProfit(lastYearIncomeStatement)
                 )
                 .Build();
             repository.Add(fs);
@@ -163,5 +141,65 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
             },
             cancellationToken);
         return Response.Successful();
+
+        SignedCodalMoney GetOtherOperationalIncome(List<IncomeStatement> incomeStatements)
+        {
+            return incomeStatements.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.OtherOperatingRevenue)?.Value ?? SignedCodalMoney.Empty;
+        }
+
+        SignedCodalMoney GrossProfitOrLoss(List<IncomeStatement> incomeStatements)
+        {
+            return incomeStatements.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.GrossProfitLoss)?.Value ?? SignedCodalMoney.Empty;
+        }
+
+        SignedCodalMoney LastYearNetProfit(List<IncomeStatement> lastYearIncomeStatement)
+        {
+            return lastYearIncomeStatement.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.NetIncomeLoss)?.Value ??
+                   SignedCodalMoney.Empty;
+        }
+    }
+
+    private static decimal Receivables(List<BalanceSheet> balanceSheets)
+    {
+        return balanceSheets.FirstOrDefault(x =>
+                x.CodalCategory == BalanceSheetCategory.Assets && x.CodalRow == BalanceSheetRow.TradeAndOtherReceivables)?.Value
+            .Value ?? CodalMoney.Empty;
+    }
+
+    private static decimal OwnersEquity(List<BalanceSheet> balanceSheets)
+    {
+        return balanceSheets.FirstOrDefault(x =>
+                   x.CodalCategory == BalanceSheetCategory.Liability && x.CodalRow == BalanceSheetRow.TotalEquity)?.Value.Value ??
+               CodalMoney.Empty;
+    }
+
+    private static decimal GetAssets(List<BalanceSheet> balanceSheets)
+    {
+        return balanceSheets.FirstOrDefault(x =>
+                   x.CodalCategory == BalanceSheetCategory.Assets && x.CodalRow == BalanceSheetRow.TotalAssets)?.Value.Value ??
+               CodalMoney.Empty;
+    }
+
+    private static SignedCodalMoney NetProfitOrLoss(List<IncomeStatement> incomeStatements)
+    {
+        return incomeStatements.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.NetIncomeLoss)?.Value ?? SignedCodalMoney.Empty;
+    }
+
+    private static decimal GetCosts(List<IncomeStatement> incomeStatements)
+    {
+        return incomeStatements.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.OtherNoneOperationalIncomeOrExpense)?.Value
+            .Value ?? CodalMoney.Empty;
+    }
+
+    private static SignedCodalMoney NoneOperationalProfit(List<IncomeStatement> incomeStatements)
+    {
+        return incomeStatements.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.OtherNoneOperationalIncomeOrExpense)?.Value ??
+               SignedCodalMoney.Empty;
+    }
+
+    private static SignedCodalMoney OperationalProfitOrLoss(List<IncomeStatement> incomeStatements)
+    {
+        return incomeStatements.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.OperatingProfitLoss)?.Value ??
+               SignedCodalMoney.Empty;
     }
 }

@@ -8,7 +8,6 @@ using Fundamental.Domain.Symbols.Entities;
 using Fundamental.Domain.Symbols.Enums;
 using Fundamental.ErrorHandling;
 using MediatR;
-using Microsoft.Extensions.Logging;
 using Index = Fundamental.Domain.Symbols.Entities.Index;
 
 namespace Fundamental.Application.Symbols.Jobs.UpdateIndexData;
@@ -16,8 +15,7 @@ namespace Fundamental.Application.Symbols.Jobs.UpdateIndexData;
 public sealed class UpdateIndexDataCommandHandler(
     IRepository repository,
     IMarketDataService marketDataService,
-    IUnitOfWork unitOfWork,
-    ILogger<UpdateIndexDataCommandHandler> logger
+    IUnitOfWork unitOfWork
 ) : IRequestHandler<UpdateIndexDataCommand, Response>
 {
     public async Task<Response> Handle(UpdateIndexDataCommand request, CancellationToken cancellationToken)

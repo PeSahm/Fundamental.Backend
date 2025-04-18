@@ -3,7 +3,6 @@ using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.ErrorHandling;
 using MediatR;
-using Microsoft.Extensions.Logging;
 using Polly;
 using Polly.Registry;
 
@@ -12,7 +11,6 @@ namespace Fundamental.Application.Codals.Manufacturing.EventHandlers.UpdateFsClo
 public sealed class UpdateFsClosePriceRequestCommandHandler(
     IFinancialStatementReadRepository repository,
     IUnitOfWork unitOfWork,
-    ILogger<UpdateFsClosePriceRequestCommandHandler> logger,
     ResiliencePipelineProvider<string> pipelineProvider
 )
     : IRequestHandler<UpdateFsClosePriceRequest, Response>

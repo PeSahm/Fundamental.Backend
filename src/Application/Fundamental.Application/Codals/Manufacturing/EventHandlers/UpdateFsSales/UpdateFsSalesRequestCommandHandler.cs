@@ -18,7 +18,8 @@ public sealed class UpdateFsSalesRequestCommandHandler(
 {
     public async Task<Response> Handle(UpdateFsSalesRequest request, CancellationToken cancellationToken)
     {
-        FinancialStatement? fs = await repository.GetLastFinancialStatement(request.Event.Isin,
+        FinancialStatement? fs = await repository.GetLastFinancialStatement(
+            request.Event.Isin,
             request.Event.FiscalYear,
             request.Event.ReportMonth,
             cancellationToken);

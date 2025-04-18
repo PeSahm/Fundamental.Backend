@@ -16,7 +16,11 @@ public class MonthlyActivityUpdatedJsonConverter : JsonConverter<MonthlyActivity
             // Handle case where data is base64 encoded
             if (reader.TokenType == JsonTokenType.String)
             {
-                string encodedJson = reader.GetString()!;
+                string? encodedJson = reader.GetString();
+                if (string.IsNullOrEmpty(encodedJson))
+                {
+                    throw new JsonException("Encoded JSON string is null or empty");
+                }
 
                 if (encodedJson.StartsWith("data:IEvent;base64,"))
                 {
@@ -35,7 +39,7 @@ public class MonthlyActivityUpdatedJsonConverter : JsonConverter<MonthlyActivity
             if (reader.TokenType != JsonTokenType.StartObject)
             {
                 // If we get a JsonElement directly from CAP, try to deserialize it
-                if (JsonSerializer.Deserialize<JsonElement>(ref reader) is JsonElement element)
+                if (JsonSerializer.Deserialize<JsonElement>(ref reader) is var element)
                 {
                     return DeserializeFromElement(element);
                 }
@@ -62,7 +66,12 @@ public class MonthlyActivityUpdatedJsonConverter : JsonConverter<MonthlyActivity
                     throw new JsonException("Expected PropertyName token");
                 }
 
-                string propertyName = reader.GetString()!;
+                string? propertyName = reader.GetString();
+                if (string.IsNullOrEmpty(propertyName))
+                {
+                    throw new JsonException("Property name is null or empty");
+                }
+
                 reader.Read();
 
                 switch (propertyName.ToLower())
@@ -108,7 +117,8 @@ public class MonthlyActivityUpdatedJsonConverter : JsonConverter<MonthlyActivity
                 }
             }
 
-            ValidateRequiredProperties(isinValue,
+            ValidateRequiredProperties(
+                isinValue,
                 reportMonthValue,
                 fiscalYearValue,
                 saleCurrentMonthValue,

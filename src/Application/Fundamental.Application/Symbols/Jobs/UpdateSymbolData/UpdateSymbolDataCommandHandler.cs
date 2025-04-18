@@ -5,15 +5,13 @@ using Fundamental.Domain.Repositories.Base;
 using Fundamental.Domain.Symbols.Entities;
 using Fundamental.ErrorHandling;
 using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace Fundamental.Application.Symbols.Jobs.UpdateSymbolData;
 
 public sealed class UpdateSymbolDataCommandHandler(
     IRepository repository,
     IMarketDataService marketDataService,
-    IUnitOfWork unitOfWork,
-    ILogger<UpdateSymbolDataCommandHandler> logger
+    IUnitOfWork unitOfWork
 ) : IRequestHandler<UpdateSymbolDataCommand, Response>
 {
     public async Task<Response> Handle(UpdateSymbolDataCommand request, CancellationToken cancellationToken)
@@ -30,7 +28,8 @@ public sealed class UpdateSymbolDataCommandHandler(
             if (await repository.AnyAsync(new SymbolSpec().WhereIsin(symbol.Isin), cancellationToken))
             {
                 Symbol? theSymbol = await repository.FirstOrDefaultAsync(new SymbolSpec().WhereIsin(symbol.Isin), cancellationToken);
-                theSymbol!.Update(
+
+                theSymbol?.Update(
                     symbol.TseInsCode,
                     symbol.EnName,
                     symbol.SymbolEnName,
@@ -47,6 +46,7 @@ public sealed class UpdateSymbolDataCommandHandler(
                     symbol.SymbolCustomExtension.EtfType,
                     DateTime.Now
                 );
+
                 continue;
             }
 

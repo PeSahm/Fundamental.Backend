@@ -22,7 +22,8 @@ public static class SwaggerExtensions
     {
         IApiDescriptionGroupCollectionProvider apiDescriptionGroupCollectionProvider =
             app.Services.GetRequiredService<IApiDescriptionGroupCollectionProvider>();
-        app.UseWhen(context => context.Request.Path.StartsWithSegments($"/{SWAGGER_PREFIX_PATH}"),
+        app.UseWhen(
+            context => context.Request.Path.StartsWithSegments($"/{SWAGGER_PREFIX_PATH}"),
             appBuilder =>
             {
                 appBuilder.UseMiddleware<SwaggerBasicAuthMiddleware>();

@@ -50,7 +50,7 @@ public static class ErrorCodeHelper
     /// <exception cref="ArgumentOutOfRangeException">If client digit of the handler code does not exist in the <see cref="Client" /> enum.</exception>
     public static Client GetClientOfHandlerCode(HandlerCode handlerCode)
     {
-        int clientDigit = (int)handlerCode % 1000 / 100;
+        int clientDigit = ((int)handlerCode % 1000) / 100;
         return Enum.IsDefined(typeof(Client), clientDigit)
             ? (Client)clientDigit
             : throw new ArgumentOutOfRangeException(

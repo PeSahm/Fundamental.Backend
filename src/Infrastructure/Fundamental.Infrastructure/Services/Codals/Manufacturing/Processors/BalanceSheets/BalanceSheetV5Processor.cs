@@ -26,139 +26,127 @@ public sealed class BalanceSheetV5Processor(IServiceScopeFactory serviceScopeFac
 
     public async Task Process(GetStatementResponse statement, GetStatementJsonResponse model, CancellationToken cancellationToken)
     {
-        try
+        JsonSerializerSettings setting = new();
+        setting.NullValueHandling = NullValueHandling.Ignore;
+        JObject jObject = JObject.Parse(model.Json);
+
+        // List of properties to keep
+        HashSet<string> propertiesToKeep =
+        [
+            "listedCapital",
+            "unauthorizedCapital",
+            "balanceSheet"
+        ];
+
+        List<JProperty> properties = jObject.Properties().ToList();
+
+        foreach (JProperty property in properties)
         {
-            JsonSerializerSettings setting = new();
-            setting.NullValueHandling = NullValueHandling.Ignore;
-            JObject jObject = JObject.Parse(model.Json);
-
-            // List of properties to keep
-            HashSet<string> propertiesToKeep =
-            [
-                "listedCapital",
-                "unauthorizedCapital",
-                "balanceSheet"
-            ];
-
-            List<JProperty> properties = jObject.Properties().ToList();
-
-            foreach (JProperty property in properties)
+            if (!propertiesToKeep.Contains(property.Name))
             {
-                if (!propertiesToKeep.Contains(property.Name))
-                {
-                    property.Remove();
-                }
+                property.Remove();
             }
-
-            // Deserialize the filtered JSON into your model
-            RootCodalBalanceSheet? codalBalanceSheetRoot = jObject.ToObject<RootCodalBalanceSheet>(new JsonSerializer
-            {
-                NullValueHandling = NullValueHandling.Ignore
-            });
-
-            if (codalBalanceSheetRoot?.BalanceSheetData is null)
-            {
-                return;
-            }
-
-            if (!codalBalanceSheetRoot.IsValidReport())
-            {
-                return;
-            }
-
-            BalanceSheetDto balanceSheetDto = codalBalanceSheetRoot.BalanceSheetData.BalanceSheet;
-            balanceSheetDto.AddCustomRowItems();
-
-            using IServiceScope scope = serviceScopeFactory.CreateScope();
-            await using FundamentalDbContext dbContext = scope.ServiceProvider.GetRequiredService<FundamentalDbContext>();
-
-            foreach (YearDatum yearDatum in balanceSheetDto.YearData)
-            {
-                try
-                {
-                    // Additional validation of date values
-                    if (yearDatum.FiscalYear is null || yearDatum.FiscalMonth is null || yearDatum.ReportMonth is null)
-                    {
-                        continue;
-                    }
-
-                    Symbol symbol =
-                        await dbContext.Symbols.FirstAsync(
-                            x => x.Isin == statement.Isin,
-                            cancellationToken);
-
-                    if (await dbContext.BalanceSheets
-                            .AnyAsync(
-                                x =>
-                                    x.Symbol.Isin == statement.Isin &&
-                                    x.FiscalYear.Year == yearDatum.FiscalYear.Value &&
-                                    x.ReportMonth.Month == yearDatum.ReportMonth.Value &&
-                                    x.TraceNo == statement.TracingNo,
-                                cancellationToken))
-                    {
-                        continue;
-                    }
-
-                    foreach (RowItem rowItem in balanceSheetDto.RowItems)
-                    {
-                        try
-                        {
-                            BalanceSheet balanceSheet = new(
-                                Guid.NewGuid(),
-                                symbol,
-                                statement.TracingNo,
-                                statement.HtmlUrl,
-                                new FiscalYear(yearDatum.FiscalYear.Value),
-                                new StatementMonth(yearDatum.FiscalMonth.Value),
-                                new StatementMonth(yearDatum.ReportMonth.Value),
-                                rowItem.RowNumber,
-                                (ushort)rowItem.RowCode,
-                                rowItem.Category == Category.Assets ? BalanceSheetCategory.Assets : BalanceSheetCategory.Liability,
-                                rowItem.GetDescription(),
-                                rowItem.GetValue(yearDatum.ColumnId),
-                                yearDatum.IsAudited,
-                                DateTime.Now
-                            );
-                            dbContext.BalanceSheets.Add(balanceSheet);
-                            logger.LogDebug(
-                                "Created balance sheet entry for trace no {TraceNo}, row {RowNumber}, description {Description}",
-                                statement.TracingNo,
-                                rowItem.RowNumber,
-                                rowItem.GetDescription());
-                        }
-                        catch (Exception ex)
-                        {
-                            logger.LogError(
-                                ex,
-                                "Error processing row item for trace no {TraceNo}, row number {RowNumber}. Error: {Error}",
-                                statement.TracingNo,
-                                rowItem.RowNumber,
-                                ex.Message);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    logger.LogError(
-                        ex,
-                        "Error processing year datum for trace no {TraceNo}, fiscal year {FiscalYear}. Error: {Error}",
-                        statement.TracingNo,
-                        yearDatum.FiscalYear,
-                        ex.Message);
-                }
-            }
-
-            await dbContext.SaveChangesAsync(cancellationToken);
-            logger.LogInformation("Successfully processed balance sheet for trace no {TraceNo}", statement.TracingNo);
         }
-        catch (Exception ex)
+
+        // Deserialize the filtered JSON into your model
+        RootCodalBalanceSheet? codalBalanceSheetRoot = jObject.ToObject<RootCodalBalanceSheet>(new JsonSerializer
         {
-            logger.LogError(
-                ex,
-                "Fatal error processing balance sheet for trace no {TraceNo}. Error: {Error}",
-                statement.TracingNo,
-                ex.Message);
-            throw; // Rethrow to let the caller handle fatal errors
+            NullValueHandling = NullValueHandling.Ignore
+        });
+
+        if (codalBalanceSheetRoot?.BalanceSheetData is null)
+        {
+            return;
         }
+
+        if (!codalBalanceSheetRoot.IsValidReport())
+        {
+            return;
+        }
+
+        BalanceSheetDto balanceSheetDto = codalBalanceSheetRoot.BalanceSheetData.BalanceSheet;
+        balanceSheetDto.AddCustomRowItems();
+
+        using IServiceScope scope = serviceScopeFactory.CreateScope();
+        await using FundamentalDbContext dbContext = scope.ServiceProvider.GetRequiredService<FundamentalDbContext>();
+
+        foreach (YearDatum yearDatum in balanceSheetDto.YearData)
+        {
+            try
+            {
+                // Additional validation of date values
+                if (yearDatum.FiscalYear is null || yearDatum.FiscalMonth is null || yearDatum.ReportMonth is null)
+                {
+                    continue;
+                }
+
+                Symbol symbol =
+                    await dbContext.Symbols.FirstAsync(
+                        x => x.Isin == statement.Isin,
+                        cancellationToken);
+
+                if (await dbContext.BalanceSheets
+                        .AnyAsync(
+                            x =>
+                                x.Symbol.Isin == statement.Isin &&
+                                x.FiscalYear.Year == yearDatum.FiscalYear.Value &&
+                                x.ReportMonth.Month == yearDatum.ReportMonth.Value &&
+                                x.TraceNo == statement.TracingNo,
+                            cancellationToken))
+                {
+                    continue;
+                }
+
+                foreach (RowItem rowItem in balanceSheetDto.RowItems)
+                {
+                    try
+                    {
+                        BalanceSheet balanceSheet = new(
+                            Guid.NewGuid(),
+                            symbol,
+                            statement.TracingNo,
+                            statement.HtmlUrl,
+                            new FiscalYear(yearDatum.FiscalYear.Value),
+                            new StatementMonth(yearDatum.FiscalMonth.Value),
+                            new StatementMonth(yearDatum.ReportMonth.Value),
+                            rowItem.RowNumber,
+                            (ushort)rowItem.RowCode,
+                            rowItem.Category == Category.Assets ? BalanceSheetCategory.Assets : BalanceSheetCategory.Liability,
+                            rowItem.GetDescription(),
+                            rowItem.GetValue(yearDatum.ColumnId),
+                            yearDatum.IsAudited,
+                            DateTime.Now
+                        );
+                        dbContext.BalanceSheets.Add(balanceSheet);
+                        logger.LogDebug(
+                            "Created balance sheet entry for trace no {TraceNo}, row {RowNumber}, description {Description}",
+                            statement.TracingNo,
+                            rowItem.RowNumber,
+                            rowItem.GetDescription());
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.LogError(
+                            ex,
+                            "Error processing row item for trace no {TraceNo}, row number {RowNumber}. Error: {Error}",
+                            statement.TracingNo,
+                            rowItem.RowNumber,
+                            ex.Message);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(
+                    ex,
+                    "Error processing year datum for trace no {TraceNo}, fiscal year {FiscalYear}. Error: {Error}",
+                    statement.TracingNo,
+                    yearDatum.FiscalYear,
+                    ex.Message);
+            }
+        }
+
+        await dbContext.SaveChangesAsync(cancellationToken);
+        logger.LogInformation("Successfully processed balance sheet for trace no {TraceNo}", statement.TracingNo);
     }
 }
