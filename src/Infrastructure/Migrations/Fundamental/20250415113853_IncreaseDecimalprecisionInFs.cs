@@ -1,11 +1,15 @@
 ﻿#nullable disable
 
 using Fundamental.Domain.Codals.Manufacturing.Enums;
+using Fundamental.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Fundamental.Migrations.Fundamental;
 
 /// <inheritdoc />
+[DbContext(typeof(FundamentalDbContext))]
+[Migration("20250415113853_IncreaseDecimalprecisionInFs")]
 public partial class IncreaseDecimalprecisionInFs : Migration
 {
     /// <inheritdoc />
