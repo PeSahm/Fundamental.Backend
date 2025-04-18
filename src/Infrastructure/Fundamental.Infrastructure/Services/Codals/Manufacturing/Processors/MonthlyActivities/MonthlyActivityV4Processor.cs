@@ -141,9 +141,9 @@ public class MonthlyActivityV4Processor(
         await dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    private RowItem GetSumRecord(CodalMonthlyActivity saleDate)
+    private static RowItem GetSumRecord(CodalMonthlyActivity saleDate)
     {
-        return saleDate.MonthlyActivity!.ProductionAndSales!.RowItems.First(x =>
+        return saleDate.MonthlyActivity!.ProductionAndSales?.RowItems.First(x =>
             x is { RowCode: RowCode.TotalSum, Category: Category.Sum });
     }
 }

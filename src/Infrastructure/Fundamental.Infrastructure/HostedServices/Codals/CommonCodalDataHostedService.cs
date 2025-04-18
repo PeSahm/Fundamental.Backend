@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace Fundamental.Infrastructure.HostedServices.Codals;
 
-public class CommonCodalDataHostedService(IServiceScopeFactory serviceScopeFactory, IConfiguration configuration) : BackgroundService
+public class CommonCodalDataHostedService : BackgroundService
 {
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {

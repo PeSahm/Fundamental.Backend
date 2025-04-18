@@ -543,7 +543,7 @@ public class FinancialStatement : BaseEntity<Guid>
         NetProfitGrowthRatio = LastYearNetProfitOrLoss == 0 ? 0 : Math.Round(NetProfitOrLoss / LastYearNetProfitOrLoss * 100);
     }
 
-    private Season GetSession(StatementMonth month)
+    private static Season GetSession(StatementMonth month)
     {
         return month.Month switch
         {
