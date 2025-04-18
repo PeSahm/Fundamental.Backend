@@ -81,7 +81,6 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
             amount => amount.UseSignedCodalMoney()
         );
 
-
         builder.ComplexProperty(
             x => x.SpringOperationIncome,
             amount => amount.UseSignedCodalMoney()

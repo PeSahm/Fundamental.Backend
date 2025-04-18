@@ -89,7 +89,6 @@ public static class ServicesConfigurationExtensions
     public static void AddHostedServices(this IServiceCollection builder)
     {
         builder.AddHostedService<CommonCodalDataHostedService>();
-        builder.AddManufacturingHostedServices();
     }
 
     public static IServiceCollection AddBuilders(this IServiceCollection builder)
