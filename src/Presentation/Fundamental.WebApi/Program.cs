@@ -52,7 +52,6 @@ builder.Services.AddCap();
 builder.Services.AddRazorPages().AddNewtonsoftJson();
 builder.Services.AddCoravelPro(typeof(FundamentalDbContext));
 
-
 builder.Services.AddHttpContextAccessor();
 builder.Host.UseSerilog((context, serviceProvider, configuration) =>
 {
