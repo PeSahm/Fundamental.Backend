@@ -5,15 +5,18 @@ namespace Fundamental.Domain.Common.ValueObjects;
 
 public sealed class SignedCodalMoney : IEquatable<SignedCodalMoney>
 {
+    private readonly decimal _value;
+
+    public static SignedCodalMoney Empty => new();
     public SignedCodalMoney(decimal amount, IsoCurrency currency)
     {
-        RealValue = amount * CodalMoneyMultiplier;
+        _value = amount * CodalMoneyMultiplier;
         Currency = currency;
     }
 
     public SignedCodalMoney(decimal amount)
     {
-        RealValue = amount * CodalMoneyMultiplier;
+        _value = amount * CodalMoneyMultiplier;
         Currency = AppConfig.BASE_CURRENCY;
     }
 
@@ -23,31 +26,14 @@ public sealed class SignedCodalMoney : IEquatable<SignedCodalMoney>
         Currency = AppConfig.BASE_CURRENCY;
     }
 
-    public static SignedCodalMoney Empty => new();
-
     public static decimal CodalMoneyMultiplier => 1_000_000;
-    public decimal Value => RealValue / CodalMoneyMultiplier;
+    public decimal Value => _value / CodalMoneyMultiplier;
 
-    public decimal RealValue { get; }
+    public decimal RealValue => _value;
 
     public IsoCurrency Currency { get; }
 
     private bool SetInternally { get; set; }
-
-    public bool Equals(SignedCodalMoney? other)
-    {
-        if (other is null)
-        {
-            return false;
-        }
-
-        if (ReferenceEquals(this, other))
-        {
-            return true;
-        }
-
-        return RealValue == other.RealValue && Currency == other.Currency;
-    }
 
     public static SignedCodalMoney operator +(SignedCodalMoney a, SignedCodalMoney b)
     {
@@ -130,7 +116,7 @@ public sealed class SignedCodalMoney : IEquatable<SignedCodalMoney>
     }
 
     /// <summary>
-    ///     Mix money value and currency.
+    /// Mix money value and currency.
     /// </summary>
     /// <param name="places">Number of decimal places.</param>
     /// <returns>A string object with money format.</returns>
@@ -139,14 +125,22 @@ public sealed class SignedCodalMoney : IEquatable<SignedCodalMoney>
         return $"{Value.ToString($"F{places}")} {Currency.ToString()}";
     }
 
-    public static implicit operator decimal(SignedCodalMoney money)
-    {
-        return money.Value;
-    }
+    public static implicit operator decimal(SignedCodalMoney money) => money.Value;
+    public static implicit operator SignedCodalMoney(decimal money) => new(money);
 
-    public static implicit operator SignedCodalMoney(decimal money)
+    public bool Equals(SignedCodalMoney? other)
     {
-        return new SignedCodalMoney(money);
+        if (other is null)
+        {
+            return false;
+        }
+
+        if (ReferenceEquals(this, other))
+        {
+            return true;
+        }
+
+        return _value == other._value && Currency == other.Currency;
     }
 
     public override bool Equals(object? obj)
@@ -171,6 +165,6 @@ public sealed class SignedCodalMoney : IEquatable<SignedCodalMoney>
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(RealValue, (int)Currency);
+        return HashCode.Combine(_value, (int)Currency);
     }
 }

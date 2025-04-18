@@ -47,7 +47,7 @@ public sealed class StockOwnership : BaseEntity<Guid>
 
     public ReviewStatus ReviewStatus { get; private set; } = ReviewStatus.Pending;
 
-    public ulong? TraceNo { get; }
+    public ulong? TraceNo { get; private set; }
 
     public string? Url { get; private set; }
 

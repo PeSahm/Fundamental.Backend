@@ -24,8 +24,8 @@ public class FinancialStatementBuilder :
     private SignedCodalMoney _netProfitOrLoss = SignedCodalMoney.Empty;
     private SignedCodalMoney _noneOperationalProfit = SignedCodalMoney.Empty;
     private SignedCodalMoney _operationalIncome = SignedCodalMoney.Empty;
-    private SignedCodalMoney _operationalProfitOrLoss = SignedCodalMoney.Empty;
     private SignedCodalMoney _otherOperationalIncome = SignedCodalMoney.Empty;
+    private SignedCodalMoney _operationalProfitOrLoss = SignedCodalMoney.Empty;
     private CodalMoney _ownersEquity = CodalMoney.Empty;
     private CodalMoney _receivables = CodalMoney.Empty;
     private StatementMonth _reportMonth = StatementMonth.Empty;
