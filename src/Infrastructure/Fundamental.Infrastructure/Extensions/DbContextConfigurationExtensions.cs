@@ -49,8 +49,22 @@ public static class DbContextConfigurationExtensions
                     dataSource,
                     b =>
                         b.EnableRetryOnFailure()
+                            .SetPostgresVersion(16, 1)
                             .MigrationsAssembly(MIGRATIONS_ASSEMBLY)
                             .UseNodaTime()
+                            .MapEnum<IsoCurrency>()
+                            .MapEnum<ReportingType>()
+                            .MapEnum<CompanyType>()
+                            .MapEnum<EnableSubCompany>()
+                            .MapEnum<PublisherFundType>()
+                            .MapEnum<PublisherSubCompanyType>()
+                            .MapEnum<PublisherMarketType>()
+                            .MapEnum<PublisherState>()
+                            .MapEnum<ReviewStatus>()
+                            .MapEnum<ProductType>()
+                            .MapEnum<ExchangeType>()
+                            .MapEnum<EtfType>()
+                            .MapEnum<NoneOperationalIncomeTag>()
                 )
                 .UseSnakeCaseNamingConvention()
 #if DEBUG

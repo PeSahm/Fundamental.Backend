@@ -54,19 +54,19 @@ public class FundamentalDbContext : DbContext, IUnitOfWork
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.HasPostgresEnum<IsoCurrency>();
-        modelBuilder.HasPostgresEnum<ReportingType>();
-        modelBuilder.HasPostgresEnum<CompanyType>();
-        modelBuilder.HasPostgresEnum<EnableSubCompany>();
-        modelBuilder.HasPostgresEnum<PublisherFundType>();
-        modelBuilder.HasPostgresEnum<PublisherSubCompanyType>();
-        modelBuilder.HasPostgresEnum<PublisherMarketType>();
-        modelBuilder.HasPostgresEnum<PublisherState>();
-        modelBuilder.HasPostgresEnum<ReviewStatus>();
-        modelBuilder.HasPostgresEnum<ProductType>();
-        modelBuilder.HasPostgresEnum<ExchangeType>();
-        modelBuilder.HasPostgresEnum<EtfType>();
-        modelBuilder.HasPostgresEnum<NoneOperationalIncomeTag>();
+        // modelBuilder.HasPostgresEnum<IsoCurrency>();
+        // modelBuilder.HasPostgresEnum<ReportingType>();
+        // modelBuilder.HasPostgresEnum<CompanyType>();
+        // modelBuilder.HasPostgresEnum<EnableSubCompany>();
+        // modelBuilder.HasPostgresEnum<PublisherFundType>();
+        // modelBuilder.HasPostgresEnum<PublisherSubCompanyType>();
+        // modelBuilder.HasPostgresEnum<PublisherMarketType>();
+        // modelBuilder.HasPostgresEnum<PublisherState>();
+        // modelBuilder.HasPostgresEnum<ReviewStatus>();
+        // modelBuilder.HasPostgresEnum<ProductType>();
+        // modelBuilder.HasPostgresEnum<ExchangeType>();
+        // modelBuilder.HasPostgresEnum<EtfType>();
+        // modelBuilder.HasPostgresEnum<NoneOperationalIncomeTag>();
 
         modelBuilder.ApplyConfigurationsFromAssembly(
             Assembly.GetExecutingAssembly(),
