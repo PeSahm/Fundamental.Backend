@@ -18,8 +18,8 @@ public class MarketDataService(
     : IMarketDataService
 {
     private readonly HttpClient _mdpClient = httpClientFactory.CreateClient(HttpClients.MDP);
-    private readonly HttpClient _tseTmcClient = httpClientFactory.CreateClient(HttpClients.TSE_TMC);
     private readonly MdpOption _mdpOption = mdpOption.Value;
+    private readonly HttpClient _tseTmcClient = httpClientFactory.CreateClient(HttpClients.TSE_TMC);
     private readonly TseTmcOption _tseTmcOption = tseTmcOption.Value;
 
     public async Task<List<ShareHoldersResponse>> GetShareHoldersAsync(DateOnly date, CancellationToken cancellationToken = default)
@@ -34,7 +34,7 @@ public class MarketDataService(
                 .Append('=')
                 .Append($"{date:yyyy-MM-dd}")
                 .ToString(),
-            cancellationToken: cancellationToken);
+            cancellationToken);
 
         return response ?? [];
     }
@@ -53,7 +53,7 @@ public class MarketDataService(
                 .Append('=')
                 .Append($"{date:yyyy-MM-dd}")
                 .ToString(),
-            cancellationToken: cancellationToken);
+            cancellationToken);
 
         return response ?? [];
     }
@@ -89,7 +89,7 @@ public class MarketDataService(
                 .Append('=')
                 .Append("ID,NO")
                 .ToString(),
-            cancellationToken: cancellationToken);
+            cancellationToken);
 
         return JsonConvert.DeserializeObject<List<SymbolResponse>>(response) ?? [];
     }
@@ -109,7 +109,8 @@ public class MarketDataService(
 
         HttpResponseMessage response = await _mdpClient.GetAsync(url, cancellationToken);
         response.EnsureSuccessStatusCode();
-        return JsonConvert.DeserializeObject<IndexResponse>(await response.Content.ReadAsStringAsync(cancellationToken)) ?? new();
+        return JsonConvert.DeserializeObject<IndexResponse>(await response.Content.ReadAsStringAsync(cancellationToken)) ??
+               new IndexResponse();
     }
 
     public async Task<IndexCompanyResponse> GetIndexCompanies(Symbol index, CancellationToken cancellationToken = default)
@@ -121,6 +122,7 @@ public class MarketDataService(
             .ToString();
         HttpResponseMessage response = await _tseTmcClient.GetAsync(url, cancellationToken);
         response.EnsureSuccessStatusCode();
-        return JsonConvert.DeserializeObject<IndexCompanyResponse>(await response.Content.ReadAsStringAsync(cancellationToken)) ?? new();
+        return JsonConvert.DeserializeObject<IndexCompanyResponse>(await response.Content.ReadAsStringAsync(cancellationToken)) ??
+               new IndexCompanyResponse();
     }
 }

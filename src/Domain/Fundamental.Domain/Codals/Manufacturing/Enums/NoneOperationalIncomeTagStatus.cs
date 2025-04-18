@@ -3,5 +3,5 @@
 public enum NoneOperationalIncomeTagStatus
 {
     Tagged = 1,
-    Untagged = 2,
+    Untagged = 2
 }

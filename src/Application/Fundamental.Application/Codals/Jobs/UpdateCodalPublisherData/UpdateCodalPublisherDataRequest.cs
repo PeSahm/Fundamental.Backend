@@ -7,4 +7,3 @@ namespace Fundamental.Application.Codals.Jobs.UpdateCodalPublisherData;
 
 [HandlerCode(HandlerCode.UpdateCodalPublisher)]
 public sealed record UpdateCodalPublisherDataRequest : IRequest<Response>;
-

@@ -14,7 +14,6 @@ public sealed class UpdateFsClosePriceRequestCommandHandler(
     IUnitOfWork unitOfWork,
     ILogger<UpdateFsClosePriceRequestCommandHandler> logger,
     ResiliencePipelineProvider<string> pipelineProvider
-
 )
     : IRequestHandler<UpdateFsClosePriceRequest, Response>
 {

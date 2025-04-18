@@ -11,5 +11,5 @@ public enum EnableSubCompany
     Active = 1,
 
     [Description("فرعی پذیرفته شده")]
-    Accepted = 2,
+    Accepted = 2
 }

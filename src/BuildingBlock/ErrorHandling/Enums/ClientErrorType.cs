@@ -3,5 +3,5 @@ namespace Fundamental.ErrorHandling.Enums;
 public enum ClientErrorType
 {
     BusinessLogic = 1,
-    InternalServerError = 2,
+    InternalServerError = 2
 }

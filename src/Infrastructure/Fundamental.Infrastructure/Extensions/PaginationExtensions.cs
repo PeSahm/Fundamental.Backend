@@ -38,7 +38,7 @@ public static class PaginationExtensions
     {
         List<T> res = await queryable
             .ApplyOrderingAndPaging(new GridifyQuery(request.PageNumber, request.PageSize, string.Empty, request.OrderBy ?? defaultSort))
-            .ToListAsync(cancellationToken: cancellationToken);
+            .ToListAsync(cancellationToken);
 
         return new Paginated<T>(
             res,
@@ -52,7 +52,7 @@ public static class PaginationExtensions
         CancellationToken cancellationToken
     )
     {
-        int totalCount = await queryable.CountAsync(cancellationToken: cancellationToken);
+        int totalCount = await queryable.CountAsync(cancellationToken);
         return new PaginationMeta(totalCount, ((request.PageNumber - 1) * request.PageSize) + 1, request.PageNumber * request.PageSize);
     }
 }

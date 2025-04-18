@@ -41,7 +41,7 @@ public sealed class FinancialStatementsResultSpec : Specification<FinancialState
             ThisPeriodSaleRatio = x.ThisPeriodSaleRatio,
             SaleAverageExcludeThisPeriod = x.SaleAverageExcludeThisPeriod,
             SaleAverageLastYearSamePeriod = x.SaleAverageLastYearSamePeriod,
-            ThisPeriodSaleRatioWithLastYear = x.ThisPeriodSaleRatioWithLastYear,
+            ThisPeriodSaleRatioWithLastYear = x.ThisPeriodSaleRatioWithLastYear
         });
     }
 

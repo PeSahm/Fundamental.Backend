@@ -1,5 +1,4 @@
 ﻿using Fundamental.Application.Codals.Services.Models.MarketDataServiceModels;
-using Fundamental.Domain.Symbols.Enums;
 
 namespace Fundamental.Application.Symbols;
 

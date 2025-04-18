@@ -3,7 +3,7 @@
 namespace Fundamental.Domain.Common.Enums;
 
 /// <summary>
-/// انواع صنعت.
+///     انواع صنعت.
 /// </summary>
 public enum ReportingType
 {

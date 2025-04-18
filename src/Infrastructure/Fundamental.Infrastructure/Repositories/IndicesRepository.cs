@@ -37,17 +37,17 @@ public class IndicesRepository(FundamentalDbContext fundamentalDbContext) : IInd
                 {
                     x.Symbol.Name,
                     x.Symbol.TseInsCode,
-                    x.Symbol.Title,
+                    x.Symbol.Title
                 }
             })
-            .ToListAsync(cancellationToken: cancellationToken);
+            .ToListAsync(cancellationToken);
 
         if (data.Count == 0)
         {
             return new GetIndicesResultDto
             {
                 Name = await fundamentalDbContext.Symbols.Where(x => x.Isin == request.Isin).Select(x => x.Name)
-                    .FirstOrDefaultAsync(cancellationToken: cancellationToken) ?? "Symbol Not found"
+                    .FirstOrDefaultAsync(cancellationToken) ?? "Symbol Not found"
             };
         }
 
@@ -60,8 +60,8 @@ public class IndicesRepository(FundamentalDbContext fundamentalDbContext) : IInd
             Data = data.Select(x => new GetIndicesResulItem
             {
                 Value = x.Value,
-                Date = x.Date,
-            }).ToList(),
+                Date = x.Date
+            }).ToList()
         }.CalculatePercentage();
     }
 }

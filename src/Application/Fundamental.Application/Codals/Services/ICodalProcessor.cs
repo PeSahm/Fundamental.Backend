@@ -15,7 +15,7 @@ public interface ICodalProcessor
     static virtual LetterPart LetterPart => LetterPart.NotSpecified;
 
     /// <summary>
-    /// Detect Codal Json version based of letter type and reportingType.
+    ///     Detect Codal Json version based of letter type and reportingType.
     /// </summary>
     /// <param name="statement">Codal Statement Data.</param>
     /// <param name="model">Codal Statement Json Data.</param>

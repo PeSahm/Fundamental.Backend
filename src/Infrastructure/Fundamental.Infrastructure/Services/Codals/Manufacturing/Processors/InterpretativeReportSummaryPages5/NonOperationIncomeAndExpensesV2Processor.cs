@@ -85,8 +85,8 @@ public sealed class NonOperationIncomeAndExpensesV2Processor(IServiceScopeFactor
 
             Symbol symbol =
                 await dbContext.Symbols.FirstAsync(
-                    predicate: x => x.Isin == statement.Isin,
-                    cancellationToken: cancellationToken);
+                    x => x.Isin == statement.Isin,
+                    cancellationToken);
 
             if (await dbContext.NonOperationIncomeAndExpenses
                     .AnyAsync(
@@ -95,7 +95,7 @@ public sealed class NonOperationIncomeAndExpensesV2Processor(IServiceScopeFactor
                             x.FiscalYear.Year == yearDatum.FiscalYear &&
                             x.ReportMonth.Month == yearDatum.ReportMonth &&
                             x.TraceNo == statement.TracingNo,
-                        cancellationToken: cancellationToken))
+                        cancellationToken))
             {
                 continue;
             }
@@ -107,9 +107,9 @@ public sealed class NonOperationIncomeAndExpensesV2Processor(IServiceScopeFactor
                     symbol,
                     statement.TracingNo,
                     statement.HtmlUrl,
-                    fiscalYear: yearDatum.FiscalYear!,
-                    yearEndMonth: yearDatum.FiscalMonth!.Value,
-                    reportMonth: yearDatum.ReportMonth!.Value,
+                    yearDatum.FiscalYear!,
+                    yearDatum.FiscalMonth!.Value,
+                    yearDatum.ReportMonth!.Value,
                     rowItem.GetDescription(),
                     rowItem.GetValue(yearDatum.ColumnId),
                     yearDatum.IsAudited,

@@ -1,6 +1,5 @@
 ﻿using Fundamental.Domain.Common.Dto;
 using Fundamental.Domain.Common.Enums;
-using Fundamental.Domain.Symbols.Enums;
 using Fundamental.ErrorHandling;
 using Fundamental.ErrorHandling.Attributes;
 using Fundamental.ErrorHandling.Enums;

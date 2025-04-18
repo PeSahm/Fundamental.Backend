@@ -195,7 +195,7 @@ public class ErrorCodeOperationFilter : IOperationFilter
             .Select(a => new
             {
                 Code = Convert.ToInt32(a).ToString("n0").Replace(",", "_"),
-                Name = a.ToString(),
+                Name = a.ToString()
             });
 
         IEnumerable<string> tableRows = errorCodes.Select(errorCode =>

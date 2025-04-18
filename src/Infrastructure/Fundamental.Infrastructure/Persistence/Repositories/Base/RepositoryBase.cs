@@ -54,7 +54,7 @@ public abstract class RepositoryBase : IRepository
         where T : class
         where TId : notnull
     {
-        return await _dbContext.Set<T>().FindAsync(new object[] { id }, cancellationToken: cancellationToken);
+        return await _dbContext.Set<T>().FindAsync(new object[] { id }, cancellationToken);
     }
 
     public async Task<T?> FirstOrDefaultAsync<T>(ISpecification<T> specification, CancellationToken cancellationToken = default)
@@ -179,13 +179,13 @@ public abstract class RepositoryBase : IRepository
     }
 
     /// <summary>
-    /// Filters the entities  of <typeparamref name="T"/>, to those that match the encapsulated query logic of the
-    /// <paramref name="specification"/>.
+    ///     Filters the entities  of <typeparamref name="T" />, to those that match the encapsulated query logic of the
+    ///     <paramref name="specification" />.
     /// </summary>
     /// <param name="specification">The encapsulated query logic.</param>
     /// <param name="evaluateCriteriaOnly">If yes, only criteria evaluators will be used.</param>
     /// <typeparam name="T">The type of entity being operated on by this method.</typeparam>
-    /// <returns>The filtered entities as an <see cref="IQueryable{T}"/>.</returns>
+    /// <returns>The filtered entities as an <see cref="IQueryable{T}" />.</returns>
     protected virtual IQueryable<T> ApplySpecification<T>(ISpecification<T> specification, bool evaluateCriteriaOnly = false)
         where T : class
     {
@@ -193,16 +193,16 @@ public abstract class RepositoryBase : IRepository
     }
 
     /// <summary>
-    /// Filters all entities of <typeparamref name="T" />, that matches the encapsulated query logic of the
-    /// <paramref name="specification"/>, from the database.
-    /// <para>
-    /// Projects each entity into a new form, being <typeparamref name="TResult" />.
-    /// </para>
+    ///     Filters all entities of <typeparamref name="T" />, that matches the encapsulated query logic of the
+    ///     <paramref name="specification" />, from the database.
+    ///     <para>
+    ///         Projects each entity into a new form, being <typeparamref name="TResult" />.
+    ///     </para>
     /// </summary>
     /// <typeparam name="T">The type of entity being operated on by this method.</typeparam>
     /// <typeparam name="TResult">The type of the value returned by the projection.</typeparam>
     /// <param name="specification">The encapsulated query logic.</param>
-    /// <returns>The filtered projected entities as an <see cref="IQueryable{T}"/>.</returns>
+    /// <returns>The filtered projected entities as an <see cref="IQueryable{T}" />.</returns>
     protected virtual IQueryable<TResult> ApplySpecification<T, TResult>(ISpecification<T, TResult> specification)
         where T : class
     {

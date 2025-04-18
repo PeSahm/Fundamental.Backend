@@ -6,7 +6,6 @@ using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Codals.ValueObjects;
 using Fundamental.Domain.Common.Enums;
-using Fundamental.Domain.Common.ValueObjects;
 using Fundamental.Domain.Symbols.Entities;
 using Fundamental.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +16,8 @@ using Newtonsoft.Json.Linq;
 
 namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.BalanceSheets;
 
-public sealed class BalanceSheetV5Processor(IServiceScopeFactory serviceScopeFactory, ILogger<BalanceSheetV5Processor> logger) : ICodalProcessor
+public sealed class BalanceSheetV5Processor(IServiceScopeFactory serviceScopeFactory, ILogger<BalanceSheetV5Processor> logger)
+    : ICodalProcessor
 {
     public static ReportingType ReportingType => ReportingType.Production;
     public static LetterType LetterType => LetterType.InterimStatement;
@@ -84,8 +84,8 @@ public sealed class BalanceSheetV5Processor(IServiceScopeFactory serviceScopeFac
 
                     Symbol symbol =
                         await dbContext.Symbols.FirstAsync(
-                            predicate: x => x.Isin == statement.Isin,
-                            cancellationToken: cancellationToken);
+                            x => x.Isin == statement.Isin,
+                            cancellationToken);
 
                     if (await dbContext.BalanceSheets
                             .AnyAsync(
@@ -94,7 +94,7 @@ public sealed class BalanceSheetV5Processor(IServiceScopeFactory serviceScopeFac
                                     x.FiscalYear.Year == yearDatum.FiscalYear.Value &&
                                     x.ReportMonth.Month == yearDatum.ReportMonth.Value &&
                                     x.TraceNo == statement.TracingNo,
-                                cancellationToken: cancellationToken))
+                                cancellationToken))
                     {
                         continue;
                     }
@@ -108,10 +108,10 @@ public sealed class BalanceSheetV5Processor(IServiceScopeFactory serviceScopeFac
                                 symbol,
                                 statement.TracingNo,
                                 statement.HtmlUrl,
-                                fiscalYear: new FiscalYear(yearDatum.FiscalYear.Value),
-                                yearEndMonth: new StatementMonth(yearDatum.FiscalMonth.Value),
-                                reportMonth: new StatementMonth(yearDatum.ReportMonth.Value),
-                                row: rowItem.RowNumber,
+                                new FiscalYear(yearDatum.FiscalYear.Value),
+                                new StatementMonth(yearDatum.FiscalMonth.Value),
+                                new StatementMonth(yearDatum.ReportMonth.Value),
+                                rowItem.RowNumber,
                                 (ushort)rowItem.RowCode,
                                 rowItem.Category == Category.Assets ? BalanceSheetCategory.Assets : BalanceSheetCategory.Liability,
                                 rowItem.GetDescription(),
@@ -134,7 +134,6 @@ public sealed class BalanceSheetV5Processor(IServiceScopeFactory serviceScopeFac
                                 statement.TracingNo,
                                 rowItem.RowNumber,
                                 ex.Message);
-                            continue;
                         }
                     }
                 }
@@ -146,7 +145,6 @@ public sealed class BalanceSheetV5Processor(IServiceScopeFactory serviceScopeFac
                         statement.TracingNo,
                         yearDatum.FiscalYear,
                         ex.Message);
-                    continue;
                 }
             }
 

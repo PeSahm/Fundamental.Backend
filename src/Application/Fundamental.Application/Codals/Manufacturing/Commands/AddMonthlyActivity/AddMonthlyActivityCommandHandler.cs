@@ -48,7 +48,7 @@ public sealed class AddMonthlyActivityCommandHandler(
             return AddMonthlyActivityErrorCodes.DuplicateStatement;
         }
 
-        MonthlyActivity statement = new MonthlyActivity(
+        MonthlyActivity statement = new(
             Guid.NewGuid(),
             symbol,
             request.TraceNo,

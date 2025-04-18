@@ -43,7 +43,7 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
                 Scheme = JwtBearerDefaults.AuthenticationScheme,
                 BearerFormat = "JWT",
                 In = ParameterLocation.Header,
-                Description = "JWT Authorization header using the Bearer scheme.",
+                Description = "JWT Authorization header using the Bearer scheme."
             });
         options.AddSecurityRequirement(new OpenApiSecurityRequirement
         {

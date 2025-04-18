@@ -1,6 +1,5 @@
 ﻿using Fundamental.Application.Codals.Manufacturing.Queries.GetMonthlyActivities;
 using Fundamental.Application.Codals.Manufacturing.Specifications;
-using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.ErrorHandling;
 using MediatR;

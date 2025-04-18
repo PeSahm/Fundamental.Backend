@@ -7,8 +7,6 @@ public sealed class CodalMoney : IEquatable<CodalMoney>
 {
     private readonly decimal _value;
 
-    public static CodalMoney Empty => new();
-
     public CodalMoney(decimal amount, IsoCurrency currency)
     {
         if (amount < 0)
@@ -40,15 +38,32 @@ public sealed class CodalMoney : IEquatable<CodalMoney>
         SetInternally = true;
     }
 
+    public static CodalMoney Empty => new();
+
     public static decimal CodalMoneyMultiplier => 1_000_000;
 
     public decimal Value => _value >= 0 ? _value / CodalMoneyMultiplier : 0;
 
     public decimal RealValue => _value >= 0 ? _value : 0;
 
-    public IsoCurrency Currency { get; private set; } = AppConfig.BASE_CURRENCY;
+    public IsoCurrency Currency { get; } = AppConfig.BASE_CURRENCY;
 
     private bool SetInternally { get; set; }
+
+    public bool Equals(CodalMoney? other)
+    {
+        if (other is null)
+        {
+            return false;
+        }
+
+        if (ReferenceEquals(this, other))
+        {
+            return true;
+        }
+
+        return _value == other._value && Currency == other.Currency;
+    }
 
     public static CodalMoney operator +(CodalMoney a, CodalMoney b)
     {
@@ -115,6 +130,16 @@ public sealed class CodalMoney : IEquatable<CodalMoney>
         return new CodalMoney(b.Value * a, b.Currency);
     }
 
+    public static bool operator ==(CodalMoney a, CodalMoney b)
+    {
+        return a.RealValue == b.RealValue && a.Currency == b.Currency;
+    }
+
+    public static bool operator !=(CodalMoney a, CodalMoney b)
+    {
+        return !(a == b);
+    }
+
     public static CodalMoney operator *(CodalMoney a, decimal b)
     {
         return new CodalMoney(a.Value * b, a.Currency);
@@ -131,7 +156,7 @@ public sealed class CodalMoney : IEquatable<CodalMoney>
     }
 
     /// <summary>
-    /// Mix money value and currency.
+    ///     Mix money value and currency.
     /// </summary>
     /// <param name="places">Number of decimal places.</param>
     /// <returns>A string object with money format.</returns>
@@ -140,23 +165,14 @@ public sealed class CodalMoney : IEquatable<CodalMoney>
         return $"{Value.ToString($"F{places}")} {Currency.ToString()}";
     }
 
-    public static implicit operator decimal(CodalMoney money) => money.Value;
-
-    public static implicit operator CodalMoney(decimal money) => new(money);
-
-    public bool Equals(CodalMoney? other)
+    public static implicit operator decimal(CodalMoney money)
     {
-        if (other is null)
-        {
-            return false;
-        }
+        return money.Value;
+    }
 
-        if (ReferenceEquals(this, other))
-        {
-            return true;
-        }
-
-        return _value == other._value && Currency == other.Currency;
+    public static implicit operator CodalMoney(decimal money)
+    {
+        return new CodalMoney(money);
     }
 
     public override bool Equals(object? obj)

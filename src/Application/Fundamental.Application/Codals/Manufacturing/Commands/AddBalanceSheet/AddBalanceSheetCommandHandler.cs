@@ -53,9 +53,9 @@ public sealed class AddBalanceSheetCommandHandler(
             {
                 return Error.FromErrorCode(
                     AddBalanceSheetErrorCodes.SomeCodalRowsAreInvalid,
-                    new Dictionary<string, string>()
+                    new Dictionary<string, string>
                     {
-                        { "CodalRow", sheetItem.CodalRow.ToString() },
+                        { "CodalRow", sheetItem.CodalRow.ToString() }
                     });
             }
         }
@@ -64,15 +64,15 @@ public sealed class AddBalanceSheetCommandHandler(
         {
             GetBalanceSheetSortResultDto balanceSheetRow =
                 codaRows.First(x => x.CodalRow == item.CodalRow && x.Category == item.CodalCategory);
-            BalanceSheet balanceSheet = new BalanceSheet(
+            BalanceSheet balanceSheet = new(
                 Guid.NewGuid(),
                 symbol,
                 request.TraceNo,
                 request.Uri,
                 request.FiscalYear,
-                yearEndMonth: request.YearEndMonth,
-                reportMonth: request.ReportMonth,
-                row: balanceSheetRow.Order,
+                request.YearEndMonth,
+                request.ReportMonth,
+                balanceSheetRow.Order,
                 balanceSheetRow.CodalRow,
                 balanceSheetRow.Category,
                 balanceSheetRow.Description,

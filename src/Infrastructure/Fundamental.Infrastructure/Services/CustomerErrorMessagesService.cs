@@ -16,7 +16,7 @@ public class CustomerErrorMessagesService : ICustomerErrorMessagesService
         Dictionary<string, string> errorMessages = ResourceHelper.GetAllErrorMessages(typeof(CommonErrors).Assembly, culture);
         Dictionary<string, string> result = new()
         {
-            { DEFAULT_ERROR_MESSAGE_KEY, ResourceHelper.GetDefaultErrorMessage<CommonErrors>(DEFAULT_ERROR_MESSAGE_KEY, culture) },
+            { DEFAULT_ERROR_MESSAGE_KEY, ResourceHelper.GetDefaultErrorMessage<CommonErrors>(DEFAULT_ERROR_MESSAGE_KEY, culture) }
         };
 
         foreach (KeyValuePair<string, string> errorMessage in errorMessages)

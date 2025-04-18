@@ -7,5 +7,5 @@ namespace Fundamental.Application.Utilities.Queries.GetCustomerErrorMessages;
 public enum GetCustomerErrorMessagesErrorCodes
 {
     [ErrorType(BackendErrorType.Security)]
-    InvalidClient = 17_999_101,
+    InvalidClient = 17_999_101
 }

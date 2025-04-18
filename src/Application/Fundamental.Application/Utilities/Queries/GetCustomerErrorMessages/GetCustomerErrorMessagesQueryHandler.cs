@@ -25,7 +25,7 @@ public class GetCustomerErrorMessagesQueryHandler : IRequestHandler<GetCustomerE
             "admin" => Client.AdminWeb,
             "web" => Client.CustomerWeb,
             "job" => Client.CodalJob,
-            _ => null,
+            _ => null
         };
 
         if (client is null)

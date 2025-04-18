@@ -98,7 +98,6 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
 
                 if (thePublisherIncome < 0)
                 {
-                    continue;
                 }
 
                 // addedOperationalRevenue += thePublisherIncome;
@@ -123,8 +122,8 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
                 .SetIncomeStatement(
                     headerData.ReportMonth,
                     allOperationalIncome,
-                    incomeStatements.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.OtherOperatingRevenue)?.Value ??
-                    SignedCodalMoney.Empty,
+                    incomeStatements.FirstOrDefault(x =>
+                        x.CodalRow == IncomeStatementRow.OtherOperatingRevenue)?.Value ?? SignedCodalMoney.Empty,
                     incomeStatements.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.GrossProfitLoss)?.Value ?? SignedCodalMoney.Empty,
                     incomeStatements.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.OperatingProfitLoss)?.Value ??
                     SignedCodalMoney.Empty,

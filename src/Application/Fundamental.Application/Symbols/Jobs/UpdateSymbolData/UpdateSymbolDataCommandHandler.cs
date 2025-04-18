@@ -50,7 +50,7 @@ public sealed class UpdateSymbolDataCommandHandler(
                 continue;
             }
 
-            Symbol newSymbol = new Symbol(
+            Symbol newSymbol = new(
                 Guid.NewGuid(),
                 symbol.Isin,
                 symbol.TseInsCode,

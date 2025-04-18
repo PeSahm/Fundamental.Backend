@@ -32,7 +32,7 @@ public sealed class StatusOfViableCompaniesRepository(FundamentalDbContext dbCon
                 SubsidiarySymbolName = x.SubsidiarySymbolName,
                 SubsidiarySymbolIsin = x.ParentSymbol.Isin,
                 CreatedAt = x.CreatedAt,
-                Url = x.Url,
+                Url = x.Url
             });
 
         if (!string.IsNullOrWhiteSpace(request.Isin))

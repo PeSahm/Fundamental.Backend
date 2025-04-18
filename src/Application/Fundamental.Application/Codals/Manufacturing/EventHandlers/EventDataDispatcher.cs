@@ -16,7 +16,8 @@ public class EventDataDispatcher(IMediator mediator) : ICapSubscribe
         await mediator.Send(new UpdateFsClosePriceRequest(eventData));
     }
 
-    [CapSubscribe(EventsAddress.MonthlyActivity.MONTHLY_ACTIVITY_UPDATE, Group = EventsAddress.FinancialStatement.FINANCIAL_STATEMENT_EVENT_GROUP)]
+    [CapSubscribe(EventsAddress.MonthlyActivity.MONTHLY_ACTIVITY_UPDATE,
+        Group = EventsAddress.FinancialStatement.FINANCIAL_STATEMENT_EVENT_GROUP)]
     public async Task UpdateFsSales(MonthlyActivityUpdated eventData)
     {
         await mediator.Send(new UpdateFsSalesRequest(eventData));

@@ -16,13 +16,13 @@ public class StockOwnershipTests
         Symbol parentSymbol = CreateSymbol(id);
         string subsidiarySymbolName = "Subsidiary";
         decimal ownershipPercentage = 50m;
-        SignedCodalMoney costPrice = new SignedCodalMoney(1000000);
+        SignedCodalMoney costPrice = new(1000000);
         ulong traceNo = 123456;
         string url = "http://example.com";
         DateTime createdAt = DateTime.UtcNow;
 
         // Act
-        StockOwnership stockOwnership = new StockOwnership(
+        StockOwnership stockOwnership = new(
             id,
             parentSymbol,
             subsidiarySymbolName,
@@ -52,7 +52,7 @@ public class StockOwnershipTests
         Symbol parentSymbol = CreateSymbol(id);
         StockOwnership stockOwnership = CreateStockOwnership(id, parentSymbol);
         decimal newOwnershipPercentage = 60m;
-        SignedCodalMoney newCostPrice = new SignedCodalMoney(2000000);
+        SignedCodalMoney newCostPrice = new(2000000);
         ulong newTraceNo = 123456;
         string newUrl = "http://example.com/new";
         DateTime updatedAt = DateTime.UtcNow;
@@ -112,7 +112,7 @@ public class StockOwnershipTests
         Symbol parentSymbol = CreateSymbol(id);
         StockOwnership stockOwnership = CreateStockOwnership(id, parentSymbol);
         decimal newOwnershipPercentage = 60m;
-        SignedCodalMoney newCostPrice = new SignedCodalMoney(2000000);
+        SignedCodalMoney newCostPrice = new(2000000);
         ulong newTraceNo = 123456; // Lower trace number
         string newUrl = "http://example.com/new";
         DateTime updatedAt = DateTime.UtcNow;
@@ -134,7 +134,7 @@ public class StockOwnershipTests
         StockOwnership stockOwnership = CreateStockOwnership(id, parentSymbol);
         stockOwnership.Reject(DateTime.UtcNow); // Set status to Rejected
         decimal newOwnershipPercentage = 60m;
-        SignedCodalMoney newCostPrice = new SignedCodalMoney(2000000);
+        SignedCodalMoney newCostPrice = new(2000000);
         ulong newTraceNo = 123456;
         string newUrl = "http://example.com/new";
         DateTime updatedAt = DateTime.UtcNow;

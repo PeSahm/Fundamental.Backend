@@ -16,5 +16,5 @@ public enum AddIncomeStatementErrorCodes
     DuplicateStatement = 13_386_103,
 
     [ErrorType(BackendErrorType.BusinessLogic)]
-    SomeCodalRowsAreInvalid = 13_386_104,
+    SomeCodalRowsAreInvalid = 13_386_104
 }

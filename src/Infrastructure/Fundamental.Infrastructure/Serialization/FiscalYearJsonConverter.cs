@@ -13,9 +13,9 @@ public class FiscalYearJsonConverter : JsonConverter<FiscalYear>
             int year = reader.GetInt32();
             return new FiscalYear(year);
         }
-        
+
         JsonElement yearObj = JsonSerializer.Deserialize<JsonElement>(ref reader);
-        
+
         if (yearObj.TryGetProperty("Year", out JsonElement yearProperty))
         {
             int year = yearProperty.GetInt32();

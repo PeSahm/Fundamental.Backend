@@ -7,5 +7,5 @@ namespace Fundamental.Application.Codals.Manufacturing.Commands.ForceUpdateState
 public enum ForceUpdateStatementErrorCodes
 {
     [ErrorType(BackendErrorType.Security)]
-    InvalidStatement = 13_383_101,
+    InvalidStatement = 13_383_101
 }

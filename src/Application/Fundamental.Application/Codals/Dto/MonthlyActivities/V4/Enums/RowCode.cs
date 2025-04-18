@@ -8,5 +8,5 @@ public enum RowCode
     ServiceIncome = 11,
     ReturnSale = 14,
     Discount = 15,
-    TotalSum = 16,
+    TotalSum = 16
 }

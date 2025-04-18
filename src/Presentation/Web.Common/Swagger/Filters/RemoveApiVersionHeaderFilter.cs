@@ -14,6 +14,7 @@ public class RemoveApiVersionHeaderFilter : IOperationFilter
         if (versionParameter != null && context.ApiDescription.Properties.TryGetValue(typeof(ApiVersion), out object? apiVersion))
         {
             string version = apiVersion.ToString()!;
+
             if (version == "1.0")
             {
                 operation.Parameters.Remove(versionParameter);

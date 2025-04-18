@@ -22,13 +22,14 @@ public abstract class ValueObject
     public override int GetHashCode()
     {
         return GetEqualityComponents()
-            .Aggregate(1, (current, obj) =>
-            {
-                unchecked
+            .Aggregate(1,
+                (current, obj) =>
                 {
-                    return (current * 23) + obj.GetHashCode();
-                }
-            });
+                    unchecked
+                    {
+                        return (current * 23) + obj.GetHashCode();
+                    }
+                });
     }
 
     protected abstract IEnumerable<object> GetEqualityComponents();

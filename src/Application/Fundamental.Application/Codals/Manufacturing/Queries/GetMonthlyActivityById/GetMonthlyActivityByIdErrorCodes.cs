@@ -7,5 +7,5 @@ namespace Fundamental.Application.Codals.Manufacturing.Queries.GetMonthlyActivit
 public enum GetMonthlyActivityByIdErrorCodes
 {
     [ErrorType(BackendErrorType.Security)]
-    MonthlyActivityNotFound = 13_394_101,
+    MonthlyActivityNotFound = 13_394_101
 }

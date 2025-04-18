@@ -6,8 +6,6 @@ namespace Fundamental.Domain.Symbols.Entities;
 
 public class Symbol : BaseEntity<Guid>
 {
-    public static Symbol Empty => new Symbol() { Name = "Empty" };
-
     public Symbol(
         Guid id,
         string isin,
@@ -58,7 +56,9 @@ public class Symbol : BaseEntity<Guid>
     {
     }
 
-    public string Isin { get; private set; }
+    public static Symbol Empty => new() { Name = "Empty" };
+
+    public string Isin { get; }
     public string TseInsCode { get; private set; }
     public string EnName { get; private set; }
     public string SymbolEnName { get; private set; }
@@ -81,7 +81,7 @@ public class Symbol : BaseEntity<Guid>
 
     public EtfType? EtfType { get; private set; }
 
-    public ICollection<SymbolRelation> InvestmentSymbols { get; private set; } = new List<SymbolRelation>();
+    public ICollection<SymbolRelation> InvestmentSymbols { get; } = new List<SymbolRelation>();
 
     public ICollection<SymbolRelation> InvestorSymbols { get; private set; } = new List<SymbolRelation>();
 
@@ -108,7 +108,7 @@ public class Symbol : BaseEntity<Guid>
             updatedAt
         )
         {
-            IsUnOfficial = true,
+            IsUnOfficial = true
         };
         return newSymbol;
     }

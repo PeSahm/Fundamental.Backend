@@ -16,5 +16,5 @@ public enum AddBalanceSheetErrorCodes
     DuplicateStatement = 13_391_103,
 
     [ErrorType(BackendErrorType.BusinessLogic)]
-    SomeCodalRowsAreInvalid = 13_391_104,
+    SomeCodalRowsAreInvalid = 13_391_104
 }
