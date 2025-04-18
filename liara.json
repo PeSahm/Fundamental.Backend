@@ -6,7 +6,7 @@
         "location": "germany"
     },
     "dotnet": {
-        "version": "8.0",
+        "version": "9.0",
         "finalDllName": "Fundamental.WebApi",
         "csprojectFile": "src/Presentation/Fundamental.WebApi"
     }
