@@ -1,5 +1,4 @@
 ﻿using Fundamental.Application.Codals.Manufacturing.Queries.GetIncomeStatements;
-using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Codals.ValueObjects;
 using Fundamental.Domain.Common.Dto;
 using Fundamental.Domain.Common.ValueObjects;
@@ -12,6 +11,7 @@ public interface IIncomeStatementsReadRepository
         GetIncomeStatementsRequest request,
         CancellationToken cancellationToken = default
     );
+
     Task<SignedCodalMoney?> GetLastIncomeStatement(
         string isin,
         FiscalYear fiscalYear,

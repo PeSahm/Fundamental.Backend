@@ -7,5 +7,5 @@ namespace Fundamental.Application.Symbols.Queries.GetSymbolRelationById;
 public enum GetSymbolRelationByIdErrorCodes
 {
     [ErrorType(BackendErrorType.Security)]
-    SymbolRelationNotFound = 11_307_101,
+    SymbolRelationNotFound = 11_307_101
 }

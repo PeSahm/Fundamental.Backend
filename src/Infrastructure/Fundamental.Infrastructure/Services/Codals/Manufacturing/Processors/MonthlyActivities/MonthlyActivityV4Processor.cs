@@ -33,7 +33,7 @@ public class MonthlyActivityV4Processor(
         JsonSerializerSettings setting = new();
         setting.NullValueHandling = NullValueHandling.Ignore;
         CodalMonthlyActivity? saleDate =
-            JsonConvert.DeserializeObject<CodalMonthlyActivity>(value: model.Json, settings: setting);
+            JsonConvert.DeserializeObject<CodalMonthlyActivity>(model.Json, setting);
 
         if (saleDate is null)
         {
@@ -68,7 +68,7 @@ public class MonthlyActivityV4Processor(
             return;
         }
 
-        SymbolExtensions.SalesInfo extraInfo = new SymbolExtensions.SalesInfo();
+        SymbolExtensions.SalesInfo extraInfo = new();
 
         if (statement.Isin != null && statement.Isin.Equals(IranCapitalMarket.FezarIsin, StringComparison.OrdinalIgnoreCase))
         {
@@ -90,23 +90,23 @@ public class MonthlyActivityV4Processor(
                 x =>
                     x.Symbol.Isin == statement.Isin && x.FiscalYear.Year == yearDatum.FiscalYear &&
                     x.ReportMonth.Month == yearDatum.ReportMonth,
-                cancellationToken: cancellationToken);
+                cancellationToken);
         Symbol symbol =
             await dbContext.Symbols.FirstAsync(
-                predicate: x => x.Isin == statement.Isin,
-                cancellationToken: cancellationToken);
+                x => x.Isin == statement.Isin,
+                cancellationToken);
 
         if (existingStatement == null)
         {
             MonthlyActivity monthlyActivity = new(
-                id: Guid.NewGuid(),
-                symbol: symbol,
-                traceNo: statement.TracingNo,
-                uri: statement.HtmlUrl,
-                fiscalYear: yearDatum.FiscalYear,
-                yearEndMonth: yearDatum.FiscalMonth.Value,
-                reportMonth: yearDatum.ReportMonth.Value,
-                saleBeforeCurrentMonth: GetSumRecord(saleDate).GetValue(SaleColumnId.SaleAmountExclusiveThisMonth),
+                Guid.NewGuid(),
+                symbol,
+                statement.TracingNo,
+                statement.HtmlUrl,
+                yearDatum.FiscalYear,
+                yearDatum.FiscalMonth.Value,
+                yearDatum.ReportMonth.Value,
+                GetSumRecord(saleDate).GetValue(SaleColumnId.SaleAmountExclusiveThisMonth),
                 GetSumRecord(saleDate).GetValue(SaleColumnId.SaleAmountThisMonth),
                 GetSumRecord(saleDate).GetValue(SaleColumnId.SaleAmountInclusiveThisMonth),
                 GetSumRecord(saleDate).GetValue(SaleColumnId.SaleAmountPrevYear),
@@ -121,13 +121,13 @@ public class MonthlyActivityV4Processor(
             if (existingStatement.TraceNo < statement.TracingNo)
             {
                 existingStatement.Update(
-                    symbol: symbol,
-                    traceNo: statement.TracingNo,
-                    uri: statement.HtmlUrl,
-                    fiscalYear: yearDatum.FiscalYear,
-                    yearEndMonth: yearDatum.FiscalMonth.Value,
-                    reportMonth: yearDatum.ReportMonth.Value,
-                    saleBeforeCurrentMonth: GetSumRecord(saleDate).GetValue(SaleColumnId.SaleAmountExclusiveThisMonth),
+                    symbol,
+                    statement.TracingNo,
+                    statement.HtmlUrl,
+                    yearDatum.FiscalYear,
+                    yearDatum.FiscalMonth.Value,
+                    yearDatum.ReportMonth.Value,
+                    GetSumRecord(saleDate).GetValue(SaleColumnId.SaleAmountExclusiveThisMonth),
                     GetSumRecord(saleDate).GetValue(SaleColumnId.SaleAmountThisMonth),
                     GetSumRecord(saleDate).GetValue(SaleColumnId.SaleAmountInclusiveThisMonth),
                     GetSumRecord(saleDate).GetValue(SaleColumnId.SaleAmountPrevYear),
@@ -143,7 +143,7 @@ public class MonthlyActivityV4Processor(
 
     private RowItem GetSumRecord(CodalMonthlyActivity saleDate)
     {
-        return saleDate.MonthlyActivity!.ProductionAndSales!.RowItems.First(predicate: x =>
+        return saleDate.MonthlyActivity!.ProductionAndSales!.RowItems.First(x =>
             x is { RowCode: RowCode.TotalSum, Category: Category.Sum });
     }
 }

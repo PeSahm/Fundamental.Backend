@@ -24,7 +24,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Npgsql;
 using Savorboard.CAP.InMemoryMessageQueue;
 
 namespace Fundamental.Infrastructure.Extensions;
@@ -55,12 +54,11 @@ public static class ServicesConfigurationExtensions
 
         builder.Services.AddSingleton<IIpService, IpService>();
 
-        builder.Services.AddMediatR(
-            cfg =>
-            {
-                cfg.AddOpenBehavior(typeof(CommonErrorsPipelineBehavior<,>));
-                cfg.RegisterServicesFromAssemblies(typeof(GetSymbolsQueryHandler).Assembly);
-            });
+        builder.Services.AddMediatR(cfg =>
+        {
+            cfg.AddOpenBehavior(typeof(CommonErrorsPipelineBehavior<,>));
+            cfg.RegisterServicesFromAssemblies(typeof(GetSymbolsQueryHandler).Assembly);
+        });
     }
 
     public static void AddOptions(this WebApplicationBuilder builder)
@@ -102,36 +100,35 @@ public static class ServicesConfigurationExtensions
 
     public static IServiceCollection AddCap(this IServiceCollection builder)
     {
-        builder.AddCap(
-            options =>
+        builder.AddCap(options =>
+        {
+            options.UseDashboard(dashboardOptions =>
             {
-                options.UseDashboard(dashboardOptions =>
-                {
-                });
-                options.UseInMemoryMessageQueue();
-                options.UseEntityFramework<FundamentalDbContext>(efOptions =>
-                {
-                    efOptions.Schema = "cap";
-                });
-                options.Version = "1";
-                options.FailedThresholdCallback = async void (failedInfo) =>
-                {
-                    ILogger<ServiceProvider>? logger = failedInfo.ServiceProvider.GetService<ILogger<ServiceProvider>>();
-                    logger?.LogError(
-                        "Failed message threshold reached. Message: {Message}, MessageType: {MessageType}",
-                        failedInfo.Message,
-                        failedInfo.MessageType
-                    );
-                    await Task.CompletedTask;
-                };
-                options.UseStorageLock = true;
-                options.ConsumerThreadCount = 2;
-                options.JsonSerializerOptions.Converters.Add(new StatementMonthJsonConverter());
-                options.JsonSerializerOptions.Converters.Add(new FiscalYearJsonConverter());
-                options.JsonSerializerOptions.Converters.Add(new CodalMoneyJsonConverter());
-                options.JsonSerializerOptions.Converters.Add(new MonthlyActivityUpdatedJsonConverter());
-                options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
             });
+            options.UseInMemoryMessageQueue();
+            options.UseEntityFramework<FundamentalDbContext>(efOptions =>
+            {
+                efOptions.Schema = "cap";
+            });
+            options.Version = "1";
+            options.FailedThresholdCallback = async void (failedInfo) =>
+            {
+                ILogger<ServiceProvider>? logger = failedInfo.ServiceProvider.GetService<ILogger<ServiceProvider>>();
+                logger?.LogError(
+                    "Failed message threshold reached. Message: {Message}, MessageType: {MessageType}",
+                    failedInfo.Message,
+                    failedInfo.MessageType
+                );
+                await Task.CompletedTask;
+            };
+            options.UseStorageLock = true;
+            options.ConsumerThreadCount = 2;
+            options.JsonSerializerOptions.Converters.Add(new StatementMonthJsonConverter());
+            options.JsonSerializerOptions.Converters.Add(new FiscalYearJsonConverter());
+            options.JsonSerializerOptions.Converters.Add(new CodalMoneyJsonConverter());
+            options.JsonSerializerOptions.Converters.Add(new MonthlyActivityUpdatedJsonConverter());
+            options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+        });
 
         return builder;
     }

@@ -14,7 +14,7 @@ public enum RowCode
     OtherNoneOperationalIncomeOrExpense = 52,
 
     /// <summary>
-    /// سود(زیان) عملیات در حال تداوم قبل از مالیات.
+    ///     سود(زیان) عملیات در حال تداوم قبل از مالیات.
     /// </summary>
     ContinuingOperatingProfit,
     TaxForThisYear = 45,
@@ -22,32 +22,32 @@ public enum RowCode
     NetIncomeLoss = 15,
 
     /// <summary>
-    /// سود (زیان) خالص عملیات متوقف شده.
+    ///     سود (زیان) خالص عملیات متوقف شده.
     /// </summary>
     BeShareDiscontinuedOperations = 21,
 
     /// <summary>
-    /// سود(زیان) خالص.
+    ///     سود(زیان) خالص.
     /// </summary>
     ProfitLoss = 17,
 
     /// <summary>
-    ///  سود زیان عملیاتی هر سهم.
+    ///     سود زیان عملیاتی هر سهم.
     /// </summary>
     BeShareContinuingOperationOperating = 19,
 
     /// <summary>
-    /// سود و زیان غیر عملیاتی هر سهم.
+    ///     سود و زیان غیر عملیاتی هر سهم.
     /// </summary>
     BeShareContinuingOperationNonOperating = 20,
 
     /// <summary>
-    /// ناشي از عمليات در حال تداوم.
+    ///     ناشي از عمليات در حال تداوم.
     /// </summary>
     BeShareContinuingOperatingProfitPerShare = 47,
 
     /// <summary>
-    /// ناشي از عمليات متوقف شده.
+    ///     ناشي از عمليات متوقف شده.
     /// </summary>
     BeShareDiscontinuedOperationsPerShare = 48,
 

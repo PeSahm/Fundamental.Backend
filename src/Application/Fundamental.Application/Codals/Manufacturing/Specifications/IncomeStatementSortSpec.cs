@@ -9,14 +9,12 @@ public class IncomeStatementSortSpec : Specification<IncomeStatementSort, GetInc
     public static IncomeStatementSortSpec GetValidSpecifications()
     {
         IncomeStatementSortSpec spec = new();
-        spec.Query
-            .Select(x => new GetIncomeStatementSortResultDto
+        spec.Query.AsNoTracking()
+            .OrderBy(x => x.Order).Select(x => new GetIncomeStatementSortResultDto
             {
                 Order = x.Order,
-                CodalRow = x.CodalRow,
-            })
-            .AsNoTracking()
-            .OrderBy(x => x.Order);
+                CodalRow = x.CodalRow
+            });
         return spec;
     }
 }

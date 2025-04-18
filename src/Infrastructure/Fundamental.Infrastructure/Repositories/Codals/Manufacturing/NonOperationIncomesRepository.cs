@@ -51,7 +51,7 @@ public sealed class NonOperationIncomesRepository(FundamentalDbContext dbContext
         {
             NoneOperationalIncomeTagStatus.Tagged => query.Where(x => x.Tags.Any()),
             NoneOperationalIncomeTagStatus.Untagged => query.Where(x => !x.Tags.Any()),
-            _ => query,
+            _ => query
         };
 
         Paginated<GetNonOperationIncomesResultItem> result = await query.Select(x => new GetNonOperationIncomesResultItem

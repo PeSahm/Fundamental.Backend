@@ -6,5 +6,5 @@ public enum DomainCode
     Price = 12,
     Codal = 13,
     Prices = 14,
-    Utilities = 17,
+    Utilities = 17
 }

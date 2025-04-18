@@ -50,7 +50,7 @@ public sealed class AddSymbolRelationCommandHandler(
             return AddSymbolRelationRequestErrorCodes.RatioIsInvalid;
         }
 
-        SymbolRelation symbolRelation = new SymbolRelation(Guid.NewGuid(), investor, investment, request.Ratio, DateTime.Now);
+        SymbolRelation symbolRelation = new(Guid.NewGuid(), investor, investment, request.Ratio, DateTime.Now);
         repository.Add(symbolRelation);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);

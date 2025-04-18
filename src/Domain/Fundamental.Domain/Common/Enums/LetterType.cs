@@ -3,7 +3,7 @@
 namespace Fundamental.Domain.Common.Enums;
 
 /// <summary>
-/// انواع اطلاعیه.
+///     انواع اطلاعیه.
 /// </summary>
 public enum LetterType
 {

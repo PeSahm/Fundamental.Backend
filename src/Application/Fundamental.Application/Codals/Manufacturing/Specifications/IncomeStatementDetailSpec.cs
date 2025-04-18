@@ -9,18 +9,17 @@ public class IncomeStatementDetailSpec : Specification<IncomeStatement, GetIncom
     public static IncomeStatementDetailSpec Where(ulong traceNo, uint fiscalYear, uint reportMonth)
     {
         IncomeStatementDetailSpec spec = new();
-        spec.Query
+        spec.Query.Where(x => x.FiscalYear.Year == fiscalYear)
+            .Where(x => x.ReportMonth.Month == reportMonth)
+            .Where(x => x.TraceNo == traceNo)
+            .OrderBy(x => x.Row)
+            .AsNoTracking()
             .Select(x => new GetIncomeStatementDetailsResultDto
             {
                 Order = x.Row,
                 CodalRow = x.CodalRow,
-                Value = x.Value,
-            })
-            .Where(x => x.FiscalYear.Year == fiscalYear)
-            .Where(x => x.ReportMonth.Month == reportMonth)
-            .Where(x => x.TraceNo == traceNo)
-            .OrderBy(x => x.Row)
-            .AsNoTracking();
+                Value = x.Value
+            });
         return spec;
     }
 }

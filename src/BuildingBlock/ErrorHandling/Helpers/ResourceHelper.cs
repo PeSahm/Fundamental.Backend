@@ -10,7 +10,7 @@ public static class ResourceHelper
     public const string DEFAULT_CULTURE = "en-US";
 
     /// <summary>
-    /// Get all error messages from all resource files in the given assembly and return them as a dictionary.
+    ///     Get all error messages from all resource files in the given assembly and return them as a dictionary.
     /// </summary>
     /// <param name="assembly">Assembly to search resource files in.</param>
     /// <param name="cultureInfo">Desired language of messages (fallback: en-US).</param>
@@ -51,7 +51,7 @@ public static class ResourceHelper
     }
 
     /// <summary>
-    /// Retrieves the default error message from a resource file based on the provided key and optional culture information.
+    ///     Retrieves the default error message from a resource file based on the provided key and optional culture information.
     /// </summary>
     /// <typeparam name="TResource">The type of the resource file to access.</typeparam>
     /// <param name="key">The key of the default error message in the resource file.</param>

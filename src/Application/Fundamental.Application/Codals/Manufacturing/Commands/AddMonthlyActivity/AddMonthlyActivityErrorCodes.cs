@@ -13,5 +13,5 @@ public enum AddMonthlyActivityErrorCodes
     DuplicateTraceNo = 13_398_102,
 
     [ErrorType(BackendErrorType.BusinessLogic)]
-    DuplicateStatement = 13_398_103,
+    DuplicateStatement = 13_398_103
 }

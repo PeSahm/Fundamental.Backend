@@ -65,5 +65,5 @@ public enum ProductType
     Other = 20,
 
     [Description("همه")]
-    All = -1,
+    All = -1
 }

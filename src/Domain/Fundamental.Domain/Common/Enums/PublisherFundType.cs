@@ -35,5 +35,5 @@ public enum PublisherFundType
     Commodity = 8,
 
     [Description("صندوق سرمایه گذاری غیرمتنوع")]
-    Diversified = 9,
+    Diversified = 9
 }

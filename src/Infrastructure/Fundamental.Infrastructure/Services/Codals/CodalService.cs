@@ -12,7 +12,6 @@ using Fundamental.Infrastructure.Common;
 using Fundamental.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
@@ -52,7 +51,7 @@ public class CodalService(
                     .Append("&take=1000000&page=1&Types=")
                     .Append((int)letterType)
                     .ToString(),
-                cancellationToken: cancellationToken);
+                cancellationToken);
         using IServiceScope scope = serviceScopeFactory.CreateScope();
         using FundamentalDbContext context = scope.ServiceProvider.GetRequiredService<FundamentalDbContext>();
 
@@ -63,7 +62,7 @@ public class CodalService(
                 string? isin = await context.Publishers.AsNoTracking()
                     .Where(x => x.CodalId == statementResponse.PublisherId.ToString())
                     .Select(x => x.Symbol.Isin)
-                    .FirstOrDefaultAsync(cancellationToken: cancellationToken);
+                    .FirstOrDefaultAsync(cancellationToken);
 
                 if (!string.IsNullOrWhiteSpace(isin))
                 {
@@ -72,7 +71,7 @@ public class CodalService(
             }
         }
 
-        return response?.Result ?? new();
+        return response?.Result ?? new List<GetStatementResponse>();
     }
 
     public async Task<GetStatementResponse?> GetStatementByTraceNo(ulong traceNo, CancellationToken cancellationToken = default)
@@ -84,7 +83,7 @@ public class CodalService(
                     .Append("?TraceNo=")
                     .Append(traceNo)
                     .ToString(),
-                cancellationToken: cancellationToken);
+                cancellationToken);
         using IServiceScope scope = serviceScopeFactory.CreateScope();
         using FundamentalDbContext context = scope.ServiceProvider.GetRequiredService<FundamentalDbContext>();
 
@@ -95,7 +94,7 @@ public class CodalService(
                 string? isin = await context.Publishers.AsNoTracking()
                     .Where(x => x.CodalId == statementResponse.PublisherId.ToString())
                     .Select(x => x.Symbol.Isin)
-                    .FirstOrDefaultAsync(cancellationToken: cancellationToken);
+                    .FirstOrDefaultAsync(cancellationToken);
 
                 if (!string.IsNullOrWhiteSpace(isin))
                 {
@@ -111,11 +110,11 @@ public class CodalService(
     {
         HttpResponseMessage response =
             await _mdpClient.GetAsync(
-                requestUri: new StringBuilder()
+                new StringBuilder()
                     .Append(_mdpOption.StatementJson)
                     .Append('/')
                     .Append(statement.TracingNo).ToString(),
-                cancellationToken: cancellationToken);
+                cancellationToken);
 
         if (!response.IsSuccessStatusCode)
         {
@@ -134,7 +133,7 @@ public class CodalService(
             return;
         }
 
-        GetStatementJsonResponse? jsonData = await response.Content.ReadFromJsonAsync<GetStatementJsonResponse>(cancellationToken: cancellationToken);
+        GetStatementJsonResponse? jsonData = await response.Content.ReadFromJsonAsync<GetStatementJsonResponse>(cancellationToken);
 
         if (jsonData is null)
         {
@@ -172,22 +171,22 @@ public class CodalService(
             new StringBuilder()
                 .Append(_mdpOption.Publishers)
                 .ToString(),
-            cancellationToken: cancellationToken);
+            cancellationToken);
 
         if (!publisherResponse.IsSuccessStatusCode)
         {
-            return new();
+            return new List<GetPublisherResponse>();
         }
 
         string stringResponse =
-            await publisherResponse.Content.ReadAsStringAsync(cancellationToken: cancellationToken);
+            await publisherResponse.Content.ReadAsStringAsync(cancellationToken);
 
         if (string.IsNullOrWhiteSpace(stringResponse))
         {
-            return new();
+            return new List<GetPublisherResponse>();
         }
 
         List<GetPublisherResponse>? publishers = JsonConvert.DeserializeObject<List<GetPublisherResponse>>(stringResponse);
-        return publishers ?? new();
+        return publishers ?? new List<GetPublisherResponse>();
     }
 }

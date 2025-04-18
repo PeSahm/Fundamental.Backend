@@ -18,13 +18,15 @@ public static class SwaggerExtensions
 
     public static IApplicationBuilder UseCustomSwaggerUi(
         this WebApplication app
-        )
+    )
     {
-        IApiDescriptionGroupCollectionProvider apiDescriptionGroupCollectionProvider = app.Services.GetRequiredService<IApiDescriptionGroupCollectionProvider>();
-        app.UseWhen(context => context.Request.Path.StartsWithSegments($"/{SWAGGER_PREFIX_PATH}"), appBuilder =>
-        {
-            appBuilder.UseMiddleware<SwaggerBasicAuthMiddleware>();
-        });
+        IApiDescriptionGroupCollectionProvider apiDescriptionGroupCollectionProvider =
+            app.Services.GetRequiredService<IApiDescriptionGroupCollectionProvider>();
+        app.UseWhen(context => context.Request.Path.StartsWithSegments($"/{SWAGGER_PREFIX_PATH}"),
+            appBuilder =>
+            {
+                appBuilder.UseMiddleware<SwaggerBasicAuthMiddleware>();
+            });
 
         app.UseSwagger(options =>
         {

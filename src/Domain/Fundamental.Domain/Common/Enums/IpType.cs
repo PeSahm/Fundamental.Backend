@@ -3,5 +3,5 @@
 public enum IpType
 {
     V4,
-    V6,
+    V6
 }

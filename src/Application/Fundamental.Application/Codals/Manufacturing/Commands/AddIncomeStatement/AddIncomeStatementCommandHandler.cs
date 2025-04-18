@@ -53,9 +53,9 @@ public sealed class AddIncomeStatementCommandHandler(
             {
                 return Error.FromErrorCode(
                     AddIncomeStatementErrorCodes.SomeCodalRowsAreInvalid,
-                    new Dictionary<string, string>()
+                    new Dictionary<string, string>
                     {
-                        { "CodalRow", sheetItem.CodalRow.ToString() },
+                        { "CodalRow", sheetItem.CodalRow.ToString() }
                     });
             }
         }
@@ -64,15 +64,15 @@ public sealed class AddIncomeStatementCommandHandler(
         {
             GetIncomeStatementSortResultDto incomeStatementRow =
                 codaRows.First(x => x.CodalRow == item.CodalRow && x.Order == item.Row);
-            IncomeStatement incomeStatement = new IncomeStatement(
+            IncomeStatement incomeStatement = new(
                 Guid.NewGuid(),
                 symbol,
                 request.TraceNo,
                 request.Uri,
-                fiscalYear: request.FiscalYear,
-                yearEndMonth: request.YearEndMonth,
-                reportMonth: request.ReportMonth,
-                row: item.Row,
+                request.FiscalYear,
+                request.YearEndMonth,
+                request.ReportMonth,
+                item.Row,
                 item.CodalRow,
                 incomeStatementRow.Description,
                 item.Value,

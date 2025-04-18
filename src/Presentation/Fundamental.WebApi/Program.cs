@@ -42,7 +42,7 @@ builder.Services.AddHostedServices();
 builder.Services.AddCodalServices();
 builder.Services.AddEventDispatcher();
 builder.Configuration
-    .AddJsonFile("appsettings.Override.json", optional: true, reloadOnChange: true)
+    .AddJsonFile("appsettings.Override.json", true, true)
     .AddEnvironmentVariables();
 builder.Services.AddBuilders().AddDbRetryPolicy();
 builder.Services.AddCap();

@@ -20,7 +20,7 @@ public class BalanceSheetDto
     public List<YearDatum> YearData { get; set; }
 
     [JsonProperty("rowItems")]
-    public List<RowItem> RowItems { get; set; } = new List<RowItem>();
+    public List<RowItem> RowItems { get; set; } = new();
 
     public void AddCustomRowItems()
     {

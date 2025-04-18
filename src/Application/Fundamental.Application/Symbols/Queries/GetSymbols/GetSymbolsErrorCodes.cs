@@ -7,5 +7,5 @@ namespace Fundamental.Application.Symbols.Queries.GetSymbols;
 public enum GetSymbolsErrorCodes
 {
     [ErrorType(BackendErrorType.BusinessLogic)]
-    SymbolNotFound = 11_999_101,
+    SymbolNotFound = 11_999_101
 }

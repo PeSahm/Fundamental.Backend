@@ -1,9 +1,8 @@
+using Ardalis.Specification;
 using BuildingBlockUnitTests.Extensions.Models;
+using Fundamental.BuildingBlock.Extensions;
 
 namespace BuildingBlockUnitTests.Extensions;
-
-using Ardalis.Specification;
-using Fundamental.BuildingBlock.Extensions;
 
 public class SpecificationExtensionsTests
 {
@@ -11,9 +10,9 @@ public class SpecificationExtensionsTests
     public void LoadSpecification_CopiesWhereExpressions()
     {
         // Arrange
-        ReferenceSpec referenceSpec = new ReferenceSpec();
+        ReferenceSpec referenceSpec = new();
         referenceSpec.Query.Where(e => e.Id > 5);
-        TargetSpec targetSpec = new TargetSpec();
+        TargetSpec targetSpec = new();
 
         // Act
         targetSpec.LoadSpecification(referenceSpec);
@@ -29,9 +28,9 @@ public class SpecificationExtensionsTests
     public void LoadSpecification_CopiesOrderExpressions()
     {
         // Arrange
-        ReferenceSpec referenceSpec = new ReferenceSpec();
+        ReferenceSpec referenceSpec = new();
         referenceSpec.Query.OrderBy(e => e.Name);
-        TargetSpec targetSpec = new TargetSpec();
+        TargetSpec targetSpec = new();
 
         // Act
         targetSpec.LoadSpecification(referenceSpec);
@@ -47,9 +46,9 @@ public class SpecificationExtensionsTests
     public void LoadSpecification_CopiesSearchCriteria()
     {
         // Arrange
-        ReferenceSpec referenceSpec = new ReferenceSpec();
+        ReferenceSpec referenceSpec = new();
         referenceSpec.Query.Search(e => e.Name, "test");
-        TargetSpec targetSpec = new TargetSpec();
+        TargetSpec targetSpec = new();
 
         // Act
         targetSpec.LoadSpecification(referenceSpec);
@@ -66,9 +65,9 @@ public class SpecificationExtensionsTests
     public void LoadSpecification_CopiesTake()
     {
         // Arrange
-        ReferenceSpec referenceSpec = new ReferenceSpec();
+        ReferenceSpec referenceSpec = new();
         referenceSpec.Query.Take(10);
-        TargetSpec targetSpec = new TargetSpec();
+        TargetSpec targetSpec = new();
 
         // Act
         targetSpec.LoadSpecification(referenceSpec);
@@ -81,9 +80,9 @@ public class SpecificationExtensionsTests
     public void LoadSpecification_CopiesSkip()
     {
         // Arrange
-        ReferenceSpec referenceSpec = new ReferenceSpec();
+        ReferenceSpec referenceSpec = new();
         referenceSpec.Query.Skip(5);
-        TargetSpec targetSpec = new TargetSpec();
+        TargetSpec targetSpec = new();
 
         // Act
         targetSpec.LoadSpecification(referenceSpec);
@@ -96,13 +95,13 @@ public class SpecificationExtensionsTests
     public void LoadSpecification_CopiesAllComponents()
     {
         // Arrange
-        ReferenceSpec referenceSpec = new ReferenceSpec();
+        ReferenceSpec referenceSpec = new();
         referenceSpec.Query.Where(e => e.Id > 5);
         referenceSpec.Query.OrderBy(e => e.Name);
         referenceSpec.Query.Search(e => e.Name, "test");
         referenceSpec.Query.Take(10);
         referenceSpec.Query.Skip(5);
-        TargetSpec targetSpec = new TargetSpec();
+        TargetSpec targetSpec = new();
 
         // Act
         targetSpec.LoadSpecification(referenceSpec);
@@ -119,10 +118,10 @@ public class SpecificationExtensionsTests
     public void LoadSpecification_CopiesMultipleWhereExpressions()
     {
         // Arrange
-        ReferenceSpec referenceSpec = new ReferenceSpec();
+        ReferenceSpec referenceSpec = new();
         referenceSpec.Query.Where(e => e.Id > 5);
         referenceSpec.Query.Where(e => e.Name != "SOMETHING");
-        TargetSpec targetSpec = new TargetSpec();
+        TargetSpec targetSpec = new();
 
         // Act
         targetSpec.LoadSpecification(referenceSpec);
@@ -141,10 +140,10 @@ public class SpecificationExtensionsTests
     public void LoadSpecification_CopiesMultipleOrderExpressions()
     {
         // Arrange
-        ReferenceSpec referenceSpec = new ReferenceSpec();
+        ReferenceSpec referenceSpec = new();
         referenceSpec.Query.OrderBy(e => e.Name);
         referenceSpec.Query.OrderBy(e => e.Id);
-        TargetSpec targetSpec = new TargetSpec();
+        TargetSpec targetSpec = new();
 
         // Act
         targetSpec.LoadSpecification(referenceSpec);
@@ -163,8 +162,8 @@ public class SpecificationExtensionsTests
     public void LoadSpecification_EmptyReferenceSpec()
     {
         // Arrange
-        ReferenceSpec referenceSpec = new ReferenceSpec();
-        TargetSpec targetSpec = new TargetSpec();
+        ReferenceSpec referenceSpec = new();
+        TargetSpec targetSpec = new();
 
         // Act
         targetSpec.LoadSpecification(referenceSpec);
@@ -173,8 +172,6 @@ public class SpecificationExtensionsTests
         Assert.Empty(targetSpec.WhereExpressions);
         Assert.Empty(targetSpec.OrderExpressions);
         Assert.Empty(targetSpec.SearchCriterias);
-        Assert.Null(targetSpec.Take);
-        Assert.Null(targetSpec.Skip);
     }
 
     [Fact]
@@ -182,20 +179,22 @@ public class SpecificationExtensionsTests
     {
         // Arrange
         ReferenceSpec? referenceSpec = null;
-        TargetSpec targetSpec = new TargetSpec();
+        TargetSpec targetSpec = new();
 
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => targetSpec.LoadSpecification(referenceSpec!));
+#pragma warning disable CS8604 // Possible null reference argument.
+        Assert.Throws<ArgumentNullException>(() => targetSpec.LoadSpecification(referenceSpec));
+#pragma warning restore CS8604 // Possible null reference argument.
     }
 
     [Fact]
     public void LoadSpecification_ReferenceSpecWithMultipleSearchCriteria()
     {
         // Arrange
-        ReferenceSpec referenceSpec = new ReferenceSpec();
+        ReferenceSpec referenceSpec = new();
         referenceSpec.Query.Search(e => e.Name, "test1");
         referenceSpec.Query.Search(e => e.Id.ToString(), "test2");
-        TargetSpec targetSpec = new TargetSpec();
+        TargetSpec targetSpec = new();
 
         // Act
         targetSpec.LoadSpecification(referenceSpec);

@@ -11,5 +11,5 @@ public enum ReviewStatus
     Rejected = 2,
 
     [Description("تایید شده")]
-    Approved = 3,
+    Approved = 3
 }

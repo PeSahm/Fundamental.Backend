@@ -21,7 +21,7 @@ public static class ErrorCodeHelper
     }
 
     /// <summary>
-    /// Determines the domain of the error code.
+    ///     Determines the domain of the error code.
     /// </summary>
     public static DomainCode? GetDomainOfErrorCode(int errorCode)
     {
@@ -32,9 +32,9 @@ public static class ErrorCodeHelper
     }
 
     /// <summary>
-    /// Determines the client of the error code.
+    ///     Determines the client of the error code.
     /// </summary>
-    /// <exception cref="ArgumentOutOfRangeException">If client digit of the error code does not exist in the <see cref="Client"/> enum.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">If client digit of the error code does not exist in the <see cref="Client" /> enum.</exception>
     public static Client GetClientOfErrorCode(string errorCode)
     {
         int errorCodeInt = ToInt(errorCode);
@@ -45,12 +45,12 @@ public static class ErrorCodeHelper
     }
 
     /// <summary>
-    /// Determines the client of the handler code.
+    ///     Determines the client of the handler code.
     /// </summary>
-    /// <exception cref="ArgumentOutOfRangeException">If client digit of the handler code does not exist in the <see cref="Client"/> enum.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">If client digit of the handler code does not exist in the <see cref="Client" /> enum.</exception>
     public static Client GetClientOfHandlerCode(HandlerCode handlerCode)
     {
-        int clientDigit = ((int)handlerCode % 1000) / 100;
+        int clientDigit = (int)handlerCode % 1000 / 100;
         return Enum.IsDefined(typeof(Client), clientDigit)
             ? (Client)clientDigit
             : throw new ArgumentOutOfRangeException(

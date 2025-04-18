@@ -3,7 +3,7 @@
 namespace Fundamental.ErrorHandling.Exceptions;
 
 /// <summary>
-/// Error codes enum field must be annotated with <see cref="ErrorTypeAttribute"/>.
+///     Error codes enum field must be annotated with <see cref="ErrorTypeAttribute" />.
 /// </summary>
 public class ErrorTypeAttributeIsMissingException : Exception
 {

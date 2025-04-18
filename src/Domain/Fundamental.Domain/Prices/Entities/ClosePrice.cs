@@ -1,4 +1,3 @@
-using System.Reflection.Metadata;
 using Fundamental.Domain.Common.BaseTypes;
 using Fundamental.Domain.Common.Constants;
 using Fundamental.Domain.Prices.Events;
@@ -21,8 +20,8 @@ public class ClosePrice : BaseEntity<Guid>
     {
     }
 
-    public Symbol Symbol { get; private set; }
-    public DateOnly Date { get; private set; }
+    public Symbol Symbol { get; }
+    public DateOnly Date { get; }
 
     public ulong Close { get; private set; }
 
@@ -58,7 +57,7 @@ public class ClosePrice : BaseEntity<Guid>
         Low = low;
         Last = last;
         UpdatedAt = updatedAt.ToUniversalTime();
-        AddDomainEvent(new ClosePriceUpdated(this.Symbol.Isin, close, this.Date), EventsAddress.ClosePrice.PRICE_UPDATE);
+        AddDomainEvent(new ClosePriceUpdated(Symbol.Isin, close, Date), EventsAddress.ClosePrice.PRICE_UPDATE);
     }
 
     public void SetAdjustedPrice(

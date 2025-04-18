@@ -14,7 +14,7 @@ IHostBuilder? hostBuilder = Host.CreateDefaultBuilder(args)
     });
 
 hostBuilder.ConfigureAppConfiguration(b => b
-    .AddJsonFile("appsettings.Override.json", optional: true, reloadOnChange: true)
+    .AddJsonFile("appsettings.Override.json", true, true)
     .AddEnvironmentVariables());
 
 IHost? host = hostBuilder.Build();

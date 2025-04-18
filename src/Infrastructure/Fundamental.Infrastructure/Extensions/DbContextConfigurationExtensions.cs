@@ -36,30 +36,29 @@ public static class DbContextConfigurationExtensions
 
         NpgsqlDataSource dataSource = dataSourceBuilder.Build();
 
-        services.AddDbContext<FundamentalDbContext>(
-            (sp, options) =>
+        services.AddDbContext<FundamentalDbContext>((sp, options) =>
+        {
+            DomainEventsInterceptor? domainEventsInterceptor = sp.GetService<DomainEventsInterceptor>();
+
+            if (domainEventsInterceptor is not null)
             {
-                DomainEventsInterceptor? domainEventsInterceptor = sp.GetService<DomainEventsInterceptor>();
+                options.AddInterceptors(sp.GetRequiredService<DomainEventsInterceptor>());
+            }
 
-                if (domainEventsInterceptor is not null)
-                {
-                    options.AddInterceptors(sp.GetRequiredService<DomainEventsInterceptor>());
-                }
-
-                options.UseNpgsql(
-                        dataSource,
-                        b =>
-                            b.EnableRetryOnFailure()
-                                .MigrationsAssembly(MIGRATIONS_ASSEMBLY)
-                                .UseNodaTime()
-                    )
-                    .UseSnakeCaseNamingConvention()
+            options.UseNpgsql(
+                    dataSource,
+                    b =>
+                        b.EnableRetryOnFailure()
+                            .MigrationsAssembly(MIGRATIONS_ASSEMBLY)
+                            .UseNodaTime()
+                )
+                .UseSnakeCaseNamingConvention()
 #if DEBUG
-                    .LogTo(Console.WriteLine)
-                    .EnableSensitiveDataLogging()
+                .LogTo(Console.WriteLine)
+                .EnableSensitiveDataLogging()
 #endif
-                    .EnableDetailedErrors();
-            });
+                .EnableDetailedErrors();
+        });
         return services;
     }
 

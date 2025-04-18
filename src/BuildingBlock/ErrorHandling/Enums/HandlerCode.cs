@@ -51,5 +51,5 @@ public enum HandlerCode : ushort
 
     GetCustomerErrorMessages = 17_999,
 
-    SaveFair = 19_999,
+    SaveFair = 19_999
 }

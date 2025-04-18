@@ -4,18 +4,17 @@ using Fundamental.ErrorHandling;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Fundamental.WebApi.Controllers
+namespace Fundamental.WebApi.Controllers;
+
+[ApiController]
+[Route("indices")]
+[ApiVersion("1.0")]
+[TranslateResultToActionResult]
+public class IndicesController(IMediator mediator) : ControllerBase
 {
-    [ApiController]
-    [Route("indices")]
-    [ApiVersion("1.0")]
-    [TranslateResultToActionResult]
-    public class IndicesController(IMediator mediator) : ControllerBase
+    [HttpGet]
+    public async Task<Response<GetIndicesResultDto>> GetIndices([FromQuery] GetIndicesRequest request)
     {
-        [HttpGet]
-        public async Task<Response<GetIndicesResultDto>> GetIndices([FromQuery] GetIndicesRequest request)
-        {
-            return await mediator.Send(request);
-        }
+        return await mediator.Send(request);
     }
 }

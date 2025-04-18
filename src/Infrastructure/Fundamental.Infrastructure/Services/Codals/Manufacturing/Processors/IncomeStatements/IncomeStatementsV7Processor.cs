@@ -76,8 +76,8 @@ public sealed class IncomeStatementsV7Processor(IServiceScopeFactory serviceScop
 
             Symbol symbol =
                 await dbContext.Symbols.FirstAsync(
-                    predicate: x => x.Isin == statement.Isin,
-                    cancellationToken: cancellationToken);
+                    x => x.Isin == statement.Isin,
+                    cancellationToken);
 
             if (await dbContext.IncomeStatements
                     .AnyAsync(
@@ -86,7 +86,7 @@ public sealed class IncomeStatementsV7Processor(IServiceScopeFactory serviceScop
                             x.FiscalYear.Year == yearDatum.FiscalYear &&
                             x.ReportMonth.Month == yearDatum.ReportMonth &&
                             x.TraceNo == statement.TracingNo,
-                        cancellationToken: cancellationToken))
+                        cancellationToken))
             {
                 continue;
             }
@@ -98,10 +98,10 @@ public sealed class IncomeStatementsV7Processor(IServiceScopeFactory serviceScop
                     symbol,
                     statement.TracingNo,
                     statement.HtmlUrl,
-                    fiscalYear: yearDatum.FiscalYear.Value,
-                    yearEndMonth: yearDatum.FiscalMonth.Value,
-                    reportMonth: yearDatum.ReportMonth.Value,
-                    row: rowItem.RowNumber,
+                    yearDatum.FiscalYear.Value,
+                    yearDatum.FiscalMonth.Value,
+                    yearDatum.ReportMonth.Value,
+                    rowItem.RowNumber,
                     rowItem.RowCode,
                     rowItem.GetDescription(),
                     rowItem.GetValue(yearDatum.ColumnId),

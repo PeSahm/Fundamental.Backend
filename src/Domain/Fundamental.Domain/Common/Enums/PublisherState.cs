@@ -20,5 +20,5 @@ public enum PublisherState
     RegisteredNotAccepted = 2,
 
     [Description("ثبت نشده در سازمان")]
-    NotRegistered = 3,
+    NotRegistered = 3
 }

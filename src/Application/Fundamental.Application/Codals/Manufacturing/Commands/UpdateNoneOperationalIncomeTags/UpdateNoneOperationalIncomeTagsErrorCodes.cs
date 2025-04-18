@@ -1,10 +1,11 @@
 ﻿using Fundamental.ErrorHandling.Attributes;
+using Fundamental.ErrorHandling.Enums;
 
 namespace Fundamental.Application.Codals.Manufacturing.Commands.UpdateNoneOperationalIncomeTags;
 
-[HandlerCode(ErrorHandling.Enums.HandlerCode.UpdateNoneOperationalIncomeTags)]
+[HandlerCode(HandlerCode.UpdateNoneOperationalIncomeTags)]
 public enum UpdateNoneOperationalIncomeTagsErrorCodes
 {
-    [ErrorType(ErrorHandling.Enums.BackendErrorType.Security)]
-    EntityNotFound = 13_379_101,
+    [ErrorType(BackendErrorType.Security)]
+    EntityNotFound = 13_379_101
 }

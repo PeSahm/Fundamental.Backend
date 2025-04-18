@@ -1,12 +1,12 @@
-﻿using Fundamental.BuildingBlock.Events;
+﻿using DotNetCore.CAP;
+using DotNetCore.CAP.Messages;
+using Fundamental.BuildingBlock.Events;
 using Fundamental.Domain.Common.BaseTypes;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Fundamental.Infrastructure.Persistence.Interceptors;
-
-using DotNetCore.CAP;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 
 public class DomainEventsInterceptor(IServiceScopeFactory serviceProvider) : SaveChangesInterceptor
 {
@@ -47,7 +47,7 @@ public class DomainEventsInterceptor(IServiceScopeFactory serviceProvider) : Sav
                 {
                     Dictionary<string, string?> headers = new()
                     {
-                        [DotNetCore.CAP.Messages.Headers.CallbackName] = aggregationEvent.CallbackName,
+                        [Headers.CallbackName] = aggregationEvent.CallbackName
                     };
                     capPublisher.Publish(aggregationEvent.Name, aggregationEvent.Data, headers);
                 }

@@ -5,8 +5,8 @@ namespace Fundamental.ErrorHandling;
 public readonly record struct Result<TValue, TErrorEnum>
     where TErrorEnum : Enum
 {
-    private readonly TValue? _value;
     private readonly ErrorOf<TErrorEnum>? _error;
+    private readonly TValue? _value;
 
     public Result(TValue value)
     {
@@ -50,7 +50,8 @@ public readonly record struct Result<TValue, TErrorEnum>
 
     public bool TryGetValue(
         [NotNullWhen(true)] out TValue? value,
-        [NotNullWhen(false)] out ErrorOf<TErrorEnum>? error)
+        [NotNullWhen(false)] out ErrorOf<TErrorEnum>? error
+    )
     {
         value = _value;
         error = _error;

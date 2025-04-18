@@ -38,7 +38,7 @@ public class Index : BaseEntity<Guid>
 
     public decimal GetChangePercentage(Index previousIndex)
     {
-        return (GetChange(previousIndex) / previousIndex.Value) * 100;
+        return GetChange(previousIndex) / previousIndex.Value * 100;
     }
 
     public decimal GetChange(Index previousIndex)

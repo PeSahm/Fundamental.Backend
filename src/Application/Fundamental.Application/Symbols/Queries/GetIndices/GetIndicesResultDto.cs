@@ -17,6 +17,7 @@ public sealed class GetIndicesResultDto
     public GetIndicesResultDto CalculatePercentage()
     {
         Data = Data.OrderBy(x => x.Date).ToList();
+
         for (int i = 1; i < Data.Count; i++)
         {
             Data[i].Change = Data[i].Value - Data[i - 1].Value;

@@ -25,5 +25,5 @@ public enum SaleColumnId
     ProducePrevYear = 119722,
     SalePrevYear = 119723,
     SaleRatePrevYear = 119724,
-    SaleAmountPrevYear = 119725,
+    SaleAmountPrevYear = 119725
 }

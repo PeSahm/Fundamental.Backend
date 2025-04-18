@@ -16,5 +16,5 @@ public enum AddSymbolRelationRequestErrorCodes
     RatioIsInvalid = 11_399_103,
 
     [ErrorType(BackendErrorType.BusinessLogic)]
-    RelationAlreadyExists = 11_399_104,
+    RelationAlreadyExists = 11_399_104
 }

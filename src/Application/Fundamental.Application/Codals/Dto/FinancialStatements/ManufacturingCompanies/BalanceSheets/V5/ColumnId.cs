@@ -4,5 +4,5 @@ public enum ColumnId
 {
     ThisPeriodData = 8992,
     LastYearSamePeriod = 8993,
-    LastYearAnnual = 8994,
+    LastYearAnnual = 8994
 }

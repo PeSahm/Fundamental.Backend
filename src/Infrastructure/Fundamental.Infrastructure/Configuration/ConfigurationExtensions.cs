@@ -34,7 +34,7 @@ public static class ConfigurationExtensions
         builder.Property(money => money.Value)
             .HasField("_value")
             .HasColumnName(NpgsqlSnakeCaseNameTranslator.ConvertToSnakeCase(builder.Metadata.Name))
-            .HasConversion(x => x, x => x )
+            .HasConversion(x => x, x => x)
             .HasColumnType("decimal")
             .HasPrecision(36, 10)
             .IsRequired();
@@ -48,7 +48,7 @@ public static class ConfigurationExtensions
         builder.Property(money => money.Value)
             .HasColumnName(NpgsqlSnakeCaseNameTranslator.ConvertToSnakeCase(builder.Metadata.Name))
             .HasField("_value")
-            .HasConversion(x => x, x => x )
+            .HasConversion(x => x, x => x)
             .HasColumnType("decimal")
             .HasPrecision(36, 10)
             .IsRequired();

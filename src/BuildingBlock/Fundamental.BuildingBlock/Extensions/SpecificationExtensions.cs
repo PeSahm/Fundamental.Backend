@@ -27,14 +27,14 @@ public static class SpecificationExtensions
             targetSpec.Query.Search(searchCriteria.Selector, searchCriteria.SearchTerm);
         }
 
-        if (referenceSpec.Take.HasValue)
+        if (referenceSpec.Take > 0)
         {
-            targetSpec.Query.Take(referenceSpec.Take.Value);
+            targetSpec.Query.Take(referenceSpec.Take);
         }
 
-        if (referenceSpec.Skip.HasValue)
+        if (referenceSpec.Skip > 0)
         {
-            targetSpec.Query.Skip(referenceSpec.Skip.Value);
+            targetSpec.Query.Skip(referenceSpec.Skip);
         }
     }
 }

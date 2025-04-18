@@ -13,9 +13,9 @@ public class StatementMonthJsonConverter : JsonConverter<StatementMonth>
             int month = reader.GetInt32();
             return new StatementMonth(month);
         }
-        
+
         JsonElement monthObj = JsonSerializer.Deserialize<JsonElement>(ref reader);
-        
+
         if (monthObj.TryGetProperty("Month", out JsonElement monthProperty))
         {
             int month = monthProperty.GetInt32();

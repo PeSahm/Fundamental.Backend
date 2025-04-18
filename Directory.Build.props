@@ -1,51 +1,51 @@
 ﻿<Project>
-	<PropertyGroup>
+    <PropertyGroup>
         <LangVersion>13.0</LangVersion>
         <Nullable>enable</Nullable>
-		<IsUnitTests>$(MSBuildProjectName.EndsWith('UnitTests'))</IsUnitTests>
-		<IsTests>$(MSBuildProjectName.EndsWith('Tests'))</IsTests>
-		<IsDbMigrations>$(MSBuildProjectName.EndsWith('Migrations'))</IsDbMigrations>
-		<InvariantGlobalization>false</InvariantGlobalization>
-		<IsPackable>false</IsPackable>
-		<Authors>PeSahm Development Team</Authors>
-        <Copyright>Mostafa Esmaeili And Amir Mehrizi </Copyright>
-		<Product>Fundamental Platform</Product>
-	</PropertyGroup>
+        <IsUnitTests>$(MSBuildProjectName.EndsWith('UnitTests'))</IsUnitTests>
+        <IsTests>$(MSBuildProjectName.EndsWith('Tests'))</IsTests>
+        <IsDbMigrations>$(MSBuildProjectName.EndsWith('Migrations'))</IsDbMigrations>
+        <InvariantGlobalization>false</InvariantGlobalization>
+        <IsPackable>false</IsPackable>
+        <Authors>PeSahm Development Team</Authors>
+        <Copyright>Mostafa Esmaeili And Amir Mehrizi</Copyright>
+        <Product>Fundamental Platform</Product>
+    </PropertyGroup>
 
-	<PropertyGroup Condition="!'$(IsDbMigrations)'">
-		<EnableNETAnalyzers>true</EnableNETAnalyzers>
-		<AnalysisMode>Default</AnalysisMode>
-	</PropertyGroup>
+    <PropertyGroup Condition="!'$(IsDbMigrations)'">
+        <EnableNETAnalyzers>true</EnableNETAnalyzers>
+        <AnalysisMode>Default</AnalysisMode>
+    </PropertyGroup>
 
-	<ItemGroup Condition="'$(IsTests)'">
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0"/>
-        <PackageReference Include="FluentAssertions" Version="7.1.0"/>
+    <ItemGroup Condition="'$(IsTests)'">
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0"/>
+        <PackageReference Include="FluentAssertions" Version="7.2.0"/>
         <PackageReference Include="Moq" Version="4.20.72"/>
         <PackageReference Include="xunit" Version="2.9.3"/>
-        <PackageReference Include="xunit.runner.visualstudio" Version="3.0.1">
+        <PackageReference Include="xunit.runner.visualstudio" Version="3.0.2">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-	</ItemGroup>
+    </ItemGroup>
 
-	<ItemGroup Condition="!'$(IsDbMigrations)'">
-        <PackageReference Include="SonarAnalyzer.CSharp" Version="10.5.0.109200">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-		</PackageReference>
+    <ItemGroup Condition="!'$(IsDbMigrations)'">
+        <PackageReference Include="SonarAnalyzer.CSharp" Version="10.8.0.113526">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-	</ItemGroup>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
 
-	<ItemGroup Condition="!'$(IsDbMigrations)'">
-		<None Include="$(MSBuildThisFileDirectory)analyzers\Analyzers.ruleset" Link="Properties\Analyzers.ruleset" />
-	</ItemGroup>
+    <ItemGroup Condition="!'$(IsDbMigrations)'">
+        <None Include="$(MSBuildThisFileDirectory)analyzers\Analyzers.ruleset" Link="Properties\Analyzers.ruleset"/>
+    </ItemGroup>
 
-	<ItemGroup Condition="'$(IsTests)'">
-		<None Include="$(MSBuildThisFileDirectory)analyzers\TestingAnalyzers.ruleset" Link="Properties\TestingAnalyzers.ruleset" />
-	</ItemGroup>
+    <ItemGroup Condition="'$(IsTests)'">
+        <None Include="$(MSBuildThisFileDirectory)analyzers\TestingAnalyzers.ruleset" Link="Properties\TestingAnalyzers.ruleset"/>
+    </ItemGroup>
 
     <PropertyGroup Condition="!'$(IsDbMigrations)'">
         <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)analyzers\Analyzers.ruleset</CodeAnalysisRuleSet>
@@ -53,5 +53,6 @@
 
     <PropertyGroup Condition="'$(IsTests)'">
         <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)analyzers\TestingAnalyzers.ruleset</CodeAnalysisRuleSet>
+
     </PropertyGroup>
 </Project>

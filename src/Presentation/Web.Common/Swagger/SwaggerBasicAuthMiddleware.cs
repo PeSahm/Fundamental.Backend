@@ -8,8 +8,8 @@ namespace Fundamental.Web.Common.Swagger;
 
 public class SwaggerBasicAuthMiddleware
 {
-    private readonly RequestDelegate _next;
     private readonly IConfiguration _configuration;
+    private readonly RequestDelegate _next;
 
     public SwaggerBasicAuthMiddleware(RequestDelegate next, IConfiguration configuration)
     {

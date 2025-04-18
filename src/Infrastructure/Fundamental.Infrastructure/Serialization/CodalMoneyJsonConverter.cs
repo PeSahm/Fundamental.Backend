@@ -10,13 +10,13 @@ public class CodalMoneyJsonConverter : JsonConverter<CodalMoney>
     public override CodalMoney Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         JsonElement moneyObj = JsonSerializer.Deserialize<JsonElement>(ref reader);
-        
+
         if (moneyObj.TryGetProperty("Value", out JsonElement valueProperty) &&
             moneyObj.TryGetProperty("Currency", out JsonElement currencyProperty))
         {
             decimal value = valueProperty.GetDecimal();
             IsoCurrency currency = (IsoCurrency)currencyProperty.GetInt32();
-            
+
             return new CodalMoney(value, currency);
         }
 

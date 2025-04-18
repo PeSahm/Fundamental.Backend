@@ -88,14 +88,14 @@ dotnet_naming_style.interface.capitalization = pascal_case
 dotnet_naming_rule.types_rule.severity = warning
 dotnet_naming_rule.types_rule.symbols = types
 dotnet_naming_rule.types_rule.style = pascal_case
-dotnet_naming_symbols.types.applicable_kinds = class,struct,interface,enum
+dotnet_naming_symbols.types.applicable_kinds = class, struct, interface, enum
 dotnet_naming_symbols.types.applicable_accessibilities = *
 dotnet_naming_style.pascal_case.capitalization = pascal_case
 
 dotnet_naming_rule.non_field_members_rule.severity = warning
 dotnet_naming_rule.non_field_members_rule.symbols = non_field_members
 dotnet_naming_rule.non_field_members_rule.style = pascal_case
-dotnet_naming_symbols.non_field_members.applicable_kinds = property,method,event
+dotnet_naming_symbols.non_field_members.applicable_kinds = property, method, event
 dotnet_naming_symbols.non_field_members.applicable_accessibilities = *
 
 dotnet_naming_rule.type_parameter_rule.severity = warning
@@ -108,7 +108,7 @@ dotnet_naming_rule.private_or_internal_field_rule.severity = warning
 dotnet_naming_rule.private_or_internal_field_rule.symbols = private_or_internal_field
 dotnet_naming_rule.private_or_internal_field_rule.style = private_or_internal_field
 dotnet_naming_symbols.private_or_internal_field.applicable_kinds = field
-dotnet_naming_symbols.private_or_internal_field.applicable_accessibilities = private,internal
+dotnet_naming_symbols.private_or_internal_field.applicable_accessibilities = private, internal
 dotnet_naming_style.private_or_internal_field.required_prefix = _
 dotnet_naming_style.private_or_internal_field.capitalization = camel_case
 
@@ -144,7 +144,7 @@ csharp_style_pattern_matching_over_is_with_cast_check = true:warning
 csharp_style_conditional_delegate_call = true:suggestion
 
 # Modifier preferences
-csharp_preferred_modifier_order = public,private,protected,internal,static,extern,new,virtual,abstract,sealed,override,readonly,unsafe,volatile,async
+csharp_preferred_modifier_order = public, private, protected, internal, static, extern, new, virtual, abstract, sealed, override, readonly, unsafe, volatile, async
 
 # Code-block preferences
 csharp_prefer_braces = true:warning
@@ -203,7 +203,7 @@ csharp_space_between_square_brackets = false
 # Wrapping preferences
 csharp_preserve_single_line_blocks = true
 csharp_preserve_single_line_statements = false
-csharp_prefer_simple_using_statement=false:suggestion
+csharp_prefer_simple_using_statement = false:suggestion
 
 # ReSharper inspection severities
 resharper_csharp_object_creation_when_type_evident = target_typed
@@ -229,5 +229,5 @@ resharper_keep_existing_invocation_parens_arrangement = true
 resharper_csharp_wrap_arguments_style = chop_if_long
 
 [*.{cs,vb}]
-dotnet_style_prefer_conditional_expression_over_assignment=false:warning
-dotnet_style_prefer_conditional_expression_over_return=false:warning
+dotnet_style_prefer_conditional_expression_over_assignment = false:warning
+dotnet_style_prefer_conditional_expression_over_return = false:warning

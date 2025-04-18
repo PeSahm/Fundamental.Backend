@@ -7,5 +7,5 @@ public enum IsoCurrency
 {
     IRR = 61,
     USD = 139,
-    EUR = 46,
+    EUR = 46
 }

@@ -8,9 +8,9 @@ public readonly record struct Response : IResponse
         Error = error;
     }
 
-    public bool Success { get; init; }
-
     public object? Data { get; init; } = null;
+
+    public bool Success { get; init; }
     public Error? Error { get; init; } = null;
 
     public static implicit operator Response(Error error)

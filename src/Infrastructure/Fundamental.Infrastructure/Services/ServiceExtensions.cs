@@ -8,14 +8,14 @@ namespace Fundamental.Infrastructure.Services;
 public static class ServiceExtensions
 {
     /// <summary>
-    /// Get service of type <typeparamref name="T"/> from the <see cref="IServiceProvider"/>.
+    ///     Get service of type <typeparamref name="T" /> from the <see cref="IServiceProvider" />.
     /// </summary>
     /// <typeparam name="T">The type of service object to get.</typeparam>
-    /// <param name="provider">The <see cref="IServiceProvider"/> to retrieve the service object from.</param>
+    /// <param name="provider">The <see cref="IServiceProvider" /> to retrieve the service object from.</param>
     /// <param name="reportingType">Codal Reporting Type. </param>
     /// <param name="letterType">Codal Letter Type. </param>
     /// <param name="letterPart">Different part of a report. </param>
-    /// <returns>A service object of type <typeparamref name="T"/> or null if there is no such service.</returns>
+    /// <returns>A service object of type <typeparamref name="T" /> or null if there is no such service.</returns>
     public static T GetRequiredKeyedService<T>(
         this IServiceProvider provider,
         ReportingType reportingType,
@@ -56,15 +56,15 @@ public static class ServiceExtensions
     }
 
     /// <summary>
-    /// Adds a scoped service of the type specified in <typeparamref name="TService"/> with an
-    /// implementation type specified in <typeparamref name="TImplementation"/> to the
-    /// specified <see cref="IServiceCollection"/>.
+    ///     Adds a scoped service of the type specified in <typeparamref name="TService" /> with an
+    ///     implementation type specified in <typeparamref name="TImplementation" /> to the
+    ///     specified <see cref="IServiceCollection" />.
     /// </summary>
     /// <typeparam name="TService">The type of the service to add.</typeparam>
     /// <typeparam name="TImplementation">The type of the implementation to use.</typeparam>
-    /// <param name="services">The <see cref="IServiceCollection"/> to add the service to.</param>
+    /// <param name="services">The <see cref="IServiceCollection" /> to add the service to.</param>
     /// <returns>A reference to this instance after the operation has completed.</returns>
-    /// <seealso cref="ServiceLifetime.Scoped"/>
+    /// <seealso cref="ServiceLifetime.Scoped" />
     public static IServiceCollection AddKeyedScopedCodalVersionDetector<TService, TImplementation>(
         this IServiceCollection services
     )
@@ -78,15 +78,15 @@ public static class ServiceExtensions
     }
 
     /// <summary>
-    /// Adds a scoped service of the type specified in <typeparamref name="TService"/> with an
-    /// implementation type specified in <typeparamref name="TImplementation"/> to the
-    /// specified <see cref="IServiceCollection"/>.
+    ///     Adds a scoped service of the type specified in <typeparamref name="TService" /> with an
+    ///     implementation type specified in <typeparamref name="TImplementation" /> to the
+    ///     specified <see cref="IServiceCollection" />.
     /// </summary>
     /// <typeparam name="TService">The type of the service to add.</typeparam>
     /// <typeparam name="TImplementation">The type of the implementation to use.</typeparam>
-    /// <param name="services">The <see cref="IServiceCollection"/> to add the service to.</param>
+    /// <param name="services">The <see cref="IServiceCollection" /> to add the service to.</param>
     /// <returns>A reference to this instance after the operation has completed.</returns>
-    /// <seealso cref="ServiceLifetime.Scoped"/>
+    /// <seealso cref="ServiceLifetime.Scoped" />
     public static IServiceCollection AddKeyedScopedCodalProcessor<TService, TImplementation>(
         this IServiceCollection services
     )

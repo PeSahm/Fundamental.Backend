@@ -17,5 +17,5 @@ public enum PublisherMarketType
     Base = 2,
 
     [Description("شرکتهای کوچک و متوسط")]
-    SmallAndMedium = 3,
+    SmallAndMedium = 3
 }

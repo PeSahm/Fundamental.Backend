@@ -10,4 +10,5 @@ public record MonthlyActivityUpdated(
     FiscalYear FiscalYear,
     CodalMoney SaleCurrentMonth,
     CodalMoney SaleBeforeCurrentMonth,
-    CodalMoney SaleLastYear) : IEvent;
+    CodalMoney SaleLastYear
+) : IEvent;

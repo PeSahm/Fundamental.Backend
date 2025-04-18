@@ -1,41 +1,40 @@
-﻿using Fundamental.Domain.Common.Enums;
+﻿#nullable disable
+
+using Fundamental.Domain.Common.Enums;
 using Fundamental.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
+namespace Fundamental.Migrations.Fundamental;
 
-namespace Fundamental.Migrations.Fundamental
+/// <inheritdoc />
+[DbContext(typeof(FundamentalDbContext))]
+[Migration("20250125220755_ChangeReviewStatusToEnum")]
+public class ChangeReviewStatusToEnum : Migration
 {
     /// <inheritdoc />
-    [DbContext(typeof(FundamentalDbContext))]
-    [Migration("20250125220755_ChangeReviewStatusToEnum")]
-    public class ChangeReviewStatusToEnum : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.AlterColumn<ReviewStatus>(
-                name: "review_status",
-                schema: "shd",
-                table: "symbol-share-holders",
-                type: "review_status",
-                nullable: false,
-                oldClrType: typeof(short),
-                oldType: "SMALLINT");
-        }
+        migrationBuilder.AlterColumn<ReviewStatus>(
+            "review_status",
+            schema: "shd",
+            table: "symbol-share-holders",
+            type: "review_status",
+            nullable: false,
+            oldClrType: typeof(short),
+            oldType: "SMALLINT");
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.AlterColumn<short>(
-                name: "review_status",
-                schema: "shd",
-                table: "symbol-share-holders",
-                type: "SMALLINT",
-                nullable: false,
-                oldClrType: typeof(ReviewStatus),
-                oldType: "review_status");
-        }
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.AlterColumn<short>(
+            "review_status",
+            schema: "shd",
+            table: "symbol-share-holders",
+            type: "SMALLINT",
+            nullable: false,
+            oldClrType: typeof(ReviewStatus),
+            oldType: "review_status");
     }
 }

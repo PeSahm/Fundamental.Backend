@@ -1,6 +1,7 @@
 using Fundamental.Domain.Prices.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using NpgsqlTypes;
 
 namespace Fundamental.Infrastructure.Configuration.Fundamental;
 
@@ -18,7 +19,7 @@ public class ClosePriceConfiguration : EntityTypeConfigurationBase<ClosePrice>
         builder.Property(x => x.Date)
             .IsRequired()
             .HasColumnName("date")
-            .HasColumnType(NpgsqlTypes.NpgsqlDbType.Date.ToString());
+            .HasColumnType(NpgsqlDbType.Date.ToString());
 
         builder.Property(x => x.Close)
             .IsRequired()

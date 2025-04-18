@@ -8,5 +8,5 @@ public enum BalanceSheetCategory
     Assets = 1,
 
     [Description("بدهی")]
-    Liability = 2,
+    Liability = 2
 }

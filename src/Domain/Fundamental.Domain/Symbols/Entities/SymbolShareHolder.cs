@@ -1,6 +1,5 @@
 ﻿using Fundamental.Domain.Common.BaseTypes;
 using Fundamental.Domain.Common.Enums;
-using Fundamental.Domain.Symbols.Enums;
 
 namespace Fundamental.Domain.Symbols.Entities;
 

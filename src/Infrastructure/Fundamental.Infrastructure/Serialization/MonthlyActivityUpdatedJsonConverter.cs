@@ -1,3 +1,4 @@
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Fundamental.Domain.Codals.Manufacturing.Events;
@@ -16,11 +17,12 @@ public class MonthlyActivityUpdatedJsonConverter : JsonConverter<MonthlyActivity
             if (reader.TokenType == JsonTokenType.String)
             {
                 string encodedJson = reader.GetString()!;
+
                 if (encodedJson.StartsWith("data:IEvent;base64,"))
                 {
                     string base64Data = encodedJson.Substring("data:IEvent;base64,".Length);
                     byte[] jsonBytes = Convert.FromBase64String(base64Data);
-                    string jsonString = System.Text.Encoding.UTF8.GetString(jsonBytes);
+                    string jsonString = Encoding.UTF8.GetString(jsonBytes);
                     using JsonDocument base64Doc = JsonDocument.Parse(jsonString);
                     return DeserializeFromElement(base64Doc.RootElement);
                 }
@@ -37,7 +39,7 @@ public class MonthlyActivityUpdatedJsonConverter : JsonConverter<MonthlyActivity
                 {
                     return DeserializeFromElement(element);
                 }
-                
+
                 throw new JsonException("Expected either a JSON object, string, or JsonElement");
             }
 
@@ -70,38 +72,48 @@ public class MonthlyActivityUpdatedJsonConverter : JsonConverter<MonthlyActivity
                         break;
 
                     case "reportmonth":
-                        int month = reader.TokenType == JsonTokenType.Number ? reader.GetInt32() :
-                            JsonSerializer.Deserialize<JsonElement>(ref reader).GetProperty("Month").GetInt32();
+                        int month = reader.TokenType == JsonTokenType.Number
+                            ? reader.GetInt32()
+                            : JsonSerializer.Deserialize<JsonElement>(ref reader).GetProperty("Month").GetInt32();
                         reportMonthValue = new StatementMonth(month);
                         break;
 
                     case "fiscalyear":
-                        int year = reader.TokenType == JsonTokenType.Number ? reader.GetInt32() :
-                            JsonSerializer.Deserialize<JsonElement>(ref reader).GetProperty("Year").GetInt32();
+                        int year = reader.TokenType == JsonTokenType.Number
+                            ? reader.GetInt32()
+                            : JsonSerializer.Deserialize<JsonElement>(ref reader).GetProperty("Year").GetInt32();
                         fiscalYearValue = new FiscalYear(year);
                         break;
 
                     case "salecurrentmonth":
-                        decimal currentMonthValue = reader.TokenType == JsonTokenType.Number ? reader.GetDecimal() :
-                            JsonSerializer.Deserialize<JsonElement>(ref reader).GetProperty("Value").GetDecimal();
+                        decimal currentMonthValue = reader.TokenType == JsonTokenType.Number
+                            ? reader.GetDecimal()
+                            : JsonSerializer.Deserialize<JsonElement>(ref reader).GetProperty("Value").GetDecimal();
                         saleCurrentMonthValue = new CodalMoney(currentMonthValue);
                         break;
 
                     case "salebeforecurrentmonth":
-                        decimal beforeMonthValue = reader.TokenType == JsonTokenType.Number ? reader.GetDecimal() :
-                            JsonSerializer.Deserialize<JsonElement>(ref reader).GetProperty("Value").GetDecimal();
+                        decimal beforeMonthValue = reader.TokenType == JsonTokenType.Number
+                            ? reader.GetDecimal()
+                            : JsonSerializer.Deserialize<JsonElement>(ref reader).GetProperty("Value").GetDecimal();
                         saleBeforeCurrentMonthValue = new CodalMoney(beforeMonthValue);
                         break;
 
                     case "salelastyear":
-                        decimal lastYearValue = reader.TokenType == JsonTokenType.Number ? reader.GetDecimal() :
-                            JsonSerializer.Deserialize<JsonElement>(ref reader).GetProperty("Value").GetDecimal();
+                        decimal lastYearValue = reader.TokenType == JsonTokenType.Number
+                            ? reader.GetDecimal()
+                            : JsonSerializer.Deserialize<JsonElement>(ref reader).GetProperty("Value").GetDecimal();
                         saleLastYearValue = new CodalMoney(lastYearValue);
                         break;
                 }
             }
 
-            ValidateRequiredProperties(isinValue, reportMonthValue, fiscalYearValue, saleCurrentMonthValue, saleBeforeCurrentMonthValue, saleLastYearValue);
+            ValidateRequiredProperties(isinValue,
+                reportMonthValue,
+                fiscalYearValue,
+                saleCurrentMonthValue,
+                saleBeforeCurrentMonthValue,
+                saleLastYearValue);
 
             return new MonthlyActivityUpdated(
                 isinValue!,
@@ -137,24 +149,29 @@ public class MonthlyActivityUpdatedJsonConverter : JsonConverter<MonthlyActivity
     private static MonthlyActivityUpdated DeserializeFromElement(JsonElement element)
     {
         string? isin = element.TryGetProperty("Isin", out JsonElement isinProp) ? isinProp.GetString() : null;
-                    
-        StatementMonth? reportMonth = element.TryGetProperty("ReportMonth", out JsonElement reportMonthProp) ?
-            new StatementMonth(reportMonthProp.GetProperty("Month").GetInt32()) : null;
-                    
-        FiscalYear? fiscalYear = element.TryGetProperty("FiscalYear", out JsonElement fiscalYearProp) ?
-            new FiscalYear(fiscalYearProp.GetProperty("Year").GetInt32()) : null;
-                    
-        CodalMoney? saleCurrentMonth = element.TryGetProperty("SaleCurrentMonth", out JsonElement saleCurrentMonthProp) ?
-            new CodalMoney(saleCurrentMonthProp.GetProperty("Value").GetDecimal()) : null;
-                    
-        CodalMoney? saleBeforeCurrentMonth = element.TryGetProperty("SaleBeforeCurrentMonth", out JsonElement saleBeforeCurrentMonthProp) ?
-            new CodalMoney(saleBeforeCurrentMonthProp.GetProperty("Value").GetDecimal()) : null;
-                    
-        CodalMoney? saleLastYear = element.TryGetProperty("SaleLastYear", out JsonElement saleLastYearProp) ?
-            new CodalMoney(saleLastYearProp.GetProperty("Value").GetDecimal()) : null;
+
+        StatementMonth? reportMonth = element.TryGetProperty("ReportMonth", out JsonElement reportMonthProp)
+            ? new StatementMonth(reportMonthProp.GetProperty("Month").GetInt32())
+            : null;
+
+        FiscalYear? fiscalYear = element.TryGetProperty("FiscalYear", out JsonElement fiscalYearProp)
+            ? new FiscalYear(fiscalYearProp.GetProperty("Year").GetInt32())
+            : null;
+
+        CodalMoney? saleCurrentMonth = element.TryGetProperty("SaleCurrentMonth", out JsonElement saleCurrentMonthProp)
+            ? new CodalMoney(saleCurrentMonthProp.GetProperty("Value").GetDecimal())
+            : null;
+
+        CodalMoney? saleBeforeCurrentMonth = element.TryGetProperty("SaleBeforeCurrentMonth", out JsonElement saleBeforeCurrentMonthProp)
+            ? new CodalMoney(saleBeforeCurrentMonthProp.GetProperty("Value").GetDecimal())
+            : null;
+
+        CodalMoney? saleLastYear = element.TryGetProperty("SaleLastYear", out JsonElement saleLastYearProp)
+            ? new CodalMoney(saleLastYearProp.GetProperty("Value").GetDecimal())
+            : null;
 
         ValidateRequiredProperties(isin, reportMonth, fiscalYear, saleCurrentMonth, saleBeforeCurrentMonth, saleLastYear);
-                    
+
         return new MonthlyActivityUpdated(
             isin!,
             reportMonth!,
@@ -170,7 +187,8 @@ public class MonthlyActivityUpdatedJsonConverter : JsonConverter<MonthlyActivity
         FiscalYear? fiscalYear,
         CodalMoney? saleCurrentMonth,
         CodalMoney? saleBeforeCurrentMonth,
-        CodalMoney? saleLastYear)
+        CodalMoney? saleLastYear
+    )
     {
         if (isin == null)
         {

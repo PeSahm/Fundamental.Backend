@@ -10,5 +10,5 @@ public enum ApproveSymbolShareHolderErrorCodes
     IdIsNotValid = 11_394_101,
 
     [ErrorType(BackendErrorType.Security)]
-    ShareHolderIsinIsNotValid = 11_394_102,
+    ShareHolderIsinIsNotValid = 11_394_102
 }

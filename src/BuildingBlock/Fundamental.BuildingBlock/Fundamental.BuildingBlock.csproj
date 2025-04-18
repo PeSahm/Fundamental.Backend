@@ -1,16 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-      <TargetFramework>net8.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <RootNamespace>Fundamental.BuildingBlock</RootNamespace>
-      <LangVersion>12</LangVersion>
-    </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net9</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Fundamental.BuildingBlock</RootNamespace>
+
+  </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ardalis.Specification" Version="8.0.0" />
-    <PackageReference Include="DNTPersianUtils.Core" Version="6.6.0" />
+    <PackageReference Include="Ardalis.Specification" Version="9.0.1" />
+    <PackageReference Include="DNTPersianUtils.Core" Version="6.6.1" />
     <PackageReference Include="DotNetCore.CAP" Version="8.3.3" />
     <PackageReference Include="RepoDb" Version="1.13.1" />
     <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />

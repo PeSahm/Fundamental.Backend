@@ -24,7 +24,7 @@ public class ErrorMessagesController : ControllerBase
     [HttpGet("{client}", Name = "GetCustomerErrorMessages")]
     [SwaggerRequestType(typeof(GetCustomerErrorMessagesRequest))]
     public async Task<Response<Dictionary<string, string>>> GetAll(
-        [FromRoute, SwaggerSchema(Title = SchemaTitle.FRONTEND_CLIENT_TYPE)] string client,
+        [FromRoute] [SwaggerSchema(Title = SchemaTitle.FRONTEND_CLIENT_TYPE)] string client,
         [FromQuery] string? culture
     )
     {

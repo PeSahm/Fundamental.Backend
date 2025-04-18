@@ -9,15 +9,15 @@ public class BalanceSheetSortSpec : Specification<BalanceSheetSort, GetBalanceSh
     public static BalanceSheetSortSpec GetValidSpecifications()
     {
         BalanceSheetSortSpec spec = new();
-        spec.Query
+
+        spec.Query.AsNoTracking()
+            .OrderBy(x => x.Order)
             .Select(x => new GetBalanceSheetSortResultDto
             {
                 Order = x.Order,
                 CodalRow = x.CodalRow,
-                Category = x.Category,
-            })
-            .AsNoTracking()
-            .OrderBy(x => x.Order);
+                Category = x.Category
+            });
         return spec;
     }
 }

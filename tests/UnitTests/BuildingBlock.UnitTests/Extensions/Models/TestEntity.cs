@@ -1,7 +1,7 @@
 ﻿namespace BuildingBlockUnitTests.Extensions.Models;
 
 /// <summary>
-/// A dummy class to test the extension methods.
+///     A dummy class to test the extension methods.
 /// </summary>
 public class TestEntity
 {

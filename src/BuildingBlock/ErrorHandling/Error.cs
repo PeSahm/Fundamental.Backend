@@ -5,7 +5,7 @@ using Fundamental.ErrorHandling.Helpers;
 namespace Fundamental.ErrorHandling;
 
 /// <summary>
-/// Represents an error.
+///     Represents an error.
 /// </summary>
 public readonly record struct Error
 {
@@ -19,23 +19,23 @@ public readonly record struct Error
     }
 
     /// <summary>
-    /// Gets the unique error code.
+    ///     Gets the unique error code.
     /// </summary>
     public string Code => ErrorCodeHelper.Format(_code);
 
     /// <summary>
-    /// Gets <see cref="BackendErrorType"/> of the error.
+    ///     Gets <see cref="BackendErrorType" /> of the error.
     /// </summary>
     [JsonIgnore]
     public BackendErrorType BackendType { get; }
 
     /// <summary>
-    /// Gets <see cref="ClientErrorType"/> of the error.
+    ///     Gets <see cref="ClientErrorType" /> of the error.
     /// </summary>
     public ClientErrorType Type => ErrorTypeHelper.GetClientErrorType(BackendType);
 
     /// <summary>
-    /// Gets values of placeholders in the error message.
+    ///     Gets values of placeholders in the error message.
     /// </summary>
     public Dictionary<string, string>? Values { get; }
 

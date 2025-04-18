@@ -1,7 +1,6 @@
 ﻿using Ardalis.Specification;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
-using Fundamental.Domain.Symbols.Enums;
 
 namespace Fundamental.Application.Symbols.Specifications;
 

@@ -8,270 +8,271 @@ using JetBrains.Annotations;
 
 namespace Domain.UnitTests.Codals.Manufacturing.Entities;
 
-[TestSubject(subject: typeof(FinancialStatement))]
+[TestSubject(typeof(FinancialStatement))]
 public class FinancialStatementTest
 {
     [Theory]
-    [InlineData(data: [6, 9, 9])]
-    [InlineData(data: [1, 12, 1])]
-    [InlineData(data: [12, 1, 11])]
-    [InlineData(data: [3, 6, 9])]
-    [InlineData(data: [11, 2, 9])]
+    [InlineData([6, 9, 9])]
+    [InlineData([1, 12, 1])]
+    [InlineData([12, 1, 11])]
+    [InlineData([3, 6, 9])]
+    [InlineData([11, 2, 9])]
     public void AdjustedMonth_ShouldReturnCorrectMonth(int reportMonth, int yearEndMonth, int expectedAdjustedMonth)
     {
         // Arrange
-        StatementMonth month = new StatementMonth(month: reportMonth);
+        StatementMonth month = new(reportMonth);
 
-        StatementMonth adjustedMonth = month.AdjustedMonth(yearEndMonth: yearEndMonth);
+        StatementMonth adjustedMonth = month.AdjustedMonth(yearEndMonth);
 
         // Assert
-        Assert.Equal(expected: expectedAdjustedMonth, actual: adjustedMonth.Month);
+        Assert.Equal(expectedAdjustedMonth, adjustedMonth.Month);
     }
 
     [Theory]
-    [MemberData(memberName: nameof(MarketValueTestCases))]
+    [MemberData(nameof(MarketValueTestCases))]
     public void Build_ShouldCalculateMarketValue(FinancialStatementTestCase testCase)
     {
         // Arrange
-        FinancialStatement financialStatement = CreateFinancialStatement(testCase: testCase);
+        FinancialStatement financialStatement = CreateFinancialStatement(testCase);
 
         // Act & Assert
-        Assert.Equal(expected: testCase.ExpectedMarketValue, actual: financialStatement.MarketValue);
+        Assert.Equal(testCase.ExpectedMarketValue, financialStatement.MarketValue);
     }
 
     [Theory]
-    [MemberData(memberName: nameof(MarketValueTestCases))]
+    [MemberData(nameof(MarketValueTestCases))]
     public void Build_ShouldCalculateQuarterlyIncome(FinancialStatementTestCase testCase)
     {
         // Arrange
-        FinancialStatement financialStatement = CreateFinancialStatement(testCase: testCase);
+        FinancialStatement financialStatement = CreateFinancialStatement(testCase);
 
         // Act & Assert
-        Assert.Equal(expected: testCase.ExpectedSpringOperationalIncome, actual: financialStatement.SpringOperationIncome);
-        Assert.Equal(expected: testCase.ExpectedSummerOperationalIncome, actual: financialStatement.SummerOperationIncome);
-        Assert.Equal(expected: testCase.ExpectedFallOperationalIncome, actual: financialStatement.FallOperationIncome);
-        Assert.Equal(expected: testCase.ExpectedWinterOperationalIncome, actual: financialStatement.WinterOperationIncome);
+        Assert.Equal(testCase.ExpectedSpringOperationalIncome, financialStatement.SpringOperationIncome);
+        Assert.Equal(testCase.ExpectedSummerOperationalIncome, financialStatement.SummerOperationIncome);
+        Assert.Equal(testCase.ExpectedFallOperationalIncome, financialStatement.FallOperationIncome);
+        Assert.Equal(testCase.ExpectedWinterOperationalIncome, financialStatement.WinterOperationIncome);
     }
 
     [Theory]
-    [MemberData(memberName: nameof(MarketValueTestCases))]
+    [MemberData(nameof(MarketValueTestCases))]
     public void Build_ShouldCalculateSaleAverageExcludeThisPeriod(FinancialStatementTestCase testCase)
     {
         // Arrange
-        FinancialStatement financialStatement = CreateFinancialStatement(testCase: testCase);
+        FinancialStatement financialStatement = CreateFinancialStatement(testCase);
 
         // Act & Assert
-        Assert.Equal(expected: testCase.ExpectedSaleAverageExcludeThisPeriod, actual: financialStatement.SaleAverageExcludeThisPeriod);
+        Assert.Equal(testCase.ExpectedSaleAverageExcludeThisPeriod, financialStatement.SaleAverageExcludeThisPeriod);
     }
 
     [Theory]
-    [MemberData(memberName: nameof(MarketValueTestCases))]
+    [MemberData(nameof(MarketValueTestCases))]
     public void Build_ShouldCalculateSaleAverageLastYearSamePeriod(FinancialStatementTestCase testCase)
     {
         // Arrange
-        FinancialStatement financialStatement = CreateFinancialStatement(testCase: testCase);
+        FinancialStatement financialStatement = CreateFinancialStatement(testCase);
 
         // Act & Assert
-        Assert.Equal(expected: testCase.ExpectedSaleAverageLastYearSamePeriod, actual: financialStatement.SaleAverageLastYearSamePeriod);
+        Assert.Equal(testCase.ExpectedSaleAverageLastYearSamePeriod, financialStatement.SaleAverageLastYearSamePeriod);
     }
 
     [Theory]
-    [MemberData(memberName: nameof(MarketValueTestCases))]
+    [MemberData(nameof(MarketValueTestCases))]
     public void Build_ShouldCalculateThisPeriodSaleRatio(FinancialStatementTestCase testCase)
     {
         // Arrange
-        FinancialStatement financialStatement = CreateFinancialStatement(testCase: testCase);
+        FinancialStatement financialStatement = CreateFinancialStatement(testCase);
 
         // Act & Assert
-        Assert.Equal(expected: testCase.ExpectedThisPeriodSaleRatio, actual: financialStatement.ThisPeriodSaleRatio);
+        Assert.Equal(testCase.ExpectedThisPeriodSaleRatio, financialStatement.ThisPeriodSaleRatio);
     }
 
     [Theory]
-    [MemberData(memberName: nameof(MarketValueTestCases))]
+    [MemberData(nameof(MarketValueTestCases))]
     public void Build_ShouldCalculateThisPeriodSaleRatioWithLastYear(FinancialStatementTestCase testCase)
     {
         // Arrange
-        FinancialStatement financialStatement = CreateFinancialStatement(testCase: testCase);
+        FinancialStatement financialStatement = CreateFinancialStatement(testCase);
 
         // Act & Assert
         Assert.Equal(
-            expected: testCase.ExpectedThisPeriodSaleRatioWithLastYear,
-            actual: financialStatement.ThisPeriodSaleRatioWithLastYear);
+            testCase.ExpectedThisPeriodSaleRatioWithLastYear,
+            financialStatement.ThisPeriodSaleRatioWithLastYear);
     }
 
     [Theory]
-    [MemberData(memberName: nameof(MarketValueTestCases))]
+    [MemberData(nameof(MarketValueTestCases))]
     public void Build_ShouldCalculateGrossMargin(FinancialStatementTestCase testCase)
     {
         // Arrange
-        FinancialStatement financialStatement = CreateFinancialStatement(testCase: testCase);
+        FinancialStatement financialStatement = CreateFinancialStatement(testCase);
 
         // Act & Assert
-        Assert.Equal(expected: testCase.ExpectedGrossMargin, actual: financialStatement.GrossMargin);
+        Assert.Equal(testCase.ExpectedGrossMargin, financialStatement.GrossMargin);
     }
 
     [Theory]
-    [MemberData(memberName: nameof(MarketValueTestCases))]
+    [MemberData(nameof(MarketValueTestCases))]
     public void Build_ShouldCalculateOperationalMargin(FinancialStatementTestCase testCase)
     {
         // Arrange
-        FinancialStatement financialStatement = CreateFinancialStatement(testCase: testCase);
+        FinancialStatement financialStatement = CreateFinancialStatement(testCase);
 
         // Act & Assert
-        Assert.Equal(expected: testCase.ExpectedOperationalMargin, actual: financialStatement.OperationalMargin);
+        Assert.Equal(testCase.ExpectedOperationalMargin, financialStatement.OperationalMargin);
     }
 
     [Theory]
-    [MemberData(memberName: nameof(MarketValueTestCases))]
+    [MemberData(nameof(MarketValueTestCases))]
     public void Build_ShouldCalculateNetMargin(FinancialStatementTestCase testCase)
     {
         // Arrange
-        FinancialStatement financialStatement = CreateFinancialStatement(testCase: testCase);
+        FinancialStatement financialStatement = CreateFinancialStatement(testCase);
 
         // Act & Assert
-        Assert.Equal(expected: testCase.ExpectedNetMargin, actual: financialStatement.NetMargin);
+        Assert.Equal(testCase.ExpectedNetMargin, financialStatement.NetMargin);
     }
 
     [Theory]
-    [MemberData(memberName: nameof(MarketValueTestCases))]
+    [MemberData(nameof(MarketValueTestCases))]
     public void Build_ShouldCalculateForecastSale(FinancialStatementTestCase testCase)
     {
         // Arrange
-        FinancialStatement financialStatement = CreateFinancialStatement(testCase: testCase);
+        FinancialStatement financialStatement = CreateFinancialStatement(testCase);
 
         // Act & Assert
-        Assert.Equal(expected: testCase.ExpectedForecastSale, actual: financialStatement.ForecastSale);
+        Assert.Equal(testCase.ExpectedForecastSale, financialStatement.ForecastSale);
     }
 
     [Theory]
-    [MemberData(memberName: nameof(MarketValueTestCases))]
+    [MemberData(nameof(MarketValueTestCases))]
     public void Build_ShouldCalculateForecastOperationalProfit(FinancialStatementTestCase testCase)
     {
         // Arrange
-        FinancialStatement financialStatement = CreateFinancialStatement(testCase: testCase);
+        FinancialStatement financialStatement = CreateFinancialStatement(testCase);
 
         // Act & Assert
-        Assert.Equal(expected: testCase.ExpectedForecastOperationalProfit, actual: financialStatement.ForecastOperationalProfit);
+        Assert.Equal(testCase.ExpectedForecastOperationalProfit, financialStatement.ForecastOperationalProfit);
     }
 
     [Theory]
-    [MemberData(memberName: nameof(MarketValueTestCases))]
+    [MemberData(nameof(MarketValueTestCases))]
     public void Build_ShouldCalculateForecastForecastTotalProfit(FinancialStatementTestCase testCase)
     {
         // Arrange
-        FinancialStatement financialStatement = CreateFinancialStatement(testCase: testCase);
+        FinancialStatement financialStatement = CreateFinancialStatement(testCase);
 
         // Act & Assert
-        Assert.Equal(expected: testCase.ExpectedForecastTotalProfit, actual: financialStatement.ForecastTotalProfit);
+        Assert.Equal(testCase.ExpectedForecastTotalProfit, financialStatement.ForecastTotalProfit);
     }
 
     [Theory]
-    [MemberData(memberName: nameof(MarketValueTestCases))]
+    [MemberData(nameof(MarketValueTestCases))]
     public void Build_ShouldCalculateForecastNoneOperationalProfit(FinancialStatementTestCase testCase)
     {
         // Arrange
-        FinancialStatement financialStatement = CreateFinancialStatement(testCase: testCase);
+        FinancialStatement financialStatement = CreateFinancialStatement(testCase);
 
         // Act & Assert
-        Assert.Equal(expected: testCase.ExpectedForecastNoneOperationalProfit, actual: financialStatement.ForecastNoneOperationalProfit);
+        Assert.Equal(testCase.ExpectedForecastNoneOperationalProfit, financialStatement.ForecastNoneOperationalProfit);
     }
 
     [Theory]
-    [MemberData(memberName: nameof(MarketValueTestCases))]
+    [MemberData(nameof(MarketValueTestCases))]
     public void Build_ShouldCalculateTargetMarketCap(FinancialStatementTestCase testCase)
     {
         // Arrange
-        FinancialStatement financialStatement = CreateFinancialStatement(testCase: testCase);
+        FinancialStatement financialStatement = CreateFinancialStatement(testCase);
 
         // Act & Assert
-        Assert.Equal(expected: testCase.ExpectedTargetMarketValue, actual: financialStatement.TargetMarketValue);
+        Assert.Equal(testCase.ExpectedTargetMarketValue, financialStatement.TargetMarketValue);
     }
 
     [Theory]
-    [MemberData(memberName: nameof(MarketValueTestCases))]
+    [MemberData(nameof(MarketValueTestCases))]
     public void Build_ShouldCalculateTargetPrice(FinancialStatementTestCase testCase)
     {
         // Arrange
-        FinancialStatement financialStatement = CreateFinancialStatement(testCase: testCase);
+        FinancialStatement financialStatement = CreateFinancialStatement(testCase);
 
         // Act & Assert
-        Assert.Equal(expected: testCase.ExpectedTargetPrice, actual: financialStatement.TargetPrice);
+        Assert.Equal(testCase.ExpectedTargetPrice, financialStatement.TargetPrice);
     }
 
     [Theory]
-    [MemberData(memberName: nameof(MarketValueTestCases))]
+    [MemberData(nameof(MarketValueTestCases))]
     public void Build_ShouldCalculateOptimalBuyPrice(FinancialStatementTestCase testCase)
     {
         // Arrange
-        FinancialStatement financialStatement = CreateFinancialStatement(testCase: testCase);
+        FinancialStatement financialStatement = CreateFinancialStatement(testCase);
 
         // Act & Assert
-        Assert.Equal(expected: testCase.ExpectedTargetOptimalBuyPrice, actual: financialStatement.OptimalBuyPrice);
+        Assert.Equal(testCase.ExpectedTargetOptimalBuyPrice, financialStatement.OptimalBuyPrice);
     }
 
     [Theory]
-    [MemberData(memberName: nameof(MarketValueTestCases))]
+    [MemberData(nameof(MarketValueTestCases))]
     public void Build_ShouldCalculatePe(FinancialStatementTestCase testCase)
     {
         // Arrange
-        FinancialStatement financialStatement = CreateFinancialStatement(testCase: testCase);
+        FinancialStatement financialStatement = CreateFinancialStatement(testCase);
 
         // Act & Assert
-        Assert.Equal(expected: testCase.ExpectedPe, actual: financialStatement.Pe);
+        Assert.Equal(testCase.ExpectedPe, financialStatement.Pe);
     }
 
     [Theory]
-    [MemberData(memberName: nameof(MarketValueTestCases))]
+    [MemberData(nameof(MarketValueTestCases))]
     public void Build_ShouldCalculatePs(FinancialStatementTestCase testCase)
     {
         // Arrange
-        FinancialStatement financialStatement = CreateFinancialStatement(testCase: testCase);
+        FinancialStatement financialStatement = CreateFinancialStatement(testCase);
 
         // Act & Assert
-        Assert.Equal(expected: testCase.ExpectedPs, actual: financialStatement.Ps);
+        Assert.Equal(testCase.ExpectedPs, financialStatement.Ps);
     }
 
     [Theory]
-    [MemberData(memberName: nameof(MarketValueTestCases))]
+    [MemberData(nameof(MarketValueTestCases))]
     public void Build_ShouldCalculateOwnersEquityRatio(FinancialStatementTestCase testCase)
     {
         // Arrange
-        FinancialStatement financialStatement = CreateFinancialStatement(testCase: testCase);
+        FinancialStatement financialStatement = CreateFinancialStatement(testCase);
 
         // Act & Assert
-        Assert.Equal(expected: testCase.ExpectedOwnersEquityRatio, actual: financialStatement.OwnersEquityRatio);
+        Assert.Equal(testCase.ExpectedOwnersEquityRatio, financialStatement.OwnersEquityRatio);
     }
 
     [Theory]
-    [MemberData(memberName: nameof(MarketValueTestCases))]
+    [MemberData(nameof(MarketValueTestCases))]
     public void Build_ShouldCalculatePa(FinancialStatementTestCase testCase)
     {
         // Arrange
-        FinancialStatement financialStatement = CreateFinancialStatement(testCase: testCase);
+        FinancialStatement financialStatement = CreateFinancialStatement(testCase);
 
         // Act & Assert
-        Assert.Equal(expected: testCase.ExpectedPa, actual: financialStatement.Pa);
+        Assert.Equal(testCase.ExpectedPa, financialStatement.Pa);
     }
+
     [Theory]
-    [MemberData(memberName: nameof(MarketValueTestCases))]
+    [MemberData(nameof(MarketValueTestCases))]
     public void Build_ShouldCalculatePb(FinancialStatementTestCase testCase)
     {
         // Arrange
-        FinancialStatement financialStatement = CreateFinancialStatement(testCase: testCase);
+        FinancialStatement financialStatement = CreateFinancialStatement(testCase);
 
         // Act & Assert
-        Assert.Equal(expected: testCase.ExpectedPb, actual: financialStatement.Pb);
+        Assert.Equal(testCase.ExpectedPb, financialStatement.Pb);
     }
 
     [Theory]
-    [MemberData(memberName: nameof(MarketValueTestCases))]
+    [MemberData(nameof(MarketValueTestCases))]
     public void Build_ShouldCalculateReceivableRatio(FinancialStatementTestCase testCase)
     {
         // Arrange
-        FinancialStatement financialStatement = CreateFinancialStatement(testCase: testCase);
+        FinancialStatement financialStatement = CreateFinancialStatement(testCase);
 
         // Act & Assert
-        Assert.Equal(expected: testCase.ExpectedReceivableRatio, actual: financialStatement.ReceivableRatio);
+        Assert.Equal(testCase.ExpectedReceivableRatio, financialStatement.ReceivableRatio);
     }
 
     // Strongly-typed test data provider
@@ -281,39 +282,39 @@ public class FinancialStatementTest
         {
             new FinancialStatementTestCase
             {
-                FiscalYear = new FiscalYear(year: 1_403),
-                YearEndMonth = new StatementMonth(month: 12),
-                ReportMonth = new StatementMonth(month: 9),
+                FiscalYear = new FiscalYear(1_403),
+                YearEndMonth = new StatementMonth(12),
+                ReportMonth = new StatementMonth(9),
                 LastClosePrice = 18_740m,
                 MarketCap = 12_000_000_000m,
                 ExpectedMarketValue = 224_880_000_000_000,
-                OperationalIncome = new SignedCodalMoney(amount: 143_128_914),
-                GrossProfitOrLoss = new SignedCodalMoney(amount: 41_964_779),
-                OperationalProfitOrLoss = new SignedCodalMoney(amount: 38_670_368),
-                NoneOperationalProfit = new SignedCodalMoney(amount: 189_406),
-                Costs = new CodalMoney(amount: 1_272_585),
-                NetProfitOrLoss = new SignedCodalMoney(amount: 50_074_345),
-                Sale = new CodalMoney(amount: 16_024_842),
-                SaleMonth = new StatementMonth(month: 10),
-                SaleBeforeThisMonth = new CodalMoney(amount: 143_128_914),
-                SaleLastYearSamePeriod = new CodalMoney(amount: 153_164_667),
-                Assets = new CodalMoney(amount: 178_921_105),
-                OwnersEquity = new CodalMoney(amount: 67_709_573),
-                Receivables = new CodalMoney(amount: 65_615_475),
-                LastYearNetProfit = new SignedCodalMoney(amount: 50_078_518),
-                ExpectedSpringOperationalIncome = new SignedCodalMoney(amount: 0),
-                ExpectedSummerOperationalIncome = new SignedCodalMoney(amount: 0),
-                ExpectedFallOperationalIncome = new SignedCodalMoney(amount: 143_128_914),
-                ExpectedWinterOperationalIncome = new SignedCodalMoney(amount: 0),
-                ExpectedSaleAverageExcludeThisPeriod = new CodalMoney(amount: 15_903_213),
-                ExpectedSaleAverageLastYearSamePeriod = new CodalMoney(amount: 15_316_467),
+                OperationalIncome = new SignedCodalMoney(143_128_914),
+                GrossProfitOrLoss = new SignedCodalMoney(41_964_779),
+                OperationalProfitOrLoss = new SignedCodalMoney(38_670_368),
+                NoneOperationalProfit = new SignedCodalMoney(189_406),
+                Costs = new CodalMoney(1_272_585),
+                NetProfitOrLoss = new SignedCodalMoney(50_074_345),
+                Sale = new CodalMoney(16_024_842),
+                SaleMonth = new StatementMonth(10),
+                SaleBeforeThisMonth = new CodalMoney(143_128_914),
+                SaleLastYearSamePeriod = new CodalMoney(153_164_667),
+                Assets = new CodalMoney(178_921_105),
+                OwnersEquity = new CodalMoney(67_709_573),
+                Receivables = new CodalMoney(65_615_475),
+                LastYearNetProfit = new SignedCodalMoney(50_078_518),
+                ExpectedSpringOperationalIncome = new SignedCodalMoney(0),
+                ExpectedSummerOperationalIncome = new SignedCodalMoney(0),
+                ExpectedFallOperationalIncome = new SignedCodalMoney(143_128_914),
+                ExpectedWinterOperationalIncome = new SignedCodalMoney(0),
+                ExpectedSaleAverageExcludeThisPeriod = new CodalMoney(15_903_213),
+                ExpectedSaleAverageLastYearSamePeriod = new CodalMoney(15_316_467),
                 ExpectedThisPeriodSaleRatio = 100.76m,
                 ExpectedThisPeriodSaleRatioWithLastYear = 104.62m,
                 ExpectedGrossMargin = 0.29m,
                 ExpectedOperationalMargin = 0.27m,
                 ExpectedNetMargin = 0.3499m,
-                ExpectedForecastSale = new CodalMoney(amount: 190_984_507),
-                ExpectedForecastOperationalProfit = new CodalMoney(amount: 51565817),
+                ExpectedForecastSale = new CodalMoney(190_984_507),
+                ExpectedForecastOperationalProfit = new CodalMoney(51565817),
                 ExpectedForecastNoneOperationalProfit = new CodalMoney(252541),
                 ExpectedForecastTotalProfit = new CodalMoney(51_818_358),
                 ExpectedTargetMarketValue = 362_728_506_000_000,
@@ -324,8 +325,8 @@ public class FinancialStatementTest
                 ExpectedOwnersEquityRatio = 37.84m,
                 ExpectedPa = 1.26m,
                 ExpectedPb = 3.32m,
-                ExpectedReceivableRatio = 36.67m,
-            },
+                ExpectedReceivableRatio = 36.67m
+            }
         };
     }
 
@@ -336,40 +337,40 @@ public class FinancialStatementTest
         ulong traceNo = 123_456;
         IsoCurrency currency = IsoCurrency.IRR;
         DateTime createdAt = DateTime.Now;
-        DateOnly lastClosePriceDate = DateOnly.FromDateTime(dateTime: DateTime.Now);
+        DateOnly lastClosePriceDate = DateOnly.FromDateTime(DateTime.Now);
         FiscalYear fiscalYear = testCase.FiscalYear;
         StatementMonth yearEndMonth = testCase.YearEndMonth;
         StatementMonth reportMonth = testCase.ReportMonth;
 
         return new FinancialStatementBuilder()
-            .SetId(id: id)
-            .SetSymbol(symbol: symbol)
-            .SetCurrency(currency: currency)
-            .SetTraceNo(traceNo: traceNo)
-            .SetFiscalYear(fiscalYear: fiscalYear)
-            .SetYearEndMonth(yearEndMonth: yearEndMonth)
-            .SetCreatedAt(createdAt: createdAt)
-            .SetLastClosePrice(lastClosePrice: testCase.LastClosePrice, lastClosePriceDate: lastClosePriceDate)
-            .SetMarketCap(marketCap: testCase.MarketCap)
+            .SetId(id)
+            .SetSymbol(symbol)
+            .SetCurrency(currency)
+            .SetTraceNo(traceNo)
+            .SetFiscalYear(fiscalYear)
+            .SetYearEndMonth(yearEndMonth)
+            .SetCreatedAt(createdAt)
+            .SetLastClosePrice(testCase.LastClosePrice, lastClosePriceDate)
+            .SetMarketCap(testCase.MarketCap)
             .SetIncomeStatement(
-                reportMonth: reportMonth,
-                operationalIncome: testCase.OperationalIncome,
+                reportMonth,
+                testCase.OperationalIncome,
                 SignedCodalMoney.Empty,
-                grossProfitOrLoss: testCase.GrossProfitOrLoss,
-                operationalProfitOrLoss: testCase.OperationalProfitOrLoss,
-                noneOperationalProfit: testCase.NoneOperationalProfit,
-                costs: testCase.Costs.Value,
-                netProfitOrLoss: testCase.NetProfitOrLoss)
+                testCase.GrossProfitOrLoss,
+                testCase.OperationalProfitOrLoss,
+                testCase.NoneOperationalProfit,
+                testCase.Costs.Value,
+                testCase.NetProfitOrLoss)
             .SetSale(
-                sale: testCase.Sale,
-                saleMonth: testCase.SaleMonth,
-                saleBeforeThisMonth: testCase.SaleBeforeThisMonth,
-                saleLastYearSamePeriod: testCase.SaleLastYearSamePeriod)
+                testCase.Sale,
+                testCase.SaleMonth,
+                testCase.SaleBeforeThisMonth,
+                testCase.SaleLastYearSamePeriod)
             .SetFinancialPosition(
-                assets: testCase.Assets,
-                ownersEquity: testCase.OwnersEquity,
-                receivables: testCase.Receivables,
-                lastYearNetProfit: testCase.LastYearNetProfit)
+                testCase.Assets,
+                testCase.OwnersEquity,
+                testCase.Receivables,
+                testCase.LastYearNetProfit)
             .Build();
     }
 

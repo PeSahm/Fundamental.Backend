@@ -3,9 +3,9 @@
 namespace Fundamental.ErrorHandling.Enums;
 
 /// <summary>
-/// 3 digit error codes for common errors which are not specific to any request.
-/// Instead of creating a new error code for each request, these common error codes are used in the pipeline behavior
-/// by appending these 3 digit codes to the request (handler) code.
+///     3 digit error codes for common errors which are not specific to any request.
+///     Instead of creating a new error code for each request, these common error codes are used in the pipeline behavior
+///     by appending these 3 digit codes to the request (handler) code.
 /// </summary>
 public enum CommonErrorCode
 {
@@ -60,5 +60,5 @@ public enum CommonErrorCode
     InvalidCodalIncomeStatementRow = 809,
 
     [ErrorType(BackendErrorType.BusinessLogic)]
-    TheTracenoIsNotMatched = 810,
+    TheTracenoIsNotMatched = 810
 }

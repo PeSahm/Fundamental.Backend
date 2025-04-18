@@ -2,7 +2,6 @@
 using Fundamental.Application.Codals.Manufacturing.Queries.GetBalanceSheets;
 using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
-using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Dto;
 using Fundamental.Infrastructure.Extensions;
 using Fundamental.Infrastructure.Persistence;
@@ -51,7 +50,7 @@ public sealed class BalanceSheetReadRepository(FundamentalDbContext dbContext) :
                 IsAudited = x.First().IsAudited,
                 YearEndMonth = x.First().YearEndMonth.Month,
                 Symbol = x.First().Symbol.Name,
-                Uri = x.First().Uri,
+                Uri = x.First().Uri
             }).ToPagingListAsync(request, "FiscalYear desc,ReportMonth desc", cancellationToken);
 
         return validStatements;

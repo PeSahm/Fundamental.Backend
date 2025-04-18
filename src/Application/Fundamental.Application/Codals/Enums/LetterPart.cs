@@ -9,7 +9,7 @@ public enum LetterPart
     NonOperationIncomeAndExpenses = 4,
 
     /// <summary>
-    /// شرکت های سرمایه پذیر
+    ///     شرکت های سرمایه پذیر
     /// </summary>
     TheStatusOfViableCompanies = 5
 }

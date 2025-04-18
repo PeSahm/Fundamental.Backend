@@ -3,5 +3,5 @@
 public enum Category
 {
     Assets = 1,
-    Liability = 2,
+    Liability = 2
 }

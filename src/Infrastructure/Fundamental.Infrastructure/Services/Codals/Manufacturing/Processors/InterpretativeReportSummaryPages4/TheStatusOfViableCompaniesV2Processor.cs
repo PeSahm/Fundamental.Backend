@@ -20,7 +20,8 @@ namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.In
 
 public class TheStatusOfViableCompaniesV2Processor(
     IServiceScopeFactory serviceScopeFactory,
-    ILogger<TheStatusOfViableCompaniesV2Processor> logger) : ICodalProcessor
+    ILogger<TheStatusOfViableCompaniesV2Processor> logger
+) : ICodalProcessor
 {
     public static ReportingType ReportingType => ReportingType.Production;
     public static LetterType LetterType => LetterType.InterimStatement;

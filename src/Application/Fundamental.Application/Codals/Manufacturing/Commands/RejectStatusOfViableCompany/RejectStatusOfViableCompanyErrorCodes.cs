@@ -6,5 +6,5 @@ namespace Fundamental.Application.Codals.Manufacturing.Commands.RejectStatusOfVi
 public enum RejectStatusOfViableCompanyErrorCodes
 {
     [ErrorType(BackendErrorType.Security)]
-    NotFound = 13_380_101,
+    NotFound = 13_380_101
 }

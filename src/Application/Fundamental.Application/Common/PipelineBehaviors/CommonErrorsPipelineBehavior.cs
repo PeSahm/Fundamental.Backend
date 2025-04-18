@@ -37,9 +37,9 @@ public class CommonErrorsPipelineBehavior<TRequest, TResponse>(
                     request,
                     new Dictionary<string, string>
                     {
-                        { "message", errorList[0].ErrorMessage },
+                        { "message", errorList[0].ErrorMessage }
                     }
-                ),
+                )
             };
             logger.LogWarning(
                 "HANDLER.ERROR.VALIDATION --- {HandlerCode} ({HandlerName}) --- ErrorCode: {ErrorCode}\n    {@Errors}",
@@ -59,7 +59,7 @@ public class CommonErrorsPipelineBehavior<TRequest, TResponse>(
         {
             response = new TResponse
             {
-                Success = false, Error = codedException.GetCommonErrorCode().ForRequest(request),
+                Success = false, Error = codedException.GetCommonErrorCode().ForRequest(request)
             };
             LogError("HANDLER.ERROR.EXPECTED", e, handlerCode, handlerNumber, response.Error.Value.Code);
         }
@@ -67,7 +67,7 @@ public class CommonErrorsPipelineBehavior<TRequest, TResponse>(
         {
             response = new TResponse
             {
-                Success = false, Error = CommonErrorCode.DatabaseError.ForRequest(request),
+                Success = false, Error = CommonErrorCode.DatabaseError.ForRequest(request)
             };
             LogError("HANDLER.ERROR.DATABASE", e, handlerCode, handlerNumber, response.Error.Value.Code);
         }
@@ -75,14 +75,14 @@ public class CommonErrorsPipelineBehavior<TRequest, TResponse>(
         {
             response = new TResponse
             {
-                Success = false, Error = CommonErrorCode.DatabaseError.ForRequest(request),
+                Success = false, Error = CommonErrorCode.DatabaseError.ForRequest(request)
             };
         }
         catch (Exception e)
         {
             response = new TResponse
             {
-                Success = false, Error = CommonErrorCode.UnexpectedError.ForRequest(request),
+                Success = false, Error = CommonErrorCode.UnexpectedError.ForRequest(request)
             };
             LogError("HANDLER.ERROR.UNEXPECTED", e, handlerCode, handlerNumber, response.Error.Value.Code);
         }

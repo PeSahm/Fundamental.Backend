@@ -1,6 +1,6 @@
 ﻿using System.Text;
-using System.Text.Json.Serialization;
 using DNTPersianUtils.Core;
+using Newtonsoft.Json;
 
 namespace Fundamental.Application.Codals.Manufacturing.Queries.GetBalanceSheets;
 
@@ -12,18 +12,18 @@ public sealed class GetBalanceSheetResultDto
     public string Uri { get; init; }
     public ushort FiscalYear { get; init; }
 
-    [Newtonsoft.Json.JsonIgnore]
     [JsonIgnore]
+    [System.Text.Json.Serialization.JsonIgnore]
     public ushort YearEndMonth { get; init; }
 
     public ushort ReportMonth { get; init; }
 
-    [Newtonsoft.Json.JsonIgnore]
     [JsonIgnore]
+    [System.Text.Json.Serialization.JsonIgnore]
     public bool IsAudited { get; init; }
 
-    [Newtonsoft.Json.JsonIgnore]
     [JsonIgnore]
+    [System.Text.Json.Serialization.JsonIgnore]
     public string IsAuditedDescription => IsAudited ? "حسابرسی شده" : "حسابرسی نشده";
 
     public string Title => new StringBuilder("گزارش صورت وضعیت مالی نماد ")

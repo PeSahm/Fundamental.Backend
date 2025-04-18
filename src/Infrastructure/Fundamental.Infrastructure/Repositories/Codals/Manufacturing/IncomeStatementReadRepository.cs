@@ -1,7 +1,6 @@
 ﻿using Fundamental.Application.Codals.Manufacturing.Queries.GetIncomeStatements;
 using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
-using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Codals.ValueObjects;
 using Fundamental.Domain.Common.Dto;
 using Fundamental.Domain.Common.ValueObjects;
@@ -52,7 +51,7 @@ public sealed class IncomeStatementReadRepository(FundamentalDbContext dbContext
                 IsAudited = x.First().IsAudited,
                 YearEndMonth = x.First().YearEndMonth.Month,
                 Symbol = x.First().Symbol.Name,
-                Uri = x.First().Uri,
+                Uri = x.First().Uri
             }).ToPagingListAsync(request, "FiscalYear desc,ReportMonth desc", cancellationToken);
 
         return validStatements;

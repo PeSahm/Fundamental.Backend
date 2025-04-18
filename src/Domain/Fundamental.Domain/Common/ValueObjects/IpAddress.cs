@@ -23,7 +23,7 @@ public class IpAddress : ValueObject
     public IpType IpType { get; }
 
     /// <summary>
-    /// Static factory method to create an IpAddress from a string.
+    ///     Static factory method to create an IpAddress from a string.
     /// </summary>
     /// <exception cref="InvalidIpAddressException">Throws if IP format is invalid.</exception>
     public static IpAddress Create(string ip)

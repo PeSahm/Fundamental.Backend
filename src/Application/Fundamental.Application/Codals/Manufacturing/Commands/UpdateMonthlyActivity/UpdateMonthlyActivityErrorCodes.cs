@@ -16,5 +16,5 @@ public enum UpdateMonthlyActivityErrorCodes
     DuplicateStatement = 13_392_103,
 
     [ErrorType(BackendErrorType.Security)]
-    MonthlyActivityNotFound = 13_392_104,
+    MonthlyActivityNotFound = 13_392_104
 }
