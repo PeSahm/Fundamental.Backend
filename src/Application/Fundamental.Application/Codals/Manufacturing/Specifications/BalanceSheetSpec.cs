@@ -15,7 +15,7 @@ public sealed class BalanceSheetSpec : Specification<BalanceSheet>
         return spec;
     }
 
-    public static BalanceSheetSpec Where(ulong traceNo, string isin, uint fiscalYear, uint reportMonth)
+    public static BalanceSheetSpec Where(ulong traceNo, string isin, uint fiscalYear, uint yearEndMonth, uint reportMonth)
     {
         BalanceSheetSpec spec = new();
         spec.Query
@@ -27,12 +27,13 @@ public sealed class BalanceSheetSpec : Specification<BalanceSheet>
         return spec;
     }
 
-    public static BalanceSheetSpec Where(ulong traceNo, uint fiscalYear, uint reportMonth)
+    public static BalanceSheetSpec Where(ulong traceNo, uint fiscalYear, uint yearEndMonth, uint reportMonth)
     {
         BalanceSheetSpec spec = new();
         spec.Query
             .Where(x => x.FiscalYear.Year == fiscalYear)
             .Where(x => x.ReportMonth.Month == reportMonth)
+            .Where(x => x.YearEndMonth.Month == yearEndMonth)
             .Where(x => x.TraceNo == traceNo)
             .AsNoTracking();
         return spec;

@@ -36,7 +36,12 @@ public sealed class AddBalanceSheetCommandHandler(
         }
 
         bool statementExists = await repository.AnyAsync(
-            BalanceSheetSpec.Where(request.TraceNo, request.Isin, request.FiscalYear, request.ReportMonth),
+            BalanceSheetSpec.Where(
+                request.TraceNo,
+                request.Isin,
+                request.FiscalYear,
+                request.YearEndMonth,
+                request.ReportMonth),
             cancellationToken);
 
         if (statementExists)
