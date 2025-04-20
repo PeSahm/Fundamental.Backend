@@ -45,6 +45,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.UnitTests", "tests\U
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingBlock.UnitTests", "tests\UnitTests\BuildingBlock.UnitTests\BuildingBlock.UnitTests.csproj", "{373AC146-F36D-42F0-95F2-7369C969A5E1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.UnitTests", "tests\UnitTests\Application.UnitTests\Application.UnitTests.csproj", "{ABFC8207-8DC0-4CAF-BBEC-89A06E880048}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -95,6 +97,10 @@ Global
 		{373AC146-F36D-42F0-95F2-7369C969A5E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{373AC146-F36D-42F0-95F2-7369C969A5E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{373AC146-F36D-42F0-95F2-7369C969A5E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABFC8207-8DC0-4CAF-BBEC-89A06E880048}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABFC8207-8DC0-4CAF-BBEC-89A06E880048}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABFC8207-8DC0-4CAF-BBEC-89A06E880048}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABFC8207-8DC0-4CAF-BBEC-89A06E880048}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -112,5 +118,6 @@ Global
 		{C650329A-D80D-40CE-B8F5-5A428F0DD74D} = {FDB0CF81-23A8-4428-8FA8-F27615360250}
 		{7346F2A5-1F57-419A-8B81-5067073C0469} = {C650329A-D80D-40CE-B8F5-5A428F0DD74D}
 		{373AC146-F36D-42F0-95F2-7369C969A5E1} = {C650329A-D80D-40CE-B8F5-5A428F0DD74D}
+		{ABFC8207-8DC0-4CAF-BBEC-89A06E880048} = {C650329A-D80D-40CE-B8F5-5A428F0DD74D}
 	EndGlobalSection
 EndGlobal
