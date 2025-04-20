@@ -36,7 +36,12 @@ public sealed class AddIncomeStatementCommandHandler(
         }
 
         bool statementExists = await repository.AnyAsync(
-            IncomeStatementSpec.Where(request.TraceNo, request.Isin, request.FiscalYear, request.ReportMonth),
+            IncomeStatementSpec.Where(
+                request.TraceNo,
+                request.Isin,
+                request.YearEndMonth,
+                request.FiscalYear,
+                request.ReportMonth),
             cancellationToken);
 
         if (statementExists)

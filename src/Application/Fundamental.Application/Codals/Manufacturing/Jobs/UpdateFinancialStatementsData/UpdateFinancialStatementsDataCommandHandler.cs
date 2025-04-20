@@ -52,6 +52,7 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
                     BalanceSheetSpec.Where(
                         headerData.TraceNo,
                         headerData.FiscalYear,
+                        headerData.YearEndMonth,
                         headerData.ReportMonth),
                     cancellationToken);
             List<IncomeStatement> incomeStatements =
@@ -59,6 +60,7 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
                     IncomeStatementSpec.Where(
                         headerData.TraceNo,
                         headerData.FiscalYear,
+                        headerData.YearEndMonth,
                         headerData.ReportMonth),
                     cancellationToken);
             MonthlyActivity? monthlyActivities =
@@ -70,6 +72,7 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
                 await repository.ListAsync(
                     IncomeStatementSpec.Where(
                         headerData.TraceNo,
+                        headerData.YearEndMonth.Month,
                         new FiscalYear(headerData.FiscalYear.Year - 1),
                         headerData.YearEndMonth),
                     cancellationToken);
@@ -144,7 +147,8 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
 
         SignedCodalMoney GetOtherOperationalIncome(List<IncomeStatement> incomeStatements)
         {
-            return incomeStatements.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.OtherOperatingRevenue)?.Value ?? SignedCodalMoney.Empty;
+            return incomeStatements.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.OtherOperatingRevenue)?.Value ??
+                   SignedCodalMoney.Empty;
         }
 
         SignedCodalMoney GrossProfitOrLoss(List<IncomeStatement> incomeStatements)

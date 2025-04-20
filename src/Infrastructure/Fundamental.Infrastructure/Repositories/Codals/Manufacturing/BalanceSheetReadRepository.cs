@@ -61,14 +61,20 @@ public sealed class BalanceSheetReadRepository(FundamentalDbContext dbContext) :
         return dbContext.BalanceSheets
                 .AsNoTracking()
                 .Where(x => !dbContext.ManufacturingFinancialStatement.Any(fs => fs.TraceNo == x.TraceNo))
-                .GroupBy(gb => new { gb.Symbol.Isin, FiscalYear = gb.FiscalYear.Year, ReportMonth = gb.ReportMonth.Month })
+                .GroupBy(gb => new
+                {
+                    gb.Symbol.Isin,
+                    FiscalYear = gb.FiscalYear.Year,
+                    YearEndMonth = gb.YearEndMonth.Month,
+                    ReportMonth = gb.ReportMonth.Month,
+                })
                 .Select(x => new SimpleBalanceSheet
                 {
                     Isin = x.Key.Isin,
                     TraceNo = x.Max(mx => mx.TraceNo),
                     FiscalYear = x.Key.FiscalYear,
                     ReportMonth = x.Key.ReportMonth,
-                    YearEndMonth = x.First().YearEndMonth.Month
+                    YearEndMonth = x.Key.YearEndMonth,
                 })
                 .ToListAsync(cancellationToken)
             ;
