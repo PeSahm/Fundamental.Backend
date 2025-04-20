@@ -1,5 +1,7 @@
 ﻿using System.Text;
 using DNTPersianUtils.Core;
+using Fundamental.Application.Codals.Common;
+using Fundamental.Domain.Codals.ValueObjects;
 
 namespace Fundamental.Application.Codals.Manufacturing.Queries.GetIncomeStatements;
 
@@ -16,20 +18,11 @@ public sealed class GetIncomeStatementsResultDto
     public bool IsAudited { get; init; }
     public string IsAuditedDescription => IsAudited ? "حسابرسی شده" : "حسابرسی نشده";
 
-    public string Title => new StringBuilder("گزارش صورت سود و زیان نماد ")
-        .Append(Symbol)
-        .Append(" دوره ")
-        .Append(ReportMonth)
-        .Append(" ماهه ")
-        .Append(" منتهی به ")
-        .Append($"{FiscalYear}/{YearEndMonth}/{GetLastDayOfFiscalYear()}")
-        .Append(' ')
-        .Append(IsAuditedDescription)
-        .ToString();
-
-    private int GetLastDayOfFiscalYear()
-    {
-        int lastDay = $"{FiscalYear}/{YearEndMonth}/1".ToGregorianDateOnly().GetPersianMonthStartAndEndDates()!.LastDayNumber;
-        return lastDay;
-    }
+    public string Title => FinancialStatementTitleGenerator.GenerateTitle(
+        "گزارش صورت سود و زیان نماد ",
+        Symbol,
+        ReportMonth,
+        YearEndMonth,
+        FiscalYear,
+        IsAudited);
 }
