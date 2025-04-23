@@ -8,6 +8,7 @@ public sealed class SignedCodalMoney : IEquatable<SignedCodalMoney>
     private readonly decimal _value;
 
     public static SignedCodalMoney Empty => new();
+
     public SignedCodalMoney(decimal amount, IsoCurrency currency)
     {
         _value = amount * CodalMoneyMultiplier;

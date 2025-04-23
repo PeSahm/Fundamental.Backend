@@ -2,12 +2,8 @@
 using Coravel.Pro.EntityFramework;
 using Fundamental.Domain.Codals;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
-using Fundamental.Domain.Codals.Manufacturing.Enums;
-using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.Domain.Symbols.Entities;
-using Fundamental.Domain.Symbols.Enums;
-using Fundamental.Infrastructure.Configuration.ExAreas;
 using Fundamental.Infrastructure.Configuration.Fundamental;
 using Microsoft.EntityFrameworkCore;
 using Index = Fundamental.Domain.Symbols.Entities.Index;
@@ -25,11 +21,11 @@ public class FundamentalDbContext : DbContext, IUnitOfWork, ICoravelProDbContext
     {
     }
 
-    public DbSet<Symbol> Symbols { get; set; } = null!;
+    public DbSet<Symbol> Symbols { get; set; }
 
-    public DbSet<SymbolRelation> SymbolRelations { get; set; } = null!;
+    public DbSet<SymbolRelation> SymbolRelations { get; set; }
 
-    public DbSet<MonthlyActivity> MonthlyActivities { get; set; } = null!;
+    public DbSet<MonthlyActivity> MonthlyActivities { get; set; }
 
     public DbSet<BalanceSheet> BalanceSheets { get; set; }
 
@@ -53,12 +49,14 @@ public class FundamentalDbContext : DbContext, IUnitOfWork, ICoravelProDbContext
 
     public DbSet<FinancialStatement> ManufacturingFinancialStatement { get; set; }
 
+    public DbSet<CapitalIncreaseRegistrationNotice> CapitalIncreaseRegistrationNotices { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(
             Assembly.GetExecutingAssembly(),
-            type => type.Namespace!.StartsWith(typeof(SymbolConfiguration).Namespace!) ||
-                    type.Namespace!.StartsWith(typeof(FairConfiguration).Namespace!)
+            type => type.Namespace?.StartsWith(typeof(SymbolConfiguration).Namespace ??
+                                               " Fundamental.Infrastructure.Configuration.Fundamental") ?? false
         );
     }
 

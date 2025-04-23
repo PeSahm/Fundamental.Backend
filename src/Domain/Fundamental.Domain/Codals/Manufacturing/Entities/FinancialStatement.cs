@@ -380,6 +380,17 @@ public class FinancialStatement : BaseEntity<Guid>
         CalculateSaleRatio();
     }
 
+    private static Season GetSession(StatementMonth month)
+    {
+        return month.Month switch
+        {
+            3 => Season.SPRING,
+            6 => Season.SUMMER,
+            9 => Season.FALL,
+            _ => Season.WINTER
+        };
+    }
+
     private void CalculateSaleRatio()
     {
         ThisPeriodSaleRatio = Math.Round((SaleBeforeThisMonth == 0 ? 0 : (Sale.Value / SaleAverageExcludeThisPeriod) - 1) * 100, 2);
@@ -541,17 +552,6 @@ public class FinancialStatement : BaseEntity<Guid>
     private void CalculateNetProfitGrowthRatio()
     {
         NetProfitGrowthRatio = LastYearNetProfitOrLoss == 0 ? 0 : Math.Round(NetProfitOrLoss / LastYearNetProfitOrLoss * 100);
-    }
-
-    private static Season GetSession(StatementMonth month)
-    {
-        return month.Month switch
-        {
-            3 => Season.SPRING,
-            6 => Season.SUMMER,
-            9 => Season.FALL,
-            _ => Season.WINTER
-        };
     }
 
     private void SetSeasonOperationalIncome()
