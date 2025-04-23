@@ -15,11 +15,11 @@ public class UpdateRegisterCapitalIncreaseDataRequestHandler(
 {
     public async Task Handle(UpdateCapitalIncreaseRegistrationNoticeDataRequest request, CancellationToken cancellationToken)
     {
-        try
+        foreach (ReportingType reportingType in Enum.GetValues<ReportingType>())
         {
             List<GetStatementResponse> statements = await codalService.GetStatements(
                 DateTime.UtcNow.AddDays(request.DaysBeforeToday),
-                ReportingType.Production,
+                reportingType,
                 LetterType.CapitalIncreaseRegistrationNotice,
                 cancellationToken);
 
@@ -38,10 +38,6 @@ public class UpdateRegisterCapitalIncreaseDataRequestHandler(
                     logger.LogError(e, "Error processing register capital increase codal for {@Model}", statement);
                 }
             }
-        }
-        catch (Exception ex) when (ex is not OperationCanceledException)
-        {
-            //Do not log the exception if it is a cancellation exception
         }
     }
 }
