@@ -2,7 +2,6 @@
 using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Symbols.Repositories;
-using Fundamental.Infrastructure.HostedServices.Codals.Manufacturing;
 using Fundamental.Infrastructure.Repositories;
 using Fundamental.Infrastructure.Repositories.Codals.Manufacturing;
 using Fundamental.Infrastructure.Services;
@@ -12,6 +11,7 @@ using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.Income
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.InterpretativeReportSummaryPages4;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.InterpretativeReportSummaryPages5;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.MonthlyActivities;
+using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.RegisterCapitalIncrease;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -26,12 +26,15 @@ public static class ServicesConfigurationExtensions
         serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, IncomeStatementDetector>();
         serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, NonOperationIncomeAndExpensesDetector>();
         serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, TheStatusOfViableCompaniesDetector>();
+        serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, CapitalIncreaseRegistrationNoticeDetector>();
 
         serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, MonthlyActivityV4Processor>();
         serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, BalanceSheetV5Processor>();
         serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, IncomeStatementsV7Processor>();
         serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, NonOperationIncomeAndExpensesV2Processor>();
         serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, TheStatusOfViableCompaniesV2Processor>();
+        serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, CapitalIncreaseRegistrationNoticeV1Processor>();
+
     }
 
     public static void AddManufacturingReadRepositories(this WebApplicationBuilder builder)
