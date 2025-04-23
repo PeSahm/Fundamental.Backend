@@ -1,12 +1,16 @@
 ﻿#nullable disable
 
 using Fundamental.Domain.Codals.Manufacturing.Enums;
+using Fundamental.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Fundamental.Migrations.Fundamental;
 
 /// <inheritdoc />
-public partial class UpdateToTimestampTz : Migration
+[DbContext(typeof(FundamentalDbContext))]
+[Migration("20250416122619_UpdateToTimestampTz")]
+public class UpdateToTimestampTz : Migration
 {
     /// <inheritdoc />
     protected override void Up(MigrationBuilder migrationBuilder)

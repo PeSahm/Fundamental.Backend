@@ -352,6 +352,194 @@ namespace Fundamental.Migrations.Fundamental
                     b.ToTable("balance-sheet-sort", "manufacturing");
                 });
 
+            modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.CapitalIncreaseRegistrationNotice", b =>
+                {
+                    b.Property<long>("_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("_id")
+                        .HasColumnOrder(0);
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("_id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<IsoCurrency>("Currency")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("iso_currency")
+                        .HasColumnName("currency");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(1);
+
+                    b.Property<DateOnly>("LastExtraAssemblyDate")
+                        .HasColumnType("Date")
+                        .HasColumnName("last_extra_assembly_date");
+
+                    b.Property<long>("PrimaryMarketTracingNo")
+                        .HasColumnType("Bigint")
+                        .HasColumnName("primary_market_tracing_no");
+
+                    b.Property<DateOnly>("StartDate")
+                        .HasColumnType("Date")
+                        .HasColumnName("start_date");
+
+                    b.Property<long>("TraceNo")
+                        .HasColumnType("Bigint")
+                        .HasColumnName("trace_no");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("ModifiedAt");
+
+                    b.Property<string>("Uri")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .IsUnicode(false)
+                        .HasColumnType("character varying(512)")
+                        .HasColumnName("uri");
+
+                    b.Property<long>("symbol-id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("symbol_id");
+
+                    b.ComplexProperty<Dictionary<string, object>>("CashForceclosurePriority", "Fundamental.Domain.Codals.Manufacturing.Entities.CapitalIncreaseRegistrationNotice.CashForceclosurePriority#CodalMoney", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<IsoCurrency>("Currency")
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("iso_currency")
+                                .HasColumnName("currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("cash_forceclosure_priority");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("CashIncoming", "Fundamental.Domain.Codals.Manufacturing.Entities.CapitalIncreaseRegistrationNotice.CashIncoming#CodalMoney", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<IsoCurrency>("Currency")
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("iso_currency")
+                                .HasColumnName("currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("cash_incoming");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("NewCapital", "Fundamental.Domain.Codals.Manufacturing.Entities.CapitalIncreaseRegistrationNotice.NewCapital#CodalMoney", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<IsoCurrency>("Currency")
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("iso_currency")
+                                .HasColumnName("currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("new_capital");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("PreviousCapital", "Fundamental.Domain.Codals.Manufacturing.Entities.CapitalIncreaseRegistrationNotice.PreviousCapital#CodalMoney", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<IsoCurrency>("Currency")
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("iso_currency")
+                                .HasColumnName("currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("previous_capital");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("Reserves", "Fundamental.Domain.Codals.Manufacturing.Entities.CapitalIncreaseRegistrationNotice.Reserves#CodalMoney", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<IsoCurrency>("Currency")
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("iso_currency")
+                                .HasColumnName("currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("reserves");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("RetainedEarning", "Fundamental.Domain.Codals.Manufacturing.Entities.CapitalIncreaseRegistrationNotice.RetainedEarning#CodalMoney", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<IsoCurrency>("Currency")
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("iso_currency")
+                                .HasColumnName("currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("retained_earning");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("RevaluationSurplus", "Fundamental.Domain.Codals.Manufacturing.Entities.CapitalIncreaseRegistrationNotice.RevaluationSurplus#CodalMoney", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<IsoCurrency>("Currency")
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("iso_currency")
+                                .HasColumnName("currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("revaluation_surplus");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("SarfSaham", "Fundamental.Domain.Codals.Manufacturing.Entities.CapitalIncreaseRegistrationNotice.SarfSaham#CodalMoney", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<IsoCurrency>("Currency")
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("iso_currency")
+                                .HasColumnName("currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("sarf_saham");
+                        });
+
+                    b.HasKey("_id")
+                        .HasName("pk_capital_increase_registration_notice");
+
+                    b.HasIndex("Id")
+                        .IsUnique()
+                        .HasDatabaseName("ix_capital_increase_registration_notice_id");
+
+                    b.HasIndex("symbol-id")
+                        .HasDatabaseName("ix_capital_increase_registration_notice_symbol_id");
+
+                    b.ToTable("capital_increase_registration_notice", "manufacturing");
+                });
+
             modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.FinancialStatement", b =>
                 {
                     b.Property<long>("_id")
@@ -1709,44 +1897,6 @@ namespace Fundamental.Migrations.Fundamental
                     b.ToTable("publisher", "fs");
                 });
 
-            modelBuilder.Entity("Fundamental.Domain.ExAreas.Entities.Fair", b =>
-                {
-                    b.Property<long>("_id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnName("_id")
-                        .HasColumnOrder(0);
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("_id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("CreatedAt");
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid")
-                        .HasColumnName("Id")
-                        .HasColumnOrder(1);
-
-                    b.Property<string>("Json")
-                        .IsRequired()
-                        .HasColumnType("jsonb")
-                        .HasColumnName("json");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("ModifiedAt");
-
-                    b.HasKey("_id")
-                        .HasName("pk_fair");
-
-                    b.HasIndex("Id")
-                        .IsUnique()
-                        .HasDatabaseName("ix_fair_id");
-
-                    b.ToTable("fair", "ex_areas");
-                });
-
             modelBuilder.Entity("Fundamental.Domain.Prices.Entities.ClosePrice", b =>
                 {
                     b.Property<long>("_id")
@@ -2269,6 +2419,18 @@ namespace Fundamental.Migrations.Fundamental
 
                     b.Navigation("YearEndMonth")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.CapitalIncreaseRegistrationNotice", b =>
+                {
+                    b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Symbol")
+                        .WithMany()
+                        .HasForeignKey("symbol-id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_capital_increase_registration_notice_symbols_symbol_id");
+
+                    b.Navigation("Symbol");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.FinancialStatement", b =>

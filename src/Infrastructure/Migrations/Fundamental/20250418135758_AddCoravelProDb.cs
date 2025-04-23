@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
+using Fundamental.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -9,7 +11,9 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fundamental.Migrations.Fundamental
 {
     /// <inheritdoc />
-    public partial class AddCoravelProDb : Migration
+    [DbContext(typeof(FundamentalDbContext))]
+    [Migration("20250418135758_AddCoravelProDb")]
+    public class AddCoravelProDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

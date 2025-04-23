@@ -16,31 +16,176 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fundamental.Migrations.Fundamental
 {
     [DbContext(typeof(FundamentalDbContext))]
-    [Migration("20250416122619_UpdateToTimestampTz")]
-    partial class UpdateToTimestampTz
+    [Migration("20250423185119_AddCapitalIncreaseRegistrationNoticeEntity")]
+    partial class AddCapitalIncreaseRegistrationNoticeEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.12")
+                .HasAnnotation("ProductVersion", "9.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "company_type", new[] { "none_financial_institution", "public_investment_and_holding", "financial_institutions", "subsidiary_financial_institutions", "intermediary_institutions", "investment_funds", "basket_companies", "investment_advisory_companies", "financial_information_processing_companies", "capital_supply_companies", "associations", "central_asset_management_company", "rating_institutions", "article44", "brokers", "government_companies", "exempt_companies", "un_known1" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "enable_sub_company", new[] { "in_active", "active", "accepted" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "etf_type", new[] { "fixed_income", "mixed_income", "equity", "land_buildings_and_projects", "gold", "vc_and_private_funds" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "exchange_type", new[] { "tse", "ifb", "irenex", "ime", "none" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "iso_currency", new[] { "irr", "usd", "eur" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "none_operational_income_tag", new[] { "bank_interest_income", "stock_dividend_income", "other_renewable_income" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "product_type", new[] { "equity", "fund", "bond", "option_sell", "index", "forward", "etf", "vc", "futures", "certificate_of_deposit", "coupon", "mbs", "gold_coin", "option_buy", "energy_electricity", "intellectual_property", "ime_certificate", "ime_certificate_agriculture", "ime_certificate_glass", "other", "all" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "publisher_fund_type", new[] { "un_known", "not_a_fund", "real_estate", "fixed_income", "mixed", "equity", "project", "venture", "market_making", "commodity", "diversified" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "publisher_market_type", new[] { "none", "first", "second", "base", "small_and_medium" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "publisher_state", new[] { "register_in_ime", "register_in_irenex", "register_in_tse", "register_in_ifb", "registered_not_accepted", "not_registered" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "publisher_sub_company_type", new[] { "un_known", "normal", "liquidation", "has_foreign_currency_unit", "has_foreign_currency_unit_and_foreign_auditor", "un_known1", "un_known2", "un_known3", "un_known4", "un_known5", "un_known6" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "reporting_type", new[] { "production", "structural", "investment", "bank", "leasing", "services", "insurance", "maritime_transportation", "agriculture", "capital_provision", "un_known" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "review_status", new[] { "pending", "rejected", "approved" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "company_type", new[] { "article44", "associations", "basket_companies", "brokers", "capital_supply_companies", "central_asset_management_company", "exempt_companies", "financial_information_processing_companies", "financial_institutions", "government_companies", "intermediary_institutions", "investment_advisory_companies", "investment_funds", "none_financial_institution", "public_investment_and_holding", "rating_institutions", "subsidiary_financial_institutions", "un_known1" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "enable_sub_company", new[] { "accepted", "active", "in_active" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "etf_type", new[] { "equity", "fixed_income", "gold", "land_buildings_and_projects", "mixed_income", "vc_and_private_funds" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "exchange_type", new[] { "ifb", "ime", "irenex", "none", "tse" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "iso_currency", new[] { "eur", "irr", "usd" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "none_operational_income_tag", new[] { "bank_interest_income", "other_renewable_income", "stock_dividend_income" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "product_type", new[] { "all", "bond", "certificate_of_deposit", "coupon", "energy_electricity", "equity", "etf", "forward", "fund", "futures", "gold_coin", "ime_certificate", "ime_certificate_agriculture", "ime_certificate_glass", "index", "intellectual_property", "mbs", "option_buy", "option_sell", "other", "vc" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "publisher_fund_type", new[] { "commodity", "diversified", "equity", "fixed_income", "market_making", "mixed", "not_a_fund", "project", "real_estate", "un_known", "venture" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "publisher_market_type", new[] { "base", "first", "none", "second", "small_and_medium" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "publisher_state", new[] { "not_registered", "register_in_ifb", "register_in_ime", "register_in_irenex", "register_in_tse", "registered_not_accepted" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "publisher_sub_company_type", new[] { "has_foreign_currency_unit", "has_foreign_currency_unit_and_foreign_auditor", "liquidation", "normal", "un_known", "un_known1", "un_known2", "un_known3", "un_known4", "un_known5", "un_known6" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "reporting_type", new[] { "agriculture", "bank", "capital_provision", "insurance", "investment", "leasing", "maritime_transportation", "production", "services", "structural", "un_known" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "review_status", new[] { "approved", "pending", "rejected" });
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("Coravel.Pro.EntityFramework.CoravelJobHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("DisplayName")
+                        .HasColumnType("text")
+                        .HasColumnName("display_name");
+
+                    b.Property<DateTime?>("EndedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("ended_at");
+
+                    b.Property<string>("ErrorMessage")
+                        .HasColumnType("text")
+                        .HasColumnName("error_message");
+
+                    b.Property<bool>("Failed")
+                        .HasColumnType("boolean")
+                        .HasColumnName("failed");
+
+                    b.Property<string>("StackTrace")
+                        .HasColumnType("text")
+                        .HasColumnName("stack_trace");
+
+                    b.Property<DateTime?>("StartedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("started_at");
+
+                    b.Property<string>("TypeFullPath")
+                        .HasColumnType("text")
+                        .HasColumnName("type_full_path");
+
+                    b.HasKey("Id")
+                        .HasName("pk_coravel_job_history");
+
+                    b.HasIndex("EndedAt")
+                        .HasDatabaseName("ix_coravel_job_history_ended_at");
+
+                    b.ToTable("coravel_job_history", (string)null);
+                });
+
+            modelBuilder.Entity("Coravel.Pro.EntityFramework.CoravelScheduledJob", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("boolean")
+                        .HasColumnName("active");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("CronExpression")
+                        .HasColumnType("text")
+                        .HasColumnName("cron_expression");
+
+                    b.Property<string>("Days")
+                        .HasColumnType("text")
+                        .HasColumnName("days");
+
+                    b.Property<string>("Frequency")
+                        .HasColumnType("text")
+                        .HasColumnName("frequency");
+
+                    b.Property<string>("InvocableFullPath")
+                        .HasColumnType("text")
+                        .HasColumnName("invocable_full_path");
+
+                    b.Property<bool>("PreventOverlapping")
+                        .HasColumnType("boolean")
+                        .HasColumnName("prevent_overlapping");
+
+                    b.Property<bool>("RunOnDedicatedThread")
+                        .HasColumnType("boolean")
+                        .HasColumnName("run_on_dedicated_thread");
+
+                    b.Property<string>("TimeZoneInfo")
+                        .HasColumnType("text")
+                        .HasColumnName("time_zone_info");
+
+                    b.HasKey("Id")
+                        .HasName("pk_coravel_scheduled_jobs");
+
+                    b.HasIndex("Active")
+                        .HasDatabaseName("ix_coravel_scheduled_jobs_active");
+
+                    b.HasIndex("InvocableFullPath")
+                        .HasDatabaseName("ix_coravel_scheduled_jobs_invocable_full_path");
+
+                    b.ToTable("coravel_scheduled_jobs", (string)null);
+                });
+
+            modelBuilder.Entity("Coravel.Pro.EntityFramework.CoravelScheduledJobHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("DisplayName")
+                        .HasColumnType("text")
+                        .HasColumnName("display_name");
+
+                    b.Property<DateTime?>("EndedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("ended_at");
+
+                    b.Property<string>("ErrorMessage")
+                        .HasColumnType("text")
+                        .HasColumnName("error_message");
+
+                    b.Property<bool>("Failed")
+                        .HasColumnType("boolean")
+                        .HasColumnName("failed");
+
+                    b.Property<string>("StackTrace")
+                        .HasColumnType("text")
+                        .HasColumnName("stack_trace");
+
+                    b.Property<string>("TypeFullPath")
+                        .HasColumnType("text")
+                        .HasColumnName("type_full_path");
+
+                    b.HasKey("Id")
+                        .HasName("pk_coravel_scheduled_job_history");
+
+                    b.HasIndex("EndedAt")
+                        .HasDatabaseName("ix_coravel_scheduled_job_history_ended_at");
+
+                    b.ToTable("coravel_scheduled_job_history", (string)null);
+                });
 
             modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.BalanceSheet", b =>
                 {
@@ -208,6 +353,194 @@ namespace Fundamental.Migrations.Fundamental
                         .HasDatabaseName("ix_balance_sheet_sort_category_codal_row");
 
                     b.ToTable("balance-sheet-sort", "manufacturing");
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.CapitalIncreaseRegistrationNotice", b =>
+                {
+                    b.Property<long>("_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("_id")
+                        .HasColumnOrder(0);
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("_id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<IsoCurrency>("Currency")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("iso_currency")
+                        .HasColumnName("currency");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(1);
+
+                    b.Property<DateOnly>("LastExtraAssemblyDate")
+                        .HasColumnType("Date")
+                        .HasColumnName("last_extra_assembly_date");
+
+                    b.Property<long>("PrimaryMarketTracingNo")
+                        .HasColumnType("Bigint")
+                        .HasColumnName("primary_market_tracing_no");
+
+                    b.Property<DateOnly>("StartDate")
+                        .HasColumnType("Date")
+                        .HasColumnName("start_date");
+
+                    b.Property<long>("TraceNo")
+                        .HasColumnType("Bigint")
+                        .HasColumnName("trace_no");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("ModifiedAt");
+
+                    b.Property<string>("Uri")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .IsUnicode(false)
+                        .HasColumnType("character varying(512)")
+                        .HasColumnName("uri");
+
+                    b.Property<long>("symbol-id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("symbol_id");
+
+                    b.ComplexProperty<Dictionary<string, object>>("CashForceclosurePriority", "Fundamental.Domain.Codals.Manufacturing.Entities.CapitalIncreaseRegistrationNotice.CashForceclosurePriority#CodalMoney", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<IsoCurrency>("Currency")
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("iso_currency")
+                                .HasColumnName("currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("cash_forceclosure_priority");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("CashIncoming", "Fundamental.Domain.Codals.Manufacturing.Entities.CapitalIncreaseRegistrationNotice.CashIncoming#CodalMoney", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<IsoCurrency>("Currency")
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("iso_currency")
+                                .HasColumnName("currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("cash_incoming");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("NewCapital", "Fundamental.Domain.Codals.Manufacturing.Entities.CapitalIncreaseRegistrationNotice.NewCapital#CodalMoney", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<IsoCurrency>("Currency")
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("iso_currency")
+                                .HasColumnName("currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("new_capital");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("PreviousCapital", "Fundamental.Domain.Codals.Manufacturing.Entities.CapitalIncreaseRegistrationNotice.PreviousCapital#CodalMoney", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<IsoCurrency>("Currency")
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("iso_currency")
+                                .HasColumnName("currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("previous_capital");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("Reserves", "Fundamental.Domain.Codals.Manufacturing.Entities.CapitalIncreaseRegistrationNotice.Reserves#CodalMoney", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<IsoCurrency>("Currency")
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("iso_currency")
+                                .HasColumnName("currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("reserves");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("RetainedEarning", "Fundamental.Domain.Codals.Manufacturing.Entities.CapitalIncreaseRegistrationNotice.RetainedEarning#CodalMoney", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<IsoCurrency>("Currency")
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("iso_currency")
+                                .HasColumnName("currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("retained_earning");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("RevaluationSurplus", "Fundamental.Domain.Codals.Manufacturing.Entities.CapitalIncreaseRegistrationNotice.RevaluationSurplus#CodalMoney", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<IsoCurrency>("Currency")
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("iso_currency")
+                                .HasColumnName("currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("revaluation_surplus");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("SarfSaham", "Fundamental.Domain.Codals.Manufacturing.Entities.CapitalIncreaseRegistrationNotice.SarfSaham#CodalMoney", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<IsoCurrency>("Currency")
+                                .ValueGeneratedOnUpdateSometimes()
+                                .HasColumnType("iso_currency")
+                                .HasColumnName("currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("sarf_saham");
+                        });
+
+                    b.HasKey("_id")
+                        .HasName("pk_capital_increase_registration_notice");
+
+                    b.HasIndex("Id")
+                        .IsUnique()
+                        .HasDatabaseName("ix_capital_increase_registration_notice_id");
+
+                    b.HasIndex("symbol-id")
+                        .HasDatabaseName("ix_capital_increase_registration_notice_symbol_id");
+
+                    b.ToTable("capital_increase_registration_notice", "manufacturing");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.FinancialStatement", b =>
@@ -1175,7 +1508,7 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnType("boolean")
                         .HasColumnName("previous_period");
 
-                    b.Property<List<NoneOperationalIncomeTag>>("Tags")
+                    b.PrimitiveCollection<List<NoneOperationalIncomeTag>>("Tags")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("none_operational_income_tag[]")
@@ -1565,44 +1898,6 @@ namespace Fundamental.Migrations.Fundamental
                         .HasDatabaseName("ix_publisher_symbol_id");
 
                     b.ToTable("publisher", "fs");
-                });
-
-            modelBuilder.Entity("Fundamental.Domain.ExAreas.Entities.Fair", b =>
-                {
-                    b.Property<long>("_id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnName("_id")
-                        .HasColumnOrder(0);
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("_id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("CreatedAt");
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid")
-                        .HasColumnName("Id")
-                        .HasColumnOrder(1);
-
-                    b.Property<string>("Json")
-                        .IsRequired()
-                        .HasColumnType("jsonb")
-                        .HasColumnName("json");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("ModifiedAt");
-
-                    b.HasKey("_id")
-                        .HasName("pk_fair");
-
-                    b.HasIndex("Id")
-                        .IsUnique()
-                        .HasDatabaseName("ix_fair_id");
-
-                    b.ToTable("fair", "ex_areas");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Prices.Entities.ClosePrice", b =>
@@ -2129,6 +2424,18 @@ namespace Fundamental.Migrations.Fundamental
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.CapitalIncreaseRegistrationNotice", b =>
+                {
+                    b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Symbol")
+                        .WithMany()
+                        .HasForeignKey("symbol-id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_capital_increase_registration_notice_symbols_symbol_id");
+
+                    b.Navigation("Symbol");
+                });
+
             modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.FinancialStatement", b =>
                 {
                     b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Symbol")
@@ -2211,7 +2518,7 @@ namespace Fundamental.Migrations.Fundamental
                             b1.Property<long>("MonthlyActivity_id")
                                 .HasColumnType("bigint");
 
-                            b1.Property<int>("Id")
+                            b1.Property<int>("__synthesizedOrdinal")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("integer");
 
@@ -2234,7 +2541,7 @@ namespace Fundamental.Migrations.Fundamental
                             b1.Property<int>("Year")
                                 .HasColumnType("integer");
 
-                            b1.HasKey("MonthlyActivity_id", "Id")
+                            b1.HasKey("MonthlyActivity_id", "__synthesizedOrdinal")
                                 .HasName("pk_monthly_activity");
 
                             b1.ToTable("monthly-activity", "manufacturing");
