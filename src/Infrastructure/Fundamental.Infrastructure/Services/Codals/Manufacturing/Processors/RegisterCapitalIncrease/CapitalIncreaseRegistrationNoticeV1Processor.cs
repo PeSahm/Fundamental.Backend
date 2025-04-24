@@ -15,15 +15,16 @@ namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.Re
 
 public class CapitalIncreaseRegistrationNoticeV1Processor(IServiceScopeFactory serviceScopeFactory) : ICodalProcessor
 {
-    public static ReportingType ReportingType => ReportingType.Production;
+    public static ReportingType ReportingType => ReportingType.UnKnown;
     public static LetterType LetterType => LetterType.CapitalIncreaseRegistrationNotice;
     public static CodalVersion CodalVersion => CodalVersion.V1;
     public static LetterPart LetterPart => LetterPart.NotSpecified;
 
     public async Task Process(GetStatementResponse statement, GetStatementJsonResponse model, CancellationToken cancellationToken)
     {
-        JsonSerializerSettings jsonSettings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
-        CodalCapitalIncreaseRegistrationNotice? capitalIncrease = JsonConvert.DeserializeObject<CodalCapitalIncreaseRegistrationNotice>(model.Json, jsonSettings);
+        JsonSerializerSettings jsonSettings = new() { NullValueHandling = NullValueHandling.Ignore };
+        CodalCapitalIncreaseRegistrationNotice? capitalIncrease =
+            JsonConvert.DeserializeObject<CodalCapitalIncreaseRegistrationNotice>(model.Json, jsonSettings);
 
         if (capitalIncrease is null)
         {
@@ -34,6 +35,7 @@ public class CapitalIncreaseRegistrationNoticeV1Processor(IServiceScopeFactory s
         await using FundamentalDbContext dbContext = scope.ServiceProvider.GetRequiredService<FundamentalDbContext>();
 
         DateTime? startDate = capitalIncrease.StartDate.ToGregorianDateTime();
+
         if (startDate is null)
         {
             return;
@@ -42,7 +44,7 @@ public class CapitalIncreaseRegistrationNoticeV1Processor(IServiceScopeFactory s
         Domain.Codals.Manufacturing.Entities.CapitalIncreaseRegistrationNotice? existingStatement =
             await dbContext.Set<Domain.Codals.Manufacturing.Entities.CapitalIncreaseRegistrationNotice>()
                 .FirstOrDefaultAsync(
-                    x => x.TraceNo == statement.TracingNo ,
+                    x => x.TraceNo == statement.TracingNo,
                     cancellationToken);
 
         Symbol symbol = await dbContext.Symbols

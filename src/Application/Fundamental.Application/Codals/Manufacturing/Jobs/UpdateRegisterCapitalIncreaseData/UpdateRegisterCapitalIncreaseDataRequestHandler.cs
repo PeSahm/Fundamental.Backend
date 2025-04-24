@@ -27,7 +27,7 @@ public class UpdateRegisterCapitalIncreaseDataRequestHandler(
             {
                 try
                 {
-                    await codalService.ProcessCodal(statement, LetterPart.NotSpecified, cancellationToken);
+                    await codalService.ProcessCodal(statement, ReportingType.UnKnown, LetterPart.NotSpecified, cancellationToken);
                 }
                 catch (TaskCanceledException)
                 {

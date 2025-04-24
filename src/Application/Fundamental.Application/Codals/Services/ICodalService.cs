@@ -20,5 +20,12 @@ public interface ICodalService
 
     Task ProcessCodal(GetStatementResponse statement, LetterPart letterPart, CancellationToken cancellationToken = default);
 
+    Task ProcessCodal(
+        GetStatementResponse statement,
+        ReportingType reportingType,
+        LetterPart letterPart,
+        CancellationToken cancellationToken = default
+    );
+
     Task<List<GetPublisherResponse>> GetPublishers(CancellationToken cancellationToken = default);
 }
