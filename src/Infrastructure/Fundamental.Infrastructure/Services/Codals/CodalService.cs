@@ -108,6 +108,16 @@ public class CodalService(
 
     public async Task ProcessCodal(GetStatementResponse statement, LetterPart letterPart, CancellationToken cancellationToken = default)
     {
+       await ProcessCodal(statement, statement.ReportingType, letterPart, cancellationToken);
+    }
+
+    public async Task ProcessCodal(
+        GetStatementResponse statement,
+        ReportingType reportingType,
+        LetterPart letterPart,
+        CancellationToken cancellationToken = default
+    )
+    {
         HttpResponseMessage response =
             await _mdpClient.GetAsync(
                 new StringBuilder()
