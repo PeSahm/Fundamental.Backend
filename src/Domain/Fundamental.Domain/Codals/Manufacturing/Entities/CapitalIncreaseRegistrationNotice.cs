@@ -1,4 +1,6 @@
-﻿using Fundamental.Domain.Common.BaseTypes;
+﻿using Fundamental.Domain.Codals.Manufacturing.Events;
+using Fundamental.Domain.Common.BaseTypes;
+using Fundamental.Domain.Common.Constants;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Common.ValueObjects;
 using Fundamental.Domain.Symbols.Entities;
@@ -43,6 +45,17 @@ public class CapitalIncreaseRegistrationNotice : BaseEntity<Guid>
         CashForceclosurePriority = cashForceCosurePriority;
         CreatedAt = createdAt.ToUniversalTime();
         UpdatedAt = createdAt.ToUniversalTime();
+
+        AddDomainEvent(
+            new CapitalIncreaseRegistrationNoticeCreated(
+                Symbol.Isin,
+                TraceNo,
+                Uri,
+                StartDate,
+                LastExtraAssemblyDate,
+                NewCapital.RealValue,
+                PreviousCapital.RealValue),
+            EventsAddress.CapitalIncrease.CAPITAL_INCREASE_NOTICE_UPDATE);
     }
 
     protected CapitalIncreaseRegistrationNotice()
