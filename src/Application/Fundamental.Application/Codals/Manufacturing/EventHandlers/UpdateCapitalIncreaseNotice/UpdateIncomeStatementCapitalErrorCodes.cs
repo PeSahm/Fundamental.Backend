@@ -3,9 +3,9 @@ using Fundamental.ErrorHandling.Enums;
 
 namespace Fundamental.Application.Codals.Manufacturing.EventHandlers.UpdateCapitalIncreaseNotice;
 
-[HandlerCode(HandlerCode.UpdateCapitalIncreaseRegistrationNotice)]
-public enum UpdateIncomeStatemetnCapitalErrorCodes
+[HandlerCode(HandlerCode.UpdateIncomeStatementCapital)]
+public enum UpdateIncomeStatementCapitalErrorCodes
 {
-    [ErrorType(BackendErrorType.ApplicationFailure)]
-    NoticeNotFound = 13_394_101
+    [ErrorType(BackendErrorType.Security)]
+    CapitalRecordNotFound = 13_190_101
 }
