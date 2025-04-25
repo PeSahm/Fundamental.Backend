@@ -27,7 +27,7 @@ public sealed class AddIncomeStatementCommandHandler(
         }
 
         bool tracingNumberExists = await repository.AnyAsync(
-            IncomeStatementSpec.WithTraceNo(request.TraceNo),
+            new IncomeStatementSpec().WithTraceNo(request.TraceNo),
             cancellationToken);
 
         if (tracingNumberExists)
