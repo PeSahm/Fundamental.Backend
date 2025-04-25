@@ -17,4 +17,9 @@ public static class EventsAddress
     {
         public const string MONTHLY_ACTIVITY_UPDATE = "monthly-activity.monthly-activity-update";
     }
+
+    public static class CapitalIncrease
+    {
+        public const string CAPITAL_INCREASE_NOTICE_UPDATE = "capital.increase.notice.update";
+    }
 }

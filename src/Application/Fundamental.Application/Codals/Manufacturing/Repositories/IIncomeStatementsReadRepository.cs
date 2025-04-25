@@ -19,4 +19,5 @@ public interface IIncomeStatementsReadRepository
         ushort incomeStatementRow,
         CancellationToken cancellationToken = default
     );
+    Task<(FiscalYear Year, StatementMonth Month, ulong TraceNo)> GetLatestStatement(string isin, CancellationToken cancellationToken = default);
 }

@@ -34,7 +34,6 @@ public static class ServicesConfigurationExtensions
         serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, NonOperationIncomeAndExpensesV2Processor>();
         serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, TheStatusOfViableCompaniesV2Processor>();
         serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, CapitalIncreaseRegistrationNoticeV1Processor>();
-
     }
 
     public static void AddManufacturingReadRepositories(this WebApplicationBuilder builder)

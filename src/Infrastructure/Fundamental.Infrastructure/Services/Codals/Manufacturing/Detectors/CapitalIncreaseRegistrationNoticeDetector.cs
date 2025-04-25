@@ -11,7 +11,7 @@ public class CapitalIncreaseRegistrationNoticeDetector : ICodalVersionDetector
         return CodalVersion.V1;
     }
 
-    public static ReportingType ReportingType => ReportingType.Production;
+    public static ReportingType ReportingType => ReportingType.UnKnown;
 
     public static LetterType LetterType => LetterType.CapitalIncreaseRegistrationNotice;
 

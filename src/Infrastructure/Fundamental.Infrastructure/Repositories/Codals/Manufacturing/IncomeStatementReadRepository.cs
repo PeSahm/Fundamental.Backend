@@ -78,4 +78,16 @@ public sealed class IncomeStatementReadRepository(FundamentalDbContext dbContext
             .Select(x => x.Value)
             .FirstOrDefaultAsync(cancellationToken);
     }
+
+    public Task<(FiscalYear Year, StatementMonth Month, ulong TraceNo)> GetLatestStatement(string isin, CancellationToken cancellationToken = default)
+    {
+        return dbContext.IncomeStatements
+            .AsNoTracking()
+            .Where(x => x.Symbol.Isin == isin)
+            .OrderByDescending(x => x.FiscalYear.Year)
+            .ThenByDescending(x => x.ReportMonth.Month)
+            .ThenByDescending(x => x.TraceNo)
+            .Select(x => new ValueTuple<FiscalYear, StatementMonth, ulong>(x.FiscalYear, x.ReportMonth, x.TraceNo))
+            .FirstOrDefaultAsync(cancellationToken);
+    }
 }

@@ -1,4 +1,5 @@
 ﻿using DotNetCore.CAP;
+using Fundamental.Application.Codals.Manufacturing.EventHandlers.UpdateCapitalIncreaseNotice;
 using Fundamental.Application.Codals.Manufacturing.EventHandlers.UpdateFsClosePrice;
 using Fundamental.Application.Codals.Manufacturing.EventHandlers.UpdateFsSales;
 using Fundamental.Domain.Codals.Manufacturing.Events;
@@ -22,5 +23,13 @@ public class EventDataDispatcher(IMediator mediator) : ICapSubscribe
     public async Task UpdateFsSales(MonthlyActivityUpdated eventData)
     {
         await mediator.Send(new UpdateFsSalesRequest(eventData));
+    }
+
+    [CapSubscribe(
+        EventsAddress.CapitalIncrease.CAPITAL_INCREASE_NOTICE_UPDATE,
+        Group = EventsAddress.FinancialStatement.FINANCIAL_STATEMENT_EVENT_GROUP)]
+    public async Task UpdateCapitalIncreaseNotice(CapitalIncreaseRegistrationNoticeCreated eventData)
+    {
+        await mediator.Send(new UpdateCapitalIncreaseRegistrationNoticeRequest(eventData));
     }
 }

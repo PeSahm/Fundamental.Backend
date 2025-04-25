@@ -1,4 +1,5 @@
-﻿using Fundamental.Domain.Codals.ValueObjects;
+﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
+using Fundamental.Domain.Codals.ValueObjects;
 using Fundamental.Domain.Common.BaseTypes;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Common.ValueObjects;
@@ -68,6 +69,16 @@ public class IncomeStatement : BaseEntity<Guid>
     public SignedCodalMoney Value { get; private set; }
 
     public bool IsAudited { get; private set; }
+
+    public void UpdateCapitalValue(SignedCodalMoney money)
+    {
+        if (CodalRow != IncomeStatementRow.ListedCapital)
+        {
+            throw new InvalidOperationException("Cannot update capital value for non-capital row.");
+        }
+
+        Value = money;
+    }
 
     public void Update(
         Symbol symbol,
