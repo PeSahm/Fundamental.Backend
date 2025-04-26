@@ -170,7 +170,7 @@ public class CodalService(
         ICodalProcessorFactory codalProcessorFactory = scope.ServiceProvider.GetRequiredService<ICodalProcessorFactory>();
 
         ICodalProcessor processor =
-            codalProcessorFactory.GetCodalProcessor(jsonData.Json, statement.ReportingType, statement.Type, letterPart);
+            codalProcessorFactory.GetCodalProcessor(jsonData.Json, reportingType, statement.Type, letterPart);
 
         await processor.Process(statement, jsonData, cancellationToken);
     }
