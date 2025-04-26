@@ -3,6 +3,7 @@ using Fundamental.Application.Codals.Manufacturing.Specifications;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Codals.ValueObjects;
+using Fundamental.Domain.Common.ValueObjects;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.ErrorHandling;
 using MediatR;
@@ -47,7 +48,7 @@ public sealed class UpdateCapitalIncreaseRegistrationNoticeRequestHandler(
             return UpdateIncomeStatementCapitalErrorCodes.CapitalRecordNotFound;
         }
 
-        capitalRow.UpdateCapitalValue(request.Event.NewCapital);
+        capitalRow.UpdateCapitalValue(request.Event.NewCapital / SignedCodalMoney.CodalMoneyMultiplier);
         await pipeline.ExecuteAsync(
             async _ =>
             {

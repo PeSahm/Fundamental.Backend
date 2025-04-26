@@ -35,7 +35,7 @@ public class CodalCapitalIncreaseRegistrationNotice
     public string StartDate { get; set; }
 
     [JsonProperty("primaryMarketTracingNo")]
-    public ulong PrimaryMarketTracingNo { get; set; }
+    public long PrimaryMarketTracingNo { get; set; }
 
     [JsonProperty("cashForceclosurePriority")]
     public decimal CashForceclosurePriority { get; set; }

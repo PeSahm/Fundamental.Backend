@@ -17,7 +17,7 @@ public sealed class GetCapitalIncreaseRegistrationNoticeResultItem
     public decimal RevaluationSurplus { get; init; }
     public decimal SarfSaham { get; init; }
     public DateOnly StartDate { get; init; }
-    public ulong? PrimaryMarketTracingNo { get; init; }
+    public long? PrimaryMarketTracingNo { get; init; }
     public decimal CashForceclosurePriority { get; init; }
     public ulong TraceNo { get; init; }
     public DateTime CreatedAt { get; init; }
