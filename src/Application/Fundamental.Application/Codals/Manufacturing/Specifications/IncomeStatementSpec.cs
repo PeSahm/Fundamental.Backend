@@ -34,8 +34,7 @@ public class IncomeStatementSpec : Specification<IncomeStatement>
     public IncomeStatementSpec WithTraceNo(ulong traceNo)
     {
         Query
-            .Where(x => x.TraceNo == traceNo)
-            .AsNoTracking();
+            .Where(x => x.TraceNo == traceNo);
         return this;
     }
 
@@ -43,7 +42,7 @@ public class IncomeStatementSpec : Specification<IncomeStatement>
     {
         Query
             .Where(x => x.FiscalYear.Year == fiscalYear.Year)
-            .AsNoTracking();
+            ;
         return this;
     }
 
@@ -51,7 +50,7 @@ public class IncomeStatementSpec : Specification<IncomeStatement>
     {
         Query
             .Where(x => x.ReportMonth.Month == statementMonth.Month)
-            .AsNoTracking();
+            ;
         return this;
     }
 
@@ -59,7 +58,7 @@ public class IncomeStatementSpec : Specification<IncomeStatement>
     {
         Query
             .Where(x => x.YearEndMonth.Month == yearEndMonth.Month)
-            .AsNoTracking();
+            ;
         return this;
     }
 
@@ -67,7 +66,7 @@ public class IncomeStatementSpec : Specification<IncomeStatement>
     {
         Query
             .Where(x => x.Symbol.Isin == isin)
-            .AsNoTracking();
+            ;
         return this;
     }
 
@@ -75,7 +74,7 @@ public class IncomeStatementSpec : Specification<IncomeStatement>
     {
         Query
             .Where(x => x.CodalRow == row)
-            .AsNoTracking();
+            ;
         return this;
     }
 }

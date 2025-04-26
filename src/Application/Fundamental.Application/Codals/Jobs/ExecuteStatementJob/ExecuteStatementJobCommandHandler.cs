@@ -23,7 +23,11 @@ public class ExecuteStatementJobCommandHandler(
 
         try
         {
-            await codalService.ProcessCodal(statement, request.LetterPart, cancellationToken);
+            await codalService.ProcessCodal(
+                statement,
+                request.ReportingType ?? statement.ReportingType,
+                request.LetterPart,
+                cancellationToken);
         }
         catch (Exception e)
         {

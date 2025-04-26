@@ -24,7 +24,7 @@ public class CapitalIncreaseRegistrationNotice : BaseEntity<Guid>
         CodalMoney cashIncoming,
         CodalMoney sarfSaham,
         CodalMoney cashForceCosurePriority,
-        ulong? primaryMarketTracingNo,
+        long? primaryMarketTracingNo,
         DateTime createdAt
     )
     {
@@ -74,7 +74,7 @@ public class CapitalIncreaseRegistrationNotice : BaseEntity<Guid>
     public CodalMoney RevaluationSurplus { get; private set; }
     public CodalMoney CashIncoming { get; private set; }
     public CodalMoney SarfSaham { get; private set; }
-    public ulong? PrimaryMarketTracingNo { get; private set; }
+    public long? PrimaryMarketTracingNo { get; private set; }
     public CodalMoney CashForceclosurePriority { get; private set; }
     public IsoCurrency Currency { get; private set; } = IsoCurrency.IRR;
 }

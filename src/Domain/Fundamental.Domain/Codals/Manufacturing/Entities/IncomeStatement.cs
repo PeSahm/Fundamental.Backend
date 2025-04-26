@@ -78,6 +78,7 @@ public class IncomeStatement : BaseEntity<Guid>
         }
 
         Value = money;
+        UpdatedAt = DateTime.UtcNow;
     }
 
     public void Update(
