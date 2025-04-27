@@ -104,6 +104,8 @@ public sealed class UpdateCodalPublisherDataCommandHandler(
                 thePublisher.IsSupplied = publisher.IsSupplied;
                 thePublisher.MarketType = (PublisherMarketType)publisher.MarketType;
                 thePublisher.UnauthorizedCapital = publisher.UnauthorizedCapital;
+                thePublisher.ParentSymbol = parentSymbol;
+                thePublisher.UpdateLog();
 
                 if (symbol.Isin != thePublisher?.Symbol.Isin)
                 {
