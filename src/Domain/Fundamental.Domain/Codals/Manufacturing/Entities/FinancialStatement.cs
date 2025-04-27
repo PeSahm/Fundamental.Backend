@@ -344,10 +344,10 @@ public class FinancialStatement : BaseEntity<Guid>
         SaleBeforeThisMonth = saleBeforeThisMonth;
         SaleLastYearSamePeriod = saleLastYearSamePeriod;
         SaleAverageExcludeThisPeriod = saleMonth.AdjustedMonth(YearEndMonth) == 1
-            ? saleMonth
+            ? Sale
             : Math.Ceiling(saleBeforeThisMonth / (saleMonth.AdjustedMonth(YearEndMonth) - 1));
         SaleAverageLastYearSamePeriod = saleMonth.AdjustedMonth(YearEndMonth) == 1
-            ? saleMonth
+            ? saleLastYearSamePeriod
             : Math.Ceiling(saleLastYearSamePeriod / saleMonth.AdjustedMonth(YearEndMonth));
 
         TotalSale = SaleBeforeThisMonth + Sale;
