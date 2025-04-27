@@ -13,7 +13,8 @@ public sealed class GetSymbolsQueryHandler(IRepository repository)
     {
         List<GetSymbolsResultDto> symbols = await repository.ListAsync(
             new SymbolSpec()
-                .Filter(request.Filter.Safe()!)
+                .Filter(request.Filter.Safe())
+                .FilterReportingTypes(request.ReportingTypes)
                 .ShowOfficialSymbols(request.ShowOfficialSymbolsOnly)
                 .Select(),
             cancellationToken);

@@ -1,5 +1,6 @@
 ﻿using Ardalis.Specification;
 using Fundamental.BuildingBlock.Extensions;
+using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
 using Fundamental.Domain.Symbols.Enums;
 
@@ -19,8 +20,13 @@ public sealed class SymbolSpec : Specification<Symbol>
         return this;
     }
 
-    public SymbolSpec Filter(string filter)
+    public SymbolSpec Filter(string? filter)
     {
+        if (string.IsNullOrEmpty(filter))
+        {
+            return this;
+        }
+
         Query.Where(x => x.Isin.StartsWith(filter) || x.Name.StartsWith(filter) || x.Title.StartsWith(filter));
         return this;
     }
@@ -47,6 +53,18 @@ public sealed class SymbolSpec : Specification<Symbol>
         {
             Query.Where(x => x.IsUnOfficial);
         }
+
+        return this;
+    }
+
+    public SymbolSpec FilterReportingTypes(List<ReportingType> reportingTypes)
+    {
+        if (reportingTypes.Count == 0)
+        {
+            return this;
+        }
+
+        Query.Where(x => x.Publisher != null && reportingTypes.Contains(x.Publisher.ReportingType));
 
         return this;
     }
