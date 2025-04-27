@@ -7,5 +7,8 @@ namespace Fundamental.Application.Codals.Manufacturing.EventHandlers.UpdateCapit
 public enum UpdateIncomeStatementCapitalErrorCodes
 {
     [ErrorType(BackendErrorType.Security)]
-    CapitalRecordNotFound = 13_190_101
+    CapitalRecordNotFound = 13_190_101,
+
+    [ErrorType(BackendErrorType.Security)]
+    FsRecordNotFound = 13_190_102
 }
