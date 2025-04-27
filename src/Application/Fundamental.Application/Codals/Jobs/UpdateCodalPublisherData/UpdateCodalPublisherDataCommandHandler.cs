@@ -66,6 +66,45 @@ public sealed class UpdateCodalPublisherDataCommandHandler(
                 Publisher? thePublisher =
                     await repository.FirstOrDefaultAsync(PublisherSpec.WithCodalId(publisher.Id), cancellationToken);
 
+                if (thePublisher == null)
+                {
+                    continue;
+                }
+
+                thePublisher.CodalId = publisher.Id;
+                thePublisher.Isic = publisher.Isic;
+                thePublisher.ReportingType = (ReportingType)publisher.ReportingType;
+                thePublisher.CompanyType = (CompanyType)publisher.CompanyType;
+                thePublisher.ExecutiveManager = publisher.ExecutiveManager.Safe();
+                thePublisher.Address = publisher.Address.Safe();
+                thePublisher.TelNo = publisher.TelNo.Safe();
+                thePublisher.FaxNo = publisher.FaxNo.Safe();
+                thePublisher.ActivitySubject = publisher.ActivitySubject.Safe();
+                thePublisher.OfficeAddress = publisher.OfficeAddress.Safe();
+                thePublisher.ShareOfficeAddress = publisher.ShareOfficeAddress.Safe();
+                thePublisher.Website = publisher.Website;
+                thePublisher.Email = publisher.Email;
+                thePublisher.State = (PublisherState)publisher.State;
+                thePublisher.Inspector = publisher.Inspector.Safe();
+                thePublisher.FinancialManager = publisher.FinancialManager.Safe();
+                thePublisher.FactoryTel = publisher.FactoryTel.Safe();
+                thePublisher.FactoryFax = publisher.FactoryFax.Safe();
+                thePublisher.OfficeTel = publisher.OfficeTel.Safe();
+                thePublisher.OfficeFax = publisher.OfficeFax.Safe();
+                thePublisher.ShareOfficeTel = publisher.ShareOfficeTel.Safe();
+                thePublisher.ShareOfficeFax = publisher.ShareOfficeFax.Safe();
+                thePublisher.NationalCode = publisher.NationalCode.Safe();
+                thePublisher.FinancialYear = publisher.FinancialYear.Safe();
+                thePublisher.ListedCapital = publisher.ListedCapital;
+                thePublisher.AuditorName = publisher.AuditorName.Safe();
+                thePublisher.IsEnableSubCompany = (EnableSubCompany)publisher.IsEnableSubCompany;
+                thePublisher.IsEnabled = publisher.IsEnabled;
+                thePublisher.FundType = (PublisherFundType)publisher.FundType;
+                thePublisher.SubCompanyType = (PublisherSubCompanyType)publisher.SubCompanyType;
+                thePublisher.IsSupplied = publisher.IsSupplied;
+                thePublisher.MarketType = (PublisherMarketType)publisher.MarketType;
+                thePublisher.UnauthorizedCapital = publisher.UnauthorizedCapital;
+
                 if (symbol.Isin != thePublisher?.Symbol.Isin)
                 {
                     thePublisher!.Update(symbol);

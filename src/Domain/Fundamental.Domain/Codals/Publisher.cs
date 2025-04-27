@@ -18,43 +18,43 @@ public sealed class Publisher : BaseEntity<Guid>
     {
     }
 
-    public required string CodalId { get; init; }
+    public required string CodalId { get; set; }
     public Symbol Symbol { get; private set; }
-    public Symbol? ParentSymbol { get; init; }
-    public string? Isic { get; init; }
-    public ReportingType ReportingType { get; init; }
-    public CompanyType CompanyType { get; init; }
-    public string? ExecutiveManager { get; init; }
-    public string? Address { get; init; }
-    public string? TelNo { get; init; }
-    public string? FaxNo { get; init; }
-    public string? ActivitySubject { get; init; }
-    public string? OfficeAddress { get; init; }
-    public string? ShareOfficeAddress { get; init; }
-    public string? Website { get; init; }
-    public string? Email { get; init; }
-    public PublisherState State { get; init; }
-    public string? Inspector { get; init; }
-    public string? FinancialManager { get; init; }
-    public string? FactoryTel { get; init; }
-    public string? FactoryFax { get; init; }
-    public string? OfficeTel { get; init; }
-    public string? OfficeFax { get; init; }
-    public string? ShareOfficeTel { get; init; }
-    public string? ShareOfficeFax { get; init; }
-    public string? NationalCode { get; init; }
-    public string? FinancialYear { get; init; }
+    public Symbol? ParentSymbol { get; set; }
+    public string? Isic { get; set; }
+    public ReportingType ReportingType { get; set; }
+    public CompanyType CompanyType { get; set; }
+    public string? ExecutiveManager { get; set; }
+    public string? Address { get; set; }
+    public string? TelNo { get; set; }
+    public string? FaxNo { get; set; }
+    public string? ActivitySubject { get; set; }
+    public string? OfficeAddress { get; set; }
+    public string? ShareOfficeAddress { get; set; }
+    public string? Website { get; set; }
+    public string? Email { get; set; }
+    public PublisherState State { get; set; }
+    public string? Inspector { get; set; }
+    public string? FinancialManager { get; set; }
+    public string? FactoryTel { get; set; }
+    public string? FactoryFax { get; set; }
+    public string? OfficeTel { get; set; }
+    public string? OfficeFax { get; set; }
+    public string? ShareOfficeTel { get; set; }
+    public string? ShareOfficeFax { get; set; }
+    public string? NationalCode { get; set; }
+    public string? FinancialYear { get; set; }
 
     public IsoCurrency Currency { get; private set; } = IsoCurrency.IRR;
-    public CodalMoney ListedCapital { get; init; } = CodalMoney.BaseCurrency(0);
-    public string? AuditorName { get; init; }
-    public EnableSubCompany IsEnableSubCompany { get; init; }
-    public bool IsEnabled { get; init; }
-    public PublisherFundType FundType { get; init; }
-    public PublisherSubCompanyType SubCompanyType { get; init; }
-    public bool IsSupplied { get; init; }
-    public PublisherMarketType MarketType { get; init; }
-    public CodalMoney UnauthorizedCapital { get; init; } = CodalMoney.BaseCurrency(0);
+    public CodalMoney ListedCapital { get; set; } = CodalMoney.BaseCurrency(0);
+    public string? AuditorName { get; set; }
+    public EnableSubCompany IsEnableSubCompany { get; set; }
+    public bool IsEnabled { get; set; }
+    public PublisherFundType FundType { get; set; }
+    public PublisherSubCompanyType SubCompanyType { get; set; }
+    public bool IsSupplied { get; set; }
+    public PublisherMarketType MarketType { get; set; }
+    public CodalMoney UnauthorizedCapital { get; set; } = CodalMoney.BaseCurrency(0);
 
     public void Update(Symbol symbol)
     {
