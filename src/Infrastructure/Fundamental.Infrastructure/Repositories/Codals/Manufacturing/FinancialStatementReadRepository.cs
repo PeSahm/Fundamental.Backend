@@ -16,11 +16,12 @@ public class FinancialStatementReadRepository(FundamentalDbContext dataContent) 
     )
     {
         int persianYear = date.GetPersianYear();
-        int persianMonth = date.GetPersianMonth();
 
         return await dataContent.ManufacturingFinancialStatement
-            .Where(x => x.Symbol.Isin == isin && x.FiscalYear.Year <= persianYear && x.ReportMonth.Month <= persianMonth)
-            .OrderByDescending(x => x.TraceNo)
+            .Where(x => x.Symbol.Isin == isin && x.FiscalYear.Year <= persianYear)
+            .OrderByDescending(x => x.FiscalYear.Year)
+            .ThenByDescending(x => x.ReportMonth.Month)
+            .ThenByDescending(x => x.TraceNo)
             .FirstOrDefaultAsync(cancellationToken);
     }
 
