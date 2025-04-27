@@ -60,4 +60,9 @@ public sealed class Publisher : BaseEntity<Guid>
     {
         Symbol = symbol;
     }
+
+    public void UpdateLog()
+    {
+        UpdatedAt = DateTime.UtcNow;
+    }
 }
