@@ -1,4 +1,5 @@
 ﻿using Fundamental.BuildingBlock;
+using Fundamental.Domain.Codals;
 using Fundamental.Domain.Common.BaseTypes;
 using Fundamental.Domain.Symbols.Enums;
 
@@ -80,6 +81,8 @@ public class Symbol : BaseEntity<Guid>
     public ExchangeType ExchangeType { get; private set; } = ExchangeType.None;
 
     public EtfType? EtfType { get; private set; }
+
+    public Publisher? Publisher { get; private set; }
 
     public ICollection<SymbolRelation> InvestmentSymbols { get; private set; } = new List<SymbolRelation>();
 
