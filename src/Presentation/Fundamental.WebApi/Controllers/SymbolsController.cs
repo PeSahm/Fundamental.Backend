@@ -10,18 +10,14 @@ namespace Fundamental.WebApi.Controllers;
 [Route("symbols")]
 [ApiVersion("1.0")]
 [TranslateResultToActionResult]
-public class SymbolsController : ControllerBase
+public class SymbolsController(IMediator mediator) : ControllerBase
 {
-    private readonly IMediator _mediator;
-
-    public SymbolsController(IMediator mediator)
-    {
-        _mediator = mediator;
-    }
-
     [HttpGet]
-    public async Task<Response<List<GetSymbolsResultDto>>> GetSymbols([FromQuery] GetSymbolsRequest request)
+    public async Task<Response<List<GetSymbolsResultDto>>> GetSymbols(
+        [FromQuery] GetSymbolsRequest request,
+        CancellationToken cancellationToken
+    )
     {
-        return await _mediator.Send(request);
+        return await mediator.Send(request, cancellationToken);
     }
 }
