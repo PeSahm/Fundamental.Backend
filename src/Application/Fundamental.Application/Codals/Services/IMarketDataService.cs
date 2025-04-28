@@ -13,4 +13,5 @@ public interface IMarketDataService
 
     Task<IndexResponse> GetIndicesAsync(DateOnly fromDate, CancellationToken cancellationToken = default);
     Task<IndexCompanyResponse> GetIndexCompanies(Symbol index, CancellationToken cancellationToken = default);
+    Task<ClosingPriceInfoResponse> GetClosingPriceInfo(string tseInsCode, CancellationToken cancellationToken = default);
 }

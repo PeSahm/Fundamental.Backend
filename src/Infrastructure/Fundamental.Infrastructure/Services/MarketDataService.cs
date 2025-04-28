@@ -125,4 +125,17 @@ public class MarketDataService(
         return JsonConvert.DeserializeObject<IndexCompanyResponse>(await response.Content.ReadAsStringAsync(cancellationToken)) ??
                new IndexCompanyResponse();
     }
+
+    public async Task<ClosingPriceInfoResponse> GetClosingPriceInfo(string tseInsCode, CancellationToken cancellationToken = default)
+    {
+        string url = new StringBuilder()
+            .Append(_tseTmcOption.ClosingPriceInfo)
+            .Append(tseInsCode)
+            .ToString();
+
+        HttpResponseMessage response = await _tseTmcClient.GetAsync(url, cancellationToken);
+        response.EnsureSuccessStatusCode();
+        return JsonConvert.DeserializeObject<ClosingPriceInfoResponse>(
+            await response.Content.ReadAsStringAsync(cancellationToken)) ?? new ClosingPriceInfoResponse();
+    }
 }
