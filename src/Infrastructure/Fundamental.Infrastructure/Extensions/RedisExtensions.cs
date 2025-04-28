@@ -1,4 +1,5 @@
 using Fundamental.Infrastructure.Configuration;
+using Microsoft.Extensions.Caching.Hybrid;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
@@ -8,6 +9,16 @@ namespace Fundamental.Infrastructure.Extensions;
 public static class RedisExtensions
 {
     public static IServiceCollection AddRedis(this IServiceCollection services, IConfiguration configuration)
+    {
+        ConfigurationOptions configurationOptions = GetRedisConfigurationOptions(configuration);
+
+        ConnectionMultiplexer multiplexer = ConnectionMultiplexer.Connect(configurationOptions);
+        services.AddSingleton<IConnectionMultiplexer>(multiplexer);
+
+        return services;
+    }
+
+    private static ConfigurationOptions GetRedisConfigurationOptions(IConfiguration configuration)
     {
         RedisOptions? redisOptions = configuration.GetSection("Redis").Get<RedisOptions>();
 
@@ -28,10 +39,24 @@ public static class RedisExtensions
             AbortOnConnectFail = redisOptions.AbortOnConnectFail,
             ConfigCheckSeconds = redisOptions.ConfigCheckSeconds
         };
+        return configurationOptions;
+    }
 
-        ConnectionMultiplexer multiplexer = ConnectionMultiplexer.Connect(configurationOptions);
-        services.AddSingleton<IConnectionMultiplexer>(multiplexer);
-
+    public static IServiceCollection AddCustomHybridCache(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddStackExchangeRedisCache(option =>
+        {
+            option.ConfigurationOptions = GetRedisConfigurationOptions(configuration);
+        });
+        services.AddHybridCache(option =>
+        {
+            option.ReportTagMetrics = true;
+            option.DefaultEntryOptions = new HybridCacheEntryOptions
+            {
+                Expiration = TimeSpan.FromHours(5),
+                LocalCacheExpiration = TimeSpan.FromMinutes(5),
+            };
+        });
         return services;
     }
 }

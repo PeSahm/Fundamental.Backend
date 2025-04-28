@@ -15,7 +15,10 @@ IHostBuilder? hostBuilder = Host.CreateDefaultBuilder(args)
 
 hostBuilder.ConfigureAppConfiguration(b => b
     .AddJsonFile("appsettings.Override.json", true, true)
-    .AddEnvironmentVariables());
+    .AddEnvironmentVariables()
+    .AddUserSecrets<Program>()
+    )
+    ;
 
 IHost? host = hostBuilder.Build();
 

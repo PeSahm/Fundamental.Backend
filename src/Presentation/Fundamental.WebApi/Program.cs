@@ -34,7 +34,7 @@ builder.Services.AddControllers(options =>
 builder.Services.Configure<ApiBehaviorOptions>(options
     => options.SuppressModelStateInvalidFilter = true);
 
-builder.Services.AddRedis(builder.Configuration);
+builder.Services.AddRedis(builder.Configuration).AddCustomHybridCache(builder.Configuration);
 builder.Services.AddDbContexts(builder.Configuration)
     .AddInterceptors();
 builder.AddServices();
