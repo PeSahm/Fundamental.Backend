@@ -34,6 +34,7 @@ builder.Services.AddControllers(options =>
 builder.Services.Configure<ApiBehaviorOptions>(options
     => options.SuppressModelStateInvalidFilter = true);
 
+builder.Services.AddRedis(builder.Configuration);
 builder.Services.AddDbContexts(builder.Configuration)
     .AddInterceptors();
 builder.AddServices();
@@ -59,7 +60,6 @@ builder.Host.UseSerilog((context, serviceProvider, configuration) =>
         .ReadFrom.Configuration(context.Configuration)
         .ReadFrom.Services(serviceProvider);
 });
-
 builder.Services.AddApiVersioning(options =>
 {
     options.AssumeDefaultVersionWhenUnspecified = true;
