@@ -53,7 +53,7 @@ public static class RedisExtensions
             option.ReportTagMetrics = true;
             option.DefaultEntryOptions = new HybridCacheEntryOptions
             {
-                Expiration = TimeSpan.FromHours(5),
+                Expiration = TimeSpan.FromMinutes(15),
                 LocalCacheExpiration = TimeSpan.FromMinutes(5),
             };
         });
