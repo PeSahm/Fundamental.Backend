@@ -6,4 +6,7 @@ public sealed record GetSymbolsResultDto(
     string Title,
     string Name,
     ulong MarketCap
-);
+)
+{
+    public SymbolPriceInfo? PriceInfo { get; set; }
+}

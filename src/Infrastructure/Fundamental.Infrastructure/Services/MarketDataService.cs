@@ -4,7 +4,9 @@ using Fundamental.Application.Codals.Options;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.MarketDataServiceModels;
 using Fundamental.Domain.Symbols.Entities;
+using Fundamental.Infrastructure.Caching;
 using Fundamental.Infrastructure.Common;
+using Microsoft.Extensions.Caching.Hybrid;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
@@ -13,7 +15,8 @@ namespace Fundamental.Infrastructure.Services;
 public class MarketDataService(
     IHttpClientFactory httpClientFactory,
     IOptions<MdpOption> mdpOption,
-    IOptions<TseTmcOption> tseTmcOption
+    IOptions<TseTmcOption> tseTmcOption,
+    HybridCache cache
 )
     : IMarketDataService
 {
@@ -137,5 +140,16 @@ public class MarketDataService(
         response.EnsureSuccessStatusCode();
         return JsonConvert.DeserializeObject<ClosingPriceInfoResponse>(
             await response.Content.ReadAsStringAsync(cancellationToken)) ?? new ClosingPriceInfoResponse();
+    }
+
+    public async Task<ClosingPriceInfoResponse> GetCachedClosingPriceInfo(string tseInsCode, CancellationToken cancellationToken = default)
+    {
+        return await cache.GetOrCreateAsync(
+            CacheKeys.MarketData.ClosingPriceInfo(tseInsCode),
+            (tseInsCode, obj: this),
+            static async (state, token) => await state.obj.GetClosingPriceInfo(state.tseInsCode, token),
+            tags: [CacheTags.MarketData.PRICE_TAG],
+            cancellationToken: cancellationToken
+        );
     }
 }
