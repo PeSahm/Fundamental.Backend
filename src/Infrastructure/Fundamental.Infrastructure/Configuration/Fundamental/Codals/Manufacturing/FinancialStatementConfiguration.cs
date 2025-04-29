@@ -10,6 +10,13 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
     {
         builder.ToTable("financial-statement", "manufacturing");
 
+        // Add composite indexes for query optimization
+        builder.HasIndex(x => new { x.LastClosePrice, x.Pe, x.MarketValue })
+            .HasDatabaseName("ix_financial_statement_performance_metrics");
+
+        builder.HasIndex(x => x.Id)
+            .HasDatabaseName("ix_financial_statement_id");
+
         builder.HasOne(x => x.Symbol)
             .WithMany()
             .HasForeignKey("symbol-id")
@@ -270,5 +277,9 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
 
         builder.Property(x => x.ConcurrencyToken)
             .IsRowVersion();
+
+        // Add composite indexes for query optimization
+        builder.HasIndex(x => new { x.LastClosePrice, x.Pe, x.MarketValue })
+            .HasDatabaseName("ix_financial_statement_performance_metrics");
     }
 }
