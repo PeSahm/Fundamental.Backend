@@ -153,11 +153,7 @@ public class MarketDataService(
     {
         return await cache.GetOrCreateAsync(
             CacheKeys.MarketData.ClosingPriceInfo(tseInsCode),
-            (tseInsCode, obj: this),
-            static async (state, token) =>
-            {
-                return await state.obj.GetClosingPriceInfo(state.tseInsCode, token).ConfigureAwait(false);
-            },
+            async (cancel) => await GetClosingPriceInfo(tseInsCode, cancel).ConfigureAwait(false),
             tags: [CacheTags.MarketData.PRICE_TAG],
             cancellationToken: cancellationToken
         );

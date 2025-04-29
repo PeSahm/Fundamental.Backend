@@ -10,10 +10,10 @@ public static class RedisExtensions
 {
     public static IServiceCollection AddRedis(this IServiceCollection services, IConfiguration configuration)
     {
-        ConfigurationOptions configurationOptions = GetRedisConfigurationOptions(configuration);
-
-        ConnectionMultiplexer multiplexer = ConnectionMultiplexer.Connect(configurationOptions);
-        services.AddSingleton<IConnectionMultiplexer>(multiplexer);
+        // ConfigurationOptions configurationOptions = GetRedisConfigurationOptions(configuration);
+        //
+        // ConnectionMultiplexer multiplexer = ConnectionMultiplexer.Connect(configurationOptions);
+        // services.AddSingleton<IConnectionMultiplexer>(multiplexer);
 
         return services;
     }
@@ -30,7 +30,7 @@ public static class RedisExtensions
         ConfigurationOptions configurationOptions = new()
         {
             EndPoints = { redisOptions.ConnectionString },
-            User = redisOptions.User,
+            User = null,
             Password = redisOptions.Password,
             DefaultDatabase = redisOptions.DefaultDatabase,
             ConnectTimeout = redisOptions.ConnectTimeout,
