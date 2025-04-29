@@ -26,6 +26,12 @@ public sealed class GetSymbolsQueryHandler(IRepository repository, IMarketDataSe
         foreach (GetSymbolsResultDto symbol in symbols)
         {
             ClosingPriceInfoResponse priceData = await marketDataService.GetCachedClosingPriceInfo(symbol.TseInsCode, cancellationToken);
+
+            if (priceData.ClosingPriceInfo == null)
+            {
+                continue;
+            }
+
             symbol.PriceInfo =
                 new SymbolPriceInfo(
                     priceData.ClosingPriceInfo.PDrCotVal,
