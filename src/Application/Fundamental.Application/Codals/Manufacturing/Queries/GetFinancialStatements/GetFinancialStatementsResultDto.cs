@@ -1,8 +1,11 @@
-﻿namespace Fundamental.Application.Codals.Manufacturing.Queries.GetFinancialStatements;
+﻿using Fundamental.Application.Symbols.Queries.GetSymbols;
+
+namespace Fundamental.Application.Codals.Manufacturing.Queries.GetFinancialStatements;
 
 public class GetFinancialStatementsResultDto
 {
     public string Isin { get; set; }
+    public string TseInsCode { get; set; }
     public string Name { get; set; }
     public ulong TraceNo { get; set; }
     public uint FiscalYear { get; set; }
@@ -34,4 +37,6 @@ public class GetFinancialStatementsResultDto
     public decimal ThisPeriodSaleRatioWithLastYear { get; set; }
     public decimal SaleAverageExcludeThisPeriod { get; set; }
     public decimal SaleAverageLastYearSamePeriod { get; set; }
+
+    public SymbolPriceInfo? PriceInfo { get; set; }
 }
