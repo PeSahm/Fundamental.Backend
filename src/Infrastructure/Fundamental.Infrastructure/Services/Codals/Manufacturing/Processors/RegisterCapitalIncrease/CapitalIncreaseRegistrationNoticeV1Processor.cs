@@ -42,7 +42,7 @@ public class CapitalIncreaseRegistrationNoticeV1Processor(IServiceScopeFactory s
         }
 
         Domain.Codals.Manufacturing.Entities.CapitalIncreaseRegistrationNotice? existingStatement =
-            await dbContext.Set<Domain.Codals.Manufacturing.Entities.CapitalIncreaseRegistrationNotice>()
+            await dbContext.CapitalIncreaseRegistrationNotices
                 .FirstOrDefaultAsync(
                     x => x.TraceNo == statement.TracingNo,
                     cancellationToken);
@@ -72,6 +72,10 @@ public class CapitalIncreaseRegistrationNoticeV1Processor(IServiceScopeFactory s
             );
 
             dbContext.Add(capitalIncreaseRegistrationNotice);
+        }
+        else
+        {
+            existingStatement.Update(capitalIncrease.NewCapital, capitalIncrease.PreviousCapital);
         }
 
         await dbContext.SaveChangesAsync(cancellationToken);
