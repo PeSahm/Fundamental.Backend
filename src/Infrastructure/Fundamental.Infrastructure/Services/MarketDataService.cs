@@ -142,15 +142,9 @@ public class MarketDataService(
 
         if (!response.IsSuccessStatusCode)
         {
-            logger.LogError(
-                "Failed to get closing price info for {TseInsCode}. Status code: {StatusCode}. Message: {Message}",
-                tseInsCode,
-                response.StatusCode,
-                await response.Content.ReadAsStringAsync(cancellationToken)
-            );
+            return new ClosingPriceInfoResponse();
         }
 
-        response.EnsureSuccessStatusCode();
         return JsonConvert.DeserializeObject<ClosingPriceInfoResponse>(
             await response.Content.ReadAsStringAsync(cancellationToken)) ?? new ClosingPriceInfoResponse();
     }
