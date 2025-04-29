@@ -21,6 +21,7 @@ public sealed class GetSymbolsQueryHandler(IRepository repository, IMarketDataSe
                 .ShowOfficialSymbols(request.ShowOfficialSymbolsOnly)
                 .Select(),
             cancellationToken);
+        symbols.RemoveAll(x => Guid.TryParse(x.TseInsCode, out _));
 
         foreach (GetSymbolsResultDto symbol in symbols)
         {
