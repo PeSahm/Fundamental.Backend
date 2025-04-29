@@ -1,5 +1,7 @@
 ﻿using ErrorHandling.AspNetCore;
+using Fundamental.Application.Codals.Manufacturing.Queries.GetFinancialStatementList;
 using Fundamental.Application.Codals.Manufacturing.Queries.GetFinancialStatements;
+using Fundamental.Domain.Common.Dto;
 using Fundamental.ErrorHandling;
 using Fundamental.Web.Common.Swagger;
 using MediatR;
@@ -16,8 +18,14 @@ public class FinancialStatementsController(ISender mediator) : ControllerBase
 {
     [HttpGet("isin/{isin}")]
     [SwaggerRequestType(typeof(GetFinancialStatementsReqeust))]
-    public async Task<Response<GetFinancialStatementsResultDto>> GetBalanceSheetSortList(string isin)
+    public async Task<Response<GetFinancialStatementsResultDto>> GetFinancialStatementsReqeust(string isin)
     {
         return await mediator.Send(new GetFinancialStatementsReqeust(isin));
+    }
+
+    [HttpGet]
+    public async Task<Response<Paginated<GetFinancialStatementsResultDto>>> GetFinancialStatementsListReqeust([FromQuery] GetFinancialStatementListRequest request)
+    {
+        return await mediator.Send(request);
     }
 }

@@ -50,6 +50,7 @@ public enum HandlerCode : ushort
     AddMonthlyActivity = 13_398,
     GetNonOperationIncomes = 13_399,
 
+    GetFinancialStatementList = 13_999,
     GetCustomerErrorMessages = 17_999,
 
     SaveFair = 19_999
