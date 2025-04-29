@@ -71,7 +71,7 @@ public sealed class UpdateCapitalIncreaseRegistrationNoticeRequestHandler(
         }
 
         fs.SetMarketCap(
-            (request.Event.NewCapital / SignedCodalMoney.CodalMoneyMultiplier) / IranCapitalMarket.BASE_PRICE);
+            request.Event.NewCapital / IranCapitalMarket.BASE_PRICE);
 
         await pipeline.ExecuteAsync(
             async _ =>

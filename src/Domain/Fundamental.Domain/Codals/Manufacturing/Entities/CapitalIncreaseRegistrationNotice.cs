@@ -77,4 +77,24 @@ public class CapitalIncreaseRegistrationNotice : BaseEntity<Guid>
     public long? PrimaryMarketTracingNo { get; private set; }
     public CodalMoney CashForceclosurePriority { get; private set; }
     public IsoCurrency Currency { get; private set; } = IsoCurrency.IRR;
+
+    public void Update(
+        CodalMoney newCapital,
+        CodalMoney previousCapital
+    )
+    {
+        NewCapital = newCapital;
+        PreviousCapital = previousCapital;
+
+        AddDomainEvent(
+            new CapitalIncreaseRegistrationNoticeCreated(
+                Symbol.Isin,
+                TraceNo,
+                Uri,
+                StartDate,
+                LastExtraAssemblyDate,
+                NewCapital.RealValue,
+                PreviousCapital.RealValue),
+            EventsAddress.CapitalIncrease.CAPITAL_INCREASE_NOTICE_UPDATE);
+    }
 }
