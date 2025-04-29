@@ -10,11 +10,31 @@ public static class RedisExtensions
 {
     public static IServiceCollection AddRedis(this IServiceCollection services, IConfiguration configuration)
     {
-        // ConfigurationOptions configurationOptions = GetRedisConfigurationOptions(configuration);
-        //
-        // ConnectionMultiplexer multiplexer = ConnectionMultiplexer.Connect(configurationOptions);
-        // services.AddSingleton<IConnectionMultiplexer>(multiplexer);
+        ConfigurationOptions config = GetRedisConfigurationOptions(configuration);
 
+        ConnectionMultiplexer multiplexer = ConnectionMultiplexer.Connect(config);
+
+        services.AddSingleton<IConnectionMultiplexer>(multiplexer);
+
+        services.AddStackExchangeRedisCache(options =>
+        {
+            options.ConnectionMultiplexerFactory = () => Task.FromResult<IConnectionMultiplexer>(multiplexer);
+        });
+
+        return services;
+    }
+
+    public static IServiceCollection AddCustomHybridCache(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddHybridCache(option =>
+        {
+            option.ReportTagMetrics = true;
+            option.DefaultEntryOptions = new HybridCacheEntryOptions
+            {
+                Expiration = TimeSpan.FromMinutes(15),
+                LocalCacheExpiration = TimeSpan.FromMinutes(5),
+            };
+        });
         return services;
     }
 
@@ -40,23 +60,5 @@ public static class RedisExtensions
             ConfigCheckSeconds = redisOptions.ConfigCheckSeconds
         };
         return configurationOptions;
-    }
-
-    public static IServiceCollection AddCustomHybridCache(this IServiceCollection services, IConfiguration configuration)
-    {
-        services.AddStackExchangeRedisCache(option =>
-        {
-            option.ConfigurationOptions = GetRedisConfigurationOptions(configuration);
-        });
-        services.AddHybridCache(option =>
-        {
-            option.ReportTagMetrics = true;
-            option.DefaultEntryOptions = new HybridCacheEntryOptions
-            {
-                Expiration = TimeSpan.FromMinutes(15),
-                LocalCacheExpiration = TimeSpan.FromMinutes(5),
-            };
-        });
-        return services;
     }
 }
