@@ -48,9 +48,11 @@ public sealed class FinancialStatementsResultSpec : Specification<FinancialState
 
     public FinancialStatementsResultSpec OrderByLastRecord()
     {
-        Query.OrderByDescending(x => x.TraceNo)
-            .ThenByDescending(x => x.FiscalYear.Year)
-            .ThenByDescending(x => x.ReportMonth.Month);
+        Query
+            .OrderByDescending(x => x.FiscalYear.Year)
+            .ThenByDescending(x => x.ReportMonth.Month)
+            .ThenByDescending(x => x.TraceNo)
+            ;
         return this;
     }
 }
