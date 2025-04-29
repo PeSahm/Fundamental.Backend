@@ -7,6 +7,7 @@ using Fundamental.Domain.Symbols.Entities;
 using Fundamental.Infrastructure.Caching;
 using Fundamental.Infrastructure.Common;
 using Microsoft.Extensions.Caching.Hybrid;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
@@ -16,6 +17,7 @@ public class MarketDataService(
     IHttpClientFactory httpClientFactory,
     IOptions<MdpOption> mdpOption,
     IOptions<TseTmcOption> tseTmcOption,
+    ILogger<MarketDataService> logger,
     HybridCache cache
 )
     : IMarketDataService
@@ -137,6 +139,17 @@ public class MarketDataService(
             .ToString();
 
         HttpResponseMessage response = await _tseTmcClient.GetAsync(url, cancellationToken);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            logger.LogError(
+                "Failed to get closing price info for {TseInsCode}. Status code: {StatusCode}. Message: {Message}",
+                tseInsCode,
+                response.StatusCode,
+                await response.Content.ReadAsStringAsync(cancellationToken)
+            );
+        }
+
         response.EnsureSuccessStatusCode();
         return JsonConvert.DeserializeObject<ClosingPriceInfoResponse>(
             await response.Content.ReadAsStringAsync(cancellationToken)) ?? new ClosingPriceInfoResponse();
@@ -147,7 +160,10 @@ public class MarketDataService(
         return await cache.GetOrCreateAsync(
             CacheKeys.MarketData.ClosingPriceInfo(tseInsCode),
             (tseInsCode, obj: this),
-            static async (state, token) => await state.obj.GetClosingPriceInfo(state.tseInsCode, token),
+            static async (state, token) =>
+            {
+                return await state.obj.GetClosingPriceInfo(state.tseInsCode, token).ConfigureAwait(false);
+            },
             tags: [CacheTags.MarketData.PRICE_TAG],
             cancellationToken: cancellationToken
         );
