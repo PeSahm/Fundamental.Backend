@@ -16,8 +16,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fundamental.Migrations.Fundamental
 {
     [DbContext(typeof(FundamentalDbContext))]
-    [Migration("20250423185119_AddCapitalIncreaseRegistrationNoticeEntity")]
-    partial class AddCapitalIncreaseRegistrationNoticeEntity
+    [Migration("20250429213604_AddIndexesOnFsTables")]
+    partial class AddIndexesOnFsTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1161,6 +1161,9 @@ namespace Fundamental.Migrations.Fundamental
                     b.HasIndex("symbol-id")
                         .HasDatabaseName("ix_financial_statement_symbol_id");
 
+                    b.HasIndex("LastClosePrice", "Pe", "MarketValue")
+                        .HasDatabaseName("ix_financial_statement_performance_metrics");
+
                     b.ToTable("financial-statement", "manufacturing");
                 });
 
@@ -1895,6 +1898,7 @@ namespace Fundamental.Migrations.Fundamental
                         .HasDatabaseName("ix_publisher_parent_symbol_id");
 
                     b.HasIndex("symbol-id")
+                        .IsUnique()
                         .HasDatabaseName("ix_publisher_symbol_id");
 
                     b.ToTable("publisher", "fs");
@@ -2243,6 +2247,9 @@ namespace Fundamental.Migrations.Fundamental
 
                     b.HasIndex("Name")
                         .HasDatabaseName("ix_symbol_name");
+
+                    b.HasIndex("SectorCode", "SubSectorCode")
+                        .HasDatabaseName("ix_symbol_sector_codes");
 
                     b.ToTable("symbol", "shd");
                 });
@@ -2641,8 +2648,8 @@ namespace Fundamental.Migrations.Fundamental
                         .HasConstraintName("fk_publisher_symbols_parent_symbol_id");
 
                     b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Symbol")
-                        .WithMany()
-                        .HasForeignKey("symbol-id")
+                        .WithOne("Publisher")
+                        .HasForeignKey("Fundamental.Domain.Codals.Publisher", "symbol-id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_publisher_symbols_symbol_id");
@@ -2742,6 +2749,8 @@ namespace Fundamental.Migrations.Fundamental
                     b.Navigation("InvestmentSymbols");
 
                     b.Navigation("InvestorSymbols");
+
+                    b.Navigation("Publisher");
                 });
 #pragma warning restore 612, 618
         }

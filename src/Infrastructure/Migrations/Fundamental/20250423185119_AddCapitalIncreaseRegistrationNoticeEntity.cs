@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Fundamental.Domain.Codals.Manufacturing.Enums;
+﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Enums;
+using Fundamental.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,7 +10,9 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fundamental.Migrations.Fundamental
 {
     /// <inheritdoc />
-    public partial class AddCapitalIncreaseRegistrationNoticeEntity : Migration
+    [DbContext(typeof(FundamentalDbContext))]
+    [Migration("20250423185119_AddCapitalIncreaseRegistrationNoticeEntity")]
+    public class AddCapitalIncreaseRegistrationNoticeEntity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
