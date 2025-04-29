@@ -12,8 +12,6 @@ public class PublisherConfiguration : EntityTypeConfigurationBase<Publisher>
 
         builder.Property(x => x.CodalId).IsRequired().HasMaxLength(128);
 
-        builder.HasOne(x => x.Symbol).WithMany().HasForeignKey("symbol-id").IsRequired();
-
         builder.HasOne(x => x.Symbol).WithOne(x => x.Publisher).HasForeignKey<Publisher>("symbol-id").IsRequired();
 
         builder.HasOne(x => x.ParentSymbol).WithMany().HasForeignKey("parent-symbol-id").IsRequired(false);

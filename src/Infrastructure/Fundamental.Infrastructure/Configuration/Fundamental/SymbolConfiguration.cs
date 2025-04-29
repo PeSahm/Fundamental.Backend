@@ -84,5 +84,8 @@ public class SymbolConfiguration : EntityTypeConfigurationBase<Symbol>
 
         builder.Property(x => x.EtfType)
             .IsRequired(false);
+
+        builder.HasIndex(x => new { x.SectorCode, x.SubSectorCode })
+            .HasDatabaseName("ix_symbol_sector_codes");
     }
 }
