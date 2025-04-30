@@ -29,6 +29,12 @@ public sealed class UpdateCapitalIncreaseRegistrationNoticeRequestHandler(
         ResiliencePipeline pipeline = pipelineProvider.GetPipeline("DbUpdateConcurrencyException");
         (FiscalYear Year, StatementMonth Month, ulong TraceNo) latestStatementData =
             await incomeStatementsReadRepository.GetLatestStatement(request.Event.Isin, cancellationToken);
+
+        if (latestStatementData == default)
+        {
+            return Response.Successful();
+        }
+
         IncomeStatement? capitalRow = await repository.FirstOrDefaultAsync(
             new IncomeStatementSpec()
                 .WhereIsin(request.Event.Isin)
