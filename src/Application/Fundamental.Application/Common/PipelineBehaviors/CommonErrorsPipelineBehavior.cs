@@ -62,6 +62,11 @@ public class CommonErrorsPipelineBehavior<TRequest, TResponse>(
                 Success = false, Error = codedException.GetCommonErrorCode().ForRequest(request)
             };
             LogError("HANDLER.ERROR.EXPECTED", e, handlerCode, handlerNumber, response.Error.Value.Code);
+
+            if (ErrorCodeHelper.GetClientOfHandlerCode(handlerCode) == Client.CodalJob)
+            {
+                throw;
+            }
         }
         catch (Exception e) when (e.InnerException is DbException)
         {
@@ -70,6 +75,10 @@ public class CommonErrorsPipelineBehavior<TRequest, TResponse>(
                 Success = false, Error = CommonErrorCode.DatabaseError.ForRequest(request)
             };
             LogError("HANDLER.ERROR.DATABASE", e, handlerCode, handlerNumber, response.Error.Value.Code);
+            if (ErrorCodeHelper.GetClientOfHandlerCode(handlerCode) == Client.CodalJob)
+            {
+                throw;
+            }
         }
         catch (Exception e) when (e.InnerException is TaskCanceledException)
         {
@@ -85,6 +94,10 @@ public class CommonErrorsPipelineBehavior<TRequest, TResponse>(
                 Success = false, Error = CommonErrorCode.UnexpectedError.ForRequest(request)
             };
             LogError("HANDLER.ERROR.UNEXPECTED", e, handlerCode, handlerNumber, response.Error.Value.Code);
+            if (ErrorCodeHelper.GetClientOfHandlerCode(handlerCode) == Client.CodalJob)
+            {
+                throw;
+            }
         }
 
         return response;
