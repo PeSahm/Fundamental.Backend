@@ -53,7 +53,7 @@ public class CommonErrorsPipelineBehavior<TRequest, TResponse>(
 
         try
         {
-            response = await next();
+            response = await next(cancellationToken);
         }
         catch (Exception e) when (e is ICodedException codedException)
         {
@@ -61,7 +61,7 @@ public class CommonErrorsPipelineBehavior<TRequest, TResponse>(
             {
                 Success = false, Error = codedException.GetCommonErrorCode().ForRequest(request)
             };
-            LogError("HANDLER.ERROR.EXPECTED", e, handlerCode, handlerNumber, response.Error.Value.Code);
+            LogError("HANDLER.ERROR.EXPECTED", e, handlerCode, handlerNumber, response.Error.Value.Code, request);
 
             if (ErrorCodeHelper.GetClientOfHandlerCode(handlerCode) == Client.CodalJob)
             {
@@ -74,7 +74,7 @@ public class CommonErrorsPipelineBehavior<TRequest, TResponse>(
             {
                 Success = false, Error = CommonErrorCode.DatabaseError.ForRequest(request)
             };
-            LogError("HANDLER.ERROR.DATABASE", e, handlerCode, handlerNumber, response.Error.Value.Code);
+            LogError("HANDLER.ERROR.DATABASE", e, handlerCode, handlerNumber, response.Error.Value.Code, request);
             if (ErrorCodeHelper.GetClientOfHandlerCode(handlerCode) == Client.CodalJob)
             {
                 throw;
@@ -93,7 +93,7 @@ public class CommonErrorsPipelineBehavior<TRequest, TResponse>(
             {
                 Success = false, Error = CommonErrorCode.UnexpectedError.ForRequest(request)
             };
-            LogError("HANDLER.ERROR.UNEXPECTED", e, handlerCode, handlerNumber, response.Error.Value.Code);
+            LogError("HANDLER.ERROR.UNEXPECTED", e, handlerCode, handlerNumber, response.Error.Value.Code, request);
             if (ErrorCodeHelper.GetClientOfHandlerCode(handlerCode) == Client.CodalJob)
             {
                 throw;
@@ -103,14 +103,16 @@ public class CommonErrorsPipelineBehavior<TRequest, TResponse>(
         return response;
     }
 
-    private void LogError(string name, Exception e, HandlerCode handlerCode, string handlerNumber, string errorCode)
+    private void LogError(string name, Exception e, HandlerCode handlerCode, string handlerNumber, string errorCode, TRequest request)
     {
         logger.LogError(
             e,
-            "{Name} --- {HandlerCode} ({HandlerName}) --- ErrorCode: {ErrorCode}",
+            "{Name} --- {HandlerCode} ({HandlerName}) --- ErrorCode: {ErrorCode} {Request}",
             name,
             handlerNumber,
             handlerCode,
-            errorCode);
+            errorCode,
+            request
+            );
     }
 }
