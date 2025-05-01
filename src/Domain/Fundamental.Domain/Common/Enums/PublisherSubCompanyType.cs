@@ -24,5 +24,6 @@ public enum PublisherSubCompanyType
     UnKnown3 = 6,
     UnKnown4 = 7,
     UnKnown5 = 9,
+    UnKnown7 = 10,
     UnKnown6 = 11
 }
