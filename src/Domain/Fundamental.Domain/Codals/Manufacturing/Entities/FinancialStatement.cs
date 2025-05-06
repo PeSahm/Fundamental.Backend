@@ -604,11 +604,15 @@ public class FinancialStatement : BaseEntity<Guid>
 
     public sealed class SalesOutstanding
     {
-        public SignedCodalMoney LastYearSamePeriodOperationalIncome { get; init; } = SignedCodalMoney.Empty;
-        public SignedCodalMoney LastYearFullPeriodOperationalIncome { get; init; } = SignedCodalMoney.Empty;
-        public required SignedCodalMoney CurrentOperationalIncome { get; init; }
-        public SignedCodalMoney LastYearSamePeriodTradeAndOtherReceivables { get; init; } = SignedCodalMoney.Empty;
-        public required SignedCodalMoney CurrentTradeAndOtherReceivables { get; init; }
+        public SalesOutstanding()
+        {
+        }
+
+        public decimal LastYearSamePeriodOperationalIncome { get; init; } = 0;
+        public decimal LastYearFullPeriodOperationalIncome { get; init; } = 0;
+        public required decimal CurrentOperationalIncome { get; init; }
+        public decimal LastYearSamePeriodTradeAndOtherReceivables { get; init; } = 0;
+        public required decimal CurrentTradeAndOtherReceivables { get; init; }
 
 
         /// <summary>
@@ -622,8 +626,8 @@ public class FinancialStatement : BaseEntity<Guid>
                 return 0;
             }
 
-            decimal days = 360 * ((CurrentTradeAndOtherReceivables.RealValue + LastYearSamePeriodTradeAndOtherReceivables) / 2) /
-                           (LastYearFullPeriodOperationalIncome.RealValue - LastYearSamePeriodOperationalIncome.RealValue +
+            decimal days = 360 * ((CurrentTradeAndOtherReceivables + LastYearSamePeriodTradeAndOtherReceivables) / 2) /
+                           (LastYearFullPeriodOperationalIncome - LastYearSamePeriodOperationalIncome +
                             CurrentOperationalIncome);
             return (int)Math.Round(days, 0);
         }
@@ -631,12 +635,15 @@ public class FinancialStatement : BaseEntity<Guid>
 
     public sealed class DaysInventoryOutstanding
     {
-        public SignedCodalMoney LastYearSamePeriodCostOfGoodsSale { get; init; } = SignedCodalMoney.Empty;
-        public SignedCodalMoney LastYearFullPeriodCostOfGoodsSale { get; init; } = SignedCodalMoney.Empty;
-        public required SignedCodalMoney CurrentCostOfGoodsSale { get; init; }
-        public SignedCodalMoney LastYearSamePeriodInventory { get; init; } = SignedCodalMoney.Empty;
-        public required SignedCodalMoney CurrentInventory { get; init; }
+        public DaysInventoryOutstanding()
+        {
+        }
 
+        public decimal LastYearSamePeriodCostOfGoodsSale { get; init; } = 0;
+        public decimal LastYearFullPeriodCostOfGoodsSale { get; init; } = 0;
+        public required decimal CurrentCostOfGoodsSale { get; init; }
+        public decimal LastYearSamePeriodInventory { get; init; } = 0;
+        public required decimal CurrentInventory { get; init; }
         public int GetDaysInventoryOutstanding()
         {
             if (CurrentCostOfGoodsSale == 0)
@@ -644,8 +651,8 @@ public class FinancialStatement : BaseEntity<Guid>
                 return 0;
             }
 
-            decimal days = 360 * ((CurrentInventory.RealValue + LastYearSamePeriodInventory) / 2) /
-                           (LastYearFullPeriodCostOfGoodsSale.RealValue - LastYearSamePeriodCostOfGoodsSale.RealValue +
+            decimal days = 360 * ((CurrentInventory + LastYearSamePeriodInventory) / 2) /
+                           (LastYearFullPeriodCostOfGoodsSale - LastYearSamePeriodCostOfGoodsSale +
                             CurrentCostOfGoodsSale);
             return (int)Math.Round(days, 0);
         }
