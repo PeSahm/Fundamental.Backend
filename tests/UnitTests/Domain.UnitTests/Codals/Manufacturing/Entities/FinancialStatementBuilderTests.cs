@@ -33,6 +33,8 @@ public class FinancialStatementBuilderTests
         SignedCodalMoney netProfitOrLoss = new(400000m);
         CodalMoney sale = new(6000000m);
         StatementMonth saleMonth = new(6);
+        ulong saleTraceNo = 123456;
+        FiscalYear saleYear = new(2023);
         CodalMoney saleBeforeThisMonth = new(5000000m);
         CodalMoney saleLastYearSamePeriod = new(4000000m);
         CodalMoney expectedAvgSaleBeforeThisMonth = new CodalMoney(5000000m) / (saleMonth - 1);
@@ -62,7 +64,7 @@ public class FinancialStatementBuilderTests
                 noneOperationalProfit,
                 costs,
                 netProfitOrLoss)
-            .SetSale(sale, saleMonth, saleBeforeThisMonth, saleLastYearSamePeriod)
+            .SetSale(sale, saleMonth, saleTraceNo, saleYear, saleBeforeThisMonth, saleLastYearSamePeriod)
             .SetFinancialPosition(assets, ownersEquity, receivables, lastYearNetProfit)
             .Build();
 
@@ -70,7 +72,7 @@ public class FinancialStatementBuilderTests
         Assert.Equal(id, financialStatement.Id);
         Assert.Equal(symbol, financialStatement.Symbol);
         Assert.Equal(currency, financialStatement.Currency);
-        Assert.Equal(createdAt, financialStatement.CreatedAt);
+        Assert.Equal(createdAt.ToUniversalTime(), financialStatement.CreatedAt);
         Assert.Equal(lastClosePrice, financialStatement.LastClosePrice);
         Assert.Equal(marketCap, financialStatement.MarketCap);
         Assert.Equal(fiscalYear, financialStatement.FiscalYear);
@@ -125,7 +127,7 @@ public class FinancialStatementBuilderTests
         Assert.Equal(id, financialStatement.Id);
         Assert.Equal(symbol, financialStatement.Symbol);
         Assert.Equal(currency, financialStatement.Currency);
-        Assert.Equal(createdAt, financialStatement.CreatedAt);
+        Assert.Equal(createdAt.ToUniversalTime(), financialStatement.CreatedAt);
         Assert.Equal(marketCap, financialStatement.MarketCap);
         Assert.Equal(fiscalYear, financialStatement.FiscalYear);
         Assert.Equal(yearEndMonth, financialStatement.YearEndMonth);

@@ -281,5 +281,32 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
         // Add composite indexes for query optimization
         builder.HasIndex(x => new { x.LastClosePrice, x.Pe, x.MarketValue })
             .HasDatabaseName("ix_financial_statement_performance_metrics");
+
+        builder.ComplexProperty(
+            x => x.SaleYear,
+            navigationBuilder =>
+            {
+                navigationBuilder.Property(x => x.Year)
+                    .HasColumnType("SMALLINT")
+                    .IsRequired();
+            });
+
+        builder.Property(x => x.SaleTraceNo)
+            .HasColumnType("BIGINT")
+            .IsRequired();
+
+        builder.OwnsOne(
+            x => x.InventoryOutstandingData,
+            navigationBuilder =>
+            {
+                navigationBuilder.ToJson();
+            });
+
+        builder.OwnsOne(
+            x => x.SalesOutstandingData,
+            navigationBuilder =>
+            {
+                navigationBuilder.ToJson();
+            });
     }
 }

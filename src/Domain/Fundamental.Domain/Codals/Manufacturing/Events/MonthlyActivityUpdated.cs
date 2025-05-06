@@ -6,9 +6,10 @@ namespace Fundamental.Domain.Codals.Manufacturing.Events;
 
 public record MonthlyActivityUpdated(
     string Isin,
-    StatementMonth ReportMonth,
-    FiscalYear FiscalYear,
-    CodalMoney SaleCurrentMonth,
-    CodalMoney SaleBeforeCurrentMonth,
-    CodalMoney SaleLastYear
+    ushort ReportMonth,
+    ushort FiscalYear,
+    decimal SaleCurrentMonth,
+    decimal SaleBeforeCurrentMonth,
+    decimal SaleLastYear,
+    ulong TraceNo
 ) : IEvent;

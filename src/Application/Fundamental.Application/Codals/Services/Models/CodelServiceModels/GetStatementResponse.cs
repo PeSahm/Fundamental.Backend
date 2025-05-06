@@ -4,7 +4,7 @@ namespace Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 
 public class GetStatementResponse
 {
-    public DateTime PublishDateMildai { get; set; }
+    public DateTime PublishDateMiladi { get; set; }
     public ReportingType ReportingType { get; set; }
     public LetterType Type { get; set; }
     public string HtmlUrl { get; set; }

@@ -62,13 +62,21 @@ public class MonthlyActivityRepository : IMonthlyActivityRepository
             .ToPagingListAsync(request, "UpdatedAt desc", cancellationToken);
     }
 
-    public Task<MonthlyActivity?> GetLastMonthlyActivity(string isin, FiscalYear fiscalYear, CancellationToken cancellationToken)
+    public Task<MonthlyActivity?> GetFirstMontlyActivity(
+        string isin,
+        FiscalYear fiscalYear,
+        StatementMonth month,
+        CancellationToken cancellationToken
+    )
     {
         return _dbContext.MonthlyActivities
             .AsNoTracking()
-            .Where(x => x.Symbol.Isin == isin)
-            .Where(x => x.FiscalYear.Year == fiscalYear.Year)
-            .OrderByDescending(x => x.ReportMonth.Month).ThenByDescending(x => x.TraceNo)
+            .Where(sale => sale.Symbol.Isin == isin)
+            .Where(sale => (sale.FiscalYear.Year == fiscalYear.Year && sale.ReportMonth.Month >= month.Month) ||
+                           (sale.FiscalYear.Year >= fiscalYear.Year))
+            .OrderBy(sale => sale.FiscalYear.Year)
+            .ThenBy(x => x.TraceNo)
+            .ThenByDescending(sale => sale.TraceNo)
             .FirstOrDefaultAsync(cancellationToken);
     }
 }

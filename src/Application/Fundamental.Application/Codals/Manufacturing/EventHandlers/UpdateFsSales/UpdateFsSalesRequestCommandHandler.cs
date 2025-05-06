@@ -37,6 +37,8 @@ public sealed class UpdateFsSalesRequestCommandHandler(
         fs.SetSale(
             request.Event.SaleCurrentMonth,
             request.Event.ReportMonth,
+            request.Event.TraceNo,
+            request.Event.FiscalYear,
             request.Event.SaleBeforeCurrentMonth,
             request.Event.SaleLastYear);
 

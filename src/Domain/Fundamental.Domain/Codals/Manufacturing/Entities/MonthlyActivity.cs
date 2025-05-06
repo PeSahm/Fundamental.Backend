@@ -49,9 +49,10 @@ public class MonthlyActivity : BaseEntity<Guid>
                 Symbol.Isin,
                 ReportMonth,
                 FiscalYear,
-                SaleCurrentMonth,
-                SaleBeforeCurrentMonth,
-                SaleLastYear
+                SaleCurrentMonth.Value,
+                SaleBeforeCurrentMonth.Value,
+                SaleLastYear.Value,
+                traceNo
             ),
             EventsAddress.MonthlyActivity.MONTHLY_ACTIVITY_UPDATE
         );
@@ -122,9 +123,10 @@ public class MonthlyActivity : BaseEntity<Guid>
                 Symbol.Isin,
                 ReportMonth,
                 FiscalYear,
-                SaleCurrentMonth,
-                SaleBeforeCurrentMonth,
-                SaleLastYear
+                SaleCurrentMonth.Value,
+                SaleBeforeCurrentMonth.Value,
+                SaleLastYear.Value,
+                traceNo
             ),
             EventsAddress.MonthlyActivity.MONTHLY_ACTIVITY_UPDATE
         );

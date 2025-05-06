@@ -325,7 +325,9 @@ public class FinancialStatementTest
                 ExpectedOwnersEquityRatio = 37.84m,
                 ExpectedPa = 1.26m,
                 ExpectedPb = 3.32m,
-                ExpectedReceivableRatio = 36.67m
+                ExpectedReceivableRatio = 36.67m,
+                SaleFiscalYear = 1404,
+                SaleTraceNo = 112233
             }
         };
     }
@@ -364,6 +366,8 @@ public class FinancialStatementTest
             .SetSale(
                 testCase.Sale,
                 testCase.SaleMonth,
+                testCase.SaleTraceNo,
+                testCase.SaleFiscalYear,
                 testCase.SaleBeforeThisMonth,
                 testCase.SaleLastYearSamePeriod)
             .SetFinancialPosition(
@@ -390,6 +394,10 @@ public class FinancialStatementTest
         public SignedCodalMoney NetProfitOrLoss { get; set; }
         public CodalMoney Sale { get; set; }
         public StatementMonth SaleMonth { get; set; }
+        public ulong SaleTraceNo { get; set; }
+
+        public FiscalYear SaleFiscalYear { get; set; }
+
         public CodalMoney SaleBeforeThisMonth { get; set; }
         public CodalMoney SaleLastYearSamePeriod { get; set; }
         public CodalMoney Assets { get; set; }

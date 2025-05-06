@@ -118,7 +118,7 @@ public class MonthlyActivityV4Processor(
         }
         else
         {
-            if (existingStatement.TraceNo < statement.TracingNo)
+            if (existingStatement.TraceNo <= statement.TracingNo)
             {
                 existingStatement.Update(
                     symbol,

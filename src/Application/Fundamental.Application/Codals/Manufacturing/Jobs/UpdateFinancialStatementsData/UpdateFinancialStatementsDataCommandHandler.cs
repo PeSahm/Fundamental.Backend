@@ -1,6 +1,8 @@
 ﻿using DNTPersianUtils.Core;
 using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Application.Codals.Manufacturing.Specifications;
+using Fundamental.Application.Codals.Services;
+using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Application.Prices.Specifications;
 using Fundamental.Application.Symbols.Specifications;
 using Fundamental.Domain.Codals.Manufacturing.Builders.FinancialStatements;
@@ -22,10 +24,12 @@ namespace Fundamental.Application.Codals.Manufacturing.Jobs.UpdateFinancialState
 
 public sealed class UpdateFinancialStatementsDataCommandHandler(
     IRepository repository,
-    IBalanceSheetReadRepository balanceSheetReadRepository,
     IUnitOfWork unitOfWork,
     IFinancialStatementBuilder financialStatementBuilder,
     IMonthlyActivityRepository monthlyActivityRepository,
+    IBalanceSheetReadRepository balanceSheetReadRepository,
+    IIncomeStatementsReadRepository incomeStatementsReadRepository,
+    ICodalService codalService,
     ResiliencePipelineProvider<string> pipelineProvider
 )
     : IRequestHandler<UpdateFinancialStatementsDataRequest, Response>
@@ -64,19 +68,71 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
                         headerData.ReportMonth),
                     cancellationToken);
             MonthlyActivity? monthlyActivities =
-                await monthlyActivityRepository.GetLastMonthlyActivity(symbol.Isin, headerData.FiscalYear, cancellationToken);
-
-            ClosePrice? closePrice = await repository.FirstOrDefaultAsync(ClosePriceSpec.WhereLast(symbol.Isin, today), cancellationToken);
-
-            List<IncomeStatement> lastYearIncomeStatement =
-                await repository.ListAsync(
-                    IncomeStatementSpec.Where(
-                        headerData.TraceNo,
-                        headerData.YearEndMonth.Month,
-                        new FiscalYear(headerData.FiscalYear.Year - 1),
-                        headerData.YearEndMonth),
+                await monthlyActivityRepository.GetFirstMontlyActivity(
+                    symbol.Isin,
+                    headerData.FiscalYear,
+                    headerData.ReportMonth,
                     cancellationToken);
 
+            GetStatementResponse? theStatement = await codalService.GetStatementByTraceNo(headerData.TraceNo, cancellationToken);
+            ClosePrice? closePrice =
+                await repository.FirstOrDefaultAsync(
+                    ClosePriceSpec.WhereLast(symbol.Isin, theStatement?.PublishDateMiladi.ToDateOnly() ?? today),
+                    cancellationToken);
+
+            SignedCodalMoney? lastYearSamePeriodNetProfit =
+                await incomeStatementsReadRepository.GetLastIncomeStatement(
+                    headerData.Isin,
+                    headerData.FiscalYear - 1,
+                    headerData.ReportMonth,
+                    IncomeStatementRow.NetIncomeLoss,
+                    cancellationToken);
+
+            SignedCodalMoney? lastYearSamePeriodCostOfGoodsSale =
+                await incomeStatementsReadRepository.GetLastIncomeStatement(
+                    headerData.Isin,
+                    headerData.FiscalYear - 1,
+                    headerData.ReportMonth,
+                    IncomeStatementRow.CostOfGoodsSale,
+                    cancellationToken);
+
+            SignedCodalMoney? lastYearFullPeriodCostOfGoodsSale =
+                await incomeStatementsReadRepository.GetLastIncomeStatement(
+                    headerData.Isin,
+                    headerData.FiscalYear - 1,
+                    headerData.YearEndMonth,
+                    IncomeStatementRow.CostOfGoodsSale,
+                    cancellationToken);
+            SignedCodalMoney? lastYearSamePeriodInventory = await balanceSheetReadRepository.GetLastBalanceSheetItem(
+                headerData.Isin,
+                headerData.FiscalYear - 1,
+                headerData.ReportMonth,
+                BalanceSheetCategory.Assets,
+                BalanceSheetRow.Inventory,
+                cancellationToken);
+
+            SignedCodalMoney? lastYearSamePeriodOperationalIncome =
+                await incomeStatementsReadRepository.GetLastIncomeStatement(
+                    headerData.Isin,
+                    headerData.FiscalYear - 1,
+                    headerData.ReportMonth,
+                    IncomeStatementRow.Sales,
+                    cancellationToken);
+
+            SignedCodalMoney? lastYearFullPeriodOperationalIncome =
+                await incomeStatementsReadRepository.GetLastIncomeStatement(
+                    headerData.Isin,
+                    headerData.FiscalYear - 1,
+                    headerData.YearEndMonth,
+                    IncomeStatementRow.Sales,
+                    cancellationToken);
+            SignedCodalMoney? lastYearSamePeriodTradeAndOtherReceivables = await balanceSheetReadRepository.GetLastBalanceSheetItem(
+                headerData.Isin,
+                headerData.FiscalYear - 1,
+                headerData.ReportMonth,
+                BalanceSheetCategory.Assets,
+                BalanceSheetRow.TradeAndOtherReceivables,
+                cancellationToken);
             CodalMoney addedOperationalRevenue = CodalMoney.Empty;
 
             // List<Publisher> subPublishers = await repository.ListAsync(PublisherSpec.WhereParentIsin(symbol.Isin), cancellationToken);
@@ -124,6 +180,8 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
                 .SetSale(
                     monthlyActivities?.SaleCurrentMonth ?? CodalMoney.Empty,
                     monthlyActivities?.ReportMonth ?? StatementMonth.Empty,
+                    monthlyActivities?.TraceNo ?? 0,
+                    monthlyActivities?.FiscalYear ?? FiscalYear.Empty,
                     monthlyActivities?.SaleBeforeCurrentMonth ?? CodalMoney.Empty,
                     monthlyActivities?.SaleLastYear ?? CodalMoney.Empty
                 )
@@ -131,7 +189,31 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
                     GetAssets(balanceSheets),
                     OwnersEquity(balanceSheets),
                     Receivables(balanceSheets),
-                    LastYearNetProfit(lastYearIncomeStatement)
+                    lastYearSamePeriodNetProfit ?? SignedCodalMoney.Empty
+                )
+                .SetInventoryOutstanding(new FinancialStatement.DaysInventoryOutstanding
+                    {
+                        LastYearSamePeriodCostOfGoodsSale = lastYearSamePeriodCostOfGoodsSale ?? SignedCodalMoney.Empty,
+                        LastYearFullPeriodCostOfGoodsSale = lastYearFullPeriodCostOfGoodsSale ?? SignedCodalMoney.Empty,
+                        CurrentCostOfGoodsSale = incomeStatements.First(x => x.CodalRow == IncomeStatementRow.CostOfGoodsSale)
+                            .Value,
+                        LastYearSamePeriodInventory = lastYearSamePeriodInventory ?? SignedCodalMoney.Empty,
+                        CurrentInventory = balanceSheets.First(x => x.CodalCategory == BalanceSheetCategory.Assets
+                                                                    && x.CodalRow == BalanceSheetRow.Inventory).Value,
+                    }
+                )
+                .SetDaysSalesOutstanding(new FinancialStatement.SalesOutstanding
+                    {
+                        LastYearSamePeriodOperationalIncome = lastYearSamePeriodOperationalIncome ?? SignedCodalMoney.Empty,
+                        LastYearFullPeriodOperationalIncome = lastYearFullPeriodOperationalIncome ?? SignedCodalMoney.Empty,
+                        CurrentOperationalIncome = incomeStatements.First(x => x.CodalRow == IncomeStatementRow.Sales)
+                            .Value,
+                        LastYearSamePeriodTradeAndOtherReceivables =
+                            lastYearSamePeriodTradeAndOtherReceivables ?? SignedCodalMoney.Empty,
+                        CurrentTradeAndOtherReceivables =
+                            balanceSheets.First(x => x.CodalCategory == BalanceSheetCategory.Assets
+                                                     && x.CodalRow == BalanceSheetRow.TradeAndOtherReceivables).Value,
+                    }
                 )
                 .Build();
             repository.Add(fs);
@@ -154,12 +236,6 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
         SignedCodalMoney GrossProfitOrLoss(List<IncomeStatement> incomeStatements)
         {
             return incomeStatements.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.GrossProfitLoss)?.Value ?? SignedCodalMoney.Empty;
-        }
-
-        SignedCodalMoney LastYearNetProfit(List<IncomeStatement> lastYearIncomeStatement)
-        {
-            return lastYearIncomeStatement.FirstOrDefault(x => x.CodalRow == IncomeStatementRow.NetIncomeLoss)?.Value ??
-                   SignedCodalMoney.Empty;
         }
     }
 

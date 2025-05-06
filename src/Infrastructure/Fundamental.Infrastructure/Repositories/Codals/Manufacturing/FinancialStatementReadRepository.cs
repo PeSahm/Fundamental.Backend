@@ -38,7 +38,8 @@ public class FinancialStatementReadRepository(FundamentalDbContext dataContent) 
     )
     {
         return dataContent.ManufacturingFinancialStatement
-            .Where(x => x.Symbol.Isin == isin && x.FiscalYear.Year <= year.Year)
+            .Where(x => x.Symbol.Isin == isin &&
+                        (x.FiscalYear.Year < year.Year || (x.FiscalYear.Year == year.Year && x.ReportMonth.Month <= month.Month)))
             .OrderByDescending(x => x.FiscalYear.Year)
             .ThenByDescending(x => x.ReportMonth.Month)
             .ThenByDescending(x => x.TraceNo)
