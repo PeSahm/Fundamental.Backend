@@ -62,10 +62,17 @@ public class FinancialStatement : BaseEntity<Guid>
     /// </summary>
     public StatementMonth ReportMonth { get; private set; } = StatementMonth.Empty;
 
+    public ulong SaleTraceNo { get; set; }
+
     /// <summary>
     ///     ماه گزارش فروش.
     /// </summary>
     public StatementMonth SaleMonth { get; private set; } = StatementMonth.Empty;
+
+    /// <summary>
+    ///     سال گزارش فروش.
+    /// </summary>
+    public FiscalYear SaleYear { get; private set; } = FiscalYear.Empty;
 
     /// <summary>
     ///     درآمد عملیاتی.
@@ -236,6 +243,22 @@ public class FinancialStatement : BaseEntity<Guid>
     /// </summary>
     public CodalMoney OwnersEquity { get; private set; } = CodalMoney.Empty;
 
+    public DaysInventoryOutstanding? InventoryOutstandingData { get; private set; }
+
+    public SalesOutstanding? SalesOutstandingData { get; private set; }
+
+    public FinancialStatement SetDaysInventoryOutstanding(DaysInventoryOutstanding? data)
+    {
+        InventoryOutstandingData = data;
+        return this;
+    }
+
+    public FinancialStatement SetDaysSalesOutstanding(SalesOutstanding? data)
+    {
+        SalesOutstandingData = data;
+        return this;
+    }
+
     /// <summary>
     ///     نسبت حقوق مالکانه.
     /// </summary>
@@ -335,12 +358,16 @@ public class FinancialStatement : BaseEntity<Guid>
     public FinancialStatement SetSale(
         CodalMoney sale,
         StatementMonth saleMonth,
+        ulong saleTraceNo,
+        FiscalYear saleYear,
         CodalMoney saleBeforeThisMonth,
         CodalMoney saleLastYearSamePeriod
     )
     {
         Sale = sale;
+        SaleYear = saleYear;
         SaleMonth = saleMonth;
+        SaleTraceNo = saleTraceNo;
         SaleBeforeThisMonth = saleBeforeThisMonth;
         SaleLastYearSamePeriod = saleLastYearSamePeriod;
         SaleAverageExcludeThisPeriod = saleMonth.AdjustedMonth(YearEndMonth) == 1
@@ -572,6 +599,55 @@ public class FinancialStatement : BaseEntity<Guid>
             case Season.WINTER:
                 WinterOperationIncome = OperationalIncome;
                 break;
+        }
+    }
+
+    public sealed class SalesOutstanding
+    {
+        public SignedCodalMoney LastYearSamePeriodOperationalIncome { get; init; } = SignedCodalMoney.Empty;
+        public SignedCodalMoney LastYearFullPeriodOperationalIncome { get; init; } = SignedCodalMoney.Empty;
+        public required SignedCodalMoney CurrentOperationalIncome { get; init; }
+        public SignedCodalMoney LastYearSamePeriodTradeAndOtherReceivables { get; init; } = SignedCodalMoney.Empty;
+        public required SignedCodalMoney CurrentTradeAndOtherReceivables { get; init; }
+
+
+        /// <summary>
+        /// دوره وصول مطالبات:
+        /// </summary>
+        /// <returns>Days of Sales Outstanding.</returns>
+        public int GetDaysSalesOutstanding()
+        {
+            if (CurrentOperationalIncome == 0)
+            {
+                return 0;
+            }
+
+            decimal days = 360 * ((CurrentTradeAndOtherReceivables.RealValue + LastYearSamePeriodTradeAndOtherReceivables) / 2) /
+                           (LastYearFullPeriodOperationalIncome.RealValue - LastYearSamePeriodOperationalIncome.RealValue +
+                            CurrentOperationalIncome);
+            return (int)Math.Round(days, 0);
+        }
+    }
+
+    public sealed class DaysInventoryOutstanding
+    {
+        public SignedCodalMoney LastYearSamePeriodCostOfGoodsSale { get; init; } = SignedCodalMoney.Empty;
+        public SignedCodalMoney LastYearFullPeriodCostOfGoodsSale { get; init; } = SignedCodalMoney.Empty;
+        public required SignedCodalMoney CurrentCostOfGoodsSale { get; init; }
+        public SignedCodalMoney LastYearSamePeriodInventory { get; init; } = SignedCodalMoney.Empty;
+        public required SignedCodalMoney CurrentInventory { get; init; }
+
+        public int GetDaysInventoryOutstanding()
+        {
+            if (CurrentCostOfGoodsSale == 0)
+            {
+                return 0;
+            }
+
+            decimal days = 360 * ((CurrentInventory.RealValue + LastYearSamePeriodInventory) / 2) /
+                           (LastYearFullPeriodCostOfGoodsSale.RealValue - LastYearSamePeriodCostOfGoodsSale.RealValue +
+                            CurrentCostOfGoodsSale);
+            return (int)Math.Round(days, 0);
         }
     }
 }

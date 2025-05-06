@@ -8,7 +8,7 @@ namespace Fundamental.Domain.Codals.Manufacturing.Builders.FinancialStatements;
 
 public class FinancialStatementBuilder :
     IFinancialStatementBuilder, ISetSymbol, ISetCurrency, ISetCreatedAt, ISetLastClosePrice, ISetTraceNo, ISetFiscalYear, ISetYearEndMonth,
-    ISetMarketCap, ISetIncomeStatement, ISetSale, ISetFinancialPosition, IBuild
+    ISetMarketCap, ISetIncomeStatement, ISetSale, ISetFinancialPosition, IDaysInventoryOutstanding, IDaysSalesOutstanding, IBuild
 {
     private CodalMoney _assets = CodalMoney.Empty;
     private CodalMoney _costs = CodalMoney.Empty;
@@ -30,12 +30,16 @@ public class FinancialStatementBuilder :
     private CodalMoney _receivables = CodalMoney.Empty;
     private StatementMonth _reportMonth = StatementMonth.Empty;
     private CodalMoney _sale = CodalMoney.Empty;
+    private ulong _saleTraceNo = 0;
+    private FiscalYear _saleYear = FiscalYear.Empty;
     private CodalMoney _saleBeforeThisMonth = CodalMoney.Empty;
     private CodalMoney _saleLastYearSamePeriod = CodalMoney.Empty;
     private StatementMonth _saleMonth = StatementMonth.Empty;
     private Symbol _symbol;
     private ulong _traceNo;
     private StatementMonth _yearEndMonth = StatementMonth.Empty;
+    private FinancialStatement.DaysInventoryOutstanding? _daysInventoryOutstanding;
+    private FinancialStatement.SalesOutstanding? _daysSalesOutstanding;
 
     public ISetSymbol SetId(Guid id)
     {
@@ -55,7 +59,7 @@ public class FinancialStatementBuilder :
         return this;
     }
 
-    public IBuild SetFinancialPosition(
+    public IDaysInventoryOutstanding SetFinancialPosition(
         CodalMoney assets,
         CodalMoney ownersEquity,
         CodalMoney receivables,
@@ -119,9 +123,12 @@ public class FinancialStatementBuilder :
                     _noneOperationalProfit,
                     _costs,
                     _netProfitOrLoss)
-                .SetFinancialPosition(_assets, _ownersEquity, _receivables, _lastYearNetProfit);
+                .SetFinancialPosition(_assets, _ownersEquity, _receivables, _lastYearNetProfit)
+                .SetDaysInventoryOutstanding(_daysInventoryOutstanding)
+                .SetDaysSalesOutstanding(_daysSalesOutstanding)
+            ;
 
-        financialStatement.SetSale(_sale, _saleMonth, _saleBeforeThisMonth, _saleLastYearSamePeriod);
+        financialStatement.SetSale(_sale, _saleMonth, _saleTraceNo, _saleYear, _saleBeforeThisMonth, _saleLastYearSamePeriod);
 
         return financialStatement;
     }
@@ -135,12 +142,16 @@ public class FinancialStatementBuilder :
     public ISetFinancialPosition SetSale(
         CodalMoney sale,
         StatementMonth saleMonth,
+        ulong saleTraceNo,
+        FiscalYear saleYear,
         CodalMoney saleBeforeThisMonth,
         CodalMoney saleLastYearSamePeriod
     )
     {
         _sale = sale;
         _saleMonth = saleMonth;
+        _saleTraceNo = saleTraceNo;
+        _saleYear = saleYear;
         _saleBeforeThisMonth = saleBeforeThisMonth;
         _saleLastYearSamePeriod = saleLastYearSamePeriod;
         return this;
@@ -161,6 +172,18 @@ public class FinancialStatementBuilder :
     public ISetCreatedAt SetYearEndMonth(StatementMonth yearEndMonth)
     {
         _yearEndMonth = yearEndMonth;
+        return this;
+    }
+
+    public IBuild SetDaysSalesOutstanding(FinancialStatement.SalesOutstanding data)
+    {
+        _daysSalesOutstanding = data;
+        return this;
+    }
+
+    public IDaysSalesOutstanding SetInventoryOutstanding(FinancialStatement.DaysInventoryOutstanding data)
+    {
+        _daysInventoryOutstanding = data;
         return this;
     }
 }

@@ -4,6 +4,7 @@ namespace Fundamental.Domain.Codals.ValueObjects;
 
 public class FiscalYear : ValueObject
 {
+    public static FiscalYear Empty => new FiscalYear(0);
     public FiscalYear(ushort year)
     {
         Year = year;

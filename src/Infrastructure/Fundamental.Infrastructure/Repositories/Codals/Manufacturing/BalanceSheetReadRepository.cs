@@ -2,7 +2,10 @@
 using Fundamental.Application.Codals.Manufacturing.Queries.GetBalanceSheets;
 using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
+using Fundamental.Domain.Codals.Manufacturing.Enums;
+using Fundamental.Domain.Codals.ValueObjects;
 using Fundamental.Domain.Common.Dto;
+using Fundamental.Domain.Common.ValueObjects;
 using Fundamental.Infrastructure.Extensions;
 using Fundamental.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -78,5 +81,29 @@ public sealed class BalanceSheetReadRepository(FundamentalDbContext dbContext) :
                 })
                 .ToListAsync(cancellationToken)
             ;
+    }
+
+    public Task<SignedCodalMoney?> GetLastBalanceSheetItem(
+        string isin,
+        FiscalYear fiscalYear,
+        StatementMonth statementMonth,
+        BalanceSheetCategory category,
+        ushort balanceSheetRow,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return dbContext.IncomeStatements
+            .AsNoTracking()
+            .Where(x =>
+                x.Symbol.Isin == isin &&
+                x.FiscalYear.Year <= fiscalYear &&
+                x.ReportMonth.Month <= statementMonth)
+            .Where(x => x.CodalCategory == (ushort)category)
+            .Where(x => x.CodalRow == balanceSheetRow)
+            .OrderByDescending(x => x.FiscalYear.Year)
+            .ThenByDescending(x => x.ReportMonth.Month)
+            .ThenByDescending(x => x.TraceNo)
+            .Select(x => x.Value)
+            .FirstOrDefaultAsync(cancellationToken);
     }
 }

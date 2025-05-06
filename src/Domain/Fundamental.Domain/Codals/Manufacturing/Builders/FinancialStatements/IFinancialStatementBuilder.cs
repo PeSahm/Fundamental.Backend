@@ -77,6 +77,8 @@ public interface ISetSale
     ISetFinancialPosition SetSale(
         CodalMoney sale,
         StatementMonth saleMonth,
+        ulong saleTraceNo,
+        FiscalYear saleYear,
         CodalMoney saleBeforeThisMonth,
         CodalMoney saleLastYearSamePeriod
     );
@@ -86,7 +88,7 @@ public interface ISetSale
 
 public interface ISetFinancialPosition
 {
-    IBuild SetFinancialPosition(
+    IDaysInventoryOutstanding SetFinancialPosition(
         CodalMoney assets,
         CodalMoney ownersEquity,
         CodalMoney receivables,
@@ -95,6 +97,18 @@ public interface ISetFinancialPosition
 
     FinancialStatement Build();
 }
+
+public interface IDaysInventoryOutstanding
+{
+    IDaysSalesOutstanding SetInventoryOutstanding(FinancialStatement.DaysInventoryOutstanding data);
+    FinancialStatement Build();
+}
+
+public interface IDaysSalesOutstanding
+{
+    IBuild SetDaysSalesOutstanding(FinancialStatement.SalesOutstanding data);
+}
+
 
 public interface IBuild
 {

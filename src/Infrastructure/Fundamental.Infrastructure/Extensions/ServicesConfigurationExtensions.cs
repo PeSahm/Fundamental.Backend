@@ -122,10 +122,7 @@ public static class ServicesConfigurationExtensions
             };
             options.UseStorageLock = true;
             options.ConsumerThreadCount = 2;
-            options.JsonSerializerOptions.Converters.Add(new StatementMonthJsonConverter());
-            options.JsonSerializerOptions.Converters.Add(new FiscalYearJsonConverter());
-            options.JsonSerializerOptions.Converters.Add(new CodalMoneyJsonConverter());
-            options.JsonSerializerOptions.Converters.Add(new MonthlyActivityUpdatedJsonConverter());
+
             options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
         });
 
