@@ -18,7 +18,7 @@ public sealed class UpdateTheStatusOfViableCompanyDataCommandHandler(
     {
         List<GetStatementResponse> statements =
             await codalService.GetStatements(
-                "1400/07/19".ToGregorianDateTime()!.Value,
+                DateTime.Now.AddDays(-1 * request.Days),
                 ReportingType.Production,
                 LetterType.InterimStatement,
                 cancellationToken);
