@@ -12,7 +12,14 @@ public interface IMonthlyActivityRepository
         CancellationToken cancellationToken
     );
 
-    Task<MonthlyActivity?> GetFirstMontlyActivity(
+    Task<MonthlyActivity?> GetFirstMonthlyActivity(
+        string isin,
+        FiscalYear fiscalYear,
+        StatementMonth month,
+        CancellationToken cancellationToken
+    );
+
+    Task<MonthlyActivity?> GetMonthlyActivity(
         string isin,
         FiscalYear fiscalYear,
         StatementMonth month,

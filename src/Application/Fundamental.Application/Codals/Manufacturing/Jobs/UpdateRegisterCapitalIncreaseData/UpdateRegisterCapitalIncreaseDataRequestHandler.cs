@@ -23,7 +23,7 @@ public class UpdateRegisterCapitalIncreaseDataRequestHandler(
                 LetterType.CapitalIncreaseRegistrationNotice,
                 cancellationToken);
 
-            foreach (GetStatementResponse statement in statements)
+            foreach (GetStatementResponse statement in statements.OrderBy(x => x.PublishDateMiladi))
             {
                 try
                 {

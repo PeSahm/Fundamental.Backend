@@ -11,7 +11,7 @@ public class UpdateMonthlyActivityDataJob(IServiceScopeFactory serviceScopeFacto
     {
         using IServiceScope scope = serviceScopeFactory.CreateScope();
         IMediator mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-        await mediator.Send(new UpdateMonthlyActivityDataRequest(-7), CancellationToken);
+        await mediator.Send(new UpdateMonthlyActivityDataRequest(-1400), CancellationToken);
     }
 
     public CancellationToken CancellationToken { get; set; }

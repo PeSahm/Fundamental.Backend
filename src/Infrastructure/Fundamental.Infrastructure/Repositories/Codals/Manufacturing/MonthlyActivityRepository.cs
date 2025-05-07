@@ -9,21 +9,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Fundamental.Infrastructure.Repositories.Codals.Manufacturing;
 
-public class MonthlyActivityRepository : IMonthlyActivityRepository
+public class MonthlyActivityRepository(FundamentalDbContext dbContext) : IMonthlyActivityRepository
 {
-    private readonly FundamentalDbContext _dbContext;
-
-    public MonthlyActivityRepository(FundamentalDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
-
     public async Task<Paginated<GetMonthlyActivitiesResultItem>> GetMonthlyActivitiesAsync(
         GetMonthlyActivitiesRequest request,
         CancellationToken cancellationToken
     )
     {
-        IQueryable<MonthlyActivity> query = _dbContext.MonthlyActivities.AsNoTracking();
+        IQueryable<MonthlyActivity> query = dbContext.MonthlyActivities.AsNoTracking();
 
         if (request is { IsinList: not null } && request.IsinList.Length != 0)
         {
@@ -62,20 +55,38 @@ public class MonthlyActivityRepository : IMonthlyActivityRepository
             .ToPagingListAsync(request, "UpdatedAt desc", cancellationToken);
     }
 
-    public Task<MonthlyActivity?> GetFirstMontlyActivity(
+    public Task<MonthlyActivity?> GetFirstMonthlyActivity(
         string isin,
         FiscalYear fiscalYear,
         StatementMonth month,
         CancellationToken cancellationToken
     )
     {
-        return _dbContext.MonthlyActivities
+        return dbContext.MonthlyActivities
             .AsNoTracking()
             .Where(sale => sale.Symbol.Isin == isin)
             .Where(sale => (sale.FiscalYear.Year == fiscalYear.Year && sale.ReportMonth.Month >= month.Month) ||
                            (sale.FiscalYear.Year > fiscalYear.Year))
             .OrderBy(sale => sale.FiscalYear.Year)
-            .ThenBy(x => x.TraceNo)
+            .ThenBy(x => x.ReportMonth.Month)
+            .ThenByDescending(sale => sale.TraceNo)
+            .FirstOrDefaultAsync(cancellationToken);
+    }
+
+    public Task<MonthlyActivity?> GetMonthlyActivity(
+        string isin,
+        FiscalYear fiscalYear,
+        StatementMonth month,
+        CancellationToken cancellationToken
+    )
+    {
+        return dbContext.MonthlyActivities
+            .AsNoTracking()
+            .Where(sale => sale.Symbol.Isin == isin)
+            .Where(sale => (sale.FiscalYear.Year == fiscalYear.Year))
+            .Where(sale => sale.ReportMonth.Month == month.Month)
+            .OrderByDescending(sale => sale.FiscalYear.Year)
+            .ThenByDescending(x => x.ReportMonth.Month)
             .ThenByDescending(sale => sale.TraceNo)
             .FirstOrDefaultAsync(cancellationToken);
     }
