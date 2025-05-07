@@ -8,7 +8,7 @@ public sealed class FinancialStatementsResultSpec : Specification<FinancialState
 {
     public FinancialStatementsResultSpec()
     {
-        Query.Select(x => new GetFinancialStatementsResultDto
+        Query.AsNoTracking().Select(x => new GetFinancialStatementsResultDto
         {
             Isin = x.Symbol.Isin,
             Name = x.Symbol.Name,
@@ -43,6 +43,8 @@ public sealed class FinancialStatementsResultSpec : Specification<FinancialState
             SaleAverageLastYearSamePeriod = x.SaleAverageLastYearSamePeriod,
             ThisPeriodSaleRatioWithLastYear = x.ThisPeriodSaleRatioWithLastYear,
             TseInsCode = x.Symbol.TseInsCode,
+            InventoryOutstandingData = x.InventoryOutstandingData,
+            SalesOutstandingData = x.SalesOutstandingData,
         });
     }
 

@@ -11,7 +11,6 @@ namespace Fundamental.Application.Codals.Manufacturing.Queries.GetFinancialState
 [HandlerCode(HandlerCode.GetFinancialStatements)]
 public sealed record GetFinancialStatementListRequest(
     string[] IsinList,
-    string? SectorCode,
-    string? SubSectorCode,
+    Guid? SectorCode,
     NumberRange<ulong>? MarketValueRange
 ) : PagingRequest, IRequest<Response<Paginated<GetFinancialStatementsResultDto>>>;

@@ -20,6 +20,7 @@ public sealed class GetFinancialStatementsQueryHandler(IRepository repository, I
             await repository.FirstOrDefaultAsync(
                 new FinancialStatementsSpec()
                     .WhereIsin(request.Isin)
+                    .AsNoTracking()
                     .ToResultDto()
                     .OrderByLastRecord(),
                 cancellationToken);

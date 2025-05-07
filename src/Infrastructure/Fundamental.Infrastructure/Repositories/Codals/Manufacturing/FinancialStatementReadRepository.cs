@@ -53,10 +53,10 @@ public class FinancialStatementReadRepository(FundamentalDbContext dataContent) 
     {
         string[] isinList = request.IsinList ?? [];
         Paginated<GetFinancialStatementsResultDto> query = await dataContent.ManufacturingFinancialStatement
+            .AsNoTracking()
             .Include(x => x.Symbol)
             .Where(x => !isinList.Any() || isinList.Contains(x.Symbol.Isin))
-            .Where(x => string.IsNullOrWhiteSpace(request.SectorCode) || x.Symbol.SectorCode == request.SectorCode)
-            .Where(x => string.IsNullOrWhiteSpace(request.SubSectorCode) || x.Symbol.SubSectorCode == request.SubSectorCode)
+            .Where(x => request.SectorCode == null || (x.Symbol.Sector != null && x.Symbol.Sector.Id == request.SectorCode))
             .Where(x => x.LastClosePrice > 0)
             .Where(x => x.Pe > 0)
             .Where(x =>
