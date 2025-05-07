@@ -45,6 +45,6 @@ public class GetFinancialStatementsResultDto
 
     public int? DaysInventoryOutstanding => InventoryOutstandingData?.GetDaysInventoryOutstanding() ?? 0;
 
-    public int? DaysSalesOutstandingData => SalesOutstandingData?.GetDaysSalesOutstanding() ?? 0;
+    public int? DaysSalesOutstanding => SalesOutstandingData?.GetDaysSalesOutstanding() ?? 0;
     public SymbolPriceInfo? PriceInfo { get; set; }
 }
