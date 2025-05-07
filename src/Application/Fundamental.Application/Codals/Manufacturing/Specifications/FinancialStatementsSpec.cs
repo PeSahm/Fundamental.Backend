@@ -18,4 +18,10 @@ public class FinancialStatementsSpec : Specification<FinancialStatement>
         select.LoadSpecification(this);
         return select;
     }
+
+    public new FinancialStatementsSpec AsNoTracking()
+    {
+        Query.AsNoTracking();
+        return this;
+    }
 }
