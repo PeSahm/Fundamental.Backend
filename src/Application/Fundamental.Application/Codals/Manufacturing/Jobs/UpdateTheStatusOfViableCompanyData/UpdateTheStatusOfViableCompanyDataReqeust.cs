@@ -6,4 +6,4 @@ using MediatR;
 namespace Fundamental.Application.Codals.Manufacturing.Jobs.UpdateTheStatusOfViableCompanyData;
 
 [HandlerCode(HandlerCode.UpdateTheStatusOfViableCompany)]
-public sealed record UpdateTheStatusOfViableCompanyDataReqeust : IRequest<Response>;
+public sealed record UpdateTheStatusOfViableCompanyDataReqeust(uint Days) : IRequest<Response>;

@@ -19,7 +19,7 @@ public sealed class UpdateMonthlyActivityDataCommandHandler(
     {
         List<GetStatementResponse> monthlyActivities =
             await codalService.GetStatements(
-                "1401/08/01".ToGregorianDateTime()!.Value,
+                DateTime.Now.AddDays(-1 * request.Days),
                 ReportingType.Production,
                 LetterType.MonthlyActivity,
                 cancellationToken);

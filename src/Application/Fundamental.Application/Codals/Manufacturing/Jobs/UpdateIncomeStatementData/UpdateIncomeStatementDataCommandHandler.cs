@@ -19,7 +19,7 @@ public sealed class UpdateIncomeStatementDataCommandHandler(
     {
         List<GetStatementResponse> statements =
             await codalService.GetStatements(
-                "1401/10/03".ToGregorianDateTime()!.Value,
+                DateTime.Now.AddDays(-1 * request.Days),
                 ReportingType.Production,
                 LetterType.InterimStatement,
                 cancellationToken);
