@@ -51,6 +51,7 @@ public class FundamentalDbContext : DbContext, IUnitOfWork, ICoravelProDbContext
 
     public DbSet<CapitalIncreaseRegistrationNotice> CapitalIncreaseRegistrationNotices { get; set; }
 
+    public DbSet<Sector> Sectors { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(
