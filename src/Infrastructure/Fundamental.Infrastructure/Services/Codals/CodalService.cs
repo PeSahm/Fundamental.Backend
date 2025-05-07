@@ -8,9 +8,11 @@ using Fundamental.Application.Codals.Services.Models;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Application.Common.Extensions;
 using Fundamental.Domain.Common.Enums;
+using Fundamental.Infrastructure.Caching;
 using Fundamental.Infrastructure.Common;
 using Fundamental.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Hybrid;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -20,6 +22,7 @@ namespace Fundamental.Infrastructure.Services.Codals;
 public class CodalService(
     IHttpClientFactory httpClientFactory,
     IOptions<MdpOption> monthlyActivityOption,
+    HybridCache cache,
     IServiceScopeFactory serviceScopeFactory
 )
     : ICodalService
@@ -57,16 +60,18 @@ public class CodalService(
 
         if (response?.Result is { Count: > 0 })
         {
+            List<(string CodalId, string Isin)> codalIdIsinPairs = await GetCodalIdIsinPair(cancellationToken, context);
+
             foreach (GetStatementResponse statementResponse in response.Result)
             {
-                string? isin = await context.Publishers.AsNoTracking()
+                string? theSymbolIsin = codalIdIsinPairs
                     .Where(x => x.CodalId == statementResponse.PublisherId.ToString())
-                    .Select(x => x.Symbol.Isin)
-                    .FirstOrDefaultAsync(cancellationToken);
+                    .Select(x => x.Isin)
+                    .FirstOrDefault();
 
-                if (!string.IsNullOrWhiteSpace(isin))
+                if (!string.IsNullOrWhiteSpace(theSymbolIsin))
                 {
-                    statementResponse.Isin = isin;
+                    statementResponse.Isin = theSymbolIsin;
                 }
             }
         }
@@ -89,12 +94,14 @@ public class CodalService(
 
         if (response?.Result is { Count: > 0 })
         {
+            List<(string CodalId, string Isin)> codalIdIsinPairs = await GetCodalIdIsinPair(cancellationToken, context);
+
             foreach (GetStatementResponse statementResponse in response.Result)
             {
-                string? isin = await context.Publishers.AsNoTracking()
+                string? isin = codalIdIsinPairs
                     .Where(x => x.CodalId == statementResponse.PublisherId.ToString())
-                    .Select(x => x.Symbol.Isin)
-                    .FirstOrDefaultAsync(cancellationToken);
+                    .Select(x => x.Isin)
+                    .FirstOrDefault();
 
                 if (!string.IsNullOrWhiteSpace(isin))
                 {
@@ -108,7 +115,7 @@ public class CodalService(
 
     public async Task ProcessCodal(GetStatementResponse statement, LetterPart letterPart, CancellationToken cancellationToken = default)
     {
-       await ProcessCodal(statement, statement.ReportingType, letterPart, cancellationToken);
+        await ProcessCodal(statement, statement.ReportingType, letterPart, cancellationToken);
     }
 
     public async Task ProcessCodal(
@@ -198,5 +205,27 @@ public class CodalService(
 
         List<GetPublisherResponse>? publishers = JsonConvert.DeserializeObject<List<GetPublisherResponse>>(stringResponse);
         return publishers ?? new List<GetPublisherResponse>();
+    }
+
+    private async Task<List<(string CodalId, string Isin)>> GetCodalIdIsinPair(
+        CancellationToken cancellationToken,
+        FundamentalDbContext context
+    )
+    {
+        return await cache.GetOrCreateAsync(
+            CacheKeys.MonthlyActivity.CodalIdIsinPair(),
+            async (cancel) =>
+            {
+                return await context.Publishers.AsNoTracking()
+                    .Select(x => new ValueTuple<string, string>(x.CodalId, x.Symbol.Isin))
+                    .ToListAsync(cancel);
+            },
+            new HybridCacheEntryOptions
+            {
+                LocalCacheExpiration = TimeSpan.FromHours(4),
+                Expiration = TimeSpan.FromDays(5),
+            },
+            cancellationToken: cancellationToken
+        );
     }
 }

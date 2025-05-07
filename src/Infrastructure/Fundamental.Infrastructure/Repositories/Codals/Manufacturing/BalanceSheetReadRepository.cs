@@ -63,6 +63,7 @@ public sealed class BalanceSheetReadRepository(FundamentalDbContext dbContext) :
     {
         return dbContext.BalanceSheets
                 .AsNoTracking()
+                .Where(x => x.ReportMonth.Month != 1)
                 .Where(x => !dbContext.ManufacturingFinancialStatement.Any(fs => fs.TraceNo == x.TraceNo))
                 .GroupBy(gb => new
                 {
@@ -92,13 +93,13 @@ public sealed class BalanceSheetReadRepository(FundamentalDbContext dbContext) :
         CancellationToken cancellationToken = default
     )
     {
-        return dbContext.IncomeStatements
+        return dbContext.BalanceSheets
             .AsNoTracking()
             .Where(x =>
                 x.Symbol.Isin == isin &&
                 x.FiscalYear.Year <= fiscalYear &&
                 x.ReportMonth.Month <= statementMonth)
-            .Where(x => x.CodalCategory == (ushort)category)
+            .Where(x => x.CodalCategory == category)
             .Where(x => x.CodalRow == balanceSheetRow)
             .OrderByDescending(x => x.FiscalYear.Year)
             .ThenByDescending(x => x.ReportMonth.Month)

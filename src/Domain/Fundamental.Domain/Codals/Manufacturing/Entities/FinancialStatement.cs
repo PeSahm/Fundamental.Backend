@@ -364,6 +364,20 @@ public class FinancialStatement : BaseEntity<Guid>
         CodalMoney saleLastYearSamePeriod
     )
     {
+        if (SaleYear.Year > saleYear.Year)
+        {
+            return this;
+        }
+
+        if (SaleYear.Year == saleYear.Year && SaleMonth > saleMonth)
+        {
+            return this;
+        }
+        if (SaleYear.Year == saleYear.Year && SaleMonth.Month == saleMonth.Month && SaleTraceNo > saleTraceNo)
+        {
+            return this;
+        }
+
         Sale = sale;
         SaleYear = saleYear;
         SaleMonth = saleMonth;
@@ -644,6 +658,7 @@ public class FinancialStatement : BaseEntity<Guid>
         public required decimal CurrentCostOfGoodsSale { get; init; }
         public decimal LastYearSamePeriodInventory { get; init; } = 0;
         public required decimal CurrentInventory { get; init; }
+
         public int GetDaysInventoryOutstanding()
         {
             if (CurrentCostOfGoodsSale == 0)
@@ -652,8 +667,8 @@ public class FinancialStatement : BaseEntity<Guid>
             }
 
             decimal days = 360 * ((CurrentInventory + LastYearSamePeriodInventory) / 2) /
-                           (LastYearFullPeriodCostOfGoodsSale - LastYearSamePeriodCostOfGoodsSale +
-                            CurrentCostOfGoodsSale);
+                           (Math.Abs(LastYearFullPeriodCostOfGoodsSale) - Math.Abs(LastYearSamePeriodCostOfGoodsSale) +
+                            Math.Abs(CurrentCostOfGoodsSale));
             return (int)Math.Round(days, 0);
         }
     }
