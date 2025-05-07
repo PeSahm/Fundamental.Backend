@@ -105,6 +105,8 @@ public class FinancialStatementReadRepository(FundamentalDbContext dataContent) 
                 SaleAverageLastYearSamePeriod = x.SaleAverageLastYearSamePeriod,
                 ThisPeriodSaleRatioWithLastYear = x.ThisPeriodSaleRatioWithLastYear,
                 TseInsCode = x.Symbol.TseInsCode,
+                InventoryOutstandingData = x.InventoryOutstandingData,
+                SalesOutstandingData = x.SalesOutstandingData,
             }).ToPagingListAsync(request, "MarketValue desc", cancellationToken);
 
         return query;

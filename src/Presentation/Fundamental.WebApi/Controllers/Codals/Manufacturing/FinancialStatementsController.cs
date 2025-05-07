@@ -17,10 +17,10 @@ namespace Fundamental.WebApi.Controllers.Codals.Manufacturing;
 public class FinancialStatementsController(ISender mediator) : ControllerBase
 {
     [HttpGet("isin/{isin}")]
-    [SwaggerRequestType(typeof(GetFinancialStatementsReqeust))]
-    public async Task<Response<GetFinancialStatementsResultDto>> GetFinancialStatementsReqeust(string isin)
+    [SwaggerRequestType(typeof(GetFinancialStatementsRequest))]
+    public async Task<Response<GetFinancialStatementsResultDto>> GetFinancialStatementsRequest(string isin)
     {
-        return await mediator.Send(new GetFinancialStatementsReqeust(isin));
+        return await mediator.Send(new GetFinancialStatementsRequest(isin));
     }
 
     [HttpGet]

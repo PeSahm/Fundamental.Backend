@@ -9,10 +9,10 @@ using MediatR;
 namespace Fundamental.Application.Codals.Manufacturing.Queries.GetFinancialStatements;
 
 public sealed class GetFinancialStatementsQueryHandler(IRepository repository, IMarketDataService marketDataService)
-    : IRequestHandler<GetFinancialStatementsReqeust, Response<GetFinancialStatementsResultDto>>
+    : IRequestHandler<GetFinancialStatementsRequest, Response<GetFinancialStatementsResultDto>>
 {
     public async Task<Response<GetFinancialStatementsResultDto>> Handle(
-        GetFinancialStatementsReqeust request,
+        GetFinancialStatementsRequest request,
         CancellationToken cancellationToken
     )
     {
