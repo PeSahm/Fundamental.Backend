@@ -42,7 +42,7 @@ public sealed class BalanceSheetReadRepository(FundamentalDbContext dbContext) :
         }
 
         Paginated<GetBalanceSheetResultDto> validStatements = await query
-            .Where(x => x.ReportMonth.Month != 1)
+            .Where(x => x.ReportMonth.Month != (x.YearEndMonth.Month == 12 ? 1 : x.YearEndMonth.Month + 1))
             .GroupBy(gb => new { gb.Symbol.Isin, FiscalYear = gb.FiscalYear.Year, ReportMonth = gb.ReportMonth.Month })
             .Select(x => new GetBalanceSheetResultDto
             {

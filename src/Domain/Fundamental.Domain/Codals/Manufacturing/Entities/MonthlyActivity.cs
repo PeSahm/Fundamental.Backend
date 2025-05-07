@@ -11,6 +11,8 @@ namespace Fundamental.Domain.Codals.Manufacturing.Entities;
 
 public class MonthlyActivity : BaseEntity<Guid>
 {
+    private bool ExtraSalesInfosApplied { get; set; } = false;
+
     public MonthlyActivity(
         Guid id,
         Symbol symbol,
@@ -85,6 +87,25 @@ public class MonthlyActivity : BaseEntity<Guid>
     public CodalMoney SaleLastYear { get; private set; }
 
     public bool HasSubCompanySale { get; private set; }
+
+    public void ApplyExtraSale()
+    {
+        if (ExtraSalesInfosApplied)
+        {
+            return;
+        }
+
+        if (ExtraSalesInfos.Count == 0)
+        {
+            return;
+        }
+
+        SaleCurrentMonth += ExtraSalesInfos.Sum(x => x.MonthlySales);
+        SaleIncludeCurrentMonth += ExtraSalesInfos.Sum(x => x.CumulativeSales);
+        SaleBeforeCurrentMonth = SaleBeforeCurrentMonth + ExtraSalesInfos.Sum(x => x.CumulativeSales)
+                                 - ExtraSalesInfos.Sum(x => x.MonthlySales);
+        ExtraSalesInfosApplied = true;
+    }
 
     public List<SymbolExtensions.SalesInfo> ExtraSalesInfos { get; private set; } = new();
 
