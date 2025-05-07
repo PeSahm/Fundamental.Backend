@@ -73,7 +73,7 @@ public class MonthlyActivityRepository : IMonthlyActivityRepository
             .AsNoTracking()
             .Where(sale => sale.Symbol.Isin == isin)
             .Where(sale => (sale.FiscalYear.Year == fiscalYear.Year && sale.ReportMonth.Month >= month.Month) ||
-                           (sale.FiscalYear.Year >= fiscalYear.Year))
+                           (sale.FiscalYear.Year > fiscalYear.Year))
             .OrderBy(sale => sale.FiscalYear.Year)
             .ThenBy(x => x.TraceNo)
             .ThenByDescending(sale => sale.TraceNo)

@@ -108,6 +108,10 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapRazorPages();
-app.UseCoravelPro();
+
+if (app.Configuration.GetValue<bool>("JobEnabled"))
+{
+    app.UseCoravelPro();
+}
 
 await app.RunAsync();
