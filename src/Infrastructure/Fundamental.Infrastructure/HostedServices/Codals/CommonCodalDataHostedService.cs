@@ -15,10 +15,6 @@ public class CommonCodalDataHostedService(IServiceScopeFactory factory) : Backgr
 {
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        using IServiceScope scope = factory.CreateScope();
-        IMediator mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-        await mediator.Send(new UpdateClosePricesDataCommand(7), stoppingToken);
-
         await Task.CompletedTask;
     }
 }
