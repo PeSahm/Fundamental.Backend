@@ -45,7 +45,6 @@ builder.Services.AddHostedServices();
 builder.Services.AddCodalServices();
 builder.Services.AddEventDispatcher();
 builder.Configuration
-    .AddJsonFile("appsettings.Override.json", true, true)
     .AddEnvironmentVariables();
 builder.Services.AddBuilders().AddDbRetryPolicy();
 builder.Services.AddCap();
@@ -56,9 +55,8 @@ builder.Services.AddCoravelPro(typeof(FundamentalDbContext));
 builder.Services.AddHttpContextAccessor();
 builder.Host.UseSerilog((context, serviceProvider, configuration) =>
 {
-    configuration
-        .ReadFrom.Configuration(context.Configuration)
-        .ReadFrom.Services(serviceProvider);
+    configuration.ReadFrom.Configuration(context.Configuration);
+    configuration.ReadFrom.Services(serviceProvider);
 });
 builder.Services.AddApiVersioning(options =>
 {
@@ -113,5 +111,4 @@ if (app.Configuration.GetValue<bool>("JobEnabled"))
 {
     app.UseCoravelPro();
 }
-
 await app.RunAsync();

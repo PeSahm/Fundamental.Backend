@@ -19,10 +19,8 @@ public class CommonCodalDataHostedService(IServiceScopeFactory factory) : Backgr
 {
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        using var scope = factory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<FundamentalDbContext>();
 
-        await SeedSectorsAndSymbols(dbContext, stoppingToken);
+        await Task.CompletedTask;
     }
 
     private async Task SeedSectorsAndSymbols(FundamentalDbContext dbContext, CancellationToken stoppingToken)

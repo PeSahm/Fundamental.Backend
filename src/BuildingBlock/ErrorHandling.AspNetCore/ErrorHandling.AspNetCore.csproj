@@ -4,7 +4,7 @@
     <Description>Adds ASP.NET Core filters that translate from Result to ActionResult.</Description>
     <Summary>Adds ASP.NET Core filters that translate from Result to ActionResult.</Summary>
     <PackageTags>result pattern web api aspnetcore mvc</PackageTags>
-    <TargetFramework>net9</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
 
   </PropertyGroup>
 
