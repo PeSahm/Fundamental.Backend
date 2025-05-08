@@ -234,7 +234,7 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
             }
             catch (Exception e)
             {
-                logger.LogError(e, "Error processing financial statement for  {@HeaderData}: {Error}", headerData, e.Message);
+                logger.LogWarning(e, "Error processing financial statement for  {@HeaderData}: {Error}", headerData, e.Message);
             }
         }
 
