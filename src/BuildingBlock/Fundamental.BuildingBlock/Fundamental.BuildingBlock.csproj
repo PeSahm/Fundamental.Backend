@@ -9,9 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ardalis.Specification" Version="9.1.0" />
+    <PackageReference Include="Ardalis.Specification" Version="9.2.0" />
     <PackageReference Include="DNTPersianUtils.Core" Version="6.6.1" />
-    <PackageReference Include="DotNetCore.CAP" Version="8.3.4" />
+    <PackageReference Include="DotNetCore.CAP" Version="8.3.5" />
     <PackageReference Include="RepoDb" Version="1.13.1" />
     <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
   </ItemGroup>
