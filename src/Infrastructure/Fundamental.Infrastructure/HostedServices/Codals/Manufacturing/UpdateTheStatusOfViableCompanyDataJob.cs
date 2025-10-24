@@ -11,7 +11,7 @@ public class UpdateTheStatusOfViableCompanyDataJob(IServiceScopeFactory serviceS
     {
         using IServiceScope scope = serviceScopeFactory.CreateScope();
         IMediator mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-        await mediator.Send(new UpdateTheStatusOfViableCompanyDataReqeust(7), CancellationToken);
+        await mediator.Send(new UpdateTheStatusOfViableCompanyDataReqeust(70), CancellationToken);
     }
 
     public CancellationToken CancellationToken { get; set; }

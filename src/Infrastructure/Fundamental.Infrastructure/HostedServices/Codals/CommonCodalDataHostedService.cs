@@ -1,15 +1,9 @@
-﻿using Fundamental.Application.Codals.Manufacturing.Commands.UpdateMonthlyActivity;
-using Fundamental.Application.Codals.Manufacturing.EventHandlers.UpdateFsClosePrice;
-using Fundamental.Application.Codals.Manufacturing.Jobs.UpdateFinancialStatementsData;
-using Fundamental.Application.Codals.Manufacturing.Jobs.UpdateMonthlyActivityData;
-using Fundamental.Application.Codals.Manufacturing.Jobs.UpdateRegisterCapitalIncreaseData;
-using Fundamental.Application.Common.Extensions;
-using Fundamental.Application.Prices.Jobs.UpdateClosePrices;
+﻿using Fundamental.Application.Common.Extensions;
 using Fundamental.Domain.Symbols.Entities;
+using Fundamental.Infrastructure.HostedServices.Codals.CommonJobs;
+using Fundamental.Infrastructure.HostedServices.Codals.Manufacturing;
 using Fundamental.Infrastructure.Persistence;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -19,6 +13,21 @@ public class CommonCodalDataHostedService(IServiceScopeFactory factory) : Backgr
 {
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
+        await Task.CompletedTask;
+        return;
+        using IServiceScope scope = factory.CreateScope();
+        await scope.ServiceProvider.GetRequiredService<UpdateClosePricesDataJob>().Invoke();
+        // await scope.ServiceProvider.GetRequiredService<UpdateCodalPublisherDataJob>().Invoke();
+        await scope.ServiceProvider.GetRequiredService<UpdateIndexDataJob>().Invoke();
+        await scope.ServiceProvider.GetRequiredService<UpdateSymbolDataJob>().Invoke();
+        await scope.ServiceProvider.GetRequiredService<UpdateTseTmcShareHoldersDataJob>().Invoke();
+
+        await scope.ServiceProvider.GetRequiredService<UpdateBalanceSheetDataJob>().Invoke();
+        await scope.ServiceProvider.GetRequiredService<UpdateCapitalIncreaseRegistrationNoticeDataJob>().Invoke();
+        await scope.ServiceProvider.GetRequiredService<UpdateIncomeStatementDataJob>().Invoke();
+        await scope.ServiceProvider.GetRequiredService<UpdateMonthlyActivityDataJob>().Invoke();
+        await scope.ServiceProvider.GetRequiredService<UpdateNonOperationIncomeAndExpensesDataJob>().Invoke();
+        await scope.ServiceProvider.GetRequiredService<UpdateTheStatusOfViableCompanyDataJob>().Invoke();
 
         await Task.CompletedTask;
     }
