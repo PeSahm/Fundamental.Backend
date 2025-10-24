@@ -18,6 +18,8 @@ using Serilog;
 
 WebApplicationBuilder builder = WebApplication.CreateSlimBuilder(args);
 
+builder.WebHost.UseKestrelHttpsConfiguration();
+
 builder.Services.AddControllers(options =>
     {
         options.AddDefaultResultConvention();

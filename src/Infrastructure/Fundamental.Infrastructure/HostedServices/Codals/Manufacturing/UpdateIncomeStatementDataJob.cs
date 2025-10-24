@@ -11,7 +11,7 @@ public class UpdateIncomeStatementDataJob(IServiceScopeFactory serviceScopeFacto
     {
         using IServiceScope scope = serviceScopeFactory.CreateScope();
         IMediator mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-        await mediator.Send(new UpdateIncomeStatementDataRequest(-7), CancellationToken);
+        await mediator.Send(new UpdateIncomeStatementDataRequest(-70), CancellationToken);
     }
 
     public CancellationToken CancellationToken { get; set; }
