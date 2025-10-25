@@ -1,7 +1,4 @@
-﻿using System.Text;
-using DNTPersianUtils.Core;
-using Fundamental.Application.Codals.Common;
-using Fundamental.Domain.Codals.ValueObjects;
+﻿using Fundamental.Application.Codals.Common;
 
 namespace Fundamental.Application.Codals.Manufacturing.Queries.GetIncomeStatements;
 
