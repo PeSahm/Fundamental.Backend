@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
     <OutputType>Exe</OutputType>
     <RootNamespace>Fundamental.Migrations</RootNamespace>
     <UserSecretsId>d4b33968-62dd-4059-b9ae-c0fa23177864</UserSecretsId>

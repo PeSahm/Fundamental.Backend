@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\Application\Fundamental.Application\Fundamental.Application.csproj" />
+      <ProjectReference Include="..\..\src\Infrastructure\Fundamental.Infrastructure\Fundamental.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\src\Infrastructure\Migrations\Migrations.csproj" />
+      <ProjectReference Include="..\..\src\Domain\Fundamental.Domain\Fundamental.Domain.csproj" />
+    </ItemGroup>
+
+</Project>

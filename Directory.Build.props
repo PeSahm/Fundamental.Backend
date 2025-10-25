@@ -56,6 +56,14 @@
         <Using Include="Xunit" />
     </ItemGroup>
 
+    <!-- Performance test specific packages -->
+    <ItemGroup Condition="'$(MSBuildProjectName)' == 'PerformanceTests'">
+        <PackageReference Include="NBench" Version="2.0.1" />
+        <PackageReference Include="BenchmarkDotNet" Version="0.14.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.10" />
+        <PackageReference Include="Bogus" Version="35.6.1" />
+    </ItemGroup>
+
     <!-- Application layer packages -->
     <ItemGroup Condition="'$(IsApplication)'">
         <PackageReference Include="MediatR" Version="13.1.0" />
@@ -147,6 +155,26 @@
     <!-- WebApi project packages -->
     <ItemGroup Condition="'$(IsWebApi)'">
         <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
+    </ItemGroup>
+
+    <!-- Integration test specific packages -->
+    <ItemGroup Condition="'$(MSBuildProjectName)' == 'IntegrationTests'">
+        <PackageReference Include="Testcontainers.PostgreSQL" Version="4.1.0" />
+        <PackageReference Include="Testcontainers.Redis" Version="4.1.0" />
+        <PackageReference Include="Testcontainers" Version="4.1.0" />
+        <PackageReference Include="WireMock.Net" Version="1.6.10" />
+        <PackageReference Include="Respawn" Version="6.2.1" />
+        <PackageReference Include="Bogus" Version="35.6.1" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.10" />
+    </ItemGroup>
+
+    <!-- Performance test specific packages -->
+    <ItemGroup Condition="'$(MSBuildProjectName)' == 'PerformanceTests'">
+        <PackageReference Include="NBench" Version="2.0.1" />
+        <PackageReference Include="BenchmarkDotNet" Version="0.14.0" />
+        <PackageReference Include="Bogus" Version="35.6.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.10" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.10" />
     </ItemGroup>
 
     <!-- Analyzer packages -->
