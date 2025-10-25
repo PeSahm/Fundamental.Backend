@@ -1,7 +1,6 @@
 ﻿using DNTPersianUtils.Core;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.MarketDataServiceModels;
-using Fundamental.Application.Symbols.Models;
 using Fundamental.Application.Symbols.Specifications;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.Domain.Symbols.Entities;

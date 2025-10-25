@@ -1,5 +1,4 @@
 using Fundamental.BuildingBlock.Events;
-using Fundamental.Domain.Common.ValueObjects;
 
 namespace Fundamental.Domain.Codals.Manufacturing.Events;
 

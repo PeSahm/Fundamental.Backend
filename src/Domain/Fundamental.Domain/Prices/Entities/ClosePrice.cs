@@ -1,4 +1,3 @@
-using System.Reflection.Metadata;
 using Fundamental.Domain.Common.BaseTypes;
 using Fundamental.Domain.Common.Constants;
 using Fundamental.Domain.Prices.Events;

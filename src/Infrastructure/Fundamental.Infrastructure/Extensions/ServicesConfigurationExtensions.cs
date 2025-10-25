@@ -14,7 +14,6 @@ using Fundamental.Infrastructure.HostedServices.Codals;
 using Fundamental.Infrastructure.Persistence;
 using Fundamental.Infrastructure.Persistence.Repositories.Base;
 using Fundamental.Infrastructure.Repositories;
-using Fundamental.Infrastructure.Serialization;
 using Fundamental.Infrastructure.Services;
 using Fundamental.Infrastructure.Services.Codals;
 using Fundamental.Infrastructure.Services.Codals.Factories;
