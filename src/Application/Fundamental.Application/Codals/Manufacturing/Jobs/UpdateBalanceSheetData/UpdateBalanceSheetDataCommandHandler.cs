@@ -15,7 +15,7 @@ public class UpdateBalanceSheetDataCommandHandler(ICodalService codalService, IL
     {
         List<GetStatementResponse> balanceSheets =
             await codalService.GetStatements(
-                DateTime.Now.AddDays(-1 * request.Days),
+                DateTime.Now.AddDays(-1 * Math.Abs(request.DaysBefore)),
                 ReportingType.Production,
                 LetterType.InterimStatement,
                 cancellationToken);

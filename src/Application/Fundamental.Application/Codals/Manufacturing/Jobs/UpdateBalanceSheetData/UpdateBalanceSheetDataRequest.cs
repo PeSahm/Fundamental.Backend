@@ -6,4 +6,4 @@ using MediatR;
 namespace Fundamental.Application.Codals.Manufacturing.Jobs.UpdateBalanceSheetData;
 
 [HandlerCode(HandlerCode.UpdateBalanceSheetData)]
-public record UpdateBalanceSheetDataRequest(int Days) : IRequest<Response>;
+public record UpdateBalanceSheetDataRequest(int DaysBefore) : IRequest<Response>;
