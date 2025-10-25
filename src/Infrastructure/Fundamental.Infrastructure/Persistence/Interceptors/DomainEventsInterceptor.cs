@@ -36,6 +36,8 @@ public class DomainEventsInterceptor(IServiceScopeFactory serviceProvider) : Sav
             .ToList();
 
         // Publish each domain event, then clear the events from the entity
+        Dictionary<string, string?> headers = new(1);
+
         foreach (IHaveEvent entity in entitiesWithEvents)
         {
             foreach (IAggregationEvent aggregationEvent in entity.AggregationEvents)
@@ -45,16 +47,10 @@ public class DomainEventsInterceptor(IServiceScopeFactory serviceProvider) : Sav
                 // e.g., pass it as a header or some custom usage.
                 if (aggregationEvent.CallbackName is not null)
                 {
-                    Dictionary<string, string?> headers = new()
-                    {
-                        [Headers.CallbackName] = aggregationEvent.CallbackName
-                    };
-                    capPublisher.Publish(aggregationEvent.Name, aggregationEvent.Data, headers);
+                    headers.Add(Headers.CallbackName, aggregationEvent.CallbackName);
                 }
-                else
-                {
-                    capPublisher.Publish(aggregationEvent.Name, aggregationEvent.Data);
-                }
+
+                capPublisher.Publish(aggregationEvent.Name, aggregationEvent.Data, headers);
             }
 
             entity.ClearDomainEvents();
