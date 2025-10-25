@@ -1,22 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-
     <OutputType>Exe</OutputType>
     <RootNamespace>Fundamental.Migrations</RootNamespace>
     <UserSecretsId>d4b33968-62dd-4059-b9ae-c0fa23177864</UserSecretsId>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.6">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.6" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Fundamental.Infrastructure\Fundamental.Infrastructure.csproj" />

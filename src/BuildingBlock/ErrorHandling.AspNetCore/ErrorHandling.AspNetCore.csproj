@@ -4,8 +4,6 @@
     <Description>Adds ASP.NET Core filters that translate from Result to ActionResult.</Description>
     <Summary>Adds ASP.NET Core filters that translate from Result to ActionResult.</Summary>
     <PackageTags>result pattern web api aspnetcore mvc</PackageTags>
-    <TargetFramework>net9.0</TargetFramework>
-
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,13 +13,5 @@
   <ItemGroup>
     <ProjectReference Include="..\ErrorHandling\ErrorHandling.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Update="SonarAnalyzer.CSharp" Version="9.19.0.84025">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-
 
 </Project>

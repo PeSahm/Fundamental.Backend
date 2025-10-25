@@ -1,10 +1,18 @@
 ﻿<Project>
     <PropertyGroup>
         <LangVersion>13.0</LangVersion>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <IsUnitTests>$(MSBuildProjectName.EndsWith('UnitTests'))</IsUnitTests>
         <IsTests>$(MSBuildProjectName.EndsWith('Tests'))</IsTests>
         <IsDbMigrations>$(MSBuildProjectName.EndsWith('Migrations'))</IsDbMigrations>
+        <IsApplication>$(MSBuildProjectDirectory.Contains('\Application\'))</IsApplication>
+        <IsDomain>$(MSBuildProjectDirectory.Contains('\Domain\'))</IsDomain>
+        <IsBuildingBlock>$(MSBuildProjectDirectory.Contains('\BuildingBlock\'))</IsBuildingBlock>
+        <IsPresentation>$(MSBuildProjectDirectory.Contains('\Presentation\'))</IsPresentation>
+        <IsWebApi>$(MSBuildProjectName.EndsWith('WebApi'))</IsWebApi>
+        <IsWebCommon>$(MSBuildProjectName.EndsWith('Web.Common'))</IsWebCommon>
         <InvariantGlobalization>false</InvariantGlobalization>
         <IsPackable>false</IsPackable>
         <Authors>PeSahm Development Team</Authors>
@@ -12,24 +20,138 @@
         <Product>Fundamental Platform</Product>
     </PropertyGroup>
 
+    <!-- Infrastructure detection (exclude Migrations) -->
+    <PropertyGroup>
+        <IsInfrastructure>false</IsInfrastructure>
+    </PropertyGroup>
+    <PropertyGroup Condition="$(MSBuildProjectDirectory.Contains('\Infrastructure\')) and '$(IsDbMigrations)' != 'true'">
+        <IsInfrastructure>true</IsInfrastructure>
+    </PropertyGroup>
+
+    <!-- Test project specific settings -->
+    <PropertyGroup Condition="'$(IsTests)'">
+        <IsTestProject>true</IsTestProject>
+    </PropertyGroup>
+
     <PropertyGroup Condition="!'$(IsDbMigrations)'">
         <EnableNETAnalyzers>true</EnableNETAnalyzers>
         <AnalysisMode>Default</AnalysisMode>
     </PropertyGroup>
 
+    <!-- Test projects packages -->
     <ItemGroup Condition="'$(IsTests)'">
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.0"/>
         <PackageReference Include="FluentAssertions" Version="7.2.0"/>
         <PackageReference Include="Moq" Version="4.20.72"/>
         <PackageReference Include="xunit" Version="2.9.3"/>
-        <PackageReference Include="xunit.runner.visualstudio" Version="3.1.1">
+        <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="coverlet.collector" Version="6.0.4">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="JetBrains.Annotations" Version="2025.2.2" />
+        <Using Include="Xunit" />
     </ItemGroup>
 
+    <!-- Application layer packages -->
+    <ItemGroup Condition="'$(IsApplication)'">
+        <PackageReference Include="MediatR" Version="13.1.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.10" />
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+        <PackageReference Include="Polly" Version="8.6.4" />
+    </ItemGroup>
+
+    <!-- Domain layer packages -->
+    <ItemGroup Condition="'$(IsDomain)'">
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.10" />
+    </ItemGroup>
+
+    <!-- BuildingBlock layer packages -->
+    <ItemGroup Condition="'$(IsBuildingBlock)'">
+        <PackageReference Include="Ardalis.Specification" Version="9.3.1" />
+        <PackageReference Include="DNTPersianUtils.Core" Version="6.7.0" />
+        <PackageReference Include="DotNetCore.CAP" Version="8.4.1" />
+        <PackageReference Include="RepoDb" Version="1.13.1" />
+        <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
+    </ItemGroup>
+
+    <!-- Infrastructure layer packages -->
+    <ItemGroup Condition="'$(IsInfrastructure)'">
+        <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="9.3.1" />
+        <PackageReference Include="Coravel.Pro" Version="5.2.3" />
+        <PackageReference Include="DotNetCore.CAP.PostgreSql" Version="8.4.1" />
+        <PackageReference Include="DotNetCore.CAP.Dashboard" Version="8.4.1" />
+        <PackageReference Include="EFCore.NamingConventions" Version="9.0.0" />
+        <PackageReference Include="Gridify.EntityFramework" Version="2.17.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.10" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.10" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.10">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="9.10.0" />
+        <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="9.0.10" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.10" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime" Version="9.0.4" />
+        <PackageReference Include="Polly.Contrib.WaitAndRetry" Version="1.1.1" />
+        <PackageReference Include="Polly.Extensions" Version="8.6.4" />
+        <PackageReference Include="RepoDb.PostgreSql.BulkOperations" Version="1.13.1" />
+        <PackageReference Include="Savorboard.CAP.InMemoryMessageQueue" Version="8.2.1" />
+        <PackageReference Include="StackExchange.Redis" Version="2.9.32" />
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.10" />
+        <PackageReference Include="Serilog" Version="4.3.0" />
+        <PackageReference Include="System.Linq.Dynamic.Core" Version="1.6.9" />
+        <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
+    </ItemGroup>
+
+    <!-- Migrations project packages -->
+    <ItemGroup Condition="'$(IsDbMigrations)'">
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.10">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.10" />
+    </ItemGroup>
+
+    <!-- Web.Common project packages -->
+    <ItemGroup Condition="'$(IsWebCommon)'">
+        <PackageReference Include="CollectorBank.Serilog.Enrichers.ThreadContext" Version="1.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.1.0" />
+        <PackageReference Include="Sentry.Serilog" Version="5.16.1" />
+        <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+        <PackageReference Include="Serilog.Enrichers.AspNetCore.HttpContext" Version="1.0.1" />
+        <PackageReference Include="Serilog.Enrichers.ClientInfo" Version="2.6.0" />
+        <PackageReference Include="Serilog.Enrichers.Demystifier" Version="1.0.3" />
+        <PackageReference Include="Serilog.Enrichers.Environment" Version="3.0.1" />
+        <PackageReference Include="Serilog.Enrichers.Process" Version="3.0.0" />
+        <PackageReference Include="Serilog.Enrichers.Thread" Version="4.0.0" />
+        <PackageReference Include="Serilog.Enrichers.AssemblyName" Version="2.0.0" />
+        <PackageReference Include="Serilog.Enrichers.Memory" Version="1.0.4" />
+        <PackageReference Include="Serilog.Enrichers.HttpContext" Version="8.0.9" />
+        <PackageReference Include="Serilog.Enrichers.CorrelationId" Version="3.0.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
+        <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="9.0.6" />
+        <PackageReference Include="Unchase.Swashbuckle.AspNetCore.Extensions" Version="2.7.2" />
+        <PackageReference Include="System.Text.Json" Version="9.0.10" />
+        <PackageReference Include="Microsoft.AspNetCore.SignalR.StackExchangeRedis" Version="9.0.10" />
+        <PackageReference Include="Serilog.Sinks.Seq" Version="9.0.0" />
+        
+    </ItemGroup>
+
+    <!-- WebApi project packages -->
+    <ItemGroup Condition="'$(IsWebApi)'">
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
+    </ItemGroup>
+
+    <!-- Analyzer packages -->
     <ItemGroup Condition="!'$(IsDbMigrations)'">
-        <PackageReference Include="SonarAnalyzer.CSharp" Version="10.11.0.117924">
+        <PackageReference Include="SonarAnalyzer.CSharp" Version="10.15.0.120848">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
         </PackageReference>
