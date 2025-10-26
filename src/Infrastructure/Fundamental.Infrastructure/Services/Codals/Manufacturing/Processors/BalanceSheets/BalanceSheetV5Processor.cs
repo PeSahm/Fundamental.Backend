@@ -90,7 +90,8 @@ public sealed class BalanceSheetV5Processor(IServiceScopeFactory serviceScopeFac
                             x =>
                                 x.Symbol.Isin == statement.Isin &&
                                 x.FiscalYear.Year == yearDatum.FiscalYear.Value &&
-                                x.ReportMonth.Month == yearDatum.ReportMonth.Value &&
+                                x.ReportMonth.Month ==
+                                BalanceSheet.GetFixedBalanceSheetReportMonth(yearDatum.FiscalMonth, yearDatum.ReportMonth) &&
                                 x.TraceNo == statement.TracingNo,
                             cancellationToken))
                 {
@@ -102,20 +103,20 @@ public sealed class BalanceSheetV5Processor(IServiceScopeFactory serviceScopeFac
                     try
                     {
                         BalanceSheet balanceSheet = new(
-                            Guid.NewGuid(),
-                            symbol,
-                            statement.TracingNo,
-                            statement.HtmlUrl,
-                            new FiscalYear(yearDatum.FiscalYear.Value),
-                            new StatementMonth(yearDatum.FiscalMonth.Value),
-                            new StatementMonth(yearDatum.ReportMonth.Value),
-                            rowItem.RowNumber,
-                            (ushort)rowItem.RowCode,
-                            rowItem.Category == Category.Assets ? BalanceSheetCategory.Assets : BalanceSheetCategory.Liability,
-                            rowItem.GetDescription(),
-                            rowItem.GetValue(yearDatum.ColumnId),
-                            yearDatum.IsAudited,
-                            DateTime.Now
+                            id: Guid.NewGuid(),
+                            symbol: symbol,
+                            traceNo: statement.TracingNo,
+                            uri: statement.HtmlUrl,
+                            fiscalYear: new FiscalYear(yearDatum.FiscalYear.Value),
+                            yearEndMonth: new StatementMonth(yearDatum.FiscalMonth.Value),
+                            reportMonth: new StatementMonth(yearDatum.ReportMonth.Value),
+                            row: rowItem.RowNumber,
+                            codalRow: (ushort)rowItem.RowCode,
+                            codalCategory: rowItem.Category == Category.Assets ? BalanceSheetCategory.Assets : BalanceSheetCategory.Liability,
+                            description: rowItem.GetDescription(),
+                            value: rowItem.GetValue(yearDatum.ColumnId),
+                            isAudited: yearDatum.IsAudited,
+                            createdAt: DateTime.Now
                         );
                         dbContext.BalanceSheets.Add(balanceSheet);
                         logger.LogDebug(
