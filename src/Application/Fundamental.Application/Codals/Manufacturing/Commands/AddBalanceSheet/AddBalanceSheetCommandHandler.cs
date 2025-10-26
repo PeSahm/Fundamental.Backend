@@ -83,7 +83,8 @@ public sealed class AddBalanceSheetCommandHandler(
                 balanceSheetRow.Description,
                 item.Value,
                 request.IsAudited,
-                DateTime.Now
+                DateTime.Now,
+                request.PublishDate
             );
             repository.Add(balanceSheet);
         }

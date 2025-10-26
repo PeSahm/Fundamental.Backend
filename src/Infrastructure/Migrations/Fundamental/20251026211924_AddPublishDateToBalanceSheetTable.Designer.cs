@@ -16,15 +16,15 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fundamental.Migrations.Fundamental
 {
     [DbContext(typeof(FundamentalDbContext))]
-    [Migration("20250429213604_AddIndexesOnFsTables")]
-    partial class AddIndexesOnFsTables
+    [Migration("20251026211924_AddPublishDateToBalanceSheetTable")]
+    partial class AddPublishDateToBalanceSheetTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.4")
+                .HasAnnotation("ProductVersion", "9.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "company_type", new[] { "article44", "associations", "basket_companies", "brokers", "capital_supply_companies", "central_asset_management_company", "exempt_companies", "financial_information_processing_companies", "financial_institutions", "government_companies", "intermediary_institutions", "investment_advisory_companies", "investment_funds", "none_financial_institution", "public_investment_and_holding", "rating_institutions", "subsidiary_financial_institutions", "un_known1" });
@@ -37,7 +37,7 @@ namespace Fundamental.Migrations.Fundamental
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "publisher_fund_type", new[] { "commodity", "diversified", "equity", "fixed_income", "market_making", "mixed", "not_a_fund", "project", "real_estate", "un_known", "venture" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "publisher_market_type", new[] { "base", "first", "none", "second", "small_and_medium" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "publisher_state", new[] { "not_registered", "register_in_ifb", "register_in_ime", "register_in_irenex", "register_in_tse", "registered_not_accepted" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "publisher_sub_company_type", new[] { "has_foreign_currency_unit", "has_foreign_currency_unit_and_foreign_auditor", "liquidation", "normal", "un_known", "un_known1", "un_known2", "un_known3", "un_known4", "un_known5", "un_known6" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "publisher_sub_company_type", new[] { "has_foreign_currency_unit", "has_foreign_currency_unit_and_foreign_auditor", "liquidation", "normal", "un_known", "un_known1", "un_known2", "un_known3", "un_known4", "un_known5", "un_known6", "un_known7" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "reporting_type", new[] { "agriculture", "bank", "capital_provision", "insurance", "investment", "leasing", "maritime_transportation", "production", "services", "structural", "un_known" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "review_status", new[] { "approved", "pending", "rejected" });
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -227,6 +227,10 @@ namespace Fundamental.Migrations.Fundamental
                     b.Property<bool>("IsAudited")
                         .HasColumnType("boolean")
                         .HasColumnName("is_audited");
+
+                    b.Property<DateTime>("PublishDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("publish-date");
 
                     b.Property<short>("Row")
                         .HasColumnType("SMALLINT")
@@ -647,6 +651,10 @@ namespace Fundamental.Migrations.Fundamental
                         .HasPrecision(36, 10)
                         .HasColumnType("numeric(36,10)")
                         .HasColumnName("receivable_ratio");
+
+                    b.Property<long>("SaleTraceNo")
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("sale_trace_no");
 
                     b.Property<decimal>("TargetMarketValue")
                         .HasPrecision(36, 10)
@@ -1080,6 +1088,15 @@ namespace Fundamental.Migrations.Fundamental
                             b1.Property<short>("Month")
                                 .HasColumnType("smallint")
                                 .HasColumnName("sale-month");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("SaleYear", "Fundamental.Domain.Codals.Manufacturing.Entities.FinancialStatement.SaleYear#FiscalYear", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<short>("Year")
+                                .HasColumnType("SMALLINT")
+                                .HasColumnName("sale_year_year");
                         });
 
                     b.ComplexProperty<Dictionary<string, object>>("SpringOperationIncome", "Fundamental.Domain.Codals.Manufacturing.Entities.FinancialStatement.SpringOperationIncome#SignedCodalMoney", b1 =>
@@ -2115,6 +2132,48 @@ namespace Fundamental.Migrations.Fundamental
                     b.ToTable("index_company", "shd");
                 });
 
+            modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.Sector", b =>
+                {
+                    b.Property<long>("_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("_id")
+                        .HasColumnOrder(0);
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("_id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("name");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("ModifiedAt");
+
+                    b.HasKey("_id")
+                        .HasName("pk_sector");
+
+                    b.HasIndex("Id")
+                        .IsUnique()
+                        .HasDatabaseName("ix_sector_id");
+
+                    b.HasIndex("Name")
+                        .HasDatabaseName("ix_sector_name");
+
+                    b.ToTable("sector", "shd");
+                });
+
             modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.Symbol", b =>
                 {
                     b.Property<long>("_id")
@@ -2205,6 +2264,10 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnType("character varying(50)")
                         .HasColumnName("sector_code");
 
+                    b.Property<long?>("Sector_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("sector_id");
+
                     b.Property<string>("SubSectorCode")
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)")
@@ -2247,6 +2310,9 @@ namespace Fundamental.Migrations.Fundamental
 
                     b.HasIndex("Name")
                         .HasDatabaseName("ix_symbol_name");
+
+                    b.HasIndex("Sector_id")
+                        .HasDatabaseName("ix_symbol_sector_id");
 
                     b.HasIndex("SectorCode", "SubSectorCode")
                         .HasDatabaseName("ix_symbol_sector_codes");
@@ -2451,6 +2517,72 @@ namespace Fundamental.Migrations.Fundamental
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_financial_statement_symbols_symbol_id");
+
+                    b.OwnsOne("Fundamental.Domain.Codals.Manufacturing.Entities.FinancialStatement+DaysInventoryOutstanding", "InventoryOutstandingData", b1 =>
+                        {
+                            b1.Property<long>("FinancialStatement_id")
+                                .HasColumnType("bigint");
+
+                            b1.Property<decimal>("CurrentCostOfGoodsSale")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal>("CurrentInventory")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal>("LastYearFullPeriodCostOfGoodsSale")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal>("LastYearSamePeriodCostOfGoodsSale")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal>("LastYearSamePeriodInventory")
+                                .HasColumnType("numeric");
+
+                            b1.HasKey("FinancialStatement_id");
+
+                            b1.ToTable("financial-statement", "manufacturing");
+
+                            b1.ToJson("inventory_outstanding_data");
+
+                            b1.WithOwner()
+                                .HasForeignKey("FinancialStatement_id")
+                                .HasConstraintName("fk_financial_statement_financial_statement__id");
+                        });
+
+                    b.OwnsOne("Fundamental.Domain.Codals.Manufacturing.Entities.FinancialStatement+SalesOutstanding", "SalesOutstandingData", b1 =>
+                        {
+                            b1.Property<long>("FinancialStatement_id")
+                                .HasColumnType("bigint");
+
+                            b1.Property<decimal>("CurrentOperationalIncome")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal>("CurrentTradeAndOtherReceivables")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal>("LastYearFullPeriodOperationalIncome")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal>("LastYearSamePeriodOperationalIncome")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal>("LastYearSamePeriodTradeAndOtherReceivables")
+                                .HasColumnType("numeric");
+
+                            b1.HasKey("FinancialStatement_id");
+
+                            b1.ToTable("financial-statement", "manufacturing");
+
+                            b1.ToJson("sales_outstanding_data");
+
+                            b1.WithOwner()
+                                .HasForeignKey("FinancialStatement_id")
+                                .HasConstraintName("fk_financial_statement_financial_statement__id");
+                        });
+
+                    b.Navigation("InventoryOutstandingData");
+
+                    b.Navigation("SalesOutstandingData");
 
                     b.Navigation("Symbol");
                 });
@@ -2704,6 +2836,17 @@ namespace Fundamental.Migrations.Fundamental
                     b.Navigation("Index");
                 });
 
+            modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.Symbol", b =>
+                {
+                    b.HasOne("Fundamental.Domain.Symbols.Entities.Sector", "Sector")
+                        .WithMany("Symbols")
+                        .HasForeignKey("Sector_id")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .HasConstraintName("fk_symbol_sector_sector_id");
+
+                    b.Navigation("Sector");
+                });
+
             modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.SymbolRelation", b =>
                 {
                     b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Child")
@@ -2742,6 +2885,11 @@ namespace Fundamental.Migrations.Fundamental
                     b.Navigation("ShareHolderSymbol");
 
                     b.Navigation("Symbol");
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.Sector", b =>
+                {
+                    b.Navigation("Symbols");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.Symbol", b =>

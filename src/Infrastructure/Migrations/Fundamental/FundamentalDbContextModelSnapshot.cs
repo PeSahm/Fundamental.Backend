@@ -21,7 +21,7 @@ namespace Fundamental.Migrations.Fundamental
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.4")
+                .HasAnnotation("ProductVersion", "9.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "company_type", new[] { "article44", "associations", "basket_companies", "brokers", "capital_supply_companies", "central_asset_management_company", "exempt_companies", "financial_information_processing_companies", "financial_institutions", "government_companies", "intermediary_institutions", "investment_advisory_companies", "investment_funds", "none_financial_institution", "public_investment_and_holding", "rating_institutions", "subsidiary_financial_institutions", "un_known1" });
@@ -224,6 +224,10 @@ namespace Fundamental.Migrations.Fundamental
                     b.Property<bool>("IsAudited")
                         .HasColumnType("boolean")
                         .HasColumnName("is_audited");
+
+                    b.Property<DateTime>("PublishDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("publish-date");
 
                     b.Property<short>("Row")
                         .HasColumnType("SMALLINT")

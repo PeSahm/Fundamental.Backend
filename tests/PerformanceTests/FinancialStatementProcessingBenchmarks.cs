@@ -140,7 +140,8 @@ public class FinancialStatementProcessingBenchmarks
                         $"Test Description {category}",
                         new SignedCodalMoney(value, IsoCurrency.IRR),
                         random.NextDouble() > 0.2, // 80% audited
-                        DateTime.UtcNow
+                        DateTime.UtcNow,
+                        DateTime.UtcNow.AddDays(-random.Next(1, 365))
                     ));
                 }
             }
@@ -284,7 +285,8 @@ public class PerformanceTests : IAsyncLifetime
                 $"Large Dataset Description {i}",
                 new SignedCodalMoney(value, IsoCurrency.IRR),
                 random.NextDouble() > 0.2,
-                DateTime.UtcNow
+                DateTime.UtcNow,
+                DateTime.UtcNow.AddDays(-random.Next(1, 365))
             ));
         }
 

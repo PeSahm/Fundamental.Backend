@@ -23,7 +23,8 @@ public class BalanceSheet : BaseEntity<Guid>
         string? description,
         SignedCodalMoney value,
         bool isAudited,
-        DateTime createdAt
+        DateTime createdAt,
+        DateTime publishDate
     )
     {
         Id = id;
@@ -42,6 +43,7 @@ public class BalanceSheet : BaseEntity<Guid>
         IsAudited = isAudited;
         CreatedAt = createdAt;
         UpdatedAt = createdAt;
+        PublishDate = publishDate;
     }
 
     protected BalanceSheet()
@@ -76,6 +78,8 @@ public class BalanceSheet : BaseEntity<Guid>
 
     public FinancialStatement? FinancialStatement { get; set; }
 
+    public DateTime PublishDate { get; private set; }
+
     public void Update(
         Symbol symbol,
         ulong traceNo,
@@ -87,7 +91,8 @@ public class BalanceSheet : BaseEntity<Guid>
         string description,
         SignedCodalMoney value,
         bool isAudited,
-        DateTime updatedAt
+        DateTime updatedAt,
+        DateTime publishDate
     )
     {
         Symbol = symbol;
@@ -101,6 +106,7 @@ public class BalanceSheet : BaseEntity<Guid>
         Value = value;
         IsAudited = isAudited;
         UpdatedAt = updatedAt;
+        PublishDate = publishDate;
     }
 
     /// <summary>
