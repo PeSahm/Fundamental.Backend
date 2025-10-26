@@ -21,7 +21,7 @@ public sealed class BalanceSheetReadRepository(FundamentalDbContext dbContext) :
     {
         IQueryable<BalanceSheet> query = dbContext.BalanceSheets.Where(x => x.Description != null).AsNoTracking();
 
-        if (request is not null && request.IsinList.Where(string.IsNullOrEmpty).ToList().Count != 0)
+        if (request is not null && request.IsinList.Where(x => !string.IsNullOrEmpty(x)).ToList().Count != 0)
         {
             query = query.Where(x => request.IsinList.Contains(x.Symbol.Isin));
         }
