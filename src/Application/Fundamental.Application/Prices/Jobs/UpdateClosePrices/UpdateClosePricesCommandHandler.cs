@@ -20,7 +20,7 @@ public sealed class UpdateClosePricesCommandHandler(
 {
     public async Task<Response> Handle(UpdateClosePricesDataCommand dataCommand, CancellationToken cancellationToken)
     {
-        DateOnly fromDate = DateTime.Now.AddDays(-1 * dataCommand.Days).ToDateOnly();
+        DateOnly fromDate = DateTime.Now.AddDays(-1 * dataCommand.DaysBefore).ToDateOnly();
         DateOnly toDate = DateTime.Now.AddDays(1).ToDateOnly();
 
         while (fromDate <= toDate)
