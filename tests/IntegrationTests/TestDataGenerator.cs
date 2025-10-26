@@ -1,5 +1,6 @@
 using System.Globalization;
-// using Bogus; // Commented out due to complex entity constructors
+
+using Bogus; // Commented out due to complex entity constructors
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Symbols.Entities;
 
@@ -50,7 +51,6 @@ public static class TestDataGenerator
     //
     //     await context.SaveChangesAsync();
     // }
-
     public static string GenerateFinancialStatementJson(string type, int version = 1)
     {
         return type.ToLower() switch

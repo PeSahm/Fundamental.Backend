@@ -1,6 +1,4 @@
-using System.Data.Common;
 using DotNet.Testcontainers.Builders;
-using DotNet.Testcontainers.Configurations;
 using DotNet.Testcontainers.Containers;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.Infrastructure.Persistence;
@@ -12,7 +10,10 @@ using Testcontainers.PostgreSql;
 using Testcontainers.Redis;
 using WireMock.Server;
 using Xunit;
-using Microsoft.EntityFrameworkCore.Query;
+using Moq;
+using Fundamental.Application.Codals.Services;
+using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
+using Fundamental.Application.Codals.Manufacturing.Jobs.UpdateBalanceSheetData;
 
 namespace IntegrationTests;
 
@@ -22,7 +23,7 @@ public class TestFixture : IAsyncLifetime
     private RedisContainer? _redisContainer;
     private WireMockServer? _wireMockServer;
     private IServiceProvider? _serviceProvider;
-    // private Respawn.Checkpoint? _checkpoint;
+    private Mock<ICodalService>? _codalServiceMock;
 
     public IServiceProvider Services => _serviceProvider ?? throw new InvalidOperationException("Test fixture not initialized");
     public FundamentalDbContext DbContext => Services.GetRequiredService<FundamentalDbContext>();
@@ -30,6 +31,7 @@ public class TestFixture : IAsyncLifetime
     public string RedisConnectionString => _redisContainer?.GetConnectionString() ?? throw new InvalidOperationException("Redis container not initialized");
     public WireMockServer WireMockServer => _wireMockServer ?? throw new InvalidOperationException("WireMock server not initialized");
     public ExternalServiceMocks ExternalMocks { get; private set; }
+    public Mock<ICodalService> CodalServiceMock => _codalServiceMock ?? throw new InvalidOperationException("CodalService mock not initialized");
 
     public async Task InitializeAsync()
     {
@@ -54,12 +56,14 @@ public class TestFixture : IAsyncLifetime
         // Start containers
         await Task.WhenAll(
             _postgresContainer.StartAsync(),
-            _redisContainer.StartAsync()
-        );
+            _redisContainer.StartAsync());
+
+        // Initialize CodalService mock
+        _codalServiceMock = new Mock<ICodalService>();
 
         // Configure services
-        var services = new ServiceCollection();
-        ConfigureServices(services);
+        IServiceCollection services = new ServiceCollection();
+        ConfigureServices(services, _codalServiceMock);
         _serviceProvider = services.BuildServiceProvider();
 
         // Initialize external service mocks
@@ -99,32 +103,23 @@ public class TestFixture : IAsyncLifetime
         await Task.WhenAll(disposeTasks);
     }
 
-    // public async Task ResetDatabaseAsync()
-    // {
-    //     if (_checkpoint == null)
-    //     {
-    //         throw new InvalidOperationException("Respawn checkpoint not initialized");
-    //     }
-
-    //     await using var connection = new NpgsqlConnection(PostgresConnectionString);
-    //     await connection.OpenAsync();
-    //     await _checkpoint.ResetAsync(connection);
-    // }
-
-    private void ConfigureServices(IServiceCollection services)
+    private void ConfigureServices(IServiceCollection services, Mock<ICodalService> codalServiceMock)
     {
         // Configuration
-        var configuration = new ConfigurationBuilder()
+        IConfigurationBuilder configurationBuilder = new ConfigurationBuilder()
             .AddInMemoryCollection(new Dictionary<string, string?>
             {
                 ["ConnectionStrings:DefaultConnection"] = PostgresConnectionString,
                 ["ConnectionStrings:Redis"] = RedisConnectionString,
                 ["Mdp:url"] = $"http://localhost:{WireMockServer.Port}",
                 ["TseTmc:url"] = $"http://localhost:{WireMockServer.Port}"
-            })
-            .Build();
+            });
+        IConfiguration configuration = configurationBuilder.Build();
 
         services.AddSingleton<IConfiguration>(configuration);
+
+        // Add logging
+        services.AddLogging();
 
         // Database context
         services.AddDbContext<FundamentalDbContext>(options =>
@@ -133,14 +128,20 @@ public class TestFixture : IAsyncLifetime
         // Register as IUnitOfWork
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<FundamentalDbContext>());
 
+        // Register mock CodalService
+        services.AddSingleton<ICodalService>(codalServiceMock.Object);
+
+        // Note: MediatR registration removed to avoid licensing issues in tests
+        // If needed, handlers can be tested directly
+
         // Add infrastructure services (minimal setup for testing)
         // services.AddInfrastructure(configuration);
     }
 
     private async Task InitializeDatabaseAsync()
     {
-        using var scope = Services.CreateScope();
-        var context = scope.ServiceProvider.GetRequiredService<FundamentalDbContext>();
+        using IServiceScope scope = Services.CreateScope();
+        FundamentalDbContext context = scope.ServiceProvider.GetRequiredService<FundamentalDbContext>();
 
         // Create database schema directly (more reliable for testing than running migrations)
         await context.Database.EnsureCreatedAsync();
@@ -148,6 +149,4 @@ public class TestFixture : IAsyncLifetime
         // Ensure database is ready
         await context.Database.CanConnectAsync();
     }
-
-
 }
