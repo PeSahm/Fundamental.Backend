@@ -100,7 +100,8 @@ public sealed class BalanceSheetV5Processor(IServiceScopeFactory serviceScopeFac
                             description: rowItem.GetDescription(),
                             value: rowItem.GetValue(yearDatum.ColumnId),
                             isAudited: yearDatum.IsAudited,
-                            createdAt: DateTime.Now
+                            createdAt: DateTime.Now,
+                            publishDate: statement.PublishDateMiladi.ToUniversalTime()
                         );
 
                         if (await dbContext.BalanceSheets

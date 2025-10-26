@@ -14,5 +14,6 @@ public sealed record AddBalanceSheetRequest(
     ushort YearEndMonth,
     ushort ReportMonth,
     bool IsAudited,
+    DateTime PublishDate,
     List<AddBalanceSheetItem> Items
 ) : IRequest<Response>;

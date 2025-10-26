@@ -79,6 +79,10 @@ public class BalanceSheetConfiguration : EntityTypeConfigurationBase<BalanceShee
 
         builder.Property(x => x.IsAudited).IsRequired();
 
+        builder.Property(x => x.PublishDate)
+            .HasColumnName("publish-date")
+            .IsRequired();
+
         builder.HasOne(x => x.FinancialStatement)
             .WithOne()
             .HasForeignKey<BalanceSheet>("financial-statement-id")

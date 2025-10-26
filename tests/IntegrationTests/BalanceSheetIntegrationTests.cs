@@ -123,6 +123,7 @@ public class BalanceSheetIntegrationTests : FinancialStatementTestBase
 
         // Create test balance sheets with different fiscal years/report months to avoid grouping
         DateTime createdAt = DateTime.UtcNow;
+        DateTime publishDate = DateTime.UtcNow.AddDays(-1);
         BalanceSheet balanceSheet1 = new BalanceSheet(
             Guid.NewGuid(),
             testSymbol1,
@@ -137,7 +138,8 @@ public class BalanceSheetIntegrationTests : FinancialStatementTestBase
             "Test Asset 1",
             new SignedCodalMoney(1000000.50m),
             true,
-            createdAt);
+            createdAt,
+            publishDate);
 
         BalanceSheet balanceSheet2 = new BalanceSheet(
             Guid.NewGuid(),
@@ -153,7 +155,8 @@ public class BalanceSheetIntegrationTests : FinancialStatementTestBase
             "Test Liability 1",
             new SignedCodalMoney(500000.25m),
             true,
-            createdAt);
+            createdAt,
+            publishDate);
 
         BalanceSheet balanceSheet3 = new BalanceSheet(
             Guid.NewGuid(),
@@ -169,7 +172,8 @@ public class BalanceSheetIntegrationTests : FinancialStatementTestBase
             "Test Asset 2",
             new SignedCodalMoney(2000000.75m),
             true,
-            createdAt);
+            createdAt,
+            publishDate);
 
         await _fixture.DbContext.BalanceSheets.AddRangeAsync(balanceSheet1, balanceSheet2, balanceSheet3);
         await _fixture.DbContext.SaveChangesAsync();
@@ -196,12 +200,12 @@ public class BalanceSheetIntegrationTests : FinancialStatementTestBase
         GetBalanceSheetResultDto firstItem = result.Data.Items[0];
         firstItem.Isin.Should().Be("IRO1TEST0001");
         firstItem.FiscalYear.Should().Be(1402);
-        firstItem.ReportMonth.Should().Be(12);
+        firstItem.ReportMonth.Should().Be(6); // Ordered by TraceNo desc, so highest TraceNo first
 
         GetBalanceSheetResultDto secondItem = result.Data.Items[1];
         secondItem.Isin.Should().Be("IRO1TEST0001");
         secondItem.FiscalYear.Should().Be(1402);
-        secondItem.ReportMonth.Should().Be(6);
+        secondItem.ReportMonth.Should().Be(12);
 
         // Test with non-existent ISIN
         GetBalanceSheetRequest emptyRequest = new GetBalanceSheetRequest(
