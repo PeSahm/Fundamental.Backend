@@ -6,4 +6,4 @@ using MediatR;
 namespace Fundamental.Application.Symbols.Jobs.UpdateIndexData;
 
 [HandlerCode(HandlerCode.UpdateIndexData)]
-public sealed record UpdateIndexDataCommand(int Days) : IRequest<Response>;
+public sealed record UpdateIndexDataCommand(uint DaysBefore) : IRequest<Response>;
