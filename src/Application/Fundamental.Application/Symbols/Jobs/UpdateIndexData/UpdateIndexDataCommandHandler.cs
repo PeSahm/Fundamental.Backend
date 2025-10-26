@@ -21,7 +21,7 @@ public sealed class UpdateIndexDataCommandHandler(
 {
     public async Task<Response> Handle(UpdateIndexDataCommand request, CancellationToken cancellationToken)
     {
-        DateOnly fromDate = DateTime.Now.AddDays(-1 * request.Days).ToDateOnly();
+        DateOnly fromDate = DateTime.Now.AddDays(-1 * request.DaysBefore).ToDateOnly();
 
         List<Symbol> symbols = await repository.ListAsync(
             new SymbolSpec().WhereProductType(ProductType.Index),
