@@ -21,7 +21,7 @@ public sealed class BalanceSheetReadRepository(FundamentalDbContext dbContext) :
     {
         IQueryable<BalanceSheet> query = dbContext.BalanceSheets.Where(x => x.Description != null).AsNoTracking();
 
-        if (request is not null && request.IsinList.Where(x => !string.IsNullOrEmpty(x)).ToList().Count != 0)
+        if (request is { IsinList: not null } && request.IsinList.Where(x => !string.IsNullOrEmpty(x)).ToList().Count != 0)
         {
             query = query.Where(x => request.IsinList.Contains(x.Symbol.Isin));
         }
@@ -42,7 +42,6 @@ public sealed class BalanceSheetReadRepository(FundamentalDbContext dbContext) :
         }
 
         Paginated<GetBalanceSheetResultDto> validStatements = await query
-            .Where(x => x.ReportMonth.Month != (x.YearEndMonth.Month == 12 ? 1 : x.YearEndMonth.Month + 1))
             .GroupBy(gb => new { gb.Symbol.Isin, FiscalYear = gb.FiscalYear.Year, ReportMonth = gb.ReportMonth.Month })
             .Select(x => new GetBalanceSheetResultDto
             {
@@ -54,7 +53,7 @@ public sealed class BalanceSheetReadRepository(FundamentalDbContext dbContext) :
                 YearEndMonth = x.First().YearEndMonth.Month,
                 Symbol = x.First().Symbol.Name,
                 Uri = x.First().Uri
-            }).ToPagingListAsync(request, "FiscalYear desc,ReportMonth desc", cancellationToken);
+            }).ToPagingListAsync(request, "TraceNo desc", cancellationToken);
 
         return validStatements;
     }
@@ -63,7 +62,6 @@ public sealed class BalanceSheetReadRepository(FundamentalDbContext dbContext) :
     {
         return dbContext.BalanceSheets
                 .AsNoTracking()
-                .Where(x => x.ReportMonth.Month != 1)
                 .Where(x => !dbContext.ManufacturingFinancialStatement.Any(fs => fs.TraceNo == x.TraceNo))
                 .GroupBy(gb => new
                 {
