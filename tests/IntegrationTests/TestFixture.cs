@@ -131,6 +131,9 @@ public class TestFixture : IAsyncLifetime
         // Register mock CodalService
         services.AddSingleton<ICodalService>(codalServiceMock.Object);
 
+        // Register repositories needed for testing
+        services.AddScoped<Fundamental.Application.Codals.Manufacturing.Repositories.IBalanceSheetReadRepository, Fundamental.Infrastructure.Repositories.Codals.Manufacturing.BalanceSheetReadRepository>();
+
         // Note: MediatR registration removed to avoid licensing issues in tests
         // If needed, handlers can be tested directly
 

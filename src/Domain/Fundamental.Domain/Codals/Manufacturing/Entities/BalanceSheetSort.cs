@@ -75,7 +75,7 @@ public sealed class BalanceSheetSort : BaseEntity<Guid>
             }
         }
 
-        return "Invalid value";
+        return string.Empty;
     }
 
     public void SetCodaRow(ushort codalRow)
