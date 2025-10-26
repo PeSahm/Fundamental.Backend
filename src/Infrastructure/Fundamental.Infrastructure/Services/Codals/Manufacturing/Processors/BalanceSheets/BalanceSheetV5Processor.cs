@@ -40,13 +40,10 @@ public sealed class BalanceSheetV5Processor(IServiceScopeFactory serviceScopeFac
 
         List<JProperty> properties = jObject.Properties().ToList();
 
-        foreach (JProperty property in properties)
-        {
-            if (!propertiesToKeep.Contains(property.Name))
-            {
-                property.Remove();
-            }
-        }
+        properties
+            .Where(p => !propertiesToKeep.Contains(p.Name))
+            .ToList()
+            .ForEach(p => p.Remove());
 
         // Deserialize the filtered JSON into your model
         RootCodalBalanceSheet? codalBalanceSheetRoot = jObject.ToObject<RootCodalBalanceSheet>(new JsonSerializer
@@ -85,19 +82,6 @@ public sealed class BalanceSheetV5Processor(IServiceScopeFactory serviceScopeFac
                         x => x.Isin == statement.Isin,
                         cancellationToken);
 
-                if (await dbContext.BalanceSheets
-                        .AnyAsync(
-                            x =>
-                                x.Symbol.Isin == statement.Isin &&
-                                x.FiscalYear.Year == yearDatum.FiscalYear.Value &&
-                                x.ReportMonth.Month ==
-                                BalanceSheet.GetFixedBalanceSheetReportMonth(yearDatum.FiscalMonth, yearDatum.ReportMonth) &&
-                                x.TraceNo == statement.TracingNo,
-                            cancellationToken))
-                {
-                    continue;
-                }
-
                 foreach (RowItem rowItem in balanceSheetDto.RowItems)
                 {
                     try
@@ -112,12 +96,27 @@ public sealed class BalanceSheetV5Processor(IServiceScopeFactory serviceScopeFac
                             reportMonth: new StatementMonth(yearDatum.ReportMonth.Value),
                             row: rowItem.RowNumber,
                             codalRow: (ushort)rowItem.RowCode,
-                            codalCategory: rowItem.Category == Category.Assets ? BalanceSheetCategory.Assets : BalanceSheetCategory.Liability,
+                            rowItem.Category == Category.Assets ? BalanceSheetCategory.Assets : BalanceSheetCategory.Liability,
                             description: rowItem.GetDescription(),
                             value: rowItem.GetValue(yearDatum.ColumnId),
                             isAudited: yearDatum.IsAudited,
                             createdAt: DateTime.Now
                         );
+
+                        if (await dbContext.BalanceSheets
+                                .AnyAsync(
+                                    x =>
+                                        x.Symbol.Isin == balanceSheet.Symbol.Isin &&
+                                        x.FiscalYear.Year == balanceSheet.FiscalYear &&
+                                        x.ReportMonth.Month == balanceSheet.ReportMonth &&
+                                        x.CodalRow == balanceSheet.CodalRow &&
+                                        x.CodalCategory == balanceSheet.CodalCategory &&
+                                        x.TraceNo == balanceSheet.TraceNo,
+                                    cancellationToken))
+                        {
+                            continue;
+                        }
+
                         dbContext.BalanceSheets.Add(balanceSheet);
                         logger.LogDebug(
                             "Created balance sheet entry for trace no {TraceNo}, row {RowNumber}, description {Description}",
