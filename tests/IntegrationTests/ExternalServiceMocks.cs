@@ -101,4 +101,17 @@ public class ExternalServiceMocks
                     ]
                 }"));
     }
+
+    public void SetupBalanceSheetApiResponse(string jsonResponse)
+    {
+        // Mock CODAL balance sheet API endpoint
+        _server
+            .Given(Request.Create()
+                .WithPath("/api/codal/balance-sheet")
+                .UsingPost())
+            .RespondWith(Response.Create()
+                .WithStatusCode(200)
+                .WithHeader("Content-Type", "application/json")
+                .WithBody(jsonResponse));
+    }
 }

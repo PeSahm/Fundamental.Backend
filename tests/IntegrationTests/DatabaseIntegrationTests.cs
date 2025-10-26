@@ -19,7 +19,7 @@ public class DatabaseIntegrationTests : IClassFixture<TestFixture>
     public async Task Database_ShouldBeAccessible()
     {
         // Arrange & Act
-        var canConnect = await _fixture.DbContext.Database.CanConnectAsync();
+        bool canConnect = await _fixture.DbContext.Database.CanConnectAsync();
 
         // Assert
         canConnect.Should().BeTrue();
@@ -29,7 +29,7 @@ public class DatabaseIntegrationTests : IClassFixture<TestFixture>
     public async Task Should_SaveAndRetrieveSymbol()
     {
         // Arrange
-        var symbol = new Symbol(
+        Symbol symbol = new Symbol(
             Guid.NewGuid(),
             "TEST123456789",
             "123456789",
@@ -46,15 +46,14 @@ public class DatabaseIntegrationTests : IClassFixture<TestFixture>
             ProductType.Equity,
             ExchangeType.TSE,
             null,
-            DateTime.UtcNow
-        );
+            DateTime.UtcNow);
 
         // Act
         _fixture.DbContext.Symbols.Add(symbol);
         await _fixture.DbContext.SaveChangesAsync();
 
         // Assert
-        var retrievedSymbol = await _fixture.DbContext.Symbols
+        Symbol? retrievedSymbol = await _fixture.DbContext.Symbols
             .FirstOrDefaultAsync(s => s.Id == symbol.Id);
         retrievedSymbol.Should().NotBeNull();
         retrievedSymbol!.TseInsCode.Should().Be("123456789");
@@ -65,7 +64,7 @@ public class DatabaseIntegrationTests : IClassFixture<TestFixture>
     public async Task DatabaseReset_ShouldClearData()
     {
         // Arrange - Add data
-        var symbol = new Symbol(
+        Symbol symbol = new Symbol(
             Guid.NewGuid(),
             "TEMP123456789",
             "987654321",
@@ -82,20 +81,19 @@ public class DatabaseIntegrationTests : IClassFixture<TestFixture>
             ProductType.Equity,
             ExchangeType.TSE,
             null,
-            DateTime.UtcNow
-        );
+            DateTime.UtcNow);
         _fixture.DbContext.Symbols.Add(symbol);
         await _fixture.DbContext.SaveChangesAsync();
 
         // Verify data exists
-        var countBefore = await _fixture.DbContext.Symbols.CountAsync();
+        int countBefore = await _fixture.DbContext.Symbols.CountAsync();
         countBefore.Should().BeGreaterThan(0);
 
         // Act - Reset database (commented out since Respawn is not working)
         // await _fixture.ResetDatabaseAsync();
 
         // Assert - For now, just check that we can query
-        var countAfter = await _fixture.DbContext.Symbols.CountAsync();
+        int countAfter = await _fixture.DbContext.Symbols.CountAsync();
         countAfter.Should().BeGreaterThanOrEqualTo(countBefore);
     }
 }
