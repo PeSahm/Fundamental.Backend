@@ -11,6 +11,8 @@ public sealed class GetBalanceSheetResultDto
     public string Uri { get; init; }
     public ushort FiscalYear { get; init; }
 
+    public DateTime PublishDate { get; set; }
+
     [JsonIgnore]
     [System.Text.Json.Serialization.JsonIgnore]
     public ushort YearEndMonth { get; init; }
