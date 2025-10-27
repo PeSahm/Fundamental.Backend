@@ -1,4 +1,5 @@
-﻿using Fundamental.Application.Codals.Enums;
+﻿using DNTPersianUtils.Core;
+using Fundamental.Application.Codals.Enums;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Common.Enums;
@@ -15,13 +16,18 @@ public class UpdateBalanceSheetDataCommandHandler(ICodalService codalService, IL
     {
         List<GetStatementResponse> balanceSheets =
             await codalService.GetStatements(
-                DateTime.Now.AddDays(-1 * Math.Abs(request.DaysBefore)),
+                DateTime.Now.AddDays(-1 * request.DaysBefore),
                 ReportingType.Production,
                 LetterType.InterimStatement,
                 cancellationToken);
 
         foreach (GetStatementResponse balanceSheet in balanceSheets)
         {
+            if (balanceSheet.PublishDateMiladi > new DateTime(2023,06,20))
+            {
+                continue;
+            }
+
             try
             {
                 await codalService.ProcessCodal(balanceSheet, LetterPart.BalanceSheet, cancellationToken);
