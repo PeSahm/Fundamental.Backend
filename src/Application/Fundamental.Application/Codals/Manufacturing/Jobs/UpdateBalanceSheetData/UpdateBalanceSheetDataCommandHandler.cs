@@ -23,11 +23,6 @@ public class UpdateBalanceSheetDataCommandHandler(ICodalService codalService, IL
 
         foreach (GetStatementResponse balanceSheet in balanceSheets)
         {
-            if (balanceSheet.PublishDateMiladi > new DateTime(2023,06,20))
-            {
-                continue;
-            }
-
             try
             {
                 await codalService.ProcessCodal(balanceSheet, LetterPart.BalanceSheet, cancellationToken);

@@ -16,11 +16,11 @@ public class CommonCodalDataHostedService(IServiceScopeFactory factory) : Backgr
         await Task.CompletedTask;
 
          using IServiceScope scope = factory.CreateScope();
-         await scope.ServiceProvider.GetRequiredService<UpdateClosePricesDataJob>().Invoke();
-        // await scope.ServiceProvider.GetRequiredService<UpdateCodalPublisherDataJob>().Invoke();
-         await scope.ServiceProvider.GetRequiredService<UpdateIndexDataJob>().Invoke();
-         await scope.ServiceProvider.GetRequiredService<UpdateSymbolDataJob>().Invoke();
-        //await scope.ServiceProvider.GetRequiredService<UpdateTseTmcShareHoldersDataJob>().Invoke();
+        //  await scope.ServiceProvider.GetRequiredService<UpdateClosePricesDataJob>().Invoke();
+        // // await scope.ServiceProvider.GetRequiredService<UpdateCodalPublisherDataJob>().Invoke();
+        //  await scope.ServiceProvider.GetRequiredService<UpdateIndexDataJob>().Invoke();
+        //  await scope.ServiceProvider.GetRequiredService<UpdateSymbolDataJob>().Invoke();
+        // //await scope.ServiceProvider.GetRequiredService<UpdateTseTmcShareHoldersDataJob>().Invoke();
 
          await scope.ServiceProvider.GetRequiredService<UpdateBalanceSheetDataJob>().Invoke();
         // await scope.ServiceProvider.GetRequiredService<UpdateCapitalIncreaseRegistrationNoticeDataJob>().Invoke();
