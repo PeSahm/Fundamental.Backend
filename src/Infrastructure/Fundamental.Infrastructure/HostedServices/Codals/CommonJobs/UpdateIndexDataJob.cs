@@ -11,7 +11,7 @@ public class UpdateIndexDataJob(IServiceScopeFactory serviceScopeFactory) : IInv
     {
         using IServiceScope scope = serviceScopeFactory.CreateScope();
         IMediator mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-        await mediator.Send(new UpdateIndexDataCommand(90), CancellationToken);
+        await mediator.Send(new UpdateIndexDataCommand(7), CancellationToken);
     }
 
     public CancellationToken CancellationToken { get; set; }
