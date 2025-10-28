@@ -58,20 +58,13 @@ public class IncomeStatementConfiguration : EntityTypeConfigurationBase<IncomeSt
                     .IsRequired();
             });
 
-        builder.ComplexProperty(
-            x => x.Value,
-            amount => amount.UseSignedCodalMoney());
-
-        builder.Property(x => x.Row).IsRequired();
-
-        builder.Property(x => x.CodalRow).IsRequired();
-
-        builder.Property(x => x.CodalCategory).IsRequired();
-
-        builder.Property(x => x.Description).HasMaxLength(256).IsRequired(false);
-
         builder.Property(x => x.IsAudited).IsRequired();
 
         builder.Property(x => x.PublishDate).IsRequired();
+
+        builder.HasMany(x => x.Details)
+            .WithOne(x => x.IncomeStatement)
+            .HasForeignKey("income_statement_id")
+            .IsRequired();
     }
 }

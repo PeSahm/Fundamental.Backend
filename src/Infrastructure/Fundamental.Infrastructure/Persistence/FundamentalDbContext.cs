@@ -33,6 +33,8 @@ public class FundamentalDbContext : DbContext, IUnitOfWork, ICoravelProDbContext
 
     public DbSet<IncomeStatement> IncomeStatements { get; set; }
 
+    public DbSet<IncomeStatementDetail> IncomeStatementDetails { get; set; }
+
     public DbSet<BalanceSheetSort> CodalRowOrders { get; set; }
 
     public DbSet<IncomeStatementSort> IncomeStatementSorts { get; set; }

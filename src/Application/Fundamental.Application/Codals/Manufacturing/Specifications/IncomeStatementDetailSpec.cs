@@ -4,14 +4,14 @@ using Fundamental.Domain.Codals.Manufacturing.Entities;
 
 namespace Fundamental.Application.Codals.Manufacturing.Specifications;
 
-public class IncomeStatementDetailSpec : Specification<IncomeStatement, GetIncomeStatementDetailsResultDto>
+public class IncomeStatementDetailSpec : Specification<IncomeStatementDetail, GetIncomeStatementDetailsResultDto>
 {
     public static IncomeStatementDetailSpec Where(ulong traceNo, uint fiscalYear, uint reportMonth)
     {
         IncomeStatementDetailSpec spec = new();
-        spec.Query.Where(x => x.FiscalYear.Year == fiscalYear)
-            .Where(x => x.ReportMonth.Month == reportMonth)
-            .Where(x => x.TraceNo == traceNo)
+        spec.Query.Where(x => x.IncomeStatement.FiscalYear.Year == fiscalYear)
+            .Where(x => x.IncomeStatement.ReportMonth.Month == reportMonth)
+            .Where(x => x.IncomeStatement.TraceNo == traceNo)
             .OrderBy(x => x.Row)
             .AsNoTracking()
             .Select(x => new GetIncomeStatementDetailsResultDto

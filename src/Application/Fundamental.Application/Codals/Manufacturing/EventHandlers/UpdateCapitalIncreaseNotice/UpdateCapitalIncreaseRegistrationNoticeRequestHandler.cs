@@ -56,7 +56,8 @@ public sealed class UpdateCapitalIncreaseRegistrationNoticeRequestHandler(
             return UpdateIncomeStatementCapitalErrorCodes.CapitalRecordNotFound;
         }
 
-        capitalRow.UpdateCapitalValue(request.Event.NewCapital / SignedCodalMoney.CodalMoneyMultiplier);
+        IncomeStatementDetail capitalDetail = capitalRow.Details.First(d => d.CodalRow == IncomeStatementRow.ListedCapital);
+        capitalDetail.UpdateValue(request.Event.NewCapital / SignedCodalMoney.CodalMoneyMultiplier);
 
         FinancialStatement? fs = await financialStatementReadRepository.GetLastFinancialStatement(
             request.Event.Isin,

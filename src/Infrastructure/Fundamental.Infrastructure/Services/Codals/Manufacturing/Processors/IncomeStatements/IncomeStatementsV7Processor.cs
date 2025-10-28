@@ -3,6 +3,7 @@ using Fundamental.Application.Codals.Enums;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
+using Fundamental.Domain.Codals.ValueObjects;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
 using Fundamental.Infrastructure.Persistence;
@@ -79,37 +80,57 @@ public sealed class IncomeStatementsV7Processor(IServiceScopeFactory serviceScop
                     x => x.Isin == statement.Isin,
                     cancellationToken);
 
-            if (await dbContext.IncomeStatements
-                    .AnyAsync(
-                        x =>
-                            x.Symbol.Isin == statement.Isin &&
-                            x.FiscalYear.Year == yearDatum.FiscalYear &&
-                            x.ReportMonth.Month == yearDatum.ReportMonth &&
-                            x.TraceNo == statement.TracingNo,
-                        cancellationToken))
-            {
-                continue;
-            }
+            // Check if IncomeStatement already exists
+            IncomeStatement? existingIncomeStatement = await dbContext.IncomeStatements
+                .FirstOrDefaultAsync(
+                    x => x.Symbol.Isin == statement.Isin &&
+                         x.TraceNo == statement.TracingNo &&
+                         x.FiscalYear.Year == yearDatum.FiscalYear &&
+                         x.ReportMonth.Month == yearDatum.ReportMonth,
+                    cancellationToken);
 
-            foreach (RowItem rowItem in incomeStatementDto.RowItems)
+            if (existingIncomeStatement == null)
             {
-                IncomeStatement incomeStatement = new(
+                existingIncomeStatement = new IncomeStatement(
                     Guid.NewGuid(),
                     symbol,
                     statement.TracingNo,
                     statement.HtmlUrl,
-                    yearDatum.FiscalYear.Value,
-                    yearDatum.FiscalMonth.Value,
-                    yearDatum.ReportMonth.Value,
-                    rowItem.RowNumber,
-                    rowItem.RowCode,
-                    rowItem.GetDescription(),
-                    rowItem.GetValue(yearDatum.ColumnId),
+                    new FiscalYear(yearDatum.FiscalYear.Value),
+                    new StatementMonth(yearDatum.FiscalMonth.Value),
+                    new StatementMonth(yearDatum.ReportMonth.Value),
                     yearDatum.IsAudited,
                     DateTime.Now,
                     statement.PublishDateMiladi.ToUniversalTime()
                 );
-                dbContext.IncomeStatements.Add(incomeStatement);
+
+                dbContext.IncomeStatements.Add(existingIncomeStatement);
+            }
+
+            foreach (RowItem rowItem in incomeStatementDto.RowItems)
+            {
+                // Check if detail already exists
+                if (await dbContext.IncomeStatementDetails
+                        .AnyAsync(
+                            x => x.IncomeStatement.Id == existingIncomeStatement.Id &&
+                                 x.CodalRow == rowItem.RowCode &&
+                                 x.Row == rowItem.RowNumber,
+                            cancellationToken))
+                {
+                    continue;
+                }
+
+                IncomeStatementDetail detail = new IncomeStatementDetail(
+                    Guid.NewGuid(),
+                    existingIncomeStatement,
+                    rowItem.RowNumber,
+                    rowItem.RowCode,
+                    rowItem.GetDescription(),
+                    rowItem.GetValue(yearDatum.ColumnId),
+                    DateTime.Now
+                );
+
+                dbContext.IncomeStatementDetails.Add(detail);
             }
         }
 
