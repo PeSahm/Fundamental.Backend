@@ -2,6 +2,7 @@
 using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Npgsql.NameTranslation;
 
 namespace Fundamental.Infrastructure.Configuration.Fundamental.Codals.Manufacturing;
 
@@ -9,7 +10,7 @@ public class NonOperationIncomeAndExpenseConfiguration : EntityTypeConfiguration
 {
     protected override void ExtraConfigure(EntityTypeBuilder<NonOperationIncomeAndExpense> builder)
     {
-        builder.ToTable("non-operation-income-expense", "manufacturing");
+        builder.ToTable(NpgsqlSnakeCaseNameTranslator.ConvertToSnakeCase(nameof(NonOperationIncomeAndExpense)), "manufacturing");
 
         builder.HasOne(x => x.Symbol)
             .WithMany()
