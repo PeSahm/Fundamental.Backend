@@ -36,5 +36,23 @@ public class BalanceSheetDetailConfiguration : EntityTypeConfigurationBase<Balan
             amount =>
                 amount.UseSignedCodalMoney()
         );
+
+        // Indexes for performance
+        builder.HasIndex("balance-sheet-id")
+            .HasDatabaseName("ix_balance_sheet_detail_balance_sheet_id");
+
+        builder.HasIndex(x => x.CodalRow)
+            .HasDatabaseName("ix_balance_sheet_detail_codal_row");
+
+        builder.HasIndex(x => x.CodalCategory)
+            .HasDatabaseName("ix_balance_sheet_detail_codal_category");
+
+        // Composite index for ordered queries within a balance sheet
+        builder.HasIndex("balance-sheet-id", nameof(BalanceSheetDetail.Row))
+            .HasDatabaseName("ix_balance_sheet_detail_balance_sheet_id_row");
+
+        // Composite index for filtering by category and row
+        builder.HasIndex(x => new { x.CodalCategory, x.CodalRow })
+            .HasDatabaseName("ix_balance_sheet_detail_category_row");
     }
 }

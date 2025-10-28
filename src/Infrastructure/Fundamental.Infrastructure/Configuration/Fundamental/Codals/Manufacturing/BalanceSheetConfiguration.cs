@@ -67,5 +67,15 @@ public class BalanceSheetConfiguration : EntityTypeConfigurationBase<BalanceShee
             .WithOne()
             .HasForeignKey<BalanceSheet>("financial-statement-id")
             .IsRequired(false);
+
+        // Indexes for performance
+        builder.HasIndex("symbol-id")
+            .HasDatabaseName("ix_balance_sheet_symbol_id");
+
+        builder.HasIndex(x => x.TraceNo)
+            .HasDatabaseName("ix_balance_sheet_trace_no");
+
+        builder.HasIndex(x => x.PublishDate)
+            .HasDatabaseName("ix_balance_sheet_publish_date");
     }
 }
