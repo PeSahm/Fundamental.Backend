@@ -1,6 +1,7 @@
 ﻿using Fundamental.Domain.Symbols.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Npgsql.NameTranslation;
 
 namespace Fundamental.Infrastructure.Configuration.Fundamental;
 
@@ -8,7 +9,7 @@ public class SymbolRelationConfiguration : EntityTypeConfigurationBase<SymbolRel
 {
     protected override void ExtraConfigure(EntityTypeBuilder<SymbolRelation> builder)
     {
-        builder.ToTable("symbol-relation", "shd");
+        builder.ToTable(NpgsqlSnakeCaseNameTranslator.ConvertToSnakeCase(nameof(SymbolRelation)), "shd");
 
         builder.Property(x => x.Ratio)
             .HasPrecision(18, 3)
@@ -16,12 +17,12 @@ public class SymbolRelationConfiguration : EntityTypeConfigurationBase<SymbolRel
 
         builder.HasOne(x => x.Parent)
             .WithMany(x => x.InvestmentSymbols)
-            .HasForeignKey("parent-id")
+            .HasForeignKey("parent_id")
             .IsRequired();
 
         builder.HasOne(x => x.Child)
             .WithMany(x => x.InvestorSymbols)
-            .HasForeignKey("child-id")
+            .HasForeignKey("child_id")
             .IsRequired()
             .OnDelete(DeleteBehavior.NoAction)
             ;
