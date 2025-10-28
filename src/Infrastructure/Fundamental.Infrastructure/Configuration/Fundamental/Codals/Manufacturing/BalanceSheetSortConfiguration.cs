@@ -1,6 +1,7 @@
 ﻿using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Npgsql.NameTranslation;
 
 namespace Fundamental.Infrastructure.Configuration.Fundamental.Codals.Manufacturing;
 
@@ -8,7 +9,7 @@ public class BalanceSheetSortConfiguration : EntityTypeConfigurationBase<Balance
 {
     protected override void ExtraConfigure(EntityTypeBuilder<BalanceSheetSort> builder)
     {
-        builder.ToTable("balance-sheet-sort", "manufacturing");
+        builder.ToTable(NpgsqlSnakeCaseNameTranslator.ConvertToSnakeCase(nameof(BalanceSheetSort)), "manufacturing");
 
         builder.Property(x => x.Order)
             .HasColumnType("SMALLINT")
