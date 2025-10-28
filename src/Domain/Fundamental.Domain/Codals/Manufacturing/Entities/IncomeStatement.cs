@@ -22,7 +22,8 @@ public class IncomeStatement : BaseEntity<Guid>
         string? description,
         SignedCodalMoney value,
         bool isAudited,
-        DateTime createdAt
+        DateTime createdAt,
+        DateTime publishDate
     )
     {
         Id = id;
@@ -39,6 +40,7 @@ public class IncomeStatement : BaseEntity<Guid>
         IsAudited = isAudited;
         CreatedAt = createdAt;
         UpdatedAt = createdAt;
+        PublishDate = publishDate;
     }
 
     protected IncomeStatement()
@@ -69,6 +71,8 @@ public class IncomeStatement : BaseEntity<Guid>
     public SignedCodalMoney Value { get; private set; }
 
     public bool IsAudited { get; private set; }
+
+    public DateTime PublishDate { get; private set; }
 
     public void UpdateCapitalValue(SignedCodalMoney money)
     {

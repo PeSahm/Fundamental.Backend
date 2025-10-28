@@ -134,6 +134,7 @@ public class TestFixture : IAsyncLifetime
         // Register repositories needed for testing
         services.AddScoped<IRepository, Fundamental.Infrastructure.Persistence.Repositories.Base.FundamentalRepository>();
         services.AddScoped<Fundamental.Application.Codals.Manufacturing.Repositories.IBalanceSheetReadRepository, Fundamental.Infrastructure.Repositories.Codals.Manufacturing.BalanceSheetReadRepository>();
+        services.AddScoped<Fundamental.Application.Codals.Manufacturing.Repositories.IIncomeStatementsReadRepository, Fundamental.Infrastructure.Repositories.Codals.Manufacturing.IncomeStatementReadRepository>();
 
         // Note: MediatR registration removed to avoid licensing issues in tests
         // If needed, handlers can be tested directly

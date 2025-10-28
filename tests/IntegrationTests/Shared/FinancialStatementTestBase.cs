@@ -108,6 +108,16 @@ public abstract class FinancialStatementTestBase : IClassFixture<TestFixture>
     }
 
     /// <summary>
+    /// Cleans all existing income statement data from the database.
+    /// </summary>
+    protected async Task CleanIncomeStatementData()
+    {
+        _fixture.DbContext.IncomeStatements.RemoveRange(_fixture.DbContext.IncomeStatements);
+        _fixture.DbContext.IncomeStatementSorts.RemoveRange(_fixture.DbContext.IncomeStatementSorts);
+        await _fixture.DbContext.SaveChangesAsync();
+    }
+
+    /// <summary>
     /// Gets the test data directory path relative to the test assembly.
     /// </summary>
     protected string GetTestDataDirectory(string relativePath)

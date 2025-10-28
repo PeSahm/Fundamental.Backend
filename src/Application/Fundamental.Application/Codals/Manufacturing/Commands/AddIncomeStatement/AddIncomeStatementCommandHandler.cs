@@ -82,7 +82,8 @@ public sealed class AddIncomeStatementCommandHandler(
                 incomeStatementRow.Description,
                 item.Value,
                 request.IsAudited,
-                DateTime.UtcNow
+                DateTime.UtcNow,
+                request.PublishDate
             );
             repository.Add(incomeStatement);
         }
