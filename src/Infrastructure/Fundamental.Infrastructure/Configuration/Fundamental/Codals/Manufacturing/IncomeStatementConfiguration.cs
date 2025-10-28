@@ -1,6 +1,8 @@
-﻿using Fundamental.Domain.Codals.Manufacturing.Entities;
+﻿using EFCore.NamingConventions.Internal;
+using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Npgsql.NameTranslation;
 
 namespace Fundamental.Infrastructure.Configuration.Fundamental.Codals.Manufacturing;
 
@@ -8,10 +10,10 @@ public class IncomeStatementConfiguration : EntityTypeConfigurationBase<IncomeSt
 {
     protected override void ExtraConfigure(EntityTypeBuilder<IncomeStatement> builder)
     {
-        builder.ToTable("income-statement", "manufacturing");
+        builder.ToTable(NpgsqlSnakeCaseNameTranslator.ConvertToSnakeCase(nameof(IncomeStatement)), "manufacturing");
         builder.HasOne(x => x.Symbol)
             .WithMany()
-            .HasForeignKey("symbol-id")
+            .HasForeignKey("symbol_id")
             .IsRequired();
 
         builder.Property(x => x.TraceNo)
@@ -28,7 +30,7 @@ public class IncomeStatementConfiguration : EntityTypeConfigurationBase<IncomeSt
             navigationBuilder =>
             {
                 navigationBuilder.Property(x => x.Year)
-                    .HasColumnName("fiscal-year")
+                    .HasColumnName("fiscal_year")
                     .HasColumnType("SMALLINT")
                     .IsRequired();
             });
@@ -41,7 +43,7 @@ public class IncomeStatementConfiguration : EntityTypeConfigurationBase<IncomeSt
             navigationBuilder =>
             {
                 navigationBuilder.Property(x => x.Month)
-                    .HasColumnName("year-end-month")
+                    .HasColumnName("year_end_month")
                     .HasColumnType("smallint")
                     .IsRequired();
             });
@@ -51,7 +53,7 @@ public class IncomeStatementConfiguration : EntityTypeConfigurationBase<IncomeSt
             navigationBuilder =>
             {
                 navigationBuilder.Property(x => x.Month)
-                    .HasColumnName("report-month")
+                    .HasColumnName("report_month")
                     .HasColumnType("smallint")
                     .IsRequired();
             });
