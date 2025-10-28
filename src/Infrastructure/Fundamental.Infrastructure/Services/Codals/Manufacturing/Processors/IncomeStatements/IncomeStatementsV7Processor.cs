@@ -106,7 +106,8 @@ public sealed class IncomeStatementsV7Processor(IServiceScopeFactory serviceScop
                     rowItem.GetDescription(),
                     rowItem.GetValue(yearDatum.ColumnId),
                     yearDatum.IsAudited,
-                    DateTime.Now
+                    DateTime.Now,
+                    statement.PublishDateMiladi.ToUniversalTime()
                 );
                 dbContext.IncomeStatements.Add(incomeStatement);
             }

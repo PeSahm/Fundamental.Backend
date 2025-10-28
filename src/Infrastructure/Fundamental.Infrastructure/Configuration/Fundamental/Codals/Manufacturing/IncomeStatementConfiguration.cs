@@ -71,5 +71,7 @@ public class IncomeStatementConfiguration : EntityTypeConfigurationBase<IncomeSt
         builder.Property(x => x.Description).HasMaxLength(256).IsRequired(false);
 
         builder.Property(x => x.IsAudited).IsRequired();
+
+        builder.Property(x => x.PublishDate).IsRequired();
     }
 }

@@ -51,8 +51,9 @@ public sealed class IncomeStatementReadRepository(FundamentalDbContext dbContext
                 IsAudited = x.First().IsAudited,
                 YearEndMonth = x.First().YearEndMonth.Month,
                 Symbol = x.First().Symbol.Name,
+                PublishDate = x.Max(mx => mx.PublishDate),
                 Uri = x.First().Uri
-            }).ToPagingListAsync(request, "FiscalYear desc,ReportMonth desc", cancellationToken);
+            }).ToPagingListAsync(request, "PublishDate desc", cancellationToken);
 
         return validStatements;
     }

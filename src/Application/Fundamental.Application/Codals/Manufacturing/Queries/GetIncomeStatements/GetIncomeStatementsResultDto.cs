@@ -22,4 +22,5 @@ public sealed class GetIncomeStatementsResultDto
         YearEndMonth,
         FiscalYear,
         IsAudited);
+    public DateTime PublishDate { get; init; }
 }

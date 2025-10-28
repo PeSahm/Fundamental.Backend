@@ -14,5 +14,6 @@ public sealed record AddIncomeStatementRequest(
     ushort YearEndMonth,
     ushort ReportMonth,
     bool IsAudited,
+    DateTime PublishDate,
     List<AddIncomeStatementItem> Items
 ) : IRequest<Response>;
