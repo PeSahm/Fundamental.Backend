@@ -14,7 +14,7 @@ public class CapitalIncreaseRegistrationNoticeConfiguration : EntityTypeConfigur
 
         builder.HasOne(x => x.Symbol)
             .WithMany()
-            .HasForeignKey("symbol-id")
+            .HasForeignKey("symbol_id")
             .IsRequired();
 
         builder.Property(x => x.TraceNo)
