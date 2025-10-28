@@ -17,7 +17,7 @@ public sealed class IncomeStatementReadRepository(FundamentalDbContext dbContext
         CancellationToken cancellationToken = default
     )
     {
-        IQueryable<IncomeStatement> query = dbContext.IncomeStatements.Where(x => x.Description != null).AsNoTracking();
+        IQueryable<IncomeStatement> query = dbContext.IncomeStatements.Include(x => x.Details).Where(x => x.Details.Any(d => d.Description != null)).AsNoTracking();
 
         if (request is { IsinList: not null } && request.IsinList.Count != 0)
         {
@@ -67,15 +67,17 @@ public sealed class IncomeStatementReadRepository(FundamentalDbContext dbContext
     )
     {
         return dbContext.IncomeStatements
+            .Include(x => x.Details)
             .AsNoTracking()
             .Where(x =>
                 x.Symbol.Isin == isin &&
                 x.FiscalYear.Year <= fiscalYear &&
                 x.ReportMonth.Month <= statementMonth)
-            .Where(x => x.CodalRow == incomeStatementRow)
-            .OrderByDescending(x => x.FiscalYear.Year)
-            .ThenByDescending(x => x.ReportMonth.Month)
-            .ThenByDescending(x => x.TraceNo)
+            .SelectMany(x => x.Details)
+            .Where(d => d.CodalRow == incomeStatementRow)
+            .OrderByDescending(x => x.IncomeStatement.FiscalYear.Year)
+            .ThenByDescending(x => x.IncomeStatement.ReportMonth.Month)
+            .ThenByDescending(x => x.IncomeStatement.TraceNo)
             .Select(x => x.Value)
             .FirstOrDefaultAsync(cancellationToken);
     }

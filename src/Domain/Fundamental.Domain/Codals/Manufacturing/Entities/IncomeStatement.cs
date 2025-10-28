@@ -17,10 +17,6 @@ public class IncomeStatement : BaseEntity<Guid>
         FiscalYear fiscalYear,
         StatementMonth yearEndMonth,
         StatementMonth reportMonth,
-        ushort row,
-        ushort codalRow,
-        string? description,
-        SignedCodalMoney value,
         bool isAudited,
         DateTime createdAt,
         DateTime publishDate
@@ -33,14 +29,11 @@ public class IncomeStatement : BaseEntity<Guid>
         FiscalYear = fiscalYear;
         YearEndMonth = yearEndMonth;
         ReportMonth = reportMonth;
-        Row = row;
-        CodalRow = codalRow;
-        Description = description;
-        Value = value;
         IsAudited = isAudited;
         CreatedAt = createdAt;
         UpdatedAt = createdAt;
         PublishDate = publishDate;
+        Details = new List<IncomeStatementDetail>();
     }
 
     protected IncomeStatement()
@@ -61,29 +54,11 @@ public class IncomeStatement : BaseEntity<Guid>
 
     public StatementMonth ReportMonth { get; private set; }
 
-    public ushort Row { get; private set; }
-
-    public ushort CodalRow { get; private set; }
-
-    public ushort CodalCategory { get; set; }
-    public string? Description { get; private set; }
-
-    public SignedCodalMoney Value { get; private set; }
-
     public bool IsAudited { get; private set; }
 
     public DateTime PublishDate { get; private set; }
 
-    public void UpdateCapitalValue(SignedCodalMoney money)
-    {
-        if (CodalRow != IncomeStatementRow.ListedCapital)
-        {
-            throw new InvalidOperationException("Cannot update capital value for non-capital row.");
-        }
-
-        Value = money;
-        UpdatedAt = DateTime.UtcNow;
-    }
+    public ICollection<IncomeStatementDetail> Details { get; private set; }
 
     public void Update(
         Symbol symbol,
@@ -92,9 +67,6 @@ public class IncomeStatement : BaseEntity<Guid>
         FiscalYear fiscalYear,
         StatementMonth yearEndMonth,
         StatementMonth reportMonth,
-        ushort row,
-        string description,
-        SignedCodalMoney value,
         bool isAudited,
         DateTime updatedAt
     )
@@ -105,9 +77,6 @@ public class IncomeStatement : BaseEntity<Guid>
         FiscalYear = fiscalYear;
         YearEndMonth = yearEndMonth;
         ReportMonth = reportMonth;
-        Row = row;
-        Description = description;
-        Value = value;
         IsAudited = isAudited;
         UpdatedAt = updatedAt;
     }

@@ -73,7 +73,8 @@ public class IncomeStatementSpec : Specification<IncomeStatement>
     public IncomeStatementSpec WhereIncomeStatementRow(ushort row)
     {
         Query
-            .Where(x => x.CodalRow == row)
+            .Include(x => x.Details)
+            .Where(x => x.Details.Any(d => d.CodalRow == row))
             ;
         return this;
     }

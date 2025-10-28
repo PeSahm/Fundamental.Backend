@@ -76,13 +76,14 @@ public class IncomeStatementIntegrationTests : FinancialStatementTestBase
 
             // Assert - Verify income statement data was saved correctly
             List<IncomeStatement> savedIncomeStatements = await _fixture.DbContext.IncomeStatements
+                .Include(x => x.Details)
                 .Where(bs => bs.Symbol.Isin == isin && bs.TraceNo == traceNo)
                 .ToListAsync();
 
-            savedIncomeStatements.Should().HaveCount(expectedResults.Count, $"Should have {expectedResults.Count} income statement entries for ISIN {isin}");
-
             // Group expected results by fiscal year, report month, and audit status
             Dictionary<(int FiscalYear, int ReportMonth, bool IsAudited), List<IncomeStatementTestData.IncomeStatementExpectation>> expectedByPeriod = expectedResults.GroupBy(e => (e.FiscalYear, e.ReportMonth, e.IsAudited)).ToDictionary(g => g.Key, g => g.ToList());
+
+            savedIncomeStatements.Should().HaveCount(expectedByPeriod.Count, $"Should have {expectedByPeriod.Count} income statement masters for ISIN {isin}");
 
             // Verify each income statement entry
             foreach (KeyValuePair<(int FiscalYear, int ReportMonth, bool IsAudited), List<IncomeStatementTestData.IncomeStatementExpectation>> period in expectedByPeriod)
@@ -90,29 +91,29 @@ public class IncomeStatementIntegrationTests : FinancialStatementTestBase
                 (int fiscalYear, int reportMonth, bool isAudited) = period.Key;
                 List<IncomeStatementTestData.IncomeStatementExpectation> expectedForPeriod = period.Value;
 
-                List<IncomeStatement> actualStatements = savedIncomeStatements.Where(s =>
+                IncomeStatement actualMaster = savedIncomeStatements.Single(s =>
                     s.FiscalYear.Year == fiscalYear &&
                     s.ReportMonth.Month == reportMonth &&
-                    s.IsAudited == isAudited).ToList();
+                    s.IsAudited == isAudited);
 
-                actualStatements.Should().HaveCount(expectedForPeriod.Count, $"Should have {expectedForPeriod.Count} income statements for fiscal year {fiscalYear}, report month {reportMonth}, audited {isAudited}");
+                actualMaster.Details.Should().HaveCount(expectedForPeriod.Count, $"Master should have {expectedForPeriod.Count} details for fiscal year {fiscalYear}, report month {reportMonth}, audited {isAudited}");
 
                 // Verify each expected result for this period
                 foreach (IncomeStatementTestData.IncomeStatementExpectation expected in expectedForPeriod)
                 {
-                    IncomeStatement actual = actualStatements.Single(s =>
-                        s.CodalRow == expected.CodalRow &&
-                        s.Row == expected.Row);
+                    IncomeStatementDetail actual = actualMaster.Details.Single(d =>
+                        d.CodalRow == expected.CodalRow &&
+                        d.Row == expected.Row);
 
                     actual.Should()
                         .NotBeNull(
-                            $"Income statement should exist for CodalRow {expected.CodalRow}, FiscalYear {expected.FiscalYear}, ReportMonth {expected.ReportMonth}");
+                            $"Income statement detail should exist for CodalRow {expected.CodalRow}, FiscalYear {expected.FiscalYear}, ReportMonth {expected.ReportMonth}");
 
                     // actual.Description.Should().Be(expected.Description, $"Description should match for CodalRow {expected.CodalRow}");
                     actual.Value.RealValue.Should().Be(expected.Value, $"Value should match for CodalRow {expected.CodalRow}");
-                    actual.IsAudited.Should().Be(expected.IsAudited, $"IsAudited should match for CodalRow {expected.CodalRow}");
-                    actual.Symbol.Isin.Should().Be(isin, $"Symbol ISIN should match");
-                    actual.TraceNo.Should().Be(traceNo, $"Trace number should match");
+                    actual.IncomeStatement.IsAudited.Should().Be(expected.IsAudited, $"IsAudited should match for CodalRow {expected.CodalRow}");
+                    actual.IncomeStatement.Symbol.Isin.Should().Be(isin, $"Symbol ISIN should match");
+                    actual.IncomeStatement.TraceNo.Should().Be(traceNo, $"Trace number should match");
                 }
             }
         }
@@ -143,13 +144,19 @@ public class IncomeStatementIntegrationTests : FinancialStatementTestBase
             new FiscalYear(1402),
             new StatementMonth(12),
             new StatementMonth(12),
+            true,
+            createdAt,
+            publishDate1
+        );
+        incomeStatement1.Details.Add(new IncomeStatementDetail(
+            Guid.NewGuid(),
+            incomeStatement1,
             1,
             3,
             "Sales",
             new SignedCodalMoney(1000000, IsoCurrency.IRR),
-            true,
-            createdAt,
-            publishDate1);
+            createdAt
+        ));
 
         IncomeStatement incomeStatement2 = new IncomeStatement(
             Guid.NewGuid(),
@@ -159,13 +166,19 @@ public class IncomeStatementIntegrationTests : FinancialStatementTestBase
             new FiscalYear(1402), // Same fiscal year
             new StatementMonth(12),
             new StatementMonth(6), // Different report month
+            true,
+            createdAt,
+            publishDate2
+        );
+        incomeStatement2.Details.Add(new IncomeStatementDetail(
+            Guid.NewGuid(),
+            incomeStatement2,
             2,
             4,
             "Cost of Goods Sold",
             new SignedCodalMoney(500000, IsoCurrency.IRR),
-            true,
-            createdAt,
-            publishDate2);
+            createdAt
+        ));
 
         IncomeStatement incomeStatement3 = new IncomeStatement(
             Guid.NewGuid(),
@@ -175,13 +188,19 @@ public class IncomeStatementIntegrationTests : FinancialStatementTestBase
             new FiscalYear(1402),
             new StatementMonth(12),
             new StatementMonth(12),
+            true,
+            createdAt,
+            publishDate2
+        );
+        incomeStatement3.Details.Add(new IncomeStatementDetail(
+            Guid.NewGuid(),
+            incomeStatement3,
             1,
             3,
             "Sales",
             new SignedCodalMoney(2000000, IsoCurrency.IRR),
-            true,
-            createdAt,
-            publishDate2);
+            createdAt
+        ));
 
         await _fixture.DbContext.IncomeStatements.AddRangeAsync(incomeStatement1, incomeStatement2, incomeStatement3);
         await _fixture.DbContext.SaveChangesAsync();
@@ -279,17 +298,19 @@ public class IncomeStatementIntegrationTests : FinancialStatementTestBase
             .Where(bs => bs.TraceNo == 999999999UL)
             .ToListAsync();
 
-        savedIncomeStatements.Should().HaveCount(2);
+        savedIncomeStatements.Should().HaveCount(1);
+        IncomeStatement master = savedIncomeStatements[0];
+        master.Details.Should().HaveCount(2);
 
-        IncomeStatement salesStatement = savedIncomeStatements.First(s => s.CodalRow == 3);
-        salesStatement.Symbol.Isin.Should().Be("IRO1ADDIS001");
-        salesStatement.FiscalYear.Year.Should().Be(1402);
-        salesStatement.ReportMonth.Month.Should().Be(12);
-        salesStatement.IsAudited.Should().BeTrue();
-        salesStatement.Value.RealValue.Should().Be(1000000000000); // 1000000 * 1000000 (CodalMoneyMultiplier)
+        IncomeStatementDetail salesDetail = master.Details.First(d => d.CodalRow == 3);
+        salesDetail.IncomeStatement.Symbol.Isin.Should().Be("IRO1ADDIS001");
+        salesDetail.IncomeStatement.FiscalYear.Year.Should().Be(1402);
+        salesDetail.IncomeStatement.ReportMonth.Month.Should().Be(12);
+        salesDetail.IncomeStatement.IsAudited.Should().BeTrue();
+        salesDetail.Value.RealValue.Should().Be(1000000000000); // 1000000 * 1000000 (CodalMoneyMultiplier)
 
-        IncomeStatement cogsStatement = savedIncomeStatements.First(s => s.CodalRow == 4);
-        cogsStatement.Value.RealValue.Should().Be(500000000000); // 500000 * 1000000 (CodalMoneyMultiplier)
+        IncomeStatementDetail cogsDetail = master.Details.First(d => d.CodalRow == 4);
+        cogsDetail.Value.RealValue.Should().Be(500000000000); // 500000 * 1000000 (CodalMoneyMultiplier)
     }
 
     [Fact]
@@ -342,13 +363,19 @@ public class IncomeStatementIntegrationTests : FinancialStatementTestBase
             new FiscalYear(1402),
             new StatementMonth(12),
             new StatementMonth(12),
+            true,
+            DateTime.UtcNow,
+            DateTime.UtcNow
+        );
+        existingIncomeStatement.Details.Add(new IncomeStatementDetail(
+            Guid.NewGuid(),
+            existingIncomeStatement,
             1,
             3,
             "Sales",
             new SignedCodalMoney(1000000, IsoCurrency.IRR),
-            true,
-            DateTime.UtcNow,
-            DateTime.UtcNow);
+            DateTime.UtcNow
+        ));
 
         await _fixture.DbContext.IncomeStatements.AddAsync(existingIncomeStatement);
         await _fixture.DbContext.SaveChangesAsync();
@@ -388,41 +415,38 @@ public class IncomeStatementIntegrationTests : FinancialStatementTestBase
         await _fixture.DbContext.SaveChangesAsync();
 
         // Create income statements
-        List<IncomeStatement> incomeStatements = new()
-        {
-            new IncomeStatement(
-                Guid.NewGuid(),
-                testSymbol,
-                999999995UL,
-                "http://test.codal.ir/details",
-                new FiscalYear(1402),
-                new StatementMonth(12),
-                new StatementMonth(12),
-                1,
-                3,
-                "Sales",
-                new SignedCodalMoney(1000000, IsoCurrency.IRR),
-                true,
-                DateTime.UtcNow,
-                DateTime.UtcNow),
-            new IncomeStatement(
-                Guid.NewGuid(),
-                testSymbol,
-                999999995UL,
-                "http://test.codal.ir/details",
-                new FiscalYear(1402),
-                new StatementMonth(12),
-                new StatementMonth(12),
-                2,
-                4,
-                "Cost of Goods Sold",
-                new SignedCodalMoney(500000, IsoCurrency.IRR),
-                true,
-                DateTime.UtcNow,
-                DateTime.UtcNow)
-        };
+        IncomeStatement incomeStatement = new IncomeStatement(
+            Guid.NewGuid(),
+            testSymbol,
+            999999995UL,
+            "http://test.codal.ir/details",
+            new FiscalYear(1402),
+            new StatementMonth(12),
+            new StatementMonth(12),
+            true,
+            DateTime.UtcNow,
+            DateTime.UtcNow
+        );
+        incomeStatement.Details.Add(new IncomeStatementDetail(
+            Guid.NewGuid(),
+            incomeStatement,
+            1,
+            3,
+            "Sales",
+            new SignedCodalMoney(1000000, IsoCurrency.IRR),
+            DateTime.UtcNow
+        ));
+        incomeStatement.Details.Add(new IncomeStatementDetail(
+            Guid.NewGuid(),
+            incomeStatement,
+            2,
+            4,
+            "Cost of Goods Sold",
+            new SignedCodalMoney(500000, IsoCurrency.IRR),
+            DateTime.UtcNow
+        ));
 
-        await _fixture.DbContext.IncomeStatements.AddRangeAsync(incomeStatements);
+        await _fixture.DbContext.IncomeStatements.AddAsync(incomeStatement);
         await _fixture.DbContext.SaveChangesAsync();
 
         GetIncomeStatementDetailsRequest request = new GetIncomeStatementDetailsRequest(
