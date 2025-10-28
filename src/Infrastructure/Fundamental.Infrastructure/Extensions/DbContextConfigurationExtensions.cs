@@ -7,7 +7,6 @@ using Gridify;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Npgsql;
 
 namespace Fundamental.Infrastructure.Extensions;
 
@@ -18,23 +17,6 @@ public static class DbContextConfigurationExtensions
     public static IServiceCollection AddDbContexts(this IServiceCollection services, IConfiguration configuration)
     {
         GridifyGlobalConfiguration.EnableEntityFrameworkCompatibilityLayer();
-        NpgsqlDataSourceBuilder dataSourceBuilder = new(configuration.GetConnectionString("FundamentalDbContext"));
-        dataSourceBuilder.UseNodaTime();
-        dataSourceBuilder.MapEnum<IsoCurrency>();
-        dataSourceBuilder.MapEnum<ReportingType>();
-        dataSourceBuilder.MapEnum<CompanyType>();
-        dataSourceBuilder.MapEnum<EnableSubCompany>();
-        dataSourceBuilder.MapEnum<PublisherFundType>();
-        dataSourceBuilder.MapEnum<PublisherSubCompanyType>();
-        dataSourceBuilder.MapEnum<PublisherMarketType>();
-        dataSourceBuilder.MapEnum<PublisherState>();
-        dataSourceBuilder.MapEnum<ReviewStatus>();
-        dataSourceBuilder.MapEnum<ProductType>();
-        dataSourceBuilder.MapEnum<ExchangeType>();
-        dataSourceBuilder.MapEnum<EtfType>();
-        dataSourceBuilder.MapEnum<NoneOperationalIncomeTag>();
-
-        NpgsqlDataSource dataSource = dataSourceBuilder.Build();
 
         services.AddDbContext<FundamentalDbContext>((sp, options) =>
         {
@@ -46,7 +28,7 @@ public static class DbContextConfigurationExtensions
             }
 
             options.UseNpgsql(
-                    dataSource,
+                    configuration.GetConnectionString("FundamentalDbContext"),
                     b =>
                         b.EnableRetryOnFailure()
                             .SetPostgresVersion(16, 1)
