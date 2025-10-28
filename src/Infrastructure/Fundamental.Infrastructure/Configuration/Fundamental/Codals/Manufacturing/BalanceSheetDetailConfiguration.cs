@@ -1,4 +1,3 @@
-using EFCore.NamingConventions.Internal;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
