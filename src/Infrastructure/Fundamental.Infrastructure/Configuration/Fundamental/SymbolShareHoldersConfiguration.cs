@@ -1,6 +1,7 @@
 ﻿using Fundamental.Domain.Symbols.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Npgsql.NameTranslation;
 
 namespace Fundamental.Infrastructure.Configuration.Fundamental;
 
@@ -9,7 +10,7 @@ public sealed class SymbolShareHoldersConfiguration : EntityTypeConfigurationBas
     protected override void ExtraConfigure(EntityTypeBuilder<SymbolShareHolder> builder)
     {
         builder.ToTable(
-            "symbol-share-holders",
+            NpgsqlSnakeCaseNameTranslator.ConvertToSnakeCase(nameof(SymbolShareHolder)),
             "shd");
 
         builder.Property(x => x.ShareHolderName)
@@ -25,12 +26,12 @@ public sealed class SymbolShareHoldersConfiguration : EntityTypeConfigurationBas
 
         builder.HasOne(x => x.Symbol)
             .WithMany()
-            .HasForeignKey("symbol-id")
+            .HasForeignKey("symbol_id")
             .IsRequired();
 
         builder.HasOne(x => x.ShareHolderSymbol)
             .WithMany()
-            .HasForeignKey("share-holder-symbol-id")
+            .HasForeignKey("share_holder_symbol_id")
             .IsRequired(false);
     }
 }
