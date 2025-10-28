@@ -1,8 +1,6 @@
-﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
-using Fundamental.Domain.Codals.ValueObjects;
+﻿using Fundamental.Domain.Codals.ValueObjects;
 using Fundamental.Domain.Common.BaseTypes;
 using Fundamental.Domain.Common.Enums;
-using Fundamental.Domain.Common.ValueObjects;
 using Fundamental.Domain.Symbols.Entities;
 
 namespace Fundamental.Domain.Codals.Manufacturing.Entities;
@@ -17,11 +15,6 @@ public class BalanceSheet : BaseEntity<Guid>
         FiscalYear fiscalYear,
         StatementMonth yearEndMonth,
         StatementMonth reportMonth,
-        ushort row,
-        ushort codalRow,
-        BalanceSheetCategory codalCategory,
-        string? description,
-        SignedCodalMoney value,
         bool isAudited,
         DateTime createdAt,
         DateTime publishDate
@@ -35,15 +28,11 @@ public class BalanceSheet : BaseEntity<Guid>
         YearEndMonth = yearEndMonth;
         ReportMonth = reportMonth;
         FixedBalanceSheetReportMonth(yearEndMonth, reportMonth);
-        Row = row;
-        CodalCategory = codalCategory;
-        CodalRow = codalRow;
-        Description = description;
-        Value = value;
         IsAudited = isAudited;
         CreatedAt = createdAt;
         UpdatedAt = createdAt;
         PublishDate = publishDate;
+        Details = new List<BalanceSheetDetail>();
     }
 
     protected BalanceSheet()
@@ -64,50 +53,13 @@ public class BalanceSheet : BaseEntity<Guid>
 
     public StatementMonth ReportMonth { get; private set; }
 
-    public ushort Row { get; private set; }
-
-    public ushort CodalRow { get; private set; }
-
-    public BalanceSheetCategory CodalCategory { get; set; }
-
-    public string? Description { get; private set; }
-
-    public SignedCodalMoney Value { get; private set; }
-
     public bool IsAudited { get; private set; }
 
     public FinancialStatement? FinancialStatement { get; set; }
 
     public DateTime PublishDate { get; private set; }
 
-    public void Update(
-        Symbol symbol,
-        ulong traceNo,
-        string uri,
-        FiscalYear fiscalYear,
-        StatementMonth yearEndMonth,
-        StatementMonth reportMonth,
-        ushort row,
-        string description,
-        SignedCodalMoney value,
-        bool isAudited,
-        DateTime updatedAt,
-        DateTime publishDate
-    )
-    {
-        Symbol = symbol;
-        TraceNo = traceNo;
-        Uri = uri;
-        FiscalYear = fiscalYear;
-        YearEndMonth = yearEndMonth;
-        ReportMonth = reportMonth;
-        Row = row;
-        Description = description;
-        Value = value;
-        IsAudited = isAudited;
-        UpdatedAt = updatedAt;
-        PublishDate = publishDate;
-    }
+    public ICollection<BalanceSheetDetail> Details { get; private set; }
 
     /// <summary>
     /// Adjusts ReportMonth and FiscalYear when CODAL reports the statement as the first
