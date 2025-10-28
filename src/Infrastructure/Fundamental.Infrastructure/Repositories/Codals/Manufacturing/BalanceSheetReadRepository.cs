@@ -19,24 +19,24 @@ public sealed class BalanceSheetReadRepository(FundamentalDbContext dbContext) :
         CancellationToken cancellationToken = default
     )
     {
-        IQueryable<BalanceSheet> query = dbContext.BalanceSheets.Where(x => x.Description != null).AsNoTracking();
+        IQueryable<BalanceSheet> query = dbContext.BalanceSheets.AsNoTracking();
 
         if (request is { IsinList: not null } && request.IsinList.Where(x => !string.IsNullOrEmpty(x)).ToList().Count != 0)
         {
             query = query.Where(x => request.IsinList.Contains(x.Symbol.Isin));
         }
 
-        if (request.FiscalYear.HasValue)
+        if (request?.FiscalYear.HasValue == true)
         {
             query = query.Where(x => x.FiscalYear.Year == request.FiscalYear);
         }
 
-        if (request.ReportMonth.HasValue)
+        if (request?.ReportMonth.HasValue == true)
         {
             query = query.Where(x => x.ReportMonth.Month == request.ReportMonth);
         }
 
-        if (request.TraceNo.HasValue)
+        if (request?.TraceNo.HasValue == true)
         {
             query = query.Where(x => x.TraceNo == request.TraceNo);
         }
@@ -92,17 +92,16 @@ public sealed class BalanceSheetReadRepository(FundamentalDbContext dbContext) :
         CancellationToken cancellationToken = default
     )
     {
-        return dbContext.BalanceSheets
+        return dbContext.BalanceSheetDetails
             .AsNoTracking()
-            .Where(x =>
-                x.Symbol.Isin == isin &&
-                x.FiscalYear.Year <= fiscalYear &&
-                x.ReportMonth.Month <= statementMonth)
+            .Where(x => x.BalanceSheet.Symbol.Isin == isin)
+            .Where(x => x.BalanceSheet.FiscalYear.Year <= fiscalYear)
+            .Where(x => x.BalanceSheet.ReportMonth.Month <= statementMonth)
             .Where(x => x.CodalCategory == category)
             .Where(x => x.CodalRow == balanceSheetRow)
-            .OrderByDescending(x => x.FiscalYear.Year)
-            .ThenByDescending(x => x.ReportMonth.Month)
-            .ThenByDescending(x => x.TraceNo)
+            .OrderByDescending(x => x.BalanceSheet.FiscalYear.Year)
+            .ThenByDescending(x => x.BalanceSheet.ReportMonth.Month)
+            .ThenByDescending(x => x.BalanceSheet.TraceNo)
             .Select(x => x.Value)
             .FirstOrDefaultAsync(cancellationToken);
     }

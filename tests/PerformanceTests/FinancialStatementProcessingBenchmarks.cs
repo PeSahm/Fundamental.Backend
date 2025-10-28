@@ -77,7 +77,7 @@ public class FinancialStatementProcessingBenchmarks
             .Select(g => new
             {
                 SymbolId = g.Key,
-                AverageValue = g.Average(bs => bs.Value.Value),
+                AverageValue = g.SelectMany(bs => bs.Details).Average(d => d.Value.Value),
                 RecordCount = g.Count()
             })
             .ToListAsync();
@@ -122,28 +122,37 @@ public class FinancialStatementProcessingBenchmarks
         {
             for (int year = 0; year < yearsBack; year++)
             {
+                var balanceSheet = new BalanceSheet(
+                    Guid.NewGuid(),
+                    symbol,
+                    (ulong)random.Next(1000, 999999),
+                    $"http://test.uri/{year}",
+                    new FiscalYear(DateTime.Now.Year - year),
+                    new StatementMonth(12), // December
+                    new StatementMonth(12), // December
+                    random.NextDouble() > 0.2, // 80% audited
+                    DateTime.UtcNow,
+                    DateTime.UtcNow.AddDays(-random.Next(1, 365))
+                );
+
+                // Add some detail records
                 for (int category = 0; category < 5; category++) // Multiple rows per year
                 {
                     var value = random.Next(1000000, 100000000);
-
-                    balanceSheets.Add(new BalanceSheet(
+                    var detail = new BalanceSheetDetail(
                         Guid.NewGuid(),
-                        symbol,
-                        (ulong)random.Next(1000, 999999),
-                        $"http://test.uri/{year}/{category}",
-                        new FiscalYear(DateTime.Now.Year - year),
-                        new StatementMonth(12), // December
-                        new StatementMonth(12), // December
+                        balanceSheet,
                         (ushort)category,
                         (ushort)category,
                         (BalanceSheetCategory)category,
                         $"Test Description {category}",
                         new SignedCodalMoney(value, IsoCurrency.IRR),
-                        random.NextDouble() > 0.2, // 80% audited
-                        DateTime.UtcNow,
-                        DateTime.UtcNow.AddDays(-random.Next(1, 365))
-                    ));
+                        DateTime.UtcNow
+                    );
+                    balanceSheet.Details.Add(detail);
                 }
+
+                balanceSheets.Add(balanceSheet);
             }
         }
 
@@ -269,9 +278,8 @@ public class PerformanceTests : IAsyncLifetime
         for (int i = 0; i < count; i++)
         {
             var symbol = symbols[random.Next(symbols.Count)];
-            var value = random.Next(1000000, 100000000);
 
-            balanceSheets.Add(new BalanceSheet(
+            var balanceSheet = new BalanceSheet(
                 Guid.NewGuid(),
                 symbol,
                 (ulong)random.Next(1000, 999999),
@@ -279,15 +287,26 @@ public class PerformanceTests : IAsyncLifetime
                 new FiscalYear(DateTime.Now.Year - random.Next(0, 5)),
                 new StatementMonth(12), // December
                 new StatementMonth(12), // December
+                random.NextDouble() > 0.2,
+                DateTime.UtcNow,
+                DateTime.UtcNow.AddDays(-random.Next(1, 365))
+            );
+
+            // Add a single detail record for simplicity in performance tests
+            var value = random.Next(1000000, 100000000);
+            var detail = new BalanceSheetDetail(
+                Guid.NewGuid(),
+                balanceSheet,
                 (ushort)random.Next(0, 10),
                 (ushort)random.Next(0, 10),
                 BalanceSheetCategory.Assets,
                 $"Large Dataset Description {i}",
                 new SignedCodalMoney(value, IsoCurrency.IRR),
-                random.NextDouble() > 0.2,
-                DateTime.UtcNow,
-                DateTime.UtcNow.AddDays(-random.Next(1, 365))
-            ));
+                DateTime.UtcNow
+            );
+            balanceSheet.Details.Add(detail);
+
+            balanceSheets.Add(balanceSheet);
         }
 
         return balanceSheets;

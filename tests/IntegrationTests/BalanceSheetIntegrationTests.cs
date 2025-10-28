@@ -81,29 +81,37 @@ public class BalanceSheetIntegrationTests : FinancialStatementTestBase
                 .Where(bs => bs.Symbol.Isin == isin && bs.TraceNo == traceNo)
                 .ToListAsync();
 
-            savedBalanceSheets.Should().NotBeEmpty($"Balance sheet data should be saved for ISIN {isin}");
-            savedBalanceSheets.Count.Should()
-                .Be(expectedResults.Count, $"Should have {expectedResults.Count} balance sheet entries for ISIN {isin}");
+            savedBalanceSheets.Should().HaveCount(1, $"Should have 1 balance sheet header for ISIN {isin}");
+
+            BalanceSheet balanceSheet = savedBalanceSheets[0];
+            balanceSheet.Symbol.Isin.Should().Be(isin);
+            balanceSheet.TraceNo.Should().Be(traceNo);
+
+            List<BalanceSheetDetail> savedDetails = await _fixture.DbContext.BalanceSheetDetails
+                .Where(d => d.BalanceSheet.Id == balanceSheet.Id)
+                .ToListAsync();
+
+            savedDetails.Should().HaveCount(expectedResults.Count, $"Should have {expectedResults.Count} balance sheet details for ISIN {isin}");
 
             // Verify each expected result
             foreach (BalanceSheetTestData.BalanceSheetExpectation expected in expectedResults)
             {
-                BalanceSheet actual = savedBalanceSheets.Single(bs =>
-                    bs.CodalRow == expected.CodalRow &&
-                    bs.FiscalYear.Year == expected.FiscalYear &&
-                    bs.CodalCategory == expected.CodalCategory &&
-                    bs.ReportMonth.Month == expected.ReportMonth);
+                BalanceSheetDetail actual = savedDetails.Single(d =>
+                    d.CodalRow == expected.CodalRow &&
+                    d.BalanceSheet.FiscalYear.Year == expected.FiscalYear &&
+                    d.CodalCategory == expected.CodalCategory &&
+                    d.BalanceSheet.ReportMonth.Month == expected.ReportMonth);
 
                 actual.Should()
                     .NotBeNull(
-                        $"Balance sheet entry should exist for CodalRow {expected.CodalRow}, FiscalYear {expected.FiscalYear}, ReportMonth {expected.ReportMonth}");
+                        $"Balance sheet detail should exist for CodalRow {expected.CodalRow}, FiscalYear {expected.FiscalYear}, ReportMonth {expected.ReportMonth}");
 
                 actual.Description.Should().Be(expected.Description, $"Description should match for CodalRow {expected.CodalRow}");
                 actual.Value.RealValue.Should().Be(expected.Value, $"Value should match for CodalRow {expected.CodalRow}");
                 actual.CodalCategory.Should().Be(expected.CodalCategory, $"Category should match for CodalRow {expected.CodalRow}");
-                actual.IsAudited.Should().Be(expected.IsAudited, $"IsAudited should match for CodalRow {expected.CodalRow}");
-                actual.Symbol.Isin.Should().Be(isin, $"Symbol ISIN should match");
-                actual.TraceNo.Should().Be(traceNo, $"Trace number should match");
+                actual.BalanceSheet.IsAudited.Should().Be(expected.IsAudited, $"IsAudited should match for CodalRow {expected.CodalRow}");
+                actual.BalanceSheet.Symbol.Isin.Should().Be(isin, $"Symbol ISIN should match");
+                actual.BalanceSheet.TraceNo.Should().Be(traceNo, $"Trace number should match");
             }
         }
     }
@@ -123,7 +131,9 @@ public class BalanceSheetIntegrationTests : FinancialStatementTestBase
 
         // Create test balance sheets with different fiscal years/report months to avoid grouping
         DateTime createdAt = DateTime.UtcNow;
-        DateTime publishDate = DateTime.UtcNow.AddDays(-1);
+        DateTime publishDate1 = DateTime.UtcNow.AddDays(-1);
+        DateTime publishDate2 = DateTime.UtcNow; // Later publish date
+        DateTime publishDate3 = DateTime.UtcNow.AddDays(-1);
         BalanceSheet balanceSheet1 = new BalanceSheet(
             Guid.NewGuid(),
             testSymbol1,
@@ -132,14 +142,9 @@ public class BalanceSheetIntegrationTests : FinancialStatementTestBase
             new FiscalYear(1402),
             new StatementMonth(12),
             new StatementMonth(12),
-            1,
-            1001,
-            BalanceSheetCategory.Assets,
-            "Test Asset 1",
-            new SignedCodalMoney(1000000.50m),
             true,
             createdAt,
-            publishDate);
+            publishDate1);
 
         BalanceSheet balanceSheet2 = new BalanceSheet(
             Guid.NewGuid(),
@@ -149,14 +154,9 @@ public class BalanceSheetIntegrationTests : FinancialStatementTestBase
             new FiscalYear(1402), // Same fiscal year
             new StatementMonth(12),
             new StatementMonth(6), // Different report month
-            2,
-            1002,
-            BalanceSheetCategory.Liability,
-            "Test Liability 1",
-            new SignedCodalMoney(500000.25m),
             true,
             createdAt,
-            publishDate);
+            publishDate2);
 
         BalanceSheet balanceSheet3 = new BalanceSheet(
             Guid.NewGuid(),
@@ -166,29 +166,21 @@ public class BalanceSheetIntegrationTests : FinancialStatementTestBase
             new FiscalYear(1402),
             new StatementMonth(12),
             new StatementMonth(12),
-            1,
-            1001,
-            BalanceSheetCategory.Assets,
-            "Test Asset 2",
-            new SignedCodalMoney(2000000.75m),
             true,
             createdAt,
-            publishDate);
+            publishDate3);
 
         await _fixture.DbContext.BalanceSheets.AddRangeAsync(balanceSheet1, balanceSheet2, balanceSheet3);
         await _fixture.DbContext.SaveChangesAsync();
 
-        // Act
         GetBalanceSheetRequest request = new GetBalanceSheetRequest(
             IsinList: new List<string> { "IRO1TEST0001" },
             TraceNo: null,
             FiscalYear: 1402,
-            ReportMonth: null
-        );
+            ReportMonth: null);
 
         GetBalanceSheetQueryHandler handler = new GetBalanceSheetQueryHandler(
-            _fixture.Services.GetRequiredService<IBalanceSheetReadRepository>()
-        );
+            _fixture.Services.GetRequiredService<IBalanceSheetReadRepository>());
 
         Response<Paginated<GetBalanceSheetResultDto>> result = await handler.Handle(request, CancellationToken.None);
 
@@ -200,7 +192,7 @@ public class BalanceSheetIntegrationTests : FinancialStatementTestBase
         GetBalanceSheetResultDto firstItem = result.Data.Items[0];
         firstItem.Isin.Should().Be("IRO1TEST0001");
         firstItem.FiscalYear.Should().Be(1402);
-        firstItem.ReportMonth.Should().Be(6); // Ordered by TraceNo desc, so highest TraceNo first
+        firstItem.ReportMonth.Should().Be(6); // Ordered by PublishDate desc
 
         GetBalanceSheetResultDto secondItem = result.Data.Items[1];
         secondItem.Isin.Should().Be("IRO1TEST0001");
@@ -212,8 +204,7 @@ public class BalanceSheetIntegrationTests : FinancialStatementTestBase
             IsinList: new List<string> { "NONEXISTENT" },
             TraceNo: null,
             FiscalYear: 1402,
-            ReportMonth: null
-        );
+            ReportMonth: null);
 
         Response<Paginated<GetBalanceSheetResultDto>> emptyResult = await handler.Handle(emptyRequest, CancellationToken.None);
 

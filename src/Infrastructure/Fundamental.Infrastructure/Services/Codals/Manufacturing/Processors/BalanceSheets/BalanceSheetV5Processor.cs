@@ -82,45 +82,62 @@ public sealed class BalanceSheetV5Processor(IServiceScopeFactory serviceScopeFac
                         x => x.Isin == statement.Isin,
                         cancellationToken);
 
+                // Check if BalanceSheet already exists
+                BalanceSheet? existingBalanceSheet = await dbContext.BalanceSheets
+                    .FirstOrDefaultAsync(
+                        x => x.Symbol.Isin == statement.Isin &&
+                             x.TraceNo == statement.TracingNo &&
+                             x.FiscalYear.Year == yearDatum.FiscalYear.Value &&
+                             x.ReportMonth.Month == yearDatum.ReportMonth.Value,
+                        cancellationToken);
+
+                if (existingBalanceSheet == null)
+                {
+                    existingBalanceSheet = new BalanceSheet(
+                        id: Guid.NewGuid(),
+                        symbol: symbol,
+                        traceNo: statement.TracingNo,
+                        uri: statement.HtmlUrl,
+                        fiscalYear: new FiscalYear(yearDatum.FiscalYear.Value),
+                        yearEndMonth: new StatementMonth(yearDatum.FiscalMonth.Value),
+                        reportMonth: new StatementMonth(yearDatum.ReportMonth.Value),
+                        isAudited: yearDatum.IsAudited,
+                        createdAt: DateTime.Now,
+                        publishDate: statement.PublishDateMiladi.ToUniversalTime()
+                    );
+
+                    dbContext.BalanceSheets.Add(existingBalanceSheet);
+                }
+
                 foreach (RowItem rowItem in balanceSheetDto.RowItems)
                 {
                     try
                     {
-                        BalanceSheet balanceSheet = new(
-                            id: Guid.NewGuid(),
-                            symbol: symbol,
-                            traceNo: statement.TracingNo,
-                            uri: statement.HtmlUrl,
-                            fiscalYear: new FiscalYear(yearDatum.FiscalYear.Value),
-                            yearEndMonth: new StatementMonth(yearDatum.FiscalMonth.Value),
-                            reportMonth: new StatementMonth(yearDatum.ReportMonth.Value),
-                            row: rowItem.RowNumber,
-                            codalRow: (ushort)rowItem.RowCode,
-                            rowItem.Category == Category.Assets ? BalanceSheetCategory.Assets : BalanceSheetCategory.Liability,
-                            description: rowItem.GetDescription(),
-                            value: rowItem.GetValue(yearDatum.ColumnId),
-                            isAudited: yearDatum.IsAudited,
-                            createdAt: DateTime.Now,
-                            publishDate: statement.PublishDateMiladi.ToUniversalTime()
-                        );
-
-                        if (await dbContext.BalanceSheets
+                        // Check if detail already exists
+                        if (await dbContext.BalanceSheetDetails
                                 .AnyAsync(
-                                    x =>
-                                        x.Symbol.Isin == balanceSheet.Symbol.Isin &&
-                                        x.FiscalYear.Year == balanceSheet.FiscalYear &&
-                                        x.ReportMonth.Month == balanceSheet.ReportMonth &&
-                                        x.CodalRow == balanceSheet.CodalRow &&
-                                        x.CodalCategory == balanceSheet.CodalCategory &&
-                                        x.TraceNo == balanceSheet.TraceNo,
+                                    x => x.BalanceSheet.Id == existingBalanceSheet.Id &&
+                                         x.CodalRow == (ushort)rowItem.RowCode &&
+                                         x.CodalCategory == (rowItem.Category == Category.Assets ? BalanceSheetCategory.Assets : BalanceSheetCategory.Liability),
                                     cancellationToken))
                         {
                             continue;
                         }
 
-                        dbContext.BalanceSheets.Add(balanceSheet);
+                        BalanceSheetDetail detail = new BalanceSheetDetail(
+                            id: Guid.NewGuid(),
+                            balanceSheet: existingBalanceSheet,
+                            row: rowItem.RowNumber,
+                            codalRow: (ushort)rowItem.RowCode,
+                            codalCategory: rowItem.Category == Category.Assets ? BalanceSheetCategory.Assets : BalanceSheetCategory.Liability,
+                            description: rowItem.GetDescription(),
+                            value: rowItem.GetValue(yearDatum.ColumnId),
+                            createdAt: DateTime.Now
+                        );
+
+                        dbContext.BalanceSheetDetails.Add(detail);
                         logger.LogDebug(
-                            "Created balance sheet entry for trace no {TraceNo}, row {RowNumber}, description {Description}",
+                            "Created balance sheet detail for trace no {TraceNo}, row {RowNumber}, description {Description}",
                             statement.TracingNo,
                             rowItem.RowNumber,
                             rowItem.GetDescription());

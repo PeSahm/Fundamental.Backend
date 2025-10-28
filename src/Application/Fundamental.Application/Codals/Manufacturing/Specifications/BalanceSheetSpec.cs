@@ -21,8 +21,9 @@ public sealed class BalanceSheetSpec : Specification<BalanceSheet>
         spec.Query
             .Where(x => x.Symbol.Isin == isin)
             .Where(x => x.FiscalYear.Year == fiscalYear)
+            .Where(x => x.YearEndMonth.Month == yearEndMonth)
             .Where(x => x.ReportMonth.Month == reportMonth)
-            .Where(x => x.TraceNo < traceNo)
+            .Where(x => x.TraceNo == traceNo)
             .AsNoTracking();
         return spec;
     }
