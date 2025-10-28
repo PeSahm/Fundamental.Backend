@@ -19,21 +19,6 @@ public static class DbContextConfigurationExtensions
     {
         GridifyGlobalConfiguration.EnableEntityFrameworkCompatibilityLayer();
         NpgsqlDataSourceBuilder dataSourceBuilder = new(configuration.GetConnectionString("FundamentalDbContext"));
-        dataSourceBuilder.UseNodaTime();
-        dataSourceBuilder.MapEnum<IsoCurrency>();
-        dataSourceBuilder.MapEnum<ReportingType>();
-        dataSourceBuilder.MapEnum<CompanyType>();
-        dataSourceBuilder.MapEnum<EnableSubCompany>();
-        dataSourceBuilder.MapEnum<PublisherFundType>();
-        dataSourceBuilder.MapEnum<PublisherSubCompanyType>();
-        dataSourceBuilder.MapEnum<PublisherMarketType>();
-        dataSourceBuilder.MapEnum<PublisherState>();
-        dataSourceBuilder.MapEnum<ReviewStatus>();
-        dataSourceBuilder.MapEnum<ProductType>();
-        dataSourceBuilder.MapEnum<ExchangeType>();
-        dataSourceBuilder.MapEnum<EtfType>();
-        dataSourceBuilder.MapEnum<NoneOperationalIncomeTag>();
-
         NpgsqlDataSource dataSource = dataSourceBuilder.Build();
 
         services.AddDbContext<FundamentalDbContext>((sp, options) =>
