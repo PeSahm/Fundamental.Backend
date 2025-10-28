@@ -101,7 +101,9 @@ public abstract class FinancialStatementTestBase : IClassFixture<TestFixture>
     /// </summary>
     protected async Task CleanBalanceSheetData()
     {
+        _fixture.DbContext.BalanceSheetDetails.RemoveRange(_fixture.DbContext.BalanceSheetDetails);
         _fixture.DbContext.BalanceSheets.RemoveRange(_fixture.DbContext.BalanceSheets);
+        _fixture.DbContext.CodalRowOrders.RemoveRange(_fixture.DbContext.CodalRowOrders);
         await _fixture.DbContext.SaveChangesAsync();
     }
 
