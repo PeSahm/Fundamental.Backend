@@ -1,13 +1,16 @@
 ﻿using System.Collections.Generic;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
+using Fundamental.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace Fundamental.Migrations.Fundamental
 {
-    /// <inheritdoc />
-    public partial class FixNonOperationIncomeAndExpenseNaming : Migration
+    [DbContext(typeof(FundamentalDbContext))]
+    [Migration("20251028153228_FixNonOperationIncomeAndExpenseNaming")]
+    public class FixNonOperationIncomeAndExpenseNaming : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

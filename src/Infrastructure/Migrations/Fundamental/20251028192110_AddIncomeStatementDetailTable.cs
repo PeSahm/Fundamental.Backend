@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Enums;
-using Fundamental.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fundamental.Migrations.Fundamental
 {
     /// <inheritdoc />
-    [DbContext(typeof(FundamentalDbContext))]
-    [Migration("20251028072938_AddBalanceSheetDetailEntity")]
-    public class AddBalanceSheetDetailEntity : Migration
+    public partial class AddIncomeStatementDetailTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -22,32 +18,32 @@ namespace Fundamental.Migrations.Fundamental
             migrationBuilder.DropColumn(
                 name: "codal_category",
                 schema: "manufacturing",
-                table: "balance-sheet");
+                table: "income_statement");
 
             migrationBuilder.DropColumn(
                 name: "codal_row",
                 schema: "manufacturing",
-                table: "balance-sheet");
+                table: "income_statement");
 
             migrationBuilder.DropColumn(
                 name: "description",
                 schema: "manufacturing",
-                table: "balance-sheet");
+                table: "income_statement");
 
             migrationBuilder.DropColumn(
                 name: "row",
                 schema: "manufacturing",
-                table: "balance-sheet");
+                table: "income_statement");
 
             migrationBuilder.DropColumn(
                 name: "value",
                 schema: "manufacturing",
-                table: "balance-sheet");
+                table: "income_statement");
 
             migrationBuilder.AlterColumn<List<NoneOperationalIncomeTag>>(
                 name: "tags",
                 schema: "manufacturing",
-                table: "non-operation-income-expense",
+                table: "non_operation_income_and_expense",
                 type: "none_operational_income_tag[]",
                 nullable: false,
                 defaultValue: new List<NoneOperationalIncomeTag>(),
@@ -55,18 +51,24 @@ namespace Fundamental.Migrations.Fundamental
                 oldType: "none_operational_income_tag[]",
                 oldDefaultValue: new List<NoneOperationalIncomeTag>());
 
+            migrationBuilder.AddColumn<DateTime>(
+                name: "publish_date",
+                schema: "manufacturing",
+                table: "income_statement",
+                type: "timestamp with time zone",
+                nullable: false);
+
             migrationBuilder.CreateTable(
-                name: "balance-sheet-detail",
+                name: "income_statement_details",
                 schema: "manufacturing",
                 columns: table => new
                 {
                     _id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    balance_sheet_id = table.Column<long>(type: "bigint", nullable: false),
-                    row = table.Column<short>(type: "SMALLINT", nullable: false),
-                    codal_row = table.Column<short>(type: "SMALLINT", nullable: false),
-                    codal_category = table.Column<short>(type: "SMALLINT", nullable: false),
+                    income_statement_id = table.Column<long>(type: "bigint", nullable: false),
+                    row = table.Column<int>(type: "integer", nullable: false),
+                    codal_row = table.Column<int>(type: "integer", nullable: false),
                     description = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     currency = table.Column<IsoCurrency>(type: "iso_currency", nullable: false),
                     value = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
@@ -75,41 +77,46 @@ namespace Fundamental.Migrations.Fundamental
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_balance_sheet_detail", x => x._id);
+                    table.PrimaryKey("pk_income_statement_details", x => x._id);
                     table.ForeignKey(
-                        name: "fk_balance_sheet_detail_balance_sheet_balance_sheet_id",
-                        column: x => x.balance_sheet_id,
+                        name: "fk_income_statement_details_income_statement_income_statement_",
+                        column: x => x.income_statement_id,
                         principalSchema: "manufacturing",
-                        principalTable: "balance-sheet",
+                        principalTable: "income_statement",
                         principalColumn: "_id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "ix_balance_sheet_detail_balance_sheet_id",
+                name: "ix_income_statement_details_id",
                 schema: "manufacturing",
-                table: "balance-sheet-detail",
-                column: "balance_sheet_id");
-
-            migrationBuilder.CreateIndex(
-                name: "ix_balance_sheet_detail_id",
-                schema: "manufacturing",
-                table: "balance-sheet-detail",
+                table: "income_statement_details",
                 column: "Id",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "ix_income_statement_details_income_statement_id",
+                schema: "manufacturing",
+                table: "income_statement_details",
+                column: "income_statement_id");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "balance-sheet-detail",
+                name: "income_statement_details",
                 schema: "manufacturing");
+
+            migrationBuilder.DropColumn(
+                name: "publish_date",
+                schema: "manufacturing",
+                table: "income_statement");
 
             migrationBuilder.AlterColumn<List<NoneOperationalIncomeTag>>(
                 name: "tags",
                 schema: "manufacturing",
-                table: "non-operation-income-expense",
+                table: "non_operation_income_and_expense",
                 type: "none_operational_income_tag[]",
                 nullable: false,
                 defaultValue: new List<NoneOperationalIncomeTag>(),
@@ -117,42 +124,42 @@ namespace Fundamental.Migrations.Fundamental
                 oldType: "none_operational_income_tag[]",
                 oldDefaultValue: new List<NoneOperationalIncomeTag>());
 
-            migrationBuilder.AddColumn<short>(
+            migrationBuilder.AddColumn<int>(
                 name: "codal_category",
                 schema: "manufacturing",
-                table: "balance-sheet",
-                type: "SMALLINT",
+                table: "income_statement",
+                type: "integer",
                 nullable: false,
-                defaultValue: (short)0);
+                defaultValue: 0);
 
-            migrationBuilder.AddColumn<short>(
+            migrationBuilder.AddColumn<int>(
                 name: "codal_row",
                 schema: "manufacturing",
-                table: "balance-sheet",
-                type: "SMALLINT",
+                table: "income_statement",
+                type: "integer",
                 nullable: false,
-                defaultValue: (short)0);
+                defaultValue: 0);
 
             migrationBuilder.AddColumn<string>(
                 name: "description",
                 schema: "manufacturing",
-                table: "balance-sheet",
+                table: "income_statement",
                 type: "character varying(256)",
                 maxLength: 256,
                 nullable: true);
 
-            migrationBuilder.AddColumn<short>(
+            migrationBuilder.AddColumn<int>(
                 name: "row",
                 schema: "manufacturing",
-                table: "balance-sheet",
-                type: "SMALLINT",
+                table: "income_statement",
+                type: "integer",
                 nullable: false,
-                defaultValue: (short)0);
+                defaultValue: 0);
 
             migrationBuilder.AddColumn<decimal>(
                 name: "value",
                 schema: "manufacturing",
-                table: "balance-sheet",
+                table: "income_statement",
                 type: "numeric(36,10)",
                 precision: 36,
                 scale: 10,
