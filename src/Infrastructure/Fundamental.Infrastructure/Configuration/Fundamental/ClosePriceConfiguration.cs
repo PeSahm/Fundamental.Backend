@@ -1,6 +1,7 @@
 using Fundamental.Domain.Prices.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Npgsql.NameTranslation;
 using NpgsqlTypes;
 
 namespace Fundamental.Infrastructure.Configuration.Fundamental;
@@ -9,7 +10,7 @@ public class ClosePriceConfiguration : EntityTypeConfigurationBase<ClosePrice>
 {
     protected override void ExtraConfigure(EntityTypeBuilder<ClosePrice> builder)
     {
-        builder.ToTable("close-price", "shd");
+        builder.ToTable(NpgsqlSnakeCaseNameTranslator.ConvertToSnakeCase(nameof(ClosePrice)), "shd");
 
         builder.HasOne(x => x.Symbol)
             .WithMany()
