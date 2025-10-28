@@ -1,6 +1,7 @@
 ﻿using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Npgsql.NameTranslation;
 
 namespace Fundamental.Infrastructure.Configuration.Fundamental.Codals.Manufacturing;
 
@@ -8,7 +9,7 @@ public class MonthlyActivityConfiguration : EntityTypeConfigurationBase<MonthlyA
 {
     protected override void ExtraConfigure(EntityTypeBuilder<MonthlyActivity> builder)
     {
-        builder.ToTable("monthly-activity", "manufacturing");
+        builder.ToTable(NpgsqlSnakeCaseNameTranslator.ConvertToSnakeCase(nameof(MonthlyActivity)), "manufacturing");
 
         builder.HasOne(x => x.Symbol)
             .WithMany()
