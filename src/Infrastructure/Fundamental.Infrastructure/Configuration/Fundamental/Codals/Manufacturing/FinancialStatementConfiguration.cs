@@ -1,6 +1,7 @@
 ﻿using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Npgsql.NameTranslation;
 
 namespace Fundamental.Infrastructure.Configuration.Fundamental.Codals.Manufacturing;
 
@@ -8,7 +9,7 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
 {
     protected override void ExtraConfigure(EntityTypeBuilder<FinancialStatement> builder)
     {
-        builder.ToTable("financial-statement", "manufacturing");
+        builder.ToTable(NpgsqlSnakeCaseNameTranslator.ConvertToSnakeCase(nameof(FinancialStatement)), "manufacturing");
 
         // Add composite indexes for query optimization
         builder.HasIndex(x => new { x.LastClosePrice, x.Pe, x.MarketValue })
@@ -19,7 +20,7 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
 
         builder.HasOne(x => x.Symbol)
             .WithMany()
-            .HasForeignKey("symbol-id")
+            .HasForeignKey("symbol_id")
             .IsRequired();
 
         builder.Property(x => x.TraceNo)
@@ -34,7 +35,7 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
             navigationBuilder =>
             {
                 navigationBuilder.Property(x => x.Year)
-                    .HasColumnName("fiscal-year")
+                    .HasColumnName("fiscal_year")
                     .HasColumnType("SMALLINT")
                     .IsRequired();
             });
@@ -44,7 +45,7 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
             navigationBuilder =>
             {
                 navigationBuilder.Property(x => x.Month)
-                    .HasColumnName("year-end-month")
+                    .HasColumnName("year_end_month")
                     .HasColumnType("smallint")
                     .IsRequired();
             });
@@ -54,7 +55,7 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
             navigationBuilder =>
             {
                 navigationBuilder.Property(x => x.Month)
-                    .HasColumnName("report-month")
+                    .HasColumnName("report_month")
                     .HasColumnType("smallint")
                     .IsRequired();
             });
@@ -64,7 +65,7 @@ public class FinancialStatementConfiguration : EntityTypeConfigurationBase<Finan
             navigationBuilder =>
             {
                 navigationBuilder.Property(x => x.Month)
-                    .HasColumnName("sale-month")
+                    .HasColumnName("sale_month")
                     .HasColumnType("smallint")
                     .IsRequired();
             });
