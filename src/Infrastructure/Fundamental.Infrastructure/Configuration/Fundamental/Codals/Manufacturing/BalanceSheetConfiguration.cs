@@ -1,6 +1,8 @@
-﻿using Fundamental.Domain.Codals.Manufacturing.Entities;
+﻿using EFCore.NamingConventions.Internal;
+using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Npgsql.NameTranslation;
 
 namespace Fundamental.Infrastructure.Configuration.Fundamental.Codals.Manufacturing;
 
@@ -8,7 +10,7 @@ public class BalanceSheetConfiguration : EntityTypeConfigurationBase<BalanceShee
 {
     protected override void ExtraConfigure(EntityTypeBuilder<BalanceSheet> builder)
     {
-        builder.ToTable("balance-sheet", "manufacturing");
+        builder.ToTable(NpgsqlSnakeCaseNameTranslator.ConvertToSnakeCase(nameof(BalanceSheet)), "manufacturing");
 
         builder.HasOne(x => x.Symbol)
             .WithMany()
