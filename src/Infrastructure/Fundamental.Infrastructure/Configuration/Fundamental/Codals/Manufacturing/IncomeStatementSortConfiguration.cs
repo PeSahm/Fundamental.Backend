@@ -1,6 +1,7 @@
 ﻿using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Npgsql.NameTranslation;
 
 namespace Fundamental.Infrastructure.Configuration.Fundamental.Codals.Manufacturing;
 
@@ -8,7 +9,7 @@ public sealed class IncomeStatementSortConfiguration : EntityTypeConfigurationBa
 {
     protected override void ExtraConfigure(EntityTypeBuilder<IncomeStatementSort> builder)
     {
-        builder.ToTable("income-statement-sort", "manufacturing");
+        builder.ToTable(NpgsqlSnakeCaseNameTranslator.ConvertToSnakeCase(nameof(IncomeStatementSort)), "manufacturing");
 
         builder.Property(x => x.Order)
             .HasColumnType("SMALLINT")
