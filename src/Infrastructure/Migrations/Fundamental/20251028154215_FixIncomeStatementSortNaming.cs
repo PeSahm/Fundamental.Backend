@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
+using Fundamental.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -7,7 +9,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Fundamental.Migrations.Fundamental
 {
     /// <inheritdoc />
-    public partial class FixIncomeStatementSortNaming : Migration
+    [DbContext(typeof(FundamentalDbContext))]
+    [Migration("20251028154215_FixIncomeStatementSortNaming")]
+    public class FixIncomeStatementSortNaming : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

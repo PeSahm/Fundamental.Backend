@@ -16,8 +16,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fundamental.Migrations.Fundamental
 {
     [DbContext(typeof(FundamentalDbContext))]
-    [Migration("20251028072938_AddBalanceSheetDetailEntity")]
-    partial class AddBalanceSheetDetailEntity
+    [Migration("20251028192110_AddIncomeStatementDetailTable")]
+    partial class AddIncomeStatementDetailTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -216,7 +216,7 @@ namespace Fundamental.Migrations.Fundamental
 
                     b.Property<DateTime>("PublishDate")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("publish-date");
+                        .HasColumnName("publish_date");
 
                     b.Property<long>("TraceNo")
                         .HasColumnType("BIGINT")
@@ -233,11 +233,11 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnType("character varying(512)")
                         .HasColumnName("uri");
 
-                    b.Property<long?>("financial-statement-id")
+                    b.Property<long?>("financial_statement_id")
                         .HasColumnType("bigint")
                         .HasColumnName("financial_statement_id");
 
-                    b.Property<long>("symbol-id")
+                    b.Property<long>("symbol_id")
                         .HasColumnType("bigint")
                         .HasColumnName("symbol_id");
 
@@ -247,7 +247,7 @@ namespace Fundamental.Migrations.Fundamental
 
                             b1.Property<short>("Year")
                                 .HasColumnType("SMALLINT")
-                                .HasColumnName("fiscal-year");
+                                .HasColumnName("fiscal_year");
                         });
 
                     b.HasKey("_id")
@@ -257,14 +257,20 @@ namespace Fundamental.Migrations.Fundamental
                         .IsUnique()
                         .HasDatabaseName("ix_balance_sheet_id");
 
-                    b.HasIndex("financial-statement-id")
+                    b.HasIndex("PublishDate")
+                        .HasDatabaseName("ix_balance_sheet_publish_date");
+
+                    b.HasIndex("TraceNo")
+                        .HasDatabaseName("ix_balance_sheet_trace_no");
+
+                    b.HasIndex("financial_statement_id")
                         .IsUnique()
                         .HasDatabaseName("ix_balance_sheet_financial_statement_id");
 
-                    b.HasIndex("symbol-id")
+                    b.HasIndex("symbol_id")
                         .HasDatabaseName("ix_balance_sheet_symbol_id");
 
-                    b.ToTable("balance-sheet", "manufacturing");
+                    b.ToTable("balance_sheet", "manufacturing");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.BalanceSheetDetail", b =>
@@ -307,7 +313,7 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("ModifiedAt");
 
-                    b.Property<long>("balance-sheet-id")
+                    b.Property<long>("balance_sheet_id")
                         .HasColumnType("bigint")
                         .HasColumnName("balance_sheet_id");
 
@@ -328,14 +334,26 @@ namespace Fundamental.Migrations.Fundamental
                     b.HasKey("_id")
                         .HasName("pk_balance_sheet_detail");
 
+                    b.HasIndex("CodalCategory")
+                        .HasDatabaseName("ix_balance_sheet_detail_codal_category");
+
+                    b.HasIndex("CodalRow")
+                        .HasDatabaseName("ix_balance_sheet_detail_codal_row");
+
                     b.HasIndex("Id")
                         .IsUnique()
                         .HasDatabaseName("ix_balance_sheet_detail_id");
 
-                    b.HasIndex("balance-sheet-id")
+                    b.HasIndex("balance_sheet_id")
                         .HasDatabaseName("ix_balance_sheet_detail_balance_sheet_id");
 
-                    b.ToTable("balance-sheet-detail", "manufacturing");
+                    b.HasIndex("CodalCategory", "CodalRow")
+                        .HasDatabaseName("ix_balance_sheet_detail_category_row");
+
+                    b.HasIndex("balance_sheet_id", "Row")
+                        .HasDatabaseName("ix_balance_sheet_detail_balance_sheet_id_row");
+
+                    b.ToTable("balance_sheet_detail", "manufacturing");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.BalanceSheetSort", b =>
@@ -394,7 +412,7 @@ namespace Fundamental.Migrations.Fundamental
                         .IsUnique()
                         .HasDatabaseName("ix_balance_sheet_sort_category_codal_row");
 
-                    b.ToTable("balance-sheet-sort", "manufacturing");
+                    b.ToTable("balance_sheet_sort", "manufacturing");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.CapitalIncreaseRegistrationNotice", b =>
@@ -448,7 +466,7 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnType("character varying(512)")
                         .HasColumnName("uri");
 
-                    b.Property<long>("symbol-id")
+                    b.Property<long>("symbol_id")
                         .HasColumnType("bigint")
                         .HasColumnName("symbol_id");
 
@@ -579,7 +597,7 @@ namespace Fundamental.Migrations.Fundamental
                         .IsUnique()
                         .HasDatabaseName("ix_capital_increase_registration_notice_id");
 
-                    b.HasIndex("symbol-id")
+                    b.HasIndex("symbol_id")
                         .HasDatabaseName("ix_capital_increase_registration_notice_symbol_id");
 
                     b.ToTable("capital_increase_registration_notice", "manufacturing");
@@ -722,7 +740,7 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("ModifiedAt");
 
-                    b.Property<long>("symbol-id")
+                    b.Property<long>("symbol_id")
                         .HasColumnType("bigint")
                         .HasColumnName("symbol_id");
 
@@ -837,7 +855,7 @@ namespace Fundamental.Migrations.Fundamental
 
                             b1.Property<short>("Year")
                                 .HasColumnType("SMALLINT")
-                                .HasColumnName("fiscal-year");
+                                .HasColumnName("fiscal_year");
                         });
 
                     b.ComplexProperty<Dictionary<string, object>>("ForecastNoneOperationalProfit", "Fundamental.Domain.Codals.Manufacturing.Entities.FinancialStatement.ForecastNoneOperationalProfit#CodalMoney", b1 =>
@@ -1041,7 +1059,7 @@ namespace Fundamental.Migrations.Fundamental
 
                             b1.Property<short>("Month")
                                 .HasColumnType("smallint")
-                                .HasColumnName("report-month");
+                                .HasColumnName("report_month");
                         });
 
                     b.ComplexProperty<Dictionary<string, object>>("Sale", "Fundamental.Domain.Codals.Manufacturing.Entities.FinancialStatement.Sale#CodalMoney", b1 =>
@@ -1125,7 +1143,7 @@ namespace Fundamental.Migrations.Fundamental
 
                             b1.Property<short>("Month")
                                 .HasColumnType("smallint")
-                                .HasColumnName("sale-month");
+                                .HasColumnName("sale_month");
                         });
 
                     b.ComplexProperty<Dictionary<string, object>>("SaleYear", "Fundamental.Domain.Codals.Manufacturing.Entities.FinancialStatement.SaleYear#FiscalYear", b1 =>
@@ -1203,7 +1221,7 @@ namespace Fundamental.Migrations.Fundamental
 
                             b1.Property<short>("Month")
                                 .HasColumnType("smallint")
-                                .HasColumnName("year-end-month");
+                                .HasColumnName("year_end_month");
                         });
 
                     b.HasKey("_id")
@@ -1213,13 +1231,13 @@ namespace Fundamental.Migrations.Fundamental
                         .IsUnique()
                         .HasDatabaseName("ix_financial_statement_id");
 
-                    b.HasIndex("symbol-id")
+                    b.HasIndex("symbol_id")
                         .HasDatabaseName("ix_financial_statement_symbol_id");
 
                     b.HasIndex("LastClosePrice", "Pe", "MarketValue")
                         .HasDatabaseName("ix_financial_statement_performance_metrics");
 
-                    b.ToTable("financial-statement", "manufacturing");
+                    b.ToTable("financial_statement", "manufacturing");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.IncomeStatement", b =>
@@ -1232,27 +1250,13 @@ namespace Fundamental.Migrations.Fundamental
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("_id"));
 
-                    b.Property<int>("CodalCategory")
-                        .HasColumnType("integer")
-                        .HasColumnName("codal_category");
-
-                    b.Property<int>("CodalRow")
-                        .HasColumnType("integer")
-                        .HasColumnName("codal_row");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("CreatedAt");
 
                     b.Property<IsoCurrency>("Currency")
-                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("iso_currency")
                         .HasColumnName("currency");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
-                        .HasColumnName("description");
 
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid")
@@ -1263,9 +1267,9 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnType("boolean")
                         .HasColumnName("is_audited");
 
-                    b.Property<int>("Row")
-                        .HasColumnType("integer")
-                        .HasColumnName("row");
+                    b.Property<DateTime>("PublishDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("publish_date");
 
                     b.Property<long>("TraceNo")
                         .HasColumnType("BIGINT")
@@ -1282,7 +1286,7 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnType("character varying(512)")
                         .HasColumnName("uri");
 
-                    b.Property<long>("symbol-id")
+                    b.Property<long>("symbol_id")
                         .HasColumnType("bigint")
                         .HasColumnName("symbol_id");
 
@@ -1292,15 +1296,67 @@ namespace Fundamental.Migrations.Fundamental
 
                             b1.Property<short>("Year")
                                 .HasColumnType("SMALLINT")
-                                .HasColumnName("fiscal-year");
+                                .HasColumnName("fiscal_year");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("Value", "Fundamental.Domain.Codals.Manufacturing.Entities.IncomeStatement.Value#SignedCodalMoney", b1 =>
+                    b.HasKey("_id")
+                        .HasName("pk_income_statement");
+
+                    b.HasIndex("Id")
+                        .IsUnique()
+                        .HasDatabaseName("ix_income_statement_id");
+
+                    b.HasIndex("symbol_id")
+                        .HasDatabaseName("ix_income_statement_symbol_id");
+
+                    b.ToTable("income_statement", "manufacturing");
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.IncomeStatementDetail", b =>
+                {
+                    b.Property<long>("_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("_id")
+                        .HasColumnOrder(0);
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("_id"));
+
+                    b.Property<int>("CodalRow")
+                        .HasColumnType("integer")
+                        .HasColumnName("codal_row");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("description");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(1);
+
+                    b.Property<int>("Row")
+                        .HasColumnType("integer")
+                        .HasColumnName("row");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("ModifiedAt");
+
+                    b.Property<long>("income_statement_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("income_statement_id");
+
+                    b.ComplexProperty<Dictionary<string, object>>("Value", "Fundamental.Domain.Codals.Manufacturing.Entities.IncomeStatementDetail.Value#SignedCodalMoney", b1 =>
                         {
                             b1.IsRequired();
 
                             b1.Property<IsoCurrency>("Currency")
-                                .ValueGeneratedOnUpdateSometimes()
                                 .HasColumnType("iso_currency")
                                 .HasColumnName("currency");
 
@@ -1311,16 +1367,16 @@ namespace Fundamental.Migrations.Fundamental
                         });
 
                     b.HasKey("_id")
-                        .HasName("pk_income_statement");
+                        .HasName("pk_income_statement_details");
 
                     b.HasIndex("Id")
                         .IsUnique()
-                        .HasDatabaseName("ix_income_statement_id");
+                        .HasDatabaseName("ix_income_statement_details_id");
 
-                    b.HasIndex("symbol-id")
-                        .HasDatabaseName("ix_income_statement_symbol_id");
+                    b.HasIndex("income_statement_id")
+                        .HasDatabaseName("ix_income_statement_details_income_statement_id");
 
-                    b.ToTable("income-statement", "manufacturing");
+                    b.ToTable("income_statement_details", "manufacturing");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.IncomeStatementSort", b =>
@@ -1371,7 +1427,7 @@ namespace Fundamental.Migrations.Fundamental
                         .IsUnique()
                         .HasDatabaseName("ix_income_statement_sort_order");
 
-                    b.ToTable("income-statement-sort", "manufacturing");
+                    b.ToTable("income_statement_sort", "manufacturing");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.MonthlyActivity", b =>
@@ -1518,7 +1574,7 @@ namespace Fundamental.Migrations.Fundamental
                     b.HasIndex("symbol_id")
                         .HasDatabaseName("ix_monthly_activity_symbol_id");
 
-                    b.ToTable("monthly-activity", "manufacturing");
+                    b.ToTable("monthly_activity", "manufacturing");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.NonOperationIncomeAndExpense", b =>
@@ -1623,16 +1679,16 @@ namespace Fundamental.Migrations.Fundamental
                         });
 
                     b.HasKey("_id")
-                        .HasName("pk_non_operation_income_expense");
+                        .HasName("pk_non_operation_income_and_expense");
 
                     b.HasIndex("Id")
                         .IsUnique()
-                        .HasDatabaseName("ix_non_operation_income_expense_id");
+                        .HasDatabaseName("ix_non_operation_income_and_expense_id");
 
                     b.HasIndex("symbol_id")
-                        .HasDatabaseName("ix_non_operation_income_expense_symbol_id");
+                        .HasDatabaseName("ix_non_operation_income_and_expense_symbol_id");
 
-                    b.ToTable("non-operation-income-expense", "manufacturing");
+                    b.ToTable("non_operation_income_and_expense", "manufacturing");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.StockOwnership", b =>
@@ -1904,11 +1960,11 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnType("character varying(512)")
                         .HasColumnName("website");
 
-                    b.Property<long?>("parent-symbol-id")
+                    b.Property<long?>("parent_symbol_id")
                         .HasColumnType("bigint")
                         .HasColumnName("parent_symbol_id");
 
-                    b.Property<long>("symbol-id")
+                    b.Property<long>("symbol_id")
                         .HasColumnType("bigint")
                         .HasColumnName("symbol_id");
 
@@ -1949,10 +2005,10 @@ namespace Fundamental.Migrations.Fundamental
                         .IsUnique()
                         .HasDatabaseName("ix_publisher_id");
 
-                    b.HasIndex("parent-symbol-id")
+                    b.HasIndex("parent_symbol_id")
                         .HasDatabaseName("ix_publisher_parent_symbol_id");
 
-                    b.HasIndex("symbol-id")
+                    b.HasIndex("symbol_id")
                         .IsUnique()
                         .HasDatabaseName("ix_publisher_symbol_id");
 
@@ -2052,7 +2108,7 @@ namespace Fundamental.Migrations.Fundamental
                     b.HasIndex("symbol_id")
                         .HasDatabaseName("ix_close_price_symbol_id");
 
-                    b.ToTable("close-price", "shd");
+                    b.ToTable("close_price", "shd");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.Index", b =>
@@ -2386,11 +2442,11 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("ModifiedAt");
 
-                    b.Property<long>("child-id")
+                    b.Property<long>("child_id")
                         .HasColumnType("bigint")
                         .HasColumnName("child_id");
 
-                    b.Property<long>("parent-id")
+                    b.Property<long>("parent_id")
                         .HasColumnType("bigint")
                         .HasColumnName("parent_id");
 
@@ -2401,13 +2457,13 @@ namespace Fundamental.Migrations.Fundamental
                         .IsUnique()
                         .HasDatabaseName("ix_symbol_relation_id");
 
-                    b.HasIndex("child-id")
+                    b.HasIndex("child_id")
                         .HasDatabaseName("ix_symbol_relation_child_id");
 
-                    b.HasIndex("parent-id")
+                    b.HasIndex("parent_id")
                         .HasDatabaseName("ix_symbol_relation_parent_id");
 
-                    b.ToTable("symbol-relation", "shd");
+                    b.ToTable("symbol_relation", "shd");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.SymbolShareHolder", b =>
@@ -2448,40 +2504,40 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("ModifiedAt");
 
-                    b.Property<long?>("share-holder-symbol-id")
+                    b.Property<long?>("share_holder_symbol_id")
                         .HasColumnType("bigint")
                         .HasColumnName("share_holder_symbol_id");
 
-                    b.Property<long>("symbol-id")
+                    b.Property<long>("symbol_id")
                         .HasColumnType("bigint")
                         .HasColumnName("symbol_id");
 
                     b.HasKey("_id")
-                        .HasName("pk_symbol_share_holders");
+                        .HasName("pk_symbol_share_holder");
 
                     b.HasIndex("Id")
                         .IsUnique()
-                        .HasDatabaseName("ix_symbol_share_holders_id");
+                        .HasDatabaseName("ix_symbol_share_holder_id");
 
-                    b.HasIndex("share-holder-symbol-id")
-                        .HasDatabaseName("ix_symbol_share_holders_share_holder_symbol_id");
+                    b.HasIndex("share_holder_symbol_id")
+                        .HasDatabaseName("ix_symbol_share_holder_share_holder_symbol_id");
 
-                    b.HasIndex("symbol-id")
-                        .HasDatabaseName("ix_symbol_share_holders_symbol_id");
+                    b.HasIndex("symbol_id")
+                        .HasDatabaseName("ix_symbol_share_holder_symbol_id");
 
-                    b.ToTable("symbol-share-holders", "shd");
+                    b.ToTable("symbol_share_holder", "shd");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.BalanceSheet", b =>
                 {
                     b.HasOne("Fundamental.Domain.Codals.Manufacturing.Entities.FinancialStatement", "FinancialStatement")
                         .WithOne()
-                        .HasForeignKey("Fundamental.Domain.Codals.Manufacturing.Entities.BalanceSheet", "financial-statement-id")
+                        .HasForeignKey("Fundamental.Domain.Codals.Manufacturing.Entities.BalanceSheet", "financial_statement_id")
                         .HasConstraintName("fk_balance_sheet_manufacturing_financial_statement_financial_s");
 
                     b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Symbol")
                         .WithMany()
-                        .HasForeignKey("symbol-id")
+                        .HasForeignKey("symbol_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_balance_sheet_symbols_symbol_id");
@@ -2494,11 +2550,11 @@ namespace Fundamental.Migrations.Fundamental
 
                             b1.Property<short>("Month")
                                 .HasColumnType("smallint")
-                                .HasColumnName("report-month");
+                                .HasColumnName("report_month");
 
                             b1.HasKey("BalanceSheet_id");
 
-                            b1.ToTable("balance-sheet", "manufacturing");
+                            b1.ToTable("balance_sheet", "manufacturing");
 
                             b1.WithOwner()
                                 .HasForeignKey("BalanceSheet_id")
@@ -2513,11 +2569,11 @@ namespace Fundamental.Migrations.Fundamental
 
                             b1.Property<short>("Month")
                                 .HasColumnType("smallint")
-                                .HasColumnName("year-end-month");
+                                .HasColumnName("year_end_month");
 
                             b1.HasKey("BalanceSheet_id");
 
-                            b1.ToTable("balance-sheet", "manufacturing");
+                            b1.ToTable("balance_sheet", "manufacturing");
 
                             b1.WithOwner()
                                 .HasForeignKey("BalanceSheet_id")
@@ -2539,7 +2595,7 @@ namespace Fundamental.Migrations.Fundamental
                 {
                     b.HasOne("Fundamental.Domain.Codals.Manufacturing.Entities.BalanceSheet", "BalanceSheet")
                         .WithMany("Details")
-                        .HasForeignKey("balance-sheet-id")
+                        .HasForeignKey("balance_sheet_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_balance_sheet_detail_balance_sheet_balance_sheet_id");
@@ -2551,7 +2607,7 @@ namespace Fundamental.Migrations.Fundamental
                 {
                     b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Symbol")
                         .WithMany()
-                        .HasForeignKey("symbol-id")
+                        .HasForeignKey("symbol_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_capital_increase_registration_notice_symbols_symbol_id");
@@ -2563,7 +2619,7 @@ namespace Fundamental.Migrations.Fundamental
                 {
                     b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Symbol")
                         .WithMany()
-                        .HasForeignKey("symbol-id")
+                        .HasForeignKey("symbol_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_financial_statement_symbols_symbol_id");
@@ -2590,7 +2646,7 @@ namespace Fundamental.Migrations.Fundamental
 
                             b1.HasKey("FinancialStatement_id");
 
-                            b1.ToTable("financial-statement", "manufacturing");
+                            b1.ToTable("financial_statement", "manufacturing");
 
                             b1.ToJson("inventory_outstanding_data");
 
@@ -2621,7 +2677,7 @@ namespace Fundamental.Migrations.Fundamental
 
                             b1.HasKey("FinancialStatement_id");
 
-                            b1.ToTable("financial-statement", "manufacturing");
+                            b1.ToTable("financial_statement", "manufacturing");
 
                             b1.ToJson("sales_outstanding_data");
 
@@ -2641,7 +2697,7 @@ namespace Fundamental.Migrations.Fundamental
                 {
                     b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Symbol")
                         .WithMany()
-                        .HasForeignKey("symbol-id")
+                        .HasForeignKey("symbol_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_income_statement_symbols_symbol_id");
@@ -2654,11 +2710,11 @@ namespace Fundamental.Migrations.Fundamental
 
                             b1.Property<short>("Month")
                                 .HasColumnType("smallint")
-                                .HasColumnName("report-month");
+                                .HasColumnName("report_month");
 
                             b1.HasKey("IncomeStatement_id");
 
-                            b1.ToTable("income-statement", "manufacturing");
+                            b1.ToTable("income_statement", "manufacturing");
 
                             b1.WithOwner()
                                 .HasForeignKey("IncomeStatement_id")
@@ -2673,11 +2729,11 @@ namespace Fundamental.Migrations.Fundamental
 
                             b1.Property<short>("Month")
                                 .HasColumnType("smallint")
-                                .HasColumnName("year-end-month");
+                                .HasColumnName("year_end_month");
 
                             b1.HasKey("IncomeStatement_id");
 
-                            b1.ToTable("income-statement", "manufacturing");
+                            b1.ToTable("income_statement", "manufacturing");
 
                             b1.WithOwner()
                                 .HasForeignKey("IncomeStatement_id")
@@ -2691,6 +2747,18 @@ namespace Fundamental.Migrations.Fundamental
 
                     b.Navigation("YearEndMonth")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.IncomeStatementDetail", b =>
+                {
+                    b.HasOne("Fundamental.Domain.Codals.Manufacturing.Entities.IncomeStatement", "IncomeStatement")
+                        .WithMany("Details")
+                        .HasForeignKey("income_statement_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_income_statement_details_income_statement_income_statement_");
+
+                    b.Navigation("IncomeStatement");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.MonthlyActivity", b =>
@@ -2733,7 +2801,7 @@ namespace Fundamental.Migrations.Fundamental
                             b1.HasKey("MonthlyActivity_id", "__synthesizedOrdinal")
                                 .HasName("pk_monthly_activity");
 
-                            b1.ToTable("monthly-activity", "manufacturing");
+                            b1.ToTable("monthly_activity", "manufacturing");
 
                             b1.ToJson("extra_sales_infos");
 
@@ -2754,7 +2822,7 @@ namespace Fundamental.Migrations.Fundamental
                         .HasForeignKey("symbol_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_non_operation_income_expense_symbols_symbol_id");
+                        .HasConstraintName("fk_non_operation_income_and_expense_symbols_symbol_id");
 
                     b.OwnsOne("Fundamental.Domain.Codals.ValueObjects.StatementMonth", "ReportMonth", b1 =>
                         {
@@ -2768,11 +2836,11 @@ namespace Fundamental.Migrations.Fundamental
 
                             b1.HasKey("NonOperationIncomeAndExpense_id");
 
-                            b1.ToTable("non-operation-income-expense", "manufacturing");
+                            b1.ToTable("non_operation_income_and_expense", "manufacturing");
 
                             b1.WithOwner()
                                 .HasForeignKey("NonOperationIncomeAndExpense_id")
-                                .HasConstraintName("fk_non_operation_income_expense_non_operation_income_expense__");
+                                .HasConstraintName("fk_non_operation_income_and_expense_non_operation_income_and_e");
                         });
 
                     b.OwnsOne("Fundamental.Domain.Codals.ValueObjects.StatementMonth", "YearEndMonth", b1 =>
@@ -2787,11 +2855,11 @@ namespace Fundamental.Migrations.Fundamental
 
                             b1.HasKey("NonOperationIncomeAndExpense_id");
 
-                            b1.ToTable("non-operation-income-expense", "manufacturing");
+                            b1.ToTable("non_operation_income_and_expense", "manufacturing");
 
                             b1.WithOwner()
                                 .HasForeignKey("NonOperationIncomeAndExpense_id")
-                                .HasConstraintName("fk_non_operation_income_expense_non_operation_income_expense__");
+                                .HasConstraintName("fk_non_operation_income_and_expense_non_operation_income_and_e");
                         });
 
                     b.Navigation("ReportMonth")
@@ -2826,12 +2894,12 @@ namespace Fundamental.Migrations.Fundamental
                 {
                     b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "ParentSymbol")
                         .WithMany()
-                        .HasForeignKey("parent-symbol-id")
+                        .HasForeignKey("parent_symbol_id")
                         .HasConstraintName("fk_publisher_symbols_parent_symbol_id");
 
                     b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Symbol")
                         .WithOne("Publisher")
-                        .HasForeignKey("Fundamental.Domain.Codals.Publisher", "symbol-id")
+                        .HasForeignKey("Fundamental.Domain.Codals.Publisher", "symbol_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_publisher_symbols_symbol_id");
@@ -2901,14 +2969,14 @@ namespace Fundamental.Migrations.Fundamental
                 {
                     b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Child")
                         .WithMany("InvestorSymbols")
-                        .HasForeignKey("child-id")
+                        .HasForeignKey("child_id")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
                         .HasConstraintName("fk_symbol_relation_symbol_child_id");
 
                     b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Parent")
                         .WithMany("InvestmentSymbols")
-                        .HasForeignKey("parent-id")
+                        .HasForeignKey("parent_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_symbol_relation_symbol_parent_id");
@@ -2922,15 +2990,15 @@ namespace Fundamental.Migrations.Fundamental
                 {
                     b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "ShareHolderSymbol")
                         .WithMany()
-                        .HasForeignKey("share-holder-symbol-id")
-                        .HasConstraintName("fk_symbol_share_holders_symbol_share_holder_symbol_id");
+                        .HasForeignKey("share_holder_symbol_id")
+                        .HasConstraintName("fk_symbol_share_holder_symbol_share_holder_symbol_id");
 
                     b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Symbol")
                         .WithMany()
-                        .HasForeignKey("symbol-id")
+                        .HasForeignKey("symbol_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_symbol_share_holders_symbol_symbol_id");
+                        .HasConstraintName("fk_symbol_share_holder_symbol_symbol_id");
 
                     b.Navigation("ShareHolderSymbol");
 
@@ -2938,6 +3006,11 @@ namespace Fundamental.Migrations.Fundamental
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.BalanceSheet", b =>
+                {
+                    b.Navigation("Details");
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.IncomeStatement", b =>
                 {
                     b.Navigation("Details");
                 });

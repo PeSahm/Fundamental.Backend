@@ -1247,27 +1247,13 @@ namespace Fundamental.Migrations.Fundamental
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("_id"));
 
-                    b.Property<int>("CodalCategory")
-                        .HasColumnType("integer")
-                        .HasColumnName("codal_category");
-
-                    b.Property<int>("CodalRow")
-                        .HasColumnType("integer")
-                        .HasColumnName("codal_row");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("CreatedAt");
 
                     b.Property<IsoCurrency>("Currency")
-                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("iso_currency")
                         .HasColumnName("currency");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
-                        .HasColumnName("description");
 
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid")
@@ -1278,9 +1264,9 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnType("boolean")
                         .HasColumnName("is_audited");
 
-                    b.Property<int>("Row")
-                        .HasColumnType("integer")
-                        .HasColumnName("row");
+                    b.Property<DateTime>("PublishDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("publish_date");
 
                     b.Property<long>("TraceNo")
                         .HasColumnType("BIGINT")
@@ -1310,21 +1296,6 @@ namespace Fundamental.Migrations.Fundamental
                                 .HasColumnName("fiscal_year");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("Value", "Fundamental.Domain.Codals.Manufacturing.Entities.IncomeStatement.Value#SignedCodalMoney", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<IsoCurrency>("Currency")
-                                .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("iso_currency")
-                                .HasColumnName("currency");
-
-                            b1.Property<decimal>("Value")
-                                .HasPrecision(36, 10)
-                                .HasColumnType("decimal")
-                                .HasColumnName("value");
-                        });
-
                     b.HasKey("_id")
                         .HasName("pk_income_statement");
 
@@ -1336,6 +1307,73 @@ namespace Fundamental.Migrations.Fundamental
                         .HasDatabaseName("ix_income_statement_symbol_id");
 
                     b.ToTable("income_statement", "manufacturing");
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.IncomeStatementDetail", b =>
+                {
+                    b.Property<long>("_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("_id")
+                        .HasColumnOrder(0);
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("_id"));
+
+                    b.Property<int>("CodalRow")
+                        .HasColumnType("integer")
+                        .HasColumnName("codal_row");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("description");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(1);
+
+                    b.Property<int>("Row")
+                        .HasColumnType("integer")
+                        .HasColumnName("row");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("ModifiedAt");
+
+                    b.Property<long>("income_statement_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("income_statement_id");
+
+                    b.ComplexProperty<Dictionary<string, object>>("Value", "Fundamental.Domain.Codals.Manufacturing.Entities.IncomeStatementDetail.Value#SignedCodalMoney", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<IsoCurrency>("Currency")
+                                .HasColumnType("iso_currency")
+                                .HasColumnName("currency");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(36, 10)
+                                .HasColumnType("decimal")
+                                .HasColumnName("value");
+                        });
+
+                    b.HasKey("_id")
+                        .HasName("pk_income_statement_details");
+
+                    b.HasIndex("Id")
+                        .IsUnique()
+                        .HasDatabaseName("ix_income_statement_details_id");
+
+                    b.HasIndex("income_statement_id")
+                        .HasDatabaseName("ix_income_statement_details_income_statement_id");
+
+                    b.ToTable("income_statement_details", "manufacturing");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.IncomeStatementSort", b =>
@@ -2708,6 +2746,18 @@ namespace Fundamental.Migrations.Fundamental
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.IncomeStatementDetail", b =>
+                {
+                    b.HasOne("Fundamental.Domain.Codals.Manufacturing.Entities.IncomeStatement", "IncomeStatement")
+                        .WithMany("Details")
+                        .HasForeignKey("income_statement_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_income_statement_details_income_statement_income_statement_");
+
+                    b.Navigation("IncomeStatement");
+                });
+
             modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.MonthlyActivity", b =>
                 {
                     b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Symbol")
@@ -2953,6 +3003,11 @@ namespace Fundamental.Migrations.Fundamental
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.BalanceSheet", b =>
+                {
+                    b.Navigation("Details");
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.IncomeStatement", b =>
                 {
                     b.Navigation("Details");
                 });
