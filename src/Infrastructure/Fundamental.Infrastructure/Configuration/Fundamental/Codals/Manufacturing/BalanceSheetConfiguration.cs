@@ -12,7 +12,7 @@ public class BalanceSheetConfiguration : EntityTypeConfigurationBase<BalanceShee
 
         builder.HasOne(x => x.Symbol)
             .WithMany()
-            .HasForeignKey("symbol-id")
+            .HasForeignKey("symbol_id")
             .IsRequired();
 
         builder.Property(x => x.TraceNo)
@@ -29,7 +29,7 @@ public class BalanceSheetConfiguration : EntityTypeConfigurationBase<BalanceShee
             navigationBuilder =>
             {
                 navigationBuilder.Property(x => x.Year)
-                    .HasColumnName("fiscal-year")
+                    .HasColumnName("fiscal_year")
                     .HasColumnType("SMALLINT")
                     .IsRequired();
             });
@@ -42,7 +42,7 @@ public class BalanceSheetConfiguration : EntityTypeConfigurationBase<BalanceShee
             navigationBuilder =>
             {
                 navigationBuilder.Property(x => x.Month)
-                    .HasColumnName("year-end-month")
+                    .HasColumnName("year_end_month")
                     .HasColumnType("smallint")
                     .IsRequired();
             });
@@ -52,7 +52,7 @@ public class BalanceSheetConfiguration : EntityTypeConfigurationBase<BalanceShee
             navigationBuilder =>
             {
                 navigationBuilder.Property(x => x.Month)
-                    .HasColumnName("report-month")
+                    .HasColumnName("report_month")
                     .HasColumnType("smallint")
                     .IsRequired();
             });
@@ -60,16 +60,16 @@ public class BalanceSheetConfiguration : EntityTypeConfigurationBase<BalanceShee
         builder.Property(x => x.IsAudited).IsRequired();
 
         builder.Property(x => x.PublishDate)
-            .HasColumnName("publish-date")
+            .HasColumnName("publish_date")
             .IsRequired();
 
         builder.HasOne(x => x.FinancialStatement)
             .WithOne()
-            .HasForeignKey<BalanceSheet>("financial-statement-id")
+            .HasForeignKey<BalanceSheet>("financial_statement_id")
             .IsRequired(false);
 
         // Indexes for performance
-        builder.HasIndex("symbol-id")
+        builder.HasIndex("symbol_id")
             .HasDatabaseName("ix_balance_sheet_symbol_id");
 
         builder.HasIndex(x => x.TraceNo)
