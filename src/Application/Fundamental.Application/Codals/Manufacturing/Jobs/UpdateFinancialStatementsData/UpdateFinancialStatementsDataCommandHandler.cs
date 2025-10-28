@@ -56,14 +56,9 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
                     continue;
                 }
 
-                List<BalanceSheet> balanceSheets =
-                    await repository.ListAsync(
-                        BalanceSheetSpec.Where(
-                            headerData.TraceNo,
-                            headerData.FiscalYear,
-                            headerData.YearEndMonth,
-                            headerData.ReportMonth),
-                        cancellationToken);
+                List<BalanceSheetDetail> balanceSheetDetails = await repository.ListAsync(
+                    BalanceSheetDetailEntitySpec.WhereBalanceSheet(headerData.TraceNo, headerData.FiscalYear, headerData.ReportMonth),
+                    cancellationToken);
                 List<IncomeStatement> incomeStatements =
                     await repository.ListAsync(
                         IncomeStatementSpec.Where(
@@ -178,7 +173,7 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
                     .SetCreatedAt(DateTime.Now)
                     .SetLastClosePrice(closePrice?.Close ?? 0, today)
                     .SetMarketCap(
-                        (balanceSheets
+                        (balanceSheetDetails
                             .FirstOrDefault(xx => xx.CodalCategory == BalanceSheetCategory.Liability && xx.CodalRow == BalanceSheetRow.Capital)
                             ?.Value.RealValue ?? 0) / IranCapitalMarket.BASE_PRICE)
                     .SetIncomeStatement(
@@ -200,9 +195,9 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
                         monthlyActivitiesLastYearSamePeriod?.SaleIncludeCurrentMonth ?? CodalMoney.Empty
                     )
                     .SetFinancialPosition(
-                        GetAssets(balanceSheets),
-                        OwnersEquity(balanceSheets),
-                        Receivables(balanceSheets),
+                        GetAssets(balanceSheetDetails),
+                        OwnersEquity(balanceSheetDetails),
+                        Receivables(balanceSheetDetails),
                         lastYearSamePeriodNetProfit ?? SignedCodalMoney.Empty
                     )
                     .SetInventoryOutstanding(new FinancialStatement.DaysInventoryOutstanding
@@ -212,7 +207,7 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
                             CurrentCostOfGoodsSale = incomeStatements.First(x => x.CodalRow == IncomeStatementRow.CostOfGoodsSale)
                                 .Value,
                             LastYearSamePeriodInventory = lastYearSamePeriodInventory ?? SignedCodalMoney.Empty,
-                            CurrentInventory = balanceSheets.First(x => x.CodalCategory == BalanceSheetCategory.Assets
+                            CurrentInventory = balanceSheetDetails.First(x => x.CodalCategory == BalanceSheetCategory.Assets
                                                                         && x.CodalRow == BalanceSheetRow.Inventory).Value,
                         }
                     )
@@ -225,7 +220,7 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
                             LastYearSamePeriodTradeAndOtherReceivables =
                                 lastYearSamePeriodTradeAndOtherReceivables ?? SignedCodalMoney.Empty,
                             CurrentTradeAndOtherReceivables =
-                                balanceSheets.First(x => x.CodalCategory == BalanceSheetCategory.Assets
+                                balanceSheetDetails.First(x => x.CodalCategory == BalanceSheetCategory.Assets
                                                          && x.CodalRow == BalanceSheetRow.TradeAndOtherReceivables).Value,
                         }
                     )
@@ -259,23 +254,23 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
         }
     }
 
-    private static decimal Receivables(List<BalanceSheet> balanceSheets)
+    private static decimal Receivables(List<BalanceSheetDetail> balanceSheetDetails)
     {
-        return balanceSheets.FirstOrDefault(x =>
+        return balanceSheetDetails.FirstOrDefault(x =>
                 x.CodalCategory == BalanceSheetCategory.Assets && x.CodalRow == BalanceSheetRow.TradeAndOtherReceivables)?.Value
             .Value ?? CodalMoney.Empty;
     }
 
-    private static decimal OwnersEquity(List<BalanceSheet> balanceSheets)
+    private static decimal OwnersEquity(List<BalanceSheetDetail> balanceSheetDetails)
     {
-        return balanceSheets.FirstOrDefault(x =>
+        return balanceSheetDetails.FirstOrDefault(x =>
                    x.CodalCategory == BalanceSheetCategory.Liability && x.CodalRow == BalanceSheetRow.TotalEquity)?.Value.Value ??
                CodalMoney.Empty;
     }
 
-    private static decimal GetAssets(List<BalanceSheet> balanceSheets)
+    private static decimal GetAssets(List<BalanceSheetDetail> balanceSheetDetails)
     {
-        return balanceSheets.FirstOrDefault(x =>
+        return balanceSheetDetails.FirstOrDefault(x =>
                    x.CodalCategory == BalanceSheetCategory.Assets && x.CodalRow == BalanceSheetRow.TotalAssets)?.Value.Value ??
                CodalMoney.Empty;
     }

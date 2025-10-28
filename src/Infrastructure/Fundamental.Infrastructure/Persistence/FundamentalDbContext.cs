@@ -29,6 +29,8 @@ public class FundamentalDbContext : DbContext, IUnitOfWork, ICoravelProDbContext
 
     public DbSet<BalanceSheet> BalanceSheets { get; set; }
 
+    public DbSet<BalanceSheetDetail> BalanceSheetDetails { get; set; }
+
     public DbSet<IncomeStatement> IncomeStatements { get; set; }
 
     public DbSet<BalanceSheetSort> CodalRowOrders { get; set; }

@@ -57,26 +57,6 @@ public class BalanceSheetConfiguration : EntityTypeConfigurationBase<BalanceShee
                     .IsRequired();
             });
 
-        builder.ComplexProperty(
-            x => x.Value,
-            amount =>
-                amount.UseSignedCodalMoney()
-        );
-
-        builder.Property(x => x.Row)
-            .HasColumnType("SMALLINT")
-            .IsRequired();
-
-        builder.Property(x => x.CodalRow)
-            .HasColumnType("SMALLINT")
-            .IsRequired();
-
-        builder.Property(x => x.CodalCategory)
-            .HasColumnType("SMALLINT")
-            .IsRequired();
-
-        builder.Property(x => x.Description).HasMaxLength(256).IsRequired(false);
-
         builder.Property(x => x.IsAudited).IsRequired();
 
         builder.Property(x => x.PublishDate)

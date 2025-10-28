@@ -2,6 +2,7 @@
 using Fundamental.Application.Codals.Manufacturing.Specifications;
 using Fundamental.Application.Symbols.Specifications;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
+using Fundamental.Domain.Codals.ValueObjects;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.Domain.Symbols.Entities;
 using Fundamental.ErrorHandling;
@@ -35,7 +36,8 @@ public sealed class AddBalanceSheetCommandHandler(
             return AddBalanceSheetErrorCodes.DuplicateTraceNo;
         }
 
-        bool statementExists = await repository.AnyAsync(
+        // Check if BalanceSheet already exists
+        BalanceSheet? existingBalanceSheet = await repository.FirstOrDefaultAsync(
             BalanceSheetSpec.Where(
                 request.TraceNo,
                 request.Isin,
@@ -44,7 +46,7 @@ public sealed class AddBalanceSheetCommandHandler(
                 request.ReportMonth),
             cancellationToken);
 
-        if (statementExists)
+        if (existingBalanceSheet != null)
         {
             return AddBalanceSheetErrorCodes.DuplicateStatement;
         }
@@ -52,41 +54,52 @@ public sealed class AddBalanceSheetCommandHandler(
         List<GetBalanceSheetSortResultDto> codaRows =
             await repository.ListAsync(BalanceSheetSortSpec.GetValidSpecifications(), cancellationToken);
 
-        foreach (GetBalanceSheetSortResultDto sheetItem in codaRows)
+        GetBalanceSheetSortResultDto? failingItem = codaRows.FirstOrDefault(sheetItem =>
+            !request.Items.Any(x => x.CodalRow == sheetItem.CodalRow && x.CodalCategory == sheetItem.Category));
+
+        if (failingItem != null)
         {
-            if (!request.Items.Exists(x => x.CodalRow == sheetItem.CodalRow && x.CodalCategory == sheetItem.Category))
-            {
-                return Error.FromErrorCode(
-                    AddBalanceSheetErrorCodes.SomeCodalRowsAreInvalid,
-                    new Dictionary<string, string>
-                    {
-                        { "CodalRow", sheetItem.CodalRow.ToString() }
-                    });
-            }
+            return Error.FromErrorCode(
+                AddBalanceSheetErrorCodes.SomeCodalRowsAreInvalid,
+                new Dictionary<string, string>
+                {
+                    { "CodalRow", failingItem.CodalRow.ToString() }
+                });
         }
+
+        // Create BalanceSheet header
+        BalanceSheet balanceSheet = new BalanceSheet(
+            Guid.NewGuid(),
+            symbol,
+            request.TraceNo,
+            request.Uri,
+            new FiscalYear(request.FiscalYear),
+            new StatementMonth(request.YearEndMonth),
+            new StatementMonth(request.ReportMonth),
+            request.IsAudited,
+            DateTime.Now,
+            request.PublishDate
+        );
+
+        repository.Add(balanceSheet);
 
         foreach (AddBalanceSheetItem item in request.Items)
         {
             GetBalanceSheetSortResultDto balanceSheetRow =
                 codaRows.First(x => x.CodalRow == item.CodalRow && x.Category == item.CodalCategory);
-            BalanceSheet balanceSheet = new(
+
+            BalanceSheetDetail detail = new BalanceSheetDetail(
                 Guid.NewGuid(),
-                symbol,
-                request.TraceNo,
-                request.Uri,
-                request.FiscalYear,
-                request.YearEndMonth,
-                request.ReportMonth,
+                balanceSheet,
                 balanceSheetRow.Order,
                 balanceSheetRow.CodalRow,
                 balanceSheetRow.Category,
                 balanceSheetRow.Description,
                 item.Value,
-                request.IsAudited,
-                DateTime.Now,
-                request.PublishDate
+                DateTime.Now
             );
-            repository.Add(balanceSheet);
+
+            repository.Add(detail);
         }
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
