@@ -27,6 +27,10 @@ public class FundamentalDbContext : DbContext, IUnitOfWork, ICoravelProDbContext
 
     public DbSet<MonthlyActivity> MonthlyActivities { get; set; }
 
+    public DbSet<RawMonthlyActivityJson> RawMonthlyActivityJsons { get; set; }
+
+    public DbSet<CanonicalMonthlyActivity> CanonicalMonthlyActivities { get; set; }
+
     public DbSet<BalanceSheet> BalanceSheets { get; set; }
 
     public DbSet<BalanceSheetDetail> BalanceSheetDetails { get; set; }
@@ -56,6 +60,11 @@ public class FundamentalDbContext : DbContext, IUnitOfWork, ICoravelProDbContext
     public DbSet<CapitalIncreaseRegistrationNotice> CapitalIncreaseRegistrationNotices { get; set; }
 
     public DbSet<Sector> Sectors { get; set; }
+
+    public DbSet<CoravelJobHistory> Coravel_JobHistory { get; set; }
+    public DbSet<CoravelScheduledJob> Coravel_ScheduledJobs { get; set; }
+    public DbSet<CoravelScheduledJobHistory> Coravel_ScheduledJobHistory { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(
@@ -64,8 +73,4 @@ public class FundamentalDbContext : DbContext, IUnitOfWork, ICoravelProDbContext
                                                " Fundamental.Infrastructure.Configuration.Fundamental") ?? false
         );
     }
-
-    public DbSet<CoravelJobHistory> Coravel_JobHistory { get; set; }
-    public DbSet<CoravelScheduledJob> Coravel_ScheduledJobs { get; set; }
-    public DbSet<CoravelScheduledJobHistory> Coravel_ScheduledJobHistory { get; set; }
 }
