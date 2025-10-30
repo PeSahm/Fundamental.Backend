@@ -1,0 +1,133 @@
+{
+  "productAndSales": {
+    "financialYear": {
+      "prevPeriodEndToDate": "1398/07/30",
+      "priodEndToDate": "1398/08/30"
+    },
+    "fieldsItems": [
+      {
+        "productName": "کلینکر",
+        "productSerial": 1179,
+        "productUnit": "تن",
+        "products": [
+          {
+            "typeId": 0,
+            "totalProduction": 595628.0,
+            "totalSales": 0.0,
+            "salesRate": 0.0,
+            "salesAmount": 0.0
+          },
+          {
+            "typeId": 1,
+            "totalProduction": 595628.0,
+            "totalSales": 0.0,
+            "salesRate": 0.0,
+            "salesAmount": 0.0
+          },
+          {
+            "typeId": 2,
+            "totalProduction": 153282.0,
+            "totalSales": 0.0,
+            "salesRate": 0.0,
+            "salesAmount": 0.0
+          },
+          {
+            "typeId": 3,
+            "totalProduction": 748910.0,
+            "totalSales": 0.0,
+            "salesRate": 0.0,
+            "salesAmount": 0.0
+          }
+        ],
+        "correction": {
+          "totalProduction": 0.0,
+          "totalSales": 0.0,
+          "salesAmount": 0.0
+        }
+      },
+      {
+        "productName": "سیمان داخلی",
+        "productSerial": 10942,
+        "productUnit": "تن",
+        "products": [
+          {
+            "typeId": 0,
+            "totalProduction": 606745.0,
+            "totalSales": 604874.0,
+            "salesRate": 1481386.0,
+            "salesAmount": 896052.0
+          },
+          {
+            "typeId": 1,
+            "totalProduction": 606745.0,
+            "totalSales": 604874.0,
+            "salesRate": 1481386.0,
+            "salesAmount": 896052.0
+          },
+          {
+            "typeId": 2,
+            "totalProduction": 97246.0,
+            "totalSales": 85280.0,
+            "salesRate": 1725317.0,
+            "salesAmount": 147135.0
+          },
+          {
+            "typeId": 3,
+            "totalProduction": 703991.0,
+            "totalSales": 690154.0,
+            "salesRate": 1511528.0,
+            "salesAmount": 1043187.0
+          }
+        ],
+        "correction": {
+          "totalProduction": 0.0,
+          "totalSales": 0.0,
+          "salesAmount": 0.0
+        }
+      },
+      {
+        "productName": "سیمان صادراتی",
+        "productSerial": 10943,
+        "productUnit": "تن",
+        "products": [
+          {
+            "typeId": 0,
+            "totalProduction": 214964.0,
+            "totalSales": 223784.0,
+            "salesRate": 2422716.0,
+            "salesAmount": 542165.0
+          },
+          {
+            "typeId": 1,
+            "totalProduction": 214964.0,
+            "totalSales": 223784.0,
+            "salesRate": 2422716.0,
+            "salesAmount": 542165.0
+          },
+          {
+            "typeId": 2,
+            "totalProduction": 17214.0,
+            "totalSales": 15096.0,
+            "salesRate": 2440845.0,
+            "salesAmount": 36847.0
+          },
+          {
+            "typeId": 3,
+            "totalProduction": 232178.0,
+            "totalSales": 238880.0,
+            "salesRate": 2423861.0,
+            "salesAmount": 579012.0
+          }
+        ],
+        "correction": {
+          "totalProduction": 0.0,
+          "totalSales": 0.0,
+          "salesAmount": 0.0
+        }
+      }
+    ],
+    "descriptions": []
+  },
+  "listedCapital": "810000",
+  "unauthorizedCapital": "0"
+}

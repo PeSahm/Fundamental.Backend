@@ -1,0 +1,536 @@
+{
+  "monthlyActivity": {
+    "version": "4",
+    "productionAndSales": {
+      "yearData": [
+        {
+          "columnId": "119714",
+          "caption": "دوره یک ماهه منتهی به 1402/01/31 - تعداد تولید",
+          "periodEndToDate": "1402/01/31",
+          "yearEndToDate": "1402/12/29",
+          "period": 1,
+          "isAudited": null
+        },
+        {
+          "columnId": "119715",
+          "caption": "تعداد فروش",
+          "periodEndToDate": "1402/01/31",
+          "yearEndToDate": "1402/12/29",
+          "period": 1,
+          "isAudited": null
+        },
+        {
+          "columnId": "119716",
+          "caption": "نرخ فروش (ریال)",
+          "periodEndToDate": "1402/01/31",
+          "yearEndToDate": "1402/12/29",
+          "period": 1,
+          "isAudited": null
+        },
+        {
+          "columnId": "119717",
+          "caption": "مبلغ فروش (میلیون ریال)",
+          "periodEndToDate": "1402/01/31",
+          "yearEndToDate": "1402/12/29",
+          "period": 1,
+          "isAudited": null
+        },
+        {
+          "columnId": "119718",
+          "caption": "از ابتدای سال مالی تا تاریخ 1402/01/31 - تعداد تولید",
+          "periodEndToDate": "1402/01/31",
+          "yearEndToDate": "1402/12/29",
+          "period": 1,
+          "isAudited": null
+        },
+        {
+          "columnId": "119719",
+          "caption": "تعداد فروش",
+          "periodEndToDate": "1402/01/31",
+          "yearEndToDate": "1402/12/29",
+          "period": 1,
+          "isAudited": null
+        },
+        {
+          "columnId": "119720",
+          "caption": "نرخ فروش (ریال)",
+          "periodEndToDate": "1402/01/31",
+          "yearEndToDate": "1402/12/29",
+          "period": 1,
+          "isAudited": null
+        },
+        {
+          "columnId": "119721",
+          "caption": "مبلغ فروش (میلیون ریال)",
+          "periodEndToDate": "1402/01/31",
+          "yearEndToDate": "1402/12/29",
+          "period": 1,
+          "isAudited": null
+        },
+        {
+          "columnId": "119722",
+          "caption": "از ابتدای سال مالی تا تاریخ 1401/01/31 - تعداد توليد",
+          "periodEndToDate": "1401/01/31",
+          "yearEndToDate": "1401/12/29",
+          "period": 1,
+          "isAudited": null
+        },
+        {
+          "columnId": "119723",
+          "caption": "تعداد فروش",
+          "periodEndToDate": "1401/01/31",
+          "yearEndToDate": "1401/12/29",
+          "period": 1,
+          "isAudited": null
+        },
+        {
+          "columnId": "119724",
+          "caption": "نرخ فروش (ريال)",
+          "periodEndToDate": "1401/01/31",
+          "yearEndToDate": "1401/12/29",
+          "period": 1,
+          "isAudited": null
+        },
+        {
+          "columnId": "119725",
+          "caption": "مبلغ فروش (ميليون ريال)",
+          "periodEndToDate": "1401/01/31",
+          "yearEndToDate": "1401/12/29",
+          "period": 1,
+          "isAudited": null
+        }
+      ],
+      "rowItems": [
+        {
+          "rowCode": -1,
+          "oldFieldName": "",
+          "category": 1,
+          "rowType": "CustomRow",
+          "productId": "25678",
+          "value_11971": "محصولات بتنی",
+          "unitId": "27988",
+          "value_11972": "تن",
+          "value_119714": "3",
+          "value_119715": "3",
+          "value_119716": "12666667",
+          "value_119717": "38",
+          "value_119718": "3",
+          "value_119719": "3",
+          "value_119720": "12666667",
+          "value_119721": "38",
+          "value_119722": "0",
+          "value_119723": "0",
+          "value_119724": "0",
+          "value_119725": "0",
+          "value_119726": "تولید"
+        },
+        {
+          "rowCode": -1,
+          "oldFieldName": "",
+          "category": 1,
+          "rowType": "CustomRow",
+          "productId": "12524",
+          "value_11971": "کلینکر",
+          "unitId": "12524",
+          "value_11972": "تن",
+          "value_119714": "148719",
+          "value_119715": "0",
+          "value_119716": "0",
+          "value_119717": "0",
+          "value_119718": "148719",
+          "value_119719": "0",
+          "value_119720": "0",
+          "value_119721": "0",
+          "value_119722": "102735",
+          "value_119723": "0",
+          "value_119724": "0",
+          "value_119725": "0",
+          "value_119726": "تولید"
+        },
+        {
+          "rowCode": -1,
+          "oldFieldName": "",
+          "category": 1,
+          "rowType": "CustomRow",
+          "productId": "15637",
+          "value_11971": "سیمان پاکتی تیپ2(داخلی )",
+          "unitId": "15637",
+          "value_11972": "تن ",
+          "value_119714": "51137",
+          "value_119715": "51137",
+          "value_119716": "6783914",
+          "value_119717": "346909",
+          "value_119718": "51137",
+          "value_119719": "51137",
+          "value_119720": "6783914",
+          "value_119721": "346909",
+          "value_119722": "51683",
+          "value_119723": "51683",
+          "value_119724": "5562313",
+          "value_119725": "287477",
+          "value_119726": "تولید"
+        },
+        {
+          "rowCode": -1,
+          "oldFieldName": "",
+          "category": 1,
+          "rowType": "CustomRow",
+          "productId": "15640",
+          "value_11971": "سیمان فله تیپ2(داخلی )",
+          "unitId": "15640",
+          "value_11972": "تن ",
+          "value_119714": "24953",
+          "value_119715": "40993",
+          "value_119716": "6032396",
+          "value_119717": "247286",
+          "value_119718": "24953",
+          "value_119719": "40993",
+          "value_119720": "6032396",
+          "value_119721": "247286",
+          "value_119722": "28655",
+          "value_119723": "25746",
+          "value_119724": "4492698",
+          "value_119725": "115669",
+          "value_119726": "تولید"
+        },
+        {
+          "rowCode": 5,
+          "oldFieldName": "",
+          "category": 1,
+          "rowType": "FixedRow",
+          "value_11971": "جمع فروش داخلی",
+          "value_119714": "0",
+          "value_119715": "92133",
+          "value_119717": "594233",
+          "value_119718": "0",
+          "value_119719": "92133",
+          "value_119721": "594233",
+          "value_119722": "0",
+          "value_119723": "77429",
+          "value_119725": "403146"
+        },
+        {
+          "rowCode": -1,
+          "oldFieldName": "",
+          "category": 2,
+          "rowType": "CustomRow",
+          "productId": "12524",
+          "value_11971": "کلینکر",
+          "unitId": "12524",
+          "value_11972": "تن",
+          "value_119714": "0",
+          "value_119715": "10803",
+          "value_119716": "13779043",
+          "value_119717": "148855",
+          "value_119718": "0",
+          "value_119719": "10803",
+          "value_119720": "13779043",
+          "value_119721": "148855",
+          "value_119722": "0",
+          "value_119723": "0",
+          "value_119724": "0",
+          "value_119725": "0",
+          "value_119726": "تولید"
+        },
+        {
+          "rowCode": -1,
+          "oldFieldName": "",
+          "category": 2,
+          "rowType": "CustomRow",
+          "productId": "15644",
+          "value_11971": "سیمان فله تیپ2(صادراتی )",
+          "unitId": "15644",
+          "value_11972": "تن ",
+          "value_119714": "23834",
+          "value_119715": "23834",
+          "value_119716": "13193211",
+          "value_119717": "314447",
+          "value_119718": "23834",
+          "value_119719": "23834",
+          "value_119720": "13193211",
+          "value_119721": "314447",
+          "value_119722": "13250",
+          "value_119723": "13250",
+          "value_119724": "7018868",
+          "value_119725": "93000",
+          "value_119726": "تولید"
+        },
+        {
+          "rowCode": -1,
+          "oldFieldName": "",
+          "category": 2,
+          "rowType": "CustomRow",
+          "productId": "15642",
+          "value_11971": "سیمان پاکتی تیپ 2(صادراتی )",
+          "unitId": "15642",
+          "value_11972": "تن ",
+          "value_119714": "13004",
+          "value_119715": "13004",
+          "value_119716": "13781759",
+          "value_119717": "179218",
+          "value_119718": "13004",
+          "value_119719": "13004",
+          "value_119720": "13781759",
+          "value_119721": "179218",
+          "value_119722": "13005",
+          "value_119723": "13005",
+          "value_119724": "7267282",
+          "value_119725": "94511",
+          "value_119726": "تولید"
+        },
+        {
+          "rowCode": 8,
+          "oldFieldName": "",
+          "category": 2,
+          "rowType": "FixedRow",
+          "value_11971": "جمع فروش صادراتی",
+          "value_119714": "0",
+          "value_119715": "47641",
+          "value_119717": "642520",
+          "value_119718": "0",
+          "value_119719": "47641",
+          "value_119721": "642520",
+          "value_119722": "0",
+          "value_119723": "26255",
+          "value_119725": "187511"
+        },
+        {
+          "rowCode": 11,
+          "oldFieldName": "",
+          "category": 3,
+          "rowType": "FixedRow",
+          "value_11971": "جمع درآمد ارائه خدمات",
+          "value_119714": "0",
+          "value_119715": "0",
+          "value_119717": "0",
+          "value_119718": "0",
+          "value_119719": "0",
+          "value_119721": "0",
+          "value_119722": "0",
+          "value_119723": "0",
+          "value_119725": "0"
+        },
+        {
+          "rowCode": 14,
+          "oldFieldName": "",
+          "category": 4,
+          "rowType": "FixedRow",
+          "value_11971": "جمع برگشت از فروش",
+          "value_119715": "0",
+          "value_119717": "0",
+          "value_119719": "0",
+          "value_119721": "0",
+          "value_119723": "0",
+          "value_119725": "0"
+        },
+        {
+          "rowCode": 15,
+          "oldFieldName": "",
+          "category": 5,
+          "rowType": "FixedRow",
+          "value_11971": "تخفیفات",
+          "value_119717": "0",
+          "value_119721": "0",
+          "value_119725": "0"
+        },
+        {
+          "rowCode": 16,
+          "oldFieldName": "",
+          "category": 0,
+          "rowType": "FixedRow",
+          "value_11971": "جمع",
+          "value_119717": "1236753",
+          "value_119721": "1236753",
+          "value_119725": "590657"
+        }
+      ]
+    },
+    "energy": {
+      "yearData": [
+        {
+          "columnId": "319514",
+          "caption": "دوره يک ماهه منتهي به 1402/01/31 - مقدار مصرف",
+          "periodEndToDate": "1402/01/31",
+          "yearEndToDate": "1402/12/29",
+          "period": 1,
+          "isAudited": null
+        },
+        {
+          "columnId": "319515",
+          "caption": "نرخ - ريال",
+          "periodEndToDate": "1402/01/31",
+          "yearEndToDate": "1402/12/29",
+          "period": 1,
+          "isAudited": null
+        },
+        {
+          "columnId": "319516",
+          "caption": "مبلغ - ميليون ريال",
+          "periodEndToDate": "1402/01/31",
+          "yearEndToDate": "1402/12/29",
+          "period": 1,
+          "isAudited": null
+        },
+        {
+          "columnId": "319517",
+          "caption": "از ابتداي سال مالي تا تاريخ 1402/01/31 - مقدار مصرف",
+          "periodEndToDate": "1402/01/31",
+          "yearEndToDate": "1402/12/29",
+          "period": 1,
+          "isAudited": null
+        },
+        {
+          "columnId": "319518",
+          "caption": "نرخ - ريال",
+          "periodEndToDate": "1402/01/31",
+          "yearEndToDate": "1402/12/29",
+          "period": 1,
+          "isAudited": null
+        },
+        {
+          "columnId": "319519",
+          "caption": "مبلغ - ميليون ريال",
+          "periodEndToDate": "1402/01/31",
+          "yearEndToDate": "1402/12/29",
+          "period": 1,
+          "isAudited": null
+        },
+        {
+          "columnId": "319520",
+          "caption": "از ابتداي سال مالي تا تاريخ 1401/01/31 - مقدار",
+          "periodEndToDate": "1401/01/31",
+          "yearEndToDate": "1401/12/29",
+          "period": 1,
+          "isAudited": null
+        },
+        {
+          "columnId": "319521",
+          "caption": "مبلغ",
+          "periodEndToDate": "1401/01/31",
+          "yearEndToDate": "1401/12/29",
+          "period": 1,
+          "isAudited": null
+        },
+        {
+          "columnId": "319522",
+          "caption": "مانده  پيش بيني تا انتهاي سال مالي 1402/12/29 - مقدار مصرف",
+          "periodEndToDate": "1402/12/29",
+          "yearEndToDate": "1402/12/29",
+          "period": 12,
+          "isAudited": null
+        }
+      ],
+      "rowItems": [
+        {
+          "rowCode": -1,
+          "oldFieldName": "",
+          "category": 0,
+          "rowType": "CustomRow",
+          "id": "1053",
+          "value_31951": "سیمان، آهک و گچ",
+          "value_31952": "سوخت",
+          "value_31953": "گاز سوخت",
+          "value_31954": "مترمکعب",
+          "value_319514": "18870621",
+          "value_319515": "6255",
+          "value_319516": "118037",
+          "value_319517": "18870621",
+          "value_319518": "6255",
+          "value_319519": "118037",
+          "value_319520": "10011924",
+          "value_319521": "59366",
+          "value_319522": "150000000",
+          "value_319523": ""
+        },
+        {
+          "rowCode": -1,
+          "oldFieldName": "",
+          "category": 0,
+          "rowType": "CustomRow",
+          "id": "1053",
+          "value_31951": "سیمان، آهک و گچ",
+          "value_31952": "سوخت",
+          "value_31953": "برق",
+          "value_31954": "مگاوات ساعت",
+          "value_319514": "17905",
+          "value_319515": "1419994",
+          "value_319516": "25425",
+          "value_319517": "17905",
+          "value_319518": "1419994",
+          "value_319519": "25425",
+          "value_319520": "11352",
+          "value_319521": "11261",
+          "value_319522": "170000",
+          "value_319523": ""
+        },
+        {
+          "rowCode": -1,
+          "oldFieldName": "",
+          "category": 0,
+          "rowType": "CustomRow",
+          "id": "1053",
+          "value_31951": "سیمان، آهک و گچ",
+          "value_31952": "سوخت",
+          "value_31953": "مازوت",
+          "value_31954": "مترمکعب",
+          "value_319514": "0",
+          "value_319515": "0",
+          "value_319516": "0",
+          "value_319517": "0",
+          "value_319518": "0",
+          "value_319519": "0",
+          "value_319520": "0",
+          "value_319521": "0",
+          "value_319522": "35000000",
+          "value_319523": ""
+        }
+      ]
+    },
+    "productMonthlyActivityDesc1": {
+      "rowItems": [
+        {
+          "rowCode": 1,
+          "oldFieldName": "",
+          "category": 0,
+          "rowType": "FixedRow"
+        },
+        {
+          "rowCode": 2,
+          "oldFieldName": "2",
+          "category": 0,
+          "rowType": "FixedRow"
+        },
+        {
+          "rowCode": 3,
+          "oldFieldName": "",
+          "category": 0,
+          "rowType": "FixedRow",
+          "value_11991": "کادر توضیحی مربوط به اطلاعات دوره 1 ماهه منتهی به 1402/01/31"
+        },
+        {
+          "rowCode": 4,
+          "oldFieldName": "0",
+          "category": 0,
+          "rowType": "FixedRow",
+          "value_11991": "فروش داخلی:فروش ماه فروردین در بورس کالا به مقدار 92.130 تن و به مبلغ 594.195 میلیون ریال می باشد."
+        },
+        {
+          "rowCode": 5,
+          "oldFieldName": "",
+          "category": 0,
+          "rowType": "FixedRow",
+          "value_11991": "کادر توضیحی مربوط اطلاعات تجمعی از ابتدای سال تا پایان مورخ 1402/01/31"
+        },
+        {
+          "rowCode": 6,
+          "oldFieldName": "1",
+          "category": 0,
+          "rowType": "FixedRow",
+          "value_11991": "فروش داخلی:فروش ماه فروردین در بورس کالا به مقدار 92.130 تن و به مبلغ 594.195 میلیون ریال می باشد."
+        }
+      ]
+    }
+  },
+  "listedCapital": "810000",
+  "unauthorizedCapital": "0"
+}

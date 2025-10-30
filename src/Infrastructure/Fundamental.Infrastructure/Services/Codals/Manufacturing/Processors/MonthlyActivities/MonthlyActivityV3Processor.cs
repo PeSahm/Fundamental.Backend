@@ -1,5 +1,4 @@
-﻿using Fundamental.Application.Codals.Dto.MonthlyActivities.V4;
-using Fundamental.Application.Codals.Dto.MonthlyActivities.V4.Enums;
+using Fundamental.Application.Codals.Dto.MonthlyActivities.V3;
 using Fundamental.Application.Codals.Enums;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
@@ -14,7 +13,7 @@ using Serilog;
 
 namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.MonthlyActivities;
 
-public class MonthlyActivityV4Processor(
+public class MonthlyActivityV3Processor(
     IServiceScopeFactory serviceScopeFactory,
     ICanonicalMappingServiceFactory mappingServiceFactory
 )
@@ -24,7 +23,7 @@ public class MonthlyActivityV4Processor(
 
     public static LetterType LetterType => LetterType.MonthlyActivity;
 
-    public static CodalVersion CodalVersion => CodalVersion.V4;
+    public static CodalVersion CodalVersion => CodalVersion.V3;
 
     public static LetterPart LetterPart => LetterPart.NotSpecified;
 
@@ -32,39 +31,18 @@ public class MonthlyActivityV4Processor(
     {
         JsonSerializerSettings setting = new();
         setting.NullValueHandling = NullValueHandling.Ignore;
-        CodalMonthlyActivity? monthlyActivity =
-            JsonConvert.DeserializeObject<CodalMonthlyActivity>(model.Json, setting);
+        CodalMonthlyActivityV3? monthlyActivity =
+            JsonConvert.DeserializeObject<CodalMonthlyActivityV3>(model.Json, setting);
 
         if (monthlyActivity is null)
         {
-            Log.Warning("Failed to deserialize MonthlyActivity V4 JSON for TraceNo: {TraceNo}", statement.TracingNo);
+            Log.Warning("Failed to deserialize MonthlyActivity V3 JSON for TraceNo: {TraceNo}", statement.TracingNo);
             return;
         }
 
         if (monthlyActivity.MonthlyActivity is null)
         {
-            Log.Warning("MonthlyActivity is null in V4 JSON for TraceNo: {TraceNo}", statement.TracingNo);
-            return;
-        }
-
-        if (monthlyActivity.MonthlyActivity.ProductionAndSales is null)
-        {
-            Log.Warning("ProductionAndSales is null in V4 JSON for TraceNo: {TraceNo}", statement.TracingNo);
-            return;
-        }
-
-        if (monthlyActivity.MonthlyActivity.ProductionAndSales.YearData.Count == 0)
-        {
-            Log.Warning("No year data found in V4 JSON for TraceNo: {TraceNo}", statement.TracingNo);
-            return;
-        }
-
-        YearDatum? yearDatum = monthlyActivity.MonthlyActivity.ProductionAndSales.YearData
-            .Find(x => x.ColumnId == SaleColumnId.ProduceThisMonth);
-
-        if (yearDatum is null || yearDatum.FiscalYear is null || yearDatum.ReportMonth is null)
-        {
-            Log.Warning("Could not extract fiscal year or report month from V4 data for TraceNo: {TraceNo}", statement.TracingNo);
+            Log.Warning("MonthlyActivity is null in V3 JSON for TraceNo: {TraceNo}", statement.TracingNo);
             return;
         }
 
@@ -79,7 +57,7 @@ public class MonthlyActivityV4Processor(
         RawMonthlyActivityJson? existingRawJson = await dbContext.RawMonthlyActivityJsons
             .FirstOrDefaultAsync(
                 x => x.Symbol.Id == symbol.Id &&
-                     x.Version == "V4",
+                     x.Version == "V3",
                 cancellationToken);
 
         // Store raw JSON
@@ -90,7 +68,7 @@ public class MonthlyActivityV4Processor(
                 TraceNo = (long)statement.TracingNo,
                 Symbol = symbol,
                 PublishDate = statement.PublishDateMiladi,
-                Version = "4",
+                Version = "3",
                 RawJson = model.Json
             };
             dbContext.Add(rawJson);
@@ -105,9 +83,9 @@ public class MonthlyActivityV4Processor(
             }
         }
 
-        // Get the mapping service for V4
-        ICanonicalMappingService<CanonicalMonthlyActivity, CodalMonthlyActivity> mappingService =
-            mappingServiceFactory.GetMappingService<CanonicalMonthlyActivity, CodalMonthlyActivity>();
+        // Get the mapping service for V3
+        ICanonicalMappingService<CanonicalMonthlyActivity, CodalMonthlyActivityV3> mappingService =
+            mappingServiceFactory.GetMappingService<CanonicalMonthlyActivity, CodalMonthlyActivityV3>();
 
         // Map to canonical entity
         CanonicalMonthlyActivity canonical = await mappingService.MapToCanonicalAsync(monthlyActivity, symbol, statement);
@@ -134,7 +112,7 @@ public class MonthlyActivityV4Processor(
 
         await dbContext.SaveChangesAsync(cancellationToken);
         Log.Information(
-            "Successfully processed MonthlyActivity V4 for Symbol: {Isin}, FiscalYear: {FiscalYear}, ReportMonth: {ReportMonth}",
+            "Successfully processed MonthlyActivity V3 for Symbol: {Isin}, FiscalYear: {FiscalYear}, ReportMonth: {ReportMonth}",
             statement.Isin,
             canonical.FiscalYear,
             canonical.ReportMonth);
@@ -148,10 +126,7 @@ public class MonthlyActivityV4Processor(
         existing.HasSubCompanySale = updated.HasSubCompanySale;
 
         // Update collections
-        existing.BuyRawMaterialItems = updated.BuyRawMaterialItems;
         existing.ProductionAndSalesItems = updated.ProductionAndSalesItems;
-        existing.EnergyItems = updated.EnergyItems;
-        existing.CurrencyExchangeItems = updated.CurrencyExchangeItems;
         existing.Descriptions = updated.Descriptions;
     }
 }

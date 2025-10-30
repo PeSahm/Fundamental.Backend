@@ -1,37 +1,50 @@
 using DotNet.Testcontainers.Builders;
-using DotNet.Testcontainers.Containers;
+using Fundamental.Application.Codals.Dto.MonthlyActivities.V1;
+using Fundamental.Application.Codals.Dto.MonthlyActivities.V2;
+using Fundamental.Application.Codals.Dto.MonthlyActivities.V3;
+using Fundamental.Application.Codals.Dto.MonthlyActivities.V4;
+using Fundamental.Application.Codals.Dto.MonthlyActivities.V5;
+using Fundamental.Application.Codals.Manufacturing.Repositories;
+using Fundamental.Application.Codals.Services;
+using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.Infrastructure.Persistence;
+using Fundamental.Infrastructure.Persistence.Repositories.Base;
+using Fundamental.Infrastructure.Repositories.Codals.Manufacturing;
+using Fundamental.Infrastructure.Services.Codals.Factories;
+using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.MonthlyActivities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Npgsql;
+using Moq;
 using Testcontainers.PostgreSql;
 using Testcontainers.Redis;
 using WireMock.Server;
-using Xunit;
-using Moq;
-using Fundamental.Application.Codals.Services;
-using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
-using Fundamental.Application.Codals.Manufacturing.Jobs.UpdateBalanceSheetData;
 
 namespace IntegrationTests;
 
 public class TestFixture : IAsyncLifetime
 {
+    private Mock<ICodalService>? _codalServiceMock;
     private PostgreSqlContainer? _postgresContainer;
     private RedisContainer? _redisContainer;
-    private WireMockServer? _wireMockServer;
     private IServiceProvider? _serviceProvider;
-    private Mock<ICodalService>? _codalServiceMock;
+    private WireMockServer? _wireMockServer;
 
     public IServiceProvider Services => _serviceProvider ?? throw new InvalidOperationException("Test fixture not initialized");
     public FundamentalDbContext DbContext => Services.GetRequiredService<FundamentalDbContext>();
-    public string PostgresConnectionString => _postgresContainer?.GetConnectionString() ?? throw new InvalidOperationException("PostgreSQL container not initialized");
-    public string RedisConnectionString => _redisContainer?.GetConnectionString() ?? throw new InvalidOperationException("Redis container not initialized");
+
+    public string PostgresConnectionString => _postgresContainer?.GetConnectionString() ??
+                                              throw new InvalidOperationException("PostgreSQL container not initialized");
+
+    public string RedisConnectionString =>
+        _redisContainer?.GetConnectionString() ?? throw new InvalidOperationException("Redis container not initialized");
+
     public WireMockServer WireMockServer => _wireMockServer ?? throw new InvalidOperationException("WireMock server not initialized");
     public ExternalServiceMocks ExternalMocks { get; private set; }
-    public Mock<ICodalService> CodalServiceMock => _codalServiceMock ?? throw new InvalidOperationException("CodalService mock not initialized");
+
+    public Mock<ICodalService> CodalServiceMock =>
+        _codalServiceMock ?? throw new InvalidOperationException("CodalService mock not initialized");
 
     public async Task InitializeAsync()
     {
@@ -132,9 +145,40 @@ public class TestFixture : IAsyncLifetime
         services.AddSingleton<ICodalService>(codalServiceMock.Object);
 
         // Register repositories needed for testing
-        services.AddScoped<IRepository, Fundamental.Infrastructure.Persistence.Repositories.Base.FundamentalRepository>();
-        services.AddScoped<Fundamental.Application.Codals.Manufacturing.Repositories.IBalanceSheetReadRepository, Fundamental.Infrastructure.Repositories.Codals.Manufacturing.BalanceSheetReadRepository>();
-        services.AddScoped<Fundamental.Application.Codals.Manufacturing.Repositories.IIncomeStatementsReadRepository, Fundamental.Infrastructure.Repositories.Codals.Manufacturing.IncomeStatementReadRepository>();
+        services.AddScoped<IRepository, FundamentalRepository>();
+        services.AddScoped<IBalanceSheetReadRepository, BalanceSheetReadRepository>();
+        services.AddScoped<IIncomeStatementsReadRepository, IncomeStatementReadRepository>();
+
+        // Register Canonical Mapping Service Factory and Manufacturing Services
+        services.AddCanonicalMappingServiceFactory();
+
+        services
+            .AddKeyedScopedCanonicalMappingService<ICanonicalMappingService<CanonicalMonthlyActivity, CodalMonthlyActivityV1>,
+                MonthlyActivityMappingServiceV1, CodalMonthlyActivityV1>();
+        services
+            .AddKeyedScopedCanonicalMappingService<ICanonicalMappingService<CanonicalMonthlyActivity, CodalMonthlyActivityV2>,
+                MonthlyActivityMappingServiceV2, CodalMonthlyActivityV2>();
+        services
+            .AddKeyedScopedCanonicalMappingService<ICanonicalMappingService<CanonicalMonthlyActivity, CodalMonthlyActivityV3>,
+                MonthlyActivityMappingServiceV3, CodalMonthlyActivityV3>();
+        services
+            .AddKeyedScopedCanonicalMappingService<ICanonicalMappingService<CanonicalMonthlyActivity, CodalMonthlyActivity>,
+                MonthlyActivityMappingServiceV4, CodalMonthlyActivity>();
+        services
+            .AddKeyedScopedCanonicalMappingService<ICanonicalMappingService<CanonicalMonthlyActivity, CodalMonthlyActivityV5>,
+                MonthlyActivityMappingServiceV5, CodalMonthlyActivityV5>();
+
+        // // Manually register mapping services with correct keys
+        // services.AddKeyedScoped<ICanonicalMappingService<CanonicalMonthlyActivity, CodalMonthlyActivityV5>, MonthlyActivityMappingServiceV5>(
+        //     "Production-MonthlyActivity-V5-NotSpecified");
+        // services.AddKeyedScoped<ICanonicalMappingService<CanonicalMonthlyActivity, Fundamental.Application.Codals.Dto.MonthlyActivities.V4.CodalMonthlyActivity>, MonthlyActivityMappingServiceV4>(
+        //     "Production-MonthlyActivity-V4-NotSpecified");
+        // services.AddKeyedScoped<ICanonicalMappingService<CanonicalMonthlyActivity, Fundamental.Application.Codals.Dto.MonthlyActivities.V3.CodalMonthlyActivityV3>, MonthlyActivityMappingServiceV3>(
+        //     "Production-MonthlyActivity-V3-NotSpecified");
+        // services.AddKeyedScoped<ICanonicalMappingService<CanonicalMonthlyActivity, Fundamental.Application.Codals.Dto.MonthlyActivities.V2.CodalMonthlyActivityV2>, MonthlyActivityMappingServiceV2>(
+        //     "Production-MonthlyActivity-V2-NotSpecified");
+        // services.AddKeyedScoped<ICanonicalMappingService<CanonicalMonthlyActivity, Fundamental.Application.Codals.Dto.MonthlyActivities.V1.CodalMonthlyActivityV1>, MonthlyActivityMappingServiceV1>(
+        //     "Production-MonthlyActivity-V1-NotSpecified");
 
         // Note: MediatR registration removed to avoid licensing issues in tests
         // If needed, handlers can be tested directly
