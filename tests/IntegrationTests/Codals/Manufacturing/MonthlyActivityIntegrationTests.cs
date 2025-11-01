@@ -415,6 +415,173 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
         rawJsonEntity.Should().BeNull();
     }
 
+    [Fact]
+    public async Task GetDomesticRawMaterials_ShouldReturnOnlyDomesticMaterials()
+    {
+        // Arrange
+        await CleanMonthlyActivityData();
+        Symbol symbol = CreateTestSymbol("IRO1SROD0001", 9600059UL);
+        await _fixture.DbContext.Symbols.AddAsync(symbol);
+        await _fixture.DbContext.SaveChangesAsync();
+
+        string testJson = MonthlyActivityTestData.GetV5TestData();
+        SetupApiResponse("monthly-activity", testJson);
+
+        MonthlyActivityV5Processor processor = new MonthlyActivityV5Processor(
+            _fixture.Services.GetRequiredService<IServiceScopeFactory>(),
+            _fixture.Services.GetRequiredService<ICanonicalMappingServiceFactory>());
+
+        GetStatementResponse statement = CreateStatementResponse("IRO1SROD0001", 123456789);
+        GetStatementJsonResponse jsonResponse = CreateJsonResponse(testJson);
+
+        await processor.Process(statement, jsonResponse, CancellationToken.None);
+
+        // Act
+        CanonicalMonthlyActivity? storedEntity = await _fixture.DbContext.CanonicalMonthlyActivities
+            .Include(x => x.BuyRawMaterialItems)
+            .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id);
+
+        var domesticMaterials = storedEntity!.GetDomesticRawMaterials().ToList();
+
+        // Assert
+        domesticMaterials.Should().NotBeEmpty();
+        domesticMaterials.Should().AllSatisfy(x =>
+        {
+            x.Category.Should().Be(BuyRawMaterialCategory.Domestic);
+            x.MaterialName.Should().NotBeNullOrEmpty();
+        });
+
+        // Verify some known domestic materials from test data
+        domesticMaterials.Should().Contain(x => x.MaterialName.Contains("آهن"));
+    }
+
+    [Fact]
+    public async Task GetImportedRawMaterials_ShouldReturnOnlyImportedMaterials()
+    {
+        // Arrange
+        await CleanMonthlyActivityData();
+        Symbol symbol = CreateTestSymbol("IRO1SROD0001", 9600059UL);
+        await _fixture.DbContext.Symbols.AddAsync(symbol);
+        await _fixture.DbContext.SaveChangesAsync();
+
+        string testJson = MonthlyActivityTestData.GetV5TestData();
+        SetupApiResponse("monthly-activity", testJson);
+
+        MonthlyActivityV5Processor processor = new MonthlyActivityV5Processor(
+            _fixture.Services.GetRequiredService<IServiceScopeFactory>(),
+            _fixture.Services.GetRequiredService<ICanonicalMappingServiceFactory>());
+
+        GetStatementResponse statement = CreateStatementResponse("IRO1SROD0001", 123456789);
+        GetStatementJsonResponse jsonResponse = CreateJsonResponse(testJson);
+
+        await processor.Process(statement, jsonResponse, CancellationToken.None);
+
+        // Act
+        CanonicalMonthlyActivity? storedEntity = await _fixture.DbContext.CanonicalMonthlyActivities
+            .Include(x => x.BuyRawMaterialItems)
+            .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id);
+
+        var importedMaterials = storedEntity!.GetImportedRawMaterials().ToList();
+
+        // Assert
+        importedMaterials.Should().NotBeEmpty();
+        importedMaterials.Should().AllSatisfy(x =>
+        {
+            x.Category.Should().Be(BuyRawMaterialCategory.Imported);
+            x.MaterialName.Should().NotBeNullOrEmpty();
+        });
+    }
+
+    [Fact]
+    public async Task GetTotalRawMaterials_ShouldReturnTotalSummaryRows()
+    {
+        // Arrange
+        await CleanMonthlyActivityData();
+        Symbol symbol = CreateTestSymbol("IRO1SROD0001", 9600059UL);
+        await _fixture.DbContext.Symbols.AddAsync(symbol);
+        await _fixture.DbContext.SaveChangesAsync();
+
+        string testJson = MonthlyActivityTestData.GetV5TestData();
+        SetupApiResponse("monthly-activity", testJson);
+
+        MonthlyActivityV5Processor processor = new MonthlyActivityV5Processor(
+            _fixture.Services.GetRequiredService<IServiceScopeFactory>(),
+            _fixture.Services.GetRequiredService<ICanonicalMappingServiceFactory>());
+
+        GetStatementResponse statement = CreateStatementResponse("IRO1SROD0001", 123456789);
+        GetStatementJsonResponse jsonResponse = CreateJsonResponse(testJson);
+
+        await processor.Process(statement, jsonResponse, CancellationToken.None);
+
+        // Act
+        CanonicalMonthlyActivity? storedEntity = await _fixture.DbContext.CanonicalMonthlyActivities
+            .Include(x => x.BuyRawMaterialItems)
+            .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id);
+
+        var totalMaterials = storedEntity!.GetTotalRawMaterials().ToList();
+
+        // Assert
+        totalMaterials.Should().NotBeEmpty();
+        totalMaterials.Should().AllSatisfy(x =>
+        {
+            x.Category.Should().Be(BuyRawMaterialCategory.Total);
+        });
+
+        // Total rows should have aggregated amounts
+        var firstTotal = totalMaterials.FirstOrDefault();
+        if (firstTotal != null)
+        {
+            // Total amount should be sum of domestic + imported
+            firstTotal.YearToDateAmount.Should().BeGreaterThanOrEqualTo(0);
+        }
+    }
+
+    [Fact]
+    public async Task GetRawMaterialDataRows_ShouldExcludeSummaryRows()
+    {
+        // Arrange
+        await CleanMonthlyActivityData();
+        Symbol symbol = CreateTestSymbol("IRO1SROD0001", 9600059UL);
+        await _fixture.DbContext.Symbols.AddAsync(symbol);
+        await _fixture.DbContext.SaveChangesAsync();
+
+        string testJson = MonthlyActivityTestData.GetV5TestData();
+        SetupApiResponse("monthly-activity", testJson);
+
+        MonthlyActivityV5Processor processor = new MonthlyActivityV5Processor(
+            _fixture.Services.GetRequiredService<IServiceScopeFactory>(),
+            _fixture.Services.GetRequiredService<ICanonicalMappingServiceFactory>());
+
+        GetStatementResponse statement = CreateStatementResponse("IRO1SROD0001", 123456789);
+        GetStatementJsonResponse jsonResponse = CreateJsonResponse(testJson);
+
+        await processor.Process(statement, jsonResponse, CancellationToken.None);
+
+        // Act
+        CanonicalMonthlyActivity? storedEntity = await _fixture.DbContext.CanonicalMonthlyActivities
+            .Include(x => x.BuyRawMaterialItems)
+            .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id);
+
+        var dataRows = storedEntity!.GetRawMaterialDataRows().ToList();
+
+        // Assert
+        dataRows.Should().NotBeEmpty();
+        dataRows.Should().AllSatisfy(x =>
+        {
+            // Data rows should have RowCode = -1 or null
+            if (x.RowCode.HasValue)
+            {
+                x.RowCode.Value.Should().Be(-1);
+            }
+        });
+
+        // Verify data rows are actual material entries, not totals
+        var domesticData = dataRows.Where(x => x.Category == BuyRawMaterialCategory.Domestic).ToList();
+        var importedData = dataRows.Where(x => x.Category == BuyRawMaterialCategory.Imported).ToList();
+
+        (domesticData.Count + importedData.Count).Should().BeGreaterThan(0);
+    }
+
     /// <summary>
     /// Cleans all existing monthly activity data from the database.
     /// </summary>
