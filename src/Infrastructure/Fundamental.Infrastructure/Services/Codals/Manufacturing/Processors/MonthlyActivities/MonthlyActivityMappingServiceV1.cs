@@ -2,6 +2,7 @@ using Fundamental.Application.Codals.Dto.MonthlyActivities.V1;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
+using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
 
@@ -106,7 +107,8 @@ public class MonthlyActivityMappingServiceV1 : ICanonicalMappingService<Canonica
             {
                 ProductName = product.ProductName,
                 Unit = product.ProductUnit,
-                Category = 0, // V1 doesn't have category
+                Category = ProductionSalesCategory.Internal, // V1 doesn't have category, default to internal
+                RowCode = ProductionSalesRowCode.Data, // V1 items are all data rows
                 Type = string.Empty, // V1 doesn't have type field
 
                 // V1 has period and year data - map to appropriate fields

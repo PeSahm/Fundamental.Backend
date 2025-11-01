@@ -3,6 +3,7 @@ using Fundamental.Application.Codals.Dto.MonthlyActivities.V4.Enums;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
+using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
 
@@ -132,7 +133,15 @@ public class MonthlyActivityMappingServiceV4 : ICanonicalMappingService<Canonica
                 PreviousYearSalesQuantity = x.Value119723,
                 PreviousYearSalesRate = x.Value119724,
                 PreviousYearSalesAmount = x.Value119725,
-                Type = x.Value119726 ?? string.Empty
+                Type = x.Value119726 ?? string.Empty,
+
+                // Row classification metadata - map from V4 enums to domain enums
+                RowCode = x.RowCode.HasValue
+                    ? (ProductionSalesRowCode)(int)x.RowCode.Value
+                    : ProductionSalesRowCode.Data,
+                Category = x.Category.HasValue
+                    ? (ProductionSalesCategory)(int)x.Category.Value
+                    : ProductionSalesCategory.Internal
             })
             .ToList();
     }
