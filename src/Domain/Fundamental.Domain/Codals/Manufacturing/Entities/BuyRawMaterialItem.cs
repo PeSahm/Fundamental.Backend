@@ -1,5 +1,7 @@
 namespace Fundamental.Domain.Codals.Manufacturing.Entities;
 
+using Fundamental.Domain.Codals.Manufacturing.Enums;
+
 /// <summary>
 /// Represents a raw material purchase item.
 /// Based on V5 buyRawMaterial section with columnIds starting with 346xx.
@@ -153,8 +155,9 @@ public class BuyRawMaterialItem
     public int? RowCode { get; set; }
 
     /// <summary>
-    /// Category (1 for domestic, 2 for imported, 0 for total).
+    /// Category indicating source of raw material (domestic, imported, or total).
+    /// 1 = Domestic (داخلی), 2 = Imported (وارداتی), 0 = Total (جمع).
     /// Maps to V5 category field.
     /// </summary>
-    public int? Category { get; set; }
+    public BuyRawMaterialCategory Category { get; set; } = BuyRawMaterialCategory.Domestic;
 }
