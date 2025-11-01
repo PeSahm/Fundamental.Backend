@@ -168,7 +168,13 @@ public class MonthlyActivityMappingServiceV4 : ICanonicalMappingService<Canonica
                 CumulativeToPeriodAmount = x.Value346417,
                 PreviousYearQuantity = x.Value346418,
                 PreviousYearRate = x.Value346419,
-                PreviousYearAmount = x.Value346420
+                PreviousYearAmount = x.Value346420,
+
+                // Row classification metadata
+                RowCode = (int?)x.RowCode,
+                Category = x.Category.HasValue
+                    ? (BuyRawMaterialCategory)x.Category.Value
+                    : BuyRawMaterialCategory.Domestic
             })
             .ToList();
     }
