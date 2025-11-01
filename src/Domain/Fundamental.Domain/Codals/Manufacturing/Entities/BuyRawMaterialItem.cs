@@ -1,115 +1,160 @@
 namespace Fundamental.Domain.Codals.Manufacturing.Entities;
 
 /// <summary>
-/// Represents a buy raw material item.
-/// Based on V5 captions like "از ابتدای سال مالی تا تاریخ 1404/06/31 - مقدار" (ignoring date).
+/// Represents a raw material purchase item.
+/// Based on V5 buyRawMaterial section with columnIds starting with 346xx.
 /// </summary>
 public class BuyRawMaterialItem
 {
     /// <summary>
-    /// Name of the material (e.g., "مارل").
-    /// Based on V5 value_34641.
+    /// Description/name of the raw material (e.g., "مارل", "سنگ آهک").
+    /// شرح
+    /// Maps to V5 value_34641.
     /// </summary>
     public string MaterialName { get; set; }
 
     /// <summary>
-    /// Unit of measurement (e.g., "تن").
-    /// Based on V5 value_34642.
+    /// Unit of measurement (e.g., "تن", "کیلوگرم").
+    /// واحد
+    /// Maps to V5 value_34642.
     /// </summary>
     public string Unit { get; set; }
 
     /// <summary>
-    /// Year-to-date quantity.
-    /// Based on V5 caption "از ابتدای سال مالی تا تاریخ 1404/06/31 - مقدار".
+    /// Year-to-date quantity purchased (up to end of previous period).
+    /// از ابتدای سال مالی تا پایان دوره قبل - مقدار
+    /// Maps to V5 value_34643.
     /// </summary>
     public decimal? YearToDateQuantity { get; set; }
 
     /// <summary>
-    /// Year-to-date rate (ریال).
-    /// Based on V5 caption "نرخ (ریال)".
+    /// Year-to-date purchase rate in Rials (up to end of previous period).
+    /// از ابتدای سال مالی تا پایان دوره قبل - نرخ (ریال)
+    /// Maps to V5 value_34644.
     /// </summary>
     public decimal? YearToDateRate { get; set; }
 
     /// <summary>
-    /// Year-to-date amount (میلیون ریال).
-    /// Based on V5 caption "مبلغ (میلیون ریال)".
+    /// Year-to-date purchase amount in million Rials (up to end of previous period).
+    /// از ابتدای سال مالی تا پایان دوره قبل - مبلغ (میلیون ریال)
+    /// Maps to V5 value_34645.
     /// </summary>
     public decimal? YearToDateAmount { get; set; }
 
     /// <summary>
-    /// Corrected year-to-date quantity.
-    /// Based on V5 caption "ازابتدای سال مالی تا تاریخ 1404/06/31 (اصلاح شده) - مقدار".
+    /// Quantity corrections.
+    /// اصلاحات - مقدار
+    /// Maps to V5 value_34646.
+    /// </summary>
+    public decimal? CorrectionQuantity { get; set; }
+
+    /// <summary>
+    /// Rate corrections in Rials.
+    /// اصلاحات - نرخ (ریال)
+    /// Maps to V5 value_34647.
+    /// </summary>
+    public decimal? CorrectionRate { get; set; }
+
+    /// <summary>
+    /// Amount corrections in million Rials.
+    /// اصلاحات - مبلغ (میلیون ریال)
+    /// Maps to V5 value_34648.
+    /// </summary>
+    public decimal? CorrectionAmount { get; set; }
+
+    /// <summary>
+    /// Corrected year-to-date quantity (up to end of previous period).
+    /// از ابتدای سال مالی تا پایان دوره قبل - اصلاح شده - مقدار
+    /// Maps to V5 value_34649.
     /// </summary>
     public decimal? CorrectedYearToDateQuantity { get; set; }
 
     /// <summary>
-    /// Corrected year-to-date rate (ریال).
-    /// Based on V5 caption "نرخ (ريال)".
+    /// Corrected year-to-date rate in Rials (up to end of previous period).
+    /// از ابتدای سال مالی تا پایان دوره قبل - اصلاح شده - نرخ (ریال)
+    /// Maps to V5 value_346410.
     /// </summary>
     public decimal? CorrectedYearToDateRate { get; set; }
 
     /// <summary>
-    /// Corrected year-to-date amount (میلیون ریال).
-    /// Based on V5 caption "مبلغ (میلیون ریال)".
+    /// Corrected year-to-date amount in million Rials (up to end of previous period).
+    /// از ابتدای سال مالی تا پایان دوره قبل - اصلاح شده - مبلغ (میلیون ریال)
+    /// Maps to V5 value_346411.
     /// </summary>
     public decimal? CorrectedYearToDateAmount { get; set; }
 
     /// <summary>
-    /// Monthly purchase quantity.
-    /// Based on V5 caption "خرید دوره یک ماهه منتهی به 1404/07/30 - مقدار".
+    /// Monthly purchase quantity (one month period ending in current period).
+    /// خرید دوره یک ماهه منتهی به دوره جاری - مقدار
+    /// Maps to V5 value_346412.
     /// </summary>
     public decimal? MonthlyPurchaseQuantity { get; set; }
 
     /// <summary>
-    /// Monthly purchase rate (ریال).
-    /// Based on V5 caption "نرخ (ريال)".
+    /// Monthly purchase rate in Rials (one month period ending in current period).
+    /// خرید دوره یک ماهه منتهی به دوره جاری - نرخ (ریال)
+    /// Maps to V5 value_346413.
     /// </summary>
     public decimal? MonthlyPurchaseRate { get; set; }
 
     /// <summary>
-    /// Monthly purchase amount (میلیون ریال).
-    /// Based on V5 caption "مبلغ (میلیون ریال)".
+    /// Monthly purchase amount in million Rials (one month period ending in current period).
+    /// خرید دوره یک ماهه منتهی به دوره جاری - مبلغ (میلیون ریال)
+    /// Maps to V5 value_346414.
     /// </summary>
     public decimal? MonthlyPurchaseAmount { get; set; }
 
     /// <summary>
-    /// Cumulative quantity to period end.
-    /// Based on V5 caption "مواد اولیه خریداری شده از ابتدای دوره تا پایان دوره منتهی به 1404/07/30 - مقدار".
+    /// Cumulative quantity purchased from beginning to end of current period.
+    /// مواد اولیه خریداری شده از ابتدای دوره تا پایان دوره منتهی به دوره جاری - مقدار
+    /// Maps to V5 value_346415.
     /// </summary>
     public decimal? CumulativeToPeriodQuantity { get; set; }
 
     /// <summary>
-    /// Cumulative rate to period end (ریال).
-    /// Based on V5 caption "نرخ (ريال)".
+    /// Cumulative purchase rate in Rials from beginning to end of current period.
+    /// مواد اولیه خریداری شده از ابتدای دوره تا پایان دوره منتهی به دوره جاری - نرخ (ریال)
+    /// Maps to V5 value_346416.
     /// </summary>
     public decimal? CumulativeToPeriodRate { get; set; }
 
     /// <summary>
-    /// Cumulative amount to period end (میلیون ریال).
-    /// Based on V5 caption "مبلغ (میلیون ریال)".
+    /// Cumulative purchase amount in million Rials from beginning to end of current period.
+    /// مواد اولیه خریداری شده از ابتدای دوره تا پایان دوره منتهی به دوره جاری - مبلغ (میلیون ریال)
+    /// Maps to V5 value_346417.
     /// </summary>
     public decimal? CumulativeToPeriodAmount { get; set; }
 
     /// <summary>
-    /// Previous year quantity.
-    /// Based on V5 caption "از ابتدای سال مالی تا تاریخ 1403/07/30 - مقدار".
+    /// Previous year quantity (same period in previous fiscal year).
+    /// از ابتدای سال مالی تا تاریخ مشابه سال قبل - مقدار
+    /// Maps to V5 value_346418.
     /// </summary>
     public decimal? PreviousYearQuantity { get; set; }
 
     /// <summary>
-    /// Previous year rate (ریال).
-    /// Based on V5 caption "نرخ (ريال)".
+    /// Previous year purchase rate in Rials (same period in previous fiscal year).
+    /// از ابتدای سال مالی تا تاریخ مشابه سال قبل - نرخ (ریال)
+    /// Maps to V5 value_346419.
     /// </summary>
     public decimal? PreviousYearRate { get; set; }
 
     /// <summary>
-    /// Previous year amount (میلیون ریال).
-    /// Based on V5 caption "مبلغ (میلیون ریال)".
+    /// Previous year purchase amount in million Rials (same period in previous fiscal year).
+    /// از ابتدای سال مالی تا تاریخ مشابه سال قبل - مبلغ (میلیون ریال)
+    /// Maps to V5 value_346420.
     /// </summary>
     public decimal? PreviousYearAmount { get; set; }
 
     /// <summary>
+    /// Row code for classification.
+    /// Maps to V5 rowCode field.
+    /// </summary>
+    public int? RowCode { get; set; }
+
+    /// <summary>
     /// Category (1 for domestic, 2 for imported, 0 for total).
+    /// Maps to V5 category field.
     /// </summary>
     public int? Category { get; set; }
 }
