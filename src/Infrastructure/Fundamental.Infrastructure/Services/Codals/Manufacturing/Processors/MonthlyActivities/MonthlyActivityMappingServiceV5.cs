@@ -115,7 +115,9 @@ public class MonthlyActivityMappingServiceV5 : IMonthlyActivityMappingService
 
                 // Classification metadata
                 RowCode = x.RowCode,
-                Category = x.Category
+                Category = x.Category.HasValue
+                    ? (BuyRawMaterialCategory)x.Category.Value
+                    : BuyRawMaterialCategory.Domestic
             })
             .ToList();
     }
