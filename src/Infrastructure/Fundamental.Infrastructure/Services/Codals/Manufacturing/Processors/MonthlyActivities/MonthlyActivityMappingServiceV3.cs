@@ -2,6 +2,7 @@ using Fundamental.Application.Codals.Dto.MonthlyActivities.V3;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
+using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
 
@@ -110,15 +111,26 @@ public class MonthlyActivityMappingServiceV3 : ICanonicalMappingService<Canonica
             {
                 ProductName = x.Value11971 ?? string.Empty,
                 Unit = x.Value11972 ?? string.Empty,
-                Category = (int?)x.Category,
+                Category = (ProductionSalesCategory)x.Category,
+                RowCode = (ProductionSalesRowCode)x.RowCode,
                 Type = x.Value119726 ?? string.Empty,
 
-                // Map period data - V3 has different column structure
-                // For V3, we map the corrected values to the main properties
-                YearToDateProductionQuantity = ParseDecimal(x.Value119710),
-                YearToDateSalesQuantity = ParseDecimal(x.Value119711),
-                YearToDateSalesRate = ParseDecimal(x.Value119712),
-                YearToDateSalesAmount = ParseDecimal(x.Value119713),
+                // Year-to-date data (original, before corrections)
+                YearToDateProductionQuantity = ParseDecimal(x.Value11973),
+                YearToDateSalesQuantity = ParseDecimal(x.Value11974),
+                YearToDateSalesRate = ParseDecimal(x.Value11975),
+                YearToDateSalesAmount = ParseDecimal(x.Value11976),
+
+                // Correction values
+                CorrectionProductionQuantity = ParseDecimal(x.Value11977),
+                CorrectionSalesQuantity = ParseDecimal(x.Value11978),
+                CorrectionSalesAmount = ParseDecimal(x.Value11979),
+
+                // Corrected year-to-date data (after corrections)
+                CorrectedYearToDateProductionQuantity = ParseDecimal(x.Value119710),
+                CorrectedYearToDateSalesQuantity = ParseDecimal(x.Value119711),
+                CorrectedYearToDateSalesRate = ParseDecimal(x.Value119712),
+                CorrectedYearToDateSalesAmount = ParseDecimal(x.Value119713),
 
                 // Monthly data
                 MonthlyProductionQuantity = ParseDecimal(x.Value119714),
