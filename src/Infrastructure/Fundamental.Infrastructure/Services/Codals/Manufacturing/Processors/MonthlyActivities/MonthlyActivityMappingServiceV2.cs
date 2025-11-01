@@ -2,6 +2,7 @@ using Fundamental.Application.Codals.Dto.MonthlyActivities.V2;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
+using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
 
@@ -109,7 +110,8 @@ public class MonthlyActivityMappingServiceV2 : ICanonicalMappingService<Canonica
                 {
                     ProductName = fieldItem.ProductName,
                     Unit = fieldItem.ProductUnit,
-                    Category = product.TypeId,
+                    Category = (ProductionSalesCategory)product.TypeId,
+                    RowCode = ProductionSalesRowCode.Data,
                     Type = string.Empty, // V2 doesn't have type field
 
                     // V2 has simpler structure - map to year-to-date fields
