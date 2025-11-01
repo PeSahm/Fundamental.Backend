@@ -3,6 +3,7 @@ using FluentAssertions;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
+using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.MonthlyActivities;
@@ -47,6 +48,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
 
         // Assert
         CanonicalMonthlyActivity? storedEntity = await _fixture.DbContext.CanonicalMonthlyActivities
+            .Include(x => x.ProductionAndSalesItems)
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id && x.TraceNo == 123456789UL);
 
         storedEntity.Should().NotBeNull();
@@ -69,6 +71,153 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
         rawJsonEntity.Should().NotBeNull();
         rawJsonEntity!.RawJson.Should().NotBeNullOrEmpty();
         rawJsonEntity.Version.Should().Be("5");
+    }
+
+    [Fact]
+    public async Task ProcessMonthlyActivityV5_ShouldCorrectlyMapRowCodeAndCategory()
+    {
+        // Arrange
+        await CleanMonthlyActivityData();
+        Symbol symbol = CreateTestSymbol("IRO1SROD0001", 9600059UL);
+        await _fixture.DbContext.Symbols.AddAsync(symbol);
+        await _fixture.DbContext.SaveChangesAsync();
+
+        string testJson = MonthlyActivityTestData.GetV5TestData();
+        SetupApiResponse("monthly-activity", testJson);
+
+        // Act
+        MonthlyActivityV5Processor processor = new MonthlyActivityV5Processor(
+            _fixture.Services.GetRequiredService<IServiceScopeFactory>(),
+            _fixture.Services.GetRequiredService<ICanonicalMappingServiceFactory>());
+
+        GetStatementResponse statement = CreateStatementResponse("IRO1SROD0001", 123456789);
+        GetStatementJsonResponse jsonResponse = CreateJsonResponse(testJson);
+
+        await processor.Process(statement, jsonResponse, CancellationToken.None);
+
+        // Assert
+        CanonicalMonthlyActivity? storedEntity = await _fixture.DbContext.CanonicalMonthlyActivities
+            .Include(x => x.ProductionAndSalesItems)
+            .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id && x.TraceNo == 123456789UL);
+
+        storedEntity.Should().NotBeNull();
+
+        // Verify data rows have RowCode = Data
+        var dataRows = storedEntity!.GetProductionAndSalesDataRows().ToList();
+        dataRows.Should().NotBeEmpty();
+        dataRows.Should().AllSatisfy(x =>
+        {
+            x.IsDataRow.Should().BeTrue();
+            x.IsSummaryRow.Should().BeFalse();
+        });
+
+        // Verify summary rows exist
+        var summaryRows = storedEntity.GetAllSummaryRows().ToList();
+        summaryRows.Should().NotBeEmpty();
+        summaryRows.Should().AllSatisfy(x =>
+        {
+            x.IsDataRow.Should().BeFalse();
+            x.IsSummaryRow.Should().BeTrue();
+        });
+
+        // Verify total sum exists (green box)
+        var totalSummary = storedEntity.GetTotalSummary();
+        totalSummary.Should().NotBeNull();
+        totalSummary!.ProductName.Should().Be("جمع");
+        totalSummary.YearToDateSalesAmount.Should().BeGreaterThan(0);
+
+        // Verify internal sale summary exists (blue box)
+        var internalSummary = storedEntity.GetInternalSaleSummary();
+        internalSummary.Should().NotBeNull();
+        internalSummary!.ProductName.Should().Be("جمع فروش داخلی");
+
+        // Verify export sale summary exists (red box)
+        var exportSummary = storedEntity.GetExportSaleSummary();
+        exportSummary.Should().NotBeNull();
+        exportSummary!.ProductName.Should().Be("جمع فروش صادراتی");
+    }
+
+    [Fact]
+    public async Task GetInternalSaleDataRows_ShouldReturnOnlyInternalProducts()
+    {
+        // Arrange
+        await CleanMonthlyActivityData();
+        Symbol symbol = CreateTestSymbol("IRO1SROD0001", 9600059UL);
+        await _fixture.DbContext.Symbols.AddAsync(symbol);
+        await _fixture.DbContext.SaveChangesAsync();
+
+        string testJson = MonthlyActivityTestData.GetV5TestData();
+        SetupApiResponse("monthly-activity", testJson);
+
+        MonthlyActivityV5Processor processor = new MonthlyActivityV5Processor(
+            _fixture.Services.GetRequiredService<IServiceScopeFactory>(),
+            _fixture.Services.GetRequiredService<ICanonicalMappingServiceFactory>());
+
+        GetStatementResponse statement = CreateStatementResponse("IRO1SROD0001", 123456789);
+        GetStatementJsonResponse jsonResponse = CreateJsonResponse(testJson);
+
+        await processor.Process(statement, jsonResponse, CancellationToken.None);
+
+        // Act
+        CanonicalMonthlyActivity? storedEntity = await _fixture.DbContext.CanonicalMonthlyActivities
+            .Include(x => x.ProductionAndSalesItems)
+            .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id);
+
+        var internalProducts = storedEntity!.GetInternalSaleDataRows().ToList();
+
+        // Assert
+        internalProducts.Should().NotBeEmpty();
+        internalProducts.Should().AllSatisfy(x =>
+        {
+            x.Category.Should().Be(ProductionSalesCategory.Internal);
+            x.IsDataRow.Should().BeTrue();
+        });
+
+        // Verify some known internal products from test data
+        internalProducts.Should().Contain(x => x.ProductName.Contains("کلینکر"));
+        internalProducts.Should().Contain(x => x.ProductName.Contains("محصولات بتنی"));
+        internalProducts.Should().Contain(x => x.ProductName.Contains("سیمان فله تیپ2(داخلی"));
+    }
+
+    [Fact]
+    public async Task GetExportSaleDataRows_ShouldReturnOnlyExportProducts()
+    {
+        // Arrange
+        await CleanMonthlyActivityData();
+        Symbol symbol = CreateTestSymbol("IRO1SROD0001", 9600059UL);
+        await _fixture.DbContext.Symbols.AddAsync(symbol);
+        await _fixture.DbContext.SaveChangesAsync();
+
+        string testJson = MonthlyActivityTestData.GetV5TestData();
+        SetupApiResponse("monthly-activity", testJson);
+
+        MonthlyActivityV5Processor processor = new MonthlyActivityV5Processor(
+            _fixture.Services.GetRequiredService<IServiceScopeFactory>(),
+            _fixture.Services.GetRequiredService<ICanonicalMappingServiceFactory>());
+
+        GetStatementResponse statement = CreateStatementResponse("IRO1SROD0001", 123456789);
+        GetStatementJsonResponse jsonResponse = CreateJsonResponse(testJson);
+
+        await processor.Process(statement, jsonResponse, CancellationToken.None);
+
+        // Act
+        CanonicalMonthlyActivity? storedEntity = await _fixture.DbContext.CanonicalMonthlyActivities
+            .Include(x => x.ProductionAndSalesItems)
+            .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id);
+
+        var exportProducts = storedEntity!.GetExportSaleDataRows().ToList();
+
+        // Assert
+        exportProducts.Should().NotBeEmpty();
+        exportProducts.Should().AllSatisfy(x =>
+        {
+            x.Category.Should().Be(ProductionSalesCategory.Export);
+            x.IsDataRow.Should().BeTrue();
+        });
+
+        // Verify some known export products from test data
+        exportProducts.Should().Contain(x => x.ProductName.Contains("سیمان فله تیپ2(صادراتی"));
+        exportProducts.Should().Contain(x => x.ProductName.Contains("سیمان پاکتی تیپ 2(صادراتی"));
     }
 
     [Fact]
@@ -273,6 +422,13 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
     {
         _fixture.DbContext.CanonicalMonthlyActivities.RemoveRange(_fixture.DbContext.CanonicalMonthlyActivities);
         _fixture.DbContext.RawMonthlyActivityJsons.RemoveRange(_fixture.DbContext.RawMonthlyActivityJsons);
+        
+        // Also clean up test symbols to avoid duplicate ISIN conflicts
+        List<Symbol> testSymbols = await _fixture.DbContext.Symbols
+            .Where(s => s.Isin == "IRO1SROD0001" || s.Isin == "IRO1BMLT0001")
+            .ToListAsync();
+        _fixture.DbContext.Symbols.RemoveRange(testSymbols);
+        
         await _fixture.DbContext.SaveChangesAsync();
     }
 
