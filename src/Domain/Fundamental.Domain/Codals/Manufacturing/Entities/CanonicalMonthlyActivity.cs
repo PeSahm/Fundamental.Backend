@@ -109,6 +109,55 @@ public class CanonicalMonthlyActivity : BaseEntity<Guid>
     /// </summary>
     public ICollection<MonthlyActivityDescription> Descriptions { get; set; } = new List<MonthlyActivityDescription>();
 
+    // ========== Helper Methods for Querying Buy Raw Material Data ==========
+
+    /// <summary>
+    /// Gets all domestic (internal) raw material purchase items.
+    /// These have Category = Domestic and represent materials purchased within Iran.
+    /// خرید مواد اولیه داخلی.
+    /// </summary>
+    public IEnumerable<BuyRawMaterialItem> GetDomesticRawMaterials()
+    {
+        return BuyRawMaterialItems
+            .Where(x => x.Category == BuyRawMaterialCategory.Domestic)
+            .ToList();
+    }
+
+    /// <summary>
+    /// Gets all imported raw material purchase items.
+    /// These have Category = Imported and represent materials purchased from abroad.
+    /// خرید مواد اولیه خارجی (وارداتی).
+    /// </summary>
+    public IEnumerable<BuyRawMaterialItem> GetImportedRawMaterials()
+    {
+        return BuyRawMaterialItems
+            .Where(x => x.Category == BuyRawMaterialCategory.Imported)
+            .ToList();
+    }
+
+    /// <summary>
+    /// Gets the total/sum rows for raw material purchases.
+    /// These rows have Category = Total and contain the aggregate of all material purchases.
+    /// جمع کل خرید مواد اولیه.
+    /// </summary>
+    public IEnumerable<BuyRawMaterialItem> GetTotalRawMaterials()
+    {
+        return BuyRawMaterialItems
+            .Where(x => x.Category == BuyRawMaterialCategory.Total)
+            .ToList();
+    }
+
+    /// <summary>
+    /// Gets all raw material data rows (excluding summary rows).
+    /// Returns items that have RowCode = -1 or null, representing actual material entries.
+    /// </summary>
+    public IEnumerable<BuyRawMaterialItem> GetRawMaterialDataRows()
+    {
+        return BuyRawMaterialItems
+            .Where(x => x.RowCode == null || x.RowCode == -1)
+            .ToList();
+    }
+
     // ========== Helper Methods for Querying Production and Sales Data ==========
 
     /// <summary>
