@@ -48,6 +48,7 @@ public class MonthlyActivityV5Processor(
         }
 
         // Extract fiscal year and report month from productionAndSales yearData
+        // Find the yearData entry with the highest period (most recent month) to determine current reporting period
         YearDatumV5? yearDatum = monthlyActivity.MonthlyActivity.ProductionAndSales?.YearData
             .Find(x => x.ColumnId == ((int)ProductionAndSalesV5ColumnId.SaleThisMonth).ToString());
 
