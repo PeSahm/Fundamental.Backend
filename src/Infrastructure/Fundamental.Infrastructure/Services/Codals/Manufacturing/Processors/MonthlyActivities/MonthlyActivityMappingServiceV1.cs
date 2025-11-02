@@ -14,6 +14,28 @@ namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.Mo
 public class MonthlyActivityMappingServiceV1 : ICanonicalMappingService<CanonicalMonthlyActivity, CodalMonthlyActivityV1>
 {
     /// <summary>
+    /// Extracts the fiscal year from V1 financial year data.
+    /// V1 fiscal year is PriodEndToDate year + 2.
+    /// </summary>
+    /// <param name="financialYear">The financial year data to extract from.</param>
+    /// <returns>The extracted fiscal year.</returns>
+    public static int ExtractFiscalYear(FinancialYearV1Dto financialYear)
+    {
+        if (!string.IsNullOrWhiteSpace(financialYear.PriodEndToDate) &&
+            financialYear.PriodEndToDate.Contains('/'))
+        {
+            string[] parts = financialYear.PriodEndToDate.Split('/');
+
+            if (parts.Length >= 1 && int.TryParse(parts[0], out int year))
+            {
+                return year + 2; // V1 fiscal year is PriodEndToDate year + 2
+            }
+        }
+
+        throw new ArgumentException("Invalid or missing PriodEndToDate in financial year data", nameof(financialYear));
+    }
+
+    /// <summary>
     /// Maps a V1 Monthly Activity DTO to a canonical entity.
     /// </summary>
     /// <param name="dto">The DTO to map from.</param>
@@ -74,22 +96,6 @@ public class MonthlyActivityMappingServiceV1 : ICanonicalMappingService<Canonica
         // Update collections
         existing.ProductionAndSalesItems = updated.ProductionAndSalesItems;
         existing.Descriptions = updated.Descriptions;
-    }
-
-    private static int ExtractFiscalYear(FinancialYearV1Dto financialYear)
-    {
-        if (!string.IsNullOrWhiteSpace(financialYear.PriodEndToDate) &&
-            financialYear.PriodEndToDate.Contains('/'))
-        {
-            string[] parts = financialYear.PriodEndToDate.Split('/');
-
-            if (parts.Length >= 1 && int.TryParse(parts[0], out int year))
-            {
-                return year + 2; // V1 fiscal year is PriodEndToDate year + 2
-            }
-        }
-
-        throw new ArgumentException("Invalid or missing PriodEndToDate in financial year data", nameof(financialYear));
     }
 
     private static List<ProductionAndSalesItem> MapProductionAndSalesV1(List<ProductAndSalesV1Dto> productAndSales)
