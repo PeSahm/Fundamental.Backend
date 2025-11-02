@@ -1,7 +1,10 @@
+using Fundamental.Domain.Codals.Manufacturing.Enums;
+
 namespace Fundamental.Domain.Codals.Manufacturing.Entities;
 
 /// <summary>
 /// Represents currency exchange information for foreign currency sources and uses.
+/// اطلاعات منابع و مصارف ارزی شرکت
 /// Based on V5 sourceUsesCurrency section with columnIds starting with 364xx.
 /// </summary>
 public class CurrencyExchangeItem
@@ -168,14 +171,40 @@ public class CurrencyExchangeItem
     public decimal? ForecastRemainingRialAmount { get; set; }
 
     /// <summary>
-    /// Row code for classification.
+    /// Row code for classification (Data=-1, OtherSources=32, SourcesSum=33, OtherUses=36, UsesSum=37).
+    /// کد ردیف برای تمایز بین داده‌ها و جمع‌بندی‌ها
     /// Maps to V5 rowCode field.
     /// </summary>
-    public int? RowCode { get; set; }
+    public CurrencyExchangeRowCode RowCode { get; set; } = CurrencyExchangeRowCode.Data;
 
     /// <summary>
-    /// Category (1 for sources, 2 for uses, 0 for totals).
+    /// Category (Total=0, Sources=1, Uses=2).
+    /// دسته‌بندی (منابع، مصارف، یا جمع کل)
     /// Maps to V5 category field.
     /// </summary>
-    public int? Category { get; set; }
+    public CurrencyExchangeCategory Category { get; set; } = CurrencyExchangeCategory.Sources;
+
+    /// <summary>
+    /// Indicates if this is a data row (not a summary/total row).
+    /// آیا این ردیف داده است (نه جمع‌بندی).
+    /// </summary>
+    public bool IsDataRow => RowCode == CurrencyExchangeRowCode.Data;
+
+    /// <summary>
+    /// Indicates if this is a summary row (total/sum row).
+    /// آیا این ردیف جمع‌بندی است.
+    /// </summary>
+    public bool IsSummaryRow => RowCode != CurrencyExchangeRowCode.Data;
+
+    /// <summary>
+    /// Indicates if this is a sources row (Category=Sources).
+    /// آیا این ردیف مربوط به منابع ارزی است.
+    /// </summary>
+    public bool IsSourcesRow => Category == CurrencyExchangeCategory.Sources;
+
+    /// <summary>
+    /// Indicates if this is a uses row (Category=Uses).
+    /// آیا این ردیف مربوط به مصارف ارزی است.
+    /// </summary>
+    public bool IsUsesRow => Category == CurrencyExchangeCategory.Uses;
 }

@@ -101,6 +101,50 @@ public class CanonicalMonthlyActivity : BaseEntity<Guid>
     /// </summary>
     public ICollection<CurrencyExchangeItem> CurrencyExchangeItems { get; set; } = new List<CurrencyExchangeItem>();
 
+    // ========== Helper Methods for Querying Currency Exchange Data ==========
+
+    /// <summary>
+    /// Gets all currency sources data rows (Category=Sources, RowCode=Data).
+    /// دریافت تمام ردیف‌های داده منابع ارزی (فروش صادراتی، وام خارجی و غیره).
+    /// </summary>
+    public IEnumerable<CurrencyExchangeItem> GetCurrencySourcesDataRows()
+        => CurrencyExchangeItems.Where(x => x.IsDataRow && x.IsSourcesRow);
+
+    /// <summary>
+    /// Gets all currency uses data rows (Category=Uses, RowCode=Data).
+    /// دریافت تمام ردیف‌های داده مصارف ارزی (خرید وارداتی، پرداخت‌ها و غیره).
+    /// </summary>
+    public IEnumerable<CurrencyExchangeItem> GetCurrencyUsesDataRows()
+        => CurrencyExchangeItems.Where(x => x.IsDataRow && x.IsUsesRow);
+
+    /// <summary>
+    /// Gets the total sources sum row (RowCode=SourcesSum).
+    /// دریافت ردیف جمع کل منابع ارزی.
+    /// </summary>
+    public CurrencyExchangeItem? GetCurrencySourcesSum()
+        => CurrencyExchangeItems.FirstOrDefault(x => x.RowCode == CurrencyExchangeRowCode.SourcesSum);
+
+    /// <summary>
+    /// Gets the total uses sum row (RowCode=UsesSum).
+    /// دریافت ردیف جمع کل مصارف ارزی.
+    /// </summary>
+    public CurrencyExchangeItem? GetCurrencyUsesSum()
+        => CurrencyExchangeItems.FirstOrDefault(x => x.RowCode == CurrencyExchangeRowCode.UsesSum);
+
+    /// <summary>
+    /// Gets all data rows (sources and uses combined).
+    /// دریافت تمام ردیف‌های داده (منابع و مصارف).
+    /// </summary>
+    public IEnumerable<CurrencyExchangeItem> GetCurrencyExchangeDataRows()
+        => CurrencyExchangeItems.Where(x => x.IsDataRow);
+
+    /// <summary>
+    /// Gets all summary rows (all totals and sums).
+    /// دریافت تمام ردیف‌های جمع‌بندی.
+    /// </summary>
+    public IEnumerable<CurrencyExchangeItem> GetAllCurrencyExchangeSummaryRows()
+        => CurrencyExchangeItems.Where(x => x.IsSummaryRow);
+
     /// <summary>
     /// Collection of descriptive text items.
     /// Additional textual information, explanations, and notes about the monthly activity report.

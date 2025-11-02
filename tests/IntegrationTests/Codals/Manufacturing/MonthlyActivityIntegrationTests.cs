@@ -841,6 +841,218 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
         }
     }
 
+    [Fact]
+    public async Task GetCurrencySourcesDataRows_ShouldReturnOnlySourcesDataRows()
+    {
+        // Arrange
+        await CleanMonthlyActivityData();
+        Symbol symbol = CreateTestSymbol("IRO1SROD0001", 9600059UL);
+        await _fixture.DbContext.Symbols.AddAsync(symbol);
+        await _fixture.DbContext.SaveChangesAsync();
+
+        string testJson = MonthlyActivityTestData.GetV5TestData();
+        SetupApiResponse("monthly-activity", testJson);
+
+        MonthlyActivityV5Processor processor = new MonthlyActivityV5Processor(
+            _fixture.Services.GetRequiredService<IServiceScopeFactory>(),
+            _fixture.Services.GetRequiredService<ICanonicalMappingServiceFactory>());
+
+        GetStatementResponse statement = CreateStatementResponse("IRO1SROD0001", 123456789);
+        GetStatementJsonResponse jsonResponse = CreateJsonResponse(testJson);
+
+        await processor.Process(statement, jsonResponse, CancellationToken.None);
+
+        // Act
+        CanonicalMonthlyActivity? storedEntity = await _fixture.DbContext.CanonicalMonthlyActivities
+            .Include(x => x.CurrencyExchangeItems)
+            .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id);
+
+        var sourcesData = storedEntity!.GetCurrencySourcesDataRows().ToList();
+
+        // Assert
+        sourcesData.Should().NotBeEmpty();
+        sourcesData.Should().AllSatisfy(x =>
+        {
+            x.IsDataRow.Should().BeTrue();
+            x.IsSummaryRow.Should().BeFalse();
+            x.RowCode.Should().Be(CurrencyExchangeRowCode.Data);
+            x.Category.Should().Be(CurrencyExchangeCategory.Sources);
+            x.IsSourcesRow.Should().BeTrue();
+            x.IsUsesRow.Should().BeFalse();
+            x.Description.Should().NotBeNullOrEmpty();
+        });
+    }
+
+    [Fact]
+    public async Task GetCurrencyUsesDataRows_ShouldReturnOnlyUsesDataRows()
+    {
+        // Arrange
+        await CleanMonthlyActivityData();
+        Symbol symbol = CreateTestSymbol("IRO1SROD0001", 9600059UL);
+        await _fixture.DbContext.Symbols.AddAsync(symbol);
+        await _fixture.DbContext.SaveChangesAsync();
+
+        string testJson = MonthlyActivityTestData.GetV5TestData();
+        SetupApiResponse("monthly-activity", testJson);
+
+        MonthlyActivityV5Processor processor = new MonthlyActivityV5Processor(
+            _fixture.Services.GetRequiredService<IServiceScopeFactory>(),
+            _fixture.Services.GetRequiredService<ICanonicalMappingServiceFactory>());
+
+        GetStatementResponse statement = CreateStatementResponse("IRO1SROD0001", 123456789);
+        GetStatementJsonResponse jsonResponse = CreateJsonResponse(testJson);
+
+        await processor.Process(statement, jsonResponse, CancellationToken.None);
+
+        // Act
+        CanonicalMonthlyActivity? storedEntity = await _fixture.DbContext.CanonicalMonthlyActivities
+            .Include(x => x.CurrencyExchangeItems)
+            .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id);
+
+        var usesData = storedEntity!.GetCurrencyUsesDataRows().ToList();
+
+        // Assert
+        // Note: In the test data (Sorood-.1404-07-30.json), there are no actual uses data rows (RowCode=-1, Category=Uses)
+        // Only "سایر" fixed rows exist which are not data rows (RowCode=32 or 36)
+        // So we validate the filter works correctly by checking it returns empty as expected
+        usesData.Should().BeEmpty("test data contains no currency uses data rows, only fixed 'سایر' rows");
+    }
+
+    [Fact]
+    public async Task GetCurrencySourcesSum_ShouldReturnSourcesTotalRow()
+    {
+        // Arrange
+        await CleanMonthlyActivityData();
+        Symbol symbol = CreateTestSymbol("IRO1SROD0001", 9600059UL);
+        await _fixture.DbContext.Symbols.AddAsync(symbol);
+        await _fixture.DbContext.SaveChangesAsync();
+
+        string testJson = MonthlyActivityTestData.GetV5TestData();
+        SetupApiResponse("monthly-activity", testJson);
+
+        MonthlyActivityV5Processor processor = new MonthlyActivityV5Processor(
+            _fixture.Services.GetRequiredService<IServiceScopeFactory>(),
+            _fixture.Services.GetRequiredService<ICanonicalMappingServiceFactory>());
+
+        GetStatementResponse statement = CreateStatementResponse("IRO1SROD0001", 123456789);
+        GetStatementJsonResponse jsonResponse = CreateJsonResponse(testJson);
+
+        await processor.Process(statement, jsonResponse, CancellationToken.None);
+
+        // Act
+        CanonicalMonthlyActivity? storedEntity = await _fixture.DbContext.CanonicalMonthlyActivities
+            .Include(x => x.CurrencyExchangeItems)
+            .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id);
+
+        var sourcesSum = storedEntity!.GetCurrencySourcesSum();
+
+        // Assert
+        sourcesSum.Should().NotBeNull();
+        sourcesSum!.RowCode.Should().Be(CurrencyExchangeRowCode.SourcesSum);
+        sourcesSum.Category.Should().Be(CurrencyExchangeCategory.Total);
+        sourcesSum.Description.Should().Contain("جمع منابع ارزی");
+        sourcesSum.IsSummaryRow.Should().BeTrue();
+        sourcesSum.IsDataRow.Should().BeFalse();
+
+        // Verify it has aggregated amounts matching the test data
+        sourcesSum.YearToDateForeignAmount.Should().Be(16708843);
+        sourcesSum.YearToDateRialAmount.Should().Be(11963932);
+    }
+
+    [Fact]
+    public async Task GetCurrencyUsesSum_ShouldReturnUsesTotalRow()
+    {
+        // Arrange
+        await CleanMonthlyActivityData();
+        Symbol symbol = CreateTestSymbol("IRO1SROD0001", 9600059UL);
+        await _fixture.DbContext.Symbols.AddAsync(symbol);
+        await _fixture.DbContext.SaveChangesAsync();
+
+        string testJson = MonthlyActivityTestData.GetV5TestData();
+        SetupApiResponse("monthly-activity", testJson);
+
+        MonthlyActivityV5Processor processor = new MonthlyActivityV5Processor(
+            _fixture.Services.GetRequiredService<IServiceScopeFactory>(),
+            _fixture.Services.GetRequiredService<ICanonicalMappingServiceFactory>());
+
+        GetStatementResponse statement = CreateStatementResponse("IRO1SROD0001", 123456789);
+        GetStatementJsonResponse jsonResponse = CreateJsonResponse(testJson);
+
+        await processor.Process(statement, jsonResponse, CancellationToken.None);
+
+        // Act
+        CanonicalMonthlyActivity? storedEntity = await _fixture.DbContext.CanonicalMonthlyActivities
+            .Include(x => x.CurrencyExchangeItems)
+            .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id);
+
+        var usesSum = storedEntity!.GetCurrencyUsesSum();
+
+        // Assert
+        usesSum.Should().NotBeNull();
+        usesSum!.RowCode.Should().Be(CurrencyExchangeRowCode.UsesSum);
+        usesSum.Category.Should().Be(CurrencyExchangeCategory.Total);
+        usesSum.Description.Should().Contain("جمع مصارف ارزی");
+        usesSum.IsSummaryRow.Should().BeTrue();
+        usesSum.IsDataRow.Should().BeFalse();
+
+        // In test data, uses are all zero
+        usesSum.YearToDateForeignAmount.Should().Be(0);
+        usesSum.YearToDateRialAmount.Should().Be(0);
+    }
+
+    [Fact]
+    public async Task ProcessMonthlyActivityV5_ShouldCorrectlyMapCurrencyExchangeRowCodeAndCategory()
+    {
+        // Arrange
+        await CleanMonthlyActivityData();
+        Symbol symbol = CreateTestSymbol("IRO1SROD0001", 9600059UL);
+        await _fixture.DbContext.Symbols.AddAsync(symbol);
+        await _fixture.DbContext.SaveChangesAsync();
+
+        string testJson = MonthlyActivityTestData.GetV5TestData();
+        SetupApiResponse("monthly-activity", testJson);
+
+        MonthlyActivityV5Processor processor = new MonthlyActivityV5Processor(
+            _fixture.Services.GetRequiredService<IServiceScopeFactory>(),
+            _fixture.Services.GetRequiredService<ICanonicalMappingServiceFactory>());
+
+        GetStatementResponse statement = CreateStatementResponse("IRO1SROD0001", 123456789);
+        GetStatementJsonResponse jsonResponse = CreateJsonResponse(testJson);
+
+        await processor.Process(statement, jsonResponse, CancellationToken.None);
+
+        // Act
+        CanonicalMonthlyActivity? storedEntity = await _fixture.DbContext.CanonicalMonthlyActivities
+            .Include(x => x.CurrencyExchangeItems)
+            .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id);
+
+        var allItems = storedEntity!.CurrencyExchangeItems.ToList();
+        var dataRows = allItems.Where(x => x.RowCode == CurrencyExchangeRowCode.Data).ToList();
+        var sourcesSum = allItems.FirstOrDefault(x => x.RowCode == CurrencyExchangeRowCode.SourcesSum);
+        var usesSum = allItems.FirstOrDefault(x => x.RowCode == CurrencyExchangeRowCode.UsesSum);
+
+        // Assert
+        allItems.Should().NotBeEmpty();
+
+        // Validate data rows have correct enum values
+        dataRows.Should().NotBeEmpty();
+        dataRows.Should().AllSatisfy(x =>
+        {
+            x.RowCode.Should().Be(CurrencyExchangeRowCode.Data);
+            x.Category.Should().BeOneOf(CurrencyExchangeCategory.Sources, CurrencyExchangeCategory.Uses);
+        });
+
+        // Validate sources sum row
+        sourcesSum.Should().NotBeNull();
+        sourcesSum!.RowCode.Should().Be(CurrencyExchangeRowCode.SourcesSum);
+        sourcesSum.Category.Should().Be(CurrencyExchangeCategory.Total);
+
+        // Validate uses sum row
+        usesSum.Should().NotBeNull();
+        usesSum!.RowCode.Should().Be(CurrencyExchangeRowCode.UsesSum);
+        usesSum.Category.Should().Be(CurrencyExchangeCategory.Total);
+    }
+
     /// <summary>
     /// Cleans all existing monthly activity data from the database.
     /// </summary>

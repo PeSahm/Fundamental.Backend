@@ -286,9 +286,13 @@ public class MonthlyActivityMappingServiceV5 : IMonthlyActivityMappingService
                 ForecastRemainingExchangeRate = x.Value364022,
                 ForecastRemainingRialAmount = x.Value364023,
 
-                // Classification metadata
-                RowCode = x.RowCode,
-                Category = x.Category
+                // Classification metadata with enum casting and fallback defaults
+                RowCode = x.RowCode.HasValue
+                    ? (CurrencyExchangeRowCode)x.RowCode.Value
+                    : CurrencyExchangeRowCode.Data,
+                Category = x.Category.HasValue
+                    ? (CurrencyExchangeCategory)x.Category.Value
+                    : CurrencyExchangeCategory.Sources
             })
             .ToList();
     }
