@@ -412,6 +412,78 @@ namespace Fundamental.Migrations.Fundamental
                     b.ToTable("balance_sheet_sort", "manufacturing");
                 });
 
+            modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.CanonicalMonthlyActivity", b =>
+                {
+                    b.Property<long>("_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("_id")
+                        .HasColumnOrder(0);
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("_id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<IsoCurrency>("Currency")
+                        .HasColumnType("iso_currency")
+                        .HasColumnName("currency");
+
+                    b.Property<bool>("HasSubCompanySale")
+                        .HasColumnType("boolean")
+                        .HasColumnName("has_sub_company_sale");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(1);
+
+                    b.Property<decimal>("TraceNo")
+                        .HasColumnType("numeric(20,0)")
+                        .HasColumnName("trace_no");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("ModifiedAt");
+
+                    b.Property<string>("Uri")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("uri");
+
+                    b.Property<string>("Version")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)")
+                        .HasColumnName("version");
+
+                    b.Property<long>("symbol_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("symbol_id");
+
+                    b.ComplexProperty<Dictionary<string, object>>("FiscalYear", "Fundamental.Domain.Codals.Manufacturing.Entities.CanonicalMonthlyActivity.FiscalYear#FiscalYear", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<short>("Year")
+                                .HasColumnType("SMALLINT")
+                                .HasColumnName("fiscal_year");
+                        });
+
+                    b.HasKey("_id")
+                        .HasName("pk_canonical_monthly_activity");
+
+                    b.HasIndex("Id")
+                        .IsUnique()
+                        .HasDatabaseName("ix_canonical_monthly_activity_id");
+
+                    b.HasIndex("symbol_id")
+                        .HasDatabaseName("ix_canonical_monthly_activity_symbol_id");
+
+                    b.ToTable("canonical_monthly_activity", "manufacturing");
+                });
+
             modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.CapitalIncreaseRegistrationNotice", b =>
                 {
                     b.Property<long>("_id")
@@ -1427,153 +1499,6 @@ namespace Fundamental.Migrations.Fundamental
                     b.ToTable("income_statement_sort", "manufacturing");
                 });
 
-            modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.MonthlyActivity", b =>
-                {
-                    b.Property<long>("_id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnName("_id")
-                        .HasColumnOrder(0);
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("_id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("CreatedAt");
-
-                    b.Property<IsoCurrency>("Currency")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("iso_currency")
-                        .HasColumnName("currency");
-
-                    b.Property<bool>("HasSubCompanySale")
-                        .HasColumnType("boolean")
-                        .HasColumnName("has_sub_company_sale");
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid")
-                        .HasColumnName("Id")
-                        .HasColumnOrder(1);
-
-                    b.Property<long>("TraceNo")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("trace_no");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("ModifiedAt");
-
-                    b.Property<string>("Uri")
-                        .IsRequired()
-                        .HasMaxLength(512)
-                        .IsUnicode(false)
-                        .HasColumnType("character varying(512)")
-                        .HasColumnName("uri");
-
-                    b.Property<long>("symbol_id")
-                        .HasColumnType("bigint")
-                        .HasColumnName("symbol_id");
-
-                    b.ComplexProperty<Dictionary<string, object>>("FiscalYear", "Fundamental.Domain.Codals.Manufacturing.Entities.MonthlyActivity.FiscalYear#FiscalYear", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<short>("Year")
-                                .HasColumnType("SMALLINT")
-                                .HasColumnName("fiscal_year");
-                        });
-
-                    b.ComplexProperty<Dictionary<string, object>>("ReportMonth", "Fundamental.Domain.Codals.Manufacturing.Entities.MonthlyActivity.ReportMonth#StatementMonth", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<short>("Month")
-                                .HasColumnType("smallint")
-                                .HasColumnName("report_month");
-                        });
-
-                    b.ComplexProperty<Dictionary<string, object>>("SaleBeforeCurrentMonth", "Fundamental.Domain.Codals.Manufacturing.Entities.MonthlyActivity.SaleBeforeCurrentMonth#CodalMoney", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<IsoCurrency>("Currency")
-                                .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("iso_currency")
-                                .HasColumnName("currency");
-
-                            b1.Property<decimal>("Value")
-                                .HasPrecision(36, 10)
-                                .HasColumnType("decimal")
-                                .HasColumnName("sale_before_current_month");
-                        });
-
-                    b.ComplexProperty<Dictionary<string, object>>("SaleCurrentMonth", "Fundamental.Domain.Codals.Manufacturing.Entities.MonthlyActivity.SaleCurrentMonth#CodalMoney", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<IsoCurrency>("Currency")
-                                .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("iso_currency")
-                                .HasColumnName("currency");
-
-                            b1.Property<decimal>("Value")
-                                .HasPrecision(36, 10)
-                                .HasColumnType("decimal")
-                                .HasColumnName("sale_current_month");
-                        });
-
-                    b.ComplexProperty<Dictionary<string, object>>("SaleIncludeCurrentMonth", "Fundamental.Domain.Codals.Manufacturing.Entities.MonthlyActivity.SaleIncludeCurrentMonth#CodalMoney", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<IsoCurrency>("Currency")
-                                .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("iso_currency")
-                                .HasColumnName("currency");
-
-                            b1.Property<decimal>("Value")
-                                .HasPrecision(36, 10)
-                                .HasColumnType("decimal")
-                                .HasColumnName("sale_include_current_month");
-                        });
-
-                    b.ComplexProperty<Dictionary<string, object>>("SaleLastYear", "Fundamental.Domain.Codals.Manufacturing.Entities.MonthlyActivity.SaleLastYear#CodalMoney", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<IsoCurrency>("Currency")
-                                .ValueGeneratedOnUpdateSometimes()
-                                .HasColumnType("iso_currency")
-                                .HasColumnName("currency");
-
-                            b1.Property<decimal>("Value")
-                                .HasPrecision(36, 10)
-                                .HasColumnType("decimal")
-                                .HasColumnName("sale_last_year");
-                        });
-
-                    b.ComplexProperty<Dictionary<string, object>>("YearEndMonth", "Fundamental.Domain.Codals.Manufacturing.Entities.MonthlyActivity.YearEndMonth#StatementMonth", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<short>("Month")
-                                .HasColumnType("smallint")
-                                .HasColumnName("year_end_month");
-                        });
-
-                    b.HasKey("_id")
-                        .HasName("pk_monthly_activity");
-
-                    b.HasIndex("Id")
-                        .IsUnique()
-                        .HasDatabaseName("ix_monthly_activity_id");
-
-                    b.HasIndex("symbol_id")
-                        .HasDatabaseName("ix_monthly_activity_symbol_id");
-
-                    b.ToTable("monthly_activity", "manufacturing");
-                });
-
             modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.NonOperationIncomeAndExpense", b =>
                 {
                     b.Property<long>("_id")
@@ -1686,6 +1611,65 @@ namespace Fundamental.Migrations.Fundamental
                         .HasDatabaseName("ix_non_operation_income_and_expense_symbol_id");
 
                     b.ToTable("non_operation_income_and_expense", "manufacturing");
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.RawMonthlyActivityJson", b =>
+                {
+                    b.Property<long>("_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("_id")
+                        .HasColumnOrder(0);
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("_id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(1);
+
+                    b.Property<DateTime>("PublishDate")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("publish_date");
+
+                    b.Property<string>("RawJson")
+                        .IsRequired()
+                        .HasColumnType("jsonb")
+                        .HasColumnName("raw_json");
+
+                    b.Property<long>("TraceNo")
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("trace_no");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("ModifiedAt");
+
+                    b.Property<string>("Version")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)")
+                        .HasColumnName("version");
+
+                    b.Property<long>("symbol_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("symbol_id");
+
+                    b.HasKey("_id")
+                        .HasName("pk_raw_monthly_activity_json");
+
+                    b.HasIndex("Id")
+                        .IsUnique()
+                        .HasDatabaseName("ix_raw_monthly_activity_json_id");
+
+                    b.HasIndex("symbol_id")
+                        .HasDatabaseName("ix_raw_monthly_activity_json_symbol_id");
+
+                    b.ToTable("raw_monthly_activity_json", "manufacturing");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.StockOwnership", b =>
@@ -2600,6 +2584,506 @@ namespace Fundamental.Migrations.Fundamental
                     b.Navigation("BalanceSheet");
                 });
 
+            modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.CanonicalMonthlyActivity", b =>
+                {
+                    b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Symbol")
+                        .WithMany()
+                        .HasForeignKey("symbol_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_canonical_monthly_activity_symbols_symbol_id");
+
+                    b.OwnsMany("Fundamental.Domain.Codals.Manufacturing.Entities.BuyRawMaterialItem", "BuyRawMaterialItems", b1 =>
+                        {
+                            b1.Property<long>("CanonicalMonthlyActivity_id")
+                                .HasColumnType("bigint");
+
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer");
+
+                            b1.Property<int>("Category")
+                                .HasColumnType("integer");
+
+                            b1.Property<decimal?>("CorrectedYearToDateAmount")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CorrectedYearToDateQuantity")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CorrectedYearToDateRate")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CorrectionAmount")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CorrectionQuantity")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CorrectionRate")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CumulativeToPeriodAmount")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CumulativeToPeriodQuantity")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CumulativeToPeriodRate")
+                                .HasColumnType("numeric");
+
+                            b1.Property<string>("MaterialName")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<decimal?>("MonthlyPurchaseAmount")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("MonthlyPurchaseQuantity")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("MonthlyPurchaseRate")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("PreviousYearAmount")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("PreviousYearQuantity")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("PreviousYearRate")
+                                .HasColumnType("numeric");
+
+                            b1.Property<int>("RowCode")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("Unit")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<decimal?>("YearToDateAmount")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("YearToDateQuantity")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("YearToDateRate")
+                                .HasColumnType("numeric");
+
+                            b1.HasKey("CanonicalMonthlyActivity_id", "__synthesizedOrdinal")
+                                .HasName("pk_canonical_monthly_activity");
+
+                            b1.ToTable("canonical_monthly_activity", "manufacturing");
+
+                            b1.ToJson("buy_raw_material_items");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CanonicalMonthlyActivity_id")
+                                .HasConstraintName("fk_canonical_monthly_activity_canonical_monthly_activity_canon");
+                        });
+
+                    b.OwnsOne("Fundamental.Domain.Codals.ValueObjects.StatementMonth", "ReportMonth", b1 =>
+                        {
+                            b1.Property<long>("CanonicalMonthlyActivity_id")
+                                .HasColumnType("bigint")
+                                .HasColumnName("_id");
+
+                            b1.Property<short>("Month")
+                                .HasColumnType("smallint")
+                                .HasColumnName("report_month");
+
+                            b1.HasKey("CanonicalMonthlyActivity_id");
+
+                            b1.ToTable("canonical_monthly_activity", "manufacturing");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CanonicalMonthlyActivity_id")
+                                .HasConstraintName("fk_canonical_monthly_activity_canonical_monthly_activity__id");
+                        });
+
+                    b.OwnsOne("Fundamental.Domain.Codals.ValueObjects.StatementMonth", "YearEndMonth", b1 =>
+                        {
+                            b1.Property<long>("CanonicalMonthlyActivity_id")
+                                .HasColumnType("bigint")
+                                .HasColumnName("_id");
+
+                            b1.Property<short>("Month")
+                                .HasColumnType("smallint")
+                                .HasColumnName("year_end_month");
+
+                            b1.HasKey("CanonicalMonthlyActivity_id");
+
+                            b1.ToTable("canonical_monthly_activity", "manufacturing");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CanonicalMonthlyActivity_id")
+                                .HasConstraintName("fk_canonical_monthly_activity_canonical_monthly_activity__id");
+                        });
+
+                    b.OwnsMany("Fundamental.Domain.Codals.Manufacturing.Entities.CurrencyExchangeItem", "CurrencyExchangeItems", b1 =>
+                        {
+                            b1.Property<long>("CanonicalMonthlyActivity_id")
+                                .HasColumnType("bigint");
+
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer");
+
+                            b1.Property<int>("Category")
+                                .HasColumnType("integer");
+
+                            b1.Property<decimal?>("CorrectedYearToDateExchangeRate")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CorrectedYearToDateForeignAmount")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CorrectedYearToDateRialAmount")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CorrectionExchangeRate")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CorrectionForeignAmount")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CorrectionRialAmount")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CumulativeToPeriodExchangeRate")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CumulativeToPeriodForeignAmount")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CumulativeToPeriodRialAmount")
+                                .HasColumnType("numeric");
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<string>("Description")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<decimal?>("ForecastRemainingExchangeRate")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("ForecastRemainingForeignAmount")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("ForecastRemainingRialAmount")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("MonthlyExchangeRate")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("MonthlyForeignAmount")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("MonthlyRialAmount")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("PreviousYearExchangeRate")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("PreviousYearForeignAmount")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("PreviousYearRialAmount")
+                                .HasColumnType("numeric");
+
+                            b1.Property<int>("RowCode")
+                                .HasColumnType("integer");
+
+                            b1.Property<decimal?>("YearToDateExchangeRate")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("YearToDateForeignAmount")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("YearToDateRialAmount")
+                                .HasColumnType("numeric");
+
+                            b1.HasKey("CanonicalMonthlyActivity_id", "__synthesizedOrdinal")
+                                .HasName("pk_canonical_monthly_activity");
+
+                            b1.ToTable("canonical_monthly_activity", "manufacturing");
+
+                            b1.ToJson("currency_exchange_items");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CanonicalMonthlyActivity_id")
+                                .HasConstraintName("fk_canonical_monthly_activity_canonical_monthly_activity_canon");
+                        });
+
+                    b.OwnsMany("Fundamental.Domain.Codals.Manufacturing.Entities.EnergyItem", "EnergyItems", b1 =>
+                        {
+                            b1.Property<long>("CanonicalMonthlyActivity_id")
+                                .HasColumnType("bigint");
+
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer");
+
+                            b1.Property<int>("Category")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("Classification")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<string>("ConsumptionChangeExplanation")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<decimal?>("CorrectedYearToDateConsumption")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CorrectedYearToDateCost")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CorrectedYearToDateRate")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CorrectionConsumption")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CorrectionCost")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CorrectionRate")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CumulativeToPeriodConsumption")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CumulativeToPeriodCost")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CumulativeToPeriodRate")
+                                .HasColumnType("numeric");
+
+                            b1.Property<string>("EnergyType")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<decimal?>("ForecastYearConsumption")
+                                .HasColumnType("numeric");
+
+                            b1.Property<string>("Industry")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<decimal?>("MonthlyConsumption")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("MonthlyCost")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("MonthlyRate")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("PreviousYearConsumption")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("PreviousYearCost")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("PreviousYearRate")
+                                .HasColumnType("numeric");
+
+                            b1.Property<int>("RowCode")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("Unit")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<decimal?>("YearToDateConsumption")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("YearToDateCost")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("YearToDateRate")
+                                .HasColumnType("numeric");
+
+                            b1.HasKey("CanonicalMonthlyActivity_id", "__synthesizedOrdinal")
+                                .HasName("pk_canonical_monthly_activity");
+
+                            b1.ToTable("canonical_monthly_activity", "manufacturing");
+
+                            b1.ToJson("energy_items");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CanonicalMonthlyActivity_id")
+                                .HasConstraintName("fk_canonical_monthly_activity_canonical_monthly_activity_canon");
+                        });
+
+                    b.OwnsMany("Fundamental.Domain.Codals.Manufacturing.Entities.MonthlyActivityDescription", "Descriptions", b1 =>
+                        {
+                            b1.Property<long>("CanonicalMonthlyActivity_id")
+                                .HasColumnType("bigint");
+
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer");
+
+                            b1.Property<int?>("Category")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("Description")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<int?>("RowCode")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("RowType")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.HasKey("CanonicalMonthlyActivity_id", "__synthesizedOrdinal")
+                                .HasName("pk_canonical_monthly_activity");
+
+                            b1.ToTable("canonical_monthly_activity", "manufacturing");
+
+                            b1.ToJson("descriptions");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CanonicalMonthlyActivity_id")
+                                .HasConstraintName("fk_canonical_monthly_activity_canonical_monthly_activity_canon");
+                        });
+
+                    b.OwnsMany("Fundamental.Domain.Codals.Manufacturing.Entities.ProductionAndSalesItem", "ProductionAndSalesItems", b1 =>
+                        {
+                            b1.Property<long>("CanonicalMonthlyActivity_id")
+                                .HasColumnType("bigint");
+
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer");
+
+                            b1.Property<int>("Category")
+                                .HasColumnType("integer");
+
+                            b1.Property<decimal?>("CorrectedYearToDateProductionQuantity")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CorrectedYearToDateSalesAmount")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CorrectedYearToDateSalesQuantity")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CorrectedYearToDateSalesRate")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CorrectionProductionQuantity")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CorrectionSalesAmount")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CorrectionSalesQuantity")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CumulativeToPeriodProductionQuantity")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CumulativeToPeriodSalesAmount")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CumulativeToPeriodSalesQuantity")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("CumulativeToPeriodSalesRate")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("MonthlyProductionQuantity")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("MonthlySalesAmount")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("MonthlySalesQuantity")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("MonthlySalesRate")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("PreviousYearProductionQuantity")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("PreviousYearSalesAmount")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("PreviousYearSalesQuantity")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("PreviousYearSalesRate")
+                                .HasColumnType("numeric");
+
+                            b1.Property<string>("ProductName")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<int>("RowCode")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("Type")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<string>("Unit")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<decimal?>("YearToDateProductionQuantity")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("YearToDateSalesAmount")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("YearToDateSalesQuantity")
+                                .HasColumnType("numeric");
+
+                            b1.Property<decimal?>("YearToDateSalesRate")
+                                .HasColumnType("numeric");
+
+                            b1.HasKey("CanonicalMonthlyActivity_id", "__synthesizedOrdinal")
+                                .HasName("pk_canonical_monthly_activity");
+
+                            b1.ToTable("canonical_monthly_activity", "manufacturing");
+
+                            b1.ToJson("production_and_sales_items");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CanonicalMonthlyActivity_id")
+                                .HasConstraintName("fk_canonical_monthly_activity_canonical_monthly_activity_canon");
+                        });
+
+                    b.Navigation("BuyRawMaterialItems");
+
+                    b.Navigation("CurrencyExchangeItems");
+
+                    b.Navigation("Descriptions");
+
+                    b.Navigation("EnergyItems");
+
+                    b.Navigation("ProductionAndSalesItems");
+
+                    b.Navigation("ReportMonth")
+                        .IsRequired();
+
+                    b.Navigation("Symbol");
+
+                    b.Navigation("YearEndMonth")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.CapitalIncreaseRegistrationNotice", b =>
                 {
                     b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Symbol")
@@ -2758,60 +3242,6 @@ namespace Fundamental.Migrations.Fundamental
                     b.Navigation("IncomeStatement");
                 });
 
-            modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.MonthlyActivity", b =>
-                {
-                    b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Symbol")
-                        .WithMany()
-                        .HasForeignKey("symbol_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_monthly_activity_symbols_symbol_id");
-
-                    b.OwnsMany("Fundamental.BuildingBlock.SymbolExtensions+SalesInfo", "ExtraSalesInfos", b1 =>
-                        {
-                            b1.Property<long>("MonthlyActivity_id")
-                                .HasColumnType("bigint");
-
-                            b1.Property<int>("__synthesizedOrdinal")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("integer");
-
-                            b1.Property<decimal>("CumulativeSales")
-                                .HasColumnType("numeric");
-
-                            b1.Property<int>("Month")
-                                .HasColumnType("integer");
-
-                            b1.Property<decimal>("MonthlySales")
-                                .HasColumnType("numeric");
-
-                            b1.Property<string>("PersianMonthName")
-                                .IsRequired()
-                                .HasColumnType("text");
-
-                            b1.Property<DateTime>("ReportDate")
-                                .HasColumnType("timestamp with time zone");
-
-                            b1.Property<int>("Year")
-                                .HasColumnType("integer");
-
-                            b1.HasKey("MonthlyActivity_id", "__synthesizedOrdinal")
-                                .HasName("pk_monthly_activity");
-
-                            b1.ToTable("monthly_activity", "manufacturing");
-
-                            b1.ToJson("extra_sales_infos");
-
-                            b1.WithOwner()
-                                .HasForeignKey("MonthlyActivity_id")
-                                .HasConstraintName("fk_monthly_activity_monthly_activity_monthly_activity_id");
-                        });
-
-                    b.Navigation("ExtraSalesInfos");
-
-                    b.Navigation("Symbol");
-                });
-
             modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.NonOperationIncomeAndExpense", b =>
                 {
                     b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Symbol")
@@ -2866,6 +3296,18 @@ namespace Fundamental.Migrations.Fundamental
 
                     b.Navigation("YearEndMonth")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.RawMonthlyActivityJson", b =>
+                {
+                    b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Symbol")
+                        .WithMany()
+                        .HasForeignKey("symbol_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_raw_monthly_activity_json_symbols_symbol_id");
+
+                    b.Navigation("Symbol");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.StockOwnership", b =>
