@@ -16,8 +16,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fundamental.Migrations.Fundamental
 {
     [DbContext(typeof(FundamentalDbContext))]
-    [Migration("20251102115550_AddCanonicalMonthlyActivityEntity")]
-    partial class AddCanonicalMonthlyActivityEntity
+    [Migration("20251102214112_AddEnumForCodalRawEntity")]
+    partial class AddEnumForCodalRawEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,6 +27,7 @@ namespace Fundamental.Migrations.Fundamental
                 .HasAnnotation("ProductVersion", "9.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "codal_version", new[] { "none", "v1", "v2", "v3", "v3o1", "v4", "v5", "v7" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "company_type", new[] { "article44", "associations", "basket_companies", "brokers", "capital_supply_companies", "central_asset_management_company", "exempt_companies", "financial_information_processing_companies", "financial_institutions", "government_companies", "intermediary_institutions", "investment_advisory_companies", "investment_funds", "none_financial_institution", "public_investment_and_holding", "rating_institutions", "subsidiary_financial_institutions", "un_known1" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "enable_sub_company", new[] { "accepted", "active", "in_active" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "etf_type", new[] { "equity", "fixed_income", "gold", "land_buildings_and_projects", "mixed_income", "vc_and_private_funds" });
@@ -1652,10 +1653,10 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("ModifiedAt");
 
-                    b.Property<string>("Version")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("character varying(10)")
+                    b.Property<CodalVersion>("Version")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("codal_version")
+                        .HasDefaultValue(CodalVersion.None)
                         .HasColumnName("version");
 
                     b.Property<long>("symbol_id")
