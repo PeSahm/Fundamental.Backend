@@ -1,20 +1,39 @@
-name: Deploy-Fundamental-Endpoints
+name: Build-and-Test-Fundamental-Backend
 on:
   push:
     branches:
       - main
+      - feature/*
+  pull_request:
+    branches:
+      - main
 jobs:
-  deploy:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
         with:
-          node-version: "18"
-      - name: update-Deploy-Fundamental-Endpoints
-        env:
-          LIARA_TOKEN: ${{ secrets.LIARA_API_TOKEN }}
-        run: |
-          npm i -g @liara/cli@5
-          liara deploy --app="fundamental-api" --api-token="$LIARA_TOKEN" --no-app-logs --port=5000
+          dotnet-version: '9.0.x'
+      
+      - name: Restore dependencies
+        run: dotnet restore
+      
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+      
+      - name: Run unit tests
+        run: dotnet test --configuration Release --no-build --verbosity normal
+      
+      # - uses: actions/setup-node@v4
+      #   with:
+      #     node-version: "18"
+      # - name: Deploy to Liara
+      #   env:
+      #     LIARA_TOKEN: ${{ secrets.LIARA_API_TOKEN }}
+      #   run: |
+      #     npm i -g @liara/cli@5
+      #     liara deploy --app="fundamental-api" --api-token="$LIARA_TOKEN" --no-app-logs --port=5000
