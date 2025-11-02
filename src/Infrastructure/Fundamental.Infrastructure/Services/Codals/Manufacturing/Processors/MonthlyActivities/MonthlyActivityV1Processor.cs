@@ -1,9 +1,9 @@
-using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Application.Codals.Dto.MonthlyActivities.V1;
 using Fundamental.Application.Codals.Enums;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
+using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
 using Fundamental.Infrastructure.Persistence;
@@ -86,7 +86,7 @@ public class MonthlyActivityV1Processor(
         CanonicalMonthlyActivity canonical = await mappingService.MapToCanonicalAsync(monthlyActivity, symbol, statement);
 
         // Extract fiscal year and report month for existing record check
-        int fiscalYear = ExtractFiscalYear(monthlyActivity.FinancialYear);
+        int fiscalYear = MonthlyActivityMappingServiceV1.ExtractFiscalYear(monthlyActivity.FinancialYear);
         int reportMonth = 1; // V1 reports annual data
         CanonicalMonthlyActivity? existingCanonical = await dbContext.CanonicalMonthlyActivities
             .FirstOrDefaultAsync(
@@ -113,21 +113,5 @@ public class MonthlyActivityV1Processor(
             statement.Isin,
             fiscalYear,
             reportMonth);
-    }
-
-    private static int ExtractFiscalYear(FinancialYearV1Dto financialYear)
-    {
-        if (!string.IsNullOrWhiteSpace(financialYear.PriodEndToDate) &&
-            financialYear.PriodEndToDate.Contains('/'))
-        {
-            string[] parts = financialYear.PriodEndToDate.Split('/');
-
-            if (parts.Length >= 1 && int.TryParse(parts[0], out int year))
-            {
-                return year + 2; // V1 fiscal year is PriodEndToDate year + 2
-            }
-        }
-
-        throw new ArgumentException("Invalid or missing PriodEndToDate in financial year data", nameof(financialYear));
     }
 }
