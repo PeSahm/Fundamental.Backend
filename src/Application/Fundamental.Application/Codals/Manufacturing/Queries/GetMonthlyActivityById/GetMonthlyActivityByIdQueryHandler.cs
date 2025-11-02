@@ -1,4 +1,5 @@
 ﻿using Fundamental.Application.Codals.Manufacturing.Queries.GetMonthlyActivities;
+using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Application.Codals.Manufacturing.Specifications;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.ErrorHandling;
@@ -16,9 +17,8 @@ public sealed class
     )
     {
         GetMonthlyActivitiesResultItem? result = await repository.FirstOrDefaultAsync(
-            new MonthlyActivitySpec()
-                .WhereId(request.Id)
-                .Select(),
+            new MonthlyActivityResultItemSpec()
+                .WhereId(request.Id),
             cancellationToken
         );
 
