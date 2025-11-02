@@ -106,21 +106,6 @@ public static class ServiceExtensions
             typeof(TImplementation));
     }
 
-    /// <summary>
-    /// Adds canonical mapping services to the service collection.
-    /// </summary>
-    /// <param name="services">The service collection.</param>
-    /// <returns>The service collection for chaining.</returns>
-    public static IServiceCollection AddCanonicalMappingServices(this IServiceCollection services)
-    {
-        // Register mapping services using keyed services based on DTO metadata
-        services
-            .AddKeyedScoped<ICanonicalMappingService<CanonicalMonthlyActivity, CodalMonthlyActivityV5>, MonthlyActivityMappingServiceV5>(
-                CanonicalMappingServiceKey<CodalMonthlyActivityV5>());
-
-        return services;
-    }
-
     private static string VersionDetectorKey(ReportingType reportingType, LetterType letterType, LetterPart letterPart)
     {
         return $"{reportingType}-{letterType}-{letterPart}";
