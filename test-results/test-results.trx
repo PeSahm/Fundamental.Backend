@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="00dfb594-193e-47ca-9a03-e6e03b586fba" name="Mostafa@MOSTAFA-LAPTOP 2025-11-02 22:28:59" runUser="MOSTAFA-LAPTOP\Mostafa" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2025-11-02T22:28:59.1091577+03:30" queuing="2025-11-02T22:28:59.1091582+03:30" start="2025-11-02T22:28:30.9677714+03:30" finish="2025-11-02T22:29:01.4928169+03:30" />
+  <TestSettings name="default" id="d23cc226-794b-4077-8b46-ec0c371ac972">
+    <Deployment runDeploymentRoot="Mostafa_MOSTAFA-LAPTOP_2025-11-02_22_28_59" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="c15aced1-ea87-4472-b9cf-dee43993c272" testId="23b92804-1c24-28a8-86cf-ca342b7ab02b" testName="IntegrationTests.BalanceSheetIntegrationTests.BalanceSheetV5Processing_ShouldProcessDataCorrectly" computerName="MOSTAFA-LAPTOP" duration="00:00:00.6235387" startTime="2025-11-02T22:28:59.0865893+03:30" endTime="2025-11-02T22:28:59.7025340+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c15aced1-ea87-4472-b9cf-dee43993c272" />
+    <UnitTestResult executionId="72072015-d257-4c3b-84c0-e3718481e662" testId="22183e31-b699-15bb-7cad-8367ea6c31fa" testName="IntegrationTests.IncomeStatementIntegrationTests.AddIncomeStatementCommandHandler_ShouldReturnSymbolNotFound_WhenSymbolDoesNotExist" computerName="MOSTAFA-LAPTOP" duration="00:00:00.0259988" startTime="2025-11-02T22:28:59.6720964+03:30" endTime="2025-11-02T22:28:59.6979679+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="72072015-d257-4c3b-84c0-e3718481e662" />
+    <UnitTestResult executionId="a9a40c39-2f18-452d-9dd9-0b3c39b59de3" testId="6f9ffd51-adee-0d50-f2dd-be34798bb20a" testName="IntegrationTests.IncomeStatementIntegrationTests.AddIncomeStatementCommandHandler_ShouldAddIncomeStatementSuccessfully" computerName="MOSTAFA-LAPTOP" duration="00:00:00.1008995" startTime="2025-11-02T22:28:59.9270683+03:30" endTime="2025-11-02T22:29:00.0279515+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a9a40c39-2f18-452d-9dd9-0b3c39b59de3" />
+    <UnitTestResult executionId="5be3706f-e88a-4671-854d-06f540bc77d9" testId="8de92abe-6174-5967-e4b9-abad0a51a93e" testName="IntegrationTests.BalanceSheetIntegrationTests.AddBalanceSheetCommandHandler_ShouldAddBalanceSheetSuccessfully" computerName="MOSTAFA-LAPTOP" duration="00:00:00.1088369" startTime="2025-11-02T22:28:59.8543064+03:30" endTime="2025-11-02T22:28:59.9626344+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5be3706f-e88a-4671-854d-06f540bc77d9" />
+    <UnitTestResult executionId="88bcd0ff-4881-488e-8fdb-67bec7fc2e52" testId="d826e7f3-495d-f476-003f-5e8264becd52" testName="IntegrationTests.BalanceSheetIntegrationTests.AddBalanceSheetCommandHandler_ShouldReturnDuplicateTraceNo_WhenTraceNoAlreadyExists" computerName="MOSTAFA-LAPTOP" duration="00:00:00.0706635" startTime="2025-11-02T22:28:59.7042380+03:30" endTime="2025-11-02T22:28:59.7737486+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="88bcd0ff-4881-488e-8fdb-67bec7fc2e52" />
+    <UnitTestResult executionId="75b50b0c-65ce-488b-bde8-6c5c11bfbf0a" testId="54637a11-94a5-c8eb-d19d-7cc5bb5ad32e" testName="IntegrationTests.IncomeStatementIntegrationTests.GetIncomeStatementDetailsQueryHandler_ShouldReturnEmptyList_WhenNoDetailsExist" computerName="MOSTAFA-LAPTOP" duration="00:00:00.3282726" startTime="2025-11-02T22:28:58.7839218+03:30" endTime="2025-11-02T22:28:59.0866272+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="75b50b0c-65ce-488b-bde8-6c5c11bfbf0a" />
+    <UnitTestResult executionId="2ac33d42-c563-4a06-aaee-428412ef7253" testId="8e8fe99e-80bf-2a7c-ae83-25e250709939" testName="IntegrationTests.BalanceSheetIntegrationTests.GetBalanceSheetDetailsQueryHandler_ShouldReturnDetailsSuccessfully" computerName="MOSTAFA-LAPTOP" duration="00:00:00.0297478" startTime="2025-11-02T22:28:59.7745985+03:30" endTime="2025-11-02T22:28:59.8039842+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2ac33d42-c563-4a06-aaee-428412ef7253" />
+    <UnitTestResult executionId="400b60dd-6972-44a1-8322-0ce0951130c4" testId="d47eacc1-8a61-d2ec-e14c-ededd3c58f61" testName="IntegrationTests.IncomeStatementIntegrationTests.GetIncomeStatementsQueryHandler_ShouldReturnIncomeStatementsFromDatabase" computerName="MOSTAFA-LAPTOP" duration="00:00:00.1906952" startTime="2025-11-02T22:28:59.6988620+03:30" endTime="2025-11-02T22:28:59.8895232+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="400b60dd-6972-44a1-8322-0ce0951130c4" />
+    <UnitTestResult executionId="dfa02caa-2bd3-47bd-bf8f-648e12a365b6" testId="053a1c7b-4d2b-a8d7-18fe-32cde9540ff0" testName="IntegrationTests.DatabaseIntegrationTests.Database_ShouldBeAccessible" computerName="MOSTAFA-LAPTOP" duration="00:00:00.0334000" startTime="2025-11-02T22:28:59.1041336+03:30" endTime="2025-11-02T22:28:59.1377009+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="dfa02caa-2bd3-47bd-bf8f-648e12a365b6" />
+    <UnitTestResult executionId="161ae7a0-2298-4927-b03c-b54a2475af47" testId="39812396-8f93-ea3f-22bc-27205c27c3e3" testName="IntegrationTests.FinancialStatementProcessingIntegrationTests.ExternalServiceMocks_ShouldBeConfigured" computerName="MOSTAFA-LAPTOP" duration="00:00:00.0019185" startTime="2025-11-02T22:28:59.0851326+03:30" endTime="2025-11-02T22:28:59.0852018+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="161ae7a0-2298-4927-b03c-b54a2475af47" />
+    <UnitTestResult executionId="af141e93-879c-4b57-9727-a7f67668d10a" testId="45b71ef9-403a-ab2d-b8ae-d3005f8be7fd" testName="IntegrationTests.DatabaseIntegrationTests.Should_SaveAndRetrieveSymbol" computerName="MOSTAFA-LAPTOP" duration="00:00:00.3161444" startTime="2025-11-02T22:28:58.7824630+03:30" endTime="2025-11-02T22:28:59.0707980+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="af141e93-879c-4b57-9727-a7f67668d10a" />
+    <UnitTestResult executionId="ea0c7b76-5c64-4694-9dee-3fba92070b7e" testId="52ff8f2f-cf42-21d3-57a0-de8ac2d0c14e" testName="IntegrationTests.BalanceSheetIntegrationTests.GetBalanceSheetQueryHandler_ShouldReturnBalanceSheetsFromDatabase" computerName="MOSTAFA-LAPTOP" duration="00:00:00.0918559" startTime="2025-11-02T22:28:59.9796679+03:30" endTime="2025-11-02T22:29:00.0711575+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ea0c7b76-5c64-4694-9dee-3fba92070b7e" />
+    <UnitTestResult executionId="8593262c-155c-4378-b08c-bebc652d23db" testId="59f7fd38-027b-a7af-7bae-9b18a978625d" testName="IntegrationTests.FinancialStatementProcessingIntegrationTests.BasicFinancialStatementProcessing_ShouldWork" computerName="MOSTAFA-LAPTOP" duration="00:00:00.0201992" startTime="2025-11-02T22:28:59.0940239+03:30" endTime="2025-11-02T22:28:59.1014417+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8593262c-155c-4378-b08c-bebc652d23db" />
+    <UnitTestResult executionId="f2d7f873-ee4a-4410-881a-a9ff0c29cabd" testId="9a693c89-7b55-600e-90f5-d94240cc7730" testName="IntegrationTests.FinancialStatementProcessingIntegrationTests.ContainerizedDatabase_ShouldBeAccessible" computerName="MOSTAFA-LAPTOP" duration="00:00:00.0360016" startTime="2025-11-02T22:28:59.1030073+03:30" endTime="2025-11-02T22:28:59.1382257+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f2d7f873-ee4a-4410-881a-a9ff0c29cabd" />
+    <UnitTestResult executionId="6fc12cea-d229-47ed-b4fb-f8a451052144" testId="37d438ee-aca1-4b65-e604-766f8f8b3f54" testName="IntegrationTests.FinancialStatementProcessingIntegrationTests.ComplexQueryWithIncludes_ShouldWork" computerName="MOSTAFA-LAPTOP" duration="00:00:00.0086622" startTime="2025-11-02T22:28:59.0859381+03:30" endTime="2025-11-02T22:28:59.0873870+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6fc12cea-d229-47ed-b4fb-f8a451052144" />
+    <UnitTestResult executionId="51619ad3-44e4-40bf-b914-1f19557bdd92" testId="b4b6b35d-fcf5-8c86-525e-9931c439389a" testName="IntegrationTests.IncomeStatementIntegrationTests.GetIncomeStatementDetailsQueryHandler_ShouldReturnDetailsSuccessfully" computerName="MOSTAFA-LAPTOP" duration="00:00:00.0562794" startTime="2025-11-02T22:28:59.6159631+03:30" endTime="2025-11-02T22:28:59.6714033+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="51619ad3-44e4-40bf-b914-1f19557bdd92" />
+    <UnitTestResult executionId="61e3dd96-4839-4aa9-8a8b-f7f978fac6b4" testId="72040ec7-ffac-6e3b-b9dc-527e013ff6ad" testName="IntegrationTests.IncomeStatementIntegrationTests.AddIncomeStatementCommandHandler_ShouldReturnDuplicateTraceNo_WhenTraceNoAlreadyExists" computerName="MOSTAFA-LAPTOP" duration="00:00:00.0360666" startTime="2025-11-02T22:28:59.8909655+03:30" endTime="2025-11-02T22:28:59.9261990+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="61e3dd96-4839-4aa9-8a8b-f7f978fac6b4" />
+    <UnitTestResult executionId="b6c80b53-0f37-4053-8778-80e8b33d1335" testId="811c1fc5-8254-745b-cf3c-76f11f71dcfd" testName="IntegrationTests.BalanceSheetIntegrationTests.AddBalanceSheetCommandHandler_ShouldReturnDuplicateStatement_WhenStatementAlreadyExists" computerName="MOSTAFA-LAPTOP" duration="00:00:00.0484204" startTime="2025-11-02T22:28:59.8047395+03:30" endTime="2025-11-02T22:28:59.8530574+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b6c80b53-0f37-4053-8778-80e8b33d1335" />
+    <UnitTestResult executionId="383642f0-be13-43be-903a-da41e11dd058" testId="10b5beee-4bd6-5767-1db5-4b5ce9a3ee8a" testName="IntegrationTests.DatabaseIntegrationTests.DatabaseReset_ShouldClearData" computerName="MOSTAFA-LAPTOP" duration="00:00:00.0341646" startTime="2025-11-02T22:28:59.0851081+03:30" endTime="2025-11-02T22:28:59.1035807+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="383642f0-be13-43be-903a-da41e11dd058" />
+    <UnitTestResult executionId="f1d7ee8b-baa0-4bb4-b759-c43c622006c9" testId="214c498e-e3a4-15cb-2bc8-c5bc36206c7f" testName="IntegrationTests.BalanceSheetIntegrationTests.AddBalanceSheetCommandHandler_ShouldReturnSymbolNotFound_WhenSymbolDoesNotExist" computerName="MOSTAFA-LAPTOP" duration="00:00:00.0148918" startTime="2025-11-02T22:28:59.9637667+03:30" endTime="2025-11-02T22:28:59.9781779+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f1d7ee8b-baa0-4bb4-b759-c43c622006c9" />
+    <UnitTestResult executionId="8c7c7eb8-3fd1-4a34-b81d-f9b8aaa32920" testId="fbdfac18-e51f-404f-f457-da994817dcf9" testName="IntegrationTests.FinancialStatementProcessingIntegrationTests.DatabaseQueryOperations_ShouldWork" computerName="MOSTAFA-LAPTOP" duration="00:00:00.3128651" startTime="2025-11-02T22:28:58.7838590+03:30" endTime="2025-11-02T22:28:59.0674893+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8c7c7eb8-3fd1-4a34-b81d-f9b8aaa32920" />
+    <UnitTestResult executionId="c9ae0351-80ce-4e2c-b6b0-915d3edfd6b6" testId="94740d5b-6f8d-bf39-22b4-27b086d85b71" testName="IntegrationTests.IncomeStatementIntegrationTests.IncomeStatementV7Processing_ShouldProcessDataCorrectly" computerName="MOSTAFA-LAPTOP" duration="00:00:00.5355796" startTime="2025-11-02T22:28:59.0872941+03:30" endTime="2025-11-02T22:28:59.6146569+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c9ae0351-80ce-4e2c-b6b0-915d3edfd6b6" />
+    <UnitTestResult executionId="0673d864-a8d9-487b-bec1-165ea5d6cd06" testId="ee8335bd-a519-7b13-b082-560dbf2881c4" testName="IntegrationTests.BalanceSheetIntegrationTests.GetBalanceSheetDetailsQueryHandler_ShouldReturnEmptyList_WhenNoDetailsExist" computerName="MOSTAFA-LAPTOP" duration="00:00:00.3280026" startTime="2025-11-02T22:28:58.7846353+03:30" endTime="2025-11-02T22:28:59.0860040+03:30" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0673d864-a8d9-487b-bec1-165ea5d6cd06" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="IntegrationTests.BalanceSheetIntegrationTests.BalanceSheetV5Processing_ShouldProcessDataCorrectly" storage="c:\repos\personal\fundamental\fundamental.backend\tests\integrationtests\bin\release\net9.0\integrationtests.dll" id="23b92804-1c24-28a8-86cf-ca342b7ab02b">
+      <Execution id="c15aced1-ea87-4472-b9cf-dee43993c272" />
+      <TestMethod codeBase="C:\Repos\Personal\Fundamental\Fundamental.Backend\tests\IntegrationTests\bin\Release\net9.0\IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IntegrationTests.BalanceSheetIntegrationTests" name="BalanceSheetV5Processing_ShouldProcessDataCorrectly" />
+    </UnitTest>
+    <UnitTest name="IntegrationTests.DatabaseIntegrationTests.Database_ShouldBeAccessible" storage="c:\repos\personal\fundamental\fundamental.backend\tests\integrationtests\bin\release\net9.0\integrationtests.dll" id="053a1c7b-4d2b-a8d7-18fe-32cde9540ff0">
+      <Execution id="dfa02caa-2bd3-47bd-bf8f-648e12a365b6" />
+      <TestMethod codeBase="C:\Repos\Personal\Fundamental\Fundamental.Backend\tests\IntegrationTests\bin\Release\net9.0\IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IntegrationTests.DatabaseIntegrationTests" name="Database_ShouldBeAccessible" />
+    </UnitTest>
+    <UnitTest name="IntegrationTests.IncomeStatementIntegrationTests.AddIncomeStatementCommandHandler_ShouldAddIncomeStatementSuccessfully" storage="c:\repos\personal\fundamental\fundamental.backend\tests\integrationtests\bin\release\net9.0\integrationtests.dll" id="6f9ffd51-adee-0d50-f2dd-be34798bb20a">
+      <Execution id="a9a40c39-2f18-452d-9dd9-0b3c39b59de3" />
+      <TestMethod codeBase="C:\Repos\Personal\Fundamental\Fundamental.Backend\tests\IntegrationTests\bin\Release\net9.0\IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IntegrationTests.IncomeStatementIntegrationTests" name="AddIncomeStatementCommandHandler_ShouldAddIncomeStatementSuccessfully" />
+    </UnitTest>
+    <UnitTest name="IntegrationTests.BalanceSheetIntegrationTests.AddBalanceSheetCommandHandler_ShouldReturnSymbolNotFound_WhenSymbolDoesNotExist" storage="c:\repos\personal\fundamental\fundamental.backend\tests\integrationtests\bin\release\net9.0\integrationtests.dll" id="214c498e-e3a4-15cb-2bc8-c5bc36206c7f">
+      <Execution id="f1d7ee8b-baa0-4bb4-b759-c43c622006c9" />
+      <TestMethod codeBase="C:\Repos\Personal\Fundamental\Fundamental.Backend\tests\IntegrationTests\bin\Release\net9.0\IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IntegrationTests.BalanceSheetIntegrationTests" name="AddBalanceSheetCommandHandler_ShouldReturnSymbolNotFound_WhenSymbolDoesNotExist" />
+    </UnitTest>
+    <UnitTest name="IntegrationTests.IncomeStatementIntegrationTests.AddIncomeStatementCommandHandler_ShouldReturnDuplicateTraceNo_WhenTraceNoAlreadyExists" storage="c:\repos\personal\fundamental\fundamental.backend\tests\integrationtests\bin\release\net9.0\integrationtests.dll" id="72040ec7-ffac-6e3b-b9dc-527e013ff6ad">
+      <Execution id="61e3dd96-4839-4aa9-8a8b-f7f978fac6b4" />
+      <TestMethod codeBase="C:\Repos\Personal\Fundamental\Fundamental.Backend\tests\IntegrationTests\bin\Release\net9.0\IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IntegrationTests.IncomeStatementIntegrationTests" name="AddIncomeStatementCommandHandler_ShouldReturnDuplicateTraceNo_WhenTraceNoAlreadyExists" />
+    </UnitTest>
+    <UnitTest name="IntegrationTests.BalanceSheetIntegrationTests.GetBalanceSheetQueryHandler_ShouldReturnBalanceSheetsFromDatabase" storage="c:\repos\personal\fundamental\fundamental.backend\tests\integrationtests\bin\release\net9.0\integrationtests.dll" id="52ff8f2f-cf42-21d3-57a0-de8ac2d0c14e">
+      <Execution id="ea0c7b76-5c64-4694-9dee-3fba92070b7e" />
+      <TestMethod codeBase="C:\Repos\Personal\Fundamental\Fundamental.Backend\tests\IntegrationTests\bin\Release\net9.0\IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IntegrationTests.BalanceSheetIntegrationTests" name="GetBalanceSheetQueryHandler_ShouldReturnBalanceSheetsFromDatabase" />
+    </UnitTest>
+    <UnitTest name="IntegrationTests.BalanceSheetIntegrationTests.GetBalanceSheetDetailsQueryHandler_ShouldReturnEmptyList_WhenNoDetailsExist" storage="c:\repos\personal\fundamental\fundamental.backend\tests\integrationtests\bin\release\net9.0\integrationtests.dll" id="ee8335bd-a519-7b13-b082-560dbf2881c4">
+      <Execution id="0673d864-a8d9-487b-bec1-165ea5d6cd06" />
+      <TestMethod codeBase="C:\Repos\Personal\Fundamental\Fundamental.Backend\tests\IntegrationTests\bin\Release\net9.0\IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IntegrationTests.BalanceSheetIntegrationTests" name="GetBalanceSheetDetailsQueryHandler_ShouldReturnEmptyList_WhenNoDetailsExist" />
+    </UnitTest>
+    <UnitTest name="IntegrationTests.BalanceSheetIntegrationTests.AddBalanceSheetCommandHandler_ShouldReturnDuplicateStatement_WhenStatementAlreadyExists" storage="c:\repos\personal\fundamental\fundamental.backend\tests\integrationtests\bin\release\net9.0\integrationtests.dll" id="811c1fc5-8254-745b-cf3c-76f11f71dcfd">
+      <Execution id="b6c80b53-0f37-4053-8778-80e8b33d1335" />
+      <TestMethod codeBase="C:\Repos\Personal\Fundamental\Fundamental.Backend\tests\IntegrationTests\bin\Release\net9.0\IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IntegrationTests.BalanceSheetIntegrationTests" name="AddBalanceSheetCommandHandler_ShouldReturnDuplicateStatement_WhenStatementAlreadyExists" />
+    </UnitTest>
+    <UnitTest name="IntegrationTests.IncomeStatementIntegrationTests.AddIncomeStatementCommandHandler_ShouldReturnSymbolNotFound_WhenSymbolDoesNotExist" storage="c:\repos\personal\fundamental\fundamental.backend\tests\integrationtests\bin\release\net9.0\integrationtests.dll" id="22183e31-b699-15bb-7cad-8367ea6c31fa">
+      <Execution id="72072015-d257-4c3b-84c0-e3718481e662" />
+      <TestMethod codeBase="C:\Repos\Personal\Fundamental\Fundamental.Backend\tests\IntegrationTests\bin\Release\net9.0\IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IntegrationTests.IncomeStatementIntegrationTests" name="AddIncomeStatementCommandHandler_ShouldReturnSymbolNotFound_WhenSymbolDoesNotExist" />
+    </UnitTest>
+    <UnitTest name="IntegrationTests.FinancialStatementProcessingIntegrationTests.ComplexQueryWithIncludes_ShouldWork" storage="c:\repos\personal\fundamental\fundamental.backend\tests\integrationtests\bin\release\net9.0\integrationtests.dll" id="37d438ee-aca1-4b65-e604-766f8f8b3f54">
+      <Execution id="6fc12cea-d229-47ed-b4fb-f8a451052144" />
+      <TestMethod codeBase="C:\Repos\Personal\Fundamental\Fundamental.Backend\tests\IntegrationTests\bin\Release\net9.0\IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IntegrationTests.FinancialStatementProcessingIntegrationTests" name="ComplexQueryWithIncludes_ShouldWork" />
+    </UnitTest>
+    <UnitTest name="IntegrationTests.IncomeStatementIntegrationTests.GetIncomeStatementDetailsQueryHandler_ShouldReturnDetailsSuccessfully" storage="c:\repos\personal\fundamental\fundamental.backend\tests\integrationtests\bin\release\net9.0\integrationtests.dll" id="b4b6b35d-fcf5-8c86-525e-9931c439389a">
+      <Execution id="51619ad3-44e4-40bf-b914-1f19557bdd92" />
+      <TestMethod codeBase="C:\Repos\Personal\Fundamental\Fundamental.Backend\tests\IntegrationTests\bin\Release\net9.0\IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IntegrationTests.IncomeStatementIntegrationTests" name="GetIncomeStatementDetailsQueryHandler_ShouldReturnDetailsSuccessfully" />
+    </UnitTest>
+    <UnitTest name="IntegrationTests.IncomeStatementIntegrationTests.GetIncomeStatementsQueryHandler_ShouldReturnIncomeStatementsFromDatabase" storage="c:\repos\personal\fundamental\fundamental.backend\tests\integrationtests\bin\release\net9.0\integrationtests.dll" id="d47eacc1-8a61-d2ec-e14c-ededd3c58f61">
+      <Execution id="400b60dd-6972-44a1-8322-0ce0951130c4" />
+      <TestMethod codeBase="C:\Repos\Personal\Fundamental\Fundamental.Backend\tests\IntegrationTests\bin\Release\net9.0\IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IntegrationTests.IncomeStatementIntegrationTests" name="GetIncomeStatementsQueryHandler_ShouldReturnIncomeStatementsFromDatabase" />
+    </UnitTest>
+    <UnitTest name="IntegrationTests.DatabaseIntegrationTests.DatabaseReset_ShouldClearData" storage="c:\repos\personal\fundamental\fundamental.backend\tests\integrationtests\bin\release\net9.0\integrationtests.dll" id="10b5beee-4bd6-5767-1db5-4b5ce9a3ee8a">
+      <Execution id="383642f0-be13-43be-903a-da41e11dd058" />
+      <TestMethod codeBase="C:\Repos\Personal\Fundamental\Fundamental.Backend\tests\IntegrationTests\bin\Release\net9.0\IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IntegrationTests.DatabaseIntegrationTests" name="DatabaseReset_ShouldClearData" />
+    </UnitTest>
+    <UnitTest name="IntegrationTests.BalanceSheetIntegrationTests.GetBalanceSheetDetailsQueryHandler_ShouldReturnDetailsSuccessfully" storage="c:\repos\personal\fundamental\fundamental.backend\tests\integrationtests\bin\release\net9.0\integrationtests.dll" id="8e8fe99e-80bf-2a7c-ae83-25e250709939">
+      <Execution id="2ac33d42-c563-4a06-aaee-428412ef7253" />
+      <TestMethod codeBase="C:\Repos\Personal\Fundamental\Fundamental.Backend\tests\IntegrationTests\bin\Release\net9.0\IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IntegrationTests.BalanceSheetIntegrationTests" name="GetBalanceSheetDetailsQueryHandler_ShouldReturnDetailsSuccessfully" />
+    </UnitTest>
+    <UnitTest name="IntegrationTests.DatabaseIntegrationTests.Should_SaveAndRetrieveSymbol" storage="c:\repos\personal\fundamental\fundamental.backend\tests\integrationtests\bin\release\net9.0\integrationtests.dll" id="45b71ef9-403a-ab2d-b8ae-d3005f8be7fd">
+      <Execution id="af141e93-879c-4b57-9727-a7f67668d10a" />
+      <TestMethod codeBase="C:\Repos\Personal\Fundamental\Fundamental.Backend\tests\IntegrationTests\bin\Release\net9.0\IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IntegrationTests.DatabaseIntegrationTests" name="Should_SaveAndRetrieveSymbol" />
+    </UnitTest>
+    <UnitTest name="IntegrationTests.FinancialStatementProcessingIntegrationTests.ExternalServiceMocks_ShouldBeConfigured" storage="c:\repos\personal\fundamental\fundamental.backend\tests\integrationtests\bin\release\net9.0\integrationtests.dll" id="39812396-8f93-ea3f-22bc-27205c27c3e3">
+      <Execution id="161ae7a0-2298-4927-b03c-b54a2475af47" />
+      <TestMethod codeBase="C:\Repos\Personal\Fundamental\Fundamental.Backend\tests\IntegrationTests\bin\Release\net9.0\IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IntegrationTests.FinancialStatementProcessingIntegrationTests" name="ExternalServiceMocks_ShouldBeConfigured" />
+    </UnitTest>
+    <UnitTest name="IntegrationTests.IncomeStatementIntegrationTests.IncomeStatementV7Processing_ShouldProcessDataCorrectly" storage="c:\repos\personal\fundamental\fundamental.backend\tests\integrationtests\bin\release\net9.0\integrationtests.dll" id="94740d5b-6f8d-bf39-22b4-27b086d85b71">
+      <Execution id="c9ae0351-80ce-4e2c-b6b0-915d3edfd6b6" />
+      <TestMethod codeBase="C:\Repos\Personal\Fundamental\Fundamental.Backend\tests\IntegrationTests\bin\Release\net9.0\IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IntegrationTests.IncomeStatementIntegrationTests" name="IncomeStatementV7Processing_ShouldProcessDataCorrectly" />
+    </UnitTest>
+    <UnitTest name="IntegrationTests.FinancialStatementProcessingIntegrationTests.DatabaseQueryOperations_ShouldWork" storage="c:\repos\personal\fundamental\fundamental.backend\tests\integrationtests\bin\release\net9.0\integrationtests.dll" id="fbdfac18-e51f-404f-f457-da994817dcf9">
+      <Execution id="8c7c7eb8-3fd1-4a34-b81d-f9b8aaa32920" />
+      <TestMethod codeBase="C:\Repos\Personal\Fundamental\Fundamental.Backend\tests\IntegrationTests\bin\Release\net9.0\IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IntegrationTests.FinancialStatementProcessingIntegrationTests" name="DatabaseQueryOperations_ShouldWork" />
+    </UnitTest>
+    <UnitTest name="IntegrationTests.BalanceSheetIntegrationTests.AddBalanceSheetCommandHandler_ShouldAddBalanceSheetSuccessfully" storage="c:\repos\personal\fundamental\fundamental.backend\tests\integrationtests\bin\release\net9.0\integrationtests.dll" id="8de92abe-6174-5967-e4b9-abad0a51a93e">
+      <Execution id="5be3706f-e88a-4671-854d-06f540bc77d9" />
+      <TestMethod codeBase="C:\Repos\Personal\Fundamental\Fundamental.Backend\tests\IntegrationTests\bin\Release\net9.0\IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IntegrationTests.BalanceSheetIntegrationTests" name="AddBalanceSheetCommandHandler_ShouldAddBalanceSheetSuccessfully" />
+    </UnitTest>
+    <UnitTest name="IntegrationTests.IncomeStatementIntegrationTests.GetIncomeStatementDetailsQueryHandler_ShouldReturnEmptyList_WhenNoDetailsExist" storage="c:\repos\personal\fundamental\fundamental.backend\tests\integrationtests\bin\release\net9.0\integrationtests.dll" id="54637a11-94a5-c8eb-d19d-7cc5bb5ad32e">
+      <Execution id="75b50b0c-65ce-488b-bde8-6c5c11bfbf0a" />
+      <TestMethod codeBase="C:\Repos\Personal\Fundamental\Fundamental.Backend\tests\IntegrationTests\bin\Release\net9.0\IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IntegrationTests.IncomeStatementIntegrationTests" name="GetIncomeStatementDetailsQueryHandler_ShouldReturnEmptyList_WhenNoDetailsExist" />
+    </UnitTest>
+    <UnitTest name="IntegrationTests.FinancialStatementProcessingIntegrationTests.BasicFinancialStatementProcessing_ShouldWork" storage="c:\repos\personal\fundamental\fundamental.backend\tests\integrationtests\bin\release\net9.0\integrationtests.dll" id="59f7fd38-027b-a7af-7bae-9b18a978625d">
+      <Execution id="8593262c-155c-4378-b08c-bebc652d23db" />
+      <TestMethod codeBase="C:\Repos\Personal\Fundamental\Fundamental.Backend\tests\IntegrationTests\bin\Release\net9.0\IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IntegrationTests.FinancialStatementProcessingIntegrationTests" name="BasicFinancialStatementProcessing_ShouldWork" />
+    </UnitTest>
+    <UnitTest name="IntegrationTests.BalanceSheetIntegrationTests.AddBalanceSheetCommandHandler_ShouldReturnDuplicateTraceNo_WhenTraceNoAlreadyExists" storage="c:\repos\personal\fundamental\fundamental.backend\tests\integrationtests\bin\release\net9.0\integrationtests.dll" id="d826e7f3-495d-f476-003f-5e8264becd52">
+      <Execution id="88bcd0ff-4881-488e-8fdb-67bec7fc2e52" />
+      <TestMethod codeBase="C:\Repos\Personal\Fundamental\Fundamental.Backend\tests\IntegrationTests\bin\Release\net9.0\IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IntegrationTests.BalanceSheetIntegrationTests" name="AddBalanceSheetCommandHandler_ShouldReturnDuplicateTraceNo_WhenTraceNoAlreadyExists" />
+    </UnitTest>
+    <UnitTest name="IntegrationTests.FinancialStatementProcessingIntegrationTests.ContainerizedDatabase_ShouldBeAccessible" storage="c:\repos\personal\fundamental\fundamental.backend\tests\integrationtests\bin\release\net9.0\integrationtests.dll" id="9a693c89-7b55-600e-90f5-d94240cc7730">
+      <Execution id="f2d7f873-ee4a-4410-881a-a9ff0c29cabd" />
+      <TestMethod codeBase="C:\Repos\Personal\Fundamental\Fundamental.Backend\tests\IntegrationTests\bin\Release\net9.0\IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IntegrationTests.FinancialStatementProcessingIntegrationTests" name="ContainerizedDatabase_ShouldBeAccessible" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="23b92804-1c24-28a8-86cf-ca342b7ab02b" executionId="c15aced1-ea87-4472-b9cf-dee43993c272" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="22183e31-b699-15bb-7cad-8367ea6c31fa" executionId="72072015-d257-4c3b-84c0-e3718481e662" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6f9ffd51-adee-0d50-f2dd-be34798bb20a" executionId="a9a40c39-2f18-452d-9dd9-0b3c39b59de3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8de92abe-6174-5967-e4b9-abad0a51a93e" executionId="5be3706f-e88a-4671-854d-06f540bc77d9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d826e7f3-495d-f476-003f-5e8264becd52" executionId="88bcd0ff-4881-488e-8fdb-67bec7fc2e52" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="54637a11-94a5-c8eb-d19d-7cc5bb5ad32e" executionId="75b50b0c-65ce-488b-bde8-6c5c11bfbf0a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8e8fe99e-80bf-2a7c-ae83-25e250709939" executionId="2ac33d42-c563-4a06-aaee-428412ef7253" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d47eacc1-8a61-d2ec-e14c-ededd3c58f61" executionId="400b60dd-6972-44a1-8322-0ce0951130c4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="053a1c7b-4d2b-a8d7-18fe-32cde9540ff0" executionId="dfa02caa-2bd3-47bd-bf8f-648e12a365b6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="39812396-8f93-ea3f-22bc-27205c27c3e3" executionId="161ae7a0-2298-4927-b03c-b54a2475af47" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="45b71ef9-403a-ab2d-b8ae-d3005f8be7fd" executionId="af141e93-879c-4b57-9727-a7f67668d10a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="52ff8f2f-cf42-21d3-57a0-de8ac2d0c14e" executionId="ea0c7b76-5c64-4694-9dee-3fba92070b7e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="59f7fd38-027b-a7af-7bae-9b18a978625d" executionId="8593262c-155c-4378-b08c-bebc652d23db" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9a693c89-7b55-600e-90f5-d94240cc7730" executionId="f2d7f873-ee4a-4410-881a-a9ff0c29cabd" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="37d438ee-aca1-4b65-e604-766f8f8b3f54" executionId="6fc12cea-d229-47ed-b4fb-f8a451052144" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b4b6b35d-fcf5-8c86-525e-9931c439389a" executionId="51619ad3-44e4-40bf-b914-1f19557bdd92" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="72040ec7-ffac-6e3b-b9dc-527e013ff6ad" executionId="61e3dd96-4839-4aa9-8a8b-f7f978fac6b4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="811c1fc5-8254-745b-cf3c-76f11f71dcfd" executionId="b6c80b53-0f37-4053-8778-80e8b33d1335" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="10b5beee-4bd6-5767-1db5-4b5ce9a3ee8a" executionId="383642f0-be13-43be-903a-da41e11dd058" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="214c498e-e3a4-15cb-2bc8-c5bc36206c7f" executionId="f1d7ee8b-baa0-4bb4-b759-c43c622006c9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="fbdfac18-e51f-404f-f457-da994817dcf9" executionId="8c7c7eb8-3fd1-4a34-b81d-f9b8aaa32920" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="94740d5b-6f8d-bf39-22b4-27b086d85b71" executionId="c9ae0351-80ce-4e2c-b6b0-915d3edfd6b6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ee8335bd-a519-7b13-b082-560dbf2881c4" executionId="0673d864-a8d9-487b-bec1-165ea5d6cd06" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="23" executed="23" passed="23" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v3.1.5+1b188a7b0a (64-bit .NET 9.0.10)&#xD;
+[xUnit.net 00:00:00.09]   Discovering: IntegrationTests&#xD;
+[xUnit.net 00:00:00.12]   Discovered:  IntegrationTests&#xD;
+[xUnit.net 00:00:00.14]   Starting:    IntegrationTests&#xD;
+[testcontainers.org 00:00:00.19] Connected to Docker:&#xD;
+  Host: npipe://./pipe/docker_engine&#xD;
+  Server Version: 28.5.1&#xD;
+  Kernel Version: 6.6.87.2-microsoft-standard-WSL2&#xD;
+  API Version: 1.51&#xD;
+  Operating System: Docker Desktop&#xD;
+  Total Memory: 31.16 GB&#xD;
+  Labels: &#xD;
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli&#xD;
+[testcontainers.org 00:00:00.39] Docker container 1f1837701b53 created&#xD;
+[testcontainers.org 00:00:00.43] Start Docker container 1f1837701b53&#xD;
+[testcontainers.org 00:00:00.72] Wait for Docker container 1f1837701b53 to complete readiness checks&#xD;
+[testcontainers.org 00:00:00.72] Docker container 1f1837701b53 ready&#xD;
+[testcontainers.org 00:00:00.81] Docker container b5d77183c3fd created&#xD;
+[testcontainers.org 00:00:00.81] Docker container c3edd7a722bc created&#xD;
+[testcontainers.org 00:00:00.81] Docker container c9cc81ac8cf1 created&#xD;
+[testcontainers.org 00:00:00.82] Docker container d015d8db9eab created&#xD;
+[testcontainers.org 00:00:00.82] Docker container 7716424afdd1 created&#xD;
+[testcontainers.org 00:00:00.83] Start Docker container c3edd7a722bc&#xD;
+[testcontainers.org 00:00:00.83] Start Docker container b5d77183c3fd&#xD;
+[testcontainers.org 00:00:00.84] Start Docker container d015d8db9eab&#xD;
+[testcontainers.org 00:00:00.84] Start Docker container 7716424afdd1&#xD;
+[testcontainers.org 00:00:00.84] Start Docker container c9cc81ac8cf1&#xD;
+[testcontainers.org 00:00:00.87] Docker container 7d71e942117a created&#xD;
+[testcontainers.org 00:00:00.88] Docker container 1b6ee29b5812 created&#xD;
+[testcontainers.org 00:00:00.90] Start Docker container 1b6ee29b5812&#xD;
+[testcontainers.org 00:00:00.90] Start Docker container 7d71e942117a&#xD;
+[testcontainers.org 00:00:00.92] Docker container 877a9c7fa993 created&#xD;
+[testcontainers.org 00:00:00.95] Start Docker container 877a9c7fa993&#xD;
+[testcontainers.org 00:00:01.32] Wait for Docker container d015d8db9eab to complete readiness checks&#xD;
+[testcontainers.org 00:00:01.37] Execute "/bin/sh -c true &amp;&amp; (grep -i ':0*18EB' /proc/net/tcp* || nc -vz -w 1 localhost 6379 || /bin/bash -c '&lt;/dev/tcp/localhost/6379')" at Docker container d015d8db9eab&#xD;
+[testcontainers.org 00:00:01.43] Wait for Docker container 1b6ee29b5812 to complete readiness checks&#xD;
+[testcontainers.org 00:00:01.46] Execute "/bin/sh -c true &amp;&amp; (grep -i ':0*1538' /proc/net/tcp* || nc -vz -w 1 localhost 5432 || /bin/bash -c '&lt;/dev/tcp/localhost/5432')" at Docker container 1b6ee29b5812&#xD;
+[testcontainers.org 00:00:01.50] Wait for Docker container 7716424afdd1 to complete readiness checks&#xD;
+[testcontainers.org 00:00:01.53] Execute "/bin/sh -c true &amp;&amp; (grep -i ':0*18EB' /proc/net/tcp* || nc -vz -w 1 localhost 6379 || /bin/bash -c '&lt;/dev/tcp/localhost/6379')" at Docker container 7716424afdd1&#xD;
+[testcontainers.org 00:00:01.59] Docker container d015d8db9eab ready&#xD;
+[testcontainers.org 00:00:01.61] Wait for Docker container c9cc81ac8cf1 to complete readiness checks&#xD;
+[testcontainers.org 00:00:01.62] Execute "/bin/sh -c true &amp;&amp; (grep -i ':0*18EB' /proc/net/tcp* || nc -vz -w 1 localhost 6379 || /bin/bash -c '&lt;/dev/tcp/localhost/6379')" at Docker container c9cc81ac8cf1&#xD;
+[testcontainers.org 00:00:01.66] Wait for Docker container b5d77183c3fd to complete readiness checks&#xD;
+[testcontainers.org 00:00:01.68] Execute "/bin/sh -c true &amp;&amp; (grep -i ':0*1538' /proc/net/tcp* || nc -vz -w 1 localhost 5432 || /bin/bash -c '&lt;/dev/tcp/localhost/5432')" at Docker container b5d77183c3fd&#xD;
+[testcontainers.org 00:00:01.71] Docker container 7716424afdd1 ready&#xD;
+[testcontainers.org 00:00:01.71] Wait for Docker container 7d71e942117a to complete readiness checks&#xD;
+[testcontainers.org 00:00:01.74] Execute "/bin/sh -c true &amp;&amp; (grep -i ':0*1538' /proc/net/tcp* || nc -vz -w 1 localhost 5432 || /bin/bash -c '&lt;/dev/tcp/localhost/5432')" at Docker container 7d71e942117a&#xD;
+[testcontainers.org 00:00:01.79] Docker container c9cc81ac8cf1 ready&#xD;
+[testcontainers.org 00:00:01.79] Wait for Docker container c3edd7a722bc to complete readiness checks&#xD;
+[testcontainers.org 00:00:01.83] Execute "/bin/sh -c true &amp;&amp; (grep -i ':0*18EB' /proc/net/tcp* || nc -vz -w 1 localhost 6379 || /bin/bash -c '&lt;/dev/tcp/localhost/6379')" at Docker container c3edd7a722bc&#xD;
+[testcontainers.org 00:00:01.84] Wait for Docker container 877a9c7fa993 to complete readiness checks&#xD;
+[testcontainers.org 00:00:01.86] Execute "/bin/sh -c true &amp;&amp; (grep -i ':0*1538' /proc/net/tcp* || nc -vz -w 1 localhost 5432 || /bin/bash -c '&lt;/dev/tcp/localhost/5432')" at Docker container 877a9c7fa993&#xD;
+[testcontainers.org 00:00:01.99] Docker container c3edd7a722bc ready&#xD;
+[testcontainers.org 00:00:02.66] Execute "/bin/sh -c true &amp;&amp; (grep -i ':0*1538' /proc/net/tcp* || nc -vz -w 1 localhost 5432 || /bin/bash -c '&lt;/dev/tcp/localhost/5432')" at Docker container 1b6ee29b5812&#xD;
+[testcontainers.org 00:00:02.89] Execute "/bin/sh -c true &amp;&amp; (grep -i ':0*1538' /proc/net/tcp* || nc -vz -w 1 localhost 5432 || /bin/bash -c '&lt;/dev/tcp/localhost/5432')" at Docker container b5d77183c3fd&#xD;
+[testcontainers.org 00:00:02.92] Execute "/bin/sh -c true &amp;&amp; (grep -i ':0*1538' /proc/net/tcp* || nc -vz -w 1 localhost 5432 || /bin/bash -c '&lt;/dev/tcp/localhost/5432')" at Docker container 7d71e942117a&#xD;
+[testcontainers.org 00:00:03.01] Execute "/bin/sh -c true &amp;&amp; (grep -i ':0*1538' /proc/net/tcp* || nc -vz -w 1 localhost 5432 || /bin/bash -c '&lt;/dev/tcp/localhost/5432')" at Docker container 877a9c7fa993&#xD;
+[testcontainers.org 00:00:03.83] Execute "/bin/sh -c true &amp;&amp; (grep -i ':0*1538' /proc/net/tcp* || nc -vz -w 1 localhost 5432 || /bin/bash -c '&lt;/dev/tcp/localhost/5432')" at Docker container 1b6ee29b5812&#xD;
+[testcontainers.org 00:00:04.07] Execute "/bin/sh -c true &amp;&amp; (grep -i ':0*1538' /proc/net/tcp* || nc -vz -w 1 localhost 5432 || /bin/bash -c '&lt;/dev/tcp/localhost/5432')" at Docker container 7d71e942117a&#xD;
+[testcontainers.org 00:00:04.07] Execute "/bin/sh -c true &amp;&amp; (grep -i ':0*1538' /proc/net/tcp* || nc -vz -w 1 localhost 5432 || /bin/bash -c '&lt;/dev/tcp/localhost/5432')" at Docker container b5d77183c3fd&#xD;
+[testcontainers.org 00:00:04.18] Execute "/bin/sh -c true &amp;&amp; (grep -i ':0*1538' /proc/net/tcp* || nc -vz -w 1 localhost 5432 || /bin/bash -c '&lt;/dev/tcp/localhost/5432')" at Docker container 877a9c7fa993&#xD;
+[testcontainers.org 00:00:04.96] Execute "/bin/sh -c true &amp;&amp; (grep -i ':0*1538' /proc/net/tcp* || nc -vz -w 1 localhost 5432 || /bin/bash -c '&lt;/dev/tcp/localhost/5432')" at Docker container 1b6ee29b5812&#xD;
+[testcontainers.org 00:00:05.06] Docker container 1b6ee29b5812 ready&#xD;
+[testcontainers.org 00:00:05.21] Execute "/bin/sh -c true &amp;&amp; (grep -i ':0*1538' /proc/net/tcp* || nc -vz -w 1 localhost 5432 || /bin/bash -c '&lt;/dev/tcp/localhost/5432')" at Docker container 7d71e942117a&#xD;
+[testcontainers.org 00:00:05.21] Execute "/bin/sh -c true &amp;&amp; (grep -i ':0*1538' /proc/net/tcp* || nc -vz -w 1 localhost 5432 || /bin/bash -c '&lt;/dev/tcp/localhost/5432')" at Docker container b5d77183c3fd&#xD;
+[testcontainers.org 00:00:05.29] Docker container 7d71e942117a ready&#xD;
+[testcontainers.org 00:00:05.29] Docker container b5d77183c3fd ready&#xD;
+[testcontainers.org 00:00:05.31] Execute "/bin/sh -c true &amp;&amp; (grep -i ':0*1538' /proc/net/tcp* || nc -vz -w 1 localhost 5432 || /bin/bash -c '&lt;/dev/tcp/localhost/5432')" at Docker container 877a9c7fa993&#xD;
+[testcontainers.org 00:00:05.41] Docker container 877a9c7fa993 ready&#xD;
+[testcontainers.org 00:00:07.79] Delete Docker container 877a9c7fa993&#xD;
+[testcontainers.org 00:00:07.79] Delete Docker container 1b6ee29b5812&#xD;
+[testcontainers.org 00:00:07.79] Delete Docker container c9cc81ac8cf1&#xD;
+[testcontainers.org 00:00:07.79] Delete Docker container d015d8db9eab&#xD;
+[testcontainers.org 00:00:08.68] Delete Docker container 7716424afdd1&#xD;
+[testcontainers.org 00:00:08.68] Delete Docker container 7d71e942117a&#xD;
+[testcontainers.org 00:00:08.72] Delete Docker container b5d77183c3fd&#xD;
+[testcontainers.org 00:00:08.72] Delete Docker container c3edd7a722bc&#xD;
+[xUnit.net 00:00:09.81]   Finished:    IntegrationTests&#xD;
+</StdOut>
+    </Output>
+    <CollectorDataEntries>
+      <Collector agentName="MOSTAFA-LAPTOP" uri="datacollector://microsoft/CoverletCodeCoverage/1.0" collectorDisplayName="XPlat code coverage">
+        <UriAttachments>
+          <UriAttachment>
+            <A href="MOSTAFA-LAPTOP\coverage.cobertura.xml"></A>
+          </UriAttachment>
+        </UriAttachments>
+      </Collector>
+    </CollectorDataEntries>
+  </ResultSummary>
+</TestRun>

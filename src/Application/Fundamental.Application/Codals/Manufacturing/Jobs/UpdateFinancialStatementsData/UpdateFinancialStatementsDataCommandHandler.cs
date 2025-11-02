@@ -67,21 +67,24 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
                             headerData.YearEndMonth,
                             headerData.ReportMonth),
                         cancellationToken);
-                MonthlyActivity? monthlyActivities =
-                    await monthlyActivityRepository.GetFirstMonthlyActivity(
-                        symbol.Isin,
-                        headerData.FiscalYear,
-                        headerData.ReportMonth,
-                        cancellationToken);
-                MonthlyActivity? monthlyActivitiesLastYearSamePeriod =
-                    await monthlyActivityRepository.GetMonthlyActivity(
-                        symbol.Isin,
-                        headerData.FiscalYear - 1,
-                        headerData.ReportMonth,
-                        cancellationToken);
+                // Note: MonthlyActivity entity removed - now using CanonicalMonthlyActivity with rich collections
+                // CanonicalMonthlyActivity? monthlyActivities =
+                //     await monthlyActivityRepository.GetFirstMonthlyActivity(
+                //         symbol.Isin,
+                //         headerData.FiscalYear,
+                //         headerData.ReportMonth,
+                //         cancellationToken);
+                // CanonicalMonthlyActivity? monthlyActivitiesLastYearSamePeriod =
+                //     await monthlyActivityRepository.GetMonthlyActivity(
+                //         symbol.Isin,
+                //         headerData.FiscalYear - 1,
+                //         headerData.ReportMonth,
+                //         cancellationToken);
 
-                monthlyActivitiesLastYearSamePeriod?.ApplyExtraSale();
-                monthlyActivities?.ApplyExtraSale();
+                // Note: ApplyExtraSale() was specific to old MonthlyActivity entity
+                // TODO: If extra sales calculation needed, implement using CanonicalMonthlyActivity collections
+                // monthlyActivitiesLastYearSamePeriod?.ApplyExtraSale();
+                // monthlyActivities?.ApplyExtraSale();
 
                 GetStatementResponse? theStatement = await codalService.GetStatementByTraceNo(headerData.TraceNo, cancellationToken);
                 ClosePrice? closePrice =
@@ -192,12 +195,12 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
                         NetProfitOrLoss(incomeStatement)
                     )
                     .SetSale(
-                        monthlyActivities?.SaleCurrentMonth ?? CodalMoney.Empty,
-                        monthlyActivities?.ReportMonth ?? StatementMonth.Empty,
-                        monthlyActivities?.TraceNo ?? 0,
-                        monthlyActivities?.FiscalYear ?? FiscalYear.Empty,
-                        monthlyActivities?.SaleBeforeCurrentMonth ?? CodalMoney.Empty,
-                        monthlyActivitiesLastYearSamePeriod?.SaleIncludeCurrentMonth ?? CodalMoney.Empty
+                        CodalMoney.Empty, // monthlyActivities?.SaleCurrentMonth - TODO: Calculate from CanonicalMonthlyActivity
+                        StatementMonth.Empty, // monthlyActivities?.ReportMonth
+                        0, // monthlyActivities?.TraceNo
+                        FiscalYear.Empty, // monthlyActivities?.FiscalYear
+                        CodalMoney.Empty, // monthlyActivities?.SaleBeforeCurrentMonth
+                        CodalMoney.Empty // monthlyActivitiesLastYearSamePeriod?.SaleIncludeCurrentMonth
                     )
                     .SetFinancialPosition(
                         GetAssets(balanceSheetDetails),

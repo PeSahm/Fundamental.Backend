@@ -47,6 +47,7 @@ public static class DbContextConfigurationExtensions
                             .MapEnum<ExchangeType>()
                             .MapEnum<EtfType>()
                             .MapEnum<NoneOperationalIncomeTag>()
+                            .MapEnum<CodalVersion>()
                 )
                 .UseSnakeCaseNamingConvention()
 #if DEBUG

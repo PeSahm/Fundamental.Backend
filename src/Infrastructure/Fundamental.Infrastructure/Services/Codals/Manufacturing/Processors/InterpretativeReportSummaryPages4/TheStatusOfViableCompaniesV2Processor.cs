@@ -1,4 +1,5 @@
-﻿using Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage4Summaries;
+﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
+using Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage4Summaries;
 using Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage4Summaries.V2.
     TheStatusOfViableCompanies;
 using Fundamental.Application.Codals.Enums;

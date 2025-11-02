@@ -1,0 +1,53 @@
+{
+  "productAndSales": [
+    {
+      "productName": "کلينکر",
+      "productSerial": 1179,
+      "productUnit": "تن",
+      "totalProductionInPeriod": 37540.0,
+      "totalSalesInPeriod": 0.0,
+      "salesAmountInPeriod": 0.0,
+      "salesRateInPeriod": 0.0,
+      "totalProductionInYear": 523265.0,
+      "totalSalesInYear": 4227.0,
+      "salesAmountInYear": 2114.0,
+      "salesRateInYear": 500118.0
+    },
+    {
+      "productName": "سيمان داخلي ",
+      "productSerial": 10942,
+      "productUnit": "تن ",
+      "totalProductionInPeriod": 104226.0,
+      "totalSalesInPeriod": 89018.0,
+      "salesAmountInPeriod": 86076.0,
+      "salesRateInPeriod": 966951.0,
+      "totalProductionInYear": 508332.0,
+      "totalSalesInYear": 493124.0,
+      "salesAmountInYear": 508551.0,
+      "salesRateInYear": 1031284.0
+    },
+    {
+      "productName": "سيمان صادراتي ",
+      "productSerial": 10943,
+      "productUnit": "تن ",
+      "totalProductionInPeriod": 6769.0,
+      "totalSalesInPeriod": 5781.0,
+      "salesAmountInPeriod": 4332.0,
+      "salesRateInPeriod": 749351.0,
+      "totalProductionInYear": 110246.0,
+      "totalSalesInYear": 110317.0,
+      "salesAmountInYear": 82955.0,
+      "salesRateInYear": 751969.0
+    }
+  ],
+  "description": {
+    "periodEndToDateDescription": "",
+    "yearEndToDateDescription": ""
+  },
+  "financialYear": {
+    "priodEndToDate": "1396/06/31",
+    "yearEndToDate": "1396/12/29"
+  },
+  "listedCapital": "810000",
+  "unauthorizedCapital": "0"
+}
