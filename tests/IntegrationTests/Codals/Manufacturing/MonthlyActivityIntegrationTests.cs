@@ -1,18 +1,23 @@
 using System.Net;
 using FluentAssertions;
+using Fundamental.Application.Codals.Manufacturing.Queries.GetMonthlyActivities;
+using Fundamental.Application.Codals.Manufacturing.Queries.GetMonthlyActivityById;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
+using Fundamental.Domain.Common.Dto;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
+using Fundamental.ErrorHandling;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.MonthlyActivities;
 using Fundamental.IntegrationTests.TestData;
 using IntegrationTests.Shared;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using WireMock.RequestBuilders;
-using WireMock.ResponseBuilders;
+using WireMockResponse = WireMock.ResponseBuilders.Response;
 
 namespace IntegrationTests.Codals.Manufacturing;
 
@@ -391,7 +396,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
 
         // Setup API to return 500 error
         _fixture.WireMockServer.Given(Request.Create().WithPath("/monthly-activity").UsingGet())
-            .RespondWith(Response.Create().WithStatusCode(HttpStatusCode.InternalServerError));
+            .RespondWith(WireMockResponse.Create().WithStatusCode(HttpStatusCode.InternalServerError));
 
         // Act
         MonthlyActivityV5Processor processor = new MonthlyActivityV5Processor(
@@ -1053,6 +1058,204 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
         usesSum.Category.Should().Be(CurrencyExchangeCategory.Total);
     }
 
+    [Fact]
+    public async Task GetMonthlyActivities_Query_ShouldReturnPaginatedList()
+    {
+        // Arrange
+        await CleanMonthlyActivityData();
+        Symbol symbol = CreateTestSymbol("IRO1SROD0001", 9600059UL);
+        await _fixture.DbContext.Symbols.AddAsync(symbol);
+        await _fixture.DbContext.SaveChangesAsync();
+
+        // Process test data to create entities
+        string testJson = MonthlyActivityTestData.GetV5TestData();
+        SetupApiResponse("monthly-activity", testJson);
+
+        MonthlyActivityV5Processor processor = new MonthlyActivityV5Processor(
+            _fixture.Services.GetRequiredService<IServiceScopeFactory>(),
+            _fixture.Services.GetRequiredService<ICanonicalMappingServiceFactory>());
+
+        GetStatementResponse statement = CreateStatementResponse("IRO1SROD0001", 123456789);
+        GetStatementJsonResponse jsonResponse = CreateJsonResponse(testJson);
+
+        await processor.Process(statement, jsonResponse, CancellationToken.None);
+
+        IMediator mediator = _fixture.Services.GetRequiredService<IMediator>();
+
+        // Act - query without filters to get all data
+        GetMonthlyActivitiesRequest request = new(new[] { "IRO1SROD0001" }, null, null)
+        {
+            PageSize = 20,
+            PageNumber = 1
+        };
+        Response<Paginated<GetMonthlyActivitiesResultItem>> response =
+            await mediator.Send(request, CancellationToken.None);
+
+        // Assert
+        response.Success.Should().BeTrue();
+        response.Data.Should().NotBeNull();
+        response.Data!.Items.Should().NotBeEmpty();
+
+        GetMonthlyActivitiesResultItem item = response.Data.Items.First();
+        item.Isin.Should().Be("IRO1SROD0001");
+        item.ProductionAndSalesItems.Should().NotBeEmpty();
+        item.BuyRawMaterialItems.Should().NotBeEmpty();
+        item.EnergyItems.Should().NotBeEmpty();
+        item.CurrencyExchangeItems.Should().NotBeEmpty();
+    }
+
+    [Fact]
+    public async Task GetMonthlyActivities_WithIsinFilter_ShouldReturnFilteredResults()
+    {
+        // Arrange
+        await CleanMonthlyActivityData();
+        Symbol symbol1 = CreateTestSymbol("IRO1SROD0001", 9600059UL);
+        Symbol symbol2 = CreateTestSymbol("IRO1BMLT0001", 9600060UL);
+        await _fixture.DbContext.Symbols.AddRangeAsync(symbol1, symbol2);
+        await _fixture.DbContext.SaveChangesAsync();
+
+        // Process test data for first symbol only
+        string testJson = MonthlyActivityTestData.GetV5TestData();
+        SetupApiResponse("monthly-activity", testJson);
+
+        MonthlyActivityV5Processor processor = new MonthlyActivityV5Processor(
+            _fixture.Services.GetRequiredService<IServiceScopeFactory>(),
+            _fixture.Services.GetRequiredService<ICanonicalMappingServiceFactory>());
+
+        GetStatementResponse statement1 = CreateStatementResponse("IRO1SROD0001", 123456789);
+        GetStatementJsonResponse jsonResponse = CreateJsonResponse(testJson);
+        await processor.Process(statement1, jsonResponse, CancellationToken.None);
+
+        IMediator mediator = _fixture.Services.GetRequiredService<IMediator>();
+
+        // Act - filter by specific ISIN
+        GetMonthlyActivitiesRequest request = new(new[] { "IRO1SROD0001" }, null, null)
+        {
+            PageSize = 20,
+            PageNumber = 1
+        };
+        Response<Paginated<GetMonthlyActivitiesResultItem>> response =
+            await mediator.Send(request, CancellationToken.None);
+
+        // Assert
+        response.Success.Should().BeTrue();
+        response.Data!.Items.Should().OnlyContain(x => x.Isin == "IRO1SROD0001");
+    }
+
+    [Fact]
+    public async Task GetMonthlyActivityById_Query_ShouldReturnSingleEntity()
+    {
+        // Arrange
+        await CleanMonthlyActivityData();
+        Symbol symbol = CreateTestSymbol("IRO1SROD0001", 9600059UL);
+        await _fixture.DbContext.Symbols.AddAsync(symbol);
+        await _fixture.DbContext.SaveChangesAsync();
+
+        // Process test data
+        string testJson = MonthlyActivityTestData.GetV5TestData();
+        SetupApiResponse("monthly-activity", testJson);
+
+        MonthlyActivityV5Processor processor = new MonthlyActivityV5Processor(
+            _fixture.Services.GetRequiredService<IServiceScopeFactory>(),
+            _fixture.Services.GetRequiredService<ICanonicalMappingServiceFactory>());
+
+        GetStatementResponse statement = CreateStatementResponse("IRO1SROD0001", 123456789);
+        GetStatementJsonResponse jsonResponse = CreateJsonResponse(testJson);
+        await processor.Process(statement, jsonResponse, CancellationToken.None);
+
+        // Get the entity ID
+        CanonicalMonthlyActivity? entity = await _fixture.DbContext.CanonicalMonthlyActivities
+            .FirstOrDefaultAsync();
+        entity.Should().NotBeNull();
+
+        IMediator mediator = _fixture.Services.GetRequiredService<IMediator>();
+
+        // Act
+        GetMonthlyActivityByIdRequest request = new(entity!.Id);
+        Response<GetMonthlyActivitiesResultItem> response =
+            await mediator.Send(request, CancellationToken.None);
+
+        // Assert
+        response.Success.Should().BeTrue();
+        response.Data.Should().NotBeNull();
+        response.Data!.Id.Should().Be(entity.Id);
+        response.Data.Isin.Should().Be("IRO1SROD0001");
+        response.Data.ProductionAndSalesItems.Should().NotBeEmpty();
+        response.Data.BuyRawMaterialItems.Should().NotBeEmpty();
+        response.Data.EnergyItems.Should().NotBeEmpty();
+        response.Data.CurrencyExchangeItems.Should().NotBeEmpty();
+        response.Data.Descriptions.Should().NotBeNull();
+    }
+
+    [Fact]
+    public async Task GetMonthlyActivityById_WithInvalidId_ShouldReturnNotFound()
+    {
+        // Arrange
+        Guid nonExistentId = Guid.NewGuid();
+        IMediator mediator = _fixture.Services.GetRequiredService<IMediator>();
+
+        // Act
+        GetMonthlyActivityByIdRequest request = new(nonExistentId);
+        Response<GetMonthlyActivitiesResultItem> response =
+            await mediator.Send(request, CancellationToken.None);
+
+        // Assert
+        response.Success.Should().BeFalse();
+        response.Error.Should().NotBeNull();
+    }
+
+    [Fact]
+    public async Task GetMonthlyActivities_ShouldIncludeAllCollections()
+    {
+        // Arrange
+        await CleanMonthlyActivityData();
+        Symbol symbol = CreateTestSymbol("IRO1SROD0001", 9600059UL);
+        await _fixture.DbContext.Symbols.AddAsync(symbol);
+        await _fixture.DbContext.SaveChangesAsync();
+
+        string testJson = MonthlyActivityTestData.GetV5TestData();
+        SetupApiResponse("monthly-activity", testJson);
+
+        MonthlyActivityV5Processor processor = new MonthlyActivityV5Processor(
+            _fixture.Services.GetRequiredService<IServiceScopeFactory>(),
+            _fixture.Services.GetRequiredService<ICanonicalMappingServiceFactory>());
+
+        GetStatementResponse statement = CreateStatementResponse("IRO1SROD0001", 123456789);
+        GetStatementJsonResponse jsonResponse = CreateJsonResponse(testJson);
+        await processor.Process(statement, jsonResponse, CancellationToken.None);
+
+        IMediator mediator = _fixture.Services.GetRequiredService<IMediator>();
+
+        // Act
+        GetMonthlyActivitiesRequest request = new(Array.Empty<string>(), null, null)
+        {
+            PageSize = 20,
+            PageNumber = 1
+        };
+        Response<Paginated<GetMonthlyActivitiesResultItem>> response =
+            await mediator.Send(request, CancellationToken.None);
+
+        // Assert
+        response.Success.Should().BeTrue();
+        GetMonthlyActivitiesResultItem item = response.Data!.Items.First();
+
+        // Verify all collections are loaded and not empty
+        item.ProductionAndSalesItems.Should().NotBeEmpty("ProductionAndSalesItems collection should be loaded");
+        item.BuyRawMaterialItems.Should().NotBeEmpty("BuyRawMaterialItems collection should be loaded");
+        item.EnergyItems.Should().NotBeEmpty("EnergyItems collection should be loaded");
+        item.CurrencyExchangeItems.Should().NotBeEmpty("CurrencyExchangeItems collection should be loaded");
+
+        // Verify collection items have expected properties
+        item.ProductionAndSalesItems.First().Should().Match<ProductionAndSalesItem>(x =>
+            x.RowCode != default && x.Category != default);
+        item.BuyRawMaterialItems.First().Should().Match<BuyRawMaterialItem>(x =>
+            x.RowCode != default && x.Category != default);
+        item.EnergyItems.First().Should().Match<EnergyItem>(x =>
+            x.RowCode != default);
+        item.CurrencyExchangeItems.First().Should().Match<CurrencyExchangeItem>(x =>
+            x.RowCode != default && x.Category != default);
+    }
+
     /// <summary>
     /// Cleans all existing monthly activity data from the database.
     /// </summary>
@@ -1073,7 +1276,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
     private void SetupApiResponse(string endpoint, string responseJson)
     {
         _fixture.WireMockServer.Given(Request.Create().WithPath($"/{endpoint}").UsingGet())
-            .RespondWith(Response.Create()
+            .RespondWith(WireMockResponse.Create()
                 .WithStatusCode(HttpStatusCode.OK)
                 .WithHeader("Content-Type", "application/json")
                 .WithBody(responseJson));

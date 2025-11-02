@@ -25,8 +25,6 @@ public class FundamentalDbContext : DbContext, IUnitOfWork, ICoravelProDbContext
 
     public DbSet<SymbolRelation> SymbolRelations { get; set; }
 
-    public DbSet<MonthlyActivity> MonthlyActivities { get; set; }
-
     public DbSet<RawMonthlyActivityJson> RawMonthlyActivityJsons { get; set; }
 
     public DbSet<CanonicalMonthlyActivity> CanonicalMonthlyActivities { get; set; }

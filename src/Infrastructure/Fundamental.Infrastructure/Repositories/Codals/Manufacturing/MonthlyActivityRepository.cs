@@ -16,7 +16,13 @@ public class MonthlyActivityRepository(FundamentalDbContext dbContext) : IMonthl
         CancellationToken cancellationToken
     )
     {
-        IQueryable<MonthlyActivity> query = dbContext.MonthlyActivities.AsNoTracking();
+        IQueryable<CanonicalMonthlyActivity> query = dbContext.CanonicalMonthlyActivities
+            .AsNoTracking()
+            .Include(x => x.ProductionAndSalesItems)
+            .Include(x => x.BuyRawMaterialItems)
+            .Include(x => x.EnergyItems)
+            .Include(x => x.CurrencyExchangeItems)
+            .Include(x => x.Descriptions);
 
         if (request is { IsinList: not null } && request.IsinList.Length != 0)
         {
@@ -40,29 +46,31 @@ public class MonthlyActivityRepository(FundamentalDbContext dbContext) : IMonthl
                 Symbol = x.Symbol.Name,
                 Title = x.Symbol.Title,
                 Uri = x.Uri,
+                Version = x.Version,
                 FiscalYear = x.FiscalYear.Year,
                 YearEndMonth = x.YearEndMonth.Month,
                 ReportMonth = x.ReportMonth.Month,
-                SaleBeforeCurrentMonth = x.SaleBeforeCurrentMonth.Value,
-                SaleCurrentMonth = x.SaleCurrentMonth.Value,
-                SaleIncludeCurrentMonth = x.SaleIncludeCurrentMonth.Value,
-                SaleLastYear = x.SaleLastYear.Value,
                 HasSubCompanySale = x.HasSubCompanySale,
                 TraceNo = x.TraceNo,
                 CreatedAt = x.CreatedAt,
-                UpdatedAt = x.UpdatedAt
+                UpdatedAt = x.UpdatedAt,
+                ProductionAndSalesItems = x.ProductionAndSalesItems,
+                BuyRawMaterialItems = x.BuyRawMaterialItems,
+                EnergyItems = x.EnergyItems,
+                CurrencyExchangeItems = x.CurrencyExchangeItems,
+                Descriptions = x.Descriptions
             })
             .ToPagingListAsync(request, "UpdatedAt desc", cancellationToken);
     }
 
-    public Task<MonthlyActivity?> GetFirstMonthlyActivity(
+    public Task<CanonicalMonthlyActivity?> GetFirstMonthlyActivity(
         string isin,
         FiscalYear fiscalYear,
         StatementMonth month,
         CancellationToken cancellationToken
     )
     {
-        return dbContext.MonthlyActivities
+        return dbContext.CanonicalMonthlyActivities
             .AsNoTracking()
             .Where(sale => sale.Symbol.Isin == isin)
             .Where(sale => (sale.FiscalYear.Year == fiscalYear.Year && sale.ReportMonth.Month >= month.Month) ||
@@ -73,14 +81,14 @@ public class MonthlyActivityRepository(FundamentalDbContext dbContext) : IMonthl
             .FirstOrDefaultAsync(cancellationToken);
     }
 
-    public Task<MonthlyActivity?> GetMonthlyActivity(
+    public Task<CanonicalMonthlyActivity?> GetMonthlyActivity(
         string isin,
         FiscalYear fiscalYear,
         StatementMonth month,
         CancellationToken cancellationToken
     )
     {
-        return dbContext.MonthlyActivities
+        return dbContext.CanonicalMonthlyActivities
             .AsNoTracking()
             .Where(sale => sale.Symbol.Isin == isin)
             .Where(sale => (sale.FiscalYear.Year == fiscalYear.Year))

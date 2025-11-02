@@ -144,10 +144,17 @@ public class TestFixture : IAsyncLifetime
         // Register mock CodalService
         services.AddSingleton<ICodalService>(codalServiceMock.Object);
 
+        // Register MediatR for query testing
+        services.AddMediatR(cfg =>
+        {
+            cfg.RegisterServicesFromAssembly(typeof(IMonthlyActivityRepository).Assembly);
+        });
+
         // Register repositories needed for testing
         services.AddScoped<IRepository, FundamentalRepository>();
         services.AddScoped<IBalanceSheetReadRepository, BalanceSheetReadRepository>();
         services.AddScoped<IIncomeStatementsReadRepository, IncomeStatementReadRepository>();
+        services.AddScoped<IMonthlyActivityRepository, MonthlyActivityRepository>();
 
         // Register Canonical Mapping Service Factory and Manufacturing Services
         services.AddCanonicalMappingServiceFactory();

@@ -1,12 +1,9 @@
 ﻿using ErrorHandling.AspNetCore;
-using Fundamental.Application.Codals.Manufacturing.Commands.AddMonthlyActivity;
-using Fundamental.Application.Codals.Manufacturing.Commands.UpdateMonthlyActivity;
 using Fundamental.Application.Codals.Manufacturing.Queries.GetMonthlyActivities;
 using Fundamental.Application.Codals.Manufacturing.Queries.GetMonthlyActivityById;
 using Fundamental.Application.Common.Extensions;
 using Fundamental.Domain.Common.Dto;
 using Fundamental.ErrorHandling;
-using Fundamental.ErrorHandling.Enums;
 using Fundamental.Web.Common.Swagger;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -25,23 +22,6 @@ public class MonthlyActivityController : ControllerBase
     public MonthlyActivityController(IMediator mediator)
     {
         _mediator = mediator;
-    }
-
-    [HttpPost]
-    public async Task<Response> AddStatement([FromBody] AddMonthlyActivityRequest request)
-    {
-        return await _mediator.Send(request);
-    }
-
-    [HttpPut("{id}")]
-    public async Task<Response> UpdateStatement([FromBody] UpdateMonthlyActivityRequest request, [FromRoute] Guid id)
-    {
-        if (id != request.Id)
-        {
-            return CommonErrorCode.DifferentRouteAndBodyIds.ForRequest(request);
-        }
-
-        return await _mediator.Send(request);
     }
 
     [HttpGet]
