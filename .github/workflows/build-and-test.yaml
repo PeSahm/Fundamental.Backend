@@ -21,17 +21,8 @@ jobs:
       - name: Verify .NET installation
         run: dotnet --version
       
-      # Cache NuGet packages
-      - name: Cache NuGet packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-
-      
-      # Cache build outputs
-      - name: Cache build outputs
+      # Cache NuGet packages and build outputs
+      - name: Cache .NET artifacts
         uses: actions/cache@v4
         with:
           path: |
@@ -41,9 +32,9 @@ jobs:
             ./src/**/obj
             ./tests/**/bin
             ./tests/**/obj
-          key: ${{ runner.os }}-build-${{ hashFiles('**/*.csproj', '**/*.sln', 'Directory.Build.props') }}
+          key: ${{ runner.os }}-dotnet-${{ hashFiles('**/*.csproj', '**/*.sln', 'Directory.Build.props', '**/packages.lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-build-
+            ${{ runner.os }}-dotnet-
       
       - name: Restore dependencies
         run: dotnet restore --verbosity minimal
@@ -62,6 +53,10 @@ jobs:
         run: |
           echo "Test execution completed"
           find ./test-results -name "*.trx" -exec echo "Found test result file: {}" \;
+          echo ""
+          if [ -f "./test-results/test-results.trx" ]; then
+            echo "Test results artifact ready for review"
+          fi
       
       # Upload test results
       - name: Upload test results
