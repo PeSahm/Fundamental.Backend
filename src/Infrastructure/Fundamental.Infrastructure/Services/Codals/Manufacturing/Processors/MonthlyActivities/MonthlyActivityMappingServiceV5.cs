@@ -114,7 +114,9 @@ public class MonthlyActivityMappingServiceV5 : IMonthlyActivityMappingService
                 CorrectedYearToDateAmount = x.Value346411,
 
                 // Classification metadata
-                RowCode = x.RowCode,
+                RowCode = x.RowCode.HasValue
+                    ? (BuyRawMaterialRowCode)x.RowCode.Value
+                    : BuyRawMaterialRowCode.Data,
                 Category = x.Category.HasValue
                     ? (BuyRawMaterialCategory)x.Category.Value
                     : BuyRawMaterialCategory.Domestic

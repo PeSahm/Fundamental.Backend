@@ -171,7 +171,9 @@ public class MonthlyActivityMappingServiceV4 : ICanonicalMappingService<Canonica
                 PreviousYearAmount = x.Value346420,
 
                 // Row classification metadata
-                RowCode = (int?)x.RowCode,
+                RowCode = x.RowCode.HasValue
+                    ? (BuyRawMaterialRowCode)x.RowCode.Value
+                    : BuyRawMaterialRowCode.Data,
                 Category = x.Category.HasValue
                     ? (BuyRawMaterialCategory)x.Category.Value
                     : BuyRawMaterialCategory.Domestic

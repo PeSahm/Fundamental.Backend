@@ -150,9 +150,10 @@ public class BuyRawMaterialItem
 
     /// <summary>
     /// Row code for classification.
+    /// -1 = Data row (actual material), 21 = Domestic sum, 24 = Imported sum, 25 = Total sum.
     /// Maps to V5 rowCode field.
     /// </summary>
-    public int? RowCode { get; set; }
+    public BuyRawMaterialRowCode RowCode { get; set; } = BuyRawMaterialRowCode.Data;
 
     /// <summary>
     /// Category indicating source of raw material (domestic, imported, or total).
@@ -160,4 +161,16 @@ public class BuyRawMaterialItem
     /// Maps to V5 category field.
     /// </summary>
     public BuyRawMaterialCategory Category { get; set; } = BuyRawMaterialCategory.Domestic;
+
+    /// <summary>
+    /// Gets a value indicating whether this is a data row (actual material entry).
+    /// Data rows have RowCode = -1 and contain actual material purchase details.
+    /// </summary>
+    public bool IsDataRow => RowCode == BuyRawMaterialRowCode.Data;
+
+    /// <summary>
+    /// Gets a value indicating whether this is a summary row (sum/total).
+    /// Summary rows have RowCode >= 21 and contain aggregated data.
+    /// </summary>
+    public bool IsSummaryRow => RowCode != BuyRawMaterialRowCode.Data;
 }

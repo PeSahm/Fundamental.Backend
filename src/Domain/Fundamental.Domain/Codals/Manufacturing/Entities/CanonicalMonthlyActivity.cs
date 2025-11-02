@@ -112,20 +112,23 @@ public class CanonicalMonthlyActivity : BaseEntity<Guid>
     // ========== Helper Methods for Querying Buy Raw Material Data ==========
 
     /// <summary>
-    /// Gets all domestic (internal) raw material purchase items.
-    /// These have Category = Domestic and represent materials purchased within Iran.
+    /// Gets all domestic (internal) raw material data rows.
+    /// Returns only data rows (RowCode = Data) with Category = Domestic.
+    /// Excludes summary rows. Represents materials purchased within Iran.
     /// خرید مواد اولیه داخلی.
     /// </summary>
     public IEnumerable<BuyRawMaterialItem> GetDomesticRawMaterials()
     {
         return BuyRawMaterialItems
-            .Where(x => x.Category == BuyRawMaterialCategory.Domestic)
+            .Where(x => x.RowCode == BuyRawMaterialRowCode.Data &&
+                        x.Category == BuyRawMaterialCategory.Domestic)
             .ToList();
     }
 
     /// <summary>
-    /// Gets all imported raw material purchase items.
-    /// These have Category = Imported and represent materials purchased from abroad.
+    /// Gets all imported raw material items (including both data and summary rows).
+    /// Returns all items with Category = Imported.
+    /// Represents materials purchased from abroad.
     /// خرید مواد اولیه خارجی (وارداتی).
     /// </summary>
     public IEnumerable<BuyRawMaterialItem> GetImportedRawMaterials()
@@ -136,8 +139,9 @@ public class CanonicalMonthlyActivity : BaseEntity<Guid>
     }
 
     /// <summary>
-    /// Gets the total/sum rows for raw material purchases.
-    /// These rows have Category = Total and contain the aggregate of all material purchases.
+    /// Gets all total raw material items (including both data and summary rows).
+    /// Returns all items with Category = Total.
+    /// Contains the aggregate of all material purchases.
     /// جمع کل خرید مواد اولیه.
     /// </summary>
     public IEnumerable<BuyRawMaterialItem> GetTotalRawMaterials()
@@ -149,12 +153,56 @@ public class CanonicalMonthlyActivity : BaseEntity<Guid>
 
     /// <summary>
     /// Gets all raw material data rows (excluding summary rows).
-    /// Returns items that have RowCode = -1 or null, representing actual material entries.
+    /// Returns items that have RowCode = Data, representing actual material entries.
     /// </summary>
     public IEnumerable<BuyRawMaterialItem> GetRawMaterialDataRows()
     {
         return BuyRawMaterialItems
-            .Where(x => x.RowCode == null || x.RowCode == -1)
+            .Where(x => x.IsDataRow)
+            .ToList();
+    }
+
+    /// <summary>
+    /// Gets the domestic raw materials sum row.
+    /// This row has RowCode = DomesticSum and contains the sum of all domestic purchases.
+    /// جمع مواد اولیه داخلی.
+    /// </summary>
+    public BuyRawMaterialItem? GetDomesticRawMaterialsSum()
+    {
+        return BuyRawMaterialItems
+            .FirstOrDefault(x => x.RowCode == BuyRawMaterialRowCode.DomesticSum);
+    }
+
+    /// <summary>
+    /// Gets the imported raw materials sum row.
+    /// This row has RowCode = ImportedSum and contains the sum of all imported purchases.
+    /// جمع مواد اولیه وارداتی.
+    /// </summary>
+    public BuyRawMaterialItem? GetImportedRawMaterialsSum()
+    {
+        return BuyRawMaterialItems
+            .FirstOrDefault(x => x.RowCode == BuyRawMaterialRowCode.ImportedSum);
+    }
+
+    /// <summary>
+    /// Gets the total raw materials sum row (grand total).
+    /// This row has RowCode = TotalSum and contains the sum of all raw material purchases.
+    /// جمع کل مواد اولیه.
+    /// </summary>
+    public BuyRawMaterialItem? GetRawMaterialsTotalSum()
+    {
+        return BuyRawMaterialItems
+            .FirstOrDefault(x => x.RowCode == BuyRawMaterialRowCode.TotalSum);
+    }
+
+    /// <summary>
+    /// Gets all summary rows for raw materials.
+    /// These have RowCode != Data and contain aggregated data.
+    /// </summary>
+    public IEnumerable<BuyRawMaterialItem> GetAllRawMaterialSummaryRows()
+    {
+        return BuyRawMaterialItems
+            .Where(x => x.IsSummaryRow)
             .ToList();
     }
 
