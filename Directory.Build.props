@@ -7,10 +7,10 @@
         <IsUnitTests>$(MSBuildProjectName.EndsWith('UnitTests'))</IsUnitTests>
         <IsTests>$(MSBuildProjectName.EndsWith('Tests'))</IsTests>
         <IsDbMigrations>$(MSBuildProjectName.EndsWith('Migrations'))</IsDbMigrations>
-        <IsApplication>$(MSBuildProjectDirectory.Contains('\Application\'))</IsApplication>
-        <IsDomain>$(MSBuildProjectDirectory.Contains('\Domain\'))</IsDomain>
+        <IsApplication>$(MSBuildProjectDirectory.Contains('Application'))</IsApplication>
+        <IsDomain>$(MSBuildProjectDirectory.Contains('Domain'))</IsDomain>
         <IsBuildingBlock>$(MSBuildProjectDirectory.Contains('BuildingBlock'))</IsBuildingBlock>
-        <IsPresentation>$(MSBuildProjectDirectory.Contains('\Presentation\'))</IsPresentation>
+        <IsPresentation>$(MSBuildProjectDirectory.Contains('Presentation'))</IsPresentation>
         <IsWebApi>$(MSBuildProjectName.EndsWith('WebApi'))</IsWebApi>
         <IsWebCommon>$(MSBuildProjectName.EndsWith('Web.Common'))</IsWebCommon>
         <InvariantGlobalization>false</InvariantGlobalization>
@@ -24,7 +24,7 @@
     <PropertyGroup>
         <IsInfrastructure>false</IsInfrastructure>
     </PropertyGroup>
-    <PropertyGroup Condition="$(MSBuildProjectDirectory.Contains('\Infrastructure\')) and '$(IsDbMigrations)' != 'true'">
+    <PropertyGroup Condition="$(MSBuildProjectDirectory.Contains('Infrastructure')) and '$(IsDbMigrations)' != 'true'">
         <IsInfrastructure>true</IsInfrastructure>
     </PropertyGroup>
 
