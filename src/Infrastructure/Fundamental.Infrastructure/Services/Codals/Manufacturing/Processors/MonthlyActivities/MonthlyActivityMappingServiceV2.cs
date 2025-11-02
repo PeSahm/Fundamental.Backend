@@ -28,7 +28,7 @@ public class MonthlyActivityMappingServiceV2 : ICanonicalMappingService<Canonica
     {
         // Extract fiscal year and report month from financial year data
         int fiscalYear = ExtractFiscalYear(dto.ProductAndSales.FinancialYear);
-        int reportMonth = ExtractReportMonth(dto.ProductAndSales.FinancialYear);
+        int reportMonth = 1; // V2 and older versions report annual data
 
         // Create canonical entity
         CanonicalMonthlyActivity canonical = new CanonicalMonthlyActivity
@@ -78,7 +78,8 @@ public class MonthlyActivityMappingServiceV2 : ICanonicalMappingService<Canonica
 
     private static int ExtractFiscalYear(FinancialYearV2Dto financialYear)
     {
-        if (financialYear.PriodEndToDate.Contains('/'))
+        if (!string.IsNullOrWhiteSpace(financialYear.PriodEndToDate) &&
+            financialYear.PriodEndToDate.Contains('/'))
         {
             string[] parts = financialYear.PriodEndToDate.Split('/');
 
@@ -88,13 +89,7 @@ public class MonthlyActivityMappingServiceV2 : ICanonicalMappingService<Canonica
             }
         }
 
-        return DateTime.Now.Year; // fallback
-    }
-
-    private static int ExtractReportMonth(FinancialYearV2Dto financialYear)
-    {
-        // V2 and older versions report annual data, so ReportMonth is always 1
-        return 1;
+        throw new ArgumentException("Invalid or missing PriodEndToDate in financial year data", nameof(financialYear));
     }
 
     private static List<ProductionAndSalesItem> MapProductionAndSalesV2(List<FieldsItemV2Dto> fieldsItems)

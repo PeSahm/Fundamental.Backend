@@ -34,7 +34,7 @@ public class MonthlyActivityMappingServiceV3 : ICanonicalMappingService<Canonica
         // Extract fiscal year and report month from productionAndSales yearData
         YearDataV3Dto? yearData = dto.MonthlyActivity.ProductionAndSales?.YearData.FirstOrDefault();
         int fiscalYear = ExtractFiscalYear(yearData);
-        int reportMonth = ExtractReportMonth(dto.MonthlyActivity.ProductionAndSales);
+        int reportMonth = 1; // V3 and older versions report annual data
 
         // Create canonical entity
         CanonicalMonthlyActivity canonical = new CanonicalMonthlyActivity
@@ -84,7 +84,8 @@ public class MonthlyActivityMappingServiceV3 : ICanonicalMappingService<Canonica
 
     private static int ExtractFiscalYear(YearDataV3Dto? yearData)
     {
-        if (yearData != null && yearData.YearEndToDate.Contains('/'))
+        if (yearData != null && !string.IsNullOrWhiteSpace(yearData.YearEndToDate) &&
+            yearData.YearEndToDate.Contains('/'))
         {
             string[] parts = yearData.YearEndToDate.Split('/');
 
@@ -94,13 +95,7 @@ public class MonthlyActivityMappingServiceV3 : ICanonicalMappingService<Canonica
             }
         }
 
-        return DateTime.Now.Year; // fallback
-    }
-
-    private static int ExtractReportMonth(ProductionAndSalesV3Dto? productionAndSales)
-    {
-        // V3 and older versions report annual data, so ReportMonth is always 1
-        return 1;
+        throw new ArgumentException("Invalid or missing YearEndToDate in year data", nameof(yearData));
     }
 
     private static List<ProductionAndSalesItem> MapProductionAndSalesV3(List<ProductionAndSalesRowItemV3Dto> rowItems)
