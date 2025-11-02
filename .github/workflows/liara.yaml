@@ -17,16 +17,19 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '9.0.x'
+          dotnet-version: '9.0.306'
+      
+      - name: Verify .NET installation
+        run: dotnet --version
       
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore --verbosity normal
       
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build --configuration Release --verbosity normal
       
       - name: Run unit tests
-        run: dotnet test --configuration Release --no-build --verbosity normal
+        run: dotnet test --configuration Release --verbosity normal --no-build
       
       # - uses: actions/setup-node@v4
       #   with:
