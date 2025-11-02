@@ -1,4 +1,4 @@
-﻿namespace Fundamental.Application.Codals.Enums;
+namespace Fundamental.Domain.Codals.Manufacturing.Enums;
 
 public enum CodalVersion
 {
@@ -8,5 +8,6 @@ public enum CodalVersion
     V3O1,
     V4,
     V5,
-    V7
+    V7,
+    None
 }
