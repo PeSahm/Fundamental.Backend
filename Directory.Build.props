@@ -7,10 +7,10 @@
         <IsUnitTests>$(MSBuildProjectName.EndsWith('UnitTests'))</IsUnitTests>
         <IsTests>$(MSBuildProjectName.EndsWith('Tests'))</IsTests>
         <IsDbMigrations>$(MSBuildProjectName.EndsWith('Migrations'))</IsDbMigrations>
-        <IsApplication>$(MSBuildProjectDirectory.Contains('\Application\'))</IsApplication>
-        <IsDomain>$(MSBuildProjectDirectory.Contains('\Domain\'))</IsDomain>
-        <IsBuildingBlock>$(MSBuildProjectDirectory.Contains('\BuildingBlock\'))</IsBuildingBlock>
-        <IsPresentation>$(MSBuildProjectDirectory.Contains('\Presentation\'))</IsPresentation>
+        <IsApplication>$(MSBuildProjectDirectory.Contains('Application'))</IsApplication>
+        <IsDomain>$(MSBuildProjectDirectory.Contains('Domain'))</IsDomain>
+        <IsBuildingBlock>$(MSBuildProjectDirectory.Contains('BuildingBlock'))</IsBuildingBlock>
+        <IsPresentation>$(MSBuildProjectDirectory.Contains('Presentation'))</IsPresentation>
         <IsWebApi>$(MSBuildProjectName.EndsWith('WebApi'))</IsWebApi>
         <IsWebCommon>$(MSBuildProjectName.EndsWith('Web.Common'))</IsWebCommon>
         <InvariantGlobalization>false</InvariantGlobalization>
@@ -24,7 +24,7 @@
     <PropertyGroup>
         <IsInfrastructure>false</IsInfrastructure>
     </PropertyGroup>
-    <PropertyGroup Condition="$(MSBuildProjectDirectory.Contains('\Infrastructure\')) and '$(IsDbMigrations)' != 'true'">
+    <PropertyGroup Condition="$(MSBuildProjectDirectory.Contains('Infrastructure')) and '$(IsDbMigrations)' != 'true'">
         <IsInfrastructure>true</IsInfrastructure>
     </PropertyGroup>
 
@@ -54,14 +54,6 @@
         </PackageReference>
         <PackageReference Include="JetBrains.Annotations" Version="2025.2.2" />
         <Using Include="Xunit" />
-    </ItemGroup>
-
-    <!-- Performance test specific packages -->
-    <ItemGroup Condition="'$(MSBuildProjectName)' == 'PerformanceTests'">
-        <PackageReference Include="NBench" Version="2.0.1" />
-        <PackageReference Include="BenchmarkDotNet" Version="0.14.0" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.10" />
-        <PackageReference Include="Bogus" Version="35.6.1" />
     </ItemGroup>
 
     <!-- Application layer packages -->

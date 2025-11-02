@@ -1,12 +1,16 @@
 ﻿using DNTPersianUtils.Core;
 using Fundamental.Application.Codals.Dto.MonthlyActivities.V4.Enums;
+using Fundamental.Application.Codals.Enums;
+using Fundamental.Application.Codals.Services;
+using Fundamental.Domain.Codals.Manufacturing.Enums;
+using Fundamental.Domain.Common.Enums;
 using Newtonsoft.Json;
 
 namespace Fundamental.Application.Codals.Dto.MonthlyActivities.V4;
 
 #pragma warning disable SA1402
 
-public class CodalMonthlyActivity
+public class CodalMonthlyActivity : ICodalMappingServiceMetadata
 {
     [JsonProperty("monthlyActivity")]
     public MonthlyActivityDto? MonthlyActivity { get; set; }
@@ -16,6 +20,11 @@ public class CodalMonthlyActivity
 
     [JsonProperty("unauthorizedCapital")]
     public decimal UnauthorizedCapital { get; set; }
+
+    public ReportingType ReportingType => ReportingType.Production;
+    public LetterType LetterType => LetterType.MonthlyActivity;
+    public CodalVersion CodalVersion => CodalVersion.V4;
+    public LetterPart LetterPart => LetterPart.NotSpecified;
 }
 
 public class MonthlyActivityDto
@@ -25,6 +34,9 @@ public class MonthlyActivityDto
 
     [JsonProperty("productionAndSales")]
     public ProductionAndSales? ProductionAndSales { get; set; }
+
+    [JsonProperty("buyRawMaterial")]
+    public BuyRawMaterial? BuyRawMaterial { get; set; }
 
     [JsonProperty("productMonthlyActivityDesc1")]
     public ProductMonthlyActivityDesc1 ProductMonthlyActivityDesc1 { get; set; }
@@ -41,6 +53,15 @@ public class ProductionAndSales
 
 public class ProductMonthlyActivityDesc1
 {
+    [JsonProperty("rowItems")]
+    public List<RowItem> RowItems { get; set; } = new();
+}
+
+public class BuyRawMaterial
+{
+    [JsonProperty("yearData")]
+    public List<YearDatum> YearData { get; set; } = new();
+
     [JsonProperty("rowItems")]
     public List<RowItem> RowItems { get; set; } = new();
 }
@@ -145,6 +166,110 @@ public class RowItem
 
     [JsonProperty("value_11991")]
     public string Value11991 { get; set; }
+
+    // Buy Raw Material properties for V4
+
+    /// <summary>
+    /// Buy raw material value for column ID 34641.
+    /// </summary>
+    [JsonProperty("value_34641")]
+    public string Value34641 { get; set; }
+
+    /// <summary>
+    /// Buy raw material value for column ID 34642.
+    /// </summary>
+    [JsonProperty("value_34642")]
+    public string Value34642 { get; set; }
+
+    /// <summary>
+    /// Buy raw material value for column ID 34643.
+    /// </summary>
+    [JsonProperty("value_34643")]
+    public decimal Value34643 { get; set; }
+
+    /// <summary>
+    /// Buy raw material value for column ID 34644.
+    /// </summary>
+    [JsonProperty("value_34644")]
+    public decimal Value34644 { get; set; }
+
+    /// <summary>
+    /// Buy raw material value for column ID 34645.
+    /// </summary>
+    [JsonProperty("value_34645")]
+    public decimal Value34645 { get; set; }
+
+    /// <summary>
+    /// Buy raw material value for column ID 34649.
+    /// </summary>
+    [JsonProperty("value_34649")]
+    public decimal Value34649 { get; set; }
+
+    /// <summary>
+    /// Buy raw material value for column ID 346410.
+    /// </summary>
+    [JsonProperty("value_346410")]
+    public decimal Value346410 { get; set; }
+
+    /// <summary>
+    /// Buy raw material value for column ID 346411.
+    /// </summary>
+    [JsonProperty("value_346411")]
+    public decimal Value346411 { get; set; }
+
+    /// <summary>
+    /// Buy raw material value for column ID 346412.
+    /// </summary>
+    [JsonProperty("value_346412")]
+    public decimal Value346412 { get; set; }
+
+    /// <summary>
+    /// Buy raw material value for column ID 346413.
+    /// </summary>
+    [JsonProperty("value_346413")]
+    public decimal Value346413 { get; set; }
+
+    /// <summary>
+    /// Buy raw material value for column ID 346414.
+    /// </summary>
+    [JsonProperty("value_346414")]
+    public decimal Value346414 { get; set; }
+
+    /// <summary>
+    /// Buy raw material value for column ID 346415.
+    /// </summary>
+    [JsonProperty("value_346415")]
+    public decimal Value346415 { get; set; }
+
+    /// <summary>
+    /// Buy raw material value for column ID 346416.
+    /// </summary>
+    [JsonProperty("value_346416")]
+    public decimal Value346416 { get; set; }
+
+    /// <summary>
+    /// Buy raw material value for column ID 346417.
+    /// </summary>
+    [JsonProperty("value_346417")]
+    public decimal Value346417 { get; set; }
+
+    /// <summary>
+    /// Buy raw material value for column ID 346418.
+    /// </summary>
+    [JsonProperty("value_346418")]
+    public decimal Value346418 { get; set; }
+
+    /// <summary>
+    /// Buy raw material value for column ID 346419.
+    /// </summary>
+    [JsonProperty("value_346419")]
+    public decimal Value346419 { get; set; }
+
+    /// <summary>
+    /// Buy raw material value for column ID 346420.
+    /// </summary>
+    [JsonProperty("value_346420")]
+    public decimal Value346420 { get; set; }
 
     public decimal GetValue(SaleColumnId columnId)
     {

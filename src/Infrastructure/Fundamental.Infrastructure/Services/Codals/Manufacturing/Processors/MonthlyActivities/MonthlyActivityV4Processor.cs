@@ -1,22 +1,23 @@
-﻿using Fundamental.Application.Codals.Dto.MonthlyActivities.V4;
+﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
+using Fundamental.Application.Codals.Dto.MonthlyActivities.V4;
 using Fundamental.Application.Codals.Dto.MonthlyActivities.V4.Enums;
 using Fundamental.Application.Codals.Enums;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
-using Fundamental.BuildingBlock;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
-using Fundamental.Domain.Common.Constants;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
 using Fundamental.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using Serilog;
 
 namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.MonthlyActivities;
 
 public class MonthlyActivityV4Processor(
-    IServiceScopeFactory serviceScopeFactory
+    IServiceScopeFactory serviceScopeFactory,
+    ICanonicalMappingServiceFactory mappingServiceFactory
 )
     : ICodalProcessor
 {
@@ -32,118 +33,126 @@ public class MonthlyActivityV4Processor(
     {
         JsonSerializerSettings setting = new();
         setting.NullValueHandling = NullValueHandling.Ignore;
-        CodalMonthlyActivity? saleDate =
+        CodalMonthlyActivity? monthlyActivity =
             JsonConvert.DeserializeObject<CodalMonthlyActivity>(model.Json, setting);
 
-        if (saleDate is null)
+        if (monthlyActivity is null)
         {
+            Log.Warning("Failed to deserialize MonthlyActivity V4 JSON for TraceNo: {TraceNo}", statement.TracingNo);
             return;
         }
 
-        if (saleDate.MonthlyActivity is null)
+        if (monthlyActivity.MonthlyActivity is null)
         {
+            Log.Warning("MonthlyActivity is null in V4 JSON for TraceNo: {TraceNo}", statement.TracingNo);
             return;
         }
 
-        if (saleDate.MonthlyActivity.ProductionAndSales is null)
+        if (monthlyActivity.MonthlyActivity.ProductionAndSales is null)
         {
+            Log.Warning("ProductionAndSales is null in V4 JSON for TraceNo: {TraceNo}", statement.TracingNo);
             return;
         }
 
-        if (saleDate.MonthlyActivity.ProductionAndSales.YearData.Count == 0)
+        if (monthlyActivity.MonthlyActivity.ProductionAndSales.YearData.Count == 0)
         {
+            Log.Warning("No year data found in V4 JSON for TraceNo: {TraceNo}", statement.TracingNo);
             return;
         }
 
-        YearDatum? yearDatum = saleDate.MonthlyActivity.ProductionAndSales.YearData
-            .Find(x => x.ColumnId == SaleColumnId.SaleThisMonth);
+        YearDatum? yearDatum = monthlyActivity.MonthlyActivity.ProductionAndSales.YearData
+            .Find(x => x.ColumnId == SaleColumnId.ProduceThisMonth);
 
-        if (yearDatum is null)
+        if (yearDatum is null || yearDatum.FiscalYear is null || yearDatum.ReportMonth is null)
         {
+            Log.Warning("Could not extract fiscal year or report month from V4 data for TraceNo: {TraceNo}", statement.TracingNo);
             return;
-        }
-
-        if (yearDatum.FiscalYear is null || yearDatum.FiscalMonth is null || yearDatum.ReportMonth is null)
-        {
-            return;
-        }
-
-        SymbolExtensions.SalesInfo extraInfo = new();
-
-        if (statement.Isin != null && statement.Isin.Equals(IranCapitalMarket.FezarIsin, StringComparison.OrdinalIgnoreCase))
-        {
-            extraInfo =
-                SymbolExtensions.ExtractFezarInfo(
-                    string.Join(
-                        ',',
-                        saleDate.MonthlyActivity.ProductMonthlyActivityDesc1
-                            .RowItems.Select(x => x.Value11991).ToList()
-                    )
-                );
         }
 
         using IServiceScope scope = serviceScopeFactory.CreateScope();
         await using FundamentalDbContext dbContext = scope.ServiceProvider.GetRequiredService<FundamentalDbContext>();
 
-        MonthlyActivity? existingStatement = await dbContext.MonthlyActivities
+        Symbol symbol = await dbContext.Symbols.FirstAsync(
+            x => x.Isin == statement.Isin,
+            cancellationToken);
+
+        // Check for existing record
+        RawMonthlyActivityJson? existingRawJson = await dbContext.RawMonthlyActivityJsons
             .FirstOrDefaultAsync(
-                x =>
-                    x.Symbol.Isin == statement.Isin && x.FiscalYear.Year == yearDatum.FiscalYear &&
-                    x.ReportMonth.Month == yearDatum.ReportMonth,
-                cancellationToken);
-        Symbol symbol =
-            await dbContext.Symbols.FirstAsync(
-                x => x.Isin == statement.Isin,
+                x => x.Symbol.Id == symbol.Id &&
+                     x.Version == CodalVersion.V4,
                 cancellationToken);
 
-        if (existingStatement == null)
+        // Store raw JSON
+        if (existingRawJson == null)
         {
-            MonthlyActivity monthlyActivity = new(
-                Guid.NewGuid(),
-                symbol,
-                statement.TracingNo,
-                statement.HtmlUrl,
-                yearDatum.FiscalYear,
-                yearDatum.FiscalMonth.Value,
-                yearDatum.ReportMonth.Value,
-                GetSumRecord(saleDate).GetValue(SaleColumnId.SaleAmountExclusiveThisMonth),
-                GetSumRecord(saleDate).GetValue(SaleColumnId.SaleAmountThisMonth),
-                GetSumRecord(saleDate).GetValue(SaleColumnId.SaleAmountInclusiveThisMonth),
-                GetSumRecord(saleDate).GetValue(SaleColumnId.SaleAmountPrevYear),
-                false,
-                [extraInfo],
-                DateTime.Now
-            );
-            dbContext.Add(monthlyActivity);
+            RawMonthlyActivityJson rawJson = new()
+            {
+                TraceNo = (long)statement.TracingNo,
+                Symbol = symbol,
+                PublishDate = statement.PublishDateMiladi,
+                Version = CodalVersion.V4,
+                RawJson = model.Json
+            };
+            dbContext.Add(rawJson);
         }
         else
         {
-            if (existingStatement.TraceNo <= statement.TracingNo)
+            if (existingRawJson.TraceNo <= (long)statement.TracingNo)
             {
-                existingStatement.Update(
-                    symbol,
-                    statement.TracingNo,
-                    statement.HtmlUrl,
-                    yearDatum.FiscalYear,
-                    yearDatum.FiscalMonth.Value,
-                    yearDatum.ReportMonth.Value,
-                    GetSumRecord(saleDate).GetValue(SaleColumnId.SaleAmountExclusiveThisMonth),
-                    GetSumRecord(saleDate).GetValue(SaleColumnId.SaleAmountThisMonth),
-                    GetSumRecord(saleDate).GetValue(SaleColumnId.SaleAmountInclusiveThisMonth),
-                    GetSumRecord(saleDate).GetValue(SaleColumnId.SaleAmountPrevYear),
-                    false,
-                    [extraInfo],
-                    DateTime.Now
-                );
+                existingRawJson.TraceNo = (long)statement.TracingNo;
+                existingRawJson.PublishDate = statement.PublishDateMiladi;
+                existingRawJson.RawJson = model.Json;
+            }
+        }
+
+        // Get the mapping service for V4
+        ICanonicalMappingService<CanonicalMonthlyActivity, CodalMonthlyActivity> mappingService =
+            mappingServiceFactory.GetMappingService<CanonicalMonthlyActivity, CodalMonthlyActivity>();
+
+        // Map to canonical entity
+        CanonicalMonthlyActivity canonical = await mappingService.MapToCanonicalAsync(monthlyActivity, symbol, statement);
+
+        // Check for existing canonical record
+        CanonicalMonthlyActivity? existingCanonical = await dbContext.CanonicalMonthlyActivities
+            .FirstOrDefaultAsync(
+                x => x.Symbol.Isin == statement.Isin &&
+                     x.FiscalYear.Year == canonical.FiscalYear &&
+                     x.ReportMonth.Month == canonical.ReportMonth,
+                cancellationToken);
+
+        if (existingCanonical == null)
+        {
+            dbContext.Add(canonical);
+        }
+        else
+        {
+            if (existingCanonical.TraceNo <= statement.TracingNo)
+            {
+                UpdateCanonicalMonthlyActivity(existingCanonical, canonical);
             }
         }
 
         await dbContext.SaveChangesAsync(cancellationToken);
+        Log.Information(
+            "Successfully processed MonthlyActivity V4 for Symbol: {Isin}, FiscalYear: {FiscalYear}, ReportMonth: {ReportMonth}",
+            statement.Isin,
+            canonical.FiscalYear,
+            canonical.ReportMonth);
     }
 
-    private static RowItem GetSumRecord(CodalMonthlyActivity saleDate)
+    private static void UpdateCanonicalMonthlyActivity(CanonicalMonthlyActivity existing, CanonicalMonthlyActivity updated)
     {
-        return saleDate.MonthlyActivity!.ProductionAndSales?.RowItems.First(x =>
-            x is { RowCode: RowCode.TotalSum, Category: Category.Sum });
+        existing.TraceNo = updated.TraceNo;
+        existing.Uri = updated.Uri;
+        existing.Currency = updated.Currency;
+        existing.HasSubCompanySale = updated.HasSubCompanySale;
+
+        // Update collections
+        existing.BuyRawMaterialItems = updated.BuyRawMaterialItems;
+        existing.ProductionAndSalesItems = updated.ProductionAndSalesItems;
+        existing.EnergyItems = updated.EnergyItems;
+        existing.CurrencyExchangeItems = updated.CurrencyExchangeItems;
+        existing.Descriptions = updated.Descriptions;
     }
 }

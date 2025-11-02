@@ -1,0 +1,77 @@
+name: Build-and-Test-Fundamental-Backend
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.306'
+      
+      - name: Verify .NET installation
+        run: dotnet --version
+      
+      # Cache NuGet packages and build outputs
+      - name: Cache .NET artifacts
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.nuget/packages
+            ~/.local/share/NuGet/v3-cache
+            ./src/**/bin
+            ./src/**/obj
+            ./tests/**/bin
+            ./tests/**/obj
+          key: ${{ runner.os }}-dotnet-${{ hashFiles('**/*.csproj', '**/*.sln', 'Directory.Build.props', '**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-dotnet-
+      
+      - name: Restore dependencies
+        run: dotnet restore --verbosity minimal
+      
+      - name: Build
+        run: dotnet build --configuration Release --no-restore --verbosity minimal
+      
+      - name: Check build success
+        run: echo "Build completed successfully"
+      
+      - name: Run unit tests
+        run: dotnet test --configuration Release --verbosity minimal --no-build --logger "trx;LogFileName=test-results.trx" --results-directory ./test-results --collect:"XPlat Code Coverage"
+      
+      - name: Test Results Summary
+        if: always()
+        run: |
+          echo "Test execution completed"
+          find ./test-results -name "*.trx" -exec echo "Found test result file: {}" \;
+          echo ""
+          if [ -f "./test-results/test-results.trx" ]; then
+            echo "Test results artifact ready for review"
+          fi
+      
+      # Upload test results
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results-${{ github.run_number }}
+          path: ./test-results/
+      
+      # - uses: actions/setup-node@v4
+      #   with:
+      #     node-version: "18"
+      # - name: Deploy to Liara
+      #   env:
+      #     LIARA_TOKEN: ${{ secrets.LIARA_API_TOKEN }}
+      #   run: |
+      #     npm i -g @liara/cli@5
+      #     liara deploy --app="fundamental-api" --api-token="$LIARA_TOKEN" --no-app-logs --port=5000
