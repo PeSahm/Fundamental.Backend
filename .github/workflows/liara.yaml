@@ -22,11 +22,14 @@ jobs:
       - name: Verify .NET installation
         run: dotnet --version
       
+      - name: Clear NuGet cache
+        run: dotnet nuget locals all --clear
+      
       - name: Restore dependencies
-        run: dotnet restore --verbosity normal
+        run: dotnet restore --force --verbosity normal
       
       - name: Build
-        run: dotnet build --configuration Release --verbosity normal
+        run: dotnet build --configuration Release --no-restore --verbosity normal
       
       - name: Run unit tests
         run: dotnet test --configuration Release --verbosity normal --no-build
