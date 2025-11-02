@@ -62,7 +62,7 @@ public class MonthlyActivityV1Processor(
                 TraceNo = (long)statement.TracingNo,
                 Symbol = symbol,
                 PublishDate = statement.PublishDateMiladi,
-                Version = "1",
+                Version = "V1",
                 RawJson = model.Json
             };
             dbContext.Add(rawJson);
@@ -86,7 +86,7 @@ public class MonthlyActivityV1Processor(
 
         // Extract fiscal year and report month for existing record check
         int fiscalYear = ExtractFiscalYear(monthlyActivity.FinancialYear);
-        int reportMonth = ExtractReportMonth();
+        int reportMonth = 1; // V1 reports annual data
         CanonicalMonthlyActivity? existingCanonical = await dbContext.CanonicalMonthlyActivities
             .FirstOrDefaultAsync(
                 x => x.Symbol.Isin == statement.Isin &&
@@ -116,7 +116,8 @@ public class MonthlyActivityV1Processor(
 
     private static int ExtractFiscalYear(FinancialYearV1Dto financialYear)
     {
-        if (financialYear.PriodEndToDate.Contains('/'))
+        if (!string.IsNullOrWhiteSpace(financialYear.PriodEndToDate) &&
+            financialYear.PriodEndToDate.Contains('/'))
         {
             string[] parts = financialYear.PriodEndToDate.Split('/');
 
@@ -126,12 +127,6 @@ public class MonthlyActivityV1Processor(
             }
         }
 
-        return DateTime.Now.Year; // fallback
-    }
-
-    private static int ExtractReportMonth()
-    {
-        // V1 reports annual data, so ReportMonth is always 1
-        return 1;
+        throw new ArgumentException("Invalid or missing PriodEndToDate in financial year data", nameof(financialYear));
     }
 }

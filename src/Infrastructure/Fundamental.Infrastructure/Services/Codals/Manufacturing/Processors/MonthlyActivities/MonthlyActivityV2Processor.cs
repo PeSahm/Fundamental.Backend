@@ -62,7 +62,7 @@ public class MonthlyActivityV2Processor(
                 TraceNo = (long)statement.TracingNo,
                 Symbol = symbol,
                 PublishDate = statement.PublishDateMiladi,
-                Version = "2",
+                Version = "V2",
                 RawJson = model.Json
             };
             dbContext.Add(rawJson);
@@ -116,7 +116,8 @@ public class MonthlyActivityV2Processor(
 
     private static int ExtractFiscalYear(FinancialYearV2Dto financialYear)
     {
-        if (financialYear.PriodEndToDate.Contains('/'))
+        if (!string.IsNullOrWhiteSpace(financialYear.PriodEndToDate) &&
+            financialYear.PriodEndToDate.Contains('/'))
         {
             string[] parts = financialYear.PriodEndToDate.Split('/');
 
@@ -126,6 +127,6 @@ public class MonthlyActivityV2Processor(
             }
         }
 
-        return DateTime.Now.Year; // fallback
+        throw new ArgumentException("Invalid or missing PriodEndToDate in financial year data", nameof(financialYear));
     }
 }

@@ -68,7 +68,7 @@ public class MonthlyActivityV3Processor(
                 TraceNo = (long)statement.TracingNo,
                 Symbol = symbol,
                 PublishDate = statement.PublishDateMiladi,
-                Version = "3",
+                Version = "V3",
                 RawJson = model.Json
             };
             dbContext.Add(rawJson);
