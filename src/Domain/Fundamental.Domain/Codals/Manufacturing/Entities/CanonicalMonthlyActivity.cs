@@ -109,6 +109,42 @@ public class CanonicalMonthlyActivity : BaseEntity<Guid>
     /// </summary>
     public ICollection<MonthlyActivityDescription> Descriptions { get; set; } = new List<MonthlyActivityDescription>();
 
+    // ========== Helper Methods for Querying Energy Data ==========
+
+    /// <summary>
+    /// Gets all energy data rows (actual consumption entries).
+    /// Returns items with RowCode = Data, excluding summary rows.
+    /// ردیف‌های داده مصرف انرژی.
+    /// </summary>
+    public IEnumerable<EnergyItem> GetEnergyDataRows()
+    {
+        return EnergyItems
+            .Where(x => x.IsDataRow)
+            .ToList();
+    }
+
+    /// <summary>
+    /// Gets the total energy consumption sum row.
+    /// This row has RowCode = TotalSum and contains the sum of all energy consumption.
+    /// جمع کل مصرف انرژی.
+    /// </summary>
+    public EnergyItem? GetEnergyTotalSum()
+    {
+        return EnergyItems
+            .FirstOrDefault(x => x.RowCode == EnergyRowCode.TotalSum);
+    }
+
+    /// <summary>
+    /// Gets all summary rows for energy consumption.
+    /// These have RowCode != Data and contain aggregated data.
+    /// </summary>
+    public IEnumerable<EnergyItem> GetAllEnergySummaryRows()
+    {
+        return EnergyItems
+            .Where(x => x.IsSummaryRow)
+            .ToList();
+    }
+
     // ========== Helper Methods for Querying Buy Raw Material Data ==========
 
     /// <summary>

@@ -704,6 +704,143 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
         }
     }
 
+    [Fact]
+    public async Task GetEnergyDataRows_ShouldExcludeSummaryRows()
+    {
+        // Arrange
+        await CleanMonthlyActivityData();
+        Symbol symbol = CreateTestSymbol("IRO1SROD0001", 9600059UL);
+        await _fixture.DbContext.Symbols.AddAsync(symbol);
+        await _fixture.DbContext.SaveChangesAsync();
+
+        string testJson = MonthlyActivityTestData.GetV5TestData();
+        SetupApiResponse("monthly-activity", testJson);
+
+        MonthlyActivityV5Processor processor = new MonthlyActivityV5Processor(
+            _fixture.Services.GetRequiredService<IServiceScopeFactory>(),
+            _fixture.Services.GetRequiredService<ICanonicalMappingServiceFactory>());
+
+        GetStatementResponse statement = CreateStatementResponse("IRO1SROD0001", 123456789);
+        GetStatementJsonResponse jsonResponse = CreateJsonResponse(testJson);
+
+        await processor.Process(statement, jsonResponse, CancellationToken.None);
+
+        // Act
+        CanonicalMonthlyActivity? storedEntity = await _fixture.DbContext.CanonicalMonthlyActivities
+            .Include(x => x.EnergyItems)
+            .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id);
+
+        var dataRows = storedEntity!.GetEnergyDataRows().ToList();
+
+        // Assert
+        dataRows.Should().NotBeEmpty();
+        dataRows.Should().AllSatisfy(x =>
+        {
+            x.RowCode.Should().Be(EnergyRowCode.Data);
+            x.IsDataRow.Should().BeTrue();
+            x.IsSummaryRow.Should().BeFalse();
+            x.EnergyType.Should().NotBeNullOrEmpty();
+        });
+    }
+
+    [Fact]
+    public async Task GetEnergyTotalSum_ShouldReturnTotalSummaryRow()
+    {
+        // Arrange
+        await CleanMonthlyActivityData();
+        Symbol symbol = CreateTestSymbol("IRO1SROD0001", 9600059UL);
+        await _fixture.DbContext.Symbols.AddAsync(symbol);
+        await _fixture.DbContext.SaveChangesAsync();
+
+        string testJson = MonthlyActivityTestData.GetV5TestData();
+        SetupApiResponse("monthly-activity", testJson);
+
+        MonthlyActivityV5Processor processor = new MonthlyActivityV5Processor(
+            _fixture.Services.GetRequiredService<IServiceScopeFactory>(),
+            _fixture.Services.GetRequiredService<ICanonicalMappingServiceFactory>());
+
+        GetStatementResponse statement = CreateStatementResponse("IRO1SROD0001", 123456789);
+        GetStatementJsonResponse jsonResponse = CreateJsonResponse(testJson);
+
+        await processor.Process(statement, jsonResponse, CancellationToken.None);
+
+        // Act
+        CanonicalMonthlyActivity? storedEntity = await _fixture.DbContext.CanonicalMonthlyActivities
+            .Include(x => x.EnergyItems)
+            .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id);
+
+        var totalSum = storedEntity!.GetEnergyTotalSum();
+
+        // Assert
+        totalSum.Should().NotBeNull();
+        totalSum!.RowCode.Should().Be(EnergyRowCode.TotalSum);
+        totalSum.Category.Should().Be(0);
+        totalSum.Industry.Should().Contain("جمع کل");
+        totalSum.IsSummaryRow.Should().BeTrue();
+        totalSum.IsDataRow.Should().BeFalse();
+        totalSum.YearToDateCost.Should().BeGreaterThan(0);
+
+        // Verify total matches sum of all data rows (within rounding tolerance)
+        var dataRows = storedEntity.GetEnergyDataRows().ToList();
+        var calculatedTotal = dataRows.Sum(x => x.YearToDateCost ?? 0);
+        
+        if (totalSum.YearToDateCost.HasValue && calculatedTotal > 0)
+        {
+            // Allow small rounding differences
+            totalSum.YearToDateCost.Value.Should().BeApproximately(calculatedTotal, 1);
+        }
+    }
+
+    [Fact]
+    public async Task ProcessMonthlyActivityV5_ShouldCorrectlyMapEnergyRowCodeAndCategory()
+    {
+        // Arrange
+        await CleanMonthlyActivityData();
+        Symbol symbol = CreateTestSymbol("IRO1SROD0001", 9600059UL);
+        await _fixture.DbContext.Symbols.AddAsync(symbol);
+        await _fixture.DbContext.SaveChangesAsync();
+
+        string testJson = MonthlyActivityTestData.GetV5TestData();
+        SetupApiResponse("monthly-activity", testJson);
+
+        MonthlyActivityV5Processor processor = new MonthlyActivityV5Processor(
+            _fixture.Services.GetRequiredService<IServiceScopeFactory>(),
+            _fixture.Services.GetRequiredService<ICanonicalMappingServiceFactory>());
+
+        GetStatementResponse statement = CreateStatementResponse("IRO1SROD0001", 123456789);
+        GetStatementJsonResponse jsonResponse = CreateJsonResponse(testJson);
+
+        await processor.Process(statement, jsonResponse, CancellationToken.None);
+
+        // Act
+        CanonicalMonthlyActivity? storedEntity = await _fixture.DbContext.CanonicalMonthlyActivities
+            .Include(x => x.EnergyItems)
+            .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id);
+
+        // Assert
+        storedEntity.Should().NotBeNull();
+        storedEntity!.EnergyItems.Should().NotBeEmpty();
+
+        // Check data rows
+        var dataRows = storedEntity.EnergyItems.Where(x => x.IsDataRow).ToList();
+        dataRows.Should().HaveCountGreaterThan(0);
+        dataRows.Should().AllSatisfy(x =>
+        {
+            x.RowCode.Should().Be(EnergyRowCode.Data);
+            x.Category.Should().Be(0);
+            x.EnergyType.Should().NotBeNullOrEmpty();
+        });
+
+        // Check sum row
+        var sumRow = storedEntity.EnergyItems.FirstOrDefault(x => x.IsSummaryRow);
+        if (sumRow != null)
+        {
+            sumRow.RowCode.Should().Be(EnergyRowCode.TotalSum);
+            sumRow.Category.Should().Be(0);
+            sumRow.Industry.Should().Contain("جمع");
+        }
+    }
+
     /// <summary>
     /// Cleans all existing monthly activity data from the database.
     /// </summary>

@@ -1,5 +1,7 @@
 namespace Fundamental.Domain.Codals.Manufacturing.Entities;
 
+using Fundamental.Domain.Codals.Manufacturing.Enums;
+
 /// <summary>
 /// Represents energy consumption and cost information.
 /// Based on V5 energy section with columnIds starting with 319xx.
@@ -176,13 +178,25 @@ public class EnergyItem
 
     /// <summary>
     /// Row code for classification.
-    /// Maps to V5 rowCode field.
+    /// کد ردیف
+    /// Maps to V5 rowCode field. Data = -1, TotalSum = 44.
     /// </summary>
-    public int? RowCode { get; set; }
+    public EnergyRowCode RowCode { get; set; } = EnergyRowCode.Data;
 
     /// <summary>
-    /// Category for classification.
+    /// Category for classification. Always 0 for energy items.
+    /// شماره گروه
     /// Maps to V5 category field.
     /// </summary>
-    public int? Category { get; set; }
+    public int Category { get; set; }
+
+    /// <summary>
+    /// Indicates if this is a data row (actual energy consumption entry).
+    /// </summary>
+    public bool IsDataRow => RowCode == EnergyRowCode.Data;
+
+    /// <summary>
+    /// Indicates if this is a summary row (total sum).
+    /// </summary>
+    public bool IsSummaryRow => RowCode != EnergyRowCode.Data;
 }

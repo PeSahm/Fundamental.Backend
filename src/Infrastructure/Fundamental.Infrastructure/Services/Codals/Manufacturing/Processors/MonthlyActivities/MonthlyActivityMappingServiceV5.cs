@@ -232,8 +232,10 @@ public class MonthlyActivityMappingServiceV5 : IMonthlyActivityMappingService
                 ConsumptionChangeExplanation = x.Value319524,
 
                 // Classification metadata
-                RowCode = x.RowCode,
-                Category = x.Category
+                RowCode = x.RowCode.HasValue
+                    ? (EnergyRowCode)x.RowCode.Value
+                    : EnergyRowCode.Data,
+                Category = x.Category ?? 0
             })
             .ToList();
     }
