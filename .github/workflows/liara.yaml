@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - feature/*
   pull_request:
     branches:
       - main
@@ -21,17 +22,63 @@ jobs:
       - name: Verify .NET installation
         run: dotnet --version
       
-      - name: Clear NuGet cache
-        run: dotnet nuget locals all --clear
+      # Cache NuGet packages
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+      
+      # Cache build outputs
+      - name: Cache build outputs
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.nuget/packages
+            ~/.local/share/NuGet/v3-cache
+            ./src/**/bin
+            ./src/**/obj
+            ./tests/**/bin
+            ./tests/**/obj
+          key: ${{ runner.os }}-build-${{ hashFiles('**/*.csproj', '**/*.sln', 'Directory.Build.props') }}
+          restore-keys: |
+            ${{ runner.os }}-build-
       
       - name: Restore dependencies
-        run: dotnet restore --force --verbosity normal
+        run: dotnet restore --verbosity minimal
       
       - name: Build
-        run: dotnet build --configuration Release --no-restore --verbosity normal
+        run: dotnet build --configuration Release --no-restore --verbosity minimal
+      
+      - name: Check build success
+        run: echo "Build completed successfully"
       
       - name: Run unit tests
-        run: dotnet test --configuration Release --verbosity normal --no-build
+        run: dotnet test --configuration Release --verbosity minimal --no-build --logger "trx;LogFileName=test-results.trx" --results-directory ./test-results --collect:"XPlat Code Coverage" --results-directory ./coverage
+      
+      - name: Test Results Summary
+        if: always()
+        run: |
+          echo "Test execution completed"
+          find ./test-results -name "*.trx" -exec echo "Found test result file: {}" \;
+      
+      # Upload test results
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results-${{ github.run_number }}
+          path: ./test-results/
+      
+      # Upload coverage results
+      - name: Upload coverage results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-results-${{ github.run_number }}
+          path: ./coverage/
       
       # - uses: actions/setup-node@v4
       #   with:
