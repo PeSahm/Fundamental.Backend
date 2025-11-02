@@ -41,16 +41,7 @@ namespace Fundamental.Migrations.Fundamental
                 .OldAnnotation("Npgsql:Enum:reporting_type", "agriculture,bank,capital_provision,insurance,investment,leasing,maritime_transportation,production,services,structural,un_known")
                 .OldAnnotation("Npgsql:Enum:review_status", "approved,pending,rejected");
 
-            migrationBuilder.AlterColumn<CodalVersion>(
-                name: "version",
-                schema: "manufacturing",
-                table: "raw_monthly_activity_json",
-                type: "codal_version",
-                nullable: false,
-                defaultValue: CodalVersion.None,
-                oldClrType: typeof(string),
-                oldType: "character varying(10)",
-                oldMaxLength: 10);
+            migrationBuilder.Sql("ALTER TABLE manufacturing.raw_monthly_activity_json ALTER COLUMN version TYPE codal_version USING version::codal_version");
 
             migrationBuilder.AlterColumn<List<NoneOperationalIncomeTag>>(
                 name: "tags",
@@ -96,16 +87,7 @@ namespace Fundamental.Migrations.Fundamental
                 .OldAnnotation("Npgsql:Enum:reporting_type", "agriculture,bank,capital_provision,insurance,investment,leasing,maritime_transportation,production,services,structural,un_known")
                 .OldAnnotation("Npgsql:Enum:review_status", "approved,pending,rejected");
 
-            migrationBuilder.AlterColumn<string>(
-                name: "version",
-                schema: "manufacturing",
-                table: "raw_monthly_activity_json",
-                type: "character varying(10)",
-                maxLength: 10,
-                nullable: false,
-                oldClrType: typeof(CodalVersion),
-                oldType: "codal_version",
-                oldDefaultValue: CodalVersion.None);
+            migrationBuilder.Sql("ALTER TABLE manufacturing.raw_monthly_activity_json ALTER COLUMN version TYPE character varying(10) USING version::text");
 
             migrationBuilder.AlterColumn<List<NoneOperationalIncomeTag>>(
                 name: "tags",
