@@ -75,7 +75,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id && x.TraceNo == 123456789L);
         rawJsonEntity.Should().NotBeNull();
         rawJsonEntity!.RawJson.Should().NotBeNullOrEmpty();
-        rawJsonEntity.Version.Should().Be("5");
+        rawJsonEntity.Version.Should().Be(CodalVersion.V5);
     }
 
     [Fact]

@@ -1,9 +1,7 @@
-﻿using Fundamental.Application.Codals.Dto.MonthlyActivities.V5;
-using Fundamental.Application.Codals.Enums;
+﻿using Fundamental.Application.Codals.Enums;
 using Fundamental.Application.Codals.Services;
-using Fundamental.Domain.Codals.Manufacturing.Entities;
+using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Enums;
-using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.MonthlyActivities;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Fundamental.Infrastructure.Services;
@@ -114,13 +112,5 @@ public static class ServiceExtensions
     private static string CodalProcessorKey(ReportingType reportingType, LetterType letterType, CodalVersion version, LetterPart letterPart)
     {
         return $"{reportingType}-{letterType}-{version}-{letterPart}";
-    }
-
-    private static string CanonicalMappingServiceKey<TDto>()
-        where TDto : ICodalMappingServiceMetadata
-    {
-        // Create a dummy instance to read metadata
-        TDto instance = Activator.CreateInstance<TDto>();
-        return $"{instance.ReportingType}-{instance.LetterType}-{instance.CodalVersion}-{instance.LetterPart}";
     }
 }

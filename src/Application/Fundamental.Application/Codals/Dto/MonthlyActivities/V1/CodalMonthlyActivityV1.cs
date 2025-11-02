@@ -1,5 +1,6 @@
-using System.Text.Json.Serialization;
 using Fundamental.Application.Codals.Enums;
+using System.Text.Json.Serialization;
+using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Domain.Common.Enums;
 

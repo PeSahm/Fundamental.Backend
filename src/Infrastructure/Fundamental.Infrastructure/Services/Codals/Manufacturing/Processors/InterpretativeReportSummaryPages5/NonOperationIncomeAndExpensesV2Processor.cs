@@ -1,4 +1,5 @@
-﻿using Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage5Summaries.V2;
+﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
+using Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage5Summaries.V2;
 using Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage5Summaries.V2.
     NonOperationIncomeAndExpenses;
 using Fundamental.Application.Codals.Enums;

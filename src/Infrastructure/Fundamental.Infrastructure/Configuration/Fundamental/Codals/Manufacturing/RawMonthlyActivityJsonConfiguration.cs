@@ -1,4 +1,5 @@
 using Fundamental.Domain.Codals.Manufacturing.Entities;
+using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Npgsql.NameTranslation;
@@ -25,7 +26,8 @@ public class RawMonthlyActivityJsonConfiguration : EntityTypeConfigurationBase<R
             .IsRequired();
 
         builder.Property(x => x.Version)
-            .HasMaxLength(10)
+            .HasDefaultValue(CodalVersion.None)
+            .HasSentinel(CodalVersion.None)
             .IsRequired();
 
         builder.Property(x => x.RawJson)

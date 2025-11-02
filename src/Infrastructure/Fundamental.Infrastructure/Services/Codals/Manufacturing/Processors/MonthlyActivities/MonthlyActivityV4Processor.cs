@@ -1,4 +1,5 @@
-﻿using Fundamental.Application.Codals.Dto.MonthlyActivities.V4;
+﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
+using Fundamental.Application.Codals.Dto.MonthlyActivities.V4;
 using Fundamental.Application.Codals.Dto.MonthlyActivities.V4.Enums;
 using Fundamental.Application.Codals.Enums;
 using Fundamental.Application.Codals.Services;
@@ -79,7 +80,7 @@ public class MonthlyActivityV4Processor(
         RawMonthlyActivityJson? existingRawJson = await dbContext.RawMonthlyActivityJsons
             .FirstOrDefaultAsync(
                 x => x.Symbol.Id == symbol.Id &&
-                     x.Version == "V4",
+                     x.Version == CodalVersion.V4,
                 cancellationToken);
 
         // Store raw JSON
@@ -90,7 +91,7 @@ public class MonthlyActivityV4Processor(
                 TraceNo = (long)statement.TracingNo,
                 Symbol = symbol,
                 PublishDate = statement.PublishDateMiladi,
-                Version = "4",
+                Version = CodalVersion.V4,
                 RawJson = model.Json
             };
             dbContext.Add(rawJson);

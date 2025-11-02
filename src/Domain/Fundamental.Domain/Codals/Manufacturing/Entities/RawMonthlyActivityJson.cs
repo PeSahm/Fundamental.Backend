@@ -1,3 +1,4 @@
+using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.BaseTypes;
 using Fundamental.Domain.Symbols.Entities;
 
@@ -25,9 +26,9 @@ public class RawMonthlyActivityJson : BaseEntity<Guid>
     public DateTime PublishDate { get; set; }
 
     /// <summary>
-    /// Version of the Monthly Activity data (e.g., "1", "2", etc.).
+    /// Version of the Monthly Activity data.
     /// </summary>
-    public string Version { get; set; }
+    public CodalVersion Version { get; set; }
 
     /// <summary>
     /// Raw JSON data from the API response, stored as jsonb in PostgreSQL.

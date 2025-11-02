@@ -1,4 +1,5 @@
-﻿using DNTPersianUtils.Core;
+﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
+using DNTPersianUtils.Core;
 using Fundamental.Application.Codals.Dto.RegisterCapitalIncrease.V1;
 using Fundamental.Application.Codals.Enums;
 using Fundamental.Application.Codals.Services;
