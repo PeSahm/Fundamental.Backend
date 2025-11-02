@@ -62,9 +62,8 @@ jobs:
         run: |
           echo "Test execution completed"
           find ./test-results -name "*.trx" -exec echo "Found test result file: {}" \;
-          find ./test-results -name "*.coverage" -exec echo "Found coverage file: {}" \;
       
-      # Upload test results and coverage
+      # Upload test results
       - name: Upload test results
         uses: actions/upload-artifact@v4
         if: always()
