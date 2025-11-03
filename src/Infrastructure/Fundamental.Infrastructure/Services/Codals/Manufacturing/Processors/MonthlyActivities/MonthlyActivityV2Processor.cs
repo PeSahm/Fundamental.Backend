@@ -84,9 +84,9 @@ public class MonthlyActivityV2Processor(
 
         // Map to canonical entity
         CanonicalMonthlyActivity canonical = await mappingService.MapToCanonicalAsync(monthlyActivity, symbol, statement);
-    canonical.PublishDate = statement.PublishDateMiladi;
+        canonical.PublishDate = statement.PublishDateMiladi.ToUniversalTime();
 
-    // Extract fiscal year and report month for existing record check
+        // Extract fiscal year and report month for existing record check
         int fiscalYear = ExtractFiscalYear(monthlyActivity.ProductAndSales.FinancialYear);
         const int reportMonth = 1; // V2 reports annual data
         CanonicalMonthlyActivity? existingCanonical = await dbContext.CanonicalMonthlyActivities

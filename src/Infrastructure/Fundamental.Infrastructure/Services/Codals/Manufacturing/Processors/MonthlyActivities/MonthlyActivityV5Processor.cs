@@ -73,9 +73,9 @@ public class MonthlyActivityV5Processor(
 
         // Map to canonical entity
         CanonicalMonthlyActivity canonical = await mappingService.MapToCanonicalAsync(monthlyActivity, symbol, statement);
-    canonical.PublishDate = statement.PublishDateMiladi;
+        canonical.PublishDate = statement.PublishDateMiladi.ToUniversalTime();
 
-    // Store raw JSON
+        // Store raw JSON
         RawMonthlyActivityJson? existingRawJson = await dbContext.RawMonthlyActivityJsons
             .FirstOrDefaultAsync(
                 x => x.Symbol.Id == symbol.Id &&

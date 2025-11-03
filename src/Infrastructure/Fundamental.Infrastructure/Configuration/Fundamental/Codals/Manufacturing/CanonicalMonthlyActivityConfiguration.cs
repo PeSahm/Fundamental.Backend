@@ -21,8 +21,7 @@ public class CanonicalMonthlyActivityConfiguration : EntityTypeConfigurationBase
             .IsRequired();
 
         builder.Property(x => x.PublishDate)
-            .HasColumnName("publish_date")
-            .HasColumnType("timestamp without time zone");
+            .IsRequired();
 
         builder.ComplexProperty(
             x => x.FiscalYear,
