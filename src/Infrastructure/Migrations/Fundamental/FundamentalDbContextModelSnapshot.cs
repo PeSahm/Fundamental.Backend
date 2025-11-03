@@ -440,6 +440,10 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnName("Id")
                         .HasColumnOrder(1);
 
+                    b.Property<DateTime>("PublishDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("publish_date");
+
                     b.Property<decimal>("TraceNo")
                         .HasColumnType("numeric(20,0)")
                         .HasColumnName("trace_no");
