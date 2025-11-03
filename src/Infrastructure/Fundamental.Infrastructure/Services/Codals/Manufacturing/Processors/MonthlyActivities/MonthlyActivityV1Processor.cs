@@ -84,6 +84,7 @@ public class MonthlyActivityV1Processor(
 
         // Map to canonical entity
         CanonicalMonthlyActivity canonical = await mappingService.MapToCanonicalAsync(monthlyActivity, symbol, statement);
+        canonical.PublishDate = statement.PublishDateMiladi.ToUniversalTime();
 
         // Extract fiscal year and report month for existing record check
         int fiscalYear = MonthlyActivityMappingServiceV1.ExtractFiscalYear(monthlyActivity.FinancialYear);

@@ -16,8 +16,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fundamental.Migrations.Fundamental
 {
     [DbContext(typeof(FundamentalDbContext))]
-    [Migration("20251102214112_AddEnumForCodalRawEntity")]
-    partial class AddEnumForCodalRawEntity
+    [Migration("20251103095923_AddPublishDateToCanonicalMonthlyActivity")]
+    partial class AddPublishDateToCanonicalMonthlyActivity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -442,6 +442,10 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnType("uuid")
                         .HasColumnName("Id")
                         .HasColumnOrder(1);
+
+                    b.Property<DateTime>("PublishDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("publish_date");
 
                     b.Property<decimal>("TraceNo")
                         .HasColumnType("numeric(20,0)")
