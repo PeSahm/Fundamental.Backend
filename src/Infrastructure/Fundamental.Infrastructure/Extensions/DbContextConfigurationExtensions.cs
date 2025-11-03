@@ -24,7 +24,7 @@ public static class DbContextConfigurationExtensions
 
             if (domainEventsInterceptor is not null)
             {
-                options.AddInterceptors(sp.GetRequiredService<DomainEventsInterceptor>());
+               // options.AddInterceptors(sp.GetRequiredService<DomainEventsInterceptor>());
             }
 
             options.UseNpgsql(

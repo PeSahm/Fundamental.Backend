@@ -4,12 +4,17 @@ using Fundamental.Domain.Codals.Manufacturing.Entities;
 
 namespace Fundamental.Application.Codals.Manufacturing.Specifications;
 
-public sealed class MonthlyActivityResultItemSpec : Specification<CanonicalMonthlyActivity, GetMonthlyActivitiesResultItem>
+public sealed class MonthlyActivityResultItemSpec : Specification<CanonicalMonthlyActivity, GetMonthlyActivityDetailItem>
 {
     public MonthlyActivityResultItemSpec()
     {
         Query.AsNoTracking();
-        Query.Select(x => new GetMonthlyActivitiesResultItem
+        Query.Include(x => x.ProductionAndSalesItems);
+        Query.Include(x => x.BuyRawMaterialItems);
+        Query.Include(x => x.EnergyItems);
+        Query.Include(x => x.CurrencyExchangeItems);
+        Query.Include(x => x.Descriptions);
+        Query.Select(x => new GetMonthlyActivityDetailItem
         {
             Id = x.Id,
             Isin = x.Symbol.Isin,

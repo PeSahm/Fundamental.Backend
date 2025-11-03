@@ -25,7 +25,7 @@ public class MonthlyActivityController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<Response<Paginated<GetMonthlyActivitiesResultItem>>> GetMonthlyActivities(
+    public async Task<Response<Paginated<GetMonthlyActivitiesListItem>>> GetMonthlyActivities(
         [FromQuery] GetMonthlyActivitiesRequest request
     )
     {
@@ -34,7 +34,7 @@ public class MonthlyActivityController : ControllerBase
 
     [HttpGet("{id}")]
     [SwaggerRequestType(typeof(GetMonthlyActivityByIdRequest))]
-    public async Task<Response<GetMonthlyActivitiesResultItem>> GetMonthlyActivity(
+    public async Task<Response<GetMonthlyActivityDetailItem>> GetMonthlyActivity(
         [FromRoute] Guid id
     )
     {
