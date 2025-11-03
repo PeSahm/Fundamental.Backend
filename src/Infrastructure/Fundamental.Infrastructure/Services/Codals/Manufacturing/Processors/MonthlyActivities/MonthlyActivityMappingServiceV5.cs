@@ -3,6 +3,7 @@ using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
+using Fundamental.Domain.Codals.ValueObjects;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
 
@@ -42,18 +43,17 @@ public class MonthlyActivityMappingServiceV5 : ICanonicalMappingService<Canonica
         }
 
         // Create canonical entity
-        CanonicalMonthlyActivity canonical = new CanonicalMonthlyActivity
-        {
-            Symbol = symbol,
-            TraceNo = statement.TracingNo,
-            Uri = statement.HtmlUrl,
-            Version = dto.CodalVersion.ToString(),
-            FiscalYear = fiscalYear,
-            Currency = IsoCurrency.IRR,
-            YearEndMonth = 12,
-            ReportMonth = reportMonth,
-            HasSubCompanySale = false
-        };
+        CanonicalMonthlyActivity canonical = new CanonicalMonthlyActivity(
+            Guid.NewGuid(),
+            symbol,
+            statement.TracingNo,
+            statement.HtmlUrl,
+            new FiscalYear(fiscalYear),
+            new StatementMonth(12),
+            new StatementMonth(reportMonth),
+            statement.PublishDateMiladi,
+            dto.CodalVersion.ToString()
+        );
 
         // Map all sections
         canonical.BuyRawMaterialItems = MapBuyRawMaterial(dto.MonthlyActivity?.BuyRawMaterial);
