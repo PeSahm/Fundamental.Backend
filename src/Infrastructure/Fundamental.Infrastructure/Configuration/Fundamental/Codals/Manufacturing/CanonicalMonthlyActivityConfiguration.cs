@@ -20,6 +20,9 @@ public class CanonicalMonthlyActivityConfiguration : EntityTypeConfigurationBase
             .HasMaxLength(10)
             .IsRequired();
 
+        builder.Property(x => x.PublishDate)
+            .IsRequired();
+
         builder.ComplexProperty(
             x => x.FiscalYear,
             navigationBuilder =>
