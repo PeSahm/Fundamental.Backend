@@ -7,9 +7,9 @@ namespace Fundamental.Application.Codals.Manufacturing.Queries.GetMonthlyActivit
 
 public sealed class
     GetMonthlyActivitiesQueryHandler(IMonthlyActivityRepository monthlyActivityRepository)
-    : IRequestHandler<GetMonthlyActivitiesRequest, Response<Paginated<GetMonthlyActivitiesResultItem>>>
+    : IRequestHandler<GetMonthlyActivitiesRequest, Response<Paginated<GetMonthlyActivitiesListItem>>>
 {
-    public async Task<Response<Paginated<GetMonthlyActivitiesResultItem>>> Handle(
+    public async Task<Response<Paginated<GetMonthlyActivitiesListItem>>> Handle(
         GetMonthlyActivitiesRequest request,
         CancellationToken cancellationToken
     )
