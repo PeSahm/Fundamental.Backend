@@ -20,6 +20,10 @@ public class CanonicalMonthlyActivityConfiguration : EntityTypeConfigurationBase
             .HasMaxLength(10)
             .IsRequired();
 
+        builder.Property(x => x.PublishDate)
+            .HasColumnName("publish_date")
+            .HasColumnType("timestamp without time zone");
+
         builder.ComplexProperty(
             x => x.FiscalYear,
             navigationBuilder =>

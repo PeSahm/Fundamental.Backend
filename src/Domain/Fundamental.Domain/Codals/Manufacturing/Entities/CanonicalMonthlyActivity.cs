@@ -21,6 +21,12 @@ public class CanonicalMonthlyActivity : BaseEntity<Guid>
     public string Version { get; set; }
 
     /// <summary>
+    /// Publish date of the monthly activity report (Gregorian).
+    /// Sourced from CODAL statement's PublishDateMiladi.
+    /// </summary>
+    public DateTime? PublishDate { get; set; }
+
+    /// <summary>
     /// Navigation property to the associated symbol.
     /// The company/entity this monthly activity report belongs to.
     /// </summary>

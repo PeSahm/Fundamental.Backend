@@ -90,8 +90,9 @@ public class MonthlyActivityV3Processor(
 
         // Map to canonical entity
         CanonicalMonthlyActivity canonical = await mappingService.MapToCanonicalAsync(monthlyActivity, symbol, statement);
+    canonical.PublishDate = statement.PublishDateMiladi;
 
-        // Check for existing canonical record
+    // Check for existing canonical record
         CanonicalMonthlyActivity? existingCanonical = await dbContext.CanonicalMonthlyActivities
             .FirstOrDefaultAsync(
                 x => x.Symbol.Isin == statement.Isin &&
