@@ -22,7 +22,7 @@ public static class MappingServiceExtensions
     /// <returns>The service collection for chaining.</returns>
     public static IServiceCollection AddCanonicalMappingServiceFactory(this IServiceCollection services)
     {
-        return services.AddSingleton<ICanonicalMappingServiceFactory, CanonicalMappingServiceFactory>();
+        return services.AddScoped<ICanonicalMappingServiceFactory, CanonicalMappingServiceFactory>();
     }
 
     /// <summary>
