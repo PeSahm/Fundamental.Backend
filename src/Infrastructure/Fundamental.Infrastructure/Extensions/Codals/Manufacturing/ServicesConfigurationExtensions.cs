@@ -19,7 +19,6 @@ using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.Interp
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.InterpretativeReportSummaryPages5;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.MonthlyActivities;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.RegisterCapitalIncrease;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Fundamental.Infrastructure.Extensions.Codals.Manufacturing;
@@ -28,24 +27,13 @@ public static class ServicesConfigurationExtensions
 {
     public static void AddManufacturingCodalServices(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, MonthlyActivityDetector>();
-        serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, BalanceSheetDetector>();
-        serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, IncomeStatementDetector>();
-        serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, NonOperationIncomeAndExpensesDetector>();
-        serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, TheStatusOfViableCompaniesDetector>();
-        serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, CapitalIncreaseRegistrationNoticeDetector>();
+        AddCodalServiceDetectorServices(serviceCollection)
+            .AddCodalProcessorServices()
+            .AddCodalMonthlyActivityMappingServices();
+    }
 
-        serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, MonthlyActivityV1Processor>();
-        serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, MonthlyActivityV2Processor>();
-        serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, MonthlyActivityV3Processor>();
-        serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, MonthlyActivityV4Processor>();
-        serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, MonthlyActivityV5Processor>();
-        serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, BalanceSheetV5Processor>();
-        serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, IncomeStatementsV7Processor>();
-        serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, NonOperationIncomeAndExpensesV2Processor>();
-        serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, TheStatusOfViableCompaniesV2Processor>();
-        serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, CapitalIncreaseRegistrationNoticeV1Processor>();
-
+    public static IServiceCollection AddCodalMonthlyActivityMappingServices(this IServiceCollection serviceCollection)
+    {
         // Register canonical mapping services
         serviceCollection.AddCanonicalMappingServiceFactory();
         serviceCollection
@@ -63,21 +51,50 @@ public static class ServicesConfigurationExtensions
         serviceCollection
             .AddKeyedScopedCanonicalMappingService<ICanonicalMappingService<CanonicalMonthlyActivity, CodalMonthlyActivityV5>,
                 MonthlyActivityMappingServiceV5, CodalMonthlyActivityV5>();
+        return serviceCollection;
     }
 
-    public static void AddManufacturingReadRepositories(this WebApplicationBuilder builder)
+    public static IServiceCollection AddCodalProcessorServices(this IServiceCollection serviceCollection)
     {
-        builder.Services.AddScoped<IMonthlyActivityRepository, MonthlyActivityRepository>();
-        builder.Services.AddScoped<IBalanceSheetReadRepository, BalanceSheetReadRepository>();
-        builder.Services.AddScoped<IIncomeStatementsReadRepository, IncomeStatementReadRepository>();
-        builder.Services.AddScoped<INonOperationIncomesRepository, NonOperationIncomesRepository>();
-        builder.Services.AddScoped<IStatusOfViableCompaniesRepository, StatusOfViableCompaniesRepository>();
-        builder.Services.AddScoped<IIndicesRepository, IndicesRepository>();
-        builder.Services.AddScoped<IFinancialStatementReadRepository, FinancialStatementReadRepository>();
+        serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, MonthlyActivityV1Processor>();
+        serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, MonthlyActivityV2Processor>();
+        serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, MonthlyActivityV3Processor>();
+        serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, MonthlyActivityV4Processor>();
+        serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, MonthlyActivityV5Processor>();
+        serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, BalanceSheetV5Processor>();
+        serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, IncomeStatementsV7Processor>();
+        serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, NonOperationIncomeAndExpensesV2Processor>();
+        serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, TheStatusOfViableCompaniesV2Processor>();
+        serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, CapitalIncreaseRegistrationNoticeV1Processor>();
+        return serviceCollection;
     }
 
-    public static void AddManufacturingEventDispatcher(this IServiceCollection builder)
+    public static IServiceCollection AddCodalServiceDetectorServices(IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, MonthlyActivityDetector>();
+        serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, BalanceSheetDetector>();
+        serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, IncomeStatementDetector>();
+        serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, NonOperationIncomeAndExpensesDetector>();
+        serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, TheStatusOfViableCompaniesDetector>();
+        serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, CapitalIncreaseRegistrationNoticeDetector>();
+        return serviceCollection;
+    }
+
+    public static IServiceCollection AddManufacturingReadRepositories(this IServiceCollection builder)
+    {
+        builder.AddScoped<IMonthlyActivityRepository, MonthlyActivityRepository>();
+        builder.AddScoped<IBalanceSheetReadRepository, BalanceSheetReadRepository>();
+        builder.AddScoped<IIncomeStatementsReadRepository, IncomeStatementReadRepository>();
+        builder.AddScoped<INonOperationIncomesRepository, NonOperationIncomesRepository>();
+        builder.AddScoped<IStatusOfViableCompaniesRepository, StatusOfViableCompaniesRepository>();
+        builder.AddScoped<IIndicesRepository, IndicesRepository>();
+        builder.AddScoped<IFinancialStatementReadRepository, FinancialStatementReadRepository>();
+        return builder;
+    }
+
+    public static IServiceCollection AddManufacturingEventDispatcher(this IServiceCollection builder)
     {
         builder.AddScoped<EventDataDispatcher>();
+        return builder;
     }
 }

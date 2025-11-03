@@ -39,10 +39,10 @@ builder.Services.Configure<ApiBehaviorOptions>(options
 builder.Services.AddRedis(builder.Configuration).AddCustomHybridCache(builder.Configuration);
 builder.Services.AddDbContexts(builder.Configuration)
     .AddInterceptors();
-builder.AddServices();
+builder.Services.AddServices();
 builder.AddOptions();
 builder.Services.AddCustomHttpClient(builder.Configuration);
-builder.AddReadRepositories();
+builder.Services.AddReadRepositories();
 builder.Services.AddHostedServices();
 builder.Services.AddCodalServices();
 builder.Services.AddEventDispatcher();

@@ -29,11 +29,12 @@ namespace Fundamental.Infrastructure.Extensions;
 
 public static class ServicesConfigurationExtensions
 {
-    public static void AddCodalServices(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddCodalServices(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddScoped<ICodalVersionDetectorFactory, CodalVersionDetectorFactory>();
         serviceCollection.AddScoped<ICodalProcessorFactory, CodalProcessorFactory>();
         serviceCollection.AddManufacturingCodalServices();
+        return serviceCollection;
     }
 
     public static IServiceCollection AddEventDispatcher(this IServiceCollection serviceCollection)
@@ -42,22 +43,23 @@ public static class ServicesConfigurationExtensions
         return serviceCollection;
     }
 
-    public static void AddServices(this WebApplicationBuilder builder)
+    public static IServiceCollection AddServices(this IServiceCollection builder)
     {
-        builder.Services.AddScoped<IUnitOfWork>(provider => provider.GetService<FundamentalDbContext>()!);
-        builder.Services.AddScoped(typeof(IRequestValidator<>), typeof(RequestValidator<>));
-        builder.Services.AddScoped<ICustomerErrorMessagesService, CustomerErrorMessagesService>();
-        builder.Services.AddScoped<ICodalService, CodalService>();
-        builder.Services.AddScoped<IMarketDataService, MarketDataService>();
-        builder.Services.AddScoped<IShareHoldersService, ShareHoldersService>();
+        builder.AddScoped<IUnitOfWork>(provider => provider.GetRequiredService<FundamentalDbContext>());
+        builder.AddScoped(typeof(IRequestValidator<>), typeof(RequestValidator<>));
+        builder.AddScoped<ICustomerErrorMessagesService, CustomerErrorMessagesService>();
+        builder.AddScoped<ICodalService, CodalService>();
+        builder.AddScoped<IMarketDataService, MarketDataService>();
+        builder.AddScoped<IShareHoldersService, ShareHoldersService>();
 
-        builder.Services.AddSingleton<IIpService, IpService>();
+        builder.AddSingleton<IIpService, IpService>();
 
-        builder.Services.AddMediatR(cfg =>
+        builder.AddMediatR(cfg =>
         {
             cfg.AddOpenBehavior(typeof(CommonErrorsPipelineBehavior<,>));
             cfg.RegisterServicesFromAssemblies(typeof(GetSymbolsQueryHandler).Assembly);
         });
+        return builder;
     }
 
     public static void AddOptions(this WebApplicationBuilder builder)
@@ -66,12 +68,13 @@ public static class ServicesConfigurationExtensions
         builder.Services.AddPartialOptions<TseTmcOption>("TseTmc", builder.Configuration);
     }
 
-    public static void AddReadRepositories(this WebApplicationBuilder builder)
+    public static IServiceCollection AddReadRepositories(this IServiceCollection builder)
     {
-        builder.Services.AddScoped<IRepository, FundamentalRepository>();
-        builder.Services.AddScoped<ISymbolRelationRepository, SymbolRelationRepository>();
-        builder.Services.AddScoped<ISymbolShareHoldersReadRepository, SymbolShareHoldersReadRepository>();
+        builder.AddScoped<IRepository, FundamentalRepository>();
+        builder.AddScoped<ISymbolRelationRepository, SymbolRelationRepository>();
+        builder.AddScoped<ISymbolShareHoldersReadRepository, SymbolShareHoldersReadRepository>();
         builder.AddManufacturingReadRepositories();
+        return builder;
     }
 
     public static IServiceCollection AddPartialOptions<TOptions>(
@@ -85,9 +88,10 @@ public static class ServicesConfigurationExtensions
         return services;
     }
 
-    public static void AddHostedServices(this IServiceCollection builder)
+    public static IServiceCollection AddHostedServices(this IServiceCollection builder)
     {
         builder.AddHostedService<CommonCodalDataHostedService>();
+        return builder;
     }
 
     public static IServiceCollection AddBuilders(this IServiceCollection builder)
