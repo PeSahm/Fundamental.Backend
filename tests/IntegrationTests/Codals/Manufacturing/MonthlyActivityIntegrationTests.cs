@@ -1088,7 +1088,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
             PageSize = 20,
             PageNumber = 1
         };
-        Response<Paginated<GetMonthlyActivitiesResultItem>> response =
+        Response<Paginated<GetMonthlyActivitiesListItem>> response =
             await mediator.Send(request, CancellationToken.None);
 
         // Assert
@@ -1096,12 +1096,8 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
         response.Data.Should().NotBeNull();
         response.Data!.Items.Should().NotBeEmpty();
 
-        GetMonthlyActivitiesResultItem item = response.Data.Items.First();
+        GetMonthlyActivitiesListItem item = response.Data.Items.First();
         item.Isin.Should().Be("IRO1SROD0001");
-        item.ProductionAndSalesItems.Should().NotBeEmpty();
-        item.BuyRawMaterialItems.Should().NotBeEmpty();
-        item.EnergyItems.Should().NotBeEmpty();
-        item.CurrencyExchangeItems.Should().NotBeEmpty();
     }
 
     [Fact]
@@ -1134,7 +1130,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
             PageSize = 20,
             PageNumber = 1
         };
-        Response<Paginated<GetMonthlyActivitiesResultItem>> response =
+        Response<Paginated<GetMonthlyActivitiesListItem>> response =
             await mediator.Send(request, CancellationToken.None);
 
         // Assert
@@ -1172,7 +1168,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
 
         // Act
         GetMonthlyActivityByIdRequest request = new(entity!.Id);
-        Response<GetMonthlyActivitiesResultItem> response =
+        Response<GetMonthlyActivityDetailItem> response =
             await mediator.Send(request, CancellationToken.None);
 
         // Assert
@@ -1196,7 +1192,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
 
         // Act
         GetMonthlyActivityByIdRequest request = new(nonExistentId);
-        Response<GetMonthlyActivitiesResultItem> response =
+        Response<GetMonthlyActivityDetailItem> response =
             await mediator.Send(request, CancellationToken.None);
 
         // Assert
@@ -1205,7 +1201,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
     }
 
     [Fact]
-    public async Task GetMonthlyActivities_ShouldIncludeAllCollections()
+    public async Task GetMonthlyActivityById_ShouldIncludeAllCollections()
     {
         // Arrange
         await CleanMonthlyActivityData();
@@ -1224,20 +1220,21 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
         GetStatementJsonResponse jsonResponse = CreateJsonResponse(testJson);
         await processor.Process(statement, jsonResponse, CancellationToken.None);
 
+        // Get the entity ID
+        CanonicalMonthlyActivity? entity = await _fixture.DbContext.CanonicalMonthlyActivities
+            .FirstOrDefaultAsync();
+        entity.Should().NotBeNull();
+
         IMediator mediator = _fixture.Services.GetRequiredService<IMediator>();
 
         // Act
-        GetMonthlyActivitiesRequest request = new(Array.Empty<string>(), null, null)
-        {
-            PageSize = 20,
-            PageNumber = 1
-        };
-        Response<Paginated<GetMonthlyActivitiesResultItem>> response =
+        GetMonthlyActivityByIdRequest request = new(entity!.Id);
+        Response<GetMonthlyActivityDetailItem> response =
             await mediator.Send(request, CancellationToken.None);
 
         // Assert
         response.Success.Should().BeTrue();
-        GetMonthlyActivitiesResultItem item = response.Data!.Items.First();
+        GetMonthlyActivityDetailItem item = response.Data!;
 
         // Verify all collections are loaded and not empty
         item.ProductionAndSalesItems.Should().NotBeEmpty("ProductionAndSalesItems collection should be loaded");
