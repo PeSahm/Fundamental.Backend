@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Codals.Manufacturing.Queries.GetMonthlyActivities;
+using Fundamental.Application.Codals.Manufacturing.Queries.GetMonthlyActivities;
 using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Codals.ValueObjects;
@@ -11,6 +11,12 @@ namespace Fundamental.Infrastructure.Repositories.Codals.Manufacturing;
 
 public class MonthlyActivityRepository(FundamentalDbContext dbContext) : IMonthlyActivityRepository
 {
+    /// <summary>
+    /// Retrieves a paginated list of monthly activity items filtered and projected according to the request.
+    /// </summary>
+    /// <param name="request">Filter and paging options. Supported filters: IsinList (matches Symbol.Isin), Year (FiscalYear.Year), ReportMonth (ReportMonth.Month); paging/sorting are applied from the request.</param>
+    /// <param name="cancellationToken">Cancellation token to cancel the query.</param>
+    /// <returns>A paginated list of <see cref="GetMonthlyActivitiesListItem"/> containing the projected fields for matching canonical monthly activities.</returns>
     public async Task<Paginated<GetMonthlyActivitiesListItem>> GetMonthlyActivitiesAsync(
         GetMonthlyActivitiesRequest request,
         CancellationToken cancellationToken
@@ -71,6 +77,14 @@ public class MonthlyActivityRepository(FundamentalDbContext dbContext) : IMonthl
             .FirstOrDefaultAsync(cancellationToken);
     }
 
+    /// <summary>
+    /// Retrieve a canonical monthly activity matching the specified ISIN, fiscal year, and report month.
+    /// </summary>
+    /// <param name="isin">ISIN of the security to match.</param>
+    /// <param name="fiscalYear">Fiscal year to match (compares FiscalYear.Year).</param>
+    /// <param name="month">Report month to match (compares ReportMonth.Month).</param>
+    /// <param name="cancellationToken">Token to cancel the database query.</param>
+    /// <returns>The matching <see cref="CanonicalMonthlyActivity"/>, or <c>null</c> if none is found.</returns>
     public Task<CanonicalMonthlyActivity?> GetMonthlyActivity(
         string isin,
         FiscalYear fiscalYear,

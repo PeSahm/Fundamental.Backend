@@ -1,4 +1,4 @@
-﻿using Ardalis.Specification;
+using Ardalis.Specification;
 using Fundamental.Application.Codals.Manufacturing.Queries.GetMonthlyActivities;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 
@@ -6,6 +6,12 @@ namespace Fundamental.Application.Codals.Manufacturing.Specifications;
 
 public sealed class MonthlyActivityResultItemSpec : Specification<CanonicalMonthlyActivity, GetMonthlyActivityDetailItem>
 {
+    /// <summary>
+    /// Configures the specification to query MonthlyActivity entities without tracking, include related item collections, and project each entity into a GetMonthlyActivityDetailItem.
+    /// </summary>
+    /// <remarks>
+    /// The projection maps Id, ISIN, Symbol, Title, Uri, Version, FiscalYear, YearEndMonth, ReportMonth, HasSubCompanySale, TraceNo, CreatedAt, UpdatedAt and the included collections: ProductionAndSalesItems, BuyRawMaterialItems, EnergyItems, CurrencyExchangeItems, and Descriptions.
+    /// </remarks>
     public MonthlyActivityResultItemSpec()
     {
         Query.AsNoTracking();

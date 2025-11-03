@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Common.Extensions;
+using Fundamental.Application.Common.Extensions;
 using Fundamental.Domain.Symbols.Entities;
 using Fundamental.Infrastructure.HostedServices.Codals.CommonJobs;
 using Fundamental.Infrastructure.HostedServices.Codals.Manufacturing;
@@ -11,6 +11,10 @@ namespace Fundamental.Infrastructure.HostedServices.Codals;
 
 public class CommonCodalDataHostedService(IServiceScopeFactory factory) : BackgroundService
 {
+    /// <summary>
+    /// Executes configured data update jobs inside a dependency-injection scope.
+    /// </summary>
+    /// <returns>A task that completes after all selected update jobs have been invoked.</returns>
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         await Task.CompletedTask;

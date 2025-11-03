@@ -1,4 +1,4 @@
-﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
+using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Enums;
 using Fundamental.Infrastructure.Persistence;
@@ -14,6 +14,10 @@ public static class DbContextConfigurationExtensions
 {
     private const string MIGRATIONS_ASSEMBLY = "Migrations";
 
+    /// <summary>
+    /// Registers FundamentalDbContext in the dependency injection container and configures its PostgreSQL provider and EF Core behavior.
+    /// </summary>
+    /// <returns>The same <see cref="IServiceCollection"/> instance to allow fluent chaining.</returns>
     public static IServiceCollection AddDbContexts(this IServiceCollection services, IConfiguration configuration)
     {
         GridifyGlobalConfiguration.EnableEntityFrameworkCompatibilityLayer();
