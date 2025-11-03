@@ -11,4 +11,4 @@ public record GetMonthlyActivitiesRequest(
     string[] IsinList,
     ushort? Year,
     ushort? ReportMonth
-) : PagingRequest, IRequest<Response<Paginated<GetMonthlyActivitiesResultItem>>>;
+) : PagingRequest, IRequest<Response<Paginated<GetMonthlyActivitiesListItem>>>;
