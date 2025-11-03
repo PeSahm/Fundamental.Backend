@@ -11,7 +11,7 @@ namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.Mo
 /// <summary>
 /// Mapping service for Monthly Activity V5 data.
 /// </summary>
-public class MonthlyActivityMappingServiceV5 : IMonthlyActivityMappingService
+public class MonthlyActivityMappingServiceV5 : ICanonicalMappingService<CanonicalMonthlyActivity, CodalMonthlyActivityV5>
 {
     /// <summary>
     /// Maps a V5 Monthly Activity DTO to a canonical entity.
