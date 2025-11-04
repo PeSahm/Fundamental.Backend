@@ -22,21 +22,17 @@ public class MonthlyActivityDetector : ICodalVersionDetector
                 return CodalVersion.V5;
             }
 
-            // V4: has monthlyActivity with productionAndSales and productMonthlyActivityDesc1
-            // but no buyRawMaterial/energy sections
+            // V4: has monthlyActivity with productionAndSales, energy, and productMonthlyActivityDesc1
+            // V4 is distinguished from V3 by having an energy section
             if (jObject["monthlyActivity"]?["productionAndSales"] != null &&
+                jObject["monthlyActivity"]?["energy"] != null &&
                 jObject["monthlyActivity"]?["productMonthlyActivityDesc1"] != null)
             {
-                // Check if it's V4 by looking for specific V4 structure
-                JToken? productionAndSales = jObject["monthlyActivity"]?["productionAndSales"];
-
-                if (productionAndSales?["yearData"] != null)
-                {
-                    return CodalVersion.V4;
-                }
+                return CodalVersion.V4;
             }
 
             // V3: has monthlyActivity with productionAndSales and productMonthlyActivityDesc1
+            // but no energy section (which distinguishes it from V4)
             if (jObject["monthlyActivity"]?["productionAndSales"] != null &&
                 jObject["monthlyActivity"]?["productMonthlyActivityDesc1"] != null)
             {
