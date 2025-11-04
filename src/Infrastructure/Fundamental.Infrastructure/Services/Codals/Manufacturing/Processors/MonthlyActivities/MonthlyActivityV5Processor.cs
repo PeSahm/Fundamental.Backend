@@ -84,23 +84,25 @@ public class MonthlyActivityV5Processor(
 
         if (existingRawJson == null)
         {
-            RawMonthlyActivityJson rawJson = new()
-            {
-                TraceNo = (long)statement.TracingNo,
-                Symbol = symbol,
-                PublishDate = statement.PublishDateMiladi,
-                Version = CodalVersion.V5,
-                RawJson = model.Json
-            };
+            RawMonthlyActivityJson rawJson = new(
+                id: Guid.NewGuid(),
+                traceNo: (long)statement.TracingNo,
+                symbol: symbol,
+                publishDate: statement.PublishDateMiladi,
+                version: CodalVersion.V5,
+                rawJson: model.Json,
+                createdAt: DateTime.UtcNow);
             dbContext.Add(rawJson);
         }
         else
         {
             if (existingRawJson.TraceNo <= (long)statement.TracingNo)
             {
-                existingRawJson.TraceNo = (long)statement.TracingNo;
-                existingRawJson.PublishDate = statement.PublishDateMiladi;
-                existingRawJson.RawJson = JsonConvert.SerializeObject(monthlyActivity.MonthlyActivity, setting);
+                existingRawJson.Update(
+                    traceNo: (long)statement.TracingNo,
+                    publishDate: statement.PublishDateMiladi,
+                    rawJson: JsonConvert.SerializeObject(monthlyActivity.MonthlyActivity, setting),
+                    updatedAt: DateTime.UtcNow);
             }
         }
 
