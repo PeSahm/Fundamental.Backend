@@ -38,6 +38,9 @@ public class MonthlyActivityDto
     [JsonProperty("buyRawMaterial")]
     public BuyRawMaterial? BuyRawMaterial { get; set; }
 
+    [JsonProperty("energy")]
+    public Energy? Energy { get; set; }
+
     [JsonProperty("productMonthlyActivityDesc1")]
     public ProductMonthlyActivityDesc1 ProductMonthlyActivityDesc1 { get; set; }
 }
@@ -64,6 +67,96 @@ public class BuyRawMaterial
 
     [JsonProperty("rowItems")]
     public List<RowItem> RowItems { get; set; } = new();
+}
+
+public class Energy
+{
+    [JsonProperty("yearData")]
+    public List<YearDatum> YearData { get; set; } = new();
+
+    [JsonProperty("rowItems")]
+    public List<EnergyRowItem> RowItems { get; set; } = new();
+}
+
+public class EnergyRowItem
+{
+    [JsonProperty("rowCode")]
+    public int? RowCode { get; set; }
+
+    [JsonProperty("oldFieldName")]
+    public string OldFieldName { get; set; }
+
+    [JsonProperty("category")]
+    public int? Category { get; set; }
+
+    [JsonProperty("rowType")]
+    public string RowType { get; set; }
+
+    [JsonProperty("id")]
+    public string Id { get; set; }
+
+    [JsonProperty("value_31951")]
+    public string Value31951 { get; set; }
+
+    [JsonProperty("value_31952")]
+    public string Value31952 { get; set; }
+
+    [JsonProperty("value_31953")]
+    public string Value31953 { get; set; }
+
+    [JsonProperty("value_31954")]
+    public string Value31954 { get; set; }
+
+    [JsonProperty("value_31955")]
+    public decimal Value31955 { get; set; }
+
+    [JsonProperty("value_31956")]
+    public decimal Value31956 { get; set; }
+
+    [JsonProperty("value_31957")]
+    public decimal Value31957 { get; set; }
+
+    [JsonProperty("value_319511")]
+    public decimal Value319511 { get; set; }
+
+    [JsonProperty("value_319512")]
+    public decimal Value319512 { get; set; }
+
+    [JsonProperty("value_319513")]
+    public decimal Value319513 { get; set; }
+
+    [JsonProperty("value_319514")]
+    public decimal Value319514 { get; set; }
+
+    [JsonProperty("value_319515")]
+    public decimal Value319515 { get; set; }
+
+    [JsonProperty("value_319516")]
+    public decimal Value319516 { get; set; }
+
+    [JsonProperty("value_319517")]
+    public decimal Value319517 { get; set; }
+
+    [JsonProperty("value_319518")]
+    public decimal Value319518 { get; set; }
+
+    [JsonProperty("value_319519")]
+    public decimal Value319519 { get; set; }
+
+    [JsonProperty("value_319520")]
+    public decimal Value319520 { get; set; }
+
+    [JsonProperty("value_319521")]
+    public decimal Value319521 { get; set; }
+
+    [JsonProperty("value_319522")]
+    public decimal Value319522 { get; set; }
+
+    [JsonProperty("value_319523")]
+    public decimal Value319523 { get; set; }
+
+    [JsonProperty("value_319524")]
+    public string Value319524 { get; set; }
 }
 
 public class RowItem

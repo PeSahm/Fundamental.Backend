@@ -70,10 +70,10 @@ public class MonthlyActivityMappingServiceV4 : ICanonicalMappingService<Canonica
             canonical.ProductionAndSalesItems = MapProductionAndSalesV4(dto.MonthlyActivity.ProductionAndSales.RowItems);
         }
 
-        // Map BuyRawMaterial (V4 has this section)
-        if (dto.MonthlyActivity.BuyRawMaterial?.RowItems != null)
+        // Map Energy (V4 has this section)
+        if (dto.MonthlyActivity.Energy?.RowItems != null)
         {
-            canonical.BuyRawMaterialItems = MapBuyRawMaterialV4(dto.MonthlyActivity.BuyRawMaterial.RowItems);
+            canonical.EnergyItems = MapEnergyV4(dto.MonthlyActivity.Energy.RowItems);
         }
 
         // Map descriptions
@@ -146,37 +146,52 @@ public class MonthlyActivityMappingServiceV4 : ICanonicalMappingService<Canonica
             .ToList();
     }
 
-    private static List<BuyRawMaterialItem> MapBuyRawMaterialV4(List<RowItem> rowItems)
+    private static List<EnergyItem> MapEnergyV4(List<EnergyRowItem> rowItems)
     {
         return rowItems
-            .Where(x => !string.IsNullOrEmpty(x.Value34641)) // Has material name
-            .Select(x => new BuyRawMaterialItem
+            .Where(x => !string.IsNullOrEmpty(x.Value31951))
+            .Select(x => new EnergyItem
             {
-                MaterialName = x.Value34641 ?? string.Empty,
-                Unit = x.Value34642 ?? string.Empty,
-                YearToDateQuantity = x.Value34643,
-                YearToDateRate = x.Value34644,
-                YearToDateAmount = x.Value34645,
-                CorrectedYearToDateQuantity = x.Value34649,
-                CorrectedYearToDateRate = x.Value346410,
-                CorrectedYearToDateAmount = x.Value346411,
-                MonthlyPurchaseQuantity = x.Value346412,
-                MonthlyPurchaseRate = x.Value346413,
-                MonthlyPurchaseAmount = x.Value346414,
-                CumulativeToPeriodQuantity = x.Value346415,
-                CumulativeToPeriodRate = x.Value346416,
-                CumulativeToPeriodAmount = x.Value346417,
-                PreviousYearQuantity = x.Value346418,
-                PreviousYearRate = x.Value346419,
-                PreviousYearAmount = x.Value346420,
+                // Descriptive fields: value_31951-31954
+                Industry = x.Value31951,
+                Classification = x.Value31952,
+                EnergyType = x.Value31953,
+                Unit = x.Value31954,
 
-                // Row classification metadata
+                // Year-to-date values (consumption/rate/cost): value_31955-31957
+                YearToDateConsumption = x.Value31955,
+                YearToDateRate = x.Value31956,
+                YearToDateCost = x.Value31957,
+
+                // Corrected year-to-date values (consumption/rate/cost): value_319511-319513
+                CorrectedYearToDateConsumption = x.Value319511,
+                CorrectedYearToDateRate = x.Value319512,
+                CorrectedYearToDateCost = x.Value319513,
+
+                // Monthly values (consumption/rate/cost): value_319514-319516
+                MonthlyConsumption = x.Value319514,
+                MonthlyRate = x.Value319515,
+                MonthlyCost = x.Value319516,
+
+                // Cumulative to period values (consumption/rate/cost): value_319517-319519
+                CumulativeToPeriodConsumption = x.Value319517,
+                CumulativeToPeriodRate = x.Value319518,
+                CumulativeToPeriodCost = x.Value319519,
+
+                // Previous year values (consumption/rate/cost): value_319520-319522
+                PreviousYearConsumption = x.Value319520,
+                PreviousYearRate = x.Value319521,
+                PreviousYearCost = x.Value319522,
+
+                // Forecast and explanation: value_319523-319524
+                ForecastYearConsumption = x.Value319523,
+                ConsumptionChangeExplanation = x.Value319524,
+
+                // Classification metadata
                 RowCode = x.RowCode.HasValue
-                    ? (BuyRawMaterialRowCode)x.RowCode.Value
-                    : BuyRawMaterialRowCode.Data,
-                Category = x.Category.HasValue
-                    ? (BuyRawMaterialCategory)x.Category.Value
-                    : BuyRawMaterialCategory.Domestic
+                    ? (EnergyRowCode)x.RowCode.Value
+                    : EnergyRowCode.Data,
+                Category = x.Category ?? 0
             })
             .ToList();
     }

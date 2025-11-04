@@ -10,6 +10,7 @@ using Fundamental.Domain.Common.Dto;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
 using Fundamental.ErrorHandling;
+using Fundamental.Infrastructure.Services.Codals.Manufacturing.Detectors;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.MonthlyActivities;
 using Fundamental.IntegrationTests.TestData;
 using IntegrationTests.Shared;
@@ -257,12 +258,15 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
         storedEntity.FiscalYear.Year.Should().Be(1402);
         storedEntity.ReportMonth.Month.Should().Be(1);
 
-        // V4 should have production and sales, but not energy or currency exchange
+        // V4 should have production and sales, energy, and descriptions
+        // V4 does NOT have buyRawMaterial or sourceUsesCurrency (those are V5-only)
         storedEntity.ProductionAndSalesItems.Should().NotBeEmpty();
-        storedEntity.BuyRawMaterialItems.Should().BeEmpty();
-        storedEntity.EnergyItems.Should().BeEmpty();
-        storedEntity.CurrencyExchangeItems.Should().BeEmpty();
+        storedEntity.EnergyItems.Should().NotBeEmpty();
         storedEntity.Descriptions.Should().NotBeEmpty();
+        
+        // V5-only sections
+        storedEntity.BuyRawMaterialItems.Should().BeEmpty();
+        storedEntity.CurrencyExchangeItems.Should().BeEmpty();
     }
 
     [Fact]
@@ -1251,6 +1255,51 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
             x.RowCode != default);
         item.CurrencyExchangeItems.First().Should().Match<CurrencyExchangeItem>(x =>
             x.RowCode != default && x.Category != default);
+    }
+
+    [Fact]
+    public async Task MonthlyActivityDetector_ShouldCorrectlyDetectV4()
+    {
+        // Arrange
+        string v4Json = MonthlyActivityTestData.GetV4TestData();
+        MonthlyActivityDetector detector = new MonthlyActivityDetector();
+
+        // Act
+        CodalVersion detectedVersion = detector.DetectVersion(v4Json);
+
+        // Assert
+        detectedVersion.Should().Be(CodalVersion.V4,
+            "V4 JSON (with energy section but no buyRawMaterial/sourceUsesCurrency) should be detected as V4, not V5");
+    }
+
+    [Fact]
+    public async Task MonthlyActivityDetector_ShouldCorrectlyDetectV5()
+    {
+        // Arrange
+        string v5Json = MonthlyActivityTestData.GetV5TestData();
+        MonthlyActivityDetector detector = new MonthlyActivityDetector();
+
+        // Act
+        CodalVersion detectedVersion = detector.DetectVersion(v5Json);
+
+        // Assert
+        detectedVersion.Should().Be(CodalVersion.V5,
+            "V5 JSON (with buyRawMaterial AND energy AND sourceUsesCurrency) should be detected as V5");
+    }
+
+    [Fact]
+    public async Task MonthlyActivityDetector_ShouldCorrectlyDetectV3()
+    {
+        // Arrange
+        string v3Json = MonthlyActivityTestData.GetV3TestData();
+        MonthlyActivityDetector detector = new MonthlyActivityDetector();
+
+        // Act
+        CodalVersion detectedVersion = detector.DetectVersion(v3Json);
+
+        // Assert
+        detectedVersion.Should().Be(CodalVersion.V3,
+            "V3 JSON (with productionAndSales but no energy/buyRawMaterial/sourceUsesCurrency) should be detected as V3");
     }
 
     /// <summary>
