@@ -1,7 +1,6 @@
 ﻿using ErrorHandling.AspNetCore;
 using Fundamental.Application.Codals.Manufacturing.Queries.GetMonthlyActivities;
 using Fundamental.Application.Codals.Manufacturing.Queries.GetMonthlyActivityById;
-using Fundamental.Application.Common.Extensions;
 using Fundamental.Domain.Common.Dto;
 using Fundamental.ErrorHandling;
 using Fundamental.Web.Common.Swagger;
