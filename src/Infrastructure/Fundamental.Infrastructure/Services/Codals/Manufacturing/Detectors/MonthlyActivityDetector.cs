@@ -14,9 +14,9 @@ public class MonthlyActivityDetector : ICodalVersionDetector
         {
             JObject jObject = JObject.Parse(json);
 
-            // V5: has buyRawMaterial, energy, sourceUsesCurrency sections
-            if (jObject["monthlyActivity"]?["buyRawMaterial"] != null ||
-                jObject["monthlyActivity"]?["energy"] != null ||
+            // V5: has buyRawMaterial, energy, AND sourceUsesCurrency sections (all three required)
+            if (jObject["monthlyActivity"]?["buyRawMaterial"] != null &&
+                jObject["monthlyActivity"]?["energy"] != null &&
                 jObject["monthlyActivity"]?["sourceUsesCurrency"] != null)
             {
                 return CodalVersion.V5;
