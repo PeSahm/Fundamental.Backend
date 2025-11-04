@@ -64,23 +64,25 @@ public class MonthlyActivityV3Processor(
         // Store raw JSON
         if (existingRawJson == null)
         {
-            RawMonthlyActivityJson rawJson = new()
-            {
-                TraceNo = (long)statement.TracingNo,
-                Symbol = symbol,
-                PublishDate = statement.PublishDateMiladi,
-                Version = CodalVersion.V3,
-                RawJson = model.Json
-            };
+            RawMonthlyActivityJson rawJson = new(
+                id: Guid.NewGuid(),
+                traceNo: (long)statement.TracingNo,
+                symbol: symbol,
+                publishDate: statement.PublishDateMiladi,
+                version: CodalVersion.V3,
+                rawJson: model.Json,
+                createdAt: DateTime.UtcNow);
             dbContext.Add(rawJson);
         }
         else
         {
             if (existingRawJson.TraceNo <= (long)statement.TracingNo)
             {
-                existingRawJson.TraceNo = (long)statement.TracingNo;
-                existingRawJson.PublishDate = statement.PublishDateMiladi;
-                existingRawJson.RawJson = model.Json;
+                existingRawJson.Update(
+                    traceNo: (long)statement.TracingNo,
+                    publishDate: statement.PublishDateMiladi,
+                    rawJson: model.Json,
+                    updatedAt: DateTime.UtcNow);
             }
         }
 
