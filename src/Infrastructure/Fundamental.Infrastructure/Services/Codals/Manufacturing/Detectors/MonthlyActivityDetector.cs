@@ -14,7 +14,23 @@ public class MonthlyActivityDetector : ICodalVersionDetector
         {
             JObject jObject = JObject.Parse(json);
 
-            // V5: has buyRawMaterial, energy, AND sourceUsesCurrency sections (all three required)
+            // V1: has productAndSales as array at root level AND has description with periodEndToDateDescription
+            // This is the oldest format and should be checked first
+            if (jObject["productAndSales"]?.Type == JTokenType.Array &&
+                jObject["description"]?["periodEndToDateDescription"] != null)
+            {
+                return CodalVersion.V1;
+            }
+
+            // V2: has productAndSales (object, not array) with fieldsItems at root level
+            // Distinguished from V1 by having fieldsItems
+            if (jObject["productAndSales"]?.Type == JTokenType.Object &&
+                jObject["productAndSales"]?["fieldsItems"] != null)
+            {
+                return CodalVersion.V2;
+            }
+
+            // V5: has monthlyActivity with buyRawMaterial, energy, AND sourceUsesCurrency (all three required)
             if (jObject["monthlyActivity"]?["buyRawMaterial"] != null &&
                 jObject["monthlyActivity"]?["energy"] != null &&
                 jObject["monthlyActivity"]?["sourceUsesCurrency"] != null)
@@ -37,18 +53,6 @@ public class MonthlyActivityDetector : ICodalVersionDetector
                 jObject["monthlyActivity"]?["productMonthlyActivityDesc1"] != null)
             {
                 return CodalVersion.V3;
-            }
-
-            // V2: has productAndSales with fieldsItems
-            if (jObject["productAndSales"]?["fieldsItems"] != null)
-            {
-                return CodalVersion.V2;
-            }
-
-            // V1: has productAndSales as array
-            if (jObject["productAndSales"] is JArray)
-            {
-                return CodalVersion.V1;
             }
 
             // Default to V4 for backward compatibility
