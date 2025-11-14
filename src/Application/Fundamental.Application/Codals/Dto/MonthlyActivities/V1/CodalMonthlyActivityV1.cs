@@ -18,10 +18,10 @@ public class CodalMonthlyActivityV1 : ICodalMappingServiceMetadata
     public FinancialYearV1Dto? FinancialYear { get; set; }
 
     [JsonPropertyName("listedCapital")]
-    public string ListedCapital { get; set; }
+    public string? ListedCapital { get; set; }
 
     [JsonPropertyName("unauthorizedCapital")]
-    public string UnauthorizedCapital { get; set; }
+    public string? UnauthorizedCapital { get; set; }
 
     public ReportingType ReportingType => ReportingType.Production;
     public LetterType LetterType => LetterType.MonthlyActivity;
