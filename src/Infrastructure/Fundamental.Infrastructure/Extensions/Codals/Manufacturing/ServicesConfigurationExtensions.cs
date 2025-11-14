@@ -27,7 +27,7 @@ public static class ServicesConfigurationExtensions
 {
     public static void AddManufacturingCodalServices(this IServiceCollection serviceCollection)
     {
-        AddCodalServiceDetectorServices(serviceCollection)
+        serviceCollection.AddCodalServiceDetectorServices()
             .AddCodalProcessorServices()
             .AddCodalMonthlyActivityMappingServices();
     }
@@ -69,15 +69,15 @@ public static class ServicesConfigurationExtensions
         return serviceCollection;
     }
 
-    public static IServiceCollection AddCodalServiceDetectorServices(IServiceCollection serviceCollection)
+    public static IServiceCollection AddCodalServiceDetectorServices(this IServiceCollection services)
     {
-        serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, MonthlyActivityDetector>();
-        serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, BalanceSheetDetector>();
-        serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, IncomeStatementDetector>();
-        serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, NonOperationIncomeAndExpensesDetector>();
-        serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, TheStatusOfViableCompaniesDetector>();
-        serviceCollection.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, CapitalIncreaseRegistrationNoticeDetector>();
-        return serviceCollection;
+        services.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, MonthlyActivityDetector>();
+        services.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, BalanceSheetDetector>();
+        services.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, IncomeStatementDetector>();
+        services.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, NonOperationIncomeAndExpensesDetector>();
+        services.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, TheStatusOfViableCompaniesDetector>();
+        services.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, CapitalIncreaseRegistrationNoticeDetector>();
+        return services;
     }
 
     public static IServiceCollection AddManufacturingReadRepositories(this IServiceCollection builder)
