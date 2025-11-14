@@ -22,4 +22,14 @@ public class PublisherSpec : Specification<Publisher>
             .Where(x => x.ParentSymbol != null && x.ParentSymbol.Isin == isin);
         return spec;
     }
+
+    public static PublisherSpec WhereCodalIdsIn(IEnumerable<string> codalIds)
+    {
+        PublisherSpec spec = new();
+        spec.Query
+            .Include(x => x.Symbol)
+            .Include(x => x.ParentSymbol)
+            .Where(x => codalIds.Contains(x.CodalId));
+        return spec;
+    }
 }
