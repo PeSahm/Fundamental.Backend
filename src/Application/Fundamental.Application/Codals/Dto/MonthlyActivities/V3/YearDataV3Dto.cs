@@ -26,7 +26,8 @@ public class YearDataV3Dto
     public int FiscalYear => YearEndToDate.ToPersianDateTime()?.Year ??
                              throw new InvalidOperationException("Invalid YearEndToDate format");
 
-    public int YearEndMonth => YearEndToDate.ToPersianDateTime()?.Month ?? 12;
+    public int YearEndMonth => YearEndToDate.ToPersianDateTime()?.Month ??
+                              throw new InvalidOperationException("Invalid YearEndToDate format");
 
     public int ReportMonth => PeriodEndToDate.ToPersianDateTime()?.Month ??
                               throw new InvalidOperationException("Invalid PeriodEndToDate format");
