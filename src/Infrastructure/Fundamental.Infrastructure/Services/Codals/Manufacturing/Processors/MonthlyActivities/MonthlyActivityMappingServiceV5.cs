@@ -26,21 +26,23 @@ public class MonthlyActivityMappingServiceV5 : ICanonicalMappingService<Canonica
     )
     {
         // Extract fiscal year and report month from productionAndSales yearData
-        int fiscalYear = DateTime.Now.Year;
-        int reportMonth = 1;
-        int yearEndMonth = 12;
-
-        if (dto.MonthlyActivity?.ProductionAndSales?.YearData.Any() == true)
+        if (dto.MonthlyActivity?.ProductionAndSales?.YearData.Any() != true)
         {
-            // Find the yearData entry with the highest period (most recent month)
-            YearDatumV5 latestYearDatum = dto.MonthlyActivity.ProductionAndSales.YearData
-                .OrderByDescending(yd => yd.Period ?? 0)
-                .First();
-
-            fiscalYear = latestYearDatum.FiscalYear ?? latestYearDatum.ReportYear ?? DateTime.Now.Year;
-            reportMonth = latestYearDatum.ReportMonth ?? latestYearDatum.Period ?? 1;
-            yearEndMonth = latestYearDatum.FiscalMonth ?? 12;
+            throw new InvalidOperationException("No year data found in V5 DTO");
         }
+
+        YearDatumV5 latestYearDatum = dto.MonthlyActivity.ProductionAndSales.YearData
+            .OrderByDescending(yd => yd.Period ?? 0)
+            .First();
+
+        if (latestYearDatum.FiscalYear is null && latestYearDatum.ReportYear is null)
+        {
+            throw new InvalidOperationException("Could not extract fiscal year from V5 data");
+        }
+
+        int fiscalYear = latestYearDatum.FiscalYear ?? latestYearDatum.ReportYear!.Value;
+        int reportMonth = latestYearDatum.ReportMonth ?? latestYearDatum.Period ?? 1;
+        int yearEndMonth = latestYearDatum.FiscalMonth ?? 12;
 
         // Create canonical entity
         CanonicalMonthlyActivity canonical = new(
