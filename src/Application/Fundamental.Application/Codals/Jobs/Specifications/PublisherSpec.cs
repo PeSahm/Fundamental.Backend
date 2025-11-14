@@ -26,10 +26,11 @@ public class PublisherSpec : Specification<Publisher>
     public static PublisherSpec WhereCodalIdsIn(IEnumerable<string> codalIds)
     {
         PublisherSpec spec = new();
+        List<string> codalIdList = codalIds.ToList();
         spec.Query
             .Include(x => x.Symbol)
             .Include(x => x.ParentSymbol)
-            .Where(x => codalIds.Contains(x.CodalId));
+            .Where(x => codalIdList.Contains(x.CodalId));
         return spec;
     }
 }

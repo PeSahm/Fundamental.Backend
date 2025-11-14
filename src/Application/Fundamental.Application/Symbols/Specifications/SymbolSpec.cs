@@ -78,13 +78,15 @@ public sealed class SymbolSpec : Specification<Symbol>
 
     public SymbolSpec WhereIsinsIn(IEnumerable<string> isins)
     {
-        Query.Where(x => isins.Contains(x.Isin));
+        List<string> isinList = isins.ToList();
+        Query.Where(x => isinList.Contains(x.Isin));
         return this;
     }
 
     public SymbolSpec WhereNamesIn(IEnumerable<string> names)
     {
-        Query.Where(x => names.Contains(x.Name));
+        List<string> nameList = names.ToList();
+        Query.Where(x => nameList.Contains(x.Name));
         return this;
     }
 }

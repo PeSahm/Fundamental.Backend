@@ -72,7 +72,7 @@ public sealed class UpdateCodalPublisherDataCommandHandler(
         // Step 3: Create lookup dictionaries for fast access
         Dictionary<string, Symbol> isinLookup = symbolsByIsin.ToDictionary(s => s.Isin, StringComparer.OrdinalIgnoreCase);
         Dictionary<string, Symbol> nameLookup = symbolsByName
-            .Where(s => !isinLookup.ContainsKey(s.Isin))
+            .Where(s => !string.IsNullOrEmpty(s.Isin) && !isinLookup.ContainsKey(s.Isin))
             .ToDictionary(s => s.Name, StringComparer.OrdinalIgnoreCase);
         Dictionary<string, Symbol> parentLookup = parentSymbols.ToDictionary(s => s.Name, StringComparer.OrdinalIgnoreCase);
         Dictionary<string, Publisher> publisherLookup = existingPublishers.ToDictionary(p => p.CodalId, StringComparer.OrdinalIgnoreCase);
