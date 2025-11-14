@@ -4,9 +4,9 @@ using Fundamental.Domain.Codals.Manufacturing.Entities;
 
 namespace Fundamental.Application.Codals.Manufacturing.Specifications;
 
-public sealed class MonthlyActivityResultItemSpec : Specification<CanonicalMonthlyActivity, GetMonthlyActivityDetailItem>
+public sealed class MonthlyActivityDetailItemSpec : Specification<CanonicalMonthlyActivity, GetMonthlyActivityDetailItem>
 {
-    public MonthlyActivityResultItemSpec()
+    public MonthlyActivityDetailItemSpec()
     {
         Query.AsNoTracking();
         Query.Include(x => x.ProductionAndSalesItems);
@@ -37,31 +37,31 @@ public sealed class MonthlyActivityResultItemSpec : Specification<CanonicalMonth
         });
     }
 
-    public MonthlyActivityResultItemSpec WhereId(Guid id)
+    public MonthlyActivityDetailItemSpec WhereId(Guid id)
     {
         Query.Where(x => x.Id == id);
         return this;
     }
 
-    public MonthlyActivityResultItemSpec WhereSymbol(string isin)
+    public MonthlyActivityDetailItemSpec WhereSymbol(string isin)
     {
         Query.Where(x => x.Symbol.Isin == isin);
         return this;
     }
 
-    public MonthlyActivityResultItemSpec WhereFiscalYear(ushort fiscalYear)
+    public MonthlyActivityDetailItemSpec WhereFiscalYear(ushort fiscalYear)
     {
         Query.Where(x => x.FiscalYear.Year == fiscalYear);
         return this;
     }
 
-    public MonthlyActivityResultItemSpec WhereReportMonth(ushort reportMonth)
+    public MonthlyActivityDetailItemSpec WhereReportMonth(ushort reportMonth)
     {
         Query.Where(x => x.ReportMonth.Month == reportMonth);
         return this;
     }
 
-    public MonthlyActivityResultItemSpec WhereTraceNo(ulong traceNo)
+    public MonthlyActivityDetailItemSpec WhereTraceNo(ulong traceNo)
     {
         Query.Where(x => x.TraceNo == traceNo);
         return this;

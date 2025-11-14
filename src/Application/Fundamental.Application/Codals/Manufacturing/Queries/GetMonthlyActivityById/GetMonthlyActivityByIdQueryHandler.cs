@@ -17,7 +17,7 @@ public sealed class
     )
     {
         GetMonthlyActivityDetailItem? result = await repository.FirstOrDefaultAsync(
-            new MonthlyActivityResultItemSpec()
+            new MonthlyActivityDetailItemSpec()
                 .WhereId(request.Id),
             cancellationToken
         );
