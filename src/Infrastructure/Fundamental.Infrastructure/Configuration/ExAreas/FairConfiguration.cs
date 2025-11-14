@@ -1,4 +1,4 @@
-﻿using Fundamental.Domain.ExAreas.Entities;
+using Fundamental.Domain.ExAreas.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

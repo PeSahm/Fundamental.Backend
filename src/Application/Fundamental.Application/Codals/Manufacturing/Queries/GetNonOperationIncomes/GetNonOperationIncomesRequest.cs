@@ -1,4 +1,4 @@
-﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
+using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Dto;
 using Fundamental.ErrorHandling;
 using Fundamental.ErrorHandling.Attributes;

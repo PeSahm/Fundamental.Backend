@@ -1,4 +1,4 @@
-﻿using DNTPersianUtils.Core;
+using DNTPersianUtils.Core;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.MarketDataServiceModels;
 using Fundamental.Application.Prices.Specifications;

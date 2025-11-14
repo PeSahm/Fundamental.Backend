@@ -1,4 +1,4 @@
-﻿using Fundamental.Domain.Common.Enums;
+using Fundamental.Domain.Common.Enums;
 using Fundamental.ErrorHandling;
 using Fundamental.ErrorHandling.Attributes;
 using Fundamental.ErrorHandling.Enums;
@@ -15,4 +15,3 @@ public sealed class GetSymbolsRequest : IRequest<Response<List<GetSymbolsResultD
 
     public bool ShowOfficialSymbolsOnly { get; init; } = true;
 }
-

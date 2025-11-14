@@ -1,3 +1,3 @@
-﻿namespace Fundamental.BuildingBlock.Events;
+namespace Fundamental.BuildingBlock.Events;
 
 public interface IEvent;

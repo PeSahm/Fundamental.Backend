@@ -1,8 +1,8 @@
-﻿using Fundamental.ErrorHandling.Enums;
+using Fundamental.ErrorHandling.Enums;
 
 namespace Fundamental.ErrorHandling.Interfaces;
 
 public interface ICodedException
 {
-    public CommonErrorCode GetCommonErrorCode();
+    CommonErrorCode GetCommonErrorCode();
 }

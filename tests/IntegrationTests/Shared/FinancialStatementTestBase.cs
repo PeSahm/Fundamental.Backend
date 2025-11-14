@@ -26,7 +26,7 @@ public abstract class FinancialStatementTestBase : IClassFixture<TestFixture>
     /// <summary>
     /// Creates a test symbol with the specified ISIN and basic properties.
     /// </summary>
-    protected Symbol CreateTestSymbol(string isin, ulong authorizedCapital, string symbolId = null)
+    protected static Symbol CreateTestSymbol(string isin, ulong authorizedCapital, string? symbolId = null)
     {
         symbolId ??= Guid.NewGuid().ToString();
 
@@ -81,7 +81,7 @@ public abstract class FinancialStatementTestBase : IClassFixture<TestFixture>
     /// <summary>
     /// Extracts the listed capital from balance sheet JSON data.
     /// </summary>
-    protected ulong ExtractAuthorizedCapital(string balanceSheetJson)
+    protected static ulong ExtractAuthorizedCapital(string balanceSheetJson)
     {
         using JsonDocument jsonDoc = JsonDocument.Parse(balanceSheetJson);
         string listedCapital = jsonDoc.RootElement.GetProperty("listedCapital").GetString() ?? "0";
@@ -135,7 +135,7 @@ public abstract class FinancialStatementTestBase : IClassFixture<TestFixture>
     /// <summary>
     /// Finds all ISIN folders in the specified directory.
     /// </summary>
-    protected string[] GetIsinFolders(string dataDirectory)
+    protected static string[] GetIsinFolders(string dataDirectory)
     {
         string[] isinFolders = Directory.GetDirectories(dataDirectory);
         isinFolders.Should().NotBeEmpty("Test data folders should exist");

@@ -1,4 +1,3 @@
-﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage5Summaries.V2;
 using Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage5Summaries.V2.
     NonOperationIncomeAndExpenses;
@@ -6,6 +5,7 @@ using Fundamental.Application.Codals.Enums;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
+using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
 using Fundamental.Infrastructure.Persistence;
@@ -39,6 +39,7 @@ public sealed class NonOperationIncomeAndExpensesV2Processor(IServiceScopeFactor
 
         List<JProperty> properties = jObject.Properties().ToList();
 
+#pragma warning disable S3267 // Loops should be simplified using the "Where" LINQ method
         foreach (JProperty property in properties)
         {
             if (!propertiesToKeep.Contains(property.Name))
@@ -46,6 +47,7 @@ public sealed class NonOperationIncomeAndExpensesV2Processor(IServiceScopeFactor
                 property.Remove();
             }
         }
+#pragma warning restore S3267
 
         // Deserialize the filtered JSON into your model
         RootInterpretativeReportSummaryPage5? rootInterpretativeReportSummary = jObject.ToObject<RootInterpretativeReportSummaryPage5>(

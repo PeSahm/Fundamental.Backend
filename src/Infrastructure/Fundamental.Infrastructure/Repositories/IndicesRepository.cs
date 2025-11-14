@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Symbols.Queries.GetIndices;
+using Fundamental.Application.Symbols.Queries.GetIndices;
 using Fundamental.Application.Symbols.Repositories;
 using Fundamental.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -14,8 +14,8 @@ public class IndicesRepository(FundamentalDbContext fundamentalDbContext) : IInd
     )
     {
         IQueryable<Index> query = from index in fundamentalDbContext.Indices
-            where index.Symbol.Isin == request.Isin
-            select index;
+                                  where index.Symbol.Isin == request.Isin
+                                  select index;
 
         if (request.From.HasValue)
         {

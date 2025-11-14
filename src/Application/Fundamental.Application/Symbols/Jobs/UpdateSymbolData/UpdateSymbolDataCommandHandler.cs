@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Codals.Services;
+using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.MarketDataServiceModels;
 using Fundamental.Application.Symbols.Specifications;
 using Fundamental.Domain.Repositories.Base;

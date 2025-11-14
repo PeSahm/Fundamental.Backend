@@ -1,4 +1,4 @@
-﻿using System.Net.Http.Json;
+using System.Net.Http.Json;
 using System.Text;
 using Fundamental.Application.Codals.Options;
 using Fundamental.Application.Codals.Services;
@@ -17,7 +17,9 @@ public class MarketDataService(
     IHttpClientFactory httpClientFactory,
     IOptions<MdpOption> mdpOption,
     IOptions<TseTmcOption> tseTmcOption,
+#pragma warning disable CS9113 // Parameter is unread
     ILogger<MarketDataService> logger,
+#pragma warning restore CS9113 // Parameter is unread
     HybridCache cache
 )
     : IMarketDataService

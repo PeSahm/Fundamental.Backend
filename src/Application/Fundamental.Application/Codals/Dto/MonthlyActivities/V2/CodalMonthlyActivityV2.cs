@@ -1,7 +1,7 @@
-using Fundamental.Application.Codals.Enums;
 using System.Text.Json.Serialization;
-using Fundamental.Domain.Codals.Manufacturing.Enums;
+using Fundamental.Application.Codals.Enums;
 using Fundamental.Application.Codals.Services;
+using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Enums;
 
 namespace Fundamental.Application.Codals.Dto.MonthlyActivities.V2;

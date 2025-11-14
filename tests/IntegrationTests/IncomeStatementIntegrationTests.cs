@@ -1,21 +1,21 @@
 using FluentAssertions;
+using Fundamental.Application.Codals.Manufacturing.Commands.AddIncomeStatement;
+using Fundamental.Application.Codals.Manufacturing.Queries.GetIncomeStatementDetails;
+using Fundamental.Application.Codals.Manufacturing.Queries.GetIncomeStatements;
+using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Codals.ValueObjects;
-using Fundamental.Domain.Common.ValueObjects;
-using Fundamental.Domain.Common.Enums;
-using Fundamental.Domain.Symbols.Entities;
-using Fundamental.Application.Codals.Manufacturing.Queries.GetIncomeStatements;
-using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Domain.Common.Dto;
+using Fundamental.Domain.Common.Enums;
+using Fundamental.Domain.Common.ValueObjects;
+using Fundamental.Domain.Repositories.Base;
+using Fundamental.Domain.Symbols.Entities;
 using Fundamental.ErrorHandling;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.IncomeStatements;
+using IntegrationTests.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using IntegrationTests.Shared;
-using Fundamental.Application.Codals.Manufacturing.Commands.AddIncomeStatement;
-using Fundamental.Application.Codals.Manufacturing.Queries.GetIncomeStatementDetails;
-using Fundamental.Domain.Repositories.Base;
 
 namespace IntegrationTests;
 
@@ -146,8 +146,7 @@ public class IncomeStatementIntegrationTests : FinancialStatementTestBase
             new StatementMonth(12),
             true,
             createdAt,
-            publishDate1
-        );
+            publishDate1);
         incomeStatement1.Details.Add(new IncomeStatementDetail(
             Guid.NewGuid(),
             incomeStatement1,
@@ -155,8 +154,7 @@ public class IncomeStatementIntegrationTests : FinancialStatementTestBase
             3,
             "Sales",
             new SignedCodalMoney(1000000, IsoCurrency.IRR),
-            createdAt
-        ));
+            createdAt));
 
         IncomeStatement incomeStatement2 = new IncomeStatement(
             Guid.NewGuid(),
@@ -168,8 +166,7 @@ public class IncomeStatementIntegrationTests : FinancialStatementTestBase
             new StatementMonth(6), // Different report month
             true,
             createdAt,
-            publishDate2
-        );
+            publishDate2);
         incomeStatement2.Details.Add(new IncomeStatementDetail(
             Guid.NewGuid(),
             incomeStatement2,
@@ -177,8 +174,7 @@ public class IncomeStatementIntegrationTests : FinancialStatementTestBase
             4,
             "Cost of Goods Sold",
             new SignedCodalMoney(500000, IsoCurrency.IRR),
-            createdAt
-        ));
+            createdAt));
 
         IncomeStatement incomeStatement3 = new IncomeStatement(
             Guid.NewGuid(),
@@ -190,8 +186,7 @@ public class IncomeStatementIntegrationTests : FinancialStatementTestBase
             new StatementMonth(12),
             true,
             createdAt,
-            publishDate2
-        );
+            publishDate2);
         incomeStatement3.Details.Add(new IncomeStatementDetail(
             Guid.NewGuid(),
             incomeStatement3,
@@ -199,8 +194,7 @@ public class IncomeStatementIntegrationTests : FinancialStatementTestBase
             3,
             "Sales",
             new SignedCodalMoney(2000000, IsoCurrency.IRR),
-            createdAt
-        ));
+            createdAt));
 
         await _fixture.DbContext.IncomeStatements.AddRangeAsync(incomeStatement1, incomeStatement2, incomeStatement3);
         await _fixture.DbContext.SaveChangesAsync();
@@ -280,8 +274,7 @@ public class IncomeStatementIntegrationTests : FinancialStatementTestBase
             ReportMonth: 12,
             IsAudited: true,
             PublishDate: DateTime.UtcNow,
-            Items: items
-        );
+            Items: items);
 
         AddIncomeStatementCommandHandler handler = new AddIncomeStatementCommandHandler(
             _fixture.Services.GetRequiredService<IRepository>(),
@@ -328,8 +321,7 @@ public class IncomeStatementIntegrationTests : FinancialStatementTestBase
             ReportMonth: 12,
             IsAudited: true,
             PublishDate: DateTime.UtcNow,
-            Items: new List<AddIncomeStatementItem>()
-        );
+            Items: new List<AddIncomeStatementItem>());
 
         AddIncomeStatementCommandHandler handler = new AddIncomeStatementCommandHandler(
             _fixture.Services.GetRequiredService<IRepository>(),
@@ -365,8 +357,7 @@ public class IncomeStatementIntegrationTests : FinancialStatementTestBase
             new StatementMonth(12),
             true,
             DateTime.UtcNow,
-            DateTime.UtcNow
-        );
+            DateTime.UtcNow);
         existingIncomeStatement.Details.Add(new IncomeStatementDetail(
             Guid.NewGuid(),
             existingIncomeStatement,
@@ -374,8 +365,7 @@ public class IncomeStatementIntegrationTests : FinancialStatementTestBase
             3,
             "Sales",
             new SignedCodalMoney(1000000, IsoCurrency.IRR),
-            DateTime.UtcNow
-        ));
+            DateTime.UtcNow));
 
         await _fixture.DbContext.IncomeStatements.AddAsync(existingIncomeStatement);
         await _fixture.DbContext.SaveChangesAsync();
@@ -425,8 +415,7 @@ public class IncomeStatementIntegrationTests : FinancialStatementTestBase
             new StatementMonth(12),
             true,
             DateTime.UtcNow,
-            DateTime.UtcNow
-        );
+            DateTime.UtcNow);
         incomeStatement.Details.Add(new IncomeStatementDetail(
             Guid.NewGuid(),
             incomeStatement,
@@ -434,8 +423,7 @@ public class IncomeStatementIntegrationTests : FinancialStatementTestBase
             3,
             "Sales",
             new SignedCodalMoney(1000000, IsoCurrency.IRR),
-            DateTime.UtcNow
-        ));
+            DateTime.UtcNow));
         incomeStatement.Details.Add(new IncomeStatementDetail(
             Guid.NewGuid(),
             incomeStatement,
@@ -443,8 +431,7 @@ public class IncomeStatementIntegrationTests : FinancialStatementTestBase
             4,
             "Cost of Goods Sold",
             new SignedCodalMoney(500000, IsoCurrency.IRR),
-            DateTime.UtcNow
-        ));
+            DateTime.UtcNow));
 
         await _fixture.DbContext.IncomeStatements.AddAsync(incomeStatement);
         await _fixture.DbContext.SaveChangesAsync();

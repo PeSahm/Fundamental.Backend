@@ -1,4 +1,4 @@
-﻿using Fundamental.Domain.Common.Dto;
+using Fundamental.Domain.Common.Dto;
 using Gridify;
 using Microsoft.EntityFrameworkCore;
 

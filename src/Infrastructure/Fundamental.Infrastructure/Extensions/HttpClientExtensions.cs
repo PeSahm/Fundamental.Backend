@@ -1,4 +1,4 @@
-﻿using Fundamental.Infrastructure.Common;
+using Fundamental.Infrastructure.Common;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

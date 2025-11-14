@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Fundamental.Application.Codals.Dto.MonthlyActivities.V4.Enums;
 

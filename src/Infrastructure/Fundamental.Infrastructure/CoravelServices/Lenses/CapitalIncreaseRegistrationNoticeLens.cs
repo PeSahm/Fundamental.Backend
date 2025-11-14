@@ -1,4 +1,4 @@
-﻿using Fundamental.Infrastructure.Persistence;
+using Fundamental.Infrastructure.Persistence;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Fundamental.Infrastructure.CoravelServices.Lenses;

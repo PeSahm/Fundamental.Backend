@@ -1,4 +1,4 @@
-﻿namespace Fundamental.ErrorHandling.Enums;
+namespace Fundamental.ErrorHandling.Enums;
 
 public enum Client
 {

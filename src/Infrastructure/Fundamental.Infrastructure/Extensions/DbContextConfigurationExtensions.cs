@@ -1,4 +1,4 @@
-﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
+using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Enums;
 using Fundamental.Infrastructure.Persistence;

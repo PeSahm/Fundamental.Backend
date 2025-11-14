@@ -1,4 +1,4 @@
-﻿using Fundamental.Domain.Common.BaseTypes;
+using Fundamental.Domain.Common.BaseTypes;
 
 namespace Fundamental.Domain.Symbols.Entities;
 

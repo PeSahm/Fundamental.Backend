@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Codals.Manufacturing.Queries.GetIncomeStatements;
+using Fundamental.Application.Codals.Manufacturing.Queries.GetIncomeStatements;
 using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Codals.ValueObjects;

@@ -1,4 +1,4 @@
-﻿using Fundamental.ErrorHandling.Enums;
+using Fundamental.ErrorHandling.Enums;
 
 namespace Fundamental.ErrorHandling.Helpers;
 

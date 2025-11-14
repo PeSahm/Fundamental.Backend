@@ -1,4 +1,4 @@
-﻿using Fundamental.Domain.Prices.Events;
+using Fundamental.Domain.Prices.Events;
 using Fundamental.ErrorHandling;
 using Fundamental.ErrorHandling.Attributes;
 using Fundamental.ErrorHandling.Enums;

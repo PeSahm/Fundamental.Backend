@@ -1,4 +1,4 @@
-﻿namespace Fundamental.Domain.Codals.Manufacturing.Enums;
+namespace Fundamental.Domain.Codals.Manufacturing.Enums;
 
 public enum Season
 {

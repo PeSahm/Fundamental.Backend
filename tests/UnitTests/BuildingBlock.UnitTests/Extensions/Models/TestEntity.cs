@@ -1,4 +1,4 @@
-﻿namespace BuildingBlockUnitTests.Extensions.Models;
+namespace BuildingBlockUnitTests.Extensions.Models;
 
 /// <summary>
 ///     A dummy class to test the extension methods.

@@ -1,4 +1,4 @@
-﻿using Fundamental.Domain.Codals.ValueObjects;
+using Fundamental.Domain.Codals.ValueObjects;
 
 namespace Fundamental.Application.Codals.Manufacturing.Jobs.UpdateFinancialStatementsData;
 

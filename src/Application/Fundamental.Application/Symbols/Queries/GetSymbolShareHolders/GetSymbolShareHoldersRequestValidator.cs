@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+using FluentValidation;
 
 namespace Fundamental.Application.Symbols.Queries.GetSymbolShareHolders;
 

@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Codals.Manufacturing.Jobs.UpdateFinancialStatementsData;
+using Fundamental.Application.Codals.Manufacturing.Jobs.UpdateFinancialStatementsData;
 using Fundamental.Application.Codals.Manufacturing.Queries.GetBalanceSheets;
 using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
@@ -54,7 +54,7 @@ public sealed class BalanceSheetReadRepository(FundamentalDbContext dbContext) :
                 Symbol = x.First().Symbol.Name,
                 PublishDate = x.Max(mx => mx.PublishDate),
                 Uri = x.First().Uri
-            }).ToPagingListAsync(request, "PublishDate desc", cancellationToken);
+            }).ToPagingListAsync(request ?? new GetBalanceSheetRequest(), "PublishDate desc", cancellationToken);
 
         return validStatements;
     }

@@ -1,4 +1,4 @@
-﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
+using Fundamental.Domain.Codals.Manufacturing.Enums;
 
 namespace Fundamental.Application.Codals.Manufacturing.Commands.AddBalanceSheet;
 

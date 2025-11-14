@@ -1,4 +1,4 @@
-﻿using DotNetCore.CAP;
+using DotNetCore.CAP;
 using Fundamental.Application.Codals.Manufacturing.EventHandlers.UpdateCapitalIncreaseNotice;
 using Fundamental.Application.Codals.Manufacturing.EventHandlers.UpdateFsClosePrice;
 using Fundamental.Application.Codals.Manufacturing.EventHandlers.UpdateFsSales;

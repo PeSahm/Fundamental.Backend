@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Codals.Services.Models.MarketDataServiceModels;
+using Fundamental.Application.Codals.Services.Models.MarketDataServiceModels;
 
 namespace Fundamental.Application.Symbols;
 

@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Symbols.Queries.GetSymbols;
+using Fundamental.Application.Symbols.Queries.GetSymbols;
 using static Fundamental.Domain.Codals.Manufacturing.Entities.FinancialStatement;
 
 namespace Fundamental.Application.Codals.Manufacturing.Queries.GetFinancialStatements;
@@ -39,9 +39,9 @@ public class GetFinancialStatementsResultDto
     public decimal SaleAverageExcludeThisPeriod { get; set; }
     public decimal SaleAverageLastYearSamePeriod { get; set; }
 
-    public DaysInventoryOutstanding? InventoryOutstandingData { get;  set; }
+    public DaysInventoryOutstanding? InventoryOutstandingData { get; set; }
 
-    public SalesOutstanding? SalesOutstandingData { get;  set; }
+    public SalesOutstanding? SalesOutstandingData { get; set; }
 
     public int? DaysInventoryOutstanding => InventoryOutstandingData?.GetDaysInventoryOutstanding() ?? 0;
 

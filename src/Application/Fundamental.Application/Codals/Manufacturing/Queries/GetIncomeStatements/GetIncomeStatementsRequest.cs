@@ -1,4 +1,4 @@
-﻿using Fundamental.Domain.Common.Dto;
+using Fundamental.Domain.Common.Dto;
 using Fundamental.ErrorHandling;
 using Fundamental.ErrorHandling.Attributes;
 using Fundamental.ErrorHandling.Enums;

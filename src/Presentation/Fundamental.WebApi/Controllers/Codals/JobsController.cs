@@ -1,4 +1,4 @@
-﻿using ErrorHandling.AspNetCore;
+using ErrorHandling.AspNetCore;
 using Fundamental.Application.Codals.Jobs.ExecuteStatementJob;
 using Fundamental.ErrorHandling;
 using MediatR;

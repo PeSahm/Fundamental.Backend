@@ -1,4 +1,4 @@
-﻿using Fundamental.ErrorHandling.Attributes;
+using Fundamental.ErrorHandling.Attributes;
 using Fundamental.ErrorHandling.Enums;
 
 namespace Fundamental.Application.Codals.Manufacturing.Queries.GetIncomeStatementDetails;

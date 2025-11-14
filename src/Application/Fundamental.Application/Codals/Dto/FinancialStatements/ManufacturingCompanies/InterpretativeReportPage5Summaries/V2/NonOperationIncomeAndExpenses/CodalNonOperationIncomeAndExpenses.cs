@@ -1,4 +1,4 @@
-﻿using DNTPersianUtils.Core;
+using DNTPersianUtils.Core;
 using Newtonsoft.Json;
 
 namespace Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage5Summaries.V2.

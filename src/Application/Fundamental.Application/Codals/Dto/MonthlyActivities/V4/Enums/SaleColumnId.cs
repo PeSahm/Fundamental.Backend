@@ -1,4 +1,4 @@
-﻿namespace Fundamental.Application.Codals.Dto.MonthlyActivities.V4.Enums;
+namespace Fundamental.Application.Codals.Dto.MonthlyActivities.V4.Enums;
 
 public enum SaleColumnId
 {

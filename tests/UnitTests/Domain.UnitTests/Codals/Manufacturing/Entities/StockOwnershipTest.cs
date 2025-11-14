@@ -1,4 +1,4 @@
-﻿using Fundamental.Domain.Codals.Manufacturing.Entities;
+using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Common.ValueObjects;
 using Fundamental.Domain.Symbols.Entities;

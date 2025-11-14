@@ -27,7 +27,9 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
     IRepository repository,
     IUnitOfWork unitOfWork,
     IFinancialStatementBuilder financialStatementBuilder,
+#pragma warning disable CS9113 // Parameter is unread
     IMonthlyActivityRepository monthlyActivityRepository,
+#pragma warning restore CS9113 // Parameter is unread
     IBalanceSheetReadRepository balanceSheetReadRepository,
     IIncomeStatementsReadRepository incomeStatementsReadRepository,
     ICodalService codalService,
@@ -67,6 +69,7 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
                             headerData.YearEndMonth,
                             headerData.ReportMonth),
                         cancellationToken);
+
                 // Note: MonthlyActivity entity removed - now using CanonicalMonthlyActivity with rich collections
                 // CanonicalMonthlyActivity? monthlyActivities =
                 //     await monthlyActivityRepository.GetFirstMonthlyActivity(
@@ -209,28 +212,28 @@ public sealed class UpdateFinancialStatementsDataCommandHandler(
                         lastYearSamePeriodNetProfit ?? SignedCodalMoney.Empty
                     )
                     .SetInventoryOutstanding(new FinancialStatement.DaysInventoryOutstanding
-                        {
-                            LastYearSamePeriodCostOfGoodsSale = lastYearSamePeriodCostOfGoodsSale ?? SignedCodalMoney.Empty,
-                            LastYearFullPeriodCostOfGoodsSale = lastYearFullPeriodCostOfGoodsSale ?? SignedCodalMoney.Empty,
-                            CurrentCostOfGoodsSale = incomeStatement.Details.First(x => x.CodalRow == IncomeStatementRow.CostOfGoodsSale)
+                    {
+                        LastYearSamePeriodCostOfGoodsSale = lastYearSamePeriodCostOfGoodsSale ?? SignedCodalMoney.Empty,
+                        LastYearFullPeriodCostOfGoodsSale = lastYearFullPeriodCostOfGoodsSale ?? SignedCodalMoney.Empty,
+                        CurrentCostOfGoodsSale = incomeStatement.Details.First(x => x.CodalRow == IncomeStatementRow.CostOfGoodsSale)
                                 .Value,
-                            LastYearSamePeriodInventory = lastYearSamePeriodInventory ?? SignedCodalMoney.Empty,
-                            CurrentInventory = balanceSheetDetails.First(x => x.CodalCategory == BalanceSheetCategory.Assets
-                                                                        && x.CodalRow == BalanceSheetRow.Inventory).Value,
-                        }
+                        LastYearSamePeriodInventory = lastYearSamePeriodInventory ?? SignedCodalMoney.Empty,
+                        CurrentInventory = balanceSheetDetails.First(x => x.CodalCategory == BalanceSheetCategory.Assets
+                                                                    && x.CodalRow == BalanceSheetRow.Inventory).Value,
+                    }
                     )
                     .SetDaysSalesOutstanding(new FinancialStatement.SalesOutstanding
-                        {
-                            LastYearSamePeriodOperationalIncome = lastYearSamePeriodOperationalIncome ?? SignedCodalMoney.Empty,
-                            LastYearFullPeriodOperationalIncome = lastYearFullPeriodOperationalIncome ?? SignedCodalMoney.Empty,
-                            CurrentOperationalIncome = incomeStatement.Details.First(x => x.CodalRow == IncomeStatementRow.Sales)
+                    {
+                        LastYearSamePeriodOperationalIncome = lastYearSamePeriodOperationalIncome ?? SignedCodalMoney.Empty,
+                        LastYearFullPeriodOperationalIncome = lastYearFullPeriodOperationalIncome ?? SignedCodalMoney.Empty,
+                        CurrentOperationalIncome = incomeStatement.Details.First(x => x.CodalRow == IncomeStatementRow.Sales)
                                 .Value,
-                            LastYearSamePeriodTradeAndOtherReceivables =
+                        LastYearSamePeriodTradeAndOtherReceivables =
                                 lastYearSamePeriodTradeAndOtherReceivables ?? SignedCodalMoney.Empty,
-                            CurrentTradeAndOtherReceivables =
+                        CurrentTradeAndOtherReceivables =
                                 balanceSheetDetails.First(x => x.CodalCategory == BalanceSheetCategory.Assets
                                                          && x.CodalRow == BalanceSheetRow.TradeAndOtherReceivables).Value,
-                        }
+                    }
                     )
                     .Build();
                 repository.Add(fs);

@@ -1,4 +1,4 @@
-﻿namespace Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.BalanceSheets.V5;
+namespace Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.BalanceSheets.V5;
 
 public enum ColumnId
 {

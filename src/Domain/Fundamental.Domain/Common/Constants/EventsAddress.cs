@@ -1,4 +1,4 @@
-﻿namespace Fundamental.Domain.Common.Constants;
+namespace Fundamental.Domain.Common.Constants;
 
 public static class EventsAddress
 {

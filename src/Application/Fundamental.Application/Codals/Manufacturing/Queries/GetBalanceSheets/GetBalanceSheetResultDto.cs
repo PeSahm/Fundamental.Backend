@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Codals.Common;
+using Fundamental.Application.Codals.Common;
 using Newtonsoft.Json;
 
 namespace Fundamental.Application.Codals.Manufacturing.Queries.GetBalanceSheets;

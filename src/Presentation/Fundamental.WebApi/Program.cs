@@ -113,4 +113,5 @@ if (app.Configuration.GetValue<bool>("JobEnabled"))
 {
     app.UseCoravelPro();
 }
+
 await app.RunAsync();

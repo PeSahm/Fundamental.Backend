@@ -1,6 +1,6 @@
-﻿using Fundamental.Application.Codals.Common;
-using JetBrains.Annotations;
 using FluentAssertions;
+using Fundamental.Application.Codals.Common;
+using JetBrains.Annotations;
 
 namespace Application.UnitTests.Codals.Common;
 

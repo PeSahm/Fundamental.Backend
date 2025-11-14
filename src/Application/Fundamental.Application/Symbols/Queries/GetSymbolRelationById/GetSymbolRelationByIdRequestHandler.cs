@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Symbols.Queries.GetSymbolRelations;
+using Fundamental.Application.Symbols.Queries.GetSymbolRelations;
 using Fundamental.Application.Symbols.Specifications;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.ErrorHandling;

@@ -1,4 +1,4 @@
-﻿using Fundamental.Domain.Codals.Manufacturing.Events;
+using Fundamental.Domain.Codals.Manufacturing.Events;
 using Fundamental.Domain.Common.BaseTypes;
 using Fundamental.Domain.Common.Constants;
 using Fundamental.Domain.Common.Enums;

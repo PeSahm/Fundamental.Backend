@@ -1,4 +1,4 @@
-﻿using Coravel.Invocable;
+using Coravel.Invocable;
 using Fundamental.Application.Codals.Manufacturing.Jobs.UpdateRegisterCapitalIncreaseData;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;

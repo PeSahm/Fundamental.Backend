@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using System.Runtime.CompilerServices;
 using Fundamental.ErrorHandling;
 using Microsoft.AspNetCore.Mvc;

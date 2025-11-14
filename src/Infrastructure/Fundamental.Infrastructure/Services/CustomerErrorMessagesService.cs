@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 using Fundamental.Application.Utilities.Services;
 using Fundamental.ErrorHandling.Enums;
 using Fundamental.ErrorHandling.Helpers;

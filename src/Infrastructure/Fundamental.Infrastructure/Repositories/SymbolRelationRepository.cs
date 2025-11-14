@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Symbols.Queries.GetSymbolRelations;
+using Fundamental.Application.Symbols.Queries.GetSymbolRelations;
 using Fundamental.Application.Symbols.Repositories;
 using Fundamental.Domain.Common.Dto;
 using Fundamental.Domain.Symbols.Entities;
@@ -35,15 +35,15 @@ public class SymbolRelationRepository : ISymbolRelationRepository
         }
 
         return await query.Select(x => new GetSymbolRelationsResultItem
-            {
-                Id = x.Id,
-                InvestorIsin = x.Parent.Isin,
-                InvestorSymbol = x.Parent.Name,
-                InvestorTitle = x.Parent.Title,
-                InvestmentSymbol = x.Child.Name,
-                InvestmentTitle = x.Child.Title,
-                Ratio = x.Ratio
-            })
+        {
+            Id = x.Id,
+            InvestorIsin = x.Parent.Isin,
+            InvestorSymbol = x.Parent.Name,
+            InvestorTitle = x.Parent.Title,
+            InvestmentSymbol = x.Child.Name,
+            InvestmentTitle = x.Child.Title,
+            Ratio = x.Ratio
+        })
             .ToPagingListAsync(request, "InvestorIsin desc", cancellationToken);
     }
 }

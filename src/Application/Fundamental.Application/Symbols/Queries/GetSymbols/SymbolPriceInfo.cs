@@ -1,4 +1,4 @@
-﻿namespace Fundamental.Application.Symbols.Queries.GetSymbols;
+namespace Fundamental.Application.Symbols.Queries.GetSymbols;
 
 public sealed class SymbolPriceInfo
 {
@@ -19,5 +19,4 @@ public sealed class SymbolPriceInfo
 
     public decimal ClosePriceChangePercent =>
         YesterdayPrice == 0 ? 0 : Math.Round((ClosePrice - YesterdayPrice) / YesterdayPrice * 100, 2);
-
 }

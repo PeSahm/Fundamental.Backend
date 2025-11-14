@@ -18,7 +18,7 @@ public class CanonicalMonthlyActivityTests
         CanonicalMonthlyActivity monthlyActivity = CreateTestMonthlyActivity();
 
         // Act
-        var dataRows = monthlyActivity.GetProductionAndSalesDataRows().ToList();
+        List<ProductionAndSalesItem> dataRows = monthlyActivity.GetProductionAndSalesDataRows().ToList();
 
         // Assert
         dataRows.Should().HaveCount(4); // 2 internal + 2 export products
@@ -37,7 +37,7 @@ public class CanonicalMonthlyActivityTests
         CanonicalMonthlyActivity monthlyActivity = CreateTestMonthlyActivity();
 
         // Act
-        var internalProducts = monthlyActivity.GetInternalSaleDataRows().ToList();
+        List<ProductionAndSalesItem> internalProducts = monthlyActivity.GetInternalSaleDataRows().ToList();
 
         // Assert
         internalProducts.Should().HaveCount(2);
@@ -55,7 +55,7 @@ public class CanonicalMonthlyActivityTests
         CanonicalMonthlyActivity monthlyActivity = CreateTestMonthlyActivity();
 
         // Act
-        var exportProducts = monthlyActivity.GetExportSaleDataRows().ToList();
+        List<ProductionAndSalesItem> exportProducts = monthlyActivity.GetExportSaleDataRows().ToList();
 
         // Assert
         exportProducts.Should().HaveCount(2);
@@ -124,7 +124,7 @@ public class CanonicalMonthlyActivityTests
         CanonicalMonthlyActivity monthlyActivity = CreateTestMonthlyActivity();
 
         // Act
-        var summaryRows = monthlyActivity.GetAllSummaryRows().ToList();
+        List<ProductionAndSalesItem> summaryRows = monthlyActivity.GetAllSummaryRows().ToList();
 
         // Assert
         summaryRows.Should().HaveCount(3); // Internal, Export, Total

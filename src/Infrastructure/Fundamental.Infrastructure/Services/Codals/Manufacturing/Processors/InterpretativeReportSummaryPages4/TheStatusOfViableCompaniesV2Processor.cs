@@ -1,4 +1,3 @@
-﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage4Summaries;
 using Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage4Summaries.V2.
     TheStatusOfViableCompanies;
@@ -9,6 +8,7 @@ using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Application.Common.Extensions;
 using Fundamental.Application.Symbols.Specifications;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
+using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.Domain.Symbols.Entities;
@@ -45,6 +45,7 @@ public class TheStatusOfViableCompaniesV2Processor(
 
         List<JProperty> properties = jObject.Properties().ToList();
 
+#pragma warning disable S3267 // Loops should be simplified using the "Where" LINQ method
         foreach (JProperty property in properties)
         {
             if (!propertiesToKeep.Contains(property.Name))
@@ -52,6 +53,7 @@ public class TheStatusOfViableCompaniesV2Processor(
                 property.Remove();
             }
         }
+#pragma warning restore S3267
 
         // Deserialize the filtered JSON into your model
         RootInterpretativeReportSummaryPage4? rootInterpretativeReportSummary = jObject.ToObject<RootInterpretativeReportSummaryPage4>(

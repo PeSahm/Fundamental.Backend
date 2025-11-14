@@ -1,4 +1,4 @@
-﻿#nullable disable
+#nullable disable
 
 using Fundamental.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore.Infrastructure;

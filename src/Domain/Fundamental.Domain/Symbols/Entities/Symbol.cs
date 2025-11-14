@@ -82,7 +82,7 @@ public class Symbol : BaseEntity<Guid>
 
     public EtfType? EtfType { get; private set; }
 
-    public Publisher? Publisher { get; private set; }
+    public Publisher? Publisher { get; }
 
     public Sector? Sector { get; set; }
 

@@ -1,4 +1,4 @@
-﻿using DNTPersianUtils.Core;
+using DNTPersianUtils.Core;
 using Fundamental.Application.Codals.Manufacturing.Queries.GetFinancialStatementList;
 using Fundamental.Application.Codals.Manufacturing.Queries.GetFinancialStatements;
 using Fundamental.Application.Codals.Manufacturing.Repositories;

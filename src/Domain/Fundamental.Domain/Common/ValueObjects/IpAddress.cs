@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using System.Net.Sockets;
 using Fundamental.Domain.Common.BaseTypes;
 using Fundamental.Domain.Common.Enums;

@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage4Summaries.V2.
+using Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage4Summaries.V2.
     TheStatusOfViableCompanies;
 using Newtonsoft.Json;
 

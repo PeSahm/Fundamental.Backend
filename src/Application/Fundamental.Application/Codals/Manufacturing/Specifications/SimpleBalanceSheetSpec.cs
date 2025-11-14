@@ -1,4 +1,4 @@
-﻿using Ardalis.Specification;
+using Ardalis.Specification;
 using Fundamental.Application.Codals.Manufacturing.Jobs.UpdateFinancialStatementsData;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 

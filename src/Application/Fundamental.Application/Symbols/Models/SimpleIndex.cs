@@ -1,4 +1,4 @@
-﻿namespace Fundamental.Application.Symbols.Models;
+namespace Fundamental.Application.Symbols.Models;
 
 public sealed class SimpleIndex
 {

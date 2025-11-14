@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Codals.Manufacturing.Queries.GetIncomeStatements;
+using Fundamental.Application.Codals.Manufacturing.Queries.GetIncomeStatements;
 using Fundamental.Domain.Codals.ValueObjects;
 using Fundamental.Domain.Common.Dto;
 using Fundamental.Domain.Common.ValueObjects;

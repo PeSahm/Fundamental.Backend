@@ -1,4 +1,4 @@
-﻿#nullable disable
+#nullable disable
 
 using Fundamental.Domain.Symbols.Enums;
 using Fundamental.Infrastructure.Persistence;

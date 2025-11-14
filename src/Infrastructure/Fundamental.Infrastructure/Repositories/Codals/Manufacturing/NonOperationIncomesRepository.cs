@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Codals.Manufacturing.Queries.GetNonOperationIncomes;
+using Fundamental.Application.Codals.Manufacturing.Queries.GetNonOperationIncomes;
 using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
@@ -19,18 +19,18 @@ public sealed class NonOperationIncomesRepository(FundamentalDbContext dbContext
     {
         IQueryable<NonOperationIncomeAndExpense> query = from ex
                 in dbContext.NonOperationIncomeAndExpenses.Include(x => x.Symbol)
-            where !ex.ForecastPeriod
-                  && !ex.YearlyForecastPeriod
-                  && (from ex2 in dbContext.NonOperationIncomeAndExpenses
-                      where ex2.ReportMonth.Month == ex.ReportMonth.Month
-                            && ex2.FiscalYear.Year == ex.FiscalYear.Year
-                            && !ex2.ForecastPeriod
-                            && !ex2.YearlyForecastPeriod
-                            && ex2.Symbol.Id == ex.Symbol.Id
-                      group ex2 by new { ex2.FiscalYear.Year, ex2.ReportMonth.Month, ex2.Symbol.Id }
-                      into g
-                      select g.Max(e => e.TraceNo)).Contains(ex.TraceNo)
-            select ex;
+                                                         where !ex.ForecastPeriod
+                                                               && !ex.YearlyForecastPeriod
+                                                               && (from ex2 in dbContext.NonOperationIncomeAndExpenses
+                                                                   where ex2.ReportMonth.Month == ex.ReportMonth.Month
+                                                                         && ex2.FiscalYear.Year == ex.FiscalYear.Year
+                                                                         && !ex2.ForecastPeriod
+                                                                         && !ex2.YearlyForecastPeriod
+                                                                         && ex2.Symbol.Id == ex.Symbol.Id
+                                                                   group ex2 by new { ex2.FiscalYear.Year, ex2.ReportMonth.Month, ex2.Symbol.Id }
+                                                                   into g
+                                                                   select g.Max(e => e.TraceNo)).Contains(ex.TraceNo)
+                                                         select ex;
 
         if (request is { IsinList: not null } && request.IsinList.Length != 0)
         {
@@ -55,21 +55,21 @@ public sealed class NonOperationIncomesRepository(FundamentalDbContext dbContext
         };
 
         Paginated<GetNonOperationIncomesResultItem> result = await query.Select(x => new GetNonOperationIncomesResultItem
-            {
-                Id = x.Id,
-                Isin = x.Symbol.Isin,
-                Symbol = x.Symbol.Name,
-                Title = x.Symbol.Title,
-                Uri = x.Uri,
-                FiscalYear = x.FiscalYear.Year,
-                YearEndMonth = x.YearEndMonth.Month,
-                ReportMonth = x.ReportMonth.Month,
-                TraceNo = x.TraceNo,
-                Value = x.Value.Value,
-                Description = x.Description,
-                IsAudited = x.IsAudited,
-                Tags = x.Tags
-            })
+        {
+            Id = x.Id,
+            Isin = x.Symbol.Isin,
+            Symbol = x.Symbol.Name,
+            Title = x.Symbol.Title,
+            Uri = x.Uri,
+            FiscalYear = x.FiscalYear.Year,
+            YearEndMonth = x.YearEndMonth.Month,
+            ReportMonth = x.ReportMonth.Month,
+            TraceNo = x.TraceNo,
+            Value = x.Value.Value,
+            Description = x.Description,
+            IsAudited = x.IsAudited,
+            Tags = x.Tags
+        })
             .ToPagingListAsync(request, "TraceNo desc", cancellationToken);
         return result;
     }

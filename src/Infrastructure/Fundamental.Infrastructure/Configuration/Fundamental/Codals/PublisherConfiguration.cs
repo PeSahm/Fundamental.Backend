@@ -1,4 +1,4 @@
-﻿using Fundamental.Domain.Codals;
+using Fundamental.Domain.Codals;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

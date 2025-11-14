@@ -1,4 +1,4 @@
-﻿using Fundamental.Domain.Symbols.Entities;
+using Fundamental.Domain.Symbols.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -1,4 +1,4 @@
-﻿using Ardalis.Specification;
+using Ardalis.Specification;
 using Fundamental.Domain.Prices.Entities;
 
 namespace Fundamental.Application.Prices.Specifications;

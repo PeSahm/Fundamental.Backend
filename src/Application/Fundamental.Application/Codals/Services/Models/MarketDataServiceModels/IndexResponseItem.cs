@@ -1,4 +1,4 @@
-﻿namespace Fundamental.Application.Codals.Services.Models.MarketDataServiceModels;
+namespace Fundamental.Application.Codals.Services.Models.MarketDataServiceModels;
 
 public sealed class IndexResponseItem
 {

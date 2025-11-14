@@ -1,4 +1,4 @@
-﻿namespace Fundamental.Infrastructure.Common;
+namespace Fundamental.Infrastructure.Common;
 
 public static class HttpClients
 {

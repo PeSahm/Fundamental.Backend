@@ -1,4 +1,4 @@
-﻿using DotNetCore.CAP;
+using DotNetCore.CAP;
 using DotNetCore.CAP.Messages;
 using Fundamental.BuildingBlock.Events;
 using Fundamental.Domain.Common.BaseTypes;

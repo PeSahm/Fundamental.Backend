@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage5Summaries.V2.
+using Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage5Summaries.V2.
     NonOperationIncomeAndExpenses;
 using Newtonsoft.Json;
 

@@ -1,4 +1,4 @@
-﻿using Fundamental.Domain.Common.BaseTypes;
+using Fundamental.Domain.Common.BaseTypes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

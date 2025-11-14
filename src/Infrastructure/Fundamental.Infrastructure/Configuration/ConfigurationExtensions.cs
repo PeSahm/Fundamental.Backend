@@ -1,4 +1,4 @@
-﻿using Fundamental.Domain.Common.ValueObjects;
+using Fundamental.Domain.Common.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Npgsql.NameTranslation;

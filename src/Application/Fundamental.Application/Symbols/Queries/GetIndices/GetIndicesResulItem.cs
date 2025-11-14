@@ -1,4 +1,4 @@
-﻿using DNTPersianUtils.Core;
+using DNTPersianUtils.Core;
 
 namespace Fundamental.Application.Symbols.Queries.GetIndices;
 

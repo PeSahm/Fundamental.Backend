@@ -1,4 +1,4 @@
-﻿using Ardalis.Specification;
+using Ardalis.Specification;
 using Fundamental.Application.Symbols.Queries.GetSymbols;
 using Fundamental.Domain.Symbols.Entities;
 

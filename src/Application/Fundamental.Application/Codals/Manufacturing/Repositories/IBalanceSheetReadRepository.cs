@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Codals.Manufacturing.Jobs.UpdateFinancialStatementsData;
+using Fundamental.Application.Codals.Manufacturing.Jobs.UpdateFinancialStatementsData;
 using Fundamental.Application.Codals.Manufacturing.Queries.GetBalanceSheets;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Codals.ValueObjects;

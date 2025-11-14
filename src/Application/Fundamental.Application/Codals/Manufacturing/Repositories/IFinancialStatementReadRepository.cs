@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Codals.Manufacturing.Queries.GetFinancialStatementList;
+using Fundamental.Application.Codals.Manufacturing.Queries.GetFinancialStatementList;
 using Fundamental.Application.Codals.Manufacturing.Queries.GetFinancialStatements;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Codals.ValueObjects;

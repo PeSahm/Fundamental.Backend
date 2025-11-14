@@ -1,4 +1,4 @@
-﻿using Ardalis.Specification;
+using Ardalis.Specification;
 using Fundamental.Domain.Codals;
 
 namespace Fundamental.Application.Codals.Jobs.Specifications;

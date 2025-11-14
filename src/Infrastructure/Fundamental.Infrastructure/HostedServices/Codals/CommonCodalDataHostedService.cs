@@ -16,6 +16,7 @@ public class CommonCodalDataHostedService(IServiceScopeFactory factory) : Backgr
         await Task.CompletedTask;
 
         using IServiceScope scope = factory.CreateScope();
+
         // await scope.ServiceProvider.GetRequiredService<UpdateClosePricesDataJob>().Invoke();
         // //await scope.ServiceProvider.GetRequiredService<UpdateCodalPublisherDataJob>().Invoke();
         // await scope.ServiceProvider.GetRequiredService<UpdateIndexDataJob>().Invoke();
@@ -32,9 +33,11 @@ public class CommonCodalDataHostedService(IServiceScopeFactory factory) : Backgr
         await Task.CompletedTask;
     }
 
-    private async Task SeedSectorsAndSymbols(FundamentalDbContext dbContext, CancellationToken stoppingToken)
+#pragma warning disable S1144, S2325 // Unused private method / Method should be static
+    private static async Task SeedSectorsAndSymbols(FundamentalDbContext dbContext, CancellationToken stoppingToken)
+#pragma warning restore S1144, S2325
     {
-        var sectorSymbolData = new Dictionary<string, List<string>>
+        Dictionary<string, List<string>> sectorSymbolData = new Dictionary<string, List<string>>
         {
             ["هلدینگها"] = new List<string> { "شستا", "وغدیر", "وامید", "ومعادن", "وصندوق", "وکغدیر", "برکت", "وهنر", "نیرو" },
             ["استخراج سایر معادن"] = new List<string> { "کماسه" },
@@ -177,12 +180,12 @@ public class CommonCodalDataHostedService(IServiceScopeFactory factory) : Backgr
 
         foreach (var sectorData in sectorSymbolData)
         {
-            var sectorName = sectorData.Key.Safe();
-            var sector = await dbContext.Sectors.FirstOrDefaultAsync(s => s.Name == sectorName, stoppingToken);
+            string sectorName = sectorData.Key.Safe();
+            Sector? sector = await dbContext.Sectors.FirstOrDefaultAsync(s => s.Name == sectorName, stoppingToken);
 
             if (sector == null)
             {
-                sector = new Sector(Guid.NewGuid(), sectorName, DateTime.UtcNow);
+                sector = new Sector(Guid.NewGuid(), sectorName ?? string.Empty, DateTime.UtcNow);
                 dbContext.Sectors.Add(sector);
                 await dbContext.SaveChangesAsync(stoppingToken);
             }
