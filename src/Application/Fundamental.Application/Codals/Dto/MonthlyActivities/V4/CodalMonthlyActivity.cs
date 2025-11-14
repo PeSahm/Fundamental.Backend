@@ -42,7 +42,7 @@ public class MonthlyActivityDto
     public Energy? Energy { get; set; }
 
     [JsonProperty("productMonthlyActivityDesc1")]
-    public ProductMonthlyActivityDesc1 ProductMonthlyActivityDesc1 { get; set; }
+    public ProductMonthlyActivityDesc1? ProductMonthlyActivityDesc1 { get; set; }
 }
 
 public class ProductionAndSales

@@ -80,7 +80,7 @@ public class MonthlyActivityMappingServiceV4 : ICanonicalMappingService<Canonica
         }
 
         // Map descriptions
-        if (dto.MonthlyActivity.ProductMonthlyActivityDesc1.RowItems.Count > 0)
+        if (dto.MonthlyActivity.ProductMonthlyActivityDesc1?.RowItems.Count > 0)
         {
             canonical.Descriptions = MapDescriptionsV4(dto.MonthlyActivity.ProductMonthlyActivityDesc1.RowItems);
         }
