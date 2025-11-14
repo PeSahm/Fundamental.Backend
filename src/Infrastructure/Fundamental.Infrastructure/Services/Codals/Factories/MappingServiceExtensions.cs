@@ -1,6 +1,8 @@
-using Fundamental.Domain.Codals.Manufacturing.Enums;
+using System.Collections.Concurrent;
 using Fundamental.Application.Codals.Enums;
 using Fundamental.Application.Codals.Services;
+using Fundamental.Domain.Codals.Manufacturing.Enums;
+using Fundamental.Domain.Common.BaseTypes;
 using Fundamental.Domain.Common.Enums;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,6 +13,8 @@ namespace Fundamental.Infrastructure.Services.Codals.Factories;
 /// </summary>
 public static class MappingServiceExtensions
 {
+    private static readonly ConcurrentDictionary<Type, ICodalMappingServiceMetadata> _metadataCache = new();
+
     /// <summary>
     /// Adds the canonical mapping service factory to the service collection.
     /// </summary>
@@ -18,7 +22,7 @@ public static class MappingServiceExtensions
     /// <returns>The service collection for chaining.</returns>
     public static IServiceCollection AddCanonicalMappingServiceFactory(this IServiceCollection services)
     {
-        return services.AddSingleton<ICanonicalMappingServiceFactory, CanonicalMappingServiceFactory>();
+        return services.AddScoped<ICanonicalMappingServiceFactory, CanonicalMappingServiceFactory>();
     }
 
     /// <summary>
@@ -36,38 +40,32 @@ public static class MappingServiceExtensions
         where TImplementation : class, TService
         where TDto : class, ICodalMappingServiceMetadata
     {
-        return services.AddKeyedScoped(
-            typeof(TService),
-            MappingServiceKeyFromDto<TDto>(),
-            typeof(TImplementation));
+        return services.AddKeyedScoped<TService, TImplementation>(MappingServiceKeyFromDto<TDto>());
     }
 
     /// <summary>
-    /// Gets a required keyed service using the specified metadata components.
+    /// Gets a required keyed Mapping service using the specified metadata components.
     /// </summary>
-    /// <typeparam name="T">The service type.</typeparam>
-    /// <param name="provider">The service provider.</param>
-    /// <param name="reportingType">The reporting type.</param>
-    /// <param name="letterType">The letter type.</param>
-    /// <param name="version">The CODAL version.</param>
-    /// <param name="letterPart">The letter part.</param>
-    /// <returns>The service instance.</returns>
-    public static T GetRequiredKeyedService<T>(
-        this IServiceProvider provider,
-        ReportingType reportingType,
-        LetterType letterType,
-        CodalVersion version,
-        LetterPart letterPart
+    /// <typeparam name="TCanonical">The canonical entity type that inherits from BaseEntity.</typeparam>
+    /// <typeparam name="TDto">The DTO type that implements ICodalMappingServiceMetadata.</typeparam>
+    /// <param name="provider">The service provider instance.</param>
+    /// <returns>The canonical mapping service instance for the specified types.</returns>
+    /// <exception cref="InvalidOperationException">Thrown when the provider doesn't support keyed services.</exception>
+    public static ICanonicalMappingService<TCanonical, TDto> GetRequiredKeyedService<TCanonical, TDto>(
+        this IServiceProvider provider
     )
-        where T : class
+        where TCanonical : BaseEntity<Guid>
+        where TDto : class, ICodalMappingServiceMetadata
     {
         if (provider is not IKeyedServiceProvider keyedServiceProvider)
         {
             throw new InvalidOperationException("Keyed Services Not Supported");
         }
 
-        string key = MappingServiceKey(reportingType, letterType, version, letterPart);
-        return (T)keyedServiceProvider.GetRequiredKeyedService(typeof(T), key);
+        string key = MappingServiceKeyFromDto<TDto>();
+
+        return keyedServiceProvider
+            .GetRequiredKeyedService<ICanonicalMappingService<TCanonical, TDto>>(key);
     }
 
     /// <summary>
@@ -89,12 +87,20 @@ public static class MappingServiceExtensions
     /// <returns>The metadata instance.</returns>
     private static ICodalMappingServiceMetadata GetMetadataFromDtoType(Type dtoType)
     {
-        if (Activator.CreateInstance(dtoType) is not ICodalMappingServiceMetadata instance)
-        {
-            throw new InvalidOperationException($"Cannot create metadata instance for DTO type {dtoType.Name}");
-        }
+        return _metadataCache.GetOrAdd(
+            dtoType,
+            static type =>
+            {
+                if (Activator.CreateInstance(type) is not ICodalMappingServiceMetadata instance)
+                {
+                    throw new InvalidOperationException(
+                        $"Cannot create metadata instance for DTO type {type.Name}"
+                    );
+                }
 
-        return instance;
+                return instance;
+            }
+        );
     }
 
     /// <summary>
@@ -107,6 +113,6 @@ public static class MappingServiceExtensions
     /// <returns>The service key string.</returns>
     private static string MappingServiceKey(ReportingType reportingType, LetterType letterType, CodalVersion version, LetterPart letterPart)
     {
-        return $"{reportingType}-{letterType}-{version}-{letterPart}";
+        return $"MappingService-{reportingType}-{letterType}-{version}-{letterPart}";
     }
 }

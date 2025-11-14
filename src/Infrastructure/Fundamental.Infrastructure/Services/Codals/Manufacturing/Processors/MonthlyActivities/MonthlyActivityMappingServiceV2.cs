@@ -3,7 +3,6 @@ using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
-using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
 
 namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.MonthlyActivities;
@@ -20,43 +19,36 @@ public class MonthlyActivityMappingServiceV2 : ICanonicalMappingService<Canonica
     /// <param name="symbol">The associated symbol entity.</param>
     /// <param name="statement">The statement response data.</param>
     /// <returns>The mapped canonical entity.</returns>
-    public async Task<CanonicalMonthlyActivity> MapToCanonicalAsync(
+    public Task<CanonicalMonthlyActivity> MapToCanonicalAsync(
         CodalMonthlyActivityV2 dto,
         Symbol symbol,
         GetStatementResponse statement
     )
     {
         // Extract fiscal year and report month from financial year data
-        int fiscalYear = ExtractFiscalYear(dto.ProductAndSales.FinancialYear);
-        int reportMonth = 1; // V2 and older versions report annual data
+        int fiscalYear = dto.ProductAndSales.FinancialYear.FiscalYear;
+        int reportMonth = dto.ProductAndSales.FinancialYear.ReportMonth;
 
         // Create canonical entity
-        CanonicalMonthlyActivity canonical = new CanonicalMonthlyActivity
-        {
-            Symbol = symbol,
-            TraceNo = statement.TracingNo,
-            Uri = statement.HtmlUrl,
-            Version = "2",
-            FiscalYear = fiscalYear,
-            Currency = IsoCurrency.IRR,
-            YearEndMonth = 12,
-            ReportMonth = reportMonth,
-            HasSubCompanySale = false // V2 doesn't have this field, default to false
-        };
+        CanonicalMonthlyActivity canonical = new(
+            Guid.NewGuid(),
+            symbol,
+            statement.TracingNo,
+            statement.HtmlUrl,
+            fiscalYear,
+            dto.ProductAndSales.FinancialYear.YearEndMonth,
+            reportMonth,
+            statement.PublishDateMiladi,
+            nameof(CodalVersion.V2)
+        );
 
         // Map ProductionAndSales
-        if (dto.ProductAndSales.FieldsItems != null)
-        {
-            canonical.ProductionAndSalesItems = MapProductionAndSalesV2(dto.ProductAndSales.FieldsItems);
-        }
+        canonical.ProductionAndSalesItems = MapProductionAndSalesV2(dto.ProductAndSales.FieldsItems);
 
         // Map descriptions
-        if (dto.ProductAndSales.Descriptions != null)
-        {
-            canonical.Descriptions = MapDescriptionsV2(dto.ProductAndSales.Descriptions);
-        }
+        canonical.Descriptions = MapDescriptionsV2(dto.ProductAndSales.Descriptions);
 
-        return canonical;
+        return Task.FromResult(canonical);
     }
 
     /// <summary>
@@ -76,21 +68,7 @@ public class MonthlyActivityMappingServiceV2 : ICanonicalMappingService<Canonica
         existing.Descriptions = updated.Descriptions;
     }
 
-    private static int ExtractFiscalYear(FinancialYearV2Dto financialYear)
-    {
-        if (!string.IsNullOrWhiteSpace(financialYear.PriodEndToDate) &&
-            financialYear.PriodEndToDate.Contains('/'))
-        {
-            string[] parts = financialYear.PriodEndToDate.Split('/');
-
-            if (parts.Length >= 1 && int.TryParse(parts[0], out int year))
-            {
-                return year + 1; // V2 fiscal year is PriodEndToDate year + 1
-            }
-        }
-
-        throw new ArgumentException("Invalid or missing PriodEndToDate in financial year data", nameof(financialYear));
-    }
+    // Removed legacy ExtractFiscalYear; logic now centralized in FinancialYearV2Dto.
 
     private static List<ProductionAndSalesItem> MapProductionAndSalesV2(List<FieldsItemV2Dto> fieldsItems)
     {
@@ -98,26 +76,52 @@ public class MonthlyActivityMappingServiceV2 : ICanonicalMappingService<Canonica
 
         foreach (FieldsItemV2Dto fieldItem in fieldsItems)
         {
-            // Map each product type (0, 1, 2, 3) to separate items
+            // Create a single item per product, mapping typeId to appropriate time period fields
+            ProductionAndSalesItem item = new()
+            {
+                ProductName = fieldItem.ProductName,
+                Unit = fieldItem.ProductUnit,
+                Category = ProductionSalesCategory.Internal, // V2 typically reports internal products
+                RowCode = ProductionSalesRowCode.Data,
+                Type = string.Empty // V2 doesn't have type field
+            };
+
+            // Map each typeId to the corresponding time period fields
             foreach (ProductV2Dto product in fieldItem.Products)
             {
-                ProductionAndSalesItem item = new()
+                switch (product.TypeId)
                 {
-                    ProductName = fieldItem.ProductName,
-                    Unit = fieldItem.ProductUnit,
-                    Category = (ProductionSalesCategory)product.TypeId,
-                    RowCode = ProductionSalesRowCode.Data,
-                    Type = string.Empty, // V2 doesn't have type field
+                    case 0: // از ابتدای سال مالی تا پایان دوره قبل (From beginning of fiscal year to end of previous period)
+                        item.YearToDateProductionQuantity = product.TotalProduction;
+                        item.YearToDateSalesQuantity = product.TotalSales;
+                        item.YearToDateSalesRate = product.SalesRate;
+                        item.YearToDateSalesAmount = product.SalesAmount;
+                        break;
 
-                    // V2 has simpler structure - map to year-to-date fields
-                    YearToDateProductionQuantity = product.TotalProduction,
-                    YearToDateSalesQuantity = product.TotalSales,
-                    YearToDateSalesRate = product.SalesRate,
-                    YearToDateSalesAmount = product.SalesAmount
-                };
+                    case 1: // از ابتدای سال مالی تا پایان دوره قبل - اصلاح شده (Corrected previous period)
+                        item.CorrectedYearToDateProductionQuantity = product.TotalProduction;
+                        item.CorrectedYearToDateSalesQuantity = product.TotalSales;
+                        item.CorrectedYearToDateSalesRate = product.SalesRate;
+                        item.CorrectedYearToDateSalesAmount = product.SalesAmount;
+                        break;
 
-                items.Add(item);
+                    case 2: // دوره یک ماهه مربوط به ماه جاری (Current month one-month period)
+                        item.MonthlyProductionQuantity = product.TotalProduction;
+                        item.MonthlySalesQuantity = product.TotalSales;
+                        item.MonthlySalesRate = product.SalesRate;
+                        item.MonthlySalesAmount = product.SalesAmount;
+                        break;
+
+                    case 3: // از ابتدای سال تا پایان دوره جاری (From beginning of year to end of current period)
+                        item.CumulativeToPeriodProductionQuantity = product.TotalProduction;
+                        item.CumulativeToPeriodSalesQuantity = product.TotalSales;
+                        item.CumulativeToPeriodSalesRate = product.SalesRate;
+                        item.CumulativeToPeriodSalesAmount = product.SalesAmount;
+                        break;
+                }
             }
+
+            items.Add(item);
         }
 
         return items;

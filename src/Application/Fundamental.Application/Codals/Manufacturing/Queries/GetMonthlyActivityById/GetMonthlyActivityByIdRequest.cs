@@ -8,4 +8,4 @@ namespace Fundamental.Application.Codals.Manufacturing.Queries.GetMonthlyActivit
 
 [HandlerCode(HandlerCode.GetMonthlyActivityById)]
 public sealed record GetMonthlyActivityByIdRequest(Guid Id)
-    : IRequest<Response<GetMonthlyActivitiesResultItem>>;
+    : IRequest<Response<GetMonthlyActivityDetailItem>>;

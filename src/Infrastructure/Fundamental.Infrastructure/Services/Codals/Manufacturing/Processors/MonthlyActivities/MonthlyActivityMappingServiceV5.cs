@@ -3,7 +3,6 @@ using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
-using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
 
 namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.MonthlyActivities;
@@ -11,7 +10,7 @@ namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.Mo
 /// <summary>
 /// Mapping service for Monthly Activity V5 data.
 /// </summary>
-public class MonthlyActivityMappingServiceV5 : IMonthlyActivityMappingService
+public class MonthlyActivityMappingServiceV5 : ICanonicalMappingService<CanonicalMonthlyActivity, CodalMonthlyActivityV5>
 {
     /// <summary>
     /// Maps a V5 Monthly Activity DTO to a canonical entity.
@@ -20,40 +19,43 @@ public class MonthlyActivityMappingServiceV5 : IMonthlyActivityMappingService
     /// <param name="symbol">The associated symbol entity.</param>
     /// <param name="statement">The statement response data.</param>
     /// <returns>The mapped canonical entity.</returns>
-    public async Task<CanonicalMonthlyActivity> MapToCanonicalAsync(
+    public Task<CanonicalMonthlyActivity> MapToCanonicalAsync(
         CodalMonthlyActivityV5 dto,
         Symbol symbol,
         GetStatementResponse statement
     )
     {
         // Extract fiscal year and report month from productionAndSales yearData
-        int fiscalYear = DateTime.Now.Year;
-        int reportMonth = 1;
-
-        if (dto.MonthlyActivity?.ProductionAndSales?.YearData?.Any() == true)
+        if (dto.MonthlyActivity?.ProductionAndSales?.YearData.Any() != true)
         {
-            // Find the yearData entry with the highest period (most recent month)
-            YearDatumV5 latestYearDatum = dto.MonthlyActivity.ProductionAndSales.YearData
-                .OrderByDescending(yd => yd.Period ?? 0)
-                .First();
-
-            fiscalYear = latestYearDatum.FiscalYear ?? latestYearDatum.ReportYear ?? DateTime.Now.Year;
-            reportMonth = latestYearDatum.Period ?? latestYearDatum.ReportMonth ?? 1;
+            throw new InvalidOperationException("No year data found in V5 DTO");
         }
 
-        // Create canonical entity
-        CanonicalMonthlyActivity canonical = new CanonicalMonthlyActivity
+        YearDatumV5 latestYearDatum = dto.MonthlyActivity.ProductionAndSales.YearData
+            .OrderByDescending(yd => yd.Period ?? 0)
+            .First();
+
+        if (latestYearDatum.FiscalYear is null && latestYearDatum.ReportYear is null)
         {
-            Symbol = symbol,
-            TraceNo = statement.TracingNo,
-            Uri = statement.HtmlUrl,
-            Version = dto.CodalVersion.ToString(),
-            FiscalYear = fiscalYear,
-            Currency = IsoCurrency.IRR,
-            YearEndMonth = 12,
-            ReportMonth = reportMonth,
-            HasSubCompanySale = false
-        };
+            throw new InvalidOperationException("Could not extract fiscal year from V5 data");
+        }
+
+        int fiscalYear = latestYearDatum.FiscalYear ?? latestYearDatum.ReportYear!.Value;
+        int reportMonth = latestYearDatum.ReportMonth ?? latestYearDatum.Period ?? 1;
+        int yearEndMonth = latestYearDatum.FiscalMonth ?? 12;
+
+        // Create canonical entity
+        CanonicalMonthlyActivity canonical = new(
+            Guid.NewGuid(),
+            symbol,
+            statement.TracingNo,
+            statement.HtmlUrl,
+            fiscalYear,
+            yearEndMonth,
+            reportMonth,
+            statement.PublishDateMiladi,
+            nameof(CodalVersion.V5)
+        );
 
         // Map all sections
         canonical.BuyRawMaterialItems = MapBuyRawMaterial(dto.MonthlyActivity?.BuyRawMaterial);
@@ -62,7 +64,7 @@ public class MonthlyActivityMappingServiceV5 : IMonthlyActivityMappingService
         canonical.CurrencyExchangeItems = MapCurrencyExchange(dto.MonthlyActivity?.SourceUsesCurrency);
         canonical.Descriptions = MapDescriptions(dto.MonthlyActivity?.ProductMonthlyActivityDesc1);
 
-        return canonical;
+        return Task.FromResult(canonical);
     }
 
     /// <summary>

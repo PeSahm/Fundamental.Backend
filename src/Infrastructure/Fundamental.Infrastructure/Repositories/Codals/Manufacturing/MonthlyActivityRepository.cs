@@ -11,18 +11,13 @@ namespace Fundamental.Infrastructure.Repositories.Codals.Manufacturing;
 
 public class MonthlyActivityRepository(FundamentalDbContext dbContext) : IMonthlyActivityRepository
 {
-    public async Task<Paginated<GetMonthlyActivitiesResultItem>> GetMonthlyActivitiesAsync(
+    public async Task<Paginated<GetMonthlyActivitiesListItem>> GetMonthlyActivitiesAsync(
         GetMonthlyActivitiesRequest request,
         CancellationToken cancellationToken
     )
     {
         IQueryable<CanonicalMonthlyActivity> query = dbContext.CanonicalMonthlyActivities
-            .AsNoTracking()
-            .Include(x => x.ProductionAndSalesItems)
-            .Include(x => x.BuyRawMaterialItems)
-            .Include(x => x.EnergyItems)
-            .Include(x => x.CurrencyExchangeItems)
-            .Include(x => x.Descriptions);
+            .AsNoTracking();
 
         if (request is { IsinList: not null } && request.IsinList.Length != 0)
         {
@@ -39,7 +34,7 @@ public class MonthlyActivityRepository(FundamentalDbContext dbContext) : IMonthl
             query = query.Where(x => x.ReportMonth.Month == request.ReportMonth);
         }
 
-        return await query.Select(x => new GetMonthlyActivitiesResultItem
+        return await query.Select(x => new GetMonthlyActivitiesListItem
             {
                 Id = x.Id,
                 Isin = x.Symbol.Isin,
@@ -53,12 +48,7 @@ public class MonthlyActivityRepository(FundamentalDbContext dbContext) : IMonthl
                 HasSubCompanySale = x.HasSubCompanySale,
                 TraceNo = x.TraceNo,
                 CreatedAt = x.CreatedAt,
-                UpdatedAt = x.UpdatedAt,
-                ProductionAndSalesItems = x.ProductionAndSalesItems,
-                BuyRawMaterialItems = x.BuyRawMaterialItems,
-                EnergyItems = x.EnergyItems,
-                CurrencyExchangeItems = x.CurrencyExchangeItems,
-                Descriptions = x.Descriptions
+                UpdatedAt = x.UpdatedAt
             })
             .ToPagingListAsync(request, "UpdatedAt desc", cancellationToken);
     }
@@ -91,7 +81,7 @@ public class MonthlyActivityRepository(FundamentalDbContext dbContext) : IMonthl
         return dbContext.CanonicalMonthlyActivities
             .AsNoTracking()
             .Where(sale => sale.Symbol.Isin == isin)
-            .Where(sale => (sale.FiscalYear.Year == fiscalYear.Year))
+            .Where(sale => sale.FiscalYear.Year == fiscalYear.Year)
             .Where(sale => sale.ReportMonth.Month == month.Month)
             .OrderByDescending(sale => sale.FiscalYear.Year)
             .ThenByDescending(x => x.ReportMonth.Month)

@@ -8,6 +8,7 @@ using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Repositories.Base;
+using Fundamental.Infrastructure.Extensions.Codals.Manufacturing;
 using Fundamental.Infrastructure.Persistence;
 using Fundamental.Infrastructure.Persistence.Repositories.Base;
 using Fundamental.Infrastructure.Repositories.Codals.Manufacturing;
@@ -157,41 +158,9 @@ public class TestFixture : IAsyncLifetime
         services.AddScoped<IMonthlyActivityRepository, MonthlyActivityRepository>();
 
         // Register Canonical Mapping Service Factory and Manufacturing Services
-        services.AddCanonicalMappingServiceFactory();
 
-        services
-            .AddKeyedScopedCanonicalMappingService<ICanonicalMappingService<CanonicalMonthlyActivity, CodalMonthlyActivityV1>,
-                MonthlyActivityMappingServiceV1, CodalMonthlyActivityV1>();
-        services
-            .AddKeyedScopedCanonicalMappingService<ICanonicalMappingService<CanonicalMonthlyActivity, CodalMonthlyActivityV2>,
-                MonthlyActivityMappingServiceV2, CodalMonthlyActivityV2>();
-        services
-            .AddKeyedScopedCanonicalMappingService<ICanonicalMappingService<CanonicalMonthlyActivity, CodalMonthlyActivityV3>,
-                MonthlyActivityMappingServiceV3, CodalMonthlyActivityV3>();
-        services
-            .AddKeyedScopedCanonicalMappingService<ICanonicalMappingService<CanonicalMonthlyActivity, CodalMonthlyActivity>,
-                MonthlyActivityMappingServiceV4, CodalMonthlyActivity>();
-        services
-            .AddKeyedScopedCanonicalMappingService<ICanonicalMappingService<CanonicalMonthlyActivity, CodalMonthlyActivityV5>,
-                MonthlyActivityMappingServiceV5, CodalMonthlyActivityV5>();
+        services.AddCodalMonthlyActivityMappingServices();
 
-        // // Manually register mapping services with correct keys
-        // services.AddKeyedScoped<ICanonicalMappingService<CanonicalMonthlyActivity, CodalMonthlyActivityV5>, MonthlyActivityMappingServiceV5>(
-        //     "Production-MonthlyActivity-V5-NotSpecified");
-        // services.AddKeyedScoped<ICanonicalMappingService<CanonicalMonthlyActivity, Fundamental.Application.Codals.Dto.MonthlyActivities.V4.CodalMonthlyActivity>, MonthlyActivityMappingServiceV4>(
-        //     "Production-MonthlyActivity-V4-NotSpecified");
-        // services.AddKeyedScoped<ICanonicalMappingService<CanonicalMonthlyActivity, Fundamental.Application.Codals.Dto.MonthlyActivities.V3.CodalMonthlyActivityV3>, MonthlyActivityMappingServiceV3>(
-        //     "Production-MonthlyActivity-V3-NotSpecified");
-        // services.AddKeyedScoped<ICanonicalMappingService<CanonicalMonthlyActivity, Fundamental.Application.Codals.Dto.MonthlyActivities.V2.CodalMonthlyActivityV2>, MonthlyActivityMappingServiceV2>(
-        //     "Production-MonthlyActivity-V2-NotSpecified");
-        // services.AddKeyedScoped<ICanonicalMappingService<CanonicalMonthlyActivity, Fundamental.Application.Codals.Dto.MonthlyActivities.V1.CodalMonthlyActivityV1>, MonthlyActivityMappingServiceV1>(
-        //     "Production-MonthlyActivity-V1-NotSpecified");
-
-        // Note: MediatR registration removed to avoid licensing issues in tests
-        // If needed, handlers can be tested directly
-
-        // Add infrastructure services (minimal setup for testing)
-        // services.AddInfrastructure(configuration);
     }
 
     private async Task InitializeDatabaseAsync()

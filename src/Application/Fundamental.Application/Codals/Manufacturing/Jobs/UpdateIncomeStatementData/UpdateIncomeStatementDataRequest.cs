@@ -6,4 +6,4 @@ using MediatR;
 namespace Fundamental.Application.Codals.Manufacturing.Jobs.UpdateIncomeStatementData;
 
 [HandlerCode(HandlerCode.UpdateIncomeStatementData)]
-public sealed record UpdateIncomeStatementDataRequest(int Days) : IRequest<Response>;
+public sealed record UpdateIncomeStatementDataRequest(uint DaysBefore) : IRequest<Response>;

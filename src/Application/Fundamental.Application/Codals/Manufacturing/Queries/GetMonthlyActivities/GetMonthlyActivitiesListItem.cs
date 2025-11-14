@@ -1,12 +1,10 @@
-﻿using Fundamental.Domain.Codals.Manufacturing.Entities;
-
 namespace Fundamental.Application.Codals.Manufacturing.Queries.GetMonthlyActivities;
 
 /// <summary>
-/// Result item for Monthly Activity queries based on CanonicalMonthlyActivity entity.
-/// Contains basic metadata and collections of detailed items.
+/// List item for Monthly Activity queries.
+/// Contains basic metadata without detailed collections.
 /// </summary>
-public sealed class GetMonthlyActivitiesResultItem
+public sealed class GetMonthlyActivitiesListItem
 {
     /// <summary>
     /// Unique identifier of the monthly activity report.
@@ -72,29 +70,4 @@ public sealed class GetMonthlyActivitiesResultItem
     /// Last update timestamp.
     /// </summary>
     public required DateTime? UpdatedAt { get; init; }
-
-    /// <summary>
-    /// Collection of production and sales items (products, services, internal/export sales).
-    /// </summary>
-    public ICollection<ProductionAndSalesItem> ProductionAndSalesItems { get; init; } = new List<ProductionAndSalesItem>();
-
-    /// <summary>
-    /// Collection of raw material purchase items (domestic and imported materials).
-    /// </summary>
-    public ICollection<BuyRawMaterialItem> BuyRawMaterialItems { get; init; } = new List<BuyRawMaterialItem>();
-
-    /// <summary>
-    /// Collection of energy consumption items (electricity, gas, etc.).
-    /// </summary>
-    public ICollection<EnergyItem> EnergyItems { get; init; } = new List<EnergyItem>();
-
-    /// <summary>
-    /// Collection of currency exchange items (foreign currency sources and uses).
-    /// </summary>
-    public ICollection<CurrencyExchangeItem> CurrencyExchangeItems { get; init; } = new List<CurrencyExchangeItem>();
-
-    /// <summary>
-    /// Collection of descriptive text items and notes.
-    /// </summary>
-    public ICollection<MonthlyActivityDescription> Descriptions { get; init; } = new List<MonthlyActivityDescription>();
 }

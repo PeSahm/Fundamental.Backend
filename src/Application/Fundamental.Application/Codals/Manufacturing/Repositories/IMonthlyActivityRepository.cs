@@ -7,7 +7,7 @@ namespace Fundamental.Application.Codals.Manufacturing.Repositories;
 
 public interface IMonthlyActivityRepository
 {
-    Task<Paginated<GetMonthlyActivitiesResultItem>> GetMonthlyActivitiesAsync(
+    Task<Paginated<GetMonthlyActivitiesListItem>> GetMonthlyActivitiesAsync(
         GetMonthlyActivitiesRequest request,
         CancellationToken cancellationToken
     );

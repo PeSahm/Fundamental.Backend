@@ -49,14 +49,11 @@ public class MonthlyActivityV5Processor(
             return;
         }
 
-        // Extract fiscal year and report month from productionAndSales yearData
-        // Find the yearData entry with the highest period (most recent month) to determine current reporting period
-        YearDatumV5? yearDatum = monthlyActivity.MonthlyActivity.ProductionAndSales?.YearData
-            .Find(x => x.ColumnId == ((int)ProductionAndSalesV5ColumnId.SaleThisMonth).ToString());
-
-        if (yearDatum is null || yearDatum.FiscalYear is null || yearDatum.ReportMonth is null)
+        // Validation is delegated to mapping service; ensure YearData exists minimally.
+        if (monthlyActivity.MonthlyActivity.ProductionAndSales?.YearData is null ||
+            monthlyActivity.MonthlyActivity.ProductionAndSales.YearData.Count == 0)
         {
-            Log.Warning("Could not extract fiscal year or report month from V5 data for TraceNo: {TraceNo}", statement.TracingNo);
+            Log.Warning("No year data found in V5 JSON for TraceNo: {TraceNo}", statement.TracingNo);
             return;
         }
 
@@ -84,23 +81,25 @@ public class MonthlyActivityV5Processor(
 
         if (existingRawJson == null)
         {
-            RawMonthlyActivityJson rawJson = new()
-            {
-                TraceNo = (long)statement.TracingNo,
-                Symbol = symbol,
-                PublishDate = statement.PublishDateMiladi,
-                Version = CodalVersion.V5,
-                RawJson = model.Json
-            };
+            RawMonthlyActivityJson rawJson = new(
+                id: Guid.NewGuid(),
+                traceNo: (long)statement.TracingNo,
+                symbol: symbol,
+                publishDate: statement.PublishDateMiladi,
+                version: CodalVersion.V5,
+                rawJson: model.Json,
+                createdAt: DateTime.UtcNow);
             dbContext.Add(rawJson);
         }
         else
         {
             if (existingRawJson.TraceNo <= (long)statement.TracingNo)
             {
-                existingRawJson.TraceNo = (long)statement.TracingNo;
-                existingRawJson.PublishDate = statement.PublishDateMiladi;
-                existingRawJson.RawJson = JsonConvert.SerializeObject(monthlyActivity.MonthlyActivity, setting);
+                existingRawJson.Update(
+                    traceNo: (long)statement.TracingNo,
+                    publishDate: statement.PublishDateMiladi,
+                    rawJson: JsonConvert.SerializeObject(monthlyActivity.MonthlyActivity, setting),
+                    updatedAt: DateTime.UtcNow);
             }
         }
 
@@ -108,8 +107,8 @@ public class MonthlyActivityV5Processor(
         CanonicalMonthlyActivity? existingCanonical = await dbContext.CanonicalMonthlyActivities
             .FirstOrDefaultAsync(
                 x => x.Symbol.Isin == statement.Isin &&
-                     x.FiscalYear.Year == yearDatum.FiscalYear &&
-                     x.ReportMonth.Month == yearDatum.ReportMonth,
+                     x.FiscalYear.Year == canonical.FiscalYear.Year &&
+                     x.ReportMonth.Month == canonical.ReportMonth.Month,
                 cancellationToken);
 
         if (existingCanonical == null)
@@ -128,7 +127,7 @@ public class MonthlyActivityV5Processor(
         Log.Information(
             "Successfully processed MonthlyActivity V5 for Symbol: {Isin}, FiscalYear: {FiscalYear}, ReportMonth: {ReportMonth}",
             statement.Isin,
-            yearDatum.FiscalYear,
-            yearDatum.ReportMonth);
+            canonical.FiscalYear.Year,
+            canonical.ReportMonth.Month);
     }
 }

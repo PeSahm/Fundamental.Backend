@@ -14,11 +14,44 @@ namespace Fundamental.Domain.Codals.Manufacturing.Entities;
 /// </summary>
 public class CanonicalMonthlyActivity : BaseEntity<Guid>
 {
+    public CanonicalMonthlyActivity(
+        Guid id,
+        Symbol symbol,
+        ulong traceNo,
+        string uri,
+        FiscalYear fiscalYear,
+        StatementMonth yearEndMonth,
+        StatementMonth reportMonth,
+        DateTime publishDate,
+        string version
+    )
+    {
+        Id = id;
+        Symbol = symbol;
+        TraceNo = traceNo;
+        Uri = uri;
+        FiscalYear = fiscalYear;
+        YearEndMonth = yearEndMonth;
+        ReportMonth = reportMonth;
+        PublishDate = publishDate;
+        Version = version;
+        BuyRawMaterialItems = new List<BuyRawMaterialItem>();
+        ProductionAndSalesItems = new List<ProductionAndSalesItem>();
+        EnergyItems = new List<EnergyItem>();
+        CurrencyExchangeItems = new List<CurrencyExchangeItem>();
+        Descriptions = new List<MonthlyActivityDescription>();
+        CreatedAt = DateTime.UtcNow;
+    }
+
+    protected CanonicalMonthlyActivity()
+    {
+    }
+
     /// <summary>
     /// Version of the Monthly Activity data (e.g., "5" for V5, "4" for V4, etc.).
     /// Indicates which CODAL format version this data was extracted from.
     /// </summary>
-    public string Version { get; set; }
+    public string Version { get; private set; }
 
     /// <summary>
     /// Publish date of the monthly activity report (Gregorian).

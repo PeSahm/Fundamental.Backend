@@ -9,15 +9,15 @@ namespace Fundamental.Application.Codals.Manufacturing.Queries.GetMonthlyActivit
 
 public sealed class
     GetMonthlyActivityByIdQueryHandler(IRepository repository)
-    : IRequestHandler<GetMonthlyActivityByIdRequest, Response<GetMonthlyActivitiesResultItem>>
+    : IRequestHandler<GetMonthlyActivityByIdRequest, Response<GetMonthlyActivityDetailItem>>
 {
-    public async Task<Response<GetMonthlyActivitiesResultItem>> Handle(
+    public async Task<Response<GetMonthlyActivityDetailItem>> Handle(
         GetMonthlyActivityByIdRequest request,
         CancellationToken cancellationToken
     )
     {
-        GetMonthlyActivitiesResultItem? result = await repository.FirstOrDefaultAsync(
-            new MonthlyActivityResultItemSpec()
+        GetMonthlyActivityDetailItem? result = await repository.FirstOrDefaultAsync(
+            new MonthlyActivityDetailItemSpec()
                 .WhereId(request.Id),
             cancellationToken
         );

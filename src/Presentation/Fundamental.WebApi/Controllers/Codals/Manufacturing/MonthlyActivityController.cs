@@ -1,7 +1,6 @@
 ﻿using ErrorHandling.AspNetCore;
 using Fundamental.Application.Codals.Manufacturing.Queries.GetMonthlyActivities;
 using Fundamental.Application.Codals.Manufacturing.Queries.GetMonthlyActivityById;
-using Fundamental.Application.Common.Extensions;
 using Fundamental.Domain.Common.Dto;
 using Fundamental.ErrorHandling;
 using Fundamental.Web.Common.Swagger;
@@ -25,7 +24,7 @@ public class MonthlyActivityController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<Response<Paginated<GetMonthlyActivitiesResultItem>>> GetMonthlyActivities(
+    public async Task<Response<Paginated<GetMonthlyActivitiesListItem>>> GetMonthlyActivities(
         [FromQuery] GetMonthlyActivitiesRequest request
     )
     {
@@ -34,7 +33,7 @@ public class MonthlyActivityController : ControllerBase
 
     [HttpGet("{id}")]
     [SwaggerRequestType(typeof(GetMonthlyActivityByIdRequest))]
-    public async Task<Response<GetMonthlyActivitiesResultItem>> GetMonthlyActivity(
+    public async Task<Response<GetMonthlyActivityDetailItem>> GetMonthlyActivity(
         [FromRoute] Guid id
     )
     {

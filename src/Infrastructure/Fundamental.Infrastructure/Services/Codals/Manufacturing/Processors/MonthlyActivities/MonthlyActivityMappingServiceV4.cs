@@ -4,7 +4,6 @@ using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
-using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
 
 namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.MonthlyActivities;
@@ -21,7 +20,7 @@ public class MonthlyActivityMappingServiceV4 : ICanonicalMappingService<Canonica
     /// <param name="symbol">The associated symbol entity.</param>
     /// <param name="statement">The statement response data.</param>
     /// <returns>The mapped canonical entity.</returns>
-    public async Task<CanonicalMonthlyActivity> MapToCanonicalAsync(
+    public Task<CanonicalMonthlyActivity> MapToCanonicalAsync(
         CodalMonthlyActivity dto,
         Symbol symbol,
         GetStatementResponse statement
@@ -29,40 +28,44 @@ public class MonthlyActivityMappingServiceV4 : ICanonicalMappingService<Canonica
     {
         if (dto.MonthlyActivity is null)
         {
-            throw new ArgumentException("MonthlyActivity is null in V4 DTO", nameof(dto));
+            throw new InvalidOperationException("MonthlyActivity is null in V4 DTO");
         }
 
         if (dto.MonthlyActivity.ProductionAndSales is null)
         {
-            throw new ArgumentException("ProductionAndSales is null in V4 DTO", nameof(dto));
+            throw new InvalidOperationException("ProductionAndSales is null in V4 DTO");
+        }
+
+        if (dto.MonthlyActivity.ProductionAndSales.YearData is null)
+        {
+            throw new InvalidOperationException("YearData is null in V4 DTO");
         }
 
         if (dto.MonthlyActivity.ProductionAndSales.YearData.Count == 0)
         {
-            throw new ArgumentException("No year data found in V4 DTO", nameof(dto));
+            throw new InvalidOperationException("No year data found in V4 DTO");
         }
 
         YearDatum? yearDatum = dto.MonthlyActivity.ProductionAndSales.YearData
             .Find(x => x.ColumnId == SaleColumnId.ProduceThisMonth);
 
-        if (yearDatum is null || yearDatum.FiscalYear is null || yearDatum.ReportMonth is null)
+        if (yearDatum is null || yearDatum.FiscalYear is null || yearDatum.FiscalMonth is null || yearDatum.ReportMonth is null)
         {
-            throw new ArgumentException("Could not extract fiscal year or report month from V4 data", nameof(dto));
+            throw new InvalidOperationException("Could not extract fiscal year or report month from V4 data");
         }
 
         // Create canonical entity
-        CanonicalMonthlyActivity canonical = new CanonicalMonthlyActivity
-        {
-            Symbol = symbol,
-            TraceNo = statement.TracingNo,
-            Uri = statement.HtmlUrl,
-            Version = "4",
-            FiscalYear = yearDatum.FiscalYear.Value,
-            Currency = IsoCurrency.IRR,
-            YearEndMonth = 12,
-            ReportMonth = yearDatum.ReportMonth.Value,
-            HasSubCompanySale = false // Default value
-        };
+        CanonicalMonthlyActivity canonical = new(
+            Guid.NewGuid(),
+            symbol,
+            statement.TracingNo,
+            statement.HtmlUrl,
+            yearDatum.FiscalYear.Value,
+            yearDatum.FiscalMonth,
+            yearDatum.ReportMonth,
+            statement.PublishDateMiladi,
+            nameof(CodalVersion.V4)
+        );
 
         // Map ProductionAndSales
         if (dto.MonthlyActivity.ProductionAndSales?.RowItems != null)
@@ -70,19 +73,19 @@ public class MonthlyActivityMappingServiceV4 : ICanonicalMappingService<Canonica
             canonical.ProductionAndSalesItems = MapProductionAndSalesV4(dto.MonthlyActivity.ProductionAndSales.RowItems);
         }
 
-        // Map BuyRawMaterial (V4 has this section)
-        if (dto.MonthlyActivity.BuyRawMaterial?.RowItems != null)
+        // Map Energy (V4 has this section)
+        if (dto.MonthlyActivity.Energy?.RowItems != null)
         {
-            canonical.BuyRawMaterialItems = MapBuyRawMaterialV4(dto.MonthlyActivity.BuyRawMaterial.RowItems);
+            canonical.EnergyItems = MapEnergyV4(dto.MonthlyActivity.Energy.RowItems);
         }
 
         // Map descriptions
-        if (dto.MonthlyActivity.ProductMonthlyActivityDesc1?.RowItems != null)
+        if (dto.MonthlyActivity.ProductMonthlyActivityDesc1?.RowItems.Count > 0)
         {
             canonical.Descriptions = MapDescriptionsV4(dto.MonthlyActivity.ProductMonthlyActivityDesc1.RowItems);
         }
 
-        return canonical;
+        return Task.FromResult(canonical);
     }
 
     /// <summary>
@@ -111,8 +114,8 @@ public class MonthlyActivityMappingServiceV4 : ICanonicalMappingService<Canonica
             .Where(x => !string.IsNullOrEmpty(x.Value11971)) // Has product name
             .Select(x => new ProductionAndSalesItem
             {
-                ProductName = x.Value11971 ?? string.Empty,
-                Unit = x.Value11972 ?? string.Empty,
+                ProductName = x.Value11971,
+                Unit = x.Value11972,
                 YearToDateProductionQuantity = x.Value11973,
                 YearToDateSalesQuantity = x.Value11974,
                 YearToDateSalesRate = x.Value11975,
@@ -133,7 +136,7 @@ public class MonthlyActivityMappingServiceV4 : ICanonicalMappingService<Canonica
                 PreviousYearSalesQuantity = x.Value119723,
                 PreviousYearSalesRate = x.Value119724,
                 PreviousYearSalesAmount = x.Value119725,
-                Type = x.Value119726 ?? string.Empty,
+                Type = x.Value119726,
 
                 // Row classification metadata - map from V4 enums to domain enums
                 RowCode = x.RowCode.HasValue
@@ -146,37 +149,52 @@ public class MonthlyActivityMappingServiceV4 : ICanonicalMappingService<Canonica
             .ToList();
     }
 
-    private static List<BuyRawMaterialItem> MapBuyRawMaterialV4(List<RowItem> rowItems)
+    private static List<EnergyItem> MapEnergyV4(List<EnergyRowItem> rowItems)
     {
         return rowItems
-            .Where(x => !string.IsNullOrEmpty(x.Value34641)) // Has material name
-            .Select(x => new BuyRawMaterialItem
+            .Where(x => !string.IsNullOrEmpty(x.Value31951))
+            .Select(x => new EnergyItem
             {
-                MaterialName = x.Value34641 ?? string.Empty,
-                Unit = x.Value34642 ?? string.Empty,
-                YearToDateQuantity = x.Value34643,
-                YearToDateRate = x.Value34644,
-                YearToDateAmount = x.Value34645,
-                CorrectedYearToDateQuantity = x.Value34649,
-                CorrectedYearToDateRate = x.Value346410,
-                CorrectedYearToDateAmount = x.Value346411,
-                MonthlyPurchaseQuantity = x.Value346412,
-                MonthlyPurchaseRate = x.Value346413,
-                MonthlyPurchaseAmount = x.Value346414,
-                CumulativeToPeriodQuantity = x.Value346415,
-                CumulativeToPeriodRate = x.Value346416,
-                CumulativeToPeriodAmount = x.Value346417,
-                PreviousYearQuantity = x.Value346418,
-                PreviousYearRate = x.Value346419,
-                PreviousYearAmount = x.Value346420,
+                // Descriptive fields: value_31951-31954
+                Industry = x.Value31951,
+                Classification = x.Value31952,
+                EnergyType = x.Value31953,
+                Unit = x.Value31954,
 
-                // Row classification metadata
+                // Year-to-date values (consumption/rate/cost): value_31955-31957
+                YearToDateConsumption = x.Value31955,
+                YearToDateRate = x.Value31956,
+                YearToDateCost = x.Value31957,
+
+                // Corrected year-to-date values (consumption/rate/cost): value_319511-319513
+                CorrectedYearToDateConsumption = x.Value319511,
+                CorrectedYearToDateRate = x.Value319512,
+                CorrectedYearToDateCost = x.Value319513,
+
+                // Monthly values (consumption/rate/cost): value_319514-319516
+                MonthlyConsumption = x.Value319514,
+                MonthlyRate = x.Value319515,
+                MonthlyCost = x.Value319516,
+
+                // Cumulative to period values (consumption/rate/cost): value_319517-319519
+                CumulativeToPeriodConsumption = x.Value319517,
+                CumulativeToPeriodRate = x.Value319518,
+                CumulativeToPeriodCost = x.Value319519,
+
+                // Previous year values (consumption/rate/cost): value_319520-319522
+                PreviousYearConsumption = x.Value319520,
+                PreviousYearRate = x.Value319521,
+                PreviousYearCost = x.Value319522,
+
+                // Forecast and explanation: value_319523-319524
+                ForecastYearConsumption = x.Value319523,
+                ConsumptionChangeExplanation = x.Value319524,
+
+                // Classification metadata
                 RowCode = x.RowCode.HasValue
-                    ? (BuyRawMaterialRowCode)x.RowCode.Value
-                    : BuyRawMaterialRowCode.Data,
-                Category = x.Category.HasValue
-                    ? (BuyRawMaterialCategory)x.Category.Value
-                    : BuyRawMaterialCategory.Domestic
+                    ? (EnergyRowCode)x.RowCode.Value
+                    : EnergyRowCode.Data,
+                Category = x.Category ?? 0
             })
             .ToList();
     }
@@ -188,9 +206,9 @@ public class MonthlyActivityMappingServiceV4 : ICanonicalMappingService<Canonica
             .Select(x => new MonthlyActivityDescription
             {
                 RowCode = (int?)x.RowCode,
-                Description = x.Value11991 ?? string.Empty,
+                Description = x.Value11991,
                 Category = (int?)x.Category,
-                RowType = x.RowType ?? string.Empty
+                RowType = x.RowType
             })
             .ToList();
     }

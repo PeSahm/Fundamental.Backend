@@ -1,6 +1,10 @@
 using FluentAssertions;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
+using Fundamental.Domain.Codals.ValueObjects;
+using Fundamental.Domain.Common.Enums;
+using Fundamental.Domain.Symbols.Entities;
+using Fundamental.Domain.Symbols.Enums;
 using Xunit;
 
 namespace Domain.UnitTests.Codals.Manufacturing;
@@ -164,69 +168,98 @@ public class CanonicalMonthlyActivityTests
 
     private static CanonicalMonthlyActivity CreateTestMonthlyActivity()
     {
-        return new CanonicalMonthlyActivity
+        var symbol = new Symbol(
+            Guid.NewGuid(),
+            "ISIN12345678",
+            "TSE123",
+            "Test Company",
+            "TST",
+            "Test Company Title",
+            "Test Company",
+            "TST",
+            "شرکت تست",
+            null,
+            1000000,
+            "01",
+            "001",
+            ProductType.Equity,
+            ExchangeType.TSE,
+            null,
+            DateTime.UtcNow);
+
+        var monthlyActivity = new CanonicalMonthlyActivity(
+            Guid.NewGuid(),
+            symbol,
+            123456,
+            "http://test.codal.ir",
+            new FiscalYear(1403),
+            new StatementMonth(12),
+            new StatementMonth(9),
+            DateTime.UtcNow,
+            "5");
+
+        monthlyActivity.ProductionAndSalesItems = new List<ProductionAndSalesItem>
         {
-            ProductionAndSalesItems = new List<ProductionAndSalesItem>
+            // Internal products (data rows)
+            new()
             {
-                // Internal products (data rows)
-                new()
-                {
-                    ProductName = "کلینکر",
-                    RowCode = ProductionSalesRowCode.Data,
-                    Category = ProductionSalesCategory.Internal,
-                    YearToDateSalesAmount = 5000
-                },
-                new()
-                {
-                    ProductName = "سیمان",
-                    RowCode = ProductionSalesRowCode.Data,
-                    Category = ProductionSalesCategory.Internal,
-                    YearToDateSalesAmount = 5000
-                },
+                ProductName = "کلینکر",
+                RowCode = ProductionSalesRowCode.Data,
+                Category = ProductionSalesCategory.Internal,
+                YearToDateSalesAmount = 5000
+            },
+            new()
+            {
+                ProductName = "سیمان",
+                RowCode = ProductionSalesRowCode.Data,
+                Category = ProductionSalesCategory.Internal,
+                YearToDateSalesAmount = 5000
+            },
 
-                // Export products (data rows)
-                new()
-                {
-                    ProductName = "سیمان صادراتی",
-                    RowCode = ProductionSalesRowCode.Data,
-                    Category = ProductionSalesCategory.Export,
-                    YearToDateSalesAmount = 10000
-                },
-                new()
-                {
-                    ProductName = "کلینکر صادراتی",
-                    RowCode = ProductionSalesRowCode.Data,
-                    Category = ProductionSalesCategory.Export,
-                    YearToDateSalesAmount = 10000
-                },
+            // Export products (data rows)
+            new()
+            {
+                ProductName = "سیمان صادراتی",
+                RowCode = ProductionSalesRowCode.Data,
+                Category = ProductionSalesCategory.Export,
+                YearToDateSalesAmount = 10000
+            },
+            new()
+            {
+                ProductName = "کلینکر صادراتی",
+                RowCode = ProductionSalesRowCode.Data,
+                Category = ProductionSalesCategory.Export,
+                YearToDateSalesAmount = 10000
+            },
 
-                // Internal sale summary (blue box)
-                new()
-                {
-                    ProductName = "جمع فروش داخلی",
-                    RowCode = ProductionSalesRowCode.InternalSale,
-                    Category = ProductionSalesCategory.Sum,
-                    YearToDateSalesAmount = 10000
-                },
+            // Internal sale summary (blue box)
+            new()
+            {
+                ProductName = "جمع فروش داخلی",
+                RowCode = ProductionSalesRowCode.InternalSale,
+                Category = ProductionSalesCategory.Sum,
+                YearToDateSalesAmount = 10000
+            },
 
-                // Export sale summary (red box)
-                new()
-                {
-                    ProductName = "جمع فروش صادراتی",
-                    RowCode = ProductionSalesRowCode.ExportSale,
-                    Category = ProductionSalesCategory.Sum,
-                    YearToDateSalesAmount = 20000
-                },
+            // Export sale summary (red box)
+            new()
+            {
+                ProductName = "جمع فروش صادراتی",
+                RowCode = ProductionSalesRowCode.ExportSale,
+                Category = ProductionSalesCategory.Sum,
+                YearToDateSalesAmount = 20000
+            },
 
-                // Total summary (green box)
-                new()
-                {
-                    ProductName = "جمع",
-                    RowCode = ProductionSalesRowCode.TotalSum,
-                    Category = ProductionSalesCategory.Sum,
-                    YearToDateSalesAmount = 30000
-                }
+            // Total summary (green box)
+            new()
+            {
+                ProductName = "جمع",
+                RowCode = ProductionSalesRowCode.TotalSum,
+                Category = ProductionSalesCategory.Sum,
+                YearToDateSalesAmount = 30000
             }
         };
+
+        return monthlyActivity;
     }
 }

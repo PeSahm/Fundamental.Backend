@@ -58,23 +58,25 @@ public class MonthlyActivityV1Processor(
         // Store raw JSON
         if (existingRawJson == null)
         {
-            RawMonthlyActivityJson rawJson = new()
-            {
-                TraceNo = (long)statement.TracingNo,
-                Symbol = symbol,
-                PublishDate = statement.PublishDateMiladi,
-                Version = CodalVersion.V1,
-                RawJson = model.Json
-            };
+            RawMonthlyActivityJson rawJson = new(
+                id: Guid.NewGuid(),
+                traceNo: (long)statement.TracingNo,
+                symbol: symbol,
+                publishDate: statement.PublishDateMiladi,
+                version: CodalVersion.V1,
+                rawJson: model.Json,
+                createdAt: DateTime.UtcNow);
             dbContext.Add(rawJson);
         }
         else
         {
             if (existingRawJson.TraceNo <= (long)statement.TracingNo)
             {
-                existingRawJson.TraceNo = (long)statement.TracingNo;
-                existingRawJson.PublishDate = statement.PublishDateMiladi;
-                existingRawJson.RawJson = model.Json;
+                existingRawJson.Update(
+                    traceNo: (long)statement.TracingNo,
+                    publishDate: statement.PublishDateMiladi,
+                    rawJson: model.Json,
+                    updatedAt: DateTime.UtcNow);
             }
         }
 
@@ -87,8 +89,8 @@ public class MonthlyActivityV1Processor(
         canonical.PublishDate = statement.PublishDateMiladi.ToUniversalTime();
 
         // Extract fiscal year and report month for existing record check
-        int fiscalYear = MonthlyActivityMappingServiceV1.ExtractFiscalYear(monthlyActivity.FinancialYear);
-        int reportMonth = 1; // V1 reports annual data
+        int fiscalYear = canonical.FiscalYear;
+        int reportMonth = canonical.ReportMonth;
         CanonicalMonthlyActivity? existingCanonical = await dbContext.CanonicalMonthlyActivities
             .FirstOrDefaultAsync(
                 x => x.Symbol.Isin == statement.Isin &&

@@ -10,6 +10,7 @@ using Fundamental.Domain.Common.Dto;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
 using Fundamental.ErrorHandling;
+using Fundamental.Infrastructure.Services.Codals.Manufacturing.Detectors;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.MonthlyActivities;
 using Fundamental.IntegrationTests.TestData;
 using IntegrationTests.Shared;
@@ -253,16 +254,19 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id && x.TraceNo == 123456789UL);
 
         storedEntity.Should().NotBeNull();
-        storedEntity!.Version.Should().Be("4");
+        storedEntity!.Version.Should().Be(nameof(CodalVersion.V4));
         storedEntity.FiscalYear.Year.Should().Be(1402);
         storedEntity.ReportMonth.Month.Should().Be(1);
 
-        // V4 should have production and sales, but not energy or currency exchange
+        // V4 should have production and sales, energy, and descriptions
+        // V4 does NOT have buyRawMaterial or sourceUsesCurrency (those are V5-only)
         storedEntity.ProductionAndSalesItems.Should().NotBeEmpty();
-        storedEntity.BuyRawMaterialItems.Should().BeEmpty();
-        storedEntity.EnergyItems.Should().BeEmpty();
-        storedEntity.CurrencyExchangeItems.Should().BeEmpty();
+        storedEntity.EnergyItems.Should().NotBeEmpty();
         storedEntity.Descriptions.Should().NotBeEmpty();
+
+        // V5-only sections
+        storedEntity.BuyRawMaterialItems.Should().BeEmpty();
+        storedEntity.CurrencyExchangeItems.Should().BeEmpty();
     }
 
     [Fact]
@@ -293,9 +297,9 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id && x.TraceNo == 123456789UL);
 
         storedEntity.Should().NotBeNull();
-        storedEntity!.Version.Should().Be("3");
-        storedEntity.FiscalYear.Year.Should().Be(1401);
-        storedEntity.ReportMonth.Month.Should().Be(1);
+        storedEntity!.Version.Should().Be(nameof(CodalVersion.V3));
+        storedEntity.FiscalYear.Year.Should().Be(1400);
+        storedEntity.ReportMonth.Month.Should().Be(11);
 
         // V3 should have production and sales, descriptions, but not energy or currency exchange
         storedEntity.ProductionAndSalesItems.Should().NotBeEmpty();
@@ -333,9 +337,9 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id && x.TraceNo == 123456789UL);
 
         storedEntity.Should().NotBeNull();
-        storedEntity!.Version.Should().Be("2");
-        storedEntity.FiscalYear.Year.Should().Be(1399);
-        storedEntity.ReportMonth.Month.Should().Be(1);
+        storedEntity!.Version.Should().Be(nameof(CodalVersion.V2));
+        storedEntity.FiscalYear.Year.Should().Be(1398);
+        storedEntity.ReportMonth.Month.Should().Be(8);
 
         // V2 should have basic production and sales and descriptions
         storedEntity.ProductionAndSalesItems.Should().NotBeEmpty();
@@ -373,9 +377,9 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id && x.TraceNo == 123456789UL);
 
         storedEntity.Should().NotBeNull();
-        storedEntity!.Version.Should().Be("1");
-        storedEntity.FiscalYear.Year.Should().Be(1398);
-        storedEntity.ReportMonth.Month.Should().Be(1);
+        storedEntity!.Version.Should().Be(nameof(CodalVersion.V1));
+        storedEntity.FiscalYear.Year.Should().Be(1396);
+        storedEntity.ReportMonth.Month.Should().Be(6);
 
         // V1 should have minimal data
         storedEntity.ProductionAndSalesItems.Should().NotBeEmpty();
@@ -788,7 +792,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
         // Verify total matches sum of all data rows (within rounding tolerance)
         var dataRows = storedEntity.GetEnergyDataRows().ToList();
         var calculatedTotal = dataRows.Sum(x => x.YearToDateCost ?? 0);
-        
+
         if (totalSum.YearToDateCost.HasValue && calculatedTotal > 0)
         {
             // Allow small rounding differences
@@ -1088,7 +1092,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
             PageSize = 20,
             PageNumber = 1
         };
-        Response<Paginated<GetMonthlyActivitiesResultItem>> response =
+        Response<Paginated<GetMonthlyActivitiesListItem>> response =
             await mediator.Send(request, CancellationToken.None);
 
         // Assert
@@ -1096,12 +1100,8 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
         response.Data.Should().NotBeNull();
         response.Data!.Items.Should().NotBeEmpty();
 
-        GetMonthlyActivitiesResultItem item = response.Data.Items.First();
+        GetMonthlyActivitiesListItem item = response.Data.Items.First();
         item.Isin.Should().Be("IRO1SROD0001");
-        item.ProductionAndSalesItems.Should().NotBeEmpty();
-        item.BuyRawMaterialItems.Should().NotBeEmpty();
-        item.EnergyItems.Should().NotBeEmpty();
-        item.CurrencyExchangeItems.Should().NotBeEmpty();
     }
 
     [Fact]
@@ -1134,7 +1134,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
             PageSize = 20,
             PageNumber = 1
         };
-        Response<Paginated<GetMonthlyActivitiesResultItem>> response =
+        Response<Paginated<GetMonthlyActivitiesListItem>> response =
             await mediator.Send(request, CancellationToken.None);
 
         // Assert
@@ -1172,7 +1172,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
 
         // Act
         GetMonthlyActivityByIdRequest request = new(entity!.Id);
-        Response<GetMonthlyActivitiesResultItem> response =
+        Response<GetMonthlyActivityDetailItem> response =
             await mediator.Send(request, CancellationToken.None);
 
         // Assert
@@ -1196,7 +1196,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
 
         // Act
         GetMonthlyActivityByIdRequest request = new(nonExistentId);
-        Response<GetMonthlyActivitiesResultItem> response =
+        Response<GetMonthlyActivityDetailItem> response =
             await mediator.Send(request, CancellationToken.None);
 
         // Assert
@@ -1205,7 +1205,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
     }
 
     [Fact]
-    public async Task GetMonthlyActivities_ShouldIncludeAllCollections()
+    public async Task GetMonthlyActivityById_ShouldIncludeAllCollections()
     {
         // Arrange
         await CleanMonthlyActivityData();
@@ -1224,20 +1224,21 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
         GetStatementJsonResponse jsonResponse = CreateJsonResponse(testJson);
         await processor.Process(statement, jsonResponse, CancellationToken.None);
 
+        // Get the entity ID
+        CanonicalMonthlyActivity? entity = await _fixture.DbContext.CanonicalMonthlyActivities
+            .FirstOrDefaultAsync();
+        entity.Should().NotBeNull();
+
         IMediator mediator = _fixture.Services.GetRequiredService<IMediator>();
 
         // Act
-        GetMonthlyActivitiesRequest request = new(Array.Empty<string>(), null, null)
-        {
-            PageSize = 20,
-            PageNumber = 1
-        };
-        Response<Paginated<GetMonthlyActivitiesResultItem>> response =
+        GetMonthlyActivityByIdRequest request = new(entity!.Id);
+        Response<GetMonthlyActivityDetailItem> response =
             await mediator.Send(request, CancellationToken.None);
 
         // Assert
         response.Success.Should().BeTrue();
-        GetMonthlyActivitiesResultItem item = response.Data!.Items.First();
+        GetMonthlyActivityDetailItem item = response.Data!;
 
         // Verify all collections are loaded and not empty
         item.ProductionAndSalesItems.Should().NotBeEmpty("ProductionAndSalesItems collection should be loaded");
@@ -1256,6 +1257,51 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
             x.RowCode != default && x.Category != default);
     }
 
+    [Fact]
+    public async Task MonthlyActivityDetector_ShouldCorrectlyDetectV4()
+    {
+        // Arrange
+        string v4Json = MonthlyActivityTestData.GetV4TestData();
+        MonthlyActivityDetector detector = new MonthlyActivityDetector();
+
+        // Act
+        CodalVersion detectedVersion = detector.DetectVersion(v4Json);
+
+        // Assert
+        detectedVersion.Should().Be(CodalVersion.V4,
+            "V4 JSON (with energy section but no buyRawMaterial/sourceUsesCurrency) should be detected as V4, not V5");
+    }
+
+    [Fact]
+    public async Task MonthlyActivityDetector_ShouldCorrectlyDetectV5()
+    {
+        // Arrange
+        string v5Json = MonthlyActivityTestData.GetV5TestData();
+        MonthlyActivityDetector detector = new MonthlyActivityDetector();
+
+        // Act
+        CodalVersion detectedVersion = detector.DetectVersion(v5Json);
+
+        // Assert
+        detectedVersion.Should().Be(CodalVersion.V5,
+            "V5 JSON (with buyRawMaterial AND energy AND sourceUsesCurrency) should be detected as V5");
+    }
+
+    [Fact]
+    public async Task MonthlyActivityDetector_ShouldCorrectlyDetectV3()
+    {
+        // Arrange
+        string v3Json = MonthlyActivityTestData.GetV3TestData();
+        MonthlyActivityDetector detector = new MonthlyActivityDetector();
+
+        // Act
+        CodalVersion detectedVersion = detector.DetectVersion(v3Json);
+
+        // Assert
+        detectedVersion.Should().Be(CodalVersion.V3,
+            "V3 JSON (with productionAndSales but no energy/buyRawMaterial/sourceUsesCurrency) should be detected as V3");
+    }
+
     /// <summary>
     /// Cleans all existing monthly activity data from the database.
     /// </summary>
@@ -1263,13 +1309,13 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
     {
         _fixture.DbContext.CanonicalMonthlyActivities.RemoveRange(_fixture.DbContext.CanonicalMonthlyActivities);
         _fixture.DbContext.RawMonthlyActivityJsons.RemoveRange(_fixture.DbContext.RawMonthlyActivityJsons);
-        
+
         // Also clean up test symbols to avoid duplicate ISIN conflicts
         List<Symbol> testSymbols = await _fixture.DbContext.Symbols
             .Where(s => s.Isin == "IRO1SROD0001" || s.Isin == "IRO1BMLT0001")
             .ToListAsync();
         _fixture.DbContext.Symbols.RemoveRange(testSymbols);
-        
+
         await _fixture.DbContext.SaveChangesAsync();
     }
 
