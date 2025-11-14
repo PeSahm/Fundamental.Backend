@@ -46,7 +46,8 @@ public class FinancialStatementProcessingBenchmarks
     [Benchmark]
     public async Task QueryBalanceSheetsBySymbol()
     {
-        foreach (var symbol in _testSymbols.Take(10)) // Test with first 10 symbols
+        // Test with first 10 symbols
+        foreach (Symbol symbol in _testSymbols.Take(10))
         {
             var balanceSheets = await _context.BalanceSheets
                 .Where(bs => bs.Symbol.Id == symbol.Id)
@@ -134,7 +135,8 @@ public class FinancialStatementProcessingBenchmarks
                     DateTime.UtcNow.AddDays(-random.Next(1, 365)));
 
                 // Add some detail records
-                for (int category = 0; category < 5; category++) // Multiple rows per year
+                // Multiple rows per year
+                for (int category = 0; category < 5; category++)
                 {
                     var value = random.Next(1000000, 100000000);
                     BalanceSheetDetail detail = new BalanceSheetDetail(
@@ -157,7 +159,9 @@ public class FinancialStatementProcessingBenchmarks
     }
 }
 
+#pragma warning disable SA1402 // File may only contain a single type
 public class PerformanceTests : IAsyncLifetime
+#pragma warning restore SA1402
 {
     private FundamentalDbContext _context;
 
@@ -196,13 +200,17 @@ public class PerformanceTests : IAsyncLifetime
     public async Task MemoryUsage_ShouldRemainStable()
     {
         // Arrange
-        var initialMemory = GC.GetTotalMemory(true);
-        var dataset = GenerateLargeBalanceSheetDataset(5000);
+#pragma warning disable S1215 // "GC.Collect" should not be called
+        long initialMemory = GC.GetTotalMemory(true);
+#pragma warning restore S1215
+        List<BalanceSheet> dataset = GenerateLargeBalanceSheetDataset(5000);
 
         // Act
         await _context.BalanceSheets.AddRangeAsync(dataset);
         await _context.SaveChangesAsync();
-        var finalMemory = GC.GetTotalMemory(true);
+#pragma warning disable S1215 // "GC.Collect" should not be called
+        long finalMemory = GC.GetTotalMemory(true);
+#pragma warning restore S1215
 
         // Assert
         var memoryIncrease = finalMemory - initialMemory;

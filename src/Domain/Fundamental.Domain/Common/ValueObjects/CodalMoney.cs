@@ -168,4 +168,19 @@ public sealed class CodalMoney : IEquatable<CodalMoney>
     {
         return HashCode.Combine(_value, (int)Currency);
     }
+
+    public static bool operator ==(CodalMoney? left, CodalMoney? right)
+    {
+        if (left is null)
+        {
+            return right is null;
+        }
+
+        return left.Equals(right);
+    }
+
+    public static bool operator !=(CodalMoney? left, CodalMoney? right)
+    {
+        return !(left == right);
+    }
 }

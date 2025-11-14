@@ -54,7 +54,7 @@ public sealed class BalanceSheetReadRepository(FundamentalDbContext dbContext) :
                 Symbol = x.First().Symbol.Name,
                 PublishDate = x.Max(mx => mx.PublishDate),
                 Uri = x.First().Uri
-            }).ToPagingListAsync(request ?? new GetBalanceSheetRequest(), "PublishDate desc", cancellationToken);
+            }).ToPagingListAsync(request ?? new GetBalanceSheetRequest(new List<string>(), null, null, null), "PublishDate desc", cancellationToken);
 
         return validStatements;
     }

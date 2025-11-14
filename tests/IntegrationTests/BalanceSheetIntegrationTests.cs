@@ -119,11 +119,23 @@ public class BalanceSheetIntegrationTests : FinancialStatementTestBase
             Dictionary<(int FiscalYear, int ReportMonth, bool IsAudited), List<BalanceSheetTestData.BalanceSheetExpectation>> expectedByPeriod = expectedResults.GroupBy(e => (e.FiscalYear, e.ReportMonth, e.IsAudited)).ToDictionary(g => g.Key, g => g.ToList());
 
             // Verify details for each period
-            foreach (var period in expectedByPeriod)
+            foreach (KeyValuePair<(int FiscalYear, int ReportMonth, bool IsAudited), List<BalanceSheetTestData.BalanceSheetExpectation>> period in expectedByPeriod)
             {
-                var (fiscalYear, reportMonth, isAudited) = period.Key;
-                var expectedForPeriod = period.Value;
-                var actualDetails = fiscalYear == 1404 ? details1404 : fiscalYear == 1403 ? details1403 : details1402;
+                (int fiscalYear, int reportMonth, bool isAudited) = period.Key;
+                List<BalanceSheetTestData.BalanceSheetExpectation> expectedForPeriod = period.Value;
+                List<BalanceSheetDetail> actualDetails;
+                if (fiscalYear == 1404)
+                {
+                    actualDetails = details1404;
+                }
+                else if (fiscalYear == 1403)
+                {
+                    actualDetails = details1403;
+                }
+                else
+                {
+                    actualDetails = details1402;
+                }
 
                 actualDetails.Should().HaveCount(expectedForPeriod.Count, $"Should have {expectedForPeriod.Count} balance sheet details for fiscal year {fiscalYear}, report month {reportMonth}, audited {isAudited}");
 

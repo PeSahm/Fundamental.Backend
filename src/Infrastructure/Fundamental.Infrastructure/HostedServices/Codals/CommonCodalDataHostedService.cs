@@ -178,9 +178,9 @@ public class CommonCodalDataHostedService(IServiceScopeFactory factory) : Backgr
             ["هتل و رستوران"] = new List<string> { "گدنا", "گپارس", "آباد", "گکیش", "گنگین" },
         };
 
-        foreach (var sectorData in sectorSymbolData)
+        foreach (KeyValuePair<string, List<string>> sectorData in sectorSymbolData)
         {
-            string sectorName = sectorData.Key.Safe();
+            string? sectorName = sectorData.Key.Safe();
             Sector? sector = await dbContext.Sectors.FirstOrDefaultAsync(s => s.Name == sectorName, stoppingToken);
 
             if (sector == null)
