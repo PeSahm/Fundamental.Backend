@@ -6,21 +6,27 @@ namespace Fundamental.Application.Codals.Dto.MonthlyActivities.V3;
 public class YearDataV3Dto
 {
     [JsonProperty("columnId")]
+    [JsonRequired]
     public string ColumnId { get; set; }
 
     [JsonProperty("caption")]
+    [JsonRequired]
     public string Caption { get; set; }
 
     [JsonProperty("periodEndToDate")]
+    [JsonRequired]
     public string PeriodEndToDate { get; set; }
 
     [JsonProperty("yearEndToDate")]
+    [JsonRequired]
     public string YearEndToDate { get; set; }
 
     [JsonProperty("period")]
+    [JsonRequired]
     public int Period { get; set; }
 
     [JsonProperty("isAudited")]
+    [JsonRequired]
     public bool? IsAudited { get; set; }
 
     public int FiscalYear => YearEndToDate.ToPersianDateTime()?.Year ??
