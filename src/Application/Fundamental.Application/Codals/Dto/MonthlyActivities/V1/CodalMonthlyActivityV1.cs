@@ -12,10 +12,10 @@ public class CodalMonthlyActivityV1 : ICodalMappingServiceMetadata
     public List<ProductAndSalesV1Dto> ProductAndSales { get; set; } = new();
 
     [JsonPropertyName("description")]
-    public DescriptionV1Dto Description { get; set; }
+    public DescriptionV1Dto? Description { get; set; }
 
     [JsonPropertyName("financialYear")]
-    public FinancialYearV1Dto FinancialYear { get; set; }
+    public FinancialYearV1Dto? FinancialYear { get; set; }
 
     [JsonPropertyName("listedCapital")]
     public string ListedCapital { get; set; }

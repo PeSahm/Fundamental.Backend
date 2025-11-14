@@ -19,14 +19,15 @@ public class MonthlyActivityMappingServiceV1 : ICanonicalMappingService<Canonica
     /// <param name="symbol">The associated symbol entity.</param>
     /// <param name="statement">The statement response data.</param>
     /// <returns>The mapped canonical entity.</returns>
-    public async Task<CanonicalMonthlyActivity> MapToCanonicalAsync(
+    public Task<CanonicalMonthlyActivity> MapToCanonicalAsync(
         CodalMonthlyActivityV1 dto,
         Symbol symbol,
         GetStatementResponse statement
     )
     {
         // Extract fiscal year and report month from financial year data
-        int fiscalYear = dto.FinancialYear.FiscalYear;
+        int fiscalYear = dto.FinancialYear?.FiscalYear ?? throw new InvalidOperationException(
+            "FinancialYear data is required for mapping MonthlyActivity V1 to canonical entity.");
         int reportMonth = dto.FinancialYear.ReportMonth;
 
         // Create canonical entity
@@ -46,9 +47,12 @@ public class MonthlyActivityMappingServiceV1 : ICanonicalMappingService<Canonica
         canonical.ProductionAndSalesItems = MapProductionAndSalesV1(dto.ProductAndSales);
 
         // Map descriptions
-        canonical.Descriptions = MapDescriptionsV1(dto.Description);
+        if (dto.Description is not null)
+        {
+            canonical.Descriptions = MapDescriptionsV1(dto.Description);
+        }
 
-        return canonical;
+        return Task.FromResult(canonical);
     }
 
     /// <summary>
