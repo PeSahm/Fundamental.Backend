@@ -81,21 +81,21 @@ public static class ServicesConfigurationExtensions
         return services;
     }
 
-    public static IServiceCollection AddManufacturingReadRepositories(this IServiceCollection builder)
+    public static IServiceCollection AddManufacturingReadRepositories(this IServiceCollection serviceCollection)
     {
-        builder.AddScoped<IMonthlyActivityRepository, MonthlyActivityRepository>();
-        builder.AddScoped<IBalanceSheetReadRepository, BalanceSheetReadRepository>();
-        builder.AddScoped<IIncomeStatementsReadRepository, IncomeStatementReadRepository>();
-        builder.AddScoped<INonOperationIncomesRepository, NonOperationIncomesRepository>();
-        builder.AddScoped<IStatusOfViableCompaniesRepository, StatusOfViableCompaniesRepository>();
-        builder.AddScoped<IIndicesRepository, IndicesRepository>();
-        builder.AddScoped<IFinancialStatementReadRepository, FinancialStatementReadRepository>();
-        return builder;
+        serviceCollection.AddScoped<IMonthlyActivityRepository, MonthlyActivityRepository>();
+        serviceCollection.AddScoped<IBalanceSheetReadRepository, BalanceSheetReadRepository>();
+        serviceCollection.AddScoped<IIncomeStatementsReadRepository, IncomeStatementReadRepository>();
+        serviceCollection.AddScoped<INonOperationIncomesRepository, NonOperationIncomesRepository>();
+        serviceCollection.AddScoped<IStatusOfViableCompaniesRepository, StatusOfViableCompaniesRepository>();
+        serviceCollection.AddScoped<IIndicesRepository, IndicesRepository>();
+        serviceCollection.AddScoped<IFinancialStatementReadRepository, FinancialStatementReadRepository>();
+        return serviceCollection;
     }
 
-    public static IServiceCollection AddManufacturingEventDispatcher(this IServiceCollection builder)
+    public static IServiceCollection AddManufacturingEventDispatcher(this IServiceCollection serviceCollection)
     {
-        builder.AddScoped<EventDataDispatcher>();
-        return builder;
+        serviceCollection.AddScoped<EventDataDispatcher>();
+        return serviceCollection;
     }
 }

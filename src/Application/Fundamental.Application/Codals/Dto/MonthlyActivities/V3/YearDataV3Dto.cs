@@ -26,7 +26,6 @@ public class YearDataV3Dto
     public int Period { get; set; }
 
     [JsonProperty("isAudited")]
-    [JsonRequired]
     public bool? IsAudited { get; set; }
 
     public int FiscalYear => YearEndToDate.ToPersianDateTime()?.Year ??
