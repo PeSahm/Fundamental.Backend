@@ -3,8 +3,6 @@ using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
-using Fundamental.Domain.Codals.ValueObjects;
-using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
 
 namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.MonthlyActivities;
@@ -21,7 +19,7 @@ public class MonthlyActivityMappingServiceV3 : ICanonicalMappingService<Canonica
     /// <param name="symbol">The associated symbol entity.</param>
     /// <param name="statement">The statement response data.</param>
     /// <returns>The mapped canonical entity.</returns>
-    public async Task<CanonicalMonthlyActivity> MapToCanonicalAsync(
+    public Task<CanonicalMonthlyActivity> MapToCanonicalAsync(
         CodalMonthlyActivityV3 dto,
         Symbol symbol,
         GetStatementResponse statement
@@ -29,40 +27,46 @@ public class MonthlyActivityMappingServiceV3 : ICanonicalMappingService<Canonica
     {
         if (dto.MonthlyActivity is null)
         {
-            throw new ArgumentException("MonthlyActivity is null in V3 DTO", nameof(dto));
+            throw new InvalidOperationException("MonthlyActivity is null in V3 DTO");
         }
 
         // Extract fiscal year and report month from productionAndSales yearData
-        YearDataV3Dto? yearData = dto.MonthlyActivity.ProductionAndSales?.YearData.FirstOrDefault();
-        int fiscalYear = ExtractFiscalYear(yearData);
-        int reportMonth = 1; // V3 and older versions report annual data
+        YearDataV3Dto? yearData = dto.MonthlyActivity.ProductionAndSales.YearData.FirstOrDefault();
+
+        if (yearData is null)
+        {
+            throw new InvalidOperationException("Missing year data in V3 DTO");
+        }
+
+        int fiscalYear = yearData.FiscalYear;
+        int reportMonth = yearData.ReportMonth;
 
         // Create canonical entity
-        CanonicalMonthlyActivity canonical = new CanonicalMonthlyActivity(
+        CanonicalMonthlyActivity canonical = new(
             Guid.NewGuid(),
             symbol,
             statement.TracingNo,
             statement.HtmlUrl,
-            new FiscalYear(fiscalYear),
-            new StatementMonth(12),
-            new StatementMonth(reportMonth),
+            fiscalYear,
+            yearData.YearEndMonth,
+            reportMonth,
             statement.PublishDateMiladi,
-            "3"
+            nameof(CodalVersion.V3)
         );
 
         // Map ProductionAndSales
-        if (dto.MonthlyActivity.ProductionAndSales?.RowItems != null)
+        if (dto.MonthlyActivity.ProductionAndSales.RowItems.Count > 0)
         {
             canonical.ProductionAndSalesItems = MapProductionAndSalesV3(dto.MonthlyActivity.ProductionAndSales.RowItems);
         }
 
         // Map descriptions
-        if (dto.MonthlyActivity.ProductMonthlyActivityDesc1?.RowItems != null)
+        if (dto.MonthlyActivity.ProductMonthlyActivityDesc1.RowItems.Count > 0)
         {
             canonical.Descriptions = MapDescriptionsV3(dto.MonthlyActivity.ProductMonthlyActivityDesc1.RowItems);
         }
 
-        return canonical;
+        return Task.FromResult(canonical);
     }
 
     /// <summary>
@@ -82,21 +86,7 @@ public class MonthlyActivityMappingServiceV3 : ICanonicalMappingService<Canonica
         existing.Descriptions = updated.Descriptions;
     }
 
-    private static int ExtractFiscalYear(YearDataV3Dto? yearData)
-    {
-        if (yearData != null && !string.IsNullOrWhiteSpace(yearData.YearEndToDate) &&
-            yearData.YearEndToDate.Contains('/'))
-        {
-            string[] parts = yearData.YearEndToDate.Split('/');
-
-            if (parts.Length >= 1 && int.TryParse(parts[0], out int year))
-            {
-                return year + 1; // V3 fiscal year is yearEndToDate year + 1
-            }
-        }
-
-        throw new ArgumentException("Invalid or missing YearEndToDate in year data", nameof(yearData));
-    }
+    // Removed legacy ExtractFiscalYear; logic centralized inside YearDataV3Dto.
 
     private static List<ProductionAndSalesItem> MapProductionAndSalesV3(List<ProductionAndSalesRowItemV3Dto> rowItems)
     {
@@ -156,7 +146,7 @@ public class MonthlyActivityMappingServiceV3 : ICanonicalMappingService<Canonica
             {
                 RowCode = x.RowCode,
                 Description = x.Value11991 ?? string.Empty,
-                Category = (int?)x.Category,
+                Category = x.Category,
                 RowType = x.RowType
             })
             .ToList();

@@ -4,8 +4,6 @@ using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
-using Fundamental.Domain.Codals.ValueObjects;
-using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
 
 namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.MonthlyActivities;
@@ -22,7 +20,7 @@ public class MonthlyActivityMappingServiceV4 : ICanonicalMappingService<Canonica
     /// <param name="symbol">The associated symbol entity.</param>
     /// <param name="statement">The statement response data.</param>
     /// <returns>The mapped canonical entity.</returns>
-    public async Task<CanonicalMonthlyActivity> MapToCanonicalAsync(
+    public Task<CanonicalMonthlyActivity> MapToCanonicalAsync(
         CodalMonthlyActivity dto,
         Symbol symbol,
         GetStatementResponse statement
@@ -30,38 +28,38 @@ public class MonthlyActivityMappingServiceV4 : ICanonicalMappingService<Canonica
     {
         if (dto.MonthlyActivity is null)
         {
-            throw new ArgumentException("MonthlyActivity is null in V4 DTO", nameof(dto));
+            throw new InvalidOperationException("MonthlyActivity is null in V4 DTO");
         }
 
         if (dto.MonthlyActivity.ProductionAndSales is null)
         {
-            throw new ArgumentException("ProductionAndSales is null in V4 DTO", nameof(dto));
+            throw new InvalidOperationException("ProductionAndSales is null in V4 DTO");
         }
 
         if (dto.MonthlyActivity.ProductionAndSales.YearData.Count == 0)
         {
-            throw new ArgumentException("No year data found in V4 DTO", nameof(dto));
+            throw new InvalidOperationException("No year data found in V4 DTO");
         }
 
         YearDatum? yearDatum = dto.MonthlyActivity.ProductionAndSales.YearData
             .Find(x => x.ColumnId == SaleColumnId.ProduceThisMonth);
 
-        if (yearDatum is null || yearDatum.FiscalYear is null || yearDatum.ReportMonth is null)
+        if (yearDatum is null || yearDatum.FiscalYear is null || yearDatum.FiscalMonth is null || yearDatum.ReportMonth is null)
         {
-            throw new ArgumentException("Could not extract fiscal year or report month from V4 data", nameof(dto));
+            throw new InvalidOperationException("Could not extract fiscal year or report month from V4 data");
         }
 
         // Create canonical entity
-        CanonicalMonthlyActivity canonical = new CanonicalMonthlyActivity(
+        CanonicalMonthlyActivity canonical = new(
             Guid.NewGuid(),
             symbol,
             statement.TracingNo,
             statement.HtmlUrl,
-            new FiscalYear(yearDatum.FiscalYear.Value),
-            new StatementMonth(12),
-            new StatementMonth(yearDatum.ReportMonth.Value),
+            yearDatum.FiscalYear.Value,
+            yearDatum.FiscalMonth,
+            yearDatum.ReportMonth,
             statement.PublishDateMiladi,
-            "4"
+            nameof(CodalVersion.V4)
         );
 
         // Map ProductionAndSales
@@ -77,12 +75,12 @@ public class MonthlyActivityMappingServiceV4 : ICanonicalMappingService<Canonica
         }
 
         // Map descriptions
-        if (dto.MonthlyActivity.ProductMonthlyActivityDesc1?.RowItems != null)
+        if (dto.MonthlyActivity.ProductMonthlyActivityDesc1.RowItems.Count > 0)
         {
             canonical.Descriptions = MapDescriptionsV4(dto.MonthlyActivity.ProductMonthlyActivityDesc1.RowItems);
         }
 
-        return canonical;
+        return Task.FromResult(canonical);
     }
 
     /// <summary>
@@ -111,8 +109,8 @@ public class MonthlyActivityMappingServiceV4 : ICanonicalMappingService<Canonica
             .Where(x => !string.IsNullOrEmpty(x.Value11971)) // Has product name
             .Select(x => new ProductionAndSalesItem
             {
-                ProductName = x.Value11971 ?? string.Empty,
-                Unit = x.Value11972 ?? string.Empty,
+                ProductName = x.Value11971,
+                Unit = x.Value11972,
                 YearToDateProductionQuantity = x.Value11973,
                 YearToDateSalesQuantity = x.Value11974,
                 YearToDateSalesRate = x.Value11975,
@@ -133,7 +131,7 @@ public class MonthlyActivityMappingServiceV4 : ICanonicalMappingService<Canonica
                 PreviousYearSalesQuantity = x.Value119723,
                 PreviousYearSalesRate = x.Value119724,
                 PreviousYearSalesAmount = x.Value119725,
-                Type = x.Value119726 ?? string.Empty,
+                Type = x.Value119726,
 
                 // Row classification metadata - map from V4 enums to domain enums
                 RowCode = x.RowCode.HasValue
@@ -203,9 +201,9 @@ public class MonthlyActivityMappingServiceV4 : ICanonicalMappingService<Canonica
             .Select(x => new MonthlyActivityDescription
             {
                 RowCode = (int?)x.RowCode,
-                Description = x.Value11991 ?? string.Empty,
+                Description = x.Value11991,
                 Category = (int?)x.Category,
-                RowType = x.RowType ?? string.Empty
+                RowType = x.RowType
             })
             .ToList();
     }

@@ -3,8 +3,6 @@ using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
-using Fundamental.Domain.Codals.ValueObjects;
-using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
 
 namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.MonthlyActivities;
@@ -21,7 +19,7 @@ public class MonthlyActivityMappingServiceV5 : ICanonicalMappingService<Canonica
     /// <param name="symbol">The associated symbol entity.</param>
     /// <param name="statement">The statement response data.</param>
     /// <returns>The mapped canonical entity.</returns>
-    public async Task<CanonicalMonthlyActivity> MapToCanonicalAsync(
+    public Task<CanonicalMonthlyActivity> MapToCanonicalAsync(
         CodalMonthlyActivityV5 dto,
         Symbol symbol,
         GetStatementResponse statement
@@ -30,8 +28,9 @@ public class MonthlyActivityMappingServiceV5 : ICanonicalMappingService<Canonica
         // Extract fiscal year and report month from productionAndSales yearData
         int fiscalYear = DateTime.Now.Year;
         int reportMonth = 1;
+        int yearEndMonth = 12;
 
-        if (dto.MonthlyActivity?.ProductionAndSales?.YearData?.Any() == true)
+        if (dto.MonthlyActivity?.ProductionAndSales?.YearData.Any() == true)
         {
             // Find the yearData entry with the highest period (most recent month)
             YearDatumV5 latestYearDatum = dto.MonthlyActivity.ProductionAndSales.YearData
@@ -39,20 +38,21 @@ public class MonthlyActivityMappingServiceV5 : ICanonicalMappingService<Canonica
                 .First();
 
             fiscalYear = latestYearDatum.FiscalYear ?? latestYearDatum.ReportYear ?? DateTime.Now.Year;
-            reportMonth = latestYearDatum.Period ?? latestYearDatum.ReportMonth ?? 1;
+            reportMonth = latestYearDatum.ReportMonth ?? latestYearDatum.Period ?? 1;
+            yearEndMonth = latestYearDatum.FiscalMonth ?? 12;
         }
 
         // Create canonical entity
-        CanonicalMonthlyActivity canonical = new CanonicalMonthlyActivity(
+        CanonicalMonthlyActivity canonical = new(
             Guid.NewGuid(),
             symbol,
             statement.TracingNo,
             statement.HtmlUrl,
-            new FiscalYear(fiscalYear),
-            new StatementMonth(12),
-            new StatementMonth(reportMonth),
+            fiscalYear,
+            yearEndMonth,
+            reportMonth,
             statement.PublishDateMiladi,
-            dto.CodalVersion.ToString()
+            nameof(CodalVersion.V5)
         );
 
         // Map all sections
@@ -62,7 +62,7 @@ public class MonthlyActivityMappingServiceV5 : ICanonicalMappingService<Canonica
         canonical.CurrencyExchangeItems = MapCurrencyExchange(dto.MonthlyActivity?.SourceUsesCurrency);
         canonical.Descriptions = MapDescriptions(dto.MonthlyActivity?.ProductMonthlyActivityDesc1);
 
-        return canonical;
+        return Task.FromResult(canonical);
     }
 
     /// <summary>

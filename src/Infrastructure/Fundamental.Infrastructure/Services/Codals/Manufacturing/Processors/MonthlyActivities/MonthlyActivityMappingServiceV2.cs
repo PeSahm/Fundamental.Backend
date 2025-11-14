@@ -3,8 +3,6 @@ using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
-using Fundamental.Domain.Codals.ValueObjects;
-using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
 
 namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.MonthlyActivities;
@@ -21,42 +19,36 @@ public class MonthlyActivityMappingServiceV2 : ICanonicalMappingService<Canonica
     /// <param name="symbol">The associated symbol entity.</param>
     /// <param name="statement">The statement response data.</param>
     /// <returns>The mapped canonical entity.</returns>
-    public async Task<CanonicalMonthlyActivity> MapToCanonicalAsync(
+    public Task<CanonicalMonthlyActivity> MapToCanonicalAsync(
         CodalMonthlyActivityV2 dto,
         Symbol symbol,
         GetStatementResponse statement
     )
     {
         // Extract fiscal year and report month from financial year data
-        int fiscalYear = ExtractFiscalYear(dto.ProductAndSales.FinancialYear);
-        int reportMonth = 1; // V2 and older versions report annual data
+        int fiscalYear = dto.ProductAndSales.FinancialYear.FiscalYear;
+        int reportMonth = dto.ProductAndSales.FinancialYear.ReportMonth;
 
         // Create canonical entity
-        CanonicalMonthlyActivity canonical = new CanonicalMonthlyActivity(
+        CanonicalMonthlyActivity canonical = new(
             Guid.NewGuid(),
             symbol,
             statement.TracingNo,
             statement.HtmlUrl,
-            new FiscalYear(fiscalYear),
-            new StatementMonth(12),
-            new StatementMonth(reportMonth),
+            fiscalYear,
+            dto.ProductAndSales.FinancialYear.YearEndMonth,
+            reportMonth,
             statement.PublishDateMiladi,
-            "2"
+            nameof(CodalVersion.V2)
         );
 
         // Map ProductionAndSales
-        if (dto.ProductAndSales.FieldsItems != null)
-        {
-            canonical.ProductionAndSalesItems = MapProductionAndSalesV2(dto.ProductAndSales.FieldsItems);
-        }
+        canonical.ProductionAndSalesItems = MapProductionAndSalesV2(dto.ProductAndSales.FieldsItems);
 
         // Map descriptions
-        if (dto.ProductAndSales.Descriptions != null)
-        {
-            canonical.Descriptions = MapDescriptionsV2(dto.ProductAndSales.Descriptions);
-        }
+        canonical.Descriptions = MapDescriptionsV2(dto.ProductAndSales.Descriptions);
 
-        return canonical;
+        return Task.FromResult(canonical);
     }
 
     /// <summary>
@@ -76,21 +68,7 @@ public class MonthlyActivityMappingServiceV2 : ICanonicalMappingService<Canonica
         existing.Descriptions = updated.Descriptions;
     }
 
-    private static int ExtractFiscalYear(FinancialYearV2Dto financialYear)
-    {
-        if (!string.IsNullOrWhiteSpace(financialYear.PriodEndToDate) &&
-            financialYear.PriodEndToDate.Contains('/'))
-        {
-            string[] parts = financialYear.PriodEndToDate.Split('/');
-
-            if (parts.Length >= 1 && int.TryParse(parts[0], out int year))
-            {
-                return year + 1; // V2 fiscal year is PriodEndToDate year + 1
-            }
-        }
-
-        throw new ArgumentException("Invalid or missing PriodEndToDate in financial year data", nameof(financialYear));
-    }
+    // Removed legacy ExtractFiscalYear; logic now centralized in FinancialYearV2Dto.
 
     private static List<ProductionAndSalesItem> MapProductionAndSalesV2(List<FieldsItemV2Dto> fieldsItems)
     {
