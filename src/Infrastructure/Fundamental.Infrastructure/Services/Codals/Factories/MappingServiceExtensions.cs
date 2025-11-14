@@ -1,8 +1,6 @@
-using Fundamental.Application.Codals.Dto.MonthlyActivities.V3;
-using Fundamental.Application.Codals.Dto.MonthlyActivities.V5;
+using System.Collections.Concurrent;
 using Fundamental.Application.Codals.Enums;
 using Fundamental.Application.Codals.Services;
-using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.BaseTypes;
 using Fundamental.Domain.Common.Enums;
@@ -15,6 +13,8 @@ namespace Fundamental.Infrastructure.Services.Codals.Factories;
 /// </summary>
 public static class MappingServiceExtensions
 {
+    private static readonly ConcurrentDictionary<Type, ICodalMappingServiceMetadata> _metadataCache = new();
+
     /// <summary>
     /// Adds the canonical mapping service factory to the service collection.
     /// </summary>
@@ -87,12 +87,20 @@ public static class MappingServiceExtensions
     /// <returns>The metadata instance.</returns>
     private static ICodalMappingServiceMetadata GetMetadataFromDtoType(Type dtoType)
     {
-        if (Activator.CreateInstance(dtoType) is not ICodalMappingServiceMetadata instance)
-        {
-            throw new InvalidOperationException($"Cannot create metadata instance for DTO type {dtoType.Name}");
-        }
+        return _metadataCache.GetOrAdd(
+            dtoType,
+            static type =>
+            {
+                if (Activator.CreateInstance(type) is not ICodalMappingServiceMetadata instance)
+                {
+                    throw new InvalidOperationException(
+                        $"Cannot create metadata instance for DTO type {type.Name}"
+                    );
+                }
 
-        return instance;
+                return instance;
+            }
+        );
     }
 
     /// <summary>
