@@ -40,7 +40,7 @@ public class CanonicalMonthlyActivity : BaseEntity<Guid>
         EnergyItems = new List<EnergyItem>();
         CurrencyExchangeItems = new List<CurrencyExchangeItem>();
         Descriptions = new List<MonthlyActivityDescription>();
-        CreatedAt = DateTime.Now.ToUniversalTime();
+        CreatedAt = DateTime.UtcNow;
     }
 
     protected CanonicalMonthlyActivity()
