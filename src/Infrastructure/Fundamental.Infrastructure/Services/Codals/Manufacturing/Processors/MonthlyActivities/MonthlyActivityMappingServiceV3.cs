@@ -30,6 +30,16 @@ public class MonthlyActivityMappingServiceV3 : ICanonicalMappingService<Canonica
             throw new InvalidOperationException("MonthlyActivity is null in V3 DTO");
         }
 
+        if (dto.MonthlyActivity.ProductionAndSales is null)
+        {
+            throw new InvalidOperationException("Missing ProductionAndSales in V3 DTO");
+        }
+
+        if (dto.MonthlyActivity.ProductionAndSales.YearData is null || dto.MonthlyActivity.ProductionAndSales.YearData.Count == 0)
+        {
+            throw new InvalidOperationException("Missing or empty YearData in V3 DTO");
+        }
+
         // Extract fiscal year and report month from productionAndSales yearData
         YearDataV3Dto? yearData = dto.MonthlyActivity.ProductionAndSales.YearData.FirstOrDefault();
 
@@ -55,13 +65,13 @@ public class MonthlyActivityMappingServiceV3 : ICanonicalMappingService<Canonica
         );
 
         // Map ProductionAndSales
-        if (dto.MonthlyActivity.ProductionAndSales.RowItems.Count > 0)
+        if (dto.MonthlyActivity.ProductionAndSales.RowItems != null && dto.MonthlyActivity.ProductionAndSales.RowItems.Count > 0)
         {
             canonical.ProductionAndSalesItems = MapProductionAndSalesV3(dto.MonthlyActivity.ProductionAndSales.RowItems);
         }
 
         // Map descriptions
-        if (dto.MonthlyActivity.ProductMonthlyActivityDesc1.RowItems.Count > 0)
+        if (dto.MonthlyActivity.ProductMonthlyActivityDesc1 != null && dto.MonthlyActivity.ProductMonthlyActivityDesc1.RowItems != null && dto.MonthlyActivity.ProductMonthlyActivityDesc1.RowItems.Count > 0)
         {
             canonical.Descriptions = MapDescriptionsV3(dto.MonthlyActivity.ProductMonthlyActivityDesc1.RowItems);
         }
