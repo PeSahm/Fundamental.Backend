@@ -254,7 +254,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id && x.TraceNo == 123456789UL);
 
         storedEntity.Should().NotBeNull();
-        storedEntity!.Version.Should().Be("4");
+        storedEntity!.Version.Should().Be(nameof(CodalVersion.V4));
         storedEntity.FiscalYear.Year.Should().Be(1402);
         storedEntity.ReportMonth.Month.Should().Be(1);
 
@@ -263,7 +263,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
         storedEntity.ProductionAndSalesItems.Should().NotBeEmpty();
         storedEntity.EnergyItems.Should().NotBeEmpty();
         storedEntity.Descriptions.Should().NotBeEmpty();
-        
+
         // V5-only sections
         storedEntity.BuyRawMaterialItems.Should().BeEmpty();
         storedEntity.CurrencyExchangeItems.Should().BeEmpty();
@@ -297,9 +297,9 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id && x.TraceNo == 123456789UL);
 
         storedEntity.Should().NotBeNull();
-        storedEntity!.Version.Should().Be("3");
-        storedEntity.FiscalYear.Year.Should().Be(1401);
-        storedEntity.ReportMonth.Month.Should().Be(1);
+        storedEntity!.Version.Should().Be(nameof(CodalVersion.V3));
+        storedEntity.FiscalYear.Year.Should().Be(1400);
+        storedEntity.ReportMonth.Month.Should().Be(11);
 
         // V3 should have production and sales, descriptions, but not energy or currency exchange
         storedEntity.ProductionAndSalesItems.Should().NotBeEmpty();
@@ -337,9 +337,9 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id && x.TraceNo == 123456789UL);
 
         storedEntity.Should().NotBeNull();
-        storedEntity!.Version.Should().Be("2");
-        storedEntity.FiscalYear.Year.Should().Be(1399);
-        storedEntity.ReportMonth.Month.Should().Be(1);
+        storedEntity!.Version.Should().Be(nameof(CodalVersion.V2));
+        storedEntity.FiscalYear.Year.Should().Be(1398);
+        storedEntity.ReportMonth.Month.Should().Be(8);
 
         // V2 should have basic production and sales and descriptions
         storedEntity.ProductionAndSalesItems.Should().NotBeEmpty();
@@ -377,9 +377,9 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id && x.TraceNo == 123456789UL);
 
         storedEntity.Should().NotBeNull();
-        storedEntity!.Version.Should().Be("1");
-        storedEntity.FiscalYear.Year.Should().Be(1398);
-        storedEntity.ReportMonth.Month.Should().Be(1);
+        storedEntity!.Version.Should().Be(nameof(CodalVersion.V1));
+        storedEntity.FiscalYear.Year.Should().Be(1396);
+        storedEntity.ReportMonth.Month.Should().Be(6);
 
         // V1 should have minimal data
         storedEntity.ProductionAndSalesItems.Should().NotBeEmpty();
@@ -792,7 +792,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
         // Verify total matches sum of all data rows (within rounding tolerance)
         var dataRows = storedEntity.GetEnergyDataRows().ToList();
         var calculatedTotal = dataRows.Sum(x => x.YearToDateCost ?? 0);
-        
+
         if (totalSum.YearToDateCost.HasValue && calculatedTotal > 0)
         {
             // Allow small rounding differences
@@ -1309,13 +1309,13 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
     {
         _fixture.DbContext.CanonicalMonthlyActivities.RemoveRange(_fixture.DbContext.CanonicalMonthlyActivities);
         _fixture.DbContext.RawMonthlyActivityJsons.RemoveRange(_fixture.DbContext.RawMonthlyActivityJsons);
-        
+
         // Also clean up test symbols to avoid duplicate ISIN conflicts
         List<Symbol> testSymbols = await _fixture.DbContext.Symbols
             .Where(s => s.Isin == "IRO1SROD0001" || s.Isin == "IRO1BMLT0001")
             .ToListAsync();
         _fixture.DbContext.Symbols.RemoveRange(testSymbols);
-        
+
         await _fixture.DbContext.SaveChangesAsync();
     }
 
