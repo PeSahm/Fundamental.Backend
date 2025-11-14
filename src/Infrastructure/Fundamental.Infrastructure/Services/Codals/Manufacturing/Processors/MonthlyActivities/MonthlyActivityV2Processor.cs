@@ -89,8 +89,8 @@ public class MonthlyActivityV2Processor(
         canonical.PublishDate = statement.PublishDateMiladi.ToUniversalTime();
 
         // Extract fiscal year and report month for existing record check
-        int fiscalYear = canonical.FiscalYear.Year;
-        int reportMonth = canonical.ReportMonth.Month;
+        int fiscalYear = canonical.FiscalYear;
+        int reportMonth = canonical.ReportMonth;
         CanonicalMonthlyActivity? existingCanonical = await dbContext.CanonicalMonthlyActivities
             .FirstOrDefaultAsync(
                 x => x.Symbol.Isin == statement.Isin &&
