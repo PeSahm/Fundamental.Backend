@@ -1100,7 +1100,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
         response.Data.Should().NotBeNull();
         response.Data!.Items.Should().NotBeEmpty();
 
-        GetMonthlyActivitiesListItem item = response.Data.Items.First();
+        GetMonthlyActivitiesListItem item = response.Data.Items[0];
         item.Isin.Should().Be("IRO1SROD0001");
     }
 
@@ -1268,7 +1268,8 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
         CodalVersion detectedVersion = detector.DetectVersion(v4Json);
 
         // Assert
-        detectedVersion.Should().Be(CodalVersion.V4,
+        detectedVersion.Should().Be(
+            CodalVersion.V4,
             "V4 JSON (with energy section but no buyRawMaterial/sourceUsesCurrency) should be detected as V4, not V5");
     }
 
@@ -1283,7 +1284,8 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
         CodalVersion detectedVersion = detector.DetectVersion(v5Json);
 
         // Assert
-        detectedVersion.Should().Be(CodalVersion.V5,
+        detectedVersion.Should().Be(
+            CodalVersion.V5,
             "V5 JSON (with buyRawMaterial AND energy AND sourceUsesCurrency) should be detected as V5");
     }
 
@@ -1298,7 +1300,8 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
         CodalVersion detectedVersion = detector.DetectVersion(v3Json);
 
         // Assert
-        detectedVersion.Should().Be(CodalVersion.V3,
+        detectedVersion.Should().Be(
+            CodalVersion.V3,
             "V3 JSON (with productionAndSales but no energy/buyRawMaterial/sourceUsesCurrency) should be detected as V3");
     }
 
