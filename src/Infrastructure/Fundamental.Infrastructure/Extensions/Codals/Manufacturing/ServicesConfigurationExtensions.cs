@@ -25,11 +25,12 @@ namespace Fundamental.Infrastructure.Extensions.Codals.Manufacturing;
 
 public static class ServicesConfigurationExtensions
 {
-    public static void AddManufacturingCodalServices(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddManufacturingCodalServices(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddCodalServiceDetectorServices()
             .AddCodalProcessorServices()
             .AddCodalMonthlyActivityMappingServices();
+        return serviceCollection;
     }
 
     public static IServiceCollection AddCodalMonthlyActivityMappingServices(this IServiceCollection serviceCollection)
