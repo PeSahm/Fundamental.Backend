@@ -1258,7 +1258,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
     }
 
     [Fact]
-    public async Task MonthlyActivityDetector_ShouldCorrectlyDetectV4()
+    public void MonthlyActivityDetector_ShouldCorrectlyDetectV4()
     {
         // Arrange
         string v4Json = MonthlyActivityTestData.GetV4TestData();
@@ -1274,7 +1274,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
     }
 
     [Fact]
-    public async Task MonthlyActivityDetector_ShouldCorrectlyDetectV5()
+    public void MonthlyActivityDetector_ShouldCorrectlyDetectV5()
     {
         // Arrange
         string v5Json = MonthlyActivityTestData.GetV5TestData();
@@ -1290,7 +1290,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
     }
 
     [Fact]
-    public async Task MonthlyActivityDetector_ShouldCorrectlyDetectV3()
+    public void MonthlyActivityDetector_ShouldCorrectlyDetectV3()
     {
         // Arrange
         string v3Json = MonthlyActivityTestData.GetV3TestData();
