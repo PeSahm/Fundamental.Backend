@@ -49,14 +49,11 @@ public class MonthlyActivityV5Processor(
             return;
         }
 
-        // Extract fiscal year and report month from productionAndSales yearData
-        // Find the yearData entry with the highest period (most recent month) to determine current reporting period
-        YearDatumV5? yearDatum = monthlyActivity.MonthlyActivity.ProductionAndSales?.YearData
-            .Find(x => x.ColumnId == ((int)ProductionAndSalesV5ColumnId.SaleThisMonth).ToString());
-
-        if (yearDatum is null || yearDatum.FiscalYear is null || yearDatum.ReportMonth is null)
+        // Validation is delegated to mapping service; ensure YearData exists minimally.
+        if (monthlyActivity.MonthlyActivity.ProductionAndSales?.YearData is null ||
+            monthlyActivity.MonthlyActivity.ProductionAndSales.YearData.Count == 0)
         {
-            Log.Warning("Could not extract fiscal year or report month from V5 data for TraceNo: {TraceNo}", statement.TracingNo);
+            Log.Warning("No year data found in V5 JSON for TraceNo: {TraceNo}", statement.TracingNo);
             return;
         }
 
@@ -110,8 +107,8 @@ public class MonthlyActivityV5Processor(
         CanonicalMonthlyActivity? existingCanonical = await dbContext.CanonicalMonthlyActivities
             .FirstOrDefaultAsync(
                 x => x.Symbol.Isin == statement.Isin &&
-                     x.FiscalYear.Year == yearDatum.FiscalYear &&
-                     x.ReportMonth.Month == yearDatum.ReportMonth,
+                     x.FiscalYear.Year == canonical.FiscalYear.Year &&
+                     x.ReportMonth.Month == canonical.ReportMonth.Month,
                 cancellationToken);
 
         if (existingCanonical == null)
@@ -130,7 +127,7 @@ public class MonthlyActivityV5Processor(
         Log.Information(
             "Successfully processed MonthlyActivity V5 for Symbol: {Isin}, FiscalYear: {FiscalYear}, ReportMonth: {ReportMonth}",
             statement.Isin,
-            yearDatum.FiscalYear,
-            yearDatum.ReportMonth);
+            canonical.FiscalYear.Year,
+            canonical.ReportMonth.Month);
     }
 }

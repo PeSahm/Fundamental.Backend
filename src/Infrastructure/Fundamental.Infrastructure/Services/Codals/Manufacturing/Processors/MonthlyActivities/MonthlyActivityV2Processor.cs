@@ -89,8 +89,8 @@ public class MonthlyActivityV2Processor(
         canonical.PublishDate = statement.PublishDateMiladi.ToUniversalTime();
 
         // Extract fiscal year and report month for existing record check
-        int fiscalYear = ExtractFiscalYear(monthlyActivity.ProductAndSales.FinancialYear);
-        const int reportMonth = 1; // V2 reports annual data
+        int fiscalYear = canonical.FiscalYear.Year;
+        int reportMonth = canonical.ReportMonth.Month;
         CanonicalMonthlyActivity? existingCanonical = await dbContext.CanonicalMonthlyActivities
             .FirstOrDefaultAsync(
                 x => x.Symbol.Isin == statement.Isin &&
@@ -118,19 +118,5 @@ public class MonthlyActivityV2Processor(
             reportMonth);
     }
 
-    private static int ExtractFiscalYear(FinancialYearV2Dto financialYear)
-    {
-        if (!string.IsNullOrWhiteSpace(financialYear.PriodEndToDate) &&
-            financialYear.PriodEndToDate.Contains('/'))
-        {
-            string[] parts = financialYear.PriodEndToDate.Split('/');
-
-            if (parts.Length >= 1 && int.TryParse(parts[0], out int year))
-            {
-                return year + 1; // V2 fiscal year is PriodEndToDate year + 1
-            }
-        }
-
-        throw new ArgumentException("Invalid or missing PriodEndToDate in financial year data", nameof(financialYear));
-    }
+    // Removed legacy ExtractFiscalYear; rely on canonical entity populated via mapping service.
 }
