@@ -36,6 +36,11 @@ public class MonthlyActivityMappingServiceV4 : ICanonicalMappingService<Canonica
             throw new InvalidOperationException("ProductionAndSales is null in V4 DTO");
         }
 
+        if (dto.MonthlyActivity.ProductionAndSales.YearData is null)
+        {
+            throw new InvalidOperationException("YearData is null in V4 DTO");
+        }
+
         if (dto.MonthlyActivity.ProductionAndSales.YearData.Count == 0)
         {
             throw new InvalidOperationException("No year data found in V4 DTO");
