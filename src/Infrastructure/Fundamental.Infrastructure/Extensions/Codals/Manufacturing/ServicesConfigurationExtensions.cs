@@ -97,6 +97,7 @@ public static class ServicesConfigurationExtensions
         serviceCollection.AddScoped<IStatusOfViableCompaniesRepository, StatusOfViableCompaniesRepository>();
         serviceCollection.AddScoped<IIndicesRepository, IndicesRepository>();
         serviceCollection.AddScoped<IFinancialStatementReadRepository, FinancialStatementReadRepository>();
+        serviceCollection.AddScoped<IInterpretativeReportSummaryPage5Repository, InterpretativeReportSummaryPage5Repository>();
         return serviceCollection;
     }
 

@@ -6,6 +6,6 @@ namespace Fundamental.Application.Codals.Manufacturing.Queries.GetInterpretative
 [HandlerCode(HandlerCode.GetInterpretativeReportSummaryPage5ById)]
 public enum GetInterpretativeReportSummaryPage5ByIdErrorCodes
 {
-    [ErrorType(ErrorType.NotFound)]
+    [ErrorType(BackendErrorType.Security)]
     InterpretativeReportSummaryPage5NotFound = 13_400_101
 }

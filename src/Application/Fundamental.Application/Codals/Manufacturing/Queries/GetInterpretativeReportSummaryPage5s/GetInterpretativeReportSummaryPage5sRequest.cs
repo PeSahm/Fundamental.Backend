@@ -10,7 +10,5 @@ namespace Fundamental.Application.Codals.Manufacturing.Queries.GetInterpretative
 public sealed record GetInterpretativeReportSummaryPage5sRequest(
     string? Isin,
     int? FiscalYear,
-    int? ReportMonth,
-    int PageNumber = 1,
-    int PageSize = 10
-) : IRequest<Response<Paginated<GetInterpretativeReportSummaryPage5ListItem>>>;
+    int? ReportMonth
+) : PagingRequest, IRequest<Response<Paginated<GetInterpretativeReportSummaryPage5ListItem>>>;
