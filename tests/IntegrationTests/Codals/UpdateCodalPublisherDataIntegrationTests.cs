@@ -1,6 +1,5 @@
 using FluentAssertions;
 using Fundamental.Application.Codals.Jobs.UpdateCodalPublisherData;
-using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Codals;
 using Fundamental.Domain.Common.Enums;
@@ -11,17 +10,8 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
-using Xunit;
 
 namespace IntegrationTests.Codals;
-
-/// <summary>
-/// Collection definition to ensure tests run sequentially to avoid database conflicts.
-/// </summary>
-[CollectionDefinition("UpdateCodalPublisherData", DisableParallelization = true)]
-public class UpdateCodalPublisherDataCollection
-{
-}
 
 [Collection("UpdateCodalPublisherData")]
 public class UpdateCodalPublisherDataIntegrationTests : IClassFixture<TestFixture>
@@ -37,8 +27,7 @@ public class UpdateCodalPublisherDataIntegrationTests : IClassFixture<TestFixtur
     public async Task UpdateCodalPublisherData_ShouldCreateNewPublishersForExistingSymbols()
     {
         // Arrange
-        // await CleanupTestData();
-
+        await CleanupTestData();
         Symbol existingSymbol1 = CreateTestSymbol("IRO100000011", "Test Company");
         Symbol existingSymbol2 = CreateTestSymbol("IRO100000012", "New Company");
         _fixture.DbContext.Symbols.AddRange(existingSymbol1, existingSymbol2);
@@ -68,7 +57,7 @@ public class UpdateCodalPublisherDataIntegrationTests : IClassFixture<TestFixtur
             .Include(p => p.Symbol)
             .FirstOrDefaultAsync(p => p.CodalId == "PUB011");
         publisher1.Should().NotBeNull();
-        publisher1!.Symbol.Isin.Should().Be("IRO100000011");
+        publisher1.Symbol.Isin.Should().Be("IRO100000011");
         publisher1.IsEnabled.Should().BeTrue();
 
         // Verify new publisher with existing symbol was created
@@ -76,7 +65,7 @@ public class UpdateCodalPublisherDataIntegrationTests : IClassFixture<TestFixtur
             .Include(p => p.Symbol)
             .FirstOrDefaultAsync(p => p.CodalId == "PUB012");
         publisher2.Should().NotBeNull();
-        publisher2!.Symbol.Isin.Should().Be("IRO100000012");
+        publisher2.Symbol.Isin.Should().Be("IRO100000012");
         publisher2.IsEnabled.Should().BeFalse();
     }
 
@@ -84,8 +73,7 @@ public class UpdateCodalPublisherDataIntegrationTests : IClassFixture<TestFixtur
     public async Task UpdateCodalPublisherData_ShouldUpdateExistingPublishers()
     {
         // Arrange
-        // await CleanupTestData();
-
+        await CleanupTestData();
         Symbol symbol = CreateTestSymbol("IRO100000023", "Update Test");
         _fixture.DbContext.Symbols.Add(symbol);
 
@@ -122,7 +110,7 @@ public class UpdateCodalPublisherDataIntegrationTests : IClassFixture<TestFixtur
             .Include(p => p.Symbol)
             .FirstOrDefaultAsync(p => p.CodalId == "PUB023");
         updatedPublisher.Should().NotBeNull();
-        updatedPublisher!.Address.Should().Be("New Address");
+        updatedPublisher.Address.Should().Be("New Address");
         updatedPublisher.ExecutiveManager.Should().Be("New Manager");
         updatedPublisher.IsEnabled.Should().BeTrue();
     }
@@ -131,9 +119,8 @@ public class UpdateCodalPublisherDataIntegrationTests : IClassFixture<TestFixtur
     public async Task UpdateCodalPublisherData_ShouldCreateSymbolFromParentSymbol()
     {
         // Arrange
-        // await CleanupTestData();
-
-        Symbol parentSymbol = CreateTestSymbol("IRO100000034", "Parent Company");
+        await CleanupTestData();
+        Symbol parentSymbol = CreateTestSymbol("IRO1000000", "Parent Company");
         _fixture.DbContext.Symbols.Add(parentSymbol);
         await _fixture.DbContext.SaveChangesAsync();
 
@@ -160,17 +147,17 @@ public class UpdateCodalPublisherDataIntegrationTests : IClassFixture<TestFixtur
             .Include(p => p.ParentSymbol)
             .FirstOrDefaultAsync(p => p.CodalId == "PUB034");
         publisher.Should().NotBeNull();
-        publisher!.Symbol.Should().NotBeNull();
+        publisher.Symbol.Should().NotBeNull();
         publisher.Symbol.Name.Should().Be("Parent Company-Sub");
         publisher.ParentSymbol.Should().NotBeNull();
-        publisher.ParentSymbol!.Id.Should().Be(parentSymbol.Id);
+        publisher.ParentSymbol.Id.Should().Be(parentSymbol.Id);
     }
 
     [Fact]
     public async Task UpdateCodalPublisherData_ShouldHandleLargeDatasetEfficiently()
     {
         // Arrange
-        // await CleanupTestData();
+        await CleanupTestData();
 
         // Create 20 existing symbols
         List<Symbol> existingSymbols = new();
@@ -184,7 +171,7 @@ public class UpdateCodalPublisherDataIntegrationTests : IClassFixture<TestFixtur
         await _fixture.DbContext.SaveChangesAsync();
 
         // Create 40 publishers (20 for existing symbols, 20 with parent symbols)
-        Symbol parentSymbol = CreateTestSymbol("IRO100000056", "Bulk Parent");
+        Symbol parentSymbol = CreateTestSymbol("IRO100000", "Bulk Parent");
         _fixture.DbContext.Symbols.Add(parentSymbol);
         await _fixture.DbContext.SaveChangesAsync();
 
@@ -196,7 +183,7 @@ public class UpdateCodalPublisherDataIntegrationTests : IClassFixture<TestFixtur
 
         for (int i = 21; i <= 40; i++)
         {
-            publishers.Add(CreatePublisherResponse($"BULK{i + 40:D3}", null, $"Bulk Parent-Sub{i}", "Bulk Parent", false));
+            publishers.Add(CreatePublisherResponse($"BULK{i + 40:D3}", null, $"Bulk ParentSub{i}", "Bulk Parent", false));
         }
 
         _fixture.CodalServiceMock
@@ -213,7 +200,7 @@ public class UpdateCodalPublisherDataIntegrationTests : IClassFixture<TestFixtur
         response.Success.Should().BeTrue();
 
         int publisherCount = await _fixture.DbContext.Publishers
-            .Where(p => p.CodalId.StartsWith("BULK0") && int.Parse(p.CodalId.Substring(4)) >= 41)
+            .Where(p => p.CodalId.CompareTo("BULK041") >= 0)
             .CountAsync();
         publisherCount.Should().Be(40);
 
@@ -228,8 +215,7 @@ public class UpdateCodalPublisherDataIntegrationTests : IClassFixture<TestFixtur
     public async Task UpdateCodalPublisherData_ShouldSkipPublishersWithNoSymbolAndNoParent()
     {
         // Arrange
-        // await CleanupTestData();
-
+        await CleanupTestData();
         List<GetPublisherResponse> publishers = new()
         {
             CreatePublisherResponse("PUB075", "IRO100000099", "Non-existent", null, false)
@@ -257,8 +243,7 @@ public class UpdateCodalPublisherDataIntegrationTests : IClassFixture<TestFixtur
     public async Task UpdateCodalPublisherData_ShouldUpdatePublisherSymbolWhenIsinChanges()
     {
         // Arrange
-        // await CleanupTestData();
-
+        await CleanupTestData();
         Symbol oldSymbol = CreateTestSymbol("IRO100000085", "Old Symbol");
         Symbol newSymbol = CreateTestSymbol("IRO100000086", "New Symbol");
         _fixture.DbContext.Symbols.AddRange(oldSymbol, newSymbol);
@@ -289,37 +274,37 @@ public class UpdateCodalPublisherDataIntegrationTests : IClassFixture<TestFixtur
             .Include(p => p.Symbol)
             .FirstOrDefaultAsync(p => p.CodalId == "PUB086");
         updatedPublisher.Should().NotBeNull();
-        updatedPublisher!.Symbol.Isin.Should().Be("IRO100000086");
+        updatedPublisher.Symbol.Isin.Should().Be("IRO100000086");
     }
 
     private async Task CleanupTestData()
     {
         // Clean up publishers first (due to foreign key) - only test publishers
-        List<Publisher> publishers = await _fixture.DbContext.Publishers
+        await _fixture.DbContext.Publishers
             .Where(p => p.CodalId.StartsWith("PUB") || p.CodalId.StartsWith("BULK"))
-            .ToListAsync();
-        _fixture.DbContext.Publishers.RemoveRange(publishers);
-        await _fixture.DbContext.SaveChangesAsync();
+            .ExecuteDeleteAsync();
 
         // Clean up test symbols - be more specific to avoid removing non-test data
-        List<Symbol> symbols = await _fixture.DbContext.Symbols
+        await _fixture.DbContext.Symbols
             .Where(s => s.Isin.StartsWith("IRO100000") || s.Isin.StartsWith("IRO0000001"))
-            .ToListAsync();
-        _fixture.DbContext.Symbols.RemoveRange(symbols);
-        await _fixture.DbContext.SaveChangesAsync();
+            .ExecuteDeleteAsync();
     }
 
-    private Symbol CreateTestSymbol(string isin, string name)
+    private static Symbol CreateTestSymbol(string isin, string name)
     {
+        int remainingLength = isin.Length - 3;
+        string tseInsCode = isin.Substring(3, Math.Min(9, remainingLength));
+        string symbolEnName = isin.Substring(3, Math.Min(6, remainingLength));
+        string companyEnCode = isin.Substring(3, Math.Min(6, remainingLength));
         return new Symbol(
             Guid.NewGuid(),
             isin,
-            isin.Substring(3, 9),
+            tseInsCode,
             name + " EN",
-            isin.Substring(3, 6),
+            symbolEnName,
             name,
             name,
-            isin.Substring(3, 6),
+            companyEnCode,
             name + " Persian",
             null,
             1000000000,
@@ -338,6 +323,7 @@ public class UpdateCodalPublisherDataIntegrationTests : IClassFixture<TestFixtur
             CodalId = codalId,
             Address = address,
             ExecutiveManager = manager,
+            NationalCode = "1234567890",
             ReportingType = ReportingType.Production,
             CompanyType = CompanyType.NoneFinancialInstitution,
             State = PublisherState.RegisterInTse,

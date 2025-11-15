@@ -109,11 +109,16 @@ public sealed class UpdateCodalPublisherDataCommandHandler(
             }
 
             // Create new symbol if needed
-            if (symbol is null)
+            if (symbol is null && parentSymbol is not null)
             {
-                symbol = Symbol.CreateByParentSymbol(parentSymbol!, publisher.DisplayedSymbol, publisher.Name, DateTime.Now);
+                symbol = Symbol.CreateByParentSymbol(parentSymbol, publisher.DisplayedSymbol, publisher.Name, DateTime.Now);
                 newSymbols.Add(symbol);
                 nameLookup[symbol.Name] = symbol; // Add to lookup for subsequent publishers
+            }
+
+            if (symbol is null)
+            {
+                continue;
             }
 
             // Update or create publisher
@@ -153,7 +158,12 @@ public sealed class UpdateCodalPublisherDataCommandHandler(
         return Response.Successful();
     }
 
-    private static void UpdatePublisherProperties(Publisher thePublisher, GetPublisherResponse publisher, Symbol symbol, Symbol? parentSymbol)
+    private static void UpdatePublisherProperties(
+        Publisher thePublisher,
+        GetPublisherResponse publisher,
+        Symbol symbol,
+        Symbol? parentSymbol
+    )
     {
         thePublisher.CodalId = publisher.Id;
         thePublisher.Isic = publisher.Isic;
@@ -177,7 +187,7 @@ public sealed class UpdateCodalPublisherDataCommandHandler(
         thePublisher.OfficeFax = publisher.OfficeFax.Safe();
         thePublisher.ShareOfficeTel = publisher.ShareOfficeTel.Safe();
         thePublisher.ShareOfficeFax = publisher.ShareOfficeFax.Safe();
-        thePublisher.NationalCode = publisher.NationalCode.Safe();
+        thePublisher.NationalCode = TruncateNationalCode(publisher.NationalCode);
         thePublisher.FinancialYear = publisher.FinancialYear.Safe();
         thePublisher.ListedCapital = publisher.ListedCapital;
         thePublisher.AuditorName = publisher.AuditorName.Safe();
@@ -199,7 +209,7 @@ public sealed class UpdateCodalPublisherDataCommandHandler(
 
     private static Publisher CreatePublisher(GetPublisherResponse publisher, Symbol symbol, Symbol? parentSymbol)
     {
-        return new Publisher(Guid.NewGuid(), symbol, DateTime.Now)
+        return new Publisher(Guid.NewGuid(), symbol, DateTime.UtcNow)
         {
             CodalId = publisher.Id,
             Isic = publisher.Isic,
@@ -223,7 +233,7 @@ public sealed class UpdateCodalPublisherDataCommandHandler(
             OfficeFax = publisher.OfficeFax.Safe(),
             ShareOfficeTel = publisher.ShareOfficeTel.Safe(),
             ShareOfficeFax = publisher.ShareOfficeFax.Safe(),
-            NationalCode = publisher.NationalCode.Safe(),
+            NationalCode = TruncateNationalCode(publisher.NationalCode),
             FinancialYear = publisher.FinancialYear.Safe(),
             ListedCapital = publisher.ListedCapital,
             AuditorName = publisher.AuditorName.Safe(),
@@ -236,5 +246,22 @@ public sealed class UpdateCodalPublisherDataCommandHandler(
             UnauthorizedCapital = publisher.UnauthorizedCapital,
             ParentSymbol = parentSymbol
         };
+    }
+
+    private static string TruncateNationalCode(string? nationalCode)
+    {
+        if (string.IsNullOrEmpty(nationalCode))
+        {
+            return string.Empty;
+        }
+
+        string? safe = nationalCode.Safe();
+
+        if (string.IsNullOrEmpty(safe))
+        {
+            return string.Empty;
+        }
+
+        return safe.Length > 15 ? safe.Substring(0, 15) : safe;
     }
 }
