@@ -1,0 +1,7 @@
+﻿using Fundamental.ErrorHandling.Attributes;
+using Fundamental.ErrorHandling.Enums;
+
+namespace Fundamental.Application.Codals.Manufacturing.Queries.GetInterpretativeReportSummaryPage5s;
+
+[HandlerCode(HandlerCode.GetInterpretativeReportSummaryPage5s)]
+public enum GetInterpretativeReportSummaryPage5SErrorCodes;

@@ -7,5 +7,5 @@ namespace Fundamental.Application.Codals.Manufacturing.Queries.GetInterpretative
 public enum GetInterpretativeReportSummaryPage5ByIdErrorCodes
 {
     [ErrorType(BackendErrorType.Security)]
-    InterpretativeReportSummaryPage5NotFound = 13_400_101
+    InterpretativeReportSummaryPage5NotFound = 13_375_101
 }
