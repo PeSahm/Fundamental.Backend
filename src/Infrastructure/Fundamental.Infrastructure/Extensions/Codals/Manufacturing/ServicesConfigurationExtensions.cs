@@ -3,6 +3,7 @@ using Fundamental.Application.Codals.Dto.MonthlyActivities.V2;
 using Fundamental.Application.Codals.Dto.MonthlyActivities.V3;
 using Fundamental.Application.Codals.Dto.MonthlyActivities.V4;
 using Fundamental.Application.Codals.Dto.MonthlyActivities.V5;
+using Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage5Summaries.V2.InterpretativeReportSummaryPage5;
 using Fundamental.Application.Codals.Manufacturing.EventHandlers;
 using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Application.Codals.Services;
@@ -17,6 +18,7 @@ using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.Balanc
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.IncomeStatements;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.InterpretativeReportSummaryPages4;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.InterpretativeReportSummaryPages5;
+using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.InterpretativeReportSummaryPage5;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.MonthlyActivities;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.RegisterCapitalIncrease;
 using Microsoft.Extensions.DependencyInjection;
@@ -52,6 +54,9 @@ public static class ServicesConfigurationExtensions
         serviceCollection
             .AddKeyedScopedCanonicalMappingService<ICanonicalMappingService<CanonicalMonthlyActivity, CodalMonthlyActivityV5>,
                 MonthlyActivityMappingServiceV5, CodalMonthlyActivityV5>();
+        serviceCollection
+            .AddKeyedScopedCanonicalMappingService<ICanonicalMappingService<CanonicalInterpretativeReportSummaryPage5, CodalInterpretativeReportSummaryPage5V2>,
+                InterpretativeReportSummaryPage5MappingServiceV2, CodalInterpretativeReportSummaryPage5V2>();
         return serviceCollection;
     }
 
@@ -67,6 +72,7 @@ public static class ServicesConfigurationExtensions
         serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, NonOperationIncomeAndExpensesV2Processor>();
         serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, TheStatusOfViableCompaniesV2Processor>();
         serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, CapitalIncreaseRegistrationNoticeV1Processor>();
+        serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, InterpretativeReportSummaryPage5V2Processor>();
         return serviceCollection;
     }
 
@@ -78,6 +84,7 @@ public static class ServicesConfigurationExtensions
         services.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, NonOperationIncomeAndExpensesDetector>();
         services.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, TheStatusOfViableCompaniesDetector>();
         services.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, CapitalIncreaseRegistrationNoticeDetector>();
+        services.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, InterpretativeReportSummaryPage5Detector>();
         return services;
     }
 
