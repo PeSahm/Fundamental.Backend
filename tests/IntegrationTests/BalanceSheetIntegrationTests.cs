@@ -89,27 +89,27 @@ public class BalanceSheetIntegrationTests : FinancialStatementTestBase
             savedBalanceSheets.Should().HaveCount(3, $"Should have 3 balance sheet headers for ISIN {isin} (one for each fiscal year/report month combination)");
 
             // Verify each balance sheet header
-            var balanceSheet1404 = savedBalanceSheets.Single(bs => bs.FiscalYear.Year == 1404 && bs.ReportMonth.Month == 6 && !bs.IsAudited);
-            var balanceSheet1403 = savedBalanceSheets.Single(bs => bs.FiscalYear.Year == 1403 && bs.ReportMonth.Month == 12 && bs.IsAudited);
-            var balanceSheet1402 = savedBalanceSheets.Single(bs => bs.FiscalYear.Year == 1402 && bs.ReportMonth.Month == 12 && bs.IsAudited);
+            BalanceSheet balanceSheet1404 = savedBalanceSheets.Single(bs => bs.FiscalYear.Year == 1404 && bs.ReportMonth.Month == 6 && !bs.IsAudited);
+            BalanceSheet balanceSheet1403 = savedBalanceSheets.Single(bs => bs.FiscalYear.Year == 1403 && bs.ReportMonth.Month == 12 && bs.IsAudited);
+            BalanceSheet balanceSheet1402 = savedBalanceSheets.Single(bs => bs.FiscalYear.Year == 1402 && bs.ReportMonth.Month == 12 && bs.IsAudited);
 
             // Verify each balance sheet has the correct properties
-            foreach (var balanceSheet in savedBalanceSheets)
+            foreach (BalanceSheet balanceSheet in savedBalanceSheets)
             {
                 balanceSheet.Symbol.Isin.Should().Be(isin);
                 balanceSheet.TraceNo.Should().Be(traceNo);
             }
 
             // Verify details for each balance sheet
-            var details1404 = await _fixture.DbContext.BalanceSheetDetails
+            List<BalanceSheetDetail> details1404 = await _fixture.DbContext.BalanceSheetDetails
                 .Where(d => d.BalanceSheet.Id == balanceSheet1404.Id)
                 .ToListAsync();
 
-            var details1403 = await _fixture.DbContext.BalanceSheetDetails
+            List<BalanceSheetDetail> details1403 = await _fixture.DbContext.BalanceSheetDetails
                 .Where(d => d.BalanceSheet.Id == balanceSheet1403.Id)
                 .ToListAsync();
 
-            var details1402 = await _fixture.DbContext.BalanceSheetDetails
+            List<BalanceSheetDetail> details1402 = await _fixture.DbContext.BalanceSheetDetails
                 .Where(d => d.BalanceSheet.Id == balanceSheet1402.Id)
                 .ToListAsync();
 

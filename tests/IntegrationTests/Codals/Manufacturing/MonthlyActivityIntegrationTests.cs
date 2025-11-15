@@ -127,18 +127,18 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
         });
 
         // Verify total sum exists (green box)
-        var totalSummary = storedEntity.GetTotalSummary();
+        ProductionAndSalesItem? totalSummary = storedEntity.GetTotalSummary();
         totalSummary.Should().NotBeNull();
         totalSummary!.ProductName.Should().Be("جمع");
         totalSummary.YearToDateSalesAmount.Should().BeGreaterThan(0);
 
         // Verify internal sale summary exists (blue box)
-        var internalSummary = storedEntity.GetInternalSaleSummary();
+        ProductionAndSalesItem? internalSummary = storedEntity.GetInternalSaleSummary();
         internalSummary.Should().NotBeNull();
         internalSummary!.ProductName.Should().Be("جمع فروش داخلی");
 
         // Verify export sale summary exists (red box)
-        var exportSummary = storedEntity.GetExportSaleSummary();
+        ProductionAndSalesItem? exportSummary = storedEntity.GetExportSaleSummary();
         exportSummary.Should().NotBeNull();
         exportSummary!.ProductName.Should().Be("جمع فروش صادراتی");
     }
@@ -537,7 +537,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
         });
 
         // Total rows should have aggregated amounts
-        var firstTotal = totalMaterials.FirstOrDefault();
+        BuyRawMaterialItem? firstTotal = totalMaterials.FirstOrDefault();
         if (firstTotal != null)
         {
             // Total amount should be sum of domestic + imported
@@ -615,7 +615,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
             .Include(x => x.BuyRawMaterialItems)
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id);
 
-        var domesticSum = storedEntity!.GetDomesticRawMaterialsSum();
+        BuyRawMaterialItem? domesticSum = storedEntity!.GetDomesticRawMaterialsSum();
 
         // Assert
         domesticSum.Should().NotBeNull();
@@ -655,7 +655,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
             .Include(x => x.BuyRawMaterialItems)
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id);
 
-        var importedSum = storedEntity!.GetImportedRawMaterialsSum();
+        BuyRawMaterialItem? importedSum = storedEntity!.GetImportedRawMaterialsSum();
 
         // Assert
         importedSum.Should().NotBeNull();
@@ -692,7 +692,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
             .Include(x => x.BuyRawMaterialItems)
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id);
 
-        var totalSum = storedEntity!.GetRawMaterialsTotalSum();
+        BuyRawMaterialItem? totalSum = storedEntity!.GetRawMaterialsTotalSum();
 
         // Assert
         totalSum.Should().NotBeNull();
@@ -703,8 +703,8 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
         totalSum.IsDataRow.Should().BeFalse();
 
         // Verify total equals domestic + imported
-        var domesticSum = storedEntity.GetDomesticRawMaterialsSum();
-        var importedSum = storedEntity.GetImportedRawMaterialsSum();
+        BuyRawMaterialItem? domesticSum = storedEntity.GetDomesticRawMaterialsSum();
+        BuyRawMaterialItem? importedSum = storedEntity.GetImportedRawMaterialsSum();
 
         if (domesticSum != null && importedSum != null)
         {
@@ -778,7 +778,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
             .Include(x => x.EnergyItems)
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id);
 
-        var totalSum = storedEntity!.GetEnergyTotalSum();
+        EnergyItem? totalSum = storedEntity!.GetEnergyTotalSum();
 
         // Assert
         totalSum.Should().NotBeNull();
@@ -791,7 +791,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
 
         // Verify total matches sum of all data rows (within rounding tolerance)
         List<EnergyItem> dataRows = storedEntity.GetEnergyDataRows().ToList();
-        var calculatedTotal = dataRows.Sum(x => x.YearToDateCost ?? 0);
+        decimal calculatedTotal = dataRows.Sum(x => x.YearToDateCost ?? 0);
 
         if (totalSum.YearToDateCost.HasValue && calculatedTotal > 0)
         {
@@ -841,7 +841,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
         });
 
         // Check sum row
-        var sumRow = storedEntity.EnergyItems.FirstOrDefault(x => x.IsSummaryRow);
+        EnergyItem? sumRow = storedEntity.EnergyItems.FirstOrDefault(x => x.IsSummaryRow);
         if (sumRow != null)
         {
             sumRow.RowCode.Should().Be(EnergyRowCode.TotalSum);
@@ -953,7 +953,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
             .Include(x => x.CurrencyExchangeItems)
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id);
 
-        var sourcesSum = storedEntity!.GetCurrencySourcesSum();
+        CurrencyExchangeItem? sourcesSum = storedEntity!.GetCurrencySourcesSum();
 
         // Assert
         sourcesSum.Should().NotBeNull();
@@ -994,7 +994,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
             .Include(x => x.CurrencyExchangeItems)
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id);
 
-        var usesSum = storedEntity!.GetCurrencyUsesSum();
+        CurrencyExchangeItem? usesSum = storedEntity!.GetCurrencyUsesSum();
 
         // Assert
         usesSum.Should().NotBeNull();
@@ -1037,8 +1037,8 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
 
         List<CurrencyExchangeItem> allItems = storedEntity!.CurrencyExchangeItems.ToList();
         List<CurrencyExchangeItem> dataRows = allItems.Where(x => x.RowCode == CurrencyExchangeRowCode.Data).ToList();
-        var sourcesSum = allItems.FirstOrDefault(x => x.RowCode == CurrencyExchangeRowCode.SourcesSum);
-        var usesSum = allItems.FirstOrDefault(x => x.RowCode == CurrencyExchangeRowCode.UsesSum);
+        CurrencyExchangeItem? sourcesSum = allItems.FirstOrDefault(x => x.RowCode == CurrencyExchangeRowCode.SourcesSum);
+        CurrencyExchangeItem? usesSum = allItems.FirstOrDefault(x => x.RowCode == CurrencyExchangeRowCode.UsesSum);
 
         // Assert
         allItems.Should().NotBeEmpty();

@@ -166,7 +166,7 @@ public class CanonicalMonthlyActivityTests
 
     private static CanonicalMonthlyActivity CreateTestMonthlyActivity()
     {
-        var symbol = new Symbol(
+        Symbol symbol = new Symbol(
             Guid.NewGuid(),
             "ISIN12345678",
             "TSE123",
@@ -185,7 +185,7 @@ public class CanonicalMonthlyActivityTests
             null,
             DateTime.UtcNow);
 
-        var monthlyActivity = new CanonicalMonthlyActivity(
+        CanonicalMonthlyActivity monthlyActivity = new CanonicalMonthlyActivity(
             Guid.NewGuid(),
             symbol,
             123456,

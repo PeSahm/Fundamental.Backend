@@ -188,9 +188,9 @@ public class CommonCodalDataHostedService(IServiceScopeFactory factory) : Backgr
                 await dbContext.SaveChangesAsync(stoppingToken);
             }
 
-            foreach (var symbolName in sectorData.Value)
+            foreach (string symbolName in sectorData.Value)
             {
-                var symbol = await dbContext.Symbols.FirstOrDefaultAsync(s => s.Name == symbolName.Safe(), stoppingToken);
+                Symbol? symbol = await dbContext.Symbols.FirstOrDefaultAsync(s => s.Name == symbolName.Safe(), stoppingToken);
 
                 if (symbol != null && symbol.Sector?.Id != sector.Id)
                 {

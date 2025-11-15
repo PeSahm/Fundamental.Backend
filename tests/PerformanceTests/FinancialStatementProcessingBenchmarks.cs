@@ -26,7 +26,7 @@ public class FinancialStatementProcessingBenchmarks
     public async Task Setup()
     {
         // Setup in-memory database for performance testing
-        var options = new DbContextOptionsBuilder<FundamentalDbContext>()
+        DbContextOptions<FundamentalDbContext> options = new DbContextOptionsBuilder<FundamentalDbContext>()
             .UseInMemoryDatabase("PerformanceTestDb")
             .Options;
 
@@ -48,7 +48,7 @@ public class FinancialStatementProcessingBenchmarks
         // Test with first 10 symbols
         foreach (Symbol symbol in _testSymbols.Take(10))
         {
-            var balanceSheets = await _context.BalanceSheets
+            List<BalanceSheet> balanceSheets = await _context.BalanceSheets
                 .Where(bs => bs.Symbol.Id == symbol.Id)
                 .OrderBy(bs => bs.FiscalYear)
                 .ToListAsync();
@@ -60,7 +60,7 @@ public class FinancialStatementProcessingBenchmarks
     [Benchmark]
     public async Task BulkInsertBalanceSheets()
     {
-        var newBalanceSheets = GenerateTestBalanceSheets(_testSymbols.Take(50), 1);
+        List<BalanceSheet> newBalanceSheets = GenerateTestBalanceSheets(_testSymbols.Take(50), 1);
 
         await _context.BalanceSheets.AddRangeAsync(newBalanceSheets);
         await _context.SaveChangesAsync();
@@ -117,7 +117,7 @@ public class FinancialStatementProcessingBenchmarks
         List<BalanceSheet> balanceSheets = new List<BalanceSheet>();
         Random random = new Random(42); // Fixed seed for reproducible results
 
-        foreach (var symbol in symbols)
+        foreach (Symbol symbol in symbols)
         {
             for (int year = 0; year < yearsBack; year++)
             {
@@ -137,7 +137,7 @@ public class FinancialStatementProcessingBenchmarks
                 // Multiple rows per year
                 for (int category = 0; category < 5; category++)
                 {
-                    var value = random.Next(1000000, 100000000);
+                    int value = random.Next(1000000, 100000000);
                     BalanceSheetDetail detail = new BalanceSheetDetail(
                         Guid.NewGuid(),
                         balanceSheet,
@@ -166,7 +166,7 @@ public class PerformanceTests : IAsyncLifetime
 
     public async Task InitializeAsync()
     {
-        var options = new DbContextOptionsBuilder<FundamentalDbContext>()
+        DbContextOptions<FundamentalDbContext> options = new DbContextOptionsBuilder<FundamentalDbContext>()
             .UseInMemoryDatabase("PerfTestDb")
             .Options;
 
@@ -183,7 +183,7 @@ public class PerformanceTests : IAsyncLifetime
     public async Task ProcessLargeDataset_ShouldCompleteWithinTimeLimit()
     {
         // Arrange
-        var largeDataset = GenerateLargeBalanceSheetDataset(10000);
+        List<BalanceSheet> largeDataset = GenerateLargeBalanceSheetDataset(10000);
         Stopwatch stopwatch = Stopwatch.StartNew();
 
         // Act
@@ -212,7 +212,7 @@ public class PerformanceTests : IAsyncLifetime
 #pragma warning restore S1215
 
         // Assert
-        var memoryIncrease = finalMemory - initialMemory;
+        long memoryIncrease = finalMemory - initialMemory;
         memoryIncrease.Should().BeLessThan(50 * 1024 * 1024); // 50MB limit
     }
 
@@ -220,17 +220,17 @@ public class PerformanceTests : IAsyncLifetime
     public async Task ConcurrentQueries_ShouldPerformWell()
     {
         // Arrange
-        var symbolIds = (await _context.Symbols.Select(s => s.Id).ToListAsync()).Take(10);
+        IEnumerable<Guid> symbolIds = (await _context.Symbols.Select(s => s.Id).ToListAsync()).Take(10);
 
         // Act - Simple count queries to avoid complex value object issues
-        var queryTasks = symbolIds.Select(async symbolId =>
+        IEnumerable<Task<int>> queryTasks = symbolIds.Select(async symbolId =>
         {
             return await _context.BalanceSheets
                 .CountAsync(bs => bs.Symbol.Id == symbolId);
         });
 
         Stopwatch stopwatch = Stopwatch.StartNew();
-        var results = await Task.WhenAll(queryTasks);
+        int[] results = await Task.WhenAll(queryTasks);
         stopwatch.Stop();
 
         // Assert
@@ -267,7 +267,7 @@ public class PerformanceTests : IAsyncLifetime
         await _context.SaveChangesAsync();
 
         // Create balance sheets for the symbols
-        var balanceSheets = GenerateLargeBalanceSheetDataset(1000);
+        List<BalanceSheet> balanceSheets = GenerateLargeBalanceSheetDataset(1000);
         await _context.BalanceSheets.AddRangeAsync(balanceSheets);
         await _context.SaveChangesAsync();
     }
@@ -280,7 +280,7 @@ public class PerformanceTests : IAsyncLifetime
 
         for (int i = 0; i < count; i++)
         {
-            var symbol = symbols[random.Next(symbols.Count)];
+            Symbol symbol = symbols[random.Next(symbols.Count)];
 
             BalanceSheet balanceSheet = new BalanceSheet(
                 Guid.NewGuid(),
@@ -295,7 +295,7 @@ public class PerformanceTests : IAsyncLifetime
                 DateTime.UtcNow.AddDays(-random.Next(1, 365)));
 
             // Add a single detail record for simplicity in performance tests
-            var value = random.Next(1000000, 100000000);
+            int value = random.Next(1000000, 100000000);
             BalanceSheetDetail detail = new BalanceSheetDetail(
                 Guid.NewGuid(),
                 balanceSheet,
