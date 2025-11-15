@@ -31,6 +31,8 @@ public class FundamentalDbContext : DbContext, IUnitOfWork, ICoravelProDbContext
 
     public DbSet<CanonicalInterpretativeReportSummaryPage5> CanonicalInterpretativeReportSummaryPage5s { get; set; }
 
+    public DbSet<CanonicalAnnualAssembly> CanonicalAnnualAssemblies { get; set; }
+
     public DbSet<BalanceSheet> BalanceSheets { get; set; }
 
     public DbSet<BalanceSheetDetail> BalanceSheetDetails { get; set; }

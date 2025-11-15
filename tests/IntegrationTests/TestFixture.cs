@@ -145,10 +145,7 @@ public class TestFixture : IAsyncLifetime
 
         // Register repositories needed for testing
         services.AddScoped<IRepository, FundamentalRepository>();
-        services.AddScoped<IBalanceSheetReadRepository, BalanceSheetReadRepository>();
-        services.AddScoped<IIncomeStatementsReadRepository, IncomeStatementReadRepository>();
-        services.AddScoped<IMonthlyActivityRepository, MonthlyActivityRepository>();
-        services.AddScoped<IInterpretativeReportSummaryPage5Repository, InterpretativeReportSummaryPage5Repository>();
+        services.AddManufacturingReadRepositories();
 
         // Register Canonical Mapping Service Factory and Manufacturing Services
         services.AddCodalMonthlyActivityMappingServices();
