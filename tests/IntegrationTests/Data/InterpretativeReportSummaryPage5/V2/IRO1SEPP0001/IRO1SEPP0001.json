@@ -1,0 +1,4886 @@
+﻿{
+  "incomeStatement" : {
+    "version" : "7",
+    "incomeStatement" : {
+      "yearData" : [ {
+        "columnId" : "9042",
+        "caption" : "دوره منتهي به 1404/06/31 - حسابرسی نشده",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : false
+      }, {
+        "columnId" : "9043",
+        "caption" : "تجديد ارائه شده دوره منتهي به 1403/06/31 - حسابرسی شده",
+        "periodEndToDate" : "1403/06/31",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 6,
+        "isAudited" : true
+      }, {
+        "columnId" : "9045",
+        "caption" : "تجديد ارائه شده دوره منتهي به 1403/12/30 - حسابرسی شده",
+        "periodEndToDate" : "1403/12/30",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 12,
+        "isAudited" : true
+      } ],
+      "rowItems" : [ {
+        "rowCode" : 3,
+        "oldFieldName" : "Sales",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9041" : "درآمدهای عملیاتی",
+        "value_9042" : "144761885",
+        "value_9043" : "124754018",
+        "value_9045" : "302485660",
+        "value_9044" : "16"
+      }, {
+        "rowCode" : 4,
+        "oldFieldName" : "CostOfGoodsSale",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9041" : "بهاى تمام شده درآمدهای عملیاتی",
+        "value_9042" : "-111626483",
+        "value_9043" : "-94772166",
+        "value_9045" : "-229686208",
+        "value_9044" : "-18"
+      }, {
+        "rowCode" : 5,
+        "oldFieldName" : "GrossProfitLoss",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9041" : "سود(زیان) ناخالص",
+        "value_9042" : "33135402",
+        "value_9043" : "29981852",
+        "value_9045" : "72799452",
+        "value_9044" : "11"
+      }, {
+        "rowCode" : 6,
+        "oldFieldName" : "GeneralAdministrativeExpense",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9041" : "هزینه‏ هاى فروش، ادارى و عمومى",
+        "value_9042" : "-14190232",
+        "value_9043" : "-7975164",
+        "value_9045" : "-24668921",
+        "value_9044" : "-78"
+      }, {
+        "rowCode" : 44,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9041" : "هزینه کاهش ارزش دریافتنی‏ ها (هزینه استثنایی)",
+        "value_9042" : "0",
+        "value_9043" : "0",
+        "value_9045" : "0",
+        "value_9044" : "0"
+      }, {
+        "rowCode" : 7,
+        "oldFieldName" : "OtherOperatingRevenue",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9041" : "سایر درآمدها",
+        "value_9042" : "6944433",
+        "value_9043" : "1047874",
+        "value_9045" : "2813513",
+        "value_9044" : "563"
+      }, {
+        "rowCode" : 8,
+        "oldFieldName" : "OtherOperatingExpense",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9041" : "سایر هزینه‌ها",
+        "value_9042" : "-59912",
+        "value_9043" : "0",
+        "value_9045" : "0",
+        "value_9044" : "--"
+      }, {
+        "rowCode" : 9,
+        "oldFieldName" : "OperatingProfitLoss",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9041" : "سود(زیان) عملیاتى",
+        "value_9042" : "25829691",
+        "value_9043" : "23054562",
+        "value_9045" : "50944044",
+        "value_9044" : "12"
+      }, {
+        "rowCode" : 10,
+        "oldFieldName" : "FinanceExpense",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9041" : "هزینه‏ هاى مالى",
+        "value_9042" : "-841970",
+        "value_9043" : "-994121",
+        "value_9045" : "-2062351",
+        "value_9044" : "15"
+      }, {
+        "rowCode" : 52,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9041" : "سایر درآمدها و هزینه ‏هاى غیرعملیاتى",
+        "value_9042" : "7925841",
+        "value_9043" : "8024124",
+        "value_9045" : "9203277",
+        "value_9044" : "-1"
+      }, {
+        "rowCode" : 13,
+        "oldFieldName" : "ContinousOperatingProfit",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9041" : "سود(زیان) عملیات در حال تداوم قبل از مالیات",
+        "value_9042" : "32913562",
+        "value_9043" : "30084565",
+        "value_9045" : "58084970",
+        "value_9044" : "9"
+      }, {
+        "rowCode" : 45,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9041" : "سال جاری",
+        "value_9042" : "-4416661",
+        "value_9043" : "-3241175",
+        "value_9045" : "-4744138",
+        "value_9044" : "-36"
+      }, {
+        "rowCode" : 46,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9041" : "سال‌های قبل",
+        "value_9042" : "0",
+        "value_9043" : "0",
+        "value_9045" : "0",
+        "value_9044" : "0"
+      }, {
+        "rowCode" : 15,
+        "oldFieldName" : "NetIncomeLoss",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9041" : "سود(زیان) خالص عملیات در حال تداوم",
+        "value_9042" : "28496901",
+        "value_9043" : "26843390",
+        "value_9045" : "53340832",
+        "value_9044" : "6"
+      }, {
+        "rowCode" : 21,
+        "oldFieldName" : "BEShareDiscontinuedOperations",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9041" : "سود (زیان) خالص عملیات متوقف شده",
+        "value_9042" : "0",
+        "value_9043" : "0",
+        "value_9045" : "0",
+        "value_9044" : "0"
+      }, {
+        "rowCode" : 17,
+        "oldFieldName" : "ProfitLoss",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9041" : "سود(زیان) خالص",
+        "value_9042" : "28496901",
+        "value_9043" : "26843390",
+        "value_9045" : "53340832",
+        "value_9044" : "6"
+      }, {
+        "rowCode" : 19,
+        "oldFieldName" : "BEShareContinuingOperationOperating",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9041" : "عملیاتی (ریال)",
+        "value_9042" : "385",
+        "value_9043" : "355",
+        "value_9045" : "829",
+        "value_9044" : "8"
+      }, {
+        "rowCode" : 20,
+        "oldFieldName" : "BEShareContinuingOperationNonOperating",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9041" : "غیرعملیاتی (ریال)",
+        "value_9042" : "127",
+        "value_9043" : "126",
+        "value_9045" : "127",
+        "value_9044" : "1"
+      }, {
+        "rowCode" : 47,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9041" : "ناشی از عملیات در حال تداوم",
+        "value_9042" : "512",
+        "value_9043" : "481",
+        "value_9045" : "956",
+        "value_9044" : "6"
+      }, {
+        "rowCode" : 48,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9041" : "ناشی از عملیات متوقف شده",
+        "value_9042" : "0",
+        "value_9043" : "0",
+        "value_9045" : "0",
+        "value_9044" : "0"
+      }, {
+        "rowCode" : 21,
+        "oldFieldName" : "BEShareDiscontinuedOperations",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9041" : "سود(زیان) پایه هر سهم",
+        "value_9042" : "512",
+        "value_9043" : "481",
+        "value_9045" : "956",
+        "value_9044" : "6"
+      }, {
+        "rowCode" : 41,
+        "oldFieldName" : "EarningsPerShareAfterTax",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9041" : "سود (زیان) خالص هر سهم – ریال",
+        "value_9042" : "509",
+        "value_9043" : "479",
+        "value_9045" : "953",
+        "value_9044" : "6"
+      }, {
+        "rowCode" : 42,
+        "oldFieldName" : "ListedCapital",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9041" : "سرمایه",
+        "value_9042" : "56000000",
+        "value_9043" : "56000000",
+        "value_9045" : "56000000",
+        "value_9044" : "0"
+      } ]
+    },
+    "incomeStatementdesc" : {
+      "rowItems" : [ {
+        "rowCode" : 53,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9411" : "دلایل تغییرات اطلاعات واقعی دوره منتهی به 1404/06/31"
+      }, {
+        "rowCode" : 54,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9411" : ""
+      }, {
+        "rowCode" : 55,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9411" : "دلایل تغییرات اطلاعات واقعی دوره منتهی به 1403/06/31"
+      }, {
+        "rowCode" : 56,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9411" : ""
+      }, {
+        "rowCode" : 57,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9411" : "دلایل تغییرات اطلاعات واقعی دوره منتهی به 1403/12/30"
+      }, {
+        "rowCode" : 58,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9411" : ""
+      } ]
+    }
+  },
+  "listedCapital" : "56000000",
+  "unauthorizedCapital" : "0",
+  "comprehensiveIncomeStatement" : {
+    "version" : "2",
+    "comprehensiveIncomeStatement" : {
+      "yearData" : [ {
+        "columnId" : "10862",
+        "caption" : "دوره منتهي به 1404/06/31 - حسابرسی نشده",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : false
+      }, {
+        "columnId" : "10863",
+        "caption" : "تجديد ارائه شده دوره منتهي به 1403/06/31 - حسابرسی شده",
+        "periodEndToDate" : "1403/06/31",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 6,
+        "isAudited" : true
+      }, {
+        "columnId" : "10864",
+        "caption" : "تجديد ارائه شده دوره منتهي به 1403/12/30 - حسابرسی شده",
+        "periodEndToDate" : "1403/12/30",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 12,
+        "isAudited" : true
+      } ],
+      "rowItems" : [ {
+        "rowCode" : 3,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10861" : "سود(زیان) خالص",
+        "value_10862" : "28496901",
+        "value_10863" : "26843390",
+        "value_10864" : "53340832",
+        "value_10865" : "6"
+      }, {
+        "rowCode" : 5,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10861" : "مازاد تجدید ارزیابی دارایی‌های ثابت مشهود",
+        "value_10862" : "0",
+        "value_10863" : "0",
+        "value_10864" : "0",
+        "value_10865" : "0"
+      }, {
+        "rowCode" : 6,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10861" : "تفاوت تسعیر ارز عملیات خارجی",
+        "value_10862" : "0",
+        "value_10863" : "0",
+        "value_10864" : "0",
+        "value_10865" : "0"
+      }, {
+        "rowCode" : 10,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10861" : "سایر",
+        "value_10862" : "0",
+        "value_10863" : "0",
+        "value_10864" : "0",
+        "value_10865" : "0"
+      }, {
+        "rowCode" : 11,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10861" : "مالیات بر درآمد اقلام فوق",
+        "value_10862" : "0",
+        "value_10863" : "0",
+        "value_10864" : "0",
+        "value_10865" : "0"
+      }, {
+        "rowCode" : 12,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10861" : "جمع",
+        "value_10862" : "0",
+        "value_10863" : "0",
+        "value_10864" : "0",
+        "value_10865" : "0"
+      }, {
+        "rowCode" : 14,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10861" : "سایر",
+        "value_10862" : "0",
+        "value_10863" : "0",
+        "value_10864" : "0",
+        "value_10865" : "0"
+      }, {
+        "rowCode" : 15,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10861" : "مالیات بر درآمد اقلام فوق",
+        "value_10862" : "0",
+        "value_10863" : "0",
+        "value_10864" : "0",
+        "value_10865" : "0"
+      }, {
+        "rowCode" : 16,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10861" : "جمع",
+        "value_10862" : "0",
+        "value_10863" : "0",
+        "value_10864" : "0",
+        "value_10865" : "0"
+      }, {
+        "rowCode" : 8,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10861" : "سایر اقلام سود و زیان جامع سال پس از کسر مالیات",
+        "value_10862" : "0",
+        "value_10863" : "0",
+        "value_10864" : "0",
+        "value_10865" : "0"
+      }, {
+        "rowCode" : 9,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10861" : "سود(زیان) جامع سال",
+        "value_10862" : "28496901",
+        "value_10863" : "26843390",
+        "value_10864" : "53340832",
+        "value_10865" : "6"
+      } ]
+    },
+    "comprehensiveIncomeStatement-Desc" : {
+      "rowItems" : [ {
+        "rowCode" : 17,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_32611" : "توضیحات"
+      }, {
+        "rowCode" : 18,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_32611" : ""
+      } ]
+    }
+  },
+  "balanceSheet" : {
+    "version" : "5",
+    "balanceSheet" : {
+      "yearData" : [ {
+        "columnId" : "8992",
+        "caption" : "به تاريخ 1404/06/31 - حسابرسی نشده",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : false
+      }, {
+        "columnId" : "8993",
+        "caption" : "تجديد ارائه شده به تاريخ 1403/12/30 - حسابرسی شده",
+        "periodEndToDate" : "1403/12/30",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 12,
+        "isAudited" : true
+      }, {
+        "columnId" : "8994",
+        "caption" : "تجديد ارائه شده به تاريخ 1403/01/01 - حسابرسی شده",
+        "periodEndToDate" : "1403/01/01",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 1,
+        "isAudited" : true
+      } ],
+      "rowItems" : [ {
+        "rowCode" : 17,
+        "oldFieldName" : "PlantAssetsNetOfAccumulatedDepreciation",
+        "category" : 1,
+        "rowType" : "FixedRow",
+        "value_8991" : "دارایی‌های ثابت مشهود",
+        "value_8992" : "89605578",
+        "value_8993" : "88393097",
+        "value_8994" : "81771169",
+        "value_8995" : "1"
+      }, {
+        "rowCode" : 15,
+        "oldFieldName" : "InvestmentProperty",
+        "category" : 1,
+        "rowType" : "FixedRow",
+        "value_8991" : "سرمایه‌گذاری در املاک",
+        "value_8992" : "0",
+        "value_8993" : "0",
+        "value_8994" : "0",
+        "value_8995" : "0"
+      }, {
+        "rowCode" : 16,
+        "oldFieldName" : "IntangibleAssets",
+        "category" : 1,
+        "rowType" : "FixedRow",
+        "value_8991" : "دارایی‌های نامشهود",
+        "value_8992" : "826898",
+        "value_8993" : "808470",
+        "value_8994" : "790554",
+        "value_8995" : "2"
+      }, {
+        "rowCode" : 14,
+        "oldFieldName" : "LongTermInvestments",
+        "category" : 1,
+        "rowType" : "FixedRow",
+        "value_8991" : "سرمایه‌گذاری‌های بلندمدت",
+        "value_8992" : "25904781",
+        "value_8993" : "25904781",
+        "value_8994" : "25006542",
+        "value_8995" : "0"
+      }, {
+        "rowCode" : 13,
+        "oldFieldName" : "LongTermNotesAndAccountsReceivable",
+        "category" : 1,
+        "rowType" : "FixedRow",
+        "value_8991" : "دریافتنی‌های بلندمدت",
+        "value_8992" : "0",
+        "value_8993" : "0",
+        "value_8994" : "0",
+        "value_8995" : "0"
+      }, {
+        "rowCode" : 45,
+        "oldFieldName" : "",
+        "category" : 1,
+        "rowType" : "FixedRow",
+        "value_8991" : "دارایی مالیات انتقالی",
+        "value_8992" : "0",
+        "value_8993" : "0",
+        "value_8994" : "0",
+        "value_8995" : "0"
+      }, {
+        "rowCode" : 18,
+        "oldFieldName" : "OtherAssets",
+        "category" : 1,
+        "rowType" : "FixedRow",
+        "value_8991" : "سایر دارایی‌ها",
+        "value_8992" : "0",
+        "value_8993" : "0",
+        "value_8994" : "7777",
+        "value_8995" : "0"
+      }, {
+        "rowCode" : 19,
+        "oldFieldName" : "TotalNonCurrentAssets",
+        "category" : 1,
+        "rowType" : "FixedRow",
+        "value_8991" : "جمع دارایی‌های غیرجاری",
+        "value_8992" : "116337257",
+        "value_8993" : "115106348",
+        "value_8994" : "107576042",
+        "value_8995" : "1"
+      }, {
+        "rowCode" : 9,
+        "oldFieldName" : "Prepayments",
+        "category" : 1,
+        "rowType" : "FixedRow",
+        "value_8991" : "سفارشات و پیش‌پرداخت‌ها",
+        "value_8992" : "8955252",
+        "value_8993" : "10020302",
+        "value_8994" : "7042986",
+        "value_8995" : "-11"
+      }, {
+        "rowCode" : 8,
+        "oldFieldName" : "Inventories",
+        "category" : 1,
+        "rowType" : "FixedRow",
+        "value_8991" : "موجودی مواد و کالا",
+        "value_8992" : "53065858",
+        "value_8993" : "42479247",
+        "value_8994" : "45139562",
+        "value_8995" : "25"
+      }, {
+        "rowCode" : 44,
+        "oldFieldName" : "",
+        "category" : 1,
+        "rowType" : "FixedRow",
+        "value_8991" : "دریافتنی‌های تجاری و سایر دریافتنی‌ها",
+        "value_8992" : "37749014",
+        "value_8993" : "32060085",
+        "value_8994" : "22946991",
+        "value_8995" : "18"
+      }, {
+        "rowCode" : 5,
+        "oldFieldName" : "ShortTermInvestments",
+        "category" : 1,
+        "rowType" : "FixedRow",
+        "value_8991" : "سرمایه‌گذاری‌های کوتاه‌مدت",
+        "value_8992" : "895",
+        "value_8993" : "10028855",
+        "value_8994" : "895",
+        "value_8995" : "-100"
+      }, {
+        "rowCode" : 4,
+        "oldFieldName" : "CashAndCashEquivalents",
+        "category" : 1,
+        "rowType" : "FixedRow",
+        "value_8991" : "موجودی نقد",
+        "value_8992" : "24659240",
+        "value_8993" : "13522716",
+        "value_8994" : "19971032",
+        "value_8995" : "82"
+      }, {
+        "rowCode" : 34,
+        "oldFieldName" : "",
+        "category" : 1,
+        "rowType" : "FixedRow",
+        "value_8991" : "",
+        "value_8992" : "124430259",
+        "value_8993" : "108111205",
+        "value_8994" : "95101466",
+        "value_8995" : "15"
+      }, {
+        "rowCode" : 10,
+        "oldFieldName" : "NonCurrentAssetsForSale",
+        "category" : 1,
+        "rowType" : "FixedRow",
+        "value_8991" : "دارایی‌های نگهداری شده برای فروش",
+        "value_8992" : "0",
+        "value_8993" : "0",
+        "value_8994" : "0",
+        "value_8995" : "0"
+      }, {
+        "rowCode" : 11,
+        "oldFieldName" : "TotalCurrentAssets",
+        "category" : 1,
+        "rowType" : "FixedRow",
+        "value_8991" : "جمع دارایی‌های جاری",
+        "value_8992" : "124430259",
+        "value_8993" : "108111205",
+        "value_8994" : "95101466",
+        "value_8995" : "15"
+      }, {
+        "rowCode" : 33,
+        "oldFieldName" : "TotalAssets",
+        "category" : 1,
+        "rowType" : "FixedRow",
+        "value_8991" : "جمع دارایی‌ها",
+        "value_8992" : "240767516",
+        "value_8993" : "223217553",
+        "value_8994" : "202677508",
+        "value_8995" : "8"
+      }, {
+        "rowCode" : 21,
+        "oldFieldName" : "CommonStock",
+        "category" : 2,
+        "rowType" : "FixedRow",
+        "value_8991" : "سرمایه",
+        "value_8992" : "56000000",
+        "value_8993" : "56000000",
+        "value_8994" : "56000000",
+        "value_8995" : "0"
+      }, {
+        "rowCode" : 22,
+        "oldFieldName" : "InprocessCapitalIncrease",
+        "category" : 2,
+        "rowType" : "FixedRow",
+        "value_8991" : "افزایش سرمایه در جریان",
+        "value_8992" : "0",
+        "value_8993" : "0",
+        "value_8994" : "0",
+        "value_8995" : "0"
+      }, {
+        "rowCode" : 23,
+        "oldFieldName" : "StockConsume",
+        "category" : 2,
+        "rowType" : "FixedRow",
+        "value_8991" : "صرف سهام",
+        "value_8992" : "0",
+        "value_8993" : "0",
+        "value_8994" : "0",
+        "value_8995" : "0"
+      }, {
+        "rowCode" : 37,
+        "oldFieldName" : "",
+        "category" : 2,
+        "rowType" : "FixedRow",
+        "value_8991" : "صرف سهام خزانه",
+        "value_8992" : "199678",
+        "value_8993" : "206804",
+        "value_8994" : "141832",
+        "value_8995" : "-3"
+      }, {
+        "rowCode" : 25,
+        "oldFieldName" : "LegalReserve",
+        "category" : 2,
+        "rowType" : "FixedRow",
+        "value_8991" : "اندوخته قانونی",
+        "value_8992" : "5600000",
+        "value_8993" : "5600000",
+        "value_8994" : "5600000",
+        "value_8995" : "0"
+      }, {
+        "rowCode" : 26,
+        "oldFieldName" : "ExpansionReserve",
+        "category" : 2,
+        "rowType" : "FixedRow",
+        "value_8991" : "سایر اندوخته‌ها",
+        "value_8992" : "0",
+        "value_8993" : "0",
+        "value_8994" : "0",
+        "value_8995" : "0"
+      }, {
+        "rowCode" : 28,
+        "oldFieldName" : "RevaluationSurplus",
+        "category" : 2,
+        "rowType" : "FixedRow",
+        "value_8991" : "مازاد تجدیدارزیابی دارایی‌ها",
+        "value_8992" : "0",
+        "value_8993" : "0",
+        "value_8994" : "0",
+        "value_8995" : "0"
+      }, {
+        "rowCode" : 38,
+        "oldFieldName" : "",
+        "category" : 2,
+        "rowType" : "FixedRow",
+        "value_8991" : "تفاوت تسعیر ارز عملیات خارجی",
+        "value_8992" : "0",
+        "value_8993" : "0",
+        "value_8994" : "0",
+        "value_8995" : "0"
+      }, {
+        "rowCode" : 31,
+        "oldFieldName" : "RetainedEarnings",
+        "category" : 2,
+        "rowType" : "FixedRow",
+        "value_8991" : "سود(زیان) انباشته",
+        "value_8992" : "54547256",
+        "value_8993" : "70565024",
+        "value_8994" : "50671005",
+        "value_8995" : "-23"
+      }, {
+        "rowCode" : 24,
+        "oldFieldName" : "TreasuryShares",
+        "category" : 2,
+        "rowType" : "FixedRow",
+        "value_8991" : "سهام خزانه",
+        "value_8992" : "-1765470",
+        "value_8993" : "-1234744",
+        "value_8994" : "-1029117",
+        "value_8995" : "-43"
+      }, {
+        "rowCode" : 39,
+        "oldFieldName" : "",
+        "category" : 2,
+        "rowType" : "FixedRow",
+        "value_8991" : "جمع حقوق مالکانه",
+        "value_8992" : "114581464",
+        "value_8993" : "131137084",
+        "value_8994" : "111383720",
+        "value_8995" : "-13"
+      }, {
+        "rowCode" : 14,
+        "oldFieldName" : "LongTermNotesAndAccountsPayable",
+        "category" : 2,
+        "rowType" : "FixedRow",
+        "value_8991" : "پرداختنی‌های بلندمدت",
+        "value_8992" : "0",
+        "value_8993" : "0",
+        "value_8994" : "0",
+        "value_8995" : "0"
+      }, {
+        "rowCode" : 16,
+        "oldFieldName" : "LoanPayable",
+        "category" : 2,
+        "rowType" : "FixedRow",
+        "value_8991" : "تسهیلات مالی بلندمدت",
+        "value_8992" : "0",
+        "value_8993" : "0",
+        "value_8994" : "0",
+        "value_8995" : "0"
+      }, {
+        "rowCode" : 46,
+        "oldFieldName" : "",
+        "category" : 2,
+        "rowType" : "FixedRow",
+        "value_8991" : "بدهی مالیات انتقالی",
+        "value_8992" : "7736760",
+        "value_8993" : "8172212",
+        "value_8994" : "8818507",
+        "value_8995" : "-5"
+      }, {
+        "rowCode" : 17,
+        "oldFieldName" : "AllowanceForPostRetirement",
+        "category" : 2,
+        "rowType" : "FixedRow",
+        "value_8991" : "ذخیره مزایای پایان خدمت کارکنان",
+        "value_8992" : "2317835",
+        "value_8993" : "1395630",
+        "value_8994" : "890270",
+        "value_8995" : "66"
+      }, {
+        "rowCode" : 18,
+        "oldFieldName" : "TotalNonCurrentLiabilities",
+        "category" : 2,
+        "rowType" : "FixedRow",
+        "value_8991" : "جمع بدهی‌های غیرجاری",
+        "value_8992" : "10054595",
+        "value_8993" : "9567842",
+        "value_8994" : "9708777",
+        "value_8995" : "5"
+      }, {
+        "rowCode" : 41,
+        "oldFieldName" : "",
+        "category" : 2,
+        "rowType" : "FixedRow",
+        "value_8991" : "پرداختنی‌های تجاری و سایر پرداختنی‌ها",
+        "value_8992" : "61406348",
+        "value_8993" : "62117419",
+        "value_8994" : "48509493",
+        "value_8995" : "-1"
+      }, {
+        "rowCode" : 6,
+        "oldFieldName" : "CurrentTaxLiabilities",
+        "category" : 2,
+        "rowType" : "FixedRow",
+        "value_8991" : "مالیات پرداختنی",
+        "value_8992" : "8179847",
+        "value_8993" : "6427733",
+        "value_8994" : "7051683",
+        "value_8995" : "27"
+      }, {
+        "rowCode" : 7,
+        "oldFieldName" : "DividendsPayable",
+        "category" : 2,
+        "rowType" : "FixedRow",
+        "value_8991" : "سود سهام پرداختنی",
+        "value_8992" : "32067792",
+        "value_8993" : "374354",
+        "value_8994" : "10715425",
+        "value_8995" : "8466"
+      }, {
+        "rowCode" : 8,
+        "oldFieldName" : "LoanPayableCurrentPotion",
+        "category" : 2,
+        "rowType" : "FixedRow",
+        "value_8991" : "تسهیلات مالی",
+        "value_8992" : "6885124",
+        "value_8993" : "8812835",
+        "value_8994" : "11089621",
+        "value_8995" : "-22"
+      }, {
+        "rowCode" : 9,
+        "oldFieldName" : "Provisions",
+        "category" : 2,
+        "rowType" : "FixedRow",
+        "value_8991" : "ذخایر",
+        "value_8992" : "0",
+        "value_8993" : "0",
+        "value_8994" : "0",
+        "value_8995" : "0"
+      }, {
+        "rowCode" : 10,
+        "oldFieldName" : "DeferredRevenue",
+        "category" : 2,
+        "rowType" : "FixedRow",
+        "value_8991" : "پیش‌دریافت‌ها",
+        "value_8992" : "7592346",
+        "value_8993" : "4780286",
+        "value_8994" : "4218789",
+        "value_8995" : "59"
+      }, {
+        "rowCode" : 42,
+        "oldFieldName" : "",
+        "category" : 2,
+        "rowType" : "FixedRow",
+        "value_8991" : "",
+        "value_8992" : "116131457",
+        "value_8993" : "82512627",
+        "value_8994" : "81585011",
+        "value_8995" : "41"
+      }, {
+        "rowCode" : 11,
+        "oldFieldName" : "LiabilitiesDisposalGroupsForSale",
+        "category" : 2,
+        "rowType" : "FixedRow",
+        "value_8991" : "بدهی‌های ‌مرتبط ‌با دارایی‌های نگهداری‌‌شده برای ‌فروش",
+        "value_8992" : "0",
+        "value_8993" : "0",
+        "value_8994" : "0",
+        "value_8995" : "0"
+      }, {
+        "rowCode" : 12,
+        "oldFieldName" : "TotalCurrentLiabilities",
+        "category" : 2,
+        "rowType" : "FixedRow",
+        "value_8991" : "جمع بدهی‌های جاری",
+        "value_8992" : "116131457",
+        "value_8993" : "82512627",
+        "value_8994" : "81585011",
+        "value_8995" : "41"
+      }, {
+        "rowCode" : 19,
+        "oldFieldName" : "TotalLiabilities",
+        "category" : 2,
+        "rowType" : "FixedRow",
+        "value_8991" : "جمع بدهی‌ها",
+        "value_8992" : "126186052",
+        "value_8993" : "92080469",
+        "value_8994" : "91293788",
+        "value_8995" : "37"
+      }, {
+        "rowCode" : 43,
+        "oldFieldName" : "",
+        "category" : 2,
+        "rowType" : "FixedRow",
+        "value_8991" : "جمع حقوق مالکانه و بدهی‌ها",
+        "value_8992" : "240767516",
+        "value_8993" : "223217553",
+        "value_8994" : "202677508",
+        "value_8995" : "8"
+      } ]
+    }
+  },
+  "changesInPropertyRights" : {
+    "version" : "2",
+    "changesInPropertyRights" : {
+      "rowItems" : [ {
+        "rowCode" : 2,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "مانده در 1403/01/01",
+        "value_10882" : "56000000",
+        "value_10883" : "0",
+        "value_10884" : "0",
+        "value_10885" : "141832",
+        "value_10886" : "5600000",
+        "value_10887" : "0",
+        "value_10888" : "0",
+        "value_10889" : "0",
+        "value_108810" : "50671005",
+        "value_108811" : "-1029117",
+        "value_108812" : "111383720"
+      }, {
+        "rowCode" : 3,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "اصلاح اشتباهات",
+        "value_10882" : "0",
+        "value_10883" : "0",
+        "value_10884" : "0",
+        "value_10885" : "0",
+        "value_10886" : "0",
+        "value_10887" : "0",
+        "value_10888" : "0",
+        "value_10889" : "0",
+        "value_108810" : "0",
+        "value_108811" : "0",
+        "value_108812" : "0"
+      }, {
+        "rowCode" : 4,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "تغییر در رویه‌های حسابداری",
+        "value_10882" : "0",
+        "value_10883" : "0",
+        "value_10884" : "0",
+        "value_10885" : "0",
+        "value_10886" : "0",
+        "value_10887" : "0",
+        "value_10888" : "0",
+        "value_10889" : "0",
+        "value_108810" : "0",
+        "value_108811" : "0",
+        "value_108812" : "0"
+      }, {
+        "rowCode" : 5,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "مانده تجدید ارائه شده در 1403/01/01",
+        "value_10882" : "56000000",
+        "value_10883" : "0",
+        "value_10884" : "0",
+        "value_10885" : "141832",
+        "value_10886" : "5600000",
+        "value_10887" : "0",
+        "value_10888" : "0",
+        "value_10889" : "0",
+        "value_108810" : "50671005",
+        "value_108811" : "-1029117",
+        "value_108812" : "111383720"
+      }, {
+        "rowCode" : 6,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "تغییرات حقوق مالکانه در سال 1403/12/30"
+      }, {
+        "rowCode" : 7,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "سود(زیان) خالص گزارش شده در صورت‌های مالی سال  1403/12/30",
+        "value_108810" : "53340832",
+        "value_108812" : "53340832"
+      }, {
+        "rowCode" : 8,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "اصلاح اشتباهات",
+        "value_10882" : "0",
+        "value_10883" : "0",
+        "value_10884" : "0",
+        "value_10885" : "0",
+        "value_10886" : "0",
+        "value_10887" : "0",
+        "value_10888" : "0",
+        "value_10889" : "0",
+        "value_108810" : "0",
+        "value_108811" : "0",
+        "value_108812" : "0"
+      }, {
+        "rowCode" : 9,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "تغییر در رویه‌های حسابداری",
+        "value_10882" : "0",
+        "value_10883" : "0",
+        "value_10884" : "0",
+        "value_10885" : "0",
+        "value_10886" : "0",
+        "value_10887" : "0",
+        "value_10888" : "0",
+        "value_10889" : "0",
+        "value_108810" : "0",
+        "value_108811" : "0",
+        "value_108812" : "0"
+      }, {
+        "rowCode" : 10,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "سود(زیان) خالص تجدید ارائه شده سال 1403/12/30",
+        "value_10882" : "0",
+        "value_10883" : "0",
+        "value_10884" : "0",
+        "value_10885" : "0",
+        "value_10886" : "0",
+        "value_10887" : "0",
+        "value_10888" : "0",
+        "value_10889" : "0",
+        "value_108810" : "53340832",
+        "value_108811" : "0",
+        "value_108812" : "53340832"
+      }, {
+        "rowCode" : 11,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "سایر اقلام سود و زیان جامع پس از کسر مالیات",
+        "value_10888" : "0",
+        "value_10889" : "0",
+        "value_108812" : "0"
+      }, {
+        "rowCode" : 12,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "سود(زیان) جامع سال 1403/12/30",
+        "value_10882" : "0",
+        "value_10883" : "0",
+        "value_10884" : "0",
+        "value_10885" : "0",
+        "value_10886" : "0",
+        "value_10887" : "0",
+        "value_10888" : "0",
+        "value_10889" : "0",
+        "value_108810" : "53340832",
+        "value_108811" : "0",
+        "value_108812" : "53340832"
+      }, {
+        "rowCode" : 13,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "سود سهام مصوب",
+        "value_108810" : "-33446813",
+        "value_108812" : "-33446813"
+      }, {
+        "rowCode" : 14,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "افزایش سرمایه",
+        "value_10882" : "0",
+        "value_10884" : "0",
+        "value_10887" : "0",
+        "value_10888" : "0",
+        "value_108810" : "0",
+        "value_108812" : "0"
+      }, {
+        "rowCode" : 15,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "افزایش سرمایه در جریان",
+        "value_10883" : "0",
+        "value_10884" : "0",
+        "value_10885" : "0",
+        "value_10887" : "0",
+        "value_108812" : "0"
+      }, {
+        "rowCode" : 16,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "خرید سهام خزانه",
+        "value_108811" : "-849610",
+        "value_108812" : "-849610"
+      }, {
+        "rowCode" : 17,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "فروش سهام خزانه",
+        "value_10884" : "0",
+        "value_10885" : "64972",
+        "value_108811" : "643983",
+        "value_108812" : "708955"
+      }, {
+        "rowCode" : 19,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "انتقال از سایر اقلام حقوق مالکانه به سود و زیان انباشته",
+        "value_10885" : "0",
+        "value_10888" : "0",
+        "value_10889" : "0",
+        "value_108810" : "0",
+        "value_108812" : "0"
+      }, {
+        "rowCode" : 20,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "تخصیص به اندوخته قانونی",
+        "value_10886" : "0",
+        "value_108810" : "0",
+        "value_108812" : "0"
+      }, {
+        "rowCode" : 21,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "تخصیص به سایر اندوخته‌ها",
+        "value_10887" : "0",
+        "value_108810" : "0",
+        "value_108812" : "0"
+      }, {
+        "rowCode" : 22,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "مانده تجدید ارائه شده در 1403/12/30",
+        "value_10882" : "56000000",
+        "value_10883" : "0",
+        "value_10884" : "0",
+        "value_10885" : "206804",
+        "value_10886" : "5600000",
+        "value_10887" : "0",
+        "value_10888" : "0",
+        "value_10889" : "0",
+        "value_108810" : "70565024",
+        "value_108811" : "-1234744",
+        "value_108812" : "131137084"
+      }, {
+        "rowCode" : 23,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "تغییرات حقوق مالکانه در دوره 6 ماهه منتهی به 1404/06/31"
+      }, {
+        "rowCode" : 24,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "سود (زیان) خالص در دوره 6 ماهه منتهی به 1404/06/31",
+        "value_108810" : "28496902",
+        "value_108812" : "28496902"
+      }, {
+        "rowCode" : 25,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "سایر اقلام سود و زیان جامع پس از کسر مالیات",
+        "value_10888" : "0",
+        "value_10889" : "0",
+        "value_108812" : "0"
+      }, {
+        "rowCode" : 26,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "سود (زیان) جامع در دوره 6 ماهه منتهی به 1404/06/31",
+        "value_10882" : "0",
+        "value_10883" : "0",
+        "value_10884" : "0",
+        "value_10885" : "0",
+        "value_10886" : "0",
+        "value_10887" : "0",
+        "value_10888" : "0",
+        "value_10889" : "0",
+        "value_108810" : "28496902",
+        "value_108811" : "0",
+        "value_108812" : "28496902"
+      }, {
+        "rowCode" : 27,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "سود سهام مصوب",
+        "value_108810" : "-44514670",
+        "value_108812" : "-44514670"
+      }, {
+        "rowCode" : 28,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "افزایش سرمایه",
+        "value_10882" : "0",
+        "value_10884" : "0",
+        "value_10887" : "0",
+        "value_108810" : "0",
+        "value_108812" : "0"
+      }, {
+        "rowCode" : 29,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "افزایش سرمایه در جریان",
+        "value_10882" : "0",
+        "value_10883" : "0",
+        "value_108812" : "0"
+      }, {
+        "rowCode" : 30,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "خرید سهام خزانه",
+        "value_108811" : "-1016083",
+        "value_108812" : "-1016083"
+      }, {
+        "rowCode" : 31,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "فروش سهام خزانه",
+        "value_10885" : "-7126",
+        "value_108811" : "485357",
+        "value_108812" : "478231"
+      }, {
+        "rowCode" : 33,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "انتقال از سایر اقلام حقوق مالکانه به سود و زیان انباشته",
+        "value_10885" : "0",
+        "value_10888" : "0",
+        "value_10889" : "0",
+        "value_108810" : "0",
+        "value_108812" : "0"
+      }, {
+        "rowCode" : 34,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "تخصیص به اندوخته قانونی",
+        "value_10886" : "0",
+        "value_108810" : "0",
+        "value_108812" : "0"
+      }, {
+        "rowCode" : 35,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "تخصیص به سایر اندوخته‌ها",
+        "value_10887" : "0",
+        "value_108810" : "0",
+        "value_108812" : "0"
+      }, {
+        "rowCode" : 36,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_10881" : "مانده در 1404/06/31",
+        "value_10882" : "56000000",
+        "value_10883" : "0",
+        "value_10884" : "0",
+        "value_10885" : "199678",
+        "value_10886" : "5600000",
+        "value_10887" : "0",
+        "value_10888" : "0",
+        "value_10889" : "0",
+        "value_108810" : "54547256",
+        "value_108811" : "-1765470",
+        "value_108812" : "114581464"
+      } ]
+    }
+  },
+  "cashFlow" : {
+    "version" : "4",
+    "cashFlow" : {
+      "yearData" : [ {
+        "columnId" : "9062",
+        "caption" : "دوره منتهي به 1404/06/31 - حسابرسی نشده",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : false
+      }, {
+        "columnId" : "9063",
+        "caption" : "تجديد ارائه شده دوره منتهي به 1403/06/31 - حسابرسی شده",
+        "periodEndToDate" : "1403/06/31",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 6,
+        "isAudited" : true
+      }, {
+        "columnId" : "9065",
+        "caption" : "تجديد ارائه شده دوره منتهي به 1403/12/30 - حسابرسی شده",
+        "periodEndToDate" : "1403/12/30",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 12,
+        "isAudited" : true
+      } ],
+      "rowItems" : [ {
+        "rowCode" : 56,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "نقد حاصل از عملیات",
+        "value_9062" : "16618511",
+        "value_9063" : "40710109",
+        "value_9065" : "62285471",
+        "value_9064" : "-59"
+      }, {
+        "rowCode" : 13,
+        "oldFieldName" : "IncomeTaxesPayments",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "پرداخت‌های نقدی بابت مالیات بر درآمد",
+        "value_9062" : "-3100000",
+        "value_9063" : "-3333635",
+        "value_9065" : "-6014384",
+        "value_9064" : "7"
+      }, {
+        "rowCode" : 5,
+        "oldFieldName" : "NetOperatingActivities_Sum",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "جریان ‌خالص ‌ورود‌ (خروج) ‌نقد حاصل از فعالیت‌های ‌عملیاتی",
+        "value_9062" : "13518511",
+        "value_9063" : "37376474",
+        "value_9065" : "56271087",
+        "value_9064" : "-64"
+      }, {
+        "rowCode" : 15,
+        "oldFieldName" : "ProceedsFromSaleOfProperty",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "دریافت‌های نقدی حاصل از فروش دارایی‌های ثابت مشهود",
+        "value_9062" : "514197",
+        "value_9063" : "0",
+        "value_9065" : "0",
+        "value_9064" : ""
+      }, {
+        "rowCode" : 16,
+        "oldFieldName" : "PurchaseFromSaleOfProperty",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "پرداخت‌های نقدی برای خرید دارایی‌های ثابت مشهود",
+        "value_9062" : "-4046510",
+        "value_9063" : "-5742199",
+        "value_9065" : "-11542110",
+        "value_9064" : "30"
+      }, {
+        "rowCode" : 41,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "دریافت‌های نقدی حاصل از فروش دارایی‌های غیرجاری نگهداری‌شده برای فروش",
+        "value_9062" : "0",
+        "value_9063" : "0",
+        "value_9065" : "0",
+        "value_9064" : "0"
+      }, {
+        "rowCode" : 17,
+        "oldFieldName" : "ProceedsOfIntangibleAssets",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "دریافت‌های نقدی حاصل از فروش دارایی‌های نامشهود",
+        "value_9062" : "0",
+        "value_9063" : "0",
+        "value_9065" : "0",
+        "value_9064" : "0"
+      }, {
+        "rowCode" : 18,
+        "oldFieldName" : "PurchaseOfIntangibleAssets",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "پرداخت‌های نقدی برای خرید دارایی‌های نامشهود",
+        "value_9062" : "-30414",
+        "value_9063" : "-15039",
+        "value_9065" : "-42420",
+        "value_9064" : "-102"
+      }, {
+        "rowCode" : 19,
+        "oldFieldName" : "ProceedsFromSaleOfNonCurrentInvestments",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "دریافت‌های نقدی حاصل از فروش سرمایه‌گذاری‌های بلندمدت",
+        "value_9062" : "0",
+        "value_9063" : "0",
+        "value_9065" : "0",
+        "value_9064" : "0"
+      }, {
+        "rowCode" : 22,
+        "oldFieldName" : "PurchaseOfNonCurrentInvestments",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "پرداخت‌های نقدی برای تحصیل سرمایه‌گذاری‌های بلندمدت",
+        "value_9062" : "0",
+        "value_9063" : "-911762",
+        "value_9065" : "-911764",
+        "value_9064" : "--"
+      }, {
+        "rowCode" : 25,
+        "oldFieldName" : "ProceedsFromSalesOfInvestmentProperty",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "دریافت‌های نقدی حاصل از فروش سرمایه‌گذاری در املاک",
+        "value_9062" : "0",
+        "value_9063" : "0",
+        "value_9065" : "0",
+        "value_9064" : "0"
+      }, {
+        "rowCode" : 26,
+        "oldFieldName" : "PurchaseOfInvestmentProperty",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "پرداخت‌های نقدی برای تحصیل سرمایه‌گذاری‌ در املاک",
+        "value_9062" : "0",
+        "value_9063" : "0",
+        "value_9065" : "0",
+        "value_9064" : "0"
+      }, {
+        "rowCode" : 23,
+        "oldFieldName" : "ProceedsFromSaleOfCurrentInvestments",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "دریافت‌های نقدی حاصل از فروش سرمایه‌گذاری‌های کوتاه‌مدت",
+        "value_9062" : "26022603",
+        "value_9063" : "0",
+        "value_9065" : "3473286",
+        "value_9064" : ""
+      }, {
+        "rowCode" : 24,
+        "oldFieldName" : "PurchaseOfCurrentInvestment",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "پرداخت‌های نقدی برای تحصیل سرمایه‌گذاری‌های کوتاه‌مدت",
+        "value_9062" : "-15994643",
+        "value_9063" : "0",
+        "value_9065" : "-13501246",
+        "value_9064" : "--"
+      }, {
+        "rowCode" : 20,
+        "oldFieldName" : "FacilitiesGrantedToIndividuals",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "پرداخت‌های نقدی بابت تسهیلات اعطایی به دیگران",
+        "value_9062" : "0",
+        "value_9063" : "0",
+        "value_9065" : "0",
+        "value_9064" : "0"
+      }, {
+        "rowCode" : 21,
+        "oldFieldName" : "ExtraditionFacilitiesGrantedToIndividuals",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "دریافت‌های نقدی حاصل از استرداد تسهیلات اعطایی به دیگران",
+        "value_9062" : "0",
+        "value_9063" : "0",
+        "value_9065" : "0",
+        "value_9064" : "0"
+      }, {
+        "rowCode" : 42,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "دریافت‌های نقدی حاصل از سود تسهیلات اعطایی به دیگران",
+        "value_9062" : "0",
+        "value_9063" : "0",
+        "value_9065" : "0",
+        "value_9064" : "0"
+      }, {
+        "rowCode" : 7,
+        "oldFieldName" : "DividendsReceived",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "دریافت‌های نقدی حاصل از سود‌ سهام",
+        "value_9062" : "0",
+        "value_9063" : "0",
+        "value_9065" : "0",
+        "value_9064" : "0"
+      }, {
+        "rowCode" : 9,
+        "oldFieldName" : "DividendsReceivedOtherInvesting",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "دریافت‌های نقدی حاصل از سود سایر سرمایه‌گذاری‌ها",
+        "value_9062" : "599099",
+        "value_9063" : "23515",
+        "value_9065" : "72661",
+        "value_9064" : "2448"
+      }, {
+        "rowCode" : 27,
+        "oldFieldName" : "NetInvestingActivities_Sum",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "جریان خالص ورود (خروج) نقد حاصل از فعالیت‌های سرمایه‌گذاری",
+        "value_9062" : "7064332",
+        "value_9063" : "-6645485",
+        "value_9065" : "-22451593",
+        "value_9064" : "--"
+      }, {
+        "rowCode" : 28,
+        "oldFieldName" : "NetBeforeFinancingActivities_Sum",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "جریان خالص ورود (خروج) نقد قبل از فعالیت‌های تامین مالی",
+        "value_9062" : "20582843",
+        "value_9063" : "30730989",
+        "value_9065" : "33819494",
+        "value_9064" : "-33"
+      }, {
+        "rowCode" : 30,
+        "oldFieldName" : "ProceedsFromIssuingShares",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "دریافت‌های نقدی حاصل از افزایش سرمایه",
+        "value_9062" : "0",
+        "value_9063" : "0",
+        "value_9065" : "0",
+        "value_9064" : "0"
+      }, {
+        "rowCode" : 31,
+        "oldFieldName" : "ProceedsFromSaleOrIssueOfTreasuryShares",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "دریافت‌های نقدی حاصل از صرف سهام",
+        "value_9062" : "0",
+        "value_9063" : "0",
+        "value_9065" : "64972",
+        "value_9064" : "0"
+      }, {
+        "rowCode" : 43,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "دریافت‌های نقدی حاصل از فروش سهام خزانه",
+        "value_9062" : "478231",
+        "value_9063" : "18362",
+        "value_9065" : "643983",
+        "value_9064" : "2504"
+      }, {
+        "rowCode" : 32,
+        "oldFieldName" : "PaymentsForPurchaseOfTreasuryShares",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "پرداخت‌های نقدی برای خرید سهام خزانه",
+        "value_9062" : "-1016083",
+        "value_9063" : "-330213",
+        "value_9065" : "-849610",
+        "value_9064" : "-208"
+      }, {
+        "rowCode" : 44,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "دریافت‌های نقدی حاصل از تسهیلات",
+        "value_9062" : "5309000",
+        "value_9063" : "3600000",
+        "value_9065" : "12471000",
+        "value_9064" : "47"
+      }, {
+        "rowCode" : 45,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "پرداخت‌های نقدی بابت اصل تسهیلات",
+        "value_9062" : "-7206901",
+        "value_9063" : "-4178391",
+        "value_9065" : "-14489735",
+        "value_9064" : "-72"
+      }, {
+        "rowCode" : 46,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "پرداخت‌های نقدی بابت سود تسهیلات",
+        "value_9062" : "-871781",
+        "value_9063" : "-1131205",
+        "value_9065" : "-2320402",
+        "value_9064" : "23"
+      }, {
+        "rowCode" : 47,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "دریافت‌های نقدی حاصل از انتشار اوراق مشارکت",
+        "value_9062" : "0",
+        "value_9063" : "0",
+        "value_9065" : "0",
+        "value_9064" : "0"
+      }, {
+        "rowCode" : 48,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "پرداخت‌های نقدی بابت اصل اوراق مشارکت",
+        "value_9062" : "0",
+        "value_9063" : "0",
+        "value_9065" : "0",
+        "value_9064" : "0"
+      }, {
+        "rowCode" : 49,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "پرداخت‌های نقدی بابت سود اوراق مشارکت",
+        "value_9062" : "0",
+        "value_9063" : "0",
+        "value_9065" : "0",
+        "value_9064" : "0"
+      }, {
+        "rowCode" : 50,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "دریافت‌های نقدی حاصل از انتشار اوراق خرید دین",
+        "value_9062" : "0",
+        "value_9063" : "0",
+        "value_9065" : "0",
+        "value_9064" : "0"
+      }, {
+        "rowCode" : 51,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "پرداخت‌های نقدی بابت اصل اوراق خرید دین",
+        "value_9062" : "0",
+        "value_9063" : "0",
+        "value_9065" : "0",
+        "value_9064" : "0"
+      }, {
+        "rowCode" : 52,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "پرداخت‌های نقدی بابت سود اوراق خرید دین",
+        "value_9062" : "0",
+        "value_9063" : "0",
+        "value_9065" : "0",
+        "value_9064" : "0"
+      }, {
+        "rowCode" : 53,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "پرداخت‌های نقدی بابت اصل اقساط اجاره سرمایه‌ای",
+        "value_9062" : "0",
+        "value_9063" : "0",
+        "value_9065" : "0",
+        "value_9064" : "0"
+      }, {
+        "rowCode" : 54,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "پرداخت‌های نقدی بابت سود اجاره سرمایه‌ای",
+        "value_9062" : "0",
+        "value_9063" : "0",
+        "value_9065" : "0",
+        "value_9064" : "0"
+      }, {
+        "rowCode" : 55,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "پرداخت‌های نقدی بابت سود سهام",
+        "value_9062" : "-6139497",
+        "value_9063" : "-7994059",
+        "value_9065" : "-35814765",
+        "value_9064" : "23"
+      }, {
+        "rowCode" : 35,
+        "oldFieldName" : "NetFinancingActivities_Sum",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "جریان خالص ورود (خروج) نقد حاصل از فعالیت‌های تامین مالی",
+        "value_9062" : "-9447031",
+        "value_9063" : "-10015506",
+        "value_9065" : "-40294557",
+        "value_9064" : "6"
+      }, {
+        "rowCode" : 36,
+        "oldFieldName" : "NetIncreaseInCash_Sum",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "خالص افزایش (کاهش) در موجودی نقد",
+        "value_9062" : "11135812",
+        "value_9063" : "20715483",
+        "value_9065" : "-6475063",
+        "value_9064" : "-46"
+      }, {
+        "rowCode" : 37,
+        "oldFieldName" : "CashAtBeginningOfPeriod",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "مانده موجودی نقد در ابتدای سال",
+        "value_9062" : "13522716",
+        "value_9063" : "19971032",
+        "value_9065" : "19971032",
+        "value_9064" : "-32"
+      }, {
+        "rowCode" : 38,
+        "oldFieldName" : "ExchangeRateChangesOnCash",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "تاثیر تغییرات نرخ ارز",
+        "value_9062" : "712",
+        "value_9063" : "1797",
+        "value_9065" : "26747",
+        "value_9064" : "-60"
+      }, {
+        "rowCode" : 39,
+        "oldFieldName" : "CashAtEndOfPeriod_Sum",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "مانده موجودی نقد در پایان سال",
+        "value_9062" : "24659240",
+        "value_9063" : "40688312",
+        "value_9065" : "13522716",
+        "value_9064" : "-39"
+      }, {
+        "rowCode" : 40,
+        "oldFieldName" : "NonCashTransactions",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9061" : "معاملات غیرنقدی",
+        "value_9062" : "0",
+        "value_9063" : "7973119",
+        "value_9065" : "7973119",
+        "value_9064" : "--"
+      } ]
+    },
+    "cashFlowDesc" : {
+      "rowItems" : [ {
+        "rowCode" : 57,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9091" : "دلایل تغییرات اطلاعات واقعی دوره منتهی به 1404/06/31"
+      }, {
+        "rowCode" : 58,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9091" : ""
+      }, {
+        "rowCode" : 59,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9091" : "دلایل تغییرات اطلاعات واقعی دوره منتهی به 1403/06/31"
+      }, {
+        "rowCode" : 60,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9091" : ""
+      }, {
+        "rowCode" : 61,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9091" : "دلایل تغییرات اطلاعات واقعی دوره منتهی به 1403/12/30"
+      }, {
+        "rowCode" : 62,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_9091" : ""
+      } ]
+    }
+  },
+  "interpretativeReportSummaryPage1" : {
+    "version" : "2",
+    "p1Desc1" : {
+      "rowItems" : [ {
+        "rowCode" : 1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_23051" : "اطلاعات این فرم گزیده ای از اطلاعات گزارش تفسیری مدیریت می باشد که هیئت مدیره شرکت مطابق با مفاد دستورالعمل اجرایی افشای اطلاعات شرکتهای ثبت شده نزد سازمان موظف به ارائه آن در پیوست این اطلاعیه می باشد و این اطلاعات جایگزین گزارش مذکور نیست."
+      } ]
+    },
+    "operatingIncomeAndExpense" : {
+      "yearData" : [ {
+        "columnId" : "2204",
+        "caption" : "دوره 6 ماهه منتهی به 1403/06/31 - تعداد فروش",
+        "periodEndToDate" : "1403/06/31",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2205",
+        "caption" : "مبلغ فروش",
+        "periodEndToDate" : "1403/06/31",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "22028",
+        "caption" : "سال مالی منتهی به 1403/12/30 - تعداد تولید",
+        "periodEndToDate" : "1403/12/30",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "2206",
+        "caption" : "تعداد فروش",
+        "periodEndToDate" : "1403/12/30",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "2207",
+        "caption" : "نرخ فروش",
+        "periodEndToDate" : "1403/12/30",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "2208",
+        "caption" : "مبلغ فروش",
+        "periodEndToDate" : "1403/12/30",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "2209",
+        "caption" : "مبلغ بهای تمام شده",
+        "periodEndToDate" : "1403/12/30",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "22010",
+        "caption" : "سود ناخالص",
+        "periodEndToDate" : "1403/12/30",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "22029",
+        "caption" : "دوره 6 ماهه منتهی به 1404/06/31 - تعداد تولید",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "22011",
+        "caption" : "تعداد فروش",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "22012",
+        "caption" : "نرخ فروش",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "22013",
+        "caption" : "مبلغ فروش",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "22014",
+        "caption" : "مبلغ بهای تمام شده",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "22015",
+        "caption" : "سود ناخالص",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "22019",
+        "caption" : "برآورد دوره 6 ماهه منتهی به 1404/12/29 - تعداد تولید",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "22020",
+        "caption" : "تعداد فروش",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "22021",
+        "caption" : "نرخ فروش",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "22022",
+        "caption" : "مبلغ فروش",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      } ],
+      "rowItems" : [ {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 1,
+        "rowType" : "CustomRow",
+        "productId" : "16915",
+        "value_2201" : "پارافین",
+        "unitId" : "16915",
+        "value_2202" : "تن",
+        "value_22027" : "0",
+        "value_2203" : "سایر",
+        "value_2204" : "7133",
+        "value_2205" : "2520426",
+        "value_22028" : "14995",
+        "value_2206" : "16555",
+        "value_2207" : "349779644",
+        "value_2208" : "5790602",
+        "value_2209" : "-4169477",
+        "value_22010" : "1621125",
+        "value_22029" : "6457",
+        "value_22011" : "4704",
+        "value_22012" : "444341624",
+        "value_22013" : "2090183",
+        "value_22014" : "-1448866",
+        "value_22015" : "641317",
+        "value_22019" : "0",
+        "value_22020" : "0",
+        "value_22021" : "0",
+        "value_22022" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 1,
+        "rowType" : "CustomRow",
+        "productId" : "24309",
+        "value_2201" : "روغن موتور دیزلی",
+        "unitId" : "24568",
+        "value_2202" : "تن",
+        "value_22027" : "0",
+        "value_2203" : "سازمان حمایت ",
+        "value_2204" : "25871",
+        "value_2205" : "11363400",
+        "value_22028" : "49069",
+        "value_2206" : "48830",
+        "value_2207" : "455860373",
+        "value_2208" : "22259662",
+        "value_2209" : "-24512811",
+        "value_22010" : "-2253149",
+        "value_22029" : "18346",
+        "value_22011" : "17266",
+        "value_22012" : "754465423",
+        "value_22013" : "13026600",
+        "value_22014" : "-13210104",
+        "value_22015" : "-183504",
+        "value_22019" : "0",
+        "value_22020" : "0",
+        "value_22021" : "0",
+        "value_22022" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 1,
+        "rowType" : "CustomRow",
+        "productId" : "24314",
+        "value_2201" : "روغن پایه",
+        "unitId" : "24573",
+        "value_2202" : "تن",
+        "value_22027" : "0",
+        "value_2203" : "سایر",
+        "value_2204" : "30388",
+        "value_2205" : "10516955",
+        "value_22028" : "59383",
+        "value_2206" : "60949",
+        "value_2207" : "382420138",
+        "value_2208" : "23308125",
+        "value_2209" : "-18544373",
+        "value_22010" : "4763752",
+        "value_22029" : "29487",
+        "value_22011" : "27061",
+        "value_22012" : "593382617",
+        "value_22013" : "16057527",
+        "value_22014" : "-11247356",
+        "value_22015" : "4810171",
+        "value_22019" : "0",
+        "value_22020" : "0",
+        "value_22021" : "0",
+        "value_22022" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 1,
+        "rowType" : "CustomRow",
+        "productId" : "24312",
+        "value_2201" : "روغن های فرایند",
+        "unitId" : "24571",
+        "value_2202" : "تن",
+        "value_22027" : "0",
+        "value_2203" : "سایر",
+        "value_2204" : "12160",
+        "value_2205" : "2361064",
+        "value_22028" : "20532",
+        "value_2206" : "20462",
+        "value_2207" : "209972290",
+        "value_2208" : "4296453",
+        "value_2209" : "-3238396",
+        "value_22010" : "1058057",
+        "value_22029" : "6089",
+        "value_22011" : "4947",
+        "value_22012" : "255985244",
+        "value_22013" : "1266359",
+        "value_22014" : "-809619",
+        "value_22015" : "456740",
+        "value_22019" : "0",
+        "value_22020" : "0",
+        "value_22021" : "0",
+        "value_22022" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 1,
+        "rowType" : "CustomRow",
+        "productId" : "16906",
+        "value_2201" : "اسلاک واکس",
+        "unitId" : "16906",
+        "value_2202" : "تن",
+        "value_22027" : "0",
+        "value_2203" : "سایر",
+        "value_2204" : "273",
+        "value_2205" : "82585",
+        "value_22028" : "0",
+        "value_2206" : "273",
+        "value_2207" : "302505495",
+        "value_2208" : "82584",
+        "value_2209" : "-51490",
+        "value_22010" : "31094",
+        "value_22029" : "0",
+        "value_22011" : "",
+        "value_22012" : "0",
+        "value_22013" : "",
+        "value_22014" : "0",
+        "value_22015" : "0",
+        "value_22019" : "0",
+        "value_22020" : "0",
+        "value_22021" : "0",
+        "value_22022" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 1,
+        "rowType" : "CustomRow",
+        "productId" : "24310",
+        "value_2201" : "روغن های صنعتی",
+        "unitId" : "24569",
+        "value_2202" : "تن",
+        "value_22027" : "0",
+        "value_2203" : "سایر",
+        "value_2204" : "9589",
+        "value_2205" : "6189460",
+        "value_22028" : "20255",
+        "value_2206" : "20417",
+        "value_2207" : "694912573",
+        "value_2208" : "14188030",
+        "value_2209" : "-8336232",
+        "value_22010" : "5851798",
+        "value_22029" : "7405",
+        "value_22011" : "7829",
+        "value_22012" : "845006131",
+        "value_22013" : "6615553",
+        "value_22014" : "-4681219",
+        "value_22015" : "1934334",
+        "value_22019" : "0",
+        "value_22020" : "0",
+        "value_22021" : "0",
+        "value_22022" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 1,
+        "rowType" : "CustomRow",
+        "productId" : "24311",
+        "value_2201" : "سایر روغن های موتوری",
+        "unitId" : "24570",
+        "value_2202" : "تن",
+        "value_22027" : "0",
+        "value_2203" : "سایر",
+        "value_2204" : "8700",
+        "value_2205" : "4931069",
+        "value_22028" : "16535",
+        "value_2206" : "16152",
+        "value_2207" : "614764302",
+        "value_2208" : "9929673",
+        "value_2209" : "-7659144",
+        "value_22010" : "2270529",
+        "value_22029" : "8627",
+        "value_22011" : "8640",
+        "value_22012" : "826674421",
+        "value_22013" : "7142467",
+        "value_22014" : "-6100835",
+        "value_22015" : "1041632",
+        "value_22019" : "0",
+        "value_22020" : "0",
+        "value_22021" : "0",
+        "value_22022" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 1,
+        "rowType" : "CustomRow",
+        "productId" : "18499",
+        "value_2201" : "ضدیخ",
+        "unitId" : "18499",
+        "value_2202" : "تن",
+        "value_22027" : "0",
+        "value_2203" : "سایر",
+        "value_2204" : "1172",
+        "value_2205" : "687431",
+        "value_22028" : "3182",
+        "value_2206" : "3199",
+        "value_2207" : "602314786",
+        "value_2208" : "1926805",
+        "value_2209" : "-1751227",
+        "value_22010" : "175578",
+        "value_22029" : "1406",
+        "value_22011" : "1390",
+        "value_22012" : "877035971",
+        "value_22013" : "1219080",
+        "value_22014" : "-1074310",
+        "value_22015" : "144770",
+        "value_22019" : "0",
+        "value_22020" : "0",
+        "value_22021" : "0",
+        "value_22022" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 1,
+        "rowType" : "CustomRow",
+        "productId" : "16890",
+        "value_2201" : "گریس",
+        "unitId" : "16890",
+        "value_2202" : "تن",
+        "value_22027" : "0",
+        "value_2203" : "سایر",
+        "value_2204" : "366",
+        "value_2205" : "291609",
+        "value_22028" : "252",
+        "value_2206" : "882",
+        "value_2207" : "821327664",
+        "value_2208" : "724411",
+        "value_2209" : "-542999",
+        "value_22010" : "181412",
+        "value_22029" : "221",
+        "value_22011" : "663",
+        "value_22012" : "887333333",
+        "value_22013" : "588302",
+        "value_22014" : "-436098",
+        "value_22015" : "152204",
+        "value_22019" : "0",
+        "value_22020" : "0",
+        "value_22021" : "0",
+        "value_22022" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 1,
+        "rowType" : "CustomRow",
+        "productId" : "24308",
+        "value_2201" : "روغن موتور بنزینی",
+        "unitId" : "24578",
+        "value_2202" : "تن",
+        "value_22027" : "0",
+        "value_2203" : "سازمان حمایت ",
+        "value_2204" : "21425",
+        "value_2205" : "13683174",
+        "value_22028" : "39445",
+        "value_2206" : "41164",
+        "value_2207" : "747337431",
+        "value_2208" : "30763398",
+        "value_2209" : "-26507130",
+        "value_22010" : "4256268",
+        "value_22029" : "16183",
+        "value_22011" : "16116",
+        "value_22012" : "1155873170",
+        "value_22013" : "18628052",
+        "value_22014" : "-14897817",
+        "value_22015" : "3730235",
+        "value_22019" : "0",
+        "value_22020" : "0",
+        "value_22021" : "0",
+        "value_22022" : "0"
+      }, {
+        "rowCode" : 6,
+        "oldFieldName" : "",
+        "category" : 1,
+        "rowType" : "FixedRow",
+        "value_2204" : "117077",
+        "value_2205" : "52627173",
+        "value_22028" : "223648",
+        "value_2206" : "228883",
+        "value_2208" : "113269743",
+        "value_2209" : "-95313279",
+        "value_22010" : "17956464",
+        "value_22029" : "94221",
+        "value_22011" : "88616",
+        "value_22013" : "66634123",
+        "value_22014" : "-53906224",
+        "value_22015" : "12727899",
+        "value_22019" : "0",
+        "value_22020" : "0",
+        "value_22022" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 2,
+        "rowType" : "CustomRow",
+        "productId" : "24308",
+        "value_2201" : "روغن موتور بنزینی",
+        "unitId" : "24578",
+        "value_2202" : "تن",
+        "value_22027" : "0",
+        "value_2203" : "نرخهای جهانی",
+        "value_2204" : "3242",
+        "value_2205" : "1830250",
+        "value_22028" : "5296",
+        "value_2206" : "5527",
+        "value_2207" : "597178035",
+        "value_2208" : "3300603",
+        "value_2209" : "-2442424",
+        "value_22010" : "858179",
+        "value_22029" : "1721",
+        "value_22011" : "1714",
+        "value_22012" : "776295216",
+        "value_22013" : "1330570",
+        "value_22014" : "-1071611",
+        "value_22015" : "258959",
+        "value_22019" : "0",
+        "value_22020" : "0",
+        "value_22021" : "0",
+        "value_22022" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 2,
+        "rowType" : "CustomRow",
+        "productId" : "24309",
+        "value_2201" : "روغن موتور دیزلی",
+        "unitId" : "24568",
+        "value_2202" : "تن",
+        "value_22027" : "0",
+        "value_2203" : "نرخهای جهانی",
+        "value_2204" : "532",
+        "value_2205" : "330608",
+        "value_22028" : "802",
+        "value_2206" : "798",
+        "value_2207" : "644125313",
+        "value_2208" : "514012",
+        "value_2209" : "-363833",
+        "value_22010" : "150179",
+        "value_22029" : "282",
+        "value_22011" : "265",
+        "value_22012" : "782766038",
+        "value_22013" : "207433",
+        "value_22014" : "-176829",
+        "value_22015" : "30604",
+        "value_22019" : "0",
+        "value_22020" : "0",
+        "value_22021" : "0",
+        "value_22022" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 2,
+        "rowType" : "CustomRow",
+        "productId" : "16915",
+        "value_2201" : "پارافین",
+        "unitId" : "16915",
+        "value_2202" : "تن",
+        "value_22027" : "0",
+        "value_2203" : "نرخهای جهانی",
+        "value_2204" : "19047",
+        "value_2205" : "8631025",
+        "value_22028" : "50115",
+        "value_2206" : "55461",
+        "value_2207" : "437256396",
+        "value_2208" : "24250677",
+        "value_2209" : "-17784405",
+        "value_22010" : "6466272",
+        "value_22029" : "20532",
+        "value_22011" : "17022",
+        "value_22012" : "490646458",
+        "value_22013" : "8351784",
+        "value_22014" : "-6876492",
+        "value_22015" : "1475292",
+        "value_22019" : "0",
+        "value_22020" : "0",
+        "value_22021" : "0",
+        "value_22022" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 2,
+        "rowType" : "CustomRow",
+        "productId" : "24312",
+        "value_2201" : "روغن های فرایند",
+        "unitId" : "24571",
+        "value_2202" : "تن",
+        "value_22027" : "0",
+        "value_2203" : "نرخهای جهانی",
+        "value_2204" : "92427",
+        "value_2205" : "15823263",
+        "value_22028" : "204816",
+        "value_2206" : "204106",
+        "value_2207" : "200801182",
+        "value_2208" : "40984726",
+        "value_2209" : "-32311320",
+        "value_22010" : "8673406",
+        "value_22029" : "81486",
+        "value_22011" : "66207",
+        "value_22012" : "242216971",
+        "value_22013" : "16036459",
+        "value_22014" : "-11671840",
+        "value_22015" : "4364619",
+        "value_22019" : "0",
+        "value_22020" : "0",
+        "value_22021" : "0",
+        "value_22022" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 2,
+        "rowType" : "CustomRow",
+        "productId" : "24310",
+        "value_2201" : "روغن های صنعتی",
+        "unitId" : "24569",
+        "value_2202" : "تن",
+        "value_22027" : "0",
+        "value_2203" : "نرخهای جهانی",
+        "value_2204" : "62318",
+        "value_2205" : "27570691",
+        "value_22028" : "64817",
+        "value_2206" : "65334",
+        "value_2207" : "441998684",
+        "value_2208" : "28877542",
+        "value_2209" : "-21422796",
+        "value_22010" : "7454746",
+        "value_22029" : "0",
+        "value_22011" : "",
+        "value_22012" : "0",
+        "value_22013" : "",
+        "value_22014" : "0",
+        "value_22015" : "0",
+        "value_22019" : "0",
+        "value_22020" : "0",
+        "value_22021" : "0",
+        "value_22022" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 2,
+        "rowType" : "CustomRow",
+        "productId" : "24314",
+        "value_2201" : "روغن پایه",
+        "unitId" : "24573",
+        "value_2202" : "تن",
+        "value_22027" : "0",
+        "value_2203" : "نرخهای جهانی",
+        "value_2204" : "38990",
+        "value_2205" : "16584409",
+        "value_22028" : "187994",
+        "value_2206" : "192952",
+        "value_2207" : "463390563",
+        "value_2208" : "89412136",
+        "value_2209" : "-58705968",
+        "value_22010" : "30706168",
+        "value_22029" : "97507",
+        "value_22011" : "89486",
+        "value_22012" : "583348412",
+        "value_22013" : "52201516",
+        "value_22014" : "-37923487",
+        "value_22015" : "14278029",
+        "value_22019" : "0",
+        "value_22020" : "0",
+        "value_22021" : "0",
+        "value_22022" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 2,
+        "rowType" : "CustomRow",
+        "productId" : "16906",
+        "value_2201" : "اسلاک واکس",
+        "unitId" : "16906",
+        "value_2202" : "تن",
+        "value_22027" : "0",
+        "value_2203" : "نرخهای جهانی",
+        "value_2204" : "3464",
+        "value_2205" : "1356599",
+        "value_22028" : "1302",
+        "value_2206" : "4991",
+        "value_2207" : "375920858",
+        "value_2208" : "1876221",
+        "value_2209" : "-1342183",
+        "value_22010" : "534038",
+        "value_22029" : "0",
+        "value_22011" : "0",
+        "value_22012" : "0",
+        "value_22013" : "0",
+        "value_22014" : "0",
+        "value_22015" : "0",
+        "value_22019" : "0",
+        "value_22020" : "0",
+        "value_22021" : "0",
+        "value_22022" : "0"
+      }, {
+        "rowCode" : 9,
+        "oldFieldName" : "",
+        "category" : 2,
+        "rowType" : "FixedRow",
+        "value_2204" : "220020",
+        "value_2205" : "72126845",
+        "value_22028" : "515142",
+        "value_2206" : "529169",
+        "value_2208" : "189215917",
+        "value_2209" : "-134372929",
+        "value_22010" : "54842988",
+        "value_22029" : "201528",
+        "value_22011" : "174694",
+        "value_22013" : "78127762",
+        "value_22014" : "-57720259",
+        "value_22015" : "20407503",
+        "value_22019" : "0",
+        "value_22020" : "0",
+        "value_22022" : "0"
+      }, {
+        "rowCode" : 12,
+        "oldFieldName" : "",
+        "category" : 3,
+        "rowType" : "FixedRow",
+        "value_2204" : "0",
+        "value_2205" : "0",
+        "value_22028" : "0",
+        "value_2206" : "0",
+        "value_2208" : "0",
+        "value_2209" : "0",
+        "value_22010" : "0",
+        "value_22029" : "0",
+        "value_22011" : "0",
+        "value_22013" : "0",
+        "value_22014" : "0",
+        "value_22015" : "0",
+        "value_22019" : "0",
+        "value_22020" : "0",
+        "value_22022" : "0"
+      }, {
+        "rowCode" : 130,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2204" : "",
+        "value_2205" : "",
+        "value_22028" : "0",
+        "value_2206" : "",
+        "value_2207" : "",
+        "value_2208" : "",
+        "value_2209" : "0",
+        "value_22010" : "0",
+        "value_22029" : "0",
+        "value_22011" : "",
+        "value_22012" : "",
+        "value_22013" : "",
+        "value_22014" : "0",
+        "value_22015" : "0",
+        "value_22019" : "0",
+        "value_22020" : "",
+        "value_22021" : "",
+        "value_22022" : ""
+      }, {
+        "rowCode" : 15,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2204" : "337097",
+        "value_2205" : "124754018",
+        "value_22028" : "738790",
+        "value_2206" : "758052",
+        "value_2208" : "302485660",
+        "value_2209" : "-229686208",
+        "value_22010" : "72799452",
+        "value_22029" : "295749",
+        "value_22011" : "263310",
+        "value_22013" : "144761885",
+        "value_22014" : "-111626483",
+        "value_22015" : "33135402",
+        "value_22019" : "0",
+        "value_22020" : "0",
+        "value_22022" : "0"
+      } ]
+    },
+    "salesTrendAndCostOverTheLast5Years" : {
+      "yearData" : [ {
+        "columnId" : "2212",
+        "caption" : "سال مالی 1399/12/30",
+        "periodEndToDate" : "1399/12/30",
+        "yearEndToDate" : "1399/12/30",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "2213",
+        "caption" : "سال مالی 1400/12/29",
+        "periodEndToDate" : "1400/12/29",
+        "yearEndToDate" : "1400/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "2214",
+        "caption" : "سال مالی 1401/12/29",
+        "periodEndToDate" : "1401/12/29",
+        "yearEndToDate" : "1401/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "2215",
+        "caption" : "سال مالی 1402/12/29",
+        "periodEndToDate" : "1402/12/29",
+        "yearEndToDate" : "1402/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "2216",
+        "caption" : "سال مالی 1403/12/30",
+        "periodEndToDate" : "1403/12/30",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "2217",
+        "caption" : "سال مالی 1404/06/31",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2218",
+        "caption" : "برآورد دوره 6 ماهه منتهی به 1404/12/29",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      } ],
+      "rowItems" : [ {
+        "rowCode" : 17,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2211" : "مبلغ فروش",
+        "value_2212" : "71803812",
+        "value_2213" : "131977460",
+        "value_2214" : "183544853",
+        "value_2215" : "232581181",
+        "value_2216" : "302485660",
+        "value_2217" : "144761885",
+        "value_2218" : "0"
+      }, {
+        "rowCode" : 18,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2211" : "مبلغ بهای تمام شده",
+        "value_2212" : "-51460357",
+        "value_2213" : "-96356372",
+        "value_2214" : "-135521511",
+        "value_2215" : "-174405489",
+        "value_2216" : "-229686208",
+        "value_2217" : "-111626483",
+        "value_2218" : "0"
+      } ]
+    },
+    "futureManagementGoalsAndStrategies" : {
+      "rowItems" : [ {
+        "rowCode" : 19,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2221" : "توضیحات تکمیلی به شرح گزارش تفسیری پیوست می باشد ."
+      } ]
+    },
+    "companyEstimatesOfChangesInTheRateOfSalesOfProducts" : {
+      "rowItems" : [ {
+        "rowCode" : 190,
+        "oldFieldName" : "",
+        "category" : 1,
+        "rowType" : "FixedRow",
+        "value_23091" : "نرخ فروش محصولات",
+        "value_230922" : "برآورد دوره 6 ماهه منتهی به 1404/12/29",
+        "value_23093" : "توضیحات تکمیلی به شرح گزارش تفسیری پیوست می باشد ."
+      } ]
+    },
+    "theCostOfTheSoldGoods" : {
+      "yearData" : [ {
+        "columnId" : "2232",
+        "caption" : "سال مالی منتهی به 1403/12/30 (میلیون ریال)",
+        "periodEndToDate" : "1403/12/30",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "2233",
+        "caption" : "دوره 6 ماهه منتهی به 1404/06/31 (میلیون ریال)",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2234",
+        "caption" : "برآورد دوره 6 ماهه منتهی به 1404/12/29",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      } ],
+      "rowItems" : [ {
+        "rowCode" : 21,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2231" : "مواد مستقیم مصرفی",
+        "value_2232" : "203565005",
+        "value_2233" : "104617613",
+        "value_2234" : "0"
+      }, {
+        "rowCode" : 22,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2231" : "دستمزدمستقیم تولید",
+        "value_2232" : "3701233",
+        "value_2233" : "2290277",
+        "value_2234" : "0"
+      }, {
+        "rowCode" : 23,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2231" : "سربارتولید",
+        "value_2232" : "20590492",
+        "value_2233" : "15846295",
+        "value_2234" : "0"
+      }, {
+        "rowCode" : 24,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2231" : "جمع",
+        "value_2232" : "227856730",
+        "value_2233" : "122754185",
+        "value_2234" : "0"
+      }, {
+        "rowCode" : 25,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2231" : "هزینه جذب نشده درتولید",
+        "value_2232" : "0",
+        "value_2233" : "0",
+        "value_2234" : "0"
+      }, {
+        "rowCode" : 26,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2231" : "جمع هزینه های تولید",
+        "value_2232" : "227856730",
+        "value_2233" : "122754185",
+        "value_2234" : "0"
+      }, {
+        "rowCode" : 280,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2231" : "خالص موجودی کالای درجریان ساخت",
+        "value_2232" : "-287948",
+        "value_2233" : "-213491",
+        "value_2234" : "0"
+      }, {
+        "rowCode" : 29,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2231" : "ضایعات غیرعادی",
+        "value_2232" : "0",
+        "value_2233" : "0",
+        "value_2234" : "0"
+      }, {
+        "rowCode" : 30,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2231" : "بهای تمام شده کالای تولید شده",
+        "value_2232" : "227568782",
+        "value_2233" : "122540694",
+        "value_2234" : "0"
+      }, {
+        "rowCode" : 31,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2231" : "موجودی کالای ساخته شده اول دوره",
+        "value_2232" : "14239787",
+        "value_2233" : "12122361",
+        "value_2234" : "0"
+      }, {
+        "rowCode" : 32,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2231" : "موجودی کالای ساخته شده پایان دوره",
+        "value_2232" : "-12122361",
+        "value_2233" : "-23036572",
+        "value_2234" : "0"
+      }, {
+        "rowCode" : 33,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2231" : "بهای تمام شده کالای   فروش رفته",
+        "value_2232" : "229686208",
+        "value_2233" : "111626483",
+        "value_2234" : "0"
+      }, {
+        "rowCode" : 34,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2231" : "بهای تمام شده خدمات ارایه شده",
+        "value_2232" : "0",
+        "value_2233" : "0",
+        "value_2234" : "0"
+      }, {
+        "rowCode" : 35,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2231" : "جمع بهای تمام شده",
+        "value_2232" : "229686208",
+        "value_2233" : "111626483",
+        "value_2234" : "0"
+      } ]
+    },
+    "companyEstimatesOfChangesInTheCostOfTheSoldGoods" : {
+      "rowItems" : [ {
+        "rowCode" : 360,
+        "oldFieldName" : "",
+        "category" : 1,
+        "rowType" : "FixedRow",
+        "value_23111" : "برآورد دوره 6 ماهه منتهی به 1404/12/29",
+        "value_23112" : "توضیحات تکمیلی به شرح گزارش تفسیری پیوست می باشد ."
+      } ]
+    },
+    "p1Desc2" : {
+      "rowItems" : [ {
+        "rowCode" : 380,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_23121" : "«جملات آینده‌نگر نشان‌دهنده انتظارات، باورها یا پیش‌بینی‌های جاری از رویدادها و عملکرد مالی است. این جملات در معرض ریسک‌ها، عدم ‌قطعیت‌ها و مفروضات غیرقطعی قرار دارند. بنابراین نتایج واقعی ممکن است متفاوت از نتایج مورد انتظار باشند.»"
+      } ]
+    }
+  },
+  "interpretativeReportSummaryPage2" : {
+    "version" : "2",
+    "p2Desc1" : {
+      "rowItems" : [ {
+        "rowCode" : 1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_23131" : "اطلاعات این فرم گزیده ای از اطلاعات گزارش تفسیری مدیریت می باشد که هیئت مدیره شرکت مطابق با مفاد دستورالعمل اجرایی افشای اطلاعات شرکتهای ثبت شده نزد سازمان موظف به ارائه آن در پیوست این اطلاعیه می باشد و این اطلاعات جایگزین گزارش مذکور نیست."
+      } ]
+    },
+    "circulationAmountRialCommodityInventory" : {
+      "yearData" : [ {
+        "columnId" : "2263",
+        "caption" : "دوره 6 ماهه منتهی به 1404/06/31 - موجودي اول دوره - مقدار",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2264",
+        "caption" : "نرخ - ریال",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2265",
+        "caption" : "بهای تمام شده - میلیون ریال",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2266",
+        "caption" : "تولید - مقدار",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2267",
+        "caption" : "نرخ - ریال",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2268",
+        "caption" : "بهای تمام شده - میلیون ریال",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2269",
+        "caption" : "تعدیلات - مقدار",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "22610",
+        "caption" : "نرخ - ریال",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "22611",
+        "caption" : "بهای تمام شده - میلیون ریال",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "22612",
+        "caption" : "فروش - مقدار",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "22613",
+        "caption" : "نرخ - ریال",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "22614",
+        "caption" : "بهای تمام شده - میلیون ریال",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "22615",
+        "caption" : "موجودی پایان دوره - مقدار",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "22616",
+        "caption" : "نرخ - ریال",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "22617",
+        "caption" : "بهای تمام شده - میلیون ریال",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      } ],
+      "rowItems" : [ {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "CustomRow",
+        "id" : "7173",
+        "value_2261" : "انواع روانکار",
+        "value_2262" : "تن",
+        "value_2263" : "21579",
+        "value_2264" : "333337365",
+        "value_2265" : "7193087",
+        "value_2266" : "179558",
+        "value_2267" : "535793382",
+        "value_2268" : "96205988",
+        "value_2269" : "-2194",
+        "value_22610" : "440641750",
+        "value_22611" : "-966768",
+        "value_22612" : "168376",
+        "value_22613" : "525621698",
+        "value_22614" : "88502079",
+        "value_22615" : "30567",
+        "value_22616" : "455727680",
+        "value_22617" : "13930228"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "CustomRow",
+        "id" : "7174",
+        "value_2261" : "محصولات جانبی",
+        "value_2262" : "تن",
+        "value_2263" : "24146",
+        "value_2264" : "200400066",
+        "value_2265" : "4838860",
+        "value_2266" : "114565",
+        "value_2267" : "225102798",
+        "value_2268" : "25788902",
+        "value_2269" : "-2179",
+        "value_22610" : "6343736",
+        "value_22611" : "-13823",
+        "value_22612" : "92881",
+        "value_22613" : "232706312",
+        "value_22614" : "21613995",
+        "value_22615" : "43651",
+        "value_22616" : "206179561",
+        "value_22617" : "8999944"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "CustomRow",
+        "id" : "5970",
+        "value_2261" : "سایر",
+        "value_2262" : "تن",
+        "value_2263" : "186",
+        "value_2264" : "486096774",
+        "value_2265" : "90414",
+        "value_2266" : "1627",
+        "value_2267" : "853002459",
+        "value_2268" : "1387835",
+        "value_2269" : "443",
+        "value_22610" : "312776524",
+        "value_22611" : "138560",
+        "value_22612" : "2053",
+        "value_22613" : "735708232",
+        "value_22614" : "1510409",
+        "value_22615" : "203",
+        "value_22616" : "524137931",
+        "value_22617" : "106400"
+      }, {
+        "rowCode" : 6,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2265" : "12122361",
+        "value_2268" : "123382725",
+        "value_22611" : "-842031",
+        "value_22614" : "111626483",
+        "value_22617" : "23036572"
+      } ]
+    },
+    "circulationAmountRialCommodityInventory-Est1" : {
+      "yearData" : [ {
+        "columnId" : "23153",
+        "caption" : "برآورد دوره 6 ماهه منتهی به 1404/12/29 - موجودي اول دوره - مقدار",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "23154",
+        "caption" : "نرخ - ریال",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "23155",
+        "caption" : "بهای تمام شده - میلیون ریال",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "23156",
+        "caption" : "تولید - مقدار",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "23157",
+        "caption" : "نرخ - ریال",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "23158",
+        "caption" : "بهای تمام شده - میلیون ریال",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "23159",
+        "caption" : "تعدیلات - مقدار",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "231510",
+        "caption" : "نرخ - ریال",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "231511",
+        "caption" : "بهای تمام شده - میلیون ریال",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "231512",
+        "caption" : "فروش - مقدار",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "231513",
+        "caption" : "نرخ - ریال",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "231514",
+        "caption" : "بهای تمام شده - میلیون ریال",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "231515",
+        "caption" : "موجودی پایان دوره - مقدار",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "231516",
+        "caption" : "نرخ - ریال",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "231517",
+        "caption" : "بهای تمام شده - میلیون ریال",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      } ],
+      "rowItems" : [ {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "CustomRow",
+        "id" : "7173",
+        "value_23151" : "انواع روانکار",
+        "value_23152" : "تن",
+        "value_23153" : "30567",
+        "value_23154" : "455727680",
+        "value_23155" : "13930228",
+        "value_23156" : "0",
+        "value_23157" : "0",
+        "value_23158" : "0",
+        "value_23159" : "0",
+        "value_231510" : "0",
+        "value_231511" : "0",
+        "value_231512" : "0",
+        "value_231513" : "0",
+        "value_231514" : "0",
+        "value_231515" : "30567",
+        "value_231516" : "455727680",
+        "value_231517" : "13930228"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "CustomRow",
+        "id" : "7174",
+        "value_23151" : "محصولات جانبی",
+        "value_23152" : "تن",
+        "value_23153" : "43651",
+        "value_23154" : "206179561",
+        "value_23155" : "8999944",
+        "value_23156" : "0",
+        "value_23157" : "0",
+        "value_23158" : "0",
+        "value_23159" : "0",
+        "value_231510" : "0",
+        "value_231511" : "0",
+        "value_231512" : "0",
+        "value_231513" : "0",
+        "value_231514" : "0",
+        "value_231515" : "43651",
+        "value_231516" : "206179561",
+        "value_231517" : "8999944"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "CustomRow",
+        "id" : "5970",
+        "value_23151" : "سایر",
+        "value_23152" : "تن",
+        "value_23153" : "203",
+        "value_23154" : "524137931",
+        "value_23155" : "106400",
+        "value_23156" : "0",
+        "value_23157" : "0",
+        "value_23158" : "0",
+        "value_23159" : "0",
+        "value_231510" : "0",
+        "value_231511" : "0",
+        "value_231512" : "0",
+        "value_231513" : "0",
+        "value_231514" : "0",
+        "value_231515" : "203",
+        "value_231516" : "524137931",
+        "value_231517" : "106400"
+      }, {
+        "rowCode" : 74,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_23155" : "23036572",
+        "value_23158" : "0",
+        "value_231511" : "0",
+        "value_231514" : "0",
+        "value_231517" : "23036572"
+      } ]
+    },
+    "circulationAmountRialCommodityInventory-Est2" : {
+      "rowItems" : [ ]
+    },
+    "purchaseAndConsumptionOfNawMaterials" : {
+      "yearData" : [ {
+        "columnId" : "2273",
+        "caption" : "دوره 6 ماهه منتهی به 1404/06/31 - موجودي اول دوره - مقدار",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2274",
+        "caption" : "نرخ - ریال",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2275",
+        "caption" : "مبلغ - میلیون ریال",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2276",
+        "caption" : "خريد طي دوره - مقدار",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2277",
+        "caption" : "نرخ - ریال",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2278",
+        "caption" : "مبلغ - میلیون ریال",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2279",
+        "caption" : "مصرف - مقدار",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "22710",
+        "caption" : "نرخ - ریال",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "22711",
+        "caption" : "مبلغ - میلیون ریال",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "22712",
+        "caption" : "موجودی پایان دوره - مقدار",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "22713",
+        "caption" : "نرخ - ریال",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "22714",
+        "caption" : "مبلغ - میلیون ریال",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      } ],
+      "rowItems" : [ {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 1,
+        "rowType" : "CustomRow",
+        "id" : "6330",
+        "value_2271" : "لوبکات",
+        "value_2272" : "تن",
+        "value_2273" : "20710",
+        "value_2274" : "307142540",
+        "value_2275" : "6360922",
+        "value_2276" : "254779",
+        "value_2277" : "285376817",
+        "value_2278" : "72708020",
+        "value_2279" : "253982",
+        "value_22710" : "288234757",
+        "value_22711" : "73206440",
+        "value_22712" : "21507",
+        "value_22713" : "272585763",
+        "value_22714" : "5862502"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 1,
+        "rowType" : "CustomRow",
+        "id" : "6331",
+        "value_2271" : "آیزوریسایکل",
+        "value_2272" : "تن",
+        "value_2273" : "6228",
+        "value_2274" : "385748715",
+        "value_2275" : "2402443",
+        "value_2276" : "29780",
+        "value_2277" : "400497649",
+        "value_2278" : "11926820",
+        "value_2279" : "31155",
+        "value_22710" : "399404076",
+        "value_22711" : "12443434",
+        "value_22712" : "4853",
+        "value_22713" : "388590356",
+        "value_22714" : "1885829"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 1,
+        "rowType" : "CustomRow",
+        "id" : "4810",
+        "value_2271" : "سایر مواد افزودنی، بسته بندی و ملزومات",
+        "value_2272" : "مختلف",
+        "value_2273" : "0",
+        "value_2274" : "0",
+        "value_2275" : "16932334",
+        "value_2276" : "1",
+        "value_2277" : "18558178000000",
+        "value_2278" : "18558178",
+        "value_2279" : "1",
+        "value_22710" : "18967739000000",
+        "value_22711" : "18967739",
+        "value_22712" : "0",
+        "value_22713" : "0",
+        "value_22714" : "16522773"
+      }, {
+        "rowCode" : 13,
+        "oldFieldName" : "",
+        "category" : 1,
+        "rowType" : "FixedRow",
+        "value_2275" : "25695699",
+        "value_2278" : "103193018",
+        "value_22711" : "104617613",
+        "value_22714" : "24271104"
+      }, {
+        "rowCode" : 16,
+        "oldFieldName" : "",
+        "category" : 2,
+        "rowType" : "FixedRow",
+        "value_2275" : "0",
+        "value_2278" : "0",
+        "value_22711" : "0",
+        "value_22714" : "0"
+      }, {
+        "rowCode" : 17,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2275" : "25695699",
+        "value_2278" : "103193018",
+        "value_22711" : "104617613",
+        "value_22714" : "24271104"
+      } ]
+    },
+    "purchaseAndConsumptionOfNawMaterials-Est1" : {
+      "yearData" : [ {
+        "columnId" : "23183",
+        "caption" : "برآورد دوره 6 ماهه منتهی به 1404/12/29 - موجودي اول دوره - مقدار",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "23184",
+        "caption" : "نرخ - ریال",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "23185",
+        "caption" : "مبلغ - میلیون ریال",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "23186",
+        "caption" : "خريد طي دوره - مقدار",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "23187",
+        "caption" : "نرخ - ریال",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "23188",
+        "caption" : "مبلغ - میلیون ریال",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "23189",
+        "caption" : "مصرف - مقدار",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "231810",
+        "caption" : "نرخ - ریال",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "231811",
+        "caption" : "مبلغ - میلیون ریال",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "231812",
+        "caption" : "موجودی پایان دوره - مقدار",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "231813",
+        "caption" : "نرخ - ریال",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "231814",
+        "caption" : "مبلغ - میلیون ریال",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      } ],
+      "rowItems" : [ {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 1,
+        "rowType" : "CustomRow",
+        "id" : "6330",
+        "value_23181" : "لوبکات",
+        "value_23182" : "تن",
+        "value_23183" : "21507",
+        "value_23184" : "272585763",
+        "value_23185" : "5862502",
+        "value_23186" : "0",
+        "value_23187" : "0",
+        "value_23188" : "0",
+        "value_23189" : "0",
+        "value_231810" : "0",
+        "value_231811" : "0",
+        "value_231812" : "21507",
+        "value_231813" : "272585763",
+        "value_231814" : "5862502"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 1,
+        "rowType" : "CustomRow",
+        "id" : "6331",
+        "value_23181" : "آیزوریسایکل",
+        "value_23182" : "تن",
+        "value_23183" : "4853",
+        "value_23184" : "388590356",
+        "value_23185" : "1885829",
+        "value_23186" : "0",
+        "value_23187" : "0",
+        "value_23188" : "0",
+        "value_23189" : "0",
+        "value_231810" : "0",
+        "value_231811" : "0",
+        "value_231812" : "4853",
+        "value_231813" : "388590356",
+        "value_231814" : "1885829"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 1,
+        "rowType" : "CustomRow",
+        "id" : "4810",
+        "value_23181" : "سایر مواد افزودنی، بسته بندی و ملزومات",
+        "value_23182" : "مختلف",
+        "value_23183" : "0",
+        "value_23184" : "0",
+        "value_23185" : "16522773",
+        "value_23186" : "0",
+        "value_23187" : "0",
+        "value_23188" : "0",
+        "value_23189" : "0",
+        "value_231810" : "0",
+        "value_231811" : "0",
+        "value_231812" : "0",
+        "value_231813" : "0",
+        "value_231814" : "16522773"
+      }, {
+        "rowCode" : 34,
+        "oldFieldName" : "",
+        "category" : 1,
+        "rowType" : "FixedRow",
+        "value_23185" : "24271104",
+        "value_23188" : "0",
+        "value_231811" : "0",
+        "value_231814" : "24271104"
+      }, {
+        "rowCode" : 37,
+        "oldFieldName" : "",
+        "category" : 2,
+        "rowType" : "FixedRow",
+        "value_23185" : "0",
+        "value_23188" : "0",
+        "value_231811" : "0",
+        "value_231814" : "0"
+      }, {
+        "rowCode" : 38,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_23185" : "24271104",
+        "value_23188" : "0",
+        "value_231811" : "0",
+        "value_231814" : "24271104"
+      } ]
+    },
+    "purchaseAndConsumptionOfNawMaterials-Est2" : {
+      "rowItems" : [ ]
+    },
+    "companyEstimatesOfChangesInThePurchasePriceOfRawMaterials" : {
+      "rowItems" : [ {
+        "rowCode" : 50,
+        "oldFieldName" : "",
+        "category" : 1,
+        "rowType" : "FixedRow",
+        "value_23201" : "نرخ خرید مواد اولیه",
+        "value_23202" : "برآورد دوره 6 ماهه منتهی به 1404/12/29",
+        "value_23203" : "توضیحات تکمیلی به شرح گزارش تفسیری پیوست می باشد ."
+      } ]
+    },
+    "p2Desc2" : {
+      "rowItems" : [ {
+        "rowCode" : 52,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_23551" : "«جملات آینده‌نگر نشان‌دهنده انتظارات، باورها یا پیش‌بینی‌های جاری از رویدادها و عملکرد مالی است. این جملات در معرض ریسک‌ها، عدم ‌قطعیت‌ها و مفروضات غیرقطعی قرار دارند. بنابراین نتایج واقعی ممکن است متفاوت از نتایج مورد انتظار باشند.»"
+      } ]
+    }
+  },
+  "interpretativeReportSummaryPage3" : {
+    "version" : "3",
+    "p3Desc1" : {
+      "rowItems" : [ {
+        "rowCode" : 1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_23211" : "اطلاعات این فرم گزیده ای از اطلاعات گزارش تفسیری مدیریت می باشد که هیئت مدیره شرکت مطابق با مفاد دستورالعمل اجرایی افشای اطلاعات شرکتهای ثبت شده نزد سازمان موظف به ارائه آن در پیوست این اطلاعیه می باشد و این اطلاعات جایگزین گزارش مذکور نیست."
+      } ]
+    },
+    "companyEstimatesOfChangesInPublicAdministrativeOrganizational" : {
+      "rowItems" : [ {
+        "rowCode" : 27,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2351" : "برآورد دوره 6 ماهه منتهی به 1404/12/29",
+        "value_2352" : "توضیحات تکمیلی به شرح گزارش تفسیری پیوست می باشد ."
+      } ]
+    },
+    "staffStatus" : {
+      "yearData" : [ {
+        "columnId" : "2332",
+        "caption" : "سال مالی منتهی به 1403/12/30",
+        "periodEndToDate" : "1403/12/30",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "2333",
+        "caption" : "دوره 6 ماهه منتهی به 1404/06/31",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2334",
+        "caption" : "برآورد دوره 6 ماهه منتهی به 1404/12/29",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      } ],
+      "rowItems" : [ {
+        "rowCode" : 22,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2331" : "تعداد پرسنل تولیدی شرکت",
+        "value_2332" : "777",
+        "value_2333" : "793",
+        "value_2334" : "793"
+      }, {
+        "rowCode" : 23,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2331" : "تعداد پرسنل غیر تولیدی شرکت",
+        "value_2332" : "243",
+        "value_2333" : "248",
+        "value_2334" : "248"
+      } ]
+    },
+    "p3Desc2" : {
+      "rowItems" : [ {
+        "rowCode" : 29,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_23261" : "«جملات آینده‌نگر نشان‌دهنده انتظارات، باورها یا پیش‌بینی‌های جاری از رویدادها و عملکرد مالی است. این جملات در معرض ریسک‌ها، عدم ‌قطعیت‌ها و مفروضات غیرقطعی قرار دارند. بنابراین نتایج واقعی ممکن است متفاوت از نتایج مورد انتظار باشند.»"
+      } ]
+    },
+    "currencySituation" : {
+      "yearData" : [ {
+        "columnId" : "2343",
+        "caption" : "سال مالي منتهي به 1403/12/30 - نرخ ميانگين تسعير ارز",
+        "periodEndToDate" : "1403/12/30",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "2344",
+        "caption" : "مبلغ ارزي",
+        "periodEndToDate" : "1403/12/30",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "2345",
+        "caption" : "مبلغ ريالي-ميليون ريال",
+        "periodEndToDate" : "1403/12/30",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "2346",
+        "caption" : "دوره 6 ماهه منتهي به 1404/06/31 - نرخ ميانگين تسعير ارز",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2347",
+        "caption" : "مبلغ ارزي",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2348",
+        "caption" : "مبلغ ريالي-ميليون ريال",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2349",
+        "caption" : "برآورد دوره 6 ماهه منتهي به 1404/12/29 - نرخ ميانگين تسعير ارز",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "23410",
+        "caption" : "مبلغ ارزي",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "23411",
+        "caption" : "مبلغ ريالي-ميليون ريال",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      } ],
+      "rowItems" : [ {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "CustomRow",
+        "id" : "1002",
+        "value_2341" : "مصارف ارزی طی دوره",
+        "value_2342" : "درهم",
+        "value_2343" : "163167",
+        "value_2344" : "38107397",
+        "value_2345" : "6217889",
+        "value_2346" : "204598",
+        "value_2347" : "62068148",
+        "value_2348" : "12699019",
+        "value_2349" : "0",
+        "value_23410" : "0",
+        "value_23411" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "CustomRow",
+        "id" : "1001",
+        "value_2341" : "منابع ارزی طی دوره",
+        "value_2342" : "دلار",
+        "value_2343" : "579203",
+        "value_2344" : "326682774",
+        "value_2345" : "189215917",
+        "value_2346" : "709721",
+        "value_2347" : "110082315",
+        "value_2348" : "78127763",
+        "value_2349" : "0",
+        "value_23410" : "0",
+        "value_23411" : "0"
+      } ]
+    },
+    "currencySituationDesc" : {
+      "rowItems" : [ {
+        "rowCode" : 30,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_34731" : "توضیحات درخصوص وضعیت ارزی"
+      }, {
+        "rowCode" : 31,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_34731" : ""
+      } ]
+    },
+    "overheadsAndCorporateAndAdministrativeExpenses" : {
+      "yearData" : [ {
+        "columnId" : "2302",
+        "caption" : "هزینه سربار - سال مالی منتهی به 1403/12/30",
+        "periodEndToDate" : "1403/12/30",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "2303",
+        "caption" : "دوره 6 ماهه منتهی به 1404/06/31",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2304",
+        "caption" : "برآورد دوره 6 ماهه منتهی به 1404/12/29",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "2306",
+        "caption" : "هزینه های اداری، عمومی و فروش - سال مالی منتهی به 1403/12/30",
+        "periodEndToDate" : "1403/12/30",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "2307",
+        "caption" : "دوره 6 ماهه منتهی به 1404/06/31",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2308",
+        "caption" : "برآورد دوره 6 ماهه منتهی به 1404/12/29",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      } ],
+      "rowItems" : [ {
+        "rowCode" : 4,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2302" : "6049256",
+        "value_2303" : "5819362",
+        "value_2304" : "0",
+        "value_2306" : "4797443",
+        "value_2307" : "4071590",
+        "value_2308" : "0"
+      }, {
+        "rowCode" : 5,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2302" : "4469521",
+        "value_2303" : "2305877",
+        "value_2304" : "0",
+        "value_2306" : "474682",
+        "value_2307" : "252715",
+        "value_2308" : "0"
+      }, {
+        "rowCode" : 6,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2302" : "5874282",
+        "value_2303" : "4593505",
+        "value_2304" : "0",
+        "value_2306" : "0",
+        "value_2307" : "0",
+        "value_2308" : "0"
+      }, {
+        "rowCode" : 7,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2302" : "777652",
+        "value_2303" : "304712",
+        "value_2304" : "0",
+        "value_2306" : "0",
+        "value_2307" : "0",
+        "value_2308" : "0"
+      }, {
+        "rowCode" : 8,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2302" : "0",
+        "value_2303" : "0",
+        "value_2304" : "0",
+        "value_2306" : "584279",
+        "value_2307" : "839506",
+        "value_2308" : "0"
+      }, {
+        "rowCode" : 9,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2302" : "0",
+        "value_2303" : "0",
+        "value_2304" : "0",
+        "value_2306" : "0",
+        "value_2307" : "0",
+        "value_2308" : "0"
+      }, {
+        "rowCode" : 10,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2302" : "0",
+        "value_2303" : "0",
+        "value_2304" : "0",
+        "value_2306" : "0",
+        "value_2307" : "0",
+        "value_2308" : "0"
+      }, {
+        "rowCode" : 11,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2302" : "0",
+        "value_2303" : "0",
+        "value_2304" : "0",
+        "value_2306" : "0",
+        "value_2307" : "0",
+        "value_2308" : "0"
+      }, {
+        "rowCode" : 12,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2302" : "2262318",
+        "value_2303" : "2319600",
+        "value_2304" : "0",
+        "value_2306" : "16722233",
+        "value_2307" : "8460321",
+        "value_2308" : "0"
+      }, {
+        "rowCode" : 13,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2302" : "1157463",
+        "value_2303" : "503239",
+        "value_2304" : "0",
+        "value_2306" : "2090284",
+        "value_2307" : "566100",
+        "value_2308" : "0"
+      }, {
+        "rowCode" : 14,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2302" : "20590492",
+        "value_2303" : "15846295",
+        "value_2304" : "0",
+        "value_2306" : "24668921",
+        "value_2307" : "14190232",
+        "value_2308" : "0"
+      } ]
+    }
+  },
+  "interpretativeReportSummaryPage4" : {
+    "version" : "3",
+    "p4Desc1" : {
+      "rowItems" : [ ]
+    },
+    "descriptionForDescribeCompanyPlansToCompleteDevelopmentPlans" : {
+      "rowItems" : [ {
+        "rowCode" : 4,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_23291" : "توضیحات تکمیلی به شرح گزارش تفسیری پیوست می باشد ."
+      } ]
+    },
+    "theStatusOfViableCompanies" : {
+      "yearData" : [ {
+        "columnId" : "2392",
+        "caption" : "سال مالی منتهی به 1403/12/30 - درصد مالکیت",
+        "periodEndToDate" : "1403/12/30",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "2393",
+        "caption" : "بهای تمام شده",
+        "periodEndToDate" : "1403/12/30",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "2394",
+        "caption" : "سال مالی شرکت سرمایه پذیر",
+        "periodEndToDate" : "1403/12/30",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "2395",
+        "caption" : "درآمد سرمایه گذاری - میلیون ریال",
+        "periodEndToDate" : "1403/12/30",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "2396",
+        "caption" : "دوره 6 ماهه منتهی به 1404/06/31 - درصد مالکیت",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2397",
+        "caption" : "بهای تمام شده",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2399",
+        "caption" : "درآمد هر سهم",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "23910",
+        "caption" : "درآمد نقدی هر سهم",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2398",
+        "caption" : "درآمد سرمایه گذاری - میلیون ریال",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "23911",
+        "caption" : "برآورد دوره 6 ماهه منتهی به 1404/12/29 - درصد مالکیت",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "23912",
+        "caption" : "بهای تمام شده",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "23913",
+        "caption" : "درآمد هر سهم",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "23914",
+        "caption" : "درآمد نقدی هر سهم",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "23915",
+        "caption" : "درآمد سرمایه گذاری - میلیون ریال",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      } ],
+      "rowItems" : [ {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "CustomRow",
+        "id" : "45345",
+        "value_2391" : "پالایش نفت اصفهان",
+        "value_2392" : "3",
+        "value_2393" : "23681185",
+        "value_2394" : "1404/12/29",
+        "value_2395" : "7973119",
+        "value_2396" : "3",
+        "value_2397" : "23681185",
+        "value_2399" : "0",
+        "value_23910" : "0",
+        "value_2398" : "6681735",
+        "value_23911" : "0",
+        "value_23912" : "0",
+        "value_23913" : "0",
+        "value_23914" : "0",
+        "value_23915" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "CustomRow",
+        "id" : "23569",
+        "value_2391" : "بورس کالای ایران",
+        "value_2392" : "0",
+        "value_2393" : "4019",
+        "value_2394" : "1404/12/29",
+        "value_2395" : "0",
+        "value_2396" : "0",
+        "value_2397" : "4019",
+        "value_2399" : "0",
+        "value_23910" : "0",
+        "value_2398" : "0",
+        "value_23911" : "0",
+        "value_23912" : "0",
+        "value_23913" : "0",
+        "value_23914" : "0",
+        "value_23915" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "CustomRow",
+        "id" : "19986",
+        "value_2391" : "اوراق مشارکت  پذیرفته شده در بورس",
+        "value_2392" : "0",
+        "value_2393" : "0",
+        "value_2394" : "1404/12/29",
+        "value_2395" : "0",
+        "value_2396" : "0",
+        "value_2397" : "0",
+        "value_2399" : "0",
+        "value_23910" : "0",
+        "value_2398" : "0",
+        "value_23911" : "0",
+        "value_23912" : "0",
+        "value_23913" : "0",
+        "value_23914" : "0",
+        "value_23915" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "CustomRow",
+        "id" : "28869",
+        "value_2391" : "کیمیا اسپیدی قشم",
+        "value_2392" : "99",
+        "value_2393" : "499999",
+        "value_2394" : "1404/12/29",
+        "value_2395" : "917081",
+        "value_2396" : "99",
+        "value_2397" : "99",
+        "value_2399" : "0",
+        "value_23910" : "0",
+        "value_2398" : "0",
+        "value_23911" : "0",
+        "value_23912" : "0",
+        "value_23913" : "0",
+        "value_23914" : "0",
+        "value_23915" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "CustomRow",
+        "id" : "28867",
+        "value_2391" : "اوجان شیمی تبریز",
+        "value_2392" : "99",
+        "value_2393" : "532140",
+        "value_2394" : "1404/12/29",
+        "value_2395" : "536867",
+        "value_2396" : "99",
+        "value_2397" : "99",
+        "value_2399" : "0",
+        "value_23910" : "0",
+        "value_2398" : "0",
+        "value_23911" : "0",
+        "value_23912" : "0",
+        "value_23913" : "0",
+        "value_23914" : "0",
+        "value_23915" : "0"
+      } ]
+    },
+    "descriptionForTheStatusOfViableCompanies" : {
+      "rowItems" : [ {
+        "rowCode" : 8,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_23311" : "توضیحات تکمیلی به شرح گزارش تفسیری پیوست می باشد ."
+      } ]
+    },
+    "p4Desc2" : {
+      "rowItems" : [ {
+        "rowCode" : 9,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_23321" : "«جملات آینده‌نگر نشان‌دهنده انتظارات، باورها یا پیش‌بینی‌های جاری از رویدادها و عملکرد مالی است. این جملات در معرض ریسک‌ها، عدم ‌قطعیت‌ها و مفروضات غیرقطعی قرار دارند. بنابراین نتایج واقعی ممکن است متفاوت از نتایج مورد انتظار باشند.»"
+      } ]
+    },
+    "describeCompanyPlansToCompleteDevelopmentPlans" : {
+      "yearData" : [ {
+        "columnId" : "2385",
+        "caption" : "هزینه های انجام شده تا تاریخ 1404/06/31 - میلیون ریال",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2387",
+        "caption" : "درصد پیشرفت فیزیکی طرح در تاریخ  1403/12/30",
+        "periodEndToDate" : "1403/12/30",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "2388",
+        "caption" : "درصد پیشرفت فیزیکی طرح در تاریخ  1404/06/31",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2389",
+        "caption" : "درصد پیشرفت فیزیکی برآوردی طرح در تاریخ 1404/12/29",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      } ],
+      "rowItems" : [ {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "CustomRow",
+        "id" : "3642",
+        "value_2381" : "پروژه تولید روغن فرایند تصفیه شده (TDAE)",
+        "value_2382" : "2853221",
+        "value_2383" : "16059715",
+        "value_2384" : "یورو",
+        "value_2385" : "5967778",
+        "value_2386" : "20966546",
+        "value_23814" : "16059715",
+        "value_23815" : "2853221",
+        "value_23816" : "0",
+        "value_23817" : "32",
+        "value_2387" : "27",
+        "value_2388" : "35",
+        "value_2389" : "67",
+        "value_23811" : "1406/01/03",
+        "value_23812" : "توسعه عملیات-بهبود کیفیت محصولات روغن فرایند",
+        "value_23813" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "CustomRow",
+        "id" : "3856",
+        "value_2381" : "تولید روغن گروه دو و سه (HDT)",
+        "value_2382" : "4592752",
+        "value_2383" : "20625043",
+        "value_2384" : "یورو",
+        "value_2385" : "7680106",
+        "value_2386" : "27855189",
+        "value_23814" : "20625043",
+        "value_23815" : "4592752",
+        "value_23816" : "0",
+        "value_23817" : "32",
+        "value_2387" : "37",
+        "value_2388" : "39",
+        "value_2389" : "49",
+        "value_23811" : "1406/08/01",
+        "value_23812" : "توسعه عملیات-بهبود کیفیت محصولات روغن موتوری",
+        "value_23813" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "CustomRow",
+        "id" : "3640",
+        "value_2381" : "پروژه وکس تصفیه شده(FRW)",
+        "value_2382" : "1262430",
+        "value_2383" : "1111571",
+        "value_2384" : "یورو",
+        "value_2385" : "13131357",
+        "value_2386" : "2803532",
+        "value_23814" : "1111571",
+        "value_23815" : "1262430",
+        "value_23816" : "0",
+        "value_23817" : "32",
+        "value_2387" : "95",
+        "value_2388" : "97",
+        "value_2389" : "98",
+        "value_23811" : "1405/02/31",
+        "value_23812" : "توسعه عملیات-بهبود کیفیت محصولات اسلاک واکس",
+        "value_23813" : "0"
+      } ]
+    }
+  },
+  "interpretativeReportSummaryPage5" : {
+    "version" : "2",
+    "p5Desc1" : {
+      "rowItems" : [ {
+        "rowCode" : 1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_23331" : "اطلاعات این فرم گزیده ای از اطلاعات گزارش تفسیری مدیریت می باشد که هیئت مدیره شرکت مطابق با مفاد دستورالعمل اجرایی افشای اطلاعات شرکتهای ثبت شده نزد سازمان موظف به ارائه آن در پیوست این اطلاعیه می باشد و این اطلاعات جایگزین گزارش مذکور نیست."
+      } ]
+    },
+    "otherOperatingIncome" : {
+      "yearData" : [ {
+        "columnId" : "2422",
+        "caption" : "سال مالی منتهی به 1403/12/30",
+        "periodEndToDate" : "1403/12/30",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "2423",
+        "caption" : "دوره 6 ماهه منتهی به 1404/06/31",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2424",
+        "caption" : "برآورد دوره 6 ماهه منتهی به 1404/12/29",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      } ],
+      "rowItems" : [ {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "CustomRow",
+        "id" : "3475",
+        "value_2421" : "سود ناشی از تسعیر ارز",
+        "value_2422" : "1538038",
+        "value_2423" : "5939326",
+        "value_2424" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "CustomRow",
+        "id" : "8185",
+        "value_2421" : "سایر",
+        "value_2422" : "220955",
+        "value_2423" : "0",
+        "value_2424" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "CustomRow",
+        "id" : "8182",
+        "value_2421" : "درآمدحاصل از خدمات",
+        "value_2422" : "1054520",
+        "value_2423" : "1005107",
+        "value_2424" : "0"
+      }, {
+        "rowCode" : 4,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2422" : "2813513",
+        "value_2423" : "6944433",
+        "value_2424" : "0"
+      } ]
+    },
+    "otherNonOperatingExpenses" : {
+      "yearData" : [ {
+        "columnId" : "3522",
+        "caption" : "سال مالی منتهی به 1403/12/30",
+        "periodEndToDate" : "1403/12/30",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "3523",
+        "caption" : "دوره 6 ماهه منتهی به 1404/06/31",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "3524",
+        "caption" : "برآورد دوره 6 ماهه منتهی به 1404/12/29",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      } ],
+      "rowItems" : [ {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 1,
+        "rowType" : "CustomRow",
+        "id" : "4350",
+        "value_3521" : "سایر",
+        "value_3522" : "0",
+        "value_3523" : "59912",
+        "value_3524" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 1,
+        "rowType" : "CustomRow",
+        "id" : "8188",
+        "value_3521" : "سود(زیان) ناشی از تسعیر دارائیها و بدهی‏های ارزی عملیاتی",
+        "value_3522" : "0",
+        "value_3523" : "0",
+        "value_3524" : "0"
+      }, {
+        "rowCode" : 7,
+        "oldFieldName" : "",
+        "category" : 1,
+        "rowType" : "FixedRow",
+        "value_3522" : "0",
+        "value_3523" : "59912",
+        "value_3524" : "0"
+      } ]
+    },
+    "detailsOfTheFinancingOfTheCompanyAtTheEndOfThePeriod" : {
+      "yearData" : [ {
+        "columnId" : "2431",
+        "caption" : "منابع تامین مالی شرکت در دوره 6 ماهه منتهی به 1404/06/31 - محل تامین",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2432",
+        "caption" : "نرخ سود",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2433",
+        "caption" : "مانده اول دوره تسهیلات ارزی و ریالی (میلیون ریال)",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2434",
+        "caption" : "مانده پایان دوره (اصل و فرع) - ریالی",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2435",
+        "caption" : "ارزی - نوع ارز",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2436",
+        "caption" : "مبلغ ارزی",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2437",
+        "caption" : "معادل ریالی تسهیلات ارزی (میلیون ریال)",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2438",
+        "caption" : "مانده پایان دوره به تفکیک سررسید - کوتاه مدت",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2439",
+        "caption" : "بلند مدت",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "24310",
+        "caption" : "مبلغ هزینه مالی طی دوره",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "24311",
+        "caption" : "سایر توضیحات",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      } ],
+      "rowItems" : [ {
+        "rowCode" : 11,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2431" : "تسهیلات دریافتی از بانکها",
+        "value_2432" : "23",
+        "value_2433" : "8812835",
+        "value_2434" : "6885124",
+        "value_2435" : "",
+        "value_2436" : "0",
+        "value_2437" : "0",
+        "value_2438" : "6885124",
+        "value_2439" : "0",
+        "value_24310" : "841970",
+        "value_24311" : ""
+      }, {
+        "rowCode" : 13,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2431" : "تسهیلات تسویه شده از ابتدای سال مالی تا پایان دوره",
+        "value_2433" : "0",
+        "value_24310" : "0",
+        "value_24311" : ""
+      }, {
+        "rowCode" : 14,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2431" : "جمع",
+        "value_2433" : "8812835",
+        "value_2434" : "6885124",
+        "value_2437" : "0",
+        "value_2438" : "6885124",
+        "value_2439" : "0",
+        "value_24310" : "841970"
+      }, {
+        "rowCode" : 15,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2439" : "انتقال به دارایی",
+        "value_24310" : "0"
+      }, {
+        "rowCode" : 16,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2439" : "هزینه مالی دوره",
+        "value_24310" : "841970"
+      } ]
+    },
+    "detailsOfTheFinancingOfTheCompany-Est1" : {
+      "yearData" : [ {
+        "columnId" : "23371",
+        "caption" : "برآورد منابع تامین مالی شرکت در دوره 6 ماهه منتهی به 1404/12/29 - محل تامین",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "23372",
+        "caption" : "نرخ سود",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "23373",
+        "caption" : "مانده اول دوره تسهیلات ارزی و ریالی (میلیون ریال)",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "23374",
+        "caption" : "مانده پایان دوره (اصل و فرع) - ریالی",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "23375",
+        "caption" : "ارزی - نوع ارز",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "23376",
+        "caption" : "مبلغ ارزی",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "23377",
+        "caption" : "معادل ریالی تسهیلات ارزی  (میلیون ریال)",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "23378",
+        "caption" : "مانده پایان دوره به تفکیک سررسید - کوتاه مدت",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "23379",
+        "caption" : "بلند مدت",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "233710",
+        "caption" : "مبلغ هزینه مالی طی دوره",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "233711",
+        "caption" : "سایر توضیحات",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      } ],
+      "rowItems" : [ {
+        "rowCode" : 56,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_23371" : "تسهیلات دریافتی از بانکها",
+        "value_23372" : "23",
+        "value_23373" : "6885124",
+        "value_23374" : "0",
+        "value_23375" : "",
+        "value_23376" : "0",
+        "value_23377" : "0",
+        "value_23378" : "0",
+        "value_23379" : "0",
+        "value_233710" : "0",
+        "value_233711" : ""
+      }, {
+        "rowCode" : 58,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_23371" : "تسهیلات تسویه شده از ابتدای سال مالی تا پایان دوره",
+        "value_23373" : "0",
+        "value_233710" : "0",
+        "value_233711" : ""
+      }, {
+        "rowCode" : 59,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_23371" : "جمع",
+        "value_23373" : "6885124",
+        "value_23374" : "0",
+        "value_23377" : "0",
+        "value_23378" : "0",
+        "value_23379" : "0",
+        "value_233710" : "0"
+      }, {
+        "rowCode" : 60,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_23379" : "انتقال به دارایی",
+        "value_233710" : "0"
+      }, {
+        "rowCode" : 61,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_23379" : "هزینه مالی دوره",
+        "value_233710" : "0"
+      } ]
+    },
+    "detailsOfTheFinancingOfTheCompany-Est2" : {
+      "rowItems" : [ ]
+    },
+    "descriptionForDetailsOfTheFinancingOfTheCompanyAtTheEndOfThePeriod" : {
+      "rowItems" : [ {
+        "rowCode" : 17,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2531" : "توضیحات تکمیلی به شرح گزارش تفسیری پیوست می باشد ."
+      } ]
+    },
+    "companyEstimatesOfFinancingProgramsAndCompanyFinanceChanges" : {
+      "rowItems" : [ {
+        "rowCode" : 18,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2441" : "توضیحات تکمیلی به شرح گزارش تفسیری پیوست می باشد ."
+      } ]
+    },
+    "nonOperationIncomeAndExpensesInvestmentIncome" : {
+      "yearData" : [ {
+        "columnId" : "2452",
+        "caption" : "سال مالی منتهی به 1403/12/30",
+        "periodEndToDate" : "1403/12/30",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "2453",
+        "caption" : "دوره 6 ماهه منتهی به 1404/06/31",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "2454",
+        "caption" : "برآورد دوره 6 ماهه منتهی به 1404/12/29",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      } ],
+      "rowItems" : [ {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "CustomRow",
+        "id" : "8189",
+        "value_2451" : "سود حاصل از سپرده‏های‏ بانکی",
+        "value_2452" : "32974",
+        "value_2453" : "16071",
+        "value_2454" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "CustomRow",
+        "id" : "8354",
+        "value_2451" : "سود سهام حاصل از سرمایه‏ گذاری‏ه ای بلندمدت",
+        "value_2452" : "9433773",
+        "value_2453" : "6691510",
+        "value_2454" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "CustomRow",
+        "id" : "8192",
+        "value_2451" : "سود سهام حاصل از سرمایه‏ گذاری ‏های کوتاه‏ مدت",
+        "value_2452" : "32981",
+        "value_2453" : "573253",
+        "value_2454" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "CustomRow",
+        "id" : "8190",
+        "value_2451" : "سود (زیان) ناشی از تسعیر دارائیها و بدهی‏های ارزی غیرمرتبط با عملیات",
+        "value_2452" : "26747",
+        "value_2453" : "712",
+        "value_2454" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "CustomRow",
+        "id" : "8193",
+        "value_2451" : "سود(زیان) حاصل از فروش دارایی ثابت مشهود",
+        "value_2452" : "0",
+        "value_2453" : "514197",
+        "value_2454" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "CustomRow",
+        "id" : "8194",
+        "value_2451" : "سایر",
+        "value_2452" : "0",
+        "value_2453" : "130098",
+        "value_2454" : "0"
+      }, {
+        "rowCode" : 22,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2452" : "9526475",
+        "value_2453" : "7925841",
+        "value_2454" : "0"
+      } ]
+    },
+    "nonOperationIncomeAndExpensesMiscellaneousItems" : {
+      "yearData" : [ {
+        "columnId" : "3532",
+        "caption" : "سال مالی منتهی به 1403/12/30",
+        "periodEndToDate" : "1403/12/30",
+        "yearEndToDate" : "1403/12/30",
+        "period" : 12,
+        "isAudited" : null
+      }, {
+        "columnId" : "3533",
+        "caption" : "دوره 6 ماهه منتهی به 1404/06/31",
+        "periodEndToDate" : "1404/06/31",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 6,
+        "isAudited" : null
+      }, {
+        "columnId" : "3534",
+        "caption" : "برآورد دوره 6 ماهه منتهی به 1404/12/29",
+        "periodEndToDate" : "1404/12/29",
+        "yearEndToDate" : "1404/12/29",
+        "period" : 12,
+        "isAudited" : null
+      } ],
+      "rowItems" : [ {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "CustomRow",
+        "id" : "8359",
+        "value_3531" : "سود (زیان) ناشی از تسعیر دارائیها و بدهی‏های ارزی غیرمرتبط با عملیات",
+        "value_3532" : "0",
+        "value_3533" : "0",
+        "value_3534" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "CustomRow",
+        "id" : "8358",
+        "value_3531" : "سایر",
+        "value_3532" : "-63025",
+        "value_3533" : "0",
+        "value_3534" : "0"
+      }, {
+        "rowCode" : -1,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "CustomRow",
+        "id" : "8357",
+        "value_3531" : " مالیاتهای حقوق و تکلیفی سنوات قبل",
+        "value_3532" : "-260173",
+        "value_3533" : "0",
+        "value_3534" : "0"
+      }, {
+        "rowCode" : 25,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_3532" : "-323198",
+        "value_3533" : "0",
+        "value_3534" : "0"
+      } ]
+    },
+    "corporateIncomeProgram" : {
+      "rowItems" : [ {
+        "rowCode" : 27,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2461" : "70565024",
+        "value_2462" : "44514670",
+        "value_2463" : "53340832",
+        "value_2464" : "44514670",
+        "value_2465" : "0"
+      } ]
+    },
+    "otherImportantPrograms" : {
+      "rowItems" : [ {
+        "rowCode" : 28,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2471" : "برآورد دوره 6 ماهه منتهی به 1404/12/29",
+        "value_2472" : "توضیحات تکمیلی به شرح گزارش تفسیری پیوست می باشد ."
+      } ]
+    },
+    "otherImportantNotes" : {
+      "rowItems" : [ {
+        "rowCode" : 30,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_2481" : "توضیحات تکمیلی به شرح گزارش تفسیری پیوست می باشد ."
+      } ]
+    },
+    "p5Desc2" : {
+      "rowItems" : [ {
+        "rowCode" : 51,
+        "oldFieldName" : "",
+        "category" : 0,
+        "rowType" : "FixedRow",
+        "value_23461" : "«جملات آینده‌نگر نشان‌دهنده انتظارات، باورها یا پیش‌بینی‌های جاری از رویدادها و عملکرد مالی است. این جملات در معرض ریسک‌ها، عدم ‌قطعیت‌ها و مفروضات غیرقطعی قرار دارند. بنابراین نتایج واقعی ممکن است متفاوت از نتایج مورد انتظار باشند.»"
+      } ]
+    }
+  }
+}
