@@ -75,4 +75,18 @@ public sealed class SymbolSpec : Specification<Symbol>
         select.LoadSpecification(this);
         return select;
     }
+
+    public SymbolSpec WhereIsinsIn(IEnumerable<string> isins)
+    {
+        List<string> isinList = isins.ToList();
+        Query.Where(x => isinList.Contains(x.Isin));
+        return this;
+    }
+
+    public SymbolSpec WhereNamesIn(IEnumerable<string> names)
+    {
+        List<string> nameList = names.ToList();
+        Query.Where(x => nameList.Contains(x.Name));
+        return this;
+    }
 }
