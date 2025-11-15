@@ -1,0 +1,364 @@
+﻿{
+  "parentAssembly" : {
+    "assemblyResultType" : 1,
+    "assemblyResultTypeTitle" : "در خصوص دستور جلسات زیر تصمیم گیری نمود",
+    "date" : "1404/03/20",
+    "hour" : "10:00",
+    "location" : "کرمان-کيلومتر 12 بزرگراه آيت ا... هاشمي رفسنجاني",
+    "day" : "سه شنبه",
+    "letterPublishDate" : "1404/03/08",
+    "letterTracingNo" : 1352415,
+    "sessionOrders" : [ {
+      "type" : 0,
+      "description" : "استماع گزارش هیئت‌ مدیره و بازرس قانونی",
+      "fieldName" : "ListenedBoardMemberReport"
+    }, {
+      "type" : 1,
+      "description" : "تصویب صورت‌های مالی سال (دوره) مالی منتهی به1403/12/30",
+      "fieldName" : "ApproveStatements"
+    }, {
+      "type" : 2,
+      "description" : " انتخاب حسابرس و بازرس قانونی",
+      "fieldName" : "SelectInspector"
+    }, {
+      "type" : 3,
+      "description" : "انتخاب روزنامه کثیر‌الانتشار",
+      "fieldName" : "SelectNewspaper"
+    }, {
+      "type" : 4,
+      "description" : " انتخاب اعضای هیئت‌ مدیره",
+      "fieldName" : "SelectBoardMember"
+    }, {
+      "type" : 5,
+      "description" : "تعیین حق حضور اعضای غیر موظف هیئت مدیره",
+      "fieldName" : "BoardMemberWage"
+    }, {
+      "type" : 6,
+      "description" : "تعیین پاداش هیئت مدیره",
+      "fieldName" : "BoardMemberGift"
+    }, {
+      "type" : 8,
+      "description" : "سایر موارد",
+      "fieldName" : "Other"
+    } ]
+  },
+  "shareHolders" : [ {
+    "shareHolderSerial" : 998,
+    "name" : "ساير سهامداران",
+    "shareCount" : 8326614,
+    "sharePercent" : 0.03
+  }, {
+    "shareHolderSerial" : 3096,
+    "name" : "شرکت سرمايه گذاري صدر تامين",
+    "shareCount" : 17723711378,
+    "sharePercent" : 72.1
+  } ],
+  "assemblyChiefMembers" : {
+    "assemblyChief" : "محسن بهزادي صوفياني",
+    "assemblySuperVisor1" : "حسين سعيدي",
+    "assemblySuperVisor2" : "سعيد ملکي",
+    "assemblySecretary" : "احسان نمازي زاده"
+  },
+  "assemblyBoardMembers" : [ {
+    "boardMemberSerial" : 2427,
+    "fullName" : "سرمايه گذاري صدر تامين",
+    "nationalCode" : "10101924696",
+    "legalType" : 0,
+    "membershipType" : 1,
+    "agentBoardMemberFullName" : "احسان نمازي زاده",
+    "agentBoardMemberNationalCode" : "2992222003",
+    "position" : 1,
+    "hasDuty" : 1,
+    "attendingMeeting" : true,
+    "verification" : 0,
+    "degreeRef" : 5,
+    "educationFieldRef" : 133,
+    "degree" : "کارشناسي ارشد",
+    "educationField" : "مهندسي صنايع"
+  }, {
+    "boardMemberSerial" : 6884,
+    "fullName" : "صنايع خاک چيني ايران",
+    "nationalCode" : "10101038610",
+    "legalType" : 0,
+    "membershipType" : 1,
+    "agentBoardMemberFullName" : "محمدجواد مقصودي",
+    "agentBoardMemberNationalCode" : "2991554126",
+    "position" : 0,
+    "hasDuty" : 1,
+    "attendingMeeting" : true,
+    "verification" : 0,
+    "degreeRef" : 3,
+    "educationFieldRef" : 142,
+    "degree" : "دکترا",
+    "educationField" : "مهندسي برق"
+  }, {
+    "boardMemberSerial" : 6885,
+    "fullName" : "معدني املاح ايران",
+    "nationalCode" : "10100974130",
+    "legalType" : 0,
+    "membershipType" : 1,
+    "agentBoardMemberFullName" : "سيدحسين صابري اناري",
+    "agentBoardMemberNationalCode" : "5429881661",
+    "position" : 2,
+    "hasDuty" : 0,
+    "attendingMeeting" : true,
+    "verification" : 0,
+    "degreeRef" : 3,
+    "educationFieldRef" : 17,
+    "degree" : "دکترا",
+    "educationField" : "بهداشت حرفه اي"
+  }, {
+    "boardMemberSerial" : 10440,
+    "fullName" : "فراورده هاي نسوز ايران",
+    "nationalCode" : "10100592890",
+    "legalType" : 0,
+    "membershipType" : 1,
+    "agentBoardMemberFullName" : "حسين صفابينش",
+    "agentBoardMemberNationalCode" : "4569438962",
+    "position" : 0,
+    "hasDuty" : 0,
+    "attendingMeeting" : true,
+    "verification" : 0,
+    "degreeRef" : 5,
+    "educationFieldRef" : 1204,
+    "degree" : "کارشناسي ارشد",
+    "educationField" : "متالورژي"
+  }, {
+    "boardMemberSerial" : 20096,
+    "fullName" : "توسعه معادن پارس تامين",
+    "nationalCode" : "10103750223",
+    "legalType" : 0,
+    "membershipType" : 1,
+    "agentBoardMemberFullName" : "",
+    "agentBoardMemberNationalCode" : "",
+    "position" : 0,
+    "hasDuty" : 0,
+    "attendingMeeting" : true,
+    "verification" : 0,
+    "degreeRef" : 3,
+    "educationFieldRef" : 133,
+    "degree" : "دکترا",
+    "educationField" : "مهندسي صنايع"
+  } ],
+  "ceo" : {
+    "attendingMeeting" : 0,
+    "fullName" : "احسان نمازي زاده",
+    "nationalCode" : "2992222003",
+    "degreeRef" : 5,
+    "educationFieldRef" : 133,
+    "degree" : "کارشناسي ارشد",
+    "educationField" : "مهندسي صنايع",
+    "verification" : ""
+  },
+  "auditCommitteeChairman" : {
+    "attendingMeeting" : 0,
+    "fullName" : "سيدحسين صابري اناري",
+    "nationalCode" : "5429881661",
+    "degreeRef" : 3,
+    "educationFieldRef" : 17,
+    "degree" : "دکترا",
+    "educationField" : "بهداشت حرفه اي",
+    "verification" : ""
+  },
+  "independentAuditorLegalInspectorRepresentative" : {
+    "attendingMeeting" : 1,
+    "fullName" : "فاطمه کاظم پور دیزجی",
+    "nationalCode" : "0062807277",
+    "degreeRef" : 3,
+    "educationFieldRef" : 80,
+    "degree" : "دکترا",
+    "educationField" : "حسابداري",
+    "verification" : ""
+  },
+  "topFinancialPosition" : {
+    "attendingMeeting" : 1,
+    "fullName" : "سهيل رودري",
+    "nationalCode" : "2993795848",
+    "degreeRef" : 3,
+    "educationFieldRef" : 1193,
+    "degree" : "دکترا",
+    "educationField" : "اقتصاد",
+    "verification" : ""
+  },
+  "assemblyInterims" : [ ],
+  "assemblyProportionedRetainedEarning" : [ {
+    "fieldName" : "NetIncomeLoss",
+    "description" : "سود (زیان) خالص",
+    "yearEndToDateValue" : 25528570,
+    "rowClass" : "ComputationalRow"
+  }, {
+    "fieldName" : "BeginingRetainedEarnings",
+    "description" : "سود (زیان) انباشته ابتدای دوره",
+    "yearEndToDateValue" : 17203564,
+    "rowClass" : "SimpleRow"
+  }, {
+    "fieldName" : "AnnualAdjustment",
+    "description" : "تعدیلات سنواتی",
+    "yearEndToDateValue" : 0,
+    "rowClass" : "SimpleRow"
+  }, {
+    "fieldName" : "AdjustedBeginingRetainedEarnings",
+    "description" : "سود (زیان) انباشته ابتدای دوره تعدیل‌شده",
+    "yearEndToDateValue" : 17203564,
+    "rowClass" : "ComputationalRow"
+  }, {
+    "fieldName" : "PreYearDevidedRetainedEarning",
+    "description" : "سود سهام مصوب (مجمع سال قبل)",
+    "yearEndToDateValue" : -14135416,
+    "rowClass" : "SimpleRow"
+  }, {
+    "fieldName" : "TransferToCapital",
+    "description" : "تغییرات سرمایه از محل سود (زیان) انباشته",
+    "yearEndToDateValue" : 0,
+    "rowClass" : "SimpleRow"
+  }, {
+    "fieldName" : "UnallocatedRetainedEarningsAtTheBeginningOfPeriod",
+    "description" : "سود انباشته ابتدای دوره تخصیص نیافته",
+    "yearEndToDateValue" : 3068148,
+    "rowClass" : "ComputationalRow"
+  }, {
+    "fieldName" : "TransfersFromOtherEquityItems",
+    "description" : "انتقال از سایر اقلام حقوق صاحبان سهام",
+    "yearEndToDateValue" : 0,
+    "rowClass" : "SimpleRow"
+  }, {
+    "fieldName" : "ProportionableRetainedEarnings",
+    "description" : "سود قابل تخصیص",
+    "yearEndToDateValue" : 28596718,
+    "rowClass" : "ComputationalRow"
+  }, {
+    "fieldName" : "LegalReserve",
+    "description" : "انتقال به اندوخته‌ قانونی",
+    "yearEndToDateValue" : -598565,
+    "rowClass" : "SimpleRow"
+  }, {
+    "fieldName" : "ExtenseReserve",
+    "description" : "انتقال به سایر اندوخته‌ها",
+    "yearEndToDateValue" : 0,
+    "rowClass" : "SimpleRow"
+  }, {
+    "fieldName" : "EndingRetainedEarnings",
+    "description" : "سود (زیان) انباشته پايان دوره",
+    "yearEndToDateValue" : 27998153,
+    "rowClass" : "ComputationalRow"
+  }, {
+    "fieldName" : "DividedRetainedEarning",
+    "description" : "سود سهام مصوب (مجمع سال جاری)",
+    "yearEndToDateValue" : -25197915,
+    "rowClass" : "SimpleRow"
+  }, {
+    "fieldName" : "TotalEndingRetainedEarnings",
+    "description" : "سود (زیان) انباشته پایان دوره (با لحاظ نمودن مصوبات مجمع)",
+    "yearEndToDateValue" : 2800238,
+    "rowClass" : "ComputationalRow"
+  }, {
+    "fieldName" : "EarningsPerShareAfterTax",
+    "description" : "سود (زیان) خالص هر سهم- ریال",
+    "yearEndToDateValue" : 1038,
+    "rowClass" : "ComputationalRow"
+  }, {
+    "fieldName" : "DividendPerShare",
+    "description" : "سود نقدی هر سهم (ریال)",
+    "yearEndToDateValue" : 1025,
+    "rowClass" : "ComputationalRow"
+  }, {
+    "fieldName" : "ListedCapital",
+    "description" : "سرمایه",
+    "yearEndToDateValue" : 24583332,
+    "rowClass" : "ComputationalRow"
+  } ],
+  "inspectors" : [ {
+    "serial" : 221,
+    "name" : "سازمان حسابرسي",
+    "type" : 0
+  }, {
+    "serial" : 221,
+    "name" : "سازمان حسابرسي",
+    "type" : 1
+  } ],
+  "newsPapers" : [ {
+    "newsPaperId" : 4,
+    "name" : "اطلاعات"
+  } ],
+  "boardMemberPeriod" : 2,
+  "newBoardMembers" : [ {
+    "name" : "سرمايه گذاري صدر تامين",
+    "isLegal" : true,
+    "legalType" : 1,
+    "nationalCode" : "10101924696",
+    "membershipType" : 1,
+    "boardMemberSerial" : 2427
+  }, {
+    "name" : "صنايع خاک چيني ايران",
+    "isLegal" : true,
+    "legalType" : 1,
+    "nationalCode" : "10101038610",
+    "membershipType" : 1,
+    "boardMemberSerial" : 6884
+  }, {
+    "name" : "معدني املاح ايران",
+    "isLegal" : true,
+    "legalType" : 1,
+    "nationalCode" : "10100974130",
+    "membershipType" : 1,
+    "boardMemberSerial" : 6885
+  }, {
+    "name" : "توسعه معادن پارس تامين",
+    "isLegal" : true,
+    "legalType" : 2,
+    "nationalCode" : "10103750223",
+    "membershipType" : 1,
+    "boardMemberSerial" : 20096
+  }, {
+    "name" : "اکتشاف و حفاري صدر تامين",
+    "isLegal" : true,
+    "legalType" : 2,
+    "nationalCode" : "10103079357",
+    "membershipType" : 1,
+    "boardMemberSerial" : 57614
+  } ],
+  "boardMemberWageAndGifts" : [ {
+    "type" : 0,
+    "fieldName" : "حق حضور (ریال)",
+    "currentYearValue" : 66000000,
+    "pastYearValue" : 61111111,
+    "description" : "حداقل 1 جلسه در ماه و به ازای حداکثر 2جلسه در ماه"
+  }, {
+    "type" : 1,
+    "fieldName" : "پاداش (میلیون ریال)",
+    "currentYearValue" : 0,
+    "pastYearValue" : 8000,
+    "description" : "به صورت ناخالص"
+  }, {
+    "type" : 2,
+    "fieldName" : "حق حضوراعضای هیات مدیره عضو کمیته حسابرسی (ریال)",
+    "currentYearValue" : 52800000,
+    "pastYearValue" : 48888888,
+    "description" : "بابت برگزاری حداکثر 2  جلسه در ماه"
+  }, {
+    "type" : 3,
+    "fieldName" : "حق حضوراعضای هیات مدیره عضو کمیته انتصابات (ریال)\t",
+    "currentYearValue" : 52800000,
+    "pastYearValue" : 48888888,
+    "description" : "بابت برگزاری حداکثر 2  جلسه در ماه"
+  }, {
+    "type" : 4,
+    "fieldName" : "سایر کمیته های تخصصی",
+    "currentYearValue" : 52800000,
+    "pastYearValue" : 48888888,
+    "description" : "بابت برگزاری حداکثر 2  جلسه در ماه"
+  }, {
+    "type" : 5,
+    "fieldName" : "هزینه های مسولیت اجتماعی",
+    "currentYearValue" : 150000,
+    "pastYearValue" : 130000,
+    "description" : ""
+  } ],
+  "publishSecurityDes" : "",
+  "otherDescription" : "همچنين آن دسته از سهامداراني که امکان حضور درمجمع را ندارند، ميتوانند با مراجعه به سايت شرکت به آدرس WWW.CSP.IR اقدام به مشاهده مجمع و طرح سوالات خود نمايند و نيز سهامداران گرامي ميتوانند اطلاعات مورد نياز خود را از سامانه کدال به نشانيWWW.CODAL.IR دريافت نمايند.",
+  "newHour" : "",
+  "newDay" : "",
+  "newDate" : "",
+  "newLocation" : "",
+  "breakDes" : ""
+}
