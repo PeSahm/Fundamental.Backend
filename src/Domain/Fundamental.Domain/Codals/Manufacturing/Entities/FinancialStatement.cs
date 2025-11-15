@@ -288,7 +288,7 @@ public class FinancialStatement : BaseEntity<Guid>
     /// </summary>
     public decimal NetProfitGrowthRatio { get; private set; }
 
-    public decimal Peg { get; private set; }
+    public decimal Peg { get; }
 
     public CodalMoney DpsLastYear { get; private set; } = CodalMoney.Empty;
 
@@ -298,7 +298,7 @@ public class FinancialStatement : BaseEntity<Guid>
 
     public CodalMoney DpsRatioTwoYearsAgo { get; private set; } = CodalMoney.Empty;
 
-    public uint ConcurrencyToken { get; private set; }
+    public uint ConcurrencyToken { get; }
 
     public FinancialStatement SetLastClosePrice(decimal lastClosePrice, DateOnly lastClosePriceDate)
     {
@@ -373,6 +373,7 @@ public class FinancialStatement : BaseEntity<Guid>
         {
             return this;
         }
+
         if (SaleYear.Year == saleYear.Year && SaleMonth.Month == saleMonth.Month && SaleTraceNo > saleTraceNo)
         {
             return this;
@@ -628,9 +629,8 @@ public class FinancialStatement : BaseEntity<Guid>
         public decimal LastYearSamePeriodTradeAndOtherReceivables { get; init; } = 0;
         public required decimal CurrentTradeAndOtherReceivables { get; init; }
 
-
         /// <summary>
-        /// دوره وصول مطالبات:
+        /// دوره وصول مطالبات:.
         /// </summary>
         /// <returns>Days of Sales Outstanding.</returns>
         public int GetDaysSalesOutstanding()

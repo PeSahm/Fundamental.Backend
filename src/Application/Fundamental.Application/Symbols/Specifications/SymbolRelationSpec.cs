@@ -1,4 +1,4 @@
-﻿using Ardalis.Specification;
+using Ardalis.Specification;
 using Fundamental.Domain.Symbols.Entities;
 
 namespace Fundamental.Application.Symbols.Specifications;

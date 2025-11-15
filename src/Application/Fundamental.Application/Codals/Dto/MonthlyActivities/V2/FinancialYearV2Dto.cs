@@ -14,7 +14,9 @@ public class FinancialYearV2Dto
     public int FiscalYear => PriodEndToDate.ToPersianDateTime()?.Year ??
                               throw new InvalidOperationException("Invalid Period EndToDate format");
 
+#pragma warning disable S2325 // Make 'YearEndMonth' a static property
     public int YearEndMonth => 12; // Not provided in V2 payloads; assume standard year-end
+#pragma warning restore S2325
 
     public int ReportMonth => PriodEndToDate.ToPersianDateTime()?.Month ??
                               throw new InvalidOperationException("Invalid Period EndToDate format");

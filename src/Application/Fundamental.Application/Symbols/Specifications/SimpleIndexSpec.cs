@@ -1,4 +1,4 @@
-﻿using Ardalis.Specification;
+using Ardalis.Specification;
 using Fundamental.Application.Symbols.Models;
 using Index = Fundamental.Domain.Symbols.Entities.Index;
 

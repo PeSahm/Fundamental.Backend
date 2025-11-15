@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Symbols.Queries.GetSymbolRelations;
+using Fundamental.Application.Symbols.Queries.GetSymbolRelations;
 using Fundamental.ErrorHandling;
 using Fundamental.ErrorHandling.Attributes;
 using Fundamental.ErrorHandling.Enums;

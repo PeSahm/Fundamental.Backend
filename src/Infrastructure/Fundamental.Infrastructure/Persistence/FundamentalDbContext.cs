@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using Coravel.Pro.EntityFramework;
 using Fundamental.Domain.Codals;
 using Fundamental.Domain.Codals.Manufacturing.Entities;

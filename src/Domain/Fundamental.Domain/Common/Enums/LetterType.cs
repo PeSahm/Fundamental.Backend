@@ -1,5 +1,7 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+
+#pragma warning disable S2479 // Control characters in string literals should be replaced with escape sequences
 
 namespace Fundamental.Domain.Common.Enums;
 

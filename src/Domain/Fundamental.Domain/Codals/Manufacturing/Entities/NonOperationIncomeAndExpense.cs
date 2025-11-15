@@ -1,4 +1,4 @@
-﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
+using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Codals.ValueObjects;
 using Fundamental.Domain.Common.BaseTypes;
 using Fundamental.Domain.Common.Enums;

@@ -1,4 +1,4 @@
-﻿using Fundamental.Infrastructure.Extensions;
+using Fundamental.Infrastructure.Extensions;
 using Fundamental.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 using Fundamental.Application.Common.Extensions;
 using Fundamental.Domain.Common.Enums;
 

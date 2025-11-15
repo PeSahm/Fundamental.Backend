@@ -1,4 +1,4 @@
-﻿using ErrorHandling.AspNetCore;
+using ErrorHandling.AspNetCore;
 using Fundamental.Application.Symbols.Commands.ApproveSymbolShareHolder;
 using Fundamental.Application.Symbols.Commands.RejectSymbolShareHolder;
 using Fundamental.Application.Symbols.Queries.GetSymbolShareHolders;

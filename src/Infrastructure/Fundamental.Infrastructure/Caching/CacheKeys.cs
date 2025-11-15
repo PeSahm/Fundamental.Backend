@@ -14,6 +14,7 @@ public static class CacheKeys
         public static string ClosingPriceInfo(string tseInsCode) =>
             $"{PREFIX}:{SCOPE}:closing-price-info:{tseInsCode}";
     }
+
     public static class MonthlyActivity
     {
         private const string SCOPE = "monthly-activity";

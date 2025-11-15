@@ -46,7 +46,8 @@ public class FinancialStatementProcessingBenchmarks
     [Benchmark]
     public async Task QueryBalanceSheetsBySymbol()
     {
-        foreach (var symbol in _testSymbols.Take(10)) // Test with first 10 symbols
+        // Test with first 10 symbols
+        foreach (Symbol symbol in _testSymbols.Take(10))
         {
             var balanceSheets = await _context.BalanceSheets
                 .Where(bs => bs.Symbol.Id == symbol.Id)
@@ -85,9 +86,9 @@ public class FinancialStatementProcessingBenchmarks
         results.Should().NotBeEmpty();
     }
 
-    private List<Symbol> GenerateTestSymbols(int count)
+    private static List<Symbol> GenerateTestSymbols(int count)
     {
-        var symbols = new List<Symbol>();
+        List<Symbol> symbols = new List<Symbol>();
         for (int i = 0; i < count; i++)
         {
             symbols.Add(new Symbol(
@@ -101,28 +102,27 @@ public class FinancialStatementProcessingBenchmarks
                 $"TC{i:D6}",
                 $"شرکت تست {i}",
                 $"TEST{i:D6}ISIN",
-                (ulong)(1000000 + i * 1000),
+                (ulong)(1000000 + (i * 1000)),
                 "01",
                 "001",
                 ProductType.Equity,
                 ExchangeType.TSE,
                 null,
-                DateTime.UtcNow
-            ));
+                DateTime.UtcNow));
         }
         return symbols;
     }
 
-    private List<BalanceSheet> GenerateTestBalanceSheets(IEnumerable<Symbol> symbols, int yearsBack)
+    private static List<BalanceSheet> GenerateTestBalanceSheets(IEnumerable<Symbol> symbols, int yearsBack)
     {
-        var balanceSheets = new List<BalanceSheet>();
-        var random = new Random(42); // Fixed seed for reproducible results
+        List<BalanceSheet> balanceSheets = new List<BalanceSheet>();
+        Random random = new Random(42); // Fixed seed for reproducible results
 
         foreach (var symbol in symbols)
         {
             for (int year = 0; year < yearsBack; year++)
             {
-                var balanceSheet = new BalanceSheet(
+                BalanceSheet balanceSheet = new BalanceSheet(
                     Guid.NewGuid(),
                     symbol,
                     (ulong)random.Next(1000, 999999),
@@ -132,14 +132,14 @@ public class FinancialStatementProcessingBenchmarks
                     new StatementMonth(12), // December
                     random.NextDouble() > 0.2, // 80% audited
                     DateTime.UtcNow,
-                    DateTime.UtcNow.AddDays(-random.Next(1, 365))
-                );
+                    DateTime.UtcNow.AddDays(-random.Next(1, 365)));
 
                 // Add some detail records
-                for (int category = 0; category < 5; category++) // Multiple rows per year
+                // Multiple rows per year
+                for (int category = 0; category < 5; category++)
                 {
                     var value = random.Next(1000000, 100000000);
-                    var detail = new BalanceSheetDetail(
+                    BalanceSheetDetail detail = new BalanceSheetDetail(
                         Guid.NewGuid(),
                         balanceSheet,
                         (ushort)category,
@@ -147,8 +147,7 @@ public class FinancialStatementProcessingBenchmarks
                         (BalanceSheetCategory)category,
                         $"Test Description {category}",
                         new SignedCodalMoney(value, IsoCurrency.IRR),
-                        DateTime.UtcNow
-                    );
+                        DateTime.UtcNow);
                     balanceSheet.Details.Add(detail);
                 }
 
@@ -160,7 +159,9 @@ public class FinancialStatementProcessingBenchmarks
     }
 }
 
+#pragma warning disable SA1402 // File may only contain a single type
 public class PerformanceTests : IAsyncLifetime
+#pragma warning restore SA1402
 {
     private FundamentalDbContext _context;
 
@@ -184,7 +185,7 @@ public class PerformanceTests : IAsyncLifetime
     {
         // Arrange
         var largeDataset = GenerateLargeBalanceSheetDataset(10000);
-        var stopwatch = Stopwatch.StartNew();
+        Stopwatch stopwatch = Stopwatch.StartNew();
 
         // Act
         await _context.BalanceSheets.AddRangeAsync(largeDataset);
@@ -199,13 +200,17 @@ public class PerformanceTests : IAsyncLifetime
     public async Task MemoryUsage_ShouldRemainStable()
     {
         // Arrange
-        var initialMemory = GC.GetTotalMemory(true);
-        var dataset = GenerateLargeBalanceSheetDataset(5000);
+#pragma warning disable S1215 // "GC.Collect" should not be called
+        long initialMemory = GC.GetTotalMemory(true);
+#pragma warning restore S1215
+        List<BalanceSheet> dataset = GenerateLargeBalanceSheetDataset(5000);
 
         // Act
         await _context.BalanceSheets.AddRangeAsync(dataset);
         await _context.SaveChangesAsync();
-        var finalMemory = GC.GetTotalMemory(true);
+#pragma warning disable S1215 // "GC.Collect" should not be called
+        long finalMemory = GC.GetTotalMemory(true);
+#pragma warning restore S1215
 
         // Assert
         var memoryIncrease = finalMemory - initialMemory;
@@ -225,7 +230,7 @@ public class PerformanceTests : IAsyncLifetime
                 .CountAsync(bs => bs.Symbol.Id == symbolId);
         });
 
-        var stopwatch = Stopwatch.StartNew();
+        Stopwatch stopwatch = Stopwatch.StartNew();
         var results = await Task.WhenAll(queryTasks);
         stopwatch.Stop();
 
@@ -236,7 +241,7 @@ public class PerformanceTests : IAsyncLifetime
 
     private async Task SeedTestDataAsync()
     {
-        var symbols = new List<Symbol>();
+        List<Symbol> symbols = new List<Symbol>();
         for (int i = 0; i < 100; i++)
         {
             symbols.Add(new Symbol(
@@ -250,14 +255,13 @@ public class PerformanceTests : IAsyncLifetime
                 $"PTC{i:D6}",
                 $"شرکت تست عملکرد {i}",
                 $"PERF{i:D6}ISIN",
-                (ulong)(1000000 + i * 1000),
+                (ulong)(1000000 + (i * 1000)),
                 "01",
                 "001",
                 ProductType.Equity,
                 ExchangeType.TSE,
                 null,
-                DateTime.UtcNow
-            ));
+                DateTime.UtcNow));
         }
 
         await _context.Symbols.AddRangeAsync(symbols);
@@ -271,15 +275,15 @@ public class PerformanceTests : IAsyncLifetime
 
     private List<BalanceSheet> GenerateLargeBalanceSheetDataset(int count)
     {
-        var balanceSheets = new List<BalanceSheet>();
-        var random = new Random(12345);
-        var symbols = _context.Symbols.ToList();
+        List<BalanceSheet> balanceSheets = new List<BalanceSheet>();
+        Random random = new Random(12345);
+        List<Symbol> symbols = _context.Symbols.ToList();
 
         for (int i = 0; i < count; i++)
         {
             var symbol = symbols[random.Next(symbols.Count)];
 
-            var balanceSheet = new BalanceSheet(
+            BalanceSheet balanceSheet = new BalanceSheet(
                 Guid.NewGuid(),
                 symbol,
                 (ulong)random.Next(1000, 999999),
@@ -289,12 +293,11 @@ public class PerformanceTests : IAsyncLifetime
                 new StatementMonth(12), // December
                 random.NextDouble() > 0.2,
                 DateTime.UtcNow,
-                DateTime.UtcNow.AddDays(-random.Next(1, 365))
-            );
+                DateTime.UtcNow.AddDays(-random.Next(1, 365)));
 
             // Add a single detail record for simplicity in performance tests
             var value = random.Next(1000000, 100000000);
-            var detail = new BalanceSheetDetail(
+            BalanceSheetDetail detail = new BalanceSheetDetail(
                 Guid.NewGuid(),
                 balanceSheet,
                 (ushort)random.Next(0, 10),
@@ -302,8 +305,7 @@ public class PerformanceTests : IAsyncLifetime
                 BalanceSheetCategory.Assets,
                 $"Large Dataset Description {i}",
                 new SignedCodalMoney(value, IsoCurrency.IRR),
-                DateTime.UtcNow
-            );
+                DateTime.UtcNow);
             balanceSheet.Details.Add(detail);
 
             balanceSheets.Add(balanceSheet);

@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Common.Extensions;
+using Fundamental.Application.Common.Extensions;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
 

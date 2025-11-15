@@ -57,7 +57,7 @@ public class ClosePrice : BaseEntity<Guid>
         Low = low;
         Last = last;
         UpdatedAt = updatedAt.ToUniversalTime();
-        AddDomainEvent(new ClosePriceUpdated(this.Symbol.Isin, close, this.Date), EventsAddress.ClosePrice.PRICE_UPDATE);
+        AddDomainEvent(new ClosePriceUpdated(Symbol.Isin, close, Date), EventsAddress.ClosePrice.PRICE_UPDATE);
     }
 
     public void SetAdjustedPrice(

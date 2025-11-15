@@ -1,9 +1,9 @@
-﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.IncomeStatements.V7;
 using Fundamental.Application.Codals.Enums;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
+using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Codals.ValueObjects;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
@@ -38,6 +38,7 @@ public sealed class IncomeStatementsV7Processor(IServiceScopeFactory serviceScop
 
         List<JProperty> properties = jObject.Properties().ToList();
 
+#pragma warning disable S3267 // Loops should be simplified using the "Where" LINQ method
         foreach (JProperty property in properties)
         {
             if (!propertiesToKeep.Contains(property.Name))
@@ -45,6 +46,7 @@ public sealed class IncomeStatementsV7Processor(IServiceScopeFactory serviceScop
                 property.Remove();
             }
         }
+#pragma warning restore S3267
 
         // Deserialize the filtered JSON into your model
         RootCodalIncomeStatement? codalBalanceSheetRoot = jObject.ToObject<RootCodalIncomeStatement>(new JsonSerializer

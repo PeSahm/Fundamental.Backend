@@ -1,4 +1,4 @@
-﻿using ErrorHandling.AspNetCore;
+using ErrorHandling.AspNetCore;
 using Fundamental.Application.Codals.Manufacturing.Commands.AddIncomeStatement;
 using Fundamental.Application.Codals.Manufacturing.Queries.GetIncomeStatementDetails;
 using Fundamental.Application.Codals.Manufacturing.Queries.GetIncomeStatements;

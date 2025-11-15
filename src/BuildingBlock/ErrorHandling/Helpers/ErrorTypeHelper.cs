@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using Fundamental.ErrorHandling.Attributes;
 using Fundamental.ErrorHandling.Enums;
 using Fundamental.ErrorHandling.Exceptions;

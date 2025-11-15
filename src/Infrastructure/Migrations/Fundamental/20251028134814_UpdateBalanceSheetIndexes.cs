@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore.Infrastructure;

@@ -1,9 +1,9 @@
-using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Application.Codals.Dto.MonthlyActivities.V2;
 using Fundamental.Application.Codals.Enums;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
+using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
 using Fundamental.Infrastructure.Persistence;

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 
 namespace Fundamental.Application.Codals.Dto.RegisterCapitalIncrease.V1;
 

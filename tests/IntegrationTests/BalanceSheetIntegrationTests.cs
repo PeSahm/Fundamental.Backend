@@ -1,24 +1,24 @@
 using FluentAssertions;
+using Fundamental.Application.Codals.Manufacturing.Commands.AddBalanceSheet;
+using Fundamental.Application.Codals.Manufacturing.Queries.GetBalanceSheetDetails;
+using Fundamental.Application.Codals.Manufacturing.Queries.GetBalanceSheets;
+using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Codals.ValueObjects;
-using Fundamental.Domain.Common.ValueObjects;
-using Fundamental.Domain.Common.Enums;
-using Fundamental.Domain.Symbols.Entities;
-using Fundamental.Application.Codals.Manufacturing.Queries.GetBalanceSheets;
-using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Domain.Common.Dto;
+using Fundamental.Domain.Common.Enums;
+using Fundamental.Domain.Common.ValueObjects;
+using Fundamental.Domain.Repositories.Base;
+using Fundamental.Domain.Symbols.Entities;
 using Fundamental.ErrorHandling;
 using Fundamental.ErrorHandling.Helpers;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.BalanceSheets;
+using IntegrationTests.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using IntegrationTests.Shared;
-using Fundamental.Application.Codals.Manufacturing.Commands.AddBalanceSheet;
-using Fundamental.Application.Codals.Manufacturing.Queries.GetBalanceSheetDetails;
-using Fundamental.Domain.Repositories.Base;
 
 namespace IntegrationTests;
 
@@ -116,14 +116,26 @@ public class BalanceSheetIntegrationTests : FinancialStatementTestBase
                 .ToListAsync();
 
             // Group expected results by fiscal year, report month, and audit status
-            var expectedByPeriod = expectedResults.GroupBy(e => (e.FiscalYear, e.ReportMonth, e.IsAudited)).ToDictionary(g => g.Key, g => g.ToList());
+            Dictionary<(int FiscalYear, int ReportMonth, bool IsAudited), List<BalanceSheetTestData.BalanceSheetExpectation>> expectedByPeriod = expectedResults.GroupBy(e => (e.FiscalYear, e.ReportMonth, e.IsAudited)).ToDictionary(g => g.Key, g => g.ToList());
 
             // Verify details for each period
-            foreach (var period in expectedByPeriod)
+            foreach (KeyValuePair<(int FiscalYear, int ReportMonth, bool IsAudited), List<BalanceSheetTestData.BalanceSheetExpectation>> period in expectedByPeriod)
             {
-                var (fiscalYear, reportMonth, isAudited) = period.Key;
-                var expectedForPeriod = period.Value;
-                var actualDetails = fiscalYear == 1404 ? details1404 : fiscalYear == 1403 ? details1403 : details1402;
+                (int fiscalYear, int reportMonth, bool isAudited) = period.Key;
+                List<BalanceSheetTestData.BalanceSheetExpectation> expectedForPeriod = period.Value;
+                List<BalanceSheetDetail> actualDetails;
+                if (fiscalYear == 1404)
+                {
+                    actualDetails = details1404;
+                }
+                else if (fiscalYear == 1403)
+                {
+                    actualDetails = details1403;
+                }
+                else
+                {
+                    actualDetails = details1402;
+                }
 
                 actualDetails.Should().HaveCount(expectedForPeriod.Count, $"Should have {expectedForPeriod.Count} balance sheet details for fiscal year {fiscalYear}, report month {reportMonth}, audited {isAudited}");
 
@@ -280,8 +292,7 @@ public class BalanceSheetIntegrationTests : FinancialStatementTestBase
             ReportMonth: 12,
             IsAudited: true,
             PublishDate: DateTime.UtcNow,
-            Items: items
-        );
+            Items: items);
 
         AddBalanceSheetCommandHandler handler = new AddBalanceSheetCommandHandler(
             _fixture.Services.GetRequiredService<IRepository>(),
@@ -334,8 +345,7 @@ public class BalanceSheetIntegrationTests : FinancialStatementTestBase
             ReportMonth: 12,
             IsAudited: true,
             PublishDate: DateTime.UtcNow,
-            Items: new List<AddBalanceSheetItem>()
-        );
+            Items: new List<AddBalanceSheetItem>());
 
         AddBalanceSheetCommandHandler handler = new AddBalanceSheetCommandHandler(
             _fixture.Services.GetRequiredService<IRepository>(),
@@ -371,8 +381,7 @@ public class BalanceSheetIntegrationTests : FinancialStatementTestBase
             new StatementMonth(12),
             true,
             DateTime.UtcNow,
-            DateTime.UtcNow
-        );
+            DateTime.UtcNow);
 
         await _fixture.DbContext.BalanceSheets.AddAsync(existingBalanceSheet);
         await _fixture.DbContext.SaveChangesAsync();
@@ -386,8 +395,7 @@ public class BalanceSheetIntegrationTests : FinancialStatementTestBase
             ReportMonth: 12,
             IsAudited: true,
             PublishDate: DateTime.UtcNow,
-            Items: new List<AddBalanceSheetItem>()
-        );
+            Items: new List<AddBalanceSheetItem>());
 
         AddBalanceSheetCommandHandler handler = new AddBalanceSheetCommandHandler(
             _fixture.Services.GetRequiredService<IRepository>(),
@@ -432,8 +440,7 @@ public class BalanceSheetIntegrationTests : FinancialStatementTestBase
             new StatementMonth(12),
             true,
             DateTime.UtcNow,
-            DateTime.UtcNow
-        );
+            DateTime.UtcNow);
 
         await _fixture.DbContext.BalanceSheets.AddAsync(existingBalanceSheet);
         await _fixture.DbContext.SaveChangesAsync();
@@ -447,8 +454,7 @@ public class BalanceSheetIntegrationTests : FinancialStatementTestBase
             ReportMonth: 12, // Same report month
             IsAudited: true,
             PublishDate: DateTime.UtcNow,
-            Items: new List<AddBalanceSheetItem>()
-        );
+            Items: new List<AddBalanceSheetItem>());
 
         AddBalanceSheetCommandHandler handler = new AddBalanceSheetCommandHandler(
             _fixture.Services.GetRequiredService<IRepository>(),
@@ -484,8 +490,7 @@ public class BalanceSheetIntegrationTests : FinancialStatementTestBase
             new StatementMonth(12),
             true,
             DateTime.UtcNow,
-            DateTime.UtcNow
-        );
+            DateTime.UtcNow);
 
         await _fixture.DbContext.BalanceSheets.AddAsync(balanceSheet);
 
@@ -500,8 +505,7 @@ public class BalanceSheetIntegrationTests : FinancialStatementTestBase
                 BalanceSheetCategory.Assets,
                 "Current Assets",
                 new SignedCodalMoney(1000000, IsoCurrency.IRR),
-                DateTime.UtcNow
-            ),
+                DateTime.UtcNow),
             new BalanceSheetDetail(
                 Guid.NewGuid(),
                 balanceSheet,
@@ -510,8 +514,7 @@ public class BalanceSheetIntegrationTests : FinancialStatementTestBase
                 BalanceSheetCategory.Liability,
                 "Current Liabilities",
                 new SignedCodalMoney(500000, IsoCurrency.IRR),
-                DateTime.UtcNow
-            )
+                DateTime.UtcNow)
         };
 
         await _fixture.DbContext.BalanceSheetDetails.AddRangeAsync(details);
@@ -520,8 +523,7 @@ public class BalanceSheetIntegrationTests : FinancialStatementTestBase
         GetBalanceSheetDetailsRequest request = new GetBalanceSheetDetailsRequest(
             TraceNo: 999999995UL,
             FiscalYear: 1402,
-            ReportMonth: 12
-        );
+            ReportMonth: 12);
 
         GetBalanceSheetDetailsQueryHandler handler = new GetBalanceSheetDetailsQueryHandler(
             _fixture.Services.GetRequiredService<IRepository>());
@@ -555,8 +557,7 @@ public class BalanceSheetIntegrationTests : FinancialStatementTestBase
         GetBalanceSheetDetailsRequest request = new GetBalanceSheetDetailsRequest(
             TraceNo: 999999994UL,
             FiscalYear: 1402,
-            ReportMonth: 12
-        );
+            ReportMonth: 12);
 
         GetBalanceSheetDetailsQueryHandler handler = new GetBalanceSheetDetailsQueryHandler(
             _fixture.Services.GetRequiredService<IRepository>());

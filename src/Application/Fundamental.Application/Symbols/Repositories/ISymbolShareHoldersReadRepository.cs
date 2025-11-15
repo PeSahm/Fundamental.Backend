@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Symbols.Queries.GetSymbolShareHolders;
+using Fundamental.Application.Symbols.Queries.GetSymbolShareHolders;
 using Fundamental.Domain.Common.Dto;
 
 namespace Fundamental.Application.Symbols.Repositories;

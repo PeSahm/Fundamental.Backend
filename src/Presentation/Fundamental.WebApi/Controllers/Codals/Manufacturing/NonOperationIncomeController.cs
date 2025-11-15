@@ -1,4 +1,4 @@
-﻿using ErrorHandling.AspNetCore;
+using ErrorHandling.AspNetCore;
 using Fundamental.Application.Codals.Manufacturing.Commands.UpdateNoneOperationalIncomeTags;
 using Fundamental.Application.Codals.Manufacturing.Queries.GetNonOperationIncomes;
 using Fundamental.Application.Common.Extensions;

@@ -1,4 +1,4 @@
-﻿using Fundamental.BuildingBlock.Events;
+using Fundamental.BuildingBlock.Events;
 
 namespace Fundamental.Domain.Common.BaseTypes;
 

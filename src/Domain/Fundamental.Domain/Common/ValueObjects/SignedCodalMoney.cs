@@ -1,4 +1,4 @@
-﻿using Fundamental.Domain.Common.Enums;
+using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Common.Exceptions;
 
 namespace Fundamental.Domain.Common.ValueObjects;
@@ -167,5 +167,20 @@ public sealed class SignedCodalMoney : IEquatable<SignedCodalMoney>
     public override int GetHashCode()
     {
         return HashCode.Combine(_value, (int)Currency);
+    }
+
+    public static bool operator ==(SignedCodalMoney? left, SignedCodalMoney? right)
+    {
+        if (left is null)
+        {
+            return right is null;
+        }
+
+        return left.Equals(right);
+    }
+
+    public static bool operator !=(SignedCodalMoney? left, SignedCodalMoney? right)
+    {
+        return !(left == right);
     }
 }

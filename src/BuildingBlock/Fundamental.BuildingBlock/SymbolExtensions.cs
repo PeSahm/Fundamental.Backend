@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using DNTPersianUtils.Core;
 
@@ -151,7 +151,7 @@ public static class SymbolExtensions
             salesInfo.MonthlySales = ParsePersianAmount(monthlySalesMatch.Groups[2].Value) * 1000;
         }
 
-// Extract cumulative sales amount
+        // Extract cumulative sales amount
         Match cumulativeSalesMatch = Regex.Match(
             reportText,
             @"تا پایان .+?(?:ماه)? \d{4} مبلغ ([\d,،]+) میلیارد ریال است");

@@ -1,5 +1,5 @@
-﻿using Fundamental.Application.Codals.Enums;
 using System.Diagnostics.CodeAnalysis;
+using Fundamental.Application.Codals.Enums;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Enums;
 

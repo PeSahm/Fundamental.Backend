@@ -1,4 +1,4 @@
-﻿namespace Fundamental.Domain.Repositories.Base;
+namespace Fundamental.Domain.Repositories.Base;
 
 public interface IUnitOfWork
 {

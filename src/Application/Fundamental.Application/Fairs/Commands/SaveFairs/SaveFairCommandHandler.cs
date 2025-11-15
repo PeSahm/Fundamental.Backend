@@ -1,4 +1,4 @@
-﻿using Fundamental.Domain.ExAreas.Entities;
+using Fundamental.Domain.ExAreas.Entities;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.ErrorHandling;
 using MediatR;

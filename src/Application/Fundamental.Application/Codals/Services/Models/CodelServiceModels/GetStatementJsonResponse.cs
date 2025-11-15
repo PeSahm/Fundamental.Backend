@@ -1,4 +1,4 @@
-﻿namespace Fundamental.Application.Codals.Services.Models.CodelServiceModels;
+namespace Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 
 public class GetStatementJsonResponse
 {

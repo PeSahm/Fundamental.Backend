@@ -1,4 +1,4 @@
-﻿using Fundamental.Domain.Common.Enums;
+using Fundamental.Domain.Common.Enums;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Fundamental.Infrastructure.Persistence.Converters;

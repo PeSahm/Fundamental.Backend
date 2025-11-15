@@ -1,4 +1,4 @@
-﻿using Fundamental.Infrastructure.Persistence;
+using Fundamental.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 

@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Codals.Common;
+using Fundamental.Application.Codals.Common;
 
 namespace Fundamental.Application.Codals.Manufacturing.Queries.GetIncomeStatements;
 

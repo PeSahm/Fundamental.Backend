@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Services;
+using Fundamental.Application.Services;
 
 namespace Fundamental.WebApi.Middlewares;
 

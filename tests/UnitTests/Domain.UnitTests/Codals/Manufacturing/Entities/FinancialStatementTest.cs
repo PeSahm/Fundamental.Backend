@@ -1,4 +1,4 @@
-﻿using Fundamental.Domain.Codals.Manufacturing.Builders.FinancialStatements;
+using Fundamental.Domain.Codals.Manufacturing.Builders.FinancialStatements;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Codals.ValueObjects;
 using Fundamental.Domain.Common.Enums;

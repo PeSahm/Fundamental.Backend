@@ -1,4 +1,4 @@
-﻿using DNTPersianUtils.Core;
+using DNTPersianUtils.Core;
 using Newtonsoft.Json;
 
 namespace Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage4Summaries.V2.
@@ -179,102 +179,102 @@ public class YearDatum
 public enum ColumnId
 {
     /// <summary>
-    ///     Company Name (نام شرکت)
+    ///     Company Name (نام شرکت).
     /// </summary>
     TickerSymbol = 2391,
 
     /// <summary>
-    ///     Last Year Ownership Percentage (پایان سال مالی گذشته - درصد مالکیت)
+    ///     Last Year Ownership Percentage (پایان سال مالی گذشته - درصد مالکیت).
     /// </summary>
     PreviousYearOwnership = 2392,
 
     /// <summary>
-    ///     Last Year Cost (پایان سال مالی گذشته - بهای تمام شده)
+    ///     Last Year Cost (پایان سال مالی گذشته - بهای تمام شده).
     /// </summary>
     PreviousYearCostBasis = 2393,
 
     /// <summary>
-    ///     Last Year Financial Year (پایان سال مالی گذشته - سال مالی شرکت سرمایه پذیر)
+    ///     Last Year Financial Year (پایان سال مالی گذشته - سال مالی شرکت سرمایه پذیر).
     /// </summary>
     PreviousFiscalYear = 2394,
 
     /// <summary>
-    ///     Last Year Investment Income (پایان سال مالی گذشته - درآمد سرمایه گذاری - میلیون ریال)
+    ///     Last Year Investment Income (پایان سال مالی گذشته - درآمد سرمایه گذاری - میلیون ریال).
     /// </summary>
     PreviousYearInvestmentReturns = 2395,
 
     /// <summary>
-    ///     Current Period Ownership Percentage (دوره ی جاری - درصد مالکیت)
+    ///     Current Period Ownership Percentage (دوره ی جاری - درصد مالکیت).
     /// </summary>
     CurrentOwnershipPercentage = 2396,
 
     /// <summary>
-    ///     Current Period Cost (دوره ی جاری - بهای تمام شده)
+    ///     Current Period Cost (دوره ی جاری - بهای تمام شده).
     /// </summary>
     CurrentCostBasis = 2397,
 
     /// <summary>
-    ///     Current Period Earnings Per Share (دوره ی جاری - درآمد هر سهم)
+    ///     Current Period Earnings Per Share (دوره ی جاری - درآمد هر سهم).
     /// </summary>
     CurrentEarningsPerShare = 2399,
 
     /// <summary>
-    ///     Current Period Cash Earnings Per Share (دوره ی جاری - درآمد نقدی هر سهم)
+    ///     Current Period Cash Earnings Per Share (دوره ی جاری - درآمد نقدی هر سهم).
     /// </summary>
     CurrentCashEarningsPerShare = 23910,
 
     /// <summary>
-    ///     Current Period Investment Income (دوره ی جاری - درآمد سرمایه گذاری - میلیون ریال)
+    ///     Current Period Investment Income (دوره ی جاری - درآمد سرمایه گذاری - میلیون ریال).
     /// </summary>
     CurrentInvestmentReturns = 2398,
 
     /// <summary>
-    ///     Estimated Current Year Ownership Percentage (برآورد دوره منتهی به پایان سال مالی جاری - درصد مالکیت)
+    ///     Estimated Current Year Ownership Percentage (برآورد دوره منتهی به پایان سال مالی جاری - درصد مالکیت).
     /// </summary>
     EstimatedYearEndOwnership = 23911,
 
     /// <summary>
-    ///     Estimated Current Year Cost (برآورد دوره منتهی به پایان سال مالی جاری - بهای تمام شده)
+    ///     Estimated Current Year Cost (برآورد دوره منتهی به پایان سال مالی جاری - بهای تمام شده).
     /// </summary>
     EstimatedYearEndCost = 23912,
 
     /// <summary>
-    ///     Estimated Current Year Earnings Per Share (برآورد دوره منتهی به پایان سال مالی جاری - درآمد هر سهم)
+    ///     Estimated Current Year Earnings Per Share (برآورد دوره منتهی به پایان سال مالی جاری - درآمد هر سهم).
     /// </summary>
     EstimatedYearEndEarningsPerShare = 23913,
 
     /// <summary>
-    ///     Estimated Current Year Cash Earnings Per Share (برآورد دوره منتهی به پایان سال مالی جاری - درآمد نقدی هر سهم)
+    ///     Estimated Current Year Cash Earnings Per Share (برآورد دوره منتهی به پایان سال مالی جاری - درآمد نقدی هر سهم).
     /// </summary>
     EstimatedYearEndCashEarnings = 23914,
 
     /// <summary>
-    ///     Estimated Current Year Investment Income (برآورد دوره منتهی به پایان سال مالی جاری - درآمد سرمایه گذاری - میلیون ریال)
+    ///     Estimated Current Year Investment Income (برآورد دوره منتهی به پایان سال مالی جاری - درآمد سرمایه گذاری - میلیون ریال).
     /// </summary>
     EstimatedYearEndInvestmentReturns = 23915,
 
     /// <summary>
-    ///     Estimated Next Year Ownership Percentage (برآورد پایان سال مالی آینده(فقط برای دوره ی 9 ماهه) - درصد مالکیت)
+    ///     Estimated Next Year Ownership Percentage (برآورد پایان سال مالی آینده(فقط برای دوره ی 9 ماهه) - درصد مالکیت).
     /// </summary>
     ForecastNextYearOwnership = 23916,
 
     /// <summary>
-    ///     Estimated Next Year Cost (برآورد پایان سال مالی آینده(فقط برای دوره ی 9 ماهه) - بهای تمام شده)
+    ///     Estimated Next Year Cost (برآورد پایان سال مالی آینده(فقط برای دوره ی 9 ماهه) - بهای تمام شده).
     /// </summary>
     ForecastNextYearCost = 23917,
 
     /// <summary>
-    ///     Estimated Next Year Earnings Per Share (برآورد پایان سال مالی آینده(فقط برای دوره ی 9 ماهه) - درآمد هر سهم)
+    ///     Estimated Next Year Earnings Per Share (برآورد پایان سال مالی آینده(فقط برای دوره ی 9 ماهه) - درآمد هر سهم).
     /// </summary>
     ForecastNextYearEPS = 23918,
 
     /// <summary>
-    ///     Estimated Next Year Cash Earnings Per Share (برآورد پایان سال مالی آینده(فقط برای دوره ی 9 ماهه) - درآمد نقدی هر سهم)
+    ///     Estimated Next Year Cash Earnings Per Share (برآورد پایان سال مالی آینده(فقط برای دوره ی 9 ماهه) - درآمد نقدی هر سهم).
     /// </summary>
     ForecastNextYearCashEPS = 23919,
 
     /// <summary>
-    ///     Estimated Next Year Investment Income (برآورد پایان سال مالی آینده(فقط برای دوره ی 9 ماهه) - درآمد سرمایه گذاری - میلیون ریال)
+    ///     Estimated Next Year Investment Income (برآورد پایان سال مالی آینده(فقط برای دوره ی 9 ماهه) - درآمد سرمایه گذاری - میلیون ریال).
     /// </summary>
     ForecastNextYearInvestmentReturns = 23920
 }

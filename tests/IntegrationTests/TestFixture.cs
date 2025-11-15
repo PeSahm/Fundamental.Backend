@@ -158,7 +158,6 @@ public class TestFixture : IAsyncLifetime
         services.AddScoped<IMonthlyActivityRepository, MonthlyActivityRepository>();
 
         // Register Canonical Mapping Service Factory and Manufacturing Services
-
         services.AddCodalMonthlyActivityMappingServices();
 
     }

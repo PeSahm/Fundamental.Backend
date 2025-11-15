@@ -109,7 +109,6 @@ public interface IDaysSalesOutstanding
     IBuild SetDaysSalesOutstanding(FinancialStatement.SalesOutstanding data);
 }
 
-
 public interface IBuild
 {
     FinancialStatement Build();

@@ -1,4 +1,4 @@
-﻿using ErrorHandling.AspNetCore;
+using ErrorHandling.AspNetCore;
 using Fundamental.Application.Symbols.Queries.GetIndices;
 using Fundamental.ErrorHandling;
 using MediatR;

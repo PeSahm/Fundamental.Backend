@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Codals.Manufacturing.Queries.GetMonthlyActivities;
+using Fundamental.Application.Codals.Manufacturing.Queries.GetMonthlyActivities;
 using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Application.Codals.Manufacturing.Specifications;
 using Fundamental.Domain.Repositories.Base;

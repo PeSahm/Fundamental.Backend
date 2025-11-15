@@ -1,6 +1,5 @@
 ﻿namespace Fundamental.BuildingBlock.Models;
 
-
 public readonly struct NumberRange<T>(T from, T to)
     where T : struct, IComparable<T>
 {

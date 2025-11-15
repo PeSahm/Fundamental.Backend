@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 using Fundamental.ErrorHandling.Enums;
 using Fundamental.ErrorHandling.Helpers;
 using Fundamental.Web.Common.Swagger;

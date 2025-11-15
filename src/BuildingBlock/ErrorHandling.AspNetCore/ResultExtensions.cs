@@ -1,4 +1,4 @@
-﻿using Fundamental.ErrorHandling;
+using Fundamental.ErrorHandling;
 using Fundamental.ErrorHandling.Enums;
 using Microsoft.AspNetCore.Mvc;
 

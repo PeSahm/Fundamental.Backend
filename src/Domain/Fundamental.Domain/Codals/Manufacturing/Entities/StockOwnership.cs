@@ -1,4 +1,4 @@
-﻿using Fundamental.Domain.Codals.Manufacturing.Exceptions;
+using Fundamental.Domain.Codals.Manufacturing.Exceptions;
 using Fundamental.Domain.Common.BaseTypes;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Common.ValueObjects;

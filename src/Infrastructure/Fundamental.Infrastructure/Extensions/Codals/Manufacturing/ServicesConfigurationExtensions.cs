@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Codals.Dto.MonthlyActivities.V1;
+using Fundamental.Application.Codals.Dto.MonthlyActivities.V1;
 using Fundamental.Application.Codals.Dto.MonthlyActivities.V2;
 using Fundamental.Application.Codals.Dto.MonthlyActivities.V3;
 using Fundamental.Application.Codals.Dto.MonthlyActivities.V4;

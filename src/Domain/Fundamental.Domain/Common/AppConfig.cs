@@ -1,4 +1,4 @@
-﻿using Fundamental.Domain.Common.Enums;
+using Fundamental.Domain.Common.Enums;
 
 namespace Fundamental.Domain.Common;
 

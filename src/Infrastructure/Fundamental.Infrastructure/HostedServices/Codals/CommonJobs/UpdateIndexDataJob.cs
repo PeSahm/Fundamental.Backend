@@ -1,4 +1,4 @@
-﻿using Coravel.Invocable;
+using Coravel.Invocable;
 using Fundamental.Application.Symbols.Jobs.UpdateIndexData;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;

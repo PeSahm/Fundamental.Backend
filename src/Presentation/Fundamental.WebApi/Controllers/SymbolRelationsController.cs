@@ -1,4 +1,4 @@
-﻿using ErrorHandling.AspNetCore;
+using ErrorHandling.AspNetCore;
 using Fundamental.Application.Symbols.Commands.AddSymbolRelation;
 using Fundamental.Application.Symbols.Queries.GetSymbolRelationById;
 using Fundamental.Application.Symbols.Queries.GetSymbolRelations;

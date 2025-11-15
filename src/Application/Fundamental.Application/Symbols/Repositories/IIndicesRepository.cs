@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Symbols.Queries.GetIndices;
+using Fundamental.Application.Symbols.Queries.GetIndices;
 
 namespace Fundamental.Application.Symbols.Repositories;
 

@@ -1,4 +1,4 @@
-﻿using Fundamental.BuildingBlock;
+using Fundamental.BuildingBlock;
 
 namespace BuildingBlockUnitTests;
 

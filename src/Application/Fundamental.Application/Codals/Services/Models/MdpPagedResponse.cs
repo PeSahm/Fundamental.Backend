@@ -1,4 +1,4 @@
-﻿namespace Fundamental.Application.Codals.Services.Models;
+namespace Fundamental.Application.Codals.Services.Models;
 
 public class MdpPagedResponse<T>
 {

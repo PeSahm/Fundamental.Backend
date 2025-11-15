@@ -1,4 +1,4 @@
-﻿namespace Fundamental.Domain.Common.BaseTypes;
+namespace Fundamental.Domain.Common.BaseTypes;
 
 public abstract class ValueObject
 {

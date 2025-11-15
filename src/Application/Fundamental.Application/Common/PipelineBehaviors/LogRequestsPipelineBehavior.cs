@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using Fundamental.Application.Common.Extensions;
 using Fundamental.ErrorHandling;
 using Fundamental.ErrorHandling.Enums;

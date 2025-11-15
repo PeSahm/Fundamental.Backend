@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Codals.Options;
+using Fundamental.Application.Codals.Options;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Common.PipelineBehaviors;
 using Fundamental.Application.Common.Validators;

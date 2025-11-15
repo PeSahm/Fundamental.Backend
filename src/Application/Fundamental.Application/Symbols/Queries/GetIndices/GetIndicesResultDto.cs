@@ -1,4 +1,4 @@
-﻿namespace Fundamental.Application.Symbols.Queries.GetIndices;
+namespace Fundamental.Application.Symbols.Queries.GetIndices;
 
 public sealed class GetIndicesResultDto
 {

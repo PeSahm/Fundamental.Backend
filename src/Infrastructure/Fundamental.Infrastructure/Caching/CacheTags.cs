@@ -1,4 +1,4 @@
-﻿namespace Fundamental.Infrastructure.Caching;
+namespace Fundamental.Infrastructure.Caching;
 
 public static class CacheTags
 {

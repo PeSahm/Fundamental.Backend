@@ -1,4 +1,4 @@
-﻿namespace Fundamental.Application.Symbols.Queries.GetSymbolRelations;
+namespace Fundamental.Application.Symbols.Queries.GetSymbolRelations;
 
 public sealed class GetSymbolRelationsResultItem
 {

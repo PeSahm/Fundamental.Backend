@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Codals.Manufacturing.Queries.GetMonthlyActivities;
+using Fundamental.Application.Codals.Manufacturing.Queries.GetMonthlyActivities;
 using Fundamental.ErrorHandling;
 using Fundamental.ErrorHandling.Attributes;
 using Fundamental.ErrorHandling.Enums;

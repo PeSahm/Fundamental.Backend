@@ -1,4 +1,3 @@
-﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.BalanceSheets.V5;
 using Fundamental.Application.Codals.Enums;
 using Fundamental.Application.Codals.Services;

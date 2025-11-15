@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Codals.Manufacturing.Queries.GetIncomeStatementSort;
+using Fundamental.Application.Codals.Manufacturing.Queries.GetIncomeStatementSort;
 using Fundamental.Application.Codals.Manufacturing.Specifications;
 using Fundamental.Application.Symbols.Specifications;
 using Fundamental.Domain.Codals.Manufacturing.Entities;

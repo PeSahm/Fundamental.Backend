@@ -142,7 +142,7 @@ public class GetBalanceSheetQueryHandlerTests
 
         // Assert
         result.Success.Should().BeTrue();
-        result.Data.Items.Should().BeEmpty();
+        result.Data!.Items.Should().BeEmpty();
         result.Data.Meta.Total.Should().Be(0);
     }
 }

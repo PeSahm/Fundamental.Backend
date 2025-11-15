@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 
 namespace Fundamental.Application.Codals.Manufacturing.Jobs.UpdateRegisterCapitalIncreaseData;
 

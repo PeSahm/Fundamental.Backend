@@ -1,4 +1,4 @@
-﻿namespace Fundamental.Application.Codals.Options;
+namespace Fundamental.Application.Codals.Options;
 
 public sealed class MdpOption
 {

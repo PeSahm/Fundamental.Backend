@@ -1,4 +1,4 @@
-﻿namespace Fundamental.Domain.Common.Enums;
+namespace Fundamental.Domain.Common.Enums;
 
 public enum IpType
 {

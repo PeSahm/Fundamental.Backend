@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Codals.Manufacturing.Repositories;
+using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.ErrorHandling;

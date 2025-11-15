@@ -1,4 +1,4 @@
-﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
+using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;

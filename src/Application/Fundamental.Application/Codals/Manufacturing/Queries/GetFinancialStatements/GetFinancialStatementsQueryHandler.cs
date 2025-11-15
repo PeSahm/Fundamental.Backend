@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Codals.Manufacturing.Specifications;
+using Fundamental.Application.Codals.Manufacturing.Specifications;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.MarketDataServiceModels;
 using Fundamental.Application.Symbols.Queries.GetSymbols;
@@ -33,9 +33,9 @@ public sealed class GetFinancialStatementsQueryHandler(IRepository repository, I
         ClosingPriceInfoResponse priceData = await marketDataService.GetCachedClosingPriceInfo(result.TseInsCode, cancellationToken);
         result.PriceInfo =
             new SymbolPriceInfo(
-                priceData.ClosingPriceInfo.PDrCotVal,
-                priceData.ClosingPriceInfo.PClosing,
-                priceData.ClosingPriceInfo.PriceYesterday
+                priceData.ClosingPriceInfo?.PDrCotVal ?? 0,
+                priceData.ClosingPriceInfo?.PClosing ?? 0,
+                priceData.ClosingPriceInfo?.PriceYesterday ?? 0
             );
         return result;
     }

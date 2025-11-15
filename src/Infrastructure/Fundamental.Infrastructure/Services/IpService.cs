@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Services;
+using Fundamental.Application.Services;
 using Fundamental.Domain.Common.Exceptions;
 using Fundamental.Domain.Common.ValueObjects;
 using Microsoft.AspNetCore.Http;

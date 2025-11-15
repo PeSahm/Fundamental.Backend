@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Services.Models;
+using Fundamental.Application.Services.Models;
 
 namespace Fundamental.Application.Services;
 

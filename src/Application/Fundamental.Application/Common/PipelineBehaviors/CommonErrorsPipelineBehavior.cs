@@ -1,4 +1,4 @@
-﻿using System.Data.Common;
+using System.Data.Common;
 using FluentValidation.Results;
 using Fundamental.Application.Common.Extensions;
 using Fundamental.Application.Common.Validators;

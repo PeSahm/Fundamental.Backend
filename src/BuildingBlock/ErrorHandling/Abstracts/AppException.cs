@@ -1,4 +1,4 @@
-﻿namespace Fundamental.ErrorHandling.Abstracts;
+namespace Fundamental.ErrorHandling.Abstracts;
 
 public abstract class AppException : Exception
 {

@@ -109,7 +109,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
         storedEntity.Should().NotBeNull();
 
         // Verify data rows have RowCode = Data
-        var dataRows = storedEntity!.GetProductionAndSalesDataRows().ToList();
+        List<ProductionAndSalesItem> dataRows = storedEntity!.GetProductionAndSalesDataRows().ToList();
         dataRows.Should().NotBeEmpty();
         dataRows.Should().AllSatisfy(x =>
         {
@@ -118,7 +118,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
         });
 
         // Verify summary rows exist
-        var summaryRows = storedEntity.GetAllSummaryRows().ToList();
+        List<ProductionAndSalesItem> summaryRows = storedEntity.GetAllSummaryRows().ToList();
         summaryRows.Should().NotBeEmpty();
         summaryRows.Should().AllSatisfy(x =>
         {
@@ -169,7 +169,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
             .Include(x => x.ProductionAndSalesItems)
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id);
 
-        var internalProducts = storedEntity!.GetInternalSaleDataRows().ToList();
+        List<ProductionAndSalesItem> internalProducts = storedEntity!.GetInternalSaleDataRows().ToList();
 
         // Assert
         internalProducts.Should().NotBeEmpty();
@@ -211,7 +211,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
             .Include(x => x.ProductionAndSalesItems)
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id);
 
-        var exportProducts = storedEntity!.GetExportSaleDataRows().ToList();
+        List<ProductionAndSalesItem> exportProducts = storedEntity!.GetExportSaleDataRows().ToList();
 
         // Assert
         exportProducts.Should().NotBeEmpty();
@@ -450,7 +450,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
             .Include(x => x.BuyRawMaterialItems)
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id);
 
-        var domesticMaterials = storedEntity!.GetDomesticRawMaterials().ToList();
+        List<BuyRawMaterialItem> domesticMaterials = storedEntity!.GetDomesticRawMaterials().ToList();
 
         // Assert
         domesticMaterials.Should().NotBeEmpty();
@@ -490,7 +490,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
             .Include(x => x.BuyRawMaterialItems)
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id);
 
-        var importedMaterials = storedEntity!.GetImportedRawMaterials().ToList();
+        List<BuyRawMaterialItem> importedMaterials = storedEntity!.GetImportedRawMaterials().ToList();
 
         // Assert
         importedMaterials.Should().NotBeEmpty();
@@ -527,7 +527,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
             .Include(x => x.BuyRawMaterialItems)
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id);
 
-        var totalMaterials = storedEntity!.GetTotalRawMaterials().ToList();
+        List<BuyRawMaterialItem> totalMaterials = storedEntity!.GetTotalRawMaterials().ToList();
 
         // Assert
         totalMaterials.Should().NotBeEmpty();
@@ -571,7 +571,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
             .Include(x => x.BuyRawMaterialItems)
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id);
 
-        var dataRows = storedEntity!.GetRawMaterialDataRows().ToList();
+        List<BuyRawMaterialItem> dataRows = storedEntity!.GetRawMaterialDataRows().ToList();
 
         // Assert
         dataRows.Should().NotBeEmpty();
@@ -583,8 +583,8 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
         });
 
         // Verify data rows are actual material entries, not totals
-        var domesticData = dataRows.Where(x => x.Category == BuyRawMaterialCategory.Domestic).ToList();
-        var importedData = dataRows.Where(x => x.Category == BuyRawMaterialCategory.Imported).ToList();
+        List<BuyRawMaterialItem> domesticData = dataRows.Where(x => x.Category == BuyRawMaterialCategory.Domestic).ToList();
+        List<BuyRawMaterialItem> importedData = dataRows.Where(x => x.Category == BuyRawMaterialCategory.Imported).ToList();
 
         (domesticData.Count + importedData.Count).Should().BeGreaterThan(0);
     }
@@ -739,7 +739,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
             .Include(x => x.EnergyItems)
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id);
 
-        var dataRows = storedEntity!.GetEnergyDataRows().ToList();
+        List<EnergyItem> dataRows = storedEntity!.GetEnergyDataRows().ToList();
 
         // Assert
         dataRows.Should().NotBeEmpty();
@@ -790,7 +790,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
         totalSum.YearToDateCost.Should().BeGreaterThan(0);
 
         // Verify total matches sum of all data rows (within rounding tolerance)
-        var dataRows = storedEntity.GetEnergyDataRows().ToList();
+        List<EnergyItem> dataRows = storedEntity.GetEnergyDataRows().ToList();
         var calculatedTotal = dataRows.Sum(x => x.YearToDateCost ?? 0);
 
         if (totalSum.YearToDateCost.HasValue && calculatedTotal > 0)
@@ -831,7 +831,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
         storedEntity!.EnergyItems.Should().NotBeEmpty();
 
         // Check data rows
-        var dataRows = storedEntity.EnergyItems.Where(x => x.IsDataRow).ToList();
+        List<EnergyItem> dataRows = storedEntity.EnergyItems.Where(x => x.IsDataRow).ToList();
         dataRows.Should().HaveCountGreaterThan(0);
         dataRows.Should().AllSatisfy(x =>
         {
@@ -876,7 +876,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
             .Include(x => x.CurrencyExchangeItems)
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id);
 
-        var sourcesData = storedEntity!.GetCurrencySourcesDataRows().ToList();
+        List<CurrencyExchangeItem> sourcesData = storedEntity!.GetCurrencySourcesDataRows().ToList();
 
         // Assert
         sourcesData.Should().NotBeEmpty();
@@ -918,7 +918,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
             .Include(x => x.CurrencyExchangeItems)
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id);
 
-        var usesData = storedEntity!.GetCurrencyUsesDataRows().ToList();
+        List<CurrencyExchangeItem> usesData = storedEntity!.GetCurrencyUsesDataRows().ToList();
 
         // Assert
         // Note: In the test data (Sorood-.1404-07-30.json), there are no actual uses data rows (RowCode=-1, Category=Uses)
@@ -1035,8 +1035,8 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
             .Include(x => x.CurrencyExchangeItems)
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id);
 
-        var allItems = storedEntity!.CurrencyExchangeItems.ToList();
-        var dataRows = allItems.Where(x => x.RowCode == CurrencyExchangeRowCode.Data).ToList();
+        List<CurrencyExchangeItem> allItems = storedEntity!.CurrencyExchangeItems.ToList();
+        List<CurrencyExchangeItem> dataRows = allItems.Where(x => x.RowCode == CurrencyExchangeRowCode.Data).ToList();
         var sourcesSum = allItems.FirstOrDefault(x => x.RowCode == CurrencyExchangeRowCode.SourcesSum);
         var usesSum = allItems.FirstOrDefault(x => x.RowCode == CurrencyExchangeRowCode.UsesSum);
 
@@ -1100,7 +1100,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
         response.Data.Should().NotBeNull();
         response.Data!.Items.Should().NotBeEmpty();
 
-        GetMonthlyActivitiesListItem item = response.Data.Items.First();
+        GetMonthlyActivitiesListItem item = response.Data.Items[0];
         item.Isin.Should().Be("IRO1SROD0001");
     }
 
@@ -1258,7 +1258,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
     }
 
     [Fact]
-    public async Task MonthlyActivityDetector_ShouldCorrectlyDetectV4()
+    public void MonthlyActivityDetector_ShouldCorrectlyDetectV4()
     {
         // Arrange
         string v4Json = MonthlyActivityTestData.GetV4TestData();
@@ -1268,12 +1268,13 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
         CodalVersion detectedVersion = detector.DetectVersion(v4Json);
 
         // Assert
-        detectedVersion.Should().Be(CodalVersion.V4,
+        detectedVersion.Should().Be(
+            CodalVersion.V4,
             "V4 JSON (with energy section but no buyRawMaterial/sourceUsesCurrency) should be detected as V4, not V5");
     }
 
     [Fact]
-    public async Task MonthlyActivityDetector_ShouldCorrectlyDetectV5()
+    public void MonthlyActivityDetector_ShouldCorrectlyDetectV5()
     {
         // Arrange
         string v5Json = MonthlyActivityTestData.GetV5TestData();
@@ -1283,12 +1284,13 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
         CodalVersion detectedVersion = detector.DetectVersion(v5Json);
 
         // Assert
-        detectedVersion.Should().Be(CodalVersion.V5,
+        detectedVersion.Should().Be(
+            CodalVersion.V5,
             "V5 JSON (with buyRawMaterial AND energy AND sourceUsesCurrency) should be detected as V5");
     }
 
     [Fact]
-    public async Task MonthlyActivityDetector_ShouldCorrectlyDetectV3()
+    public void MonthlyActivityDetector_ShouldCorrectlyDetectV3()
     {
         // Arrange
         string v3Json = MonthlyActivityTestData.GetV3TestData();
@@ -1298,7 +1300,8 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
         CodalVersion detectedVersion = detector.DetectVersion(v3Json);
 
         // Assert
-        detectedVersion.Should().Be(CodalVersion.V3,
+        detectedVersion.Should().Be(
+            CodalVersion.V3,
             "V3 JSON (with productionAndSales but no energy/buyRawMaterial/sourceUsesCurrency) should be detected as V3");
     }
 

@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Codals.Jobs.Specifications;
+using Fundamental.Application.Codals.Jobs.Specifications;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Application.Common.Extensions;

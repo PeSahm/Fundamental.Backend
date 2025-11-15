@@ -1,4 +1,4 @@
-﻿namespace Fundamental.Domain.Common.Exceptions;
+namespace Fundamental.Domain.Common.Exceptions;
 
 public class InvalidMoneyAmountException : Exception
 {

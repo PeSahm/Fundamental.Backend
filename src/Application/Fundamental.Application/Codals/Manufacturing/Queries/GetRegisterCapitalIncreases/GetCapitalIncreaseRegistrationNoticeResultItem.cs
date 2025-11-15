@@ -1,4 +1,4 @@
-﻿namespace Fundamental.Application.Codals.Manufacturing.Queries.GetRegisterCapitalIncreases;
+namespace Fundamental.Application.Codals.Manufacturing.Queries.GetRegisterCapitalIncreases;
 
 public sealed class GetCapitalIncreaseRegistrationNoticeResultItem
 {

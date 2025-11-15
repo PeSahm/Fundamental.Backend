@@ -1,4 +1,4 @@
-﻿using Fundamental.ErrorHandling.Abstracts;
+using Fundamental.ErrorHandling.Abstracts;
 using Fundamental.ErrorHandling.Enums;
 using Fundamental.ErrorHandling.Interfaces;
 

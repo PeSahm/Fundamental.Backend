@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using Fundamental.ErrorHandling;
 using Fundamental.ErrorHandling.Attributes;
 using Fundamental.ErrorHandling.Enums;
@@ -20,9 +20,8 @@ public static class ApiBehaviorOptionsExtensions
             options.InvalidModelStateResponseFactory = context =>
             {
                 ILogger logger = context.HttpContext.RequestServices.GetRequiredService<ILogger<Program>>();
-                ControllerActionDescriptor? actionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
 
-                if (actionDescriptor is null)
+                if (context.ActionDescriptor is not ControllerActionDescriptor actionDescriptor)
                 {
                     logger.LogError(
                         "MODEL_BINDING_FAILED --- Null ActionDescriptor --- Errors: {@Errors}",

@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Common.Extensions;
+using Fundamental.Application.Common.Extensions;
 using Fundamental.Domain.Common.Enums;
 
 namespace Fundamental.Application.Symbols.Queries.GetSymbolShareHolders;

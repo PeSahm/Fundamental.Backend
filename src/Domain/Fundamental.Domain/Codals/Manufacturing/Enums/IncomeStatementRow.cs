@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using Fundamental.Domain.Attributes;
 
 namespace Fundamental.Domain.Codals.Manufacturing.Enums;

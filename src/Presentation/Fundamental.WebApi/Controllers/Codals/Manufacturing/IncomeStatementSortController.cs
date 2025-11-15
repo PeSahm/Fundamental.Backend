@@ -1,4 +1,4 @@
-﻿using ErrorHandling.AspNetCore;
+using ErrorHandling.AspNetCore;
 using Fundamental.Application.Codals.Manufacturing.Queries.GetIncomeStatementSort;
 using Fundamental.ErrorHandling;
 using Fundamental.Web.Common.Swagger;
