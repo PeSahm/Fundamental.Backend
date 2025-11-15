@@ -51,6 +51,8 @@ public enum HandlerCode : ushort
     GetFinancialStatements = 13_397,
     AddMonthlyActivity = 13_398,
     GetNonOperationIncomes = 13_399,
+    GetInterpretativeReportSummaryPage5ById = 13_400,
+    GetInterpretativeReportSummaryPage5s = 13_401,
 
     GetFinancialStatementList = 13_999,
     GetCustomerErrorMessages = 17_999,
