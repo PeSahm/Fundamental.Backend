@@ -9,7 +9,6 @@ using Fundamental.Domain.Common.Dto;
 using Fundamental.Domain.Symbols.Entities;
 using Fundamental.ErrorHandling;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.InterpretativeReportSummaryPage5;
-using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.InterpretativeReportSummaryPages5;
 using Fundamental.IntegrationTests.TestData;
 using IntegrationTests.Shared;
 using MediatR;
@@ -22,7 +21,8 @@ namespace IntegrationTests.Codals.Manufacturing;
 
 public class InterpretativeReportSummaryPage5ApiTests : FinancialStatementTestBase
 {
-    public InterpretativeReportSummaryPage5ApiTests(TestFixture fixture) : base(fixture)
+    public InterpretativeReportSummaryPage5ApiTests(TestFixture fixture)
+        : base(fixture)
     {
     }
 
@@ -34,7 +34,7 @@ public class InterpretativeReportSummaryPage5ApiTests : FinancialStatementTestBa
         await SeedTestData();
 
         IMediator mediator = _fixture.Services.GetRequiredService<IMediator>();
-        GetInterpretativeReportSummaryPage5sRequest request = new(null, null, null);
+        GetInterpretativeReportSummaryPage5SRequest request = new(null, null, null);
 
         // Act
         Response<Paginated<GetInterpretativeReportSummaryPage5ListItem>> response =
@@ -56,7 +56,7 @@ public class InterpretativeReportSummaryPage5ApiTests : FinancialStatementTestBa
         await SeedTestData();
 
         IMediator mediator = _fixture.Services.GetRequiredService<IMediator>();
-        GetInterpretativeReportSummaryPage5sRequest request = new("IRO1SEPP0001", null, null);
+        GetInterpretativeReportSummaryPage5SRequest request = new("IRO1SEPP0001", null, null);
 
         // Act
         Response<Paginated<GetInterpretativeReportSummaryPage5ListItem>> response =
@@ -86,7 +86,7 @@ public class InterpretativeReportSummaryPage5ApiTests : FinancialStatementTestBa
         firstEntity.Should().NotBeNull();
         int fiscalYear = firstEntity!.FiscalYear.Year;
 
-        GetInterpretativeReportSummaryPage5sRequest request = new(null, fiscalYear, null);
+        GetInterpretativeReportSummaryPage5SRequest request = new(null, fiscalYear, null);
 
         // Act
         Response<Paginated<GetInterpretativeReportSummaryPage5ListItem>> response =
@@ -116,7 +116,7 @@ public class InterpretativeReportSummaryPage5ApiTests : FinancialStatementTestBa
         firstEntity.Should().NotBeNull();
         int reportMonth = firstEntity!.ReportMonth.Month;
 
-        GetInterpretativeReportSummaryPage5sRequest request = new(null, null, reportMonth);
+        GetInterpretativeReportSummaryPage5SRequest request = new(null, null, reportMonth);
 
         // Act
         Response<Paginated<GetInterpretativeReportSummaryPage5ListItem>> response =
@@ -137,7 +137,7 @@ public class InterpretativeReportSummaryPage5ApiTests : FinancialStatementTestBa
         await SeedTestData();
 
         IMediator mediator = _fixture.Services.GetRequiredService<IMediator>();
-        GetInterpretativeReportSummaryPage5sRequest request = new(null, null, null)
+        GetInterpretativeReportSummaryPage5SRequest request = new(null, null, null)
         {
             PageNumber = 1,
             PageSize = 5
@@ -161,7 +161,7 @@ public class InterpretativeReportSummaryPage5ApiTests : FinancialStatementTestBa
         await SeedTestData();
 
         IMediator mediator = _fixture.Services.GetRequiredService<IMediator>();
-        GetInterpretativeReportSummaryPage5sRequest request = new(null, null, null);
+        GetInterpretativeReportSummaryPage5SRequest request = new(null, null, null);
 
         // Act
         Response<Paginated<GetInterpretativeReportSummaryPage5ListItem>> response =
@@ -321,7 +321,7 @@ public class InterpretativeReportSummaryPage5ApiTests : FinancialStatementTestBa
         await CleanInterpretativeReportSummaryPage5Data();
 
         IMediator mediator = _fixture.Services.GetRequiredService<IMediator>();
-        GetInterpretativeReportSummaryPage5sRequest request = new(null, null, null);
+        GetInterpretativeReportSummaryPage5SRequest request = new(null, null, null);
 
         // Act
         Response<Paginated<GetInterpretativeReportSummaryPage5ListItem>> response =
@@ -348,8 +348,7 @@ public class InterpretativeReportSummaryPage5ApiTests : FinancialStatementTestBa
 
         InterpretativeReportSummaryPage5V2Processor processor = new(
             _fixture.Services.GetRequiredService<IServiceScopeFactory>(),
-            _fixture.Services.GetRequiredService<ICanonicalMappingServiceFactory>()
-        );
+            _fixture.Services.GetRequiredService<ICanonicalMappingServiceFactory>());
 
         GetStatementResponse statement = CreateStatementResponse("IRO1SEPP0001", 1234567);
         GetStatementJsonResponse jsonResponse = CreateJsonResponse(testJson);

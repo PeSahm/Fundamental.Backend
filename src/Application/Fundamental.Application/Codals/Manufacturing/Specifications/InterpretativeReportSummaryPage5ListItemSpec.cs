@@ -4,7 +4,9 @@ using Fundamental.Domain.Codals.Manufacturing.Entities;
 
 namespace Fundamental.Application.Codals.Manufacturing.Specifications;
 
-public sealed class InterpretativeReportSummaryPage5ListItemSpec : Specification<CanonicalInterpretativeReportSummaryPage5, GetInterpretativeReportSummaryPage5ListItem>
+public sealed class
+    InterpretativeReportSummaryPage5ListItemSpec : Specification<CanonicalInterpretativeReportSummaryPage5,
+    GetInterpretativeReportSummaryPage5ListItem>
 {
     public InterpretativeReportSummaryPage5ListItemSpec()
     {
@@ -34,6 +36,7 @@ public sealed class InterpretativeReportSummaryPage5ListItemSpec : Specification
         {
             Query.Where(x => x.Symbol.Isin == isin);
         }
+
         return this;
     }
 
@@ -43,6 +46,7 @@ public sealed class InterpretativeReportSummaryPage5ListItemSpec : Specification
         {
             Query.Where(x => x.FiscalYear.Year == fiscalYear.Value);
         }
+
         return this;
     }
 
@@ -52,6 +56,7 @@ public sealed class InterpretativeReportSummaryPage5ListItemSpec : Specification
         {
             Query.Where(x => x.ReportMonth.Month == reportMonth.Value);
         }
+
         return this;
     }
 }

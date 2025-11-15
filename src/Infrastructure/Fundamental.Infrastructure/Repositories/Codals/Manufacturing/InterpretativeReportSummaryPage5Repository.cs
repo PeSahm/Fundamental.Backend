@@ -11,7 +11,7 @@ namespace Fundamental.Infrastructure.Repositories.Codals.Manufacturing;
 public class InterpretativeReportSummaryPage5Repository(FundamentalDbContext dbContext) : IInterpretativeReportSummaryPage5Repository
 {
     public async Task<Paginated<GetInterpretativeReportSummaryPage5ListItem>> GetInterpretativeReportSummaryPage5sAsync(
-        GetInterpretativeReportSummaryPage5sRequest request,
+        GetInterpretativeReportSummaryPage5SRequest request,
         CancellationToken cancellationToken
     )
     {

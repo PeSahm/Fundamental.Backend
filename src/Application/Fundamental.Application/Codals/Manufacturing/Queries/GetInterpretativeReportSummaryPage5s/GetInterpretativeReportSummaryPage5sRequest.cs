@@ -7,7 +7,7 @@ using MediatR;
 namespace Fundamental.Application.Codals.Manufacturing.Queries.GetInterpretativeReportSummaryPage5s;
 
 [HandlerCode(HandlerCode.GetInterpretativeReportSummaryPage5s)]
-public sealed record GetInterpretativeReportSummaryPage5sRequest(
+public sealed record GetInterpretativeReportSummaryPage5SRequest(
     string? Isin,
     int? FiscalYear,
     int? ReportMonth

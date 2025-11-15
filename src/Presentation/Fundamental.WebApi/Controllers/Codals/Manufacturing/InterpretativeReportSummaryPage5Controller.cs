@@ -25,7 +25,7 @@ public class InterpretativeReportSummaryPage5Controller : ControllerBase
 
     [HttpGet]
     public async Task<Response<Paginated<GetInterpretativeReportSummaryPage5ListItem>>> GetInterpretativeReportSummaryPage5s(
-        [FromQuery] GetInterpretativeReportSummaryPage5sRequest request
+        [FromQuery] GetInterpretativeReportSummaryPage5SRequest request
     )
     {
         return await _mediator.Send(request);

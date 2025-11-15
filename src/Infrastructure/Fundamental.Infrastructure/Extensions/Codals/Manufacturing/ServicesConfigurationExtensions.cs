@@ -1,9 +1,10 @@
+﻿using Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage5Summaries.V2.
+    InterpretativeReportSummaryPage5;
 using Fundamental.Application.Codals.Dto.MonthlyActivities.V1;
 using Fundamental.Application.Codals.Dto.MonthlyActivities.V2;
 using Fundamental.Application.Codals.Dto.MonthlyActivities.V3;
 using Fundamental.Application.Codals.Dto.MonthlyActivities.V4;
 using Fundamental.Application.Codals.Dto.MonthlyActivities.V5;
-using Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage5Summaries.V2.InterpretativeReportSummaryPage5;
 using Fundamental.Application.Codals.Manufacturing.EventHandlers;
 using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Application.Codals.Services;
@@ -16,9 +17,9 @@ using Fundamental.Infrastructure.Services.Codals.Factories;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Detectors;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.BalanceSheets;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.IncomeStatements;
+using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.InterpretativeReportSummaryPage5;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.InterpretativeReportSummaryPages4;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.InterpretativeReportSummaryPages5;
-using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.InterpretativeReportSummaryPage5;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.MonthlyActivities;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.RegisterCapitalIncrease;
 using Microsoft.Extensions.DependencyInjection;
@@ -55,7 +56,8 @@ public static class ServicesConfigurationExtensions
             .AddKeyedScopedCanonicalMappingService<ICanonicalMappingService<CanonicalMonthlyActivity, CodalMonthlyActivityV5>,
                 MonthlyActivityMappingServiceV5, CodalMonthlyActivityV5>();
         serviceCollection
-            .AddKeyedScopedCanonicalMappingService<ICanonicalMappingService<CanonicalInterpretativeReportSummaryPage5, CodalInterpretativeReportSummaryPage5V2>,
+            .AddKeyedScopedCanonicalMappingService<ICanonicalMappingService<CanonicalInterpretativeReportSummaryPage5,
+                    CodalInterpretativeReportSummaryPage5V2>,
                 InterpretativeReportSummaryPage5MappingServiceV2, CodalInterpretativeReportSummaryPage5V2>();
         return serviceCollection;
     }

@@ -1,6 +1,8 @@
 using Newtonsoft.Json;
 
-namespace Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage5Summaries.V2.InterpretativeReportSummaryPage5;
+namespace Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage5Summaries.V2.
+    InterpretativeReportSummaryPage5;
+#pragma warning disable SA1402, SA1649
 
 /// <summary>
 /// DTO for financing details sections.

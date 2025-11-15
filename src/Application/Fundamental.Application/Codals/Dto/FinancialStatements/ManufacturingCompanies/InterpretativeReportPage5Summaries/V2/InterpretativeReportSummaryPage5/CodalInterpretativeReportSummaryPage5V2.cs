@@ -4,9 +4,10 @@ using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Enums;
 using Newtonsoft.Json;
 
-namespace Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage5Summaries.V2.InterpretativeReportSummaryPage5;
+namespace Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage5Summaries.V2.
+    InterpretativeReportSummaryPage5;
 
-#pragma warning disable SA1402
+#pragma warning disable SA1402, SA1649
 
 /// <summary>
 /// Root DTO for interpretativeReportSummaryPage5 V2 JSON structure.
@@ -29,10 +30,6 @@ public class RootInterpretativeReportSummaryPage5V2
 /// </summary>
 public class CodalInterpretativeReportSummaryPage5V2 : ICodalMappingServiceMetadata
 {
-    public ReportingType ReportingType => ReportingType.Production;
-    public LetterType LetterType => LetterType.InterimStatement;
-    public CodalVersion CodalVersion => CodalVersion.V2;
-    public LetterPart LetterPart => LetterPart.InterpretativeReportSummaryPage5;
     [JsonProperty("version")]
     public string? Version { get; set; }
 
@@ -78,6 +75,11 @@ public class CodalInterpretativeReportSummaryPage5V2 : ICodalMappingServiceMetad
     [JsonProperty("p5Desc2")]
     public DescriptionDto? P5Desc2 { get; set; }
 
+    public ReportingType ReportingType => ReportingType.Production;
+    public LetterType LetterType => LetterType.InterimStatement;
+    public CodalVersion CodalVersion => CodalVersion.V2;
+    public LetterPart LetterPart => LetterPart.InterpretativeReportSummaryPage5;
+
     /// <summary>
     /// Validates if the report has the minimum required data.
     /// </summary>
@@ -89,6 +91,7 @@ public class CodalInterpretativeReportSummaryPage5V2 : ICodalMappingServiceMetad
         }
 
         YearDataDto? firstYear = OtherOperatingIncome.YearData.FirstOrDefault();
+
         if (firstYear?.FiscalYear == null || firstYear.FiscalMonth == null || firstYear.ReportMonth == null)
         {
             return false;

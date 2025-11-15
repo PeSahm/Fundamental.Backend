@@ -1,7 +1,8 @@
-using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
 
 namespace Fundamental.Application.Codals.Manufacturing.Queries.GetInterpretativeReportSummaryPage5ById;
+
+#pragma warning disable SA1402, SA1649
 
 public sealed record GetInterpretativeReportSummaryPage5DetailItem(
     Guid Id,

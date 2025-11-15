@@ -1,10 +1,10 @@
-using Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage5Summaries.V2.InterpretativeReportSummaryPage5;
+using Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage5Summaries.V2.
+    InterpretativeReportSummaryPage5;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Codals.ValueObjects;
-using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
 
 namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.InterpretativeReportSummaryPage5;
@@ -13,12 +13,14 @@ namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.In
 /// Mapping service for InterpretativeReportSummaryPage5 V2 data.
 /// Maps DTO to canonical entity with all 14 sections.
 /// </summary>
-public class InterpretativeReportSummaryPage5MappingServiceV2 : ICanonicalMappingService<CanonicalInterpretativeReportSummaryPage5, CodalInterpretativeReportSummaryPage5V2>
+public class InterpretativeReportSummaryPage5MappingServiceV2 : ICanonicalMappingService<CanonicalInterpretativeReportSummaryPage5,
+    CodalInterpretativeReportSummaryPage5V2>
 {
     public Task<CanonicalInterpretativeReportSummaryPage5> MapToCanonicalAsync(
         CodalInterpretativeReportSummaryPage5V2 dto,
         Symbol symbol,
-        GetStatementResponse statement)
+        GetStatementResponse statement
+    )
     {
         // Extract fiscal year and report month from first section's yearData
         if (dto.OtherOperatingIncome?.YearData?.Any() != true)
@@ -26,7 +28,8 @@ public class InterpretativeReportSummaryPage5MappingServiceV2 : ICanonicalMappin
             throw new InvalidOperationException("No year data found in V2 DTO");
         }
 
-        YearDataDto firstYear = dto.OtherOperatingIncome.YearData.First();
+        YearDataDto firstYear = dto.OtherOperatingIncome.YearData[0];
+
         if (firstYear.FiscalYear is null || firstYear.ReportMonth is null)
         {
             throw new InvalidOperationException("Could not extract fiscal year from V2 data");
@@ -69,6 +72,26 @@ public class InterpretativeReportSummaryPage5MappingServiceV2 : ICanonicalMappin
         existing.InvestmentIncomes = updated.InvestmentIncomes;
         existing.MiscellaneousExpenses = updated.MiscellaneousExpenses;
         existing.Descriptions = updated.Descriptions;
+    }
+
+    private static InterpretativeReportRowType? ParseRowType(string? rowType)
+    {
+        return rowType switch
+        {
+            "CustomRow" => InterpretativeReportRowType.CustomRow,
+            "FixedRow" => InterpretativeReportRowType.FixedRow,
+            _ => null
+        };
+    }
+
+    private static decimal? ParseDecimal(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return null;
+        }
+
+        return decimal.TryParse(value, out decimal result) ? result : null;
     }
 
     private List<OtherOperatingIncomeItem> MapOtherOperatingIncome(OtherOperatingIncomeDto? dto)
@@ -202,20 +225,22 @@ public class InterpretativeReportSummaryPage5MappingServiceV2 : ICanonicalMappin
 
         if (dto.DescriptionForDetailsOfTheFinancingOfTheCompanyAtTheEndOfThePeriod?.RowItems != null)
         {
-            descriptions.AddRange(dto.DescriptionForDetailsOfTheFinancingOfTheCompanyAtTheEndOfThePeriod.RowItems.Select(x => new InterpretativeReportDescription
-            {
-                SectionName = "DescriptionForDetailsOfTheFinancing",
-                AdditionalValue1 = x.Value2531
-            }));
+            descriptions.AddRange(dto.DescriptionForDetailsOfTheFinancingOfTheCompanyAtTheEndOfThePeriod.RowItems.Select(x =>
+                new InterpretativeReportDescription
+                {
+                    SectionName = "DescriptionForDetailsOfTheFinancing",
+                    AdditionalValue1 = x.Value2531
+                }));
         }
 
         if (dto.CompanyEstimatesOfFinancingProgramsAndCompanyFinanceChanges?.RowItems != null)
         {
-            descriptions.AddRange(dto.CompanyEstimatesOfFinancingProgramsAndCompanyFinanceChanges.RowItems.Select(x => new InterpretativeReportDescription
-            {
-                SectionName = "CompanyEstimatesOfFinancingPrograms",
-                AdditionalValue1 = x.Value2441
-            }));
+            descriptions.AddRange(dto.CompanyEstimatesOfFinancingProgramsAndCompanyFinanceChanges.RowItems.Select(x =>
+                new InterpretativeReportDescription
+                {
+                    SectionName = "CompanyEstimatesOfFinancingPrograms",
+                    AdditionalValue1 = x.Value2441
+                }));
         }
 
         if (dto.CorporateIncomeProgram?.RowItems != null)
@@ -260,25 +285,5 @@ public class InterpretativeReportSummaryPage5MappingServiceV2 : ICanonicalMappin
         }
 
         return descriptions;
-    }
-
-    private static InterpretativeReportRowType? ParseRowType(string? rowType)
-    {
-        return rowType switch
-        {
-            "CustomRow" => InterpretativeReportRowType.CustomRow,
-            "FixedRow" => InterpretativeReportRowType.FixedRow,
-            _ => null
-        };
-    }
-
-    private static decimal? ParseDecimal(string? value)
-    {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            return null;
-        }
-
-        return decimal.TryParse(value, out decimal result) ? result : null;
     }
 }
