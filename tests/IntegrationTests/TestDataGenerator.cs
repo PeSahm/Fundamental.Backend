@@ -1,8 +1,4 @@
-using System.Globalization;
-
-using Bogus; // Commented out due to complex entity constructors
-using Fundamental.Domain.Codals.Manufacturing.Entities;
-using Fundamental.Domain.Symbols.Entities;
+// Commented out due to complex entity constructors
 
 namespace IntegrationTests;
 

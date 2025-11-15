@@ -4,7 +4,6 @@ using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Domain.Common.Dto;
 using Fundamental.ErrorHandling;
 using Moq;
-using Xunit;
 
 namespace Application.UnitTests.Codals.Manufacturing.Queries.GetBalanceSheets;
 

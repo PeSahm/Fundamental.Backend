@@ -1,5 +1,3 @@
-using Fundamental.Domain.Codals.Manufacturing.Entities;
-
 namespace IntegrationTests.Shared;
 
 /// <summary>

@@ -1,7 +1,5 @@
 ﻿using Fundamental.Application.Common.Extensions;
 using Fundamental.Domain.Symbols.Entities;
-using Fundamental.Infrastructure.HostedServices.Codals.CommonJobs;
-using Fundamental.Infrastructure.HostedServices.Codals.Manufacturing;
 using Fundamental.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

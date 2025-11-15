@@ -1,4 +1,3 @@
-using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
 
 namespace IntegrationTests.Shared;

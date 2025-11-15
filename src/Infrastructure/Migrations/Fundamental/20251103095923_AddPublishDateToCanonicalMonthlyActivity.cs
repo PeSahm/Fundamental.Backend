@@ -1,6 +1,4 @@
-using System;
-using System.Collections.Generic;
-using Fundamental.Domain.Codals.Manufacturing.Enums;
+﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable

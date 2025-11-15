@@ -1,5 +1,4 @@
 using Fundamental.Application.Codals.Dto.MonthlyActivities.V5;
-using Fundamental.Application.Codals.Dto.MonthlyActivities.V5.Enums;
 using Fundamental.Application.Codals.Enums;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;

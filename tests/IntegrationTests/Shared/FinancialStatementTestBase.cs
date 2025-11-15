@@ -1,13 +1,8 @@
 using System.Text.Json;
 using FluentAssertions;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
-using Fundamental.Domain.Codals.Manufacturing.Entities;
-using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace IntegrationTests.Shared;
 

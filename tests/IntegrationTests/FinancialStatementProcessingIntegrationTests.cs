@@ -1,4 +1,3 @@
-using System.Text.Json;
 using FluentAssertions;
 using Fundamental.Domain.Symbols.Entities;
 using Microsoft.EntityFrameworkCore;

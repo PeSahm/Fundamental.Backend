@@ -12,8 +12,6 @@ using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Common.ValueObjects;
 using Fundamental.Domain.Repositories.Base;
 using Fundamental.Domain.Symbols.Entities;
-using Fundamental.ErrorHandling;
-using Fundamental.ErrorHandling.Helpers;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.BalanceSheets;
 using IntegrationTests.Shared;
 using Microsoft.EntityFrameworkCore;

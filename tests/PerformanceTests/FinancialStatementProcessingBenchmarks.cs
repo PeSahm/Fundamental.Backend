@@ -11,7 +11,6 @@ using Fundamental.Domain.Symbols.Entities;
 using Fundamental.Domain.Symbols.Enums;
 using Fundamental.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using Xunit;
 
 namespace PerformanceTests;
 

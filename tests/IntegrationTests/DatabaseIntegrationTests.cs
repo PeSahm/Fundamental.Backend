@@ -2,7 +2,6 @@ using FluentAssertions;
 using Fundamental.Domain.Symbols.Entities;
 using Fundamental.Domain.Symbols.Enums;
 using Microsoft.EntityFrameworkCore;
-using Xunit;
 
 namespace IntegrationTests;
 

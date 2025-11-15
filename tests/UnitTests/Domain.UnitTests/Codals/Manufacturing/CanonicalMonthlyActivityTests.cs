@@ -2,10 +2,8 @@ using FluentAssertions;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Codals.ValueObjects;
-using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
 using Fundamental.Domain.Symbols.Enums;
-using Xunit;
 
 namespace Domain.UnitTests.Codals.Manufacturing;
 
