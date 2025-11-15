@@ -57,7 +57,7 @@ public class CanonicalInterpretativeReportSummaryPage5 : BaseEntity<Guid>
     /// Publish date of the interpretative report (Gregorian).
     /// Sourced from CODAL statement's PublishDateMiladi.
     /// </summary>
-    public DateTime? PublishDate { get; set; }
+    public DateTime? PublishDate { get; private set; }
 
     /// <summary>
     /// Navigation property to the associated symbol.
