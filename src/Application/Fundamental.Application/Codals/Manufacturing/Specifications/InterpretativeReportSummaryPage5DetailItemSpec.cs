@@ -10,7 +10,7 @@ public sealed class InterpretativeReportSummaryPage5DetailItemSpec : Specificati
     {
         Query
             .AsNoTracking()
-            .Include(x => x.Symbol)
+            .AsSplitQuery()
             .Select(x => new GetInterpretativeReportSummaryPage5DetailItem(
                 x.Id,
                 x.Symbol.Isin,

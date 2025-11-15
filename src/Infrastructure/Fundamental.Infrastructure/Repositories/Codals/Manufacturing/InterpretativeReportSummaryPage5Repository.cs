@@ -16,7 +16,8 @@ public class InterpretativeReportSummaryPage5Repository(FundamentalDbContext dbC
     )
     {
         IQueryable<CanonicalInterpretativeReportSummaryPage5> query = dbContext.CanonicalInterpretativeReportSummaryPage5s
-            .AsNoTracking();
+            .AsNoTracking()
+            .Include(x => x.Symbol);
 
         if (!string.IsNullOrWhiteSpace(request.Isin))
         {
