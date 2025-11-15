@@ -24,6 +24,7 @@ public enum HandlerCode : ushort
     UpdateIncomeStatementData = 13_197,
     UpdateBalanceSheetData = 13_198,
     UpdateMonthlyActivityData = 13_199,
+    UpdateInterpretativeReportSummaryPage5Data = 13_200,
 
     UpdateClosePrices = 14_100,
 
