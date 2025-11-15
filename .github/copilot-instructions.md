@@ -73,7 +73,7 @@ dotnet test  # Runs unit + integration tests
 - Enforce via `Analyzers.ruleset` and `TestingAnalyzers.ruleset`
 
 ### Commit Messages
-```
+```text
 #17 Clean room
 
 Room was messy. Cleaned it up.
