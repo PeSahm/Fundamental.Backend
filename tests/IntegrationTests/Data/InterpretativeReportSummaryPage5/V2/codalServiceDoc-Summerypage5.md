@@ -17,7 +17,7 @@
 | value_23331 | string | توضیحات |
 
 ---
-#### **otherOperatingIncome (سایر درآمدهای عملیاتی)**
+#### **otherOperatingIncome (سایر درآمدها و هزینه‌های عملیاتی)**
 ##### **yearData (اطلاعات ستون ها)**
 | Field Name | Data Type | Description (Farsi) |
 | :--- | :--- | :--- |
@@ -26,7 +26,7 @@
 | periodEndToDate | string | دوره منتهی به |
 | yearEndToDate | string | سال منتهی به |
 | period | short | دوره |
-| isAudited | Boolean | حسابرسی شده? |
+| isAudited | Boolean | حسابرسی شده؟ |
 
 ##### **rowItems (ردیف های اطلاعاتی)**
 | Field Name | Data Type | Description (Farsi) |
@@ -52,7 +52,7 @@
 | periodEndToDate | string | دوره منتهی به |
 | yearEndToDate | string | سال منتهی به |
 | period | short | دوره |
-| isAudited | Boolean | حسابرسی شده? |
+| isAudited | Boolean | حسابرسی شده؟ |
 
 ##### **rowItems (ردیف های اطلاعاتی)**
 | Field Name | Data Type | Description (Farsi) |
@@ -78,7 +78,7 @@
 | periodEndToDate | string | دوره منتهی به |
 | yearEndToDate | string | سال منتهی به |
 | period | short | دوره |
-| isAudited | Boolean | حسابرسی شده? |
+| isAudited | Boolean | حسابرسی شده؟ |
 
 ##### **rowItems (ردیف های اطلاعاتی)**
 | Field Name | Data Type | Description (Farsi) |
@@ -109,7 +109,7 @@
 | periodEndToDate | string | دوره منتهی به |
 | yearEndToDate | string | سال منتهی به |
 | period | short | دوره |
-| isAudited | Boolean | حسابرسی شده? |
+| isAudited | Boolean | حسابرسی شده؟ |
 
 ##### **rowItems (ردیف های اطلاعاتی)**
 | Field Name | Data Type | Description (Farsi) |
@@ -140,7 +140,7 @@
 | periodEndToDate | string | دوره منتهی به |
 | yearEndToDate | string | سال منتهی به |
 | period | short | دوره |
-| isAudited | Boolean | حسابرسی شده? |
+| isAudited | Boolean | حسابرسی شده؟ |
 
 ##### **rowItems (ردیف های اطلاعاتی)**
 | Field Name | Data Type | Description (Farsi) |
@@ -193,7 +193,7 @@
 | periodEndToDate | string | دوره منتهی به |
 | yearEndToDate | string | سال منتهی به |
 | period | short | دوره |
-| isAudited | Boolean | حسابرسی شده? |
+| isAudited | Boolean | حسابرسی شده؟ |
 
 ##### **rowItems (ردیف های اطلاعاتی)**
 | Field Name | Data Type | Description (Farsi) |
@@ -219,7 +219,7 @@
 | periodEndToDate | string | دوره منتهی به |
 | yearEndToDate | string | سال منتهی به |
 | period | short | دوره |
-| isAudited | Boolean | حسابرسی شده? |
+| isAudited | Boolean | حسابرسی شده؟ |
 
 ##### **rowItems (ردیف های اطلاعاتی)**
 | Field Name | Data Type | Description (Farsi) |
@@ -275,11 +275,15 @@
 
 ---
 #### **p5Desc2 (توضیحات)**
+
 ##### **rowItems (ردیف های اطلاعاتی)**
+
 | Field Name | Data Type | Description (Farsi) |
 | :--- | :--- | :--- |
 | rowCode | short | کد ردیف |
 | oldFieldName | string | نام قدیمی فیلد |
 | category | short | گروه ردیف |
-| rowType | string | نوع ردیf |
-| value_23461 | string | |
+| rowType | string | نوع ردیف |
+| value_23461 | string | توضیحات |
+
+---
