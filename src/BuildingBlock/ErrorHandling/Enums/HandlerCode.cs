@@ -1,4 +1,4 @@
-namespace Fundamental.ErrorHandling.Enums;
+﻿namespace Fundamental.ErrorHandling.Enums;
 
 public enum HandlerCode : ushort
 {
@@ -24,9 +24,12 @@ public enum HandlerCode : ushort
     UpdateIncomeStatementData = 13_197,
     UpdateBalanceSheetData = 13_198,
     UpdateMonthlyActivityData = 13_199,
+    UpdateInterpretativeReportSummaryPage5Data = 13_200,
 
     UpdateClosePrices = 14_100,
 
+    GetInterpretativeReportSummaryPage5ById = 13_375,
+    GetInterpretativeReportSummaryPage5s = 13_376,
     UpdateFinancialStatementSales = 13_377,
     GetFinancialStatementsData = 13_378,
     UpdateNoneOperationalIncomeTags = 13_379,

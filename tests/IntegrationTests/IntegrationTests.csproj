@@ -7,4 +7,10 @@
       <ProjectReference Include="..\..\src\Domain\Fundamental.Domain\Fundamental.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="Data\**\*.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

@@ -1,0 +1,11 @@
+using Fundamental.ErrorHandling.Attributes;
+using Fundamental.ErrorHandling.Enums;
+
+namespace Fundamental.Application.Codals.Manufacturing.Queries.GetInterpretativeReportSummaryPage5ById;
+
+[HandlerCode(HandlerCode.GetInterpretativeReportSummaryPage5ById)]
+public enum GetInterpretativeReportSummaryPage5ByIdErrorCodes
+{
+    [ErrorType(BackendErrorType.Security)]
+    InterpretativeReportSummaryPage5NotFound = 13_375_101
+}
