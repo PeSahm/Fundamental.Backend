@@ -18,7 +18,7 @@ public sealed class UpdateInterpretativeReportSummaryPage5DataCommandHandler(
     {
         List<GetStatementResponse> statements =
             await codalService.GetStatements(
-                DateTime.Now.AddDays(-1 * request.Days),
+                DateTime.Now.AddDays(-1 * request.DaysBefore),
                 ReportingType.Production,
                 LetterType.InterimStatement,
                 cancellationToken);
