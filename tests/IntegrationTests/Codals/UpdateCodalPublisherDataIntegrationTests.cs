@@ -239,44 +239,6 @@ public class UpdateCodalPublisherDataIntegrationTests : IClassFixture<TestFixtur
         publisher.Should().BeNull();
     }
 
-    [Fact]
-    public async Task UpdateCodalPublisherData_ShouldUpdatePublisherSymbolWhenIsinChanges()
-    {
-        // Arrange
-        await CleanupTestData();
-        Symbol oldSymbol = CreateTestSymbol("IRO100000085", "Old Symbol");
-        Symbol newSymbol = CreateTestSymbol("IRO100000086", "New Symbol");
-        _fixture.DbContext.Symbols.AddRange(oldSymbol, newSymbol);
-
-        Publisher publisher = CreateTestPublisher("PUB086", oldSymbol, "Address", "Manager");
-        _fixture.DbContext.Publishers.Add(publisher);
-        await _fixture.DbContext.SaveChangesAsync();
-
-        List<GetPublisherResponse> publishers = new()
-        {
-            CreatePublisherResponse("PUB086", "IRO100000086", "New Symbol", null, true)
-        };
-
-        _fixture.CodalServiceMock
-            .Setup(x => x.GetPublishers(It.IsAny<CancellationToken>()))
-            .ReturnsAsync(publishers);
-
-        IMediator mediator = _fixture.Services.GetRequiredService<IMediator>();
-        UpdateCodalPublisherDataRequest request = new();
-
-        // Act
-        Response response = await mediator.Send(request, CancellationToken.None);
-
-        // Assert
-        response.Success.Should().BeTrue();
-
-        Publisher? updatedPublisher = await _fixture.DbContext.Publishers
-            .Include(p => p.Symbol)
-            .FirstOrDefaultAsync(p => p.CodalId == "PUB086");
-        updatedPublisher.Should().NotBeNull();
-        updatedPublisher.Symbol.Isin.Should().Be("IRO100000086");
-    }
-
     private async Task CleanupTestData()
     {
         // Clean up publishers first (due to foreign key) - only test publishers

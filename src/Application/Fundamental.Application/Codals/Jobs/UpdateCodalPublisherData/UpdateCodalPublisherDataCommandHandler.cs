@@ -73,8 +73,11 @@ public sealed class UpdateCodalPublisherDataCommandHandler(
         Dictionary<string, Symbol> isinLookup = symbolsByIsin.ToDictionary(s => s.Isin, StringComparer.OrdinalIgnoreCase);
         Dictionary<string, Symbol> nameLookup = symbolsByName
             .Where(s => !string.IsNullOrEmpty(s.Isin) && !isinLookup.ContainsKey(s.Isin))
-            .ToDictionary(s => s.Name, StringComparer.OrdinalIgnoreCase);
-        Dictionary<string, Symbol> parentLookup = parentSymbols.ToDictionary(s => s.Name, StringComparer.OrdinalIgnoreCase);
+            .GroupBy(s => s.Name, StringComparer.OrdinalIgnoreCase)
+            .ToDictionary(g => g.Key, g => g.First(), StringComparer.OrdinalIgnoreCase);
+        Dictionary<string, Symbol> parentLookup = parentSymbols
+            .GroupBy(s => s.Name, StringComparer.OrdinalIgnoreCase)
+            .ToDictionary(g => g.Key, g => g.First(), StringComparer.OrdinalIgnoreCase);
         Dictionary<string, Publisher> publisherLookup = existingPublishers.ToDictionary(p => p.CodalId, StringComparer.OrdinalIgnoreCase);
 
         // Step 4: Process publishers in-memory
@@ -124,7 +127,7 @@ public sealed class UpdateCodalPublisherDataCommandHandler(
             // Update or create publisher
             if (publisherLookup.TryGetValue(publisher.Id, out Publisher? existingPublisher))
             {
-                UpdatePublisherProperties(existingPublisher, publisher, symbol, parentSymbol);
+                UpdatePublisherProperties(existingPublisher, publisher);
             }
             else
             {
@@ -160,9 +163,7 @@ public sealed class UpdateCodalPublisherDataCommandHandler(
 
     private static void UpdatePublisherProperties(
         Publisher thePublisher,
-        GetPublisherResponse publisher,
-        Symbol symbol,
-        Symbol? parentSymbol
+        GetPublisherResponse publisher
     )
     {
         thePublisher.CodalId = publisher.Id;
@@ -198,13 +199,7 @@ public sealed class UpdateCodalPublisherDataCommandHandler(
         thePublisher.IsSupplied = publisher.IsSupplied;
         thePublisher.MarketType = (PublisherMarketType)publisher.MarketType;
         thePublisher.UnauthorizedCapital = publisher.UnauthorizedCapital;
-        thePublisher.ParentSymbol = parentSymbol;
         thePublisher.UpdateLog();
-
-        if (symbol.Isin != thePublisher.Symbol.Isin)
-        {
-            thePublisher.Update(symbol);
-        }
     }
 
     private static Publisher CreatePublisher(GetPublisherResponse publisher, Symbol symbol, Symbol? parentSymbol)
