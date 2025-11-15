@@ -218,8 +218,11 @@ public class InterpretativeReportSummaryPage5MappingServiceV2 : ICanonicalMappin
         {
             descriptions.AddRange(dto.P5Desc1.RowItems.Select(x => new InterpretativeReportDescription
             {
-                SectionName = "P5Desc1",
-                AdditionalValue1 = x.Value23331
+                RowCode = x.RowCode,
+                Category = x.Category,
+                RowType = ParseRowType(x.RowType),
+                Description = x.Value23331,
+                SectionName = "P5Desc1"
             }));
         }
 
@@ -228,8 +231,11 @@ public class InterpretativeReportSummaryPage5MappingServiceV2 : ICanonicalMappin
             descriptions.AddRange(dto.DescriptionForDetailsOfTheFinancingOfTheCompanyAtTheEndOfThePeriod.RowItems.Select(x =>
                 new InterpretativeReportDescription
                 {
-                    SectionName = "DescriptionForDetailsOfTheFinancing",
-                    AdditionalValue1 = x.Value2531
+                    RowCode = x.RowCode,
+                    Category = x.Category,
+                    RowType = ParseRowType(x.RowType),
+                    Description = x.Value2531,
+                    SectionName = "DescriptionForDetailsOfTheFinancing"
                 }));
         }
 
@@ -238,8 +244,11 @@ public class InterpretativeReportSummaryPage5MappingServiceV2 : ICanonicalMappin
             descriptions.AddRange(dto.CompanyEstimatesOfFinancingProgramsAndCompanyFinanceChanges.RowItems.Select(x =>
                 new InterpretativeReportDescription
                 {
-                    SectionName = "CompanyEstimatesOfFinancingPrograms",
-                    AdditionalValue1 = x.Value2441
+                    RowCode = x.RowCode,
+                    Category = x.Category,
+                    RowType = ParseRowType(x.RowType),
+                    Description = x.Value2441,
+                    SectionName = "CompanyEstimatesOfFinancingPrograms"
                 }));
         }
 
@@ -247,6 +256,9 @@ public class InterpretativeReportSummaryPage5MappingServiceV2 : ICanonicalMappin
         {
             descriptions.AddRange(dto.CorporateIncomeProgram.RowItems.Select(x => new InterpretativeReportDescription
             {
+                RowCode = x.RowCode,
+                Category = x.Category,
+                RowType = ParseRowType(x.RowType),
                 SectionName = "CorporateIncomeProgram",
                 AdditionalValue1 = x.Value2461,
                 AdditionalValue2 = x.Value2462,
@@ -260,9 +272,12 @@ public class InterpretativeReportSummaryPage5MappingServiceV2 : ICanonicalMappin
         {
             descriptions.AddRange(dto.OtherImportantPrograms.RowItems.Select(x => new InterpretativeReportDescription
             {
+                RowCode = x.RowCode,
+                Category = x.Category,
+                RowType = ParseRowType(x.RowType),
+                Description = x.Value2471,
                 SectionName = "OtherImportantPrograms",
-                AdditionalValue1 = x.Value2471,
-                AdditionalValue2 = x.Value2472
+                AdditionalValue1 = x.Value2472
             }));
         }
 
@@ -270,8 +285,11 @@ public class InterpretativeReportSummaryPage5MappingServiceV2 : ICanonicalMappin
         {
             descriptions.AddRange(dto.OtherImportantNotes.RowItems.Select(x => new InterpretativeReportDescription
             {
-                SectionName = "OtherImportantNotes",
-                AdditionalValue1 = x.Value2481
+                RowCode = x.RowCode,
+                Category = x.Category,
+                RowType = ParseRowType(x.RowType),
+                Description = x.Value2481,
+                SectionName = "OtherImportantNotes"
             }));
         }
 
@@ -279,8 +297,11 @@ public class InterpretativeReportSummaryPage5MappingServiceV2 : ICanonicalMappin
         {
             descriptions.AddRange(dto.P5Desc2.RowItems.Select(x => new InterpretativeReportDescription
             {
-                SectionName = "P5Desc2",
-                AdditionalValue1 = x.Value23341
+                RowCode = x.RowCode,
+                Category = x.Category,
+                RowType = ParseRowType(x.RowType),
+                Description = x.Value23461,
+                SectionName = "P5Desc2"
             }));
         }
 

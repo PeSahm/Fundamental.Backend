@@ -45,6 +45,6 @@ public class DescriptionRowDto
     public string? Value2481 { get; set; }
 
     // p5Desc2
-    [JsonProperty("value_23341")]
-    public string? Value23341 { get; set; }
+    [JsonProperty("value_23461")]
+    public string? Value23461 { get; set; }
 }

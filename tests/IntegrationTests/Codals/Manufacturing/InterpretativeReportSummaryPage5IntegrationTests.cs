@@ -188,6 +188,75 @@ public class InterpretativeReportSummaryPage5IntegrationTests : FinancialStateme
     }
 
     [Fact]
+    public async Task ProcessInterpretativeReportSummaryPage5V2_ShouldMapDescriptionStructuralFields()
+    {
+        // Arrange
+        await CleanInterpretativeReportSummaryPage5Data();
+        Symbol symbol = CreateTestSymbol("IRO1SEPP0001", 9600001UL);
+        await _fixture.DbContext.Symbols.AddAsync(symbol);
+        await _fixture.DbContext.SaveChangesAsync();
+
+        string testJson = InterpretativeReportSummaryPage5TestData.GetV2TestData();
+        SetupApiResponse("interpretative-report-summary-page5", testJson);
+
+        // Act
+        InterpretativeReportSummaryPage5V2Processor processor = new(
+            _fixture.Services.GetRequiredService<IServiceScopeFactory>(),
+            _fixture.Services.GetRequiredService<ICanonicalMappingServiceFactory>());
+
+        GetStatementResponse statement = CreateStatementResponse("IRO1SEPP0001", 987654321);
+        GetStatementJsonResponse jsonResponse = CreateJsonResponse(testJson);
+
+        await processor.Process(statement, jsonResponse, CancellationToken.None);
+
+        // Assert - Verify description structural fields are mapped
+        CanonicalInterpretativeReportSummaryPage5? storedEntity = await _fixture.DbContext.CanonicalInterpretativeReportSummaryPage5s
+            .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id && x.TraceNo == 987654321UL);
+
+        storedEntity.Should().NotBeNull();
+        storedEntity!.Descriptions.Should().NotBeNullOrEmpty();
+
+        // Verify all descriptions have structural fields populated
+        foreach (InterpretativeReportDescription desc in storedEntity.Descriptions)
+        {
+            desc.RowCode.Should().BeGreaterThan(0, "RowCode should be populated from JSON");
+            desc.Category.Should().BeGreaterOrEqualTo(0, "Category should be populated from JSON");
+            desc.RowType.Should().NotBeNull("RowType should be populated from JSON");
+            desc.SectionName.Should().NotBeNullOrWhiteSpace("SectionName should be populated");
+        }
+
+        // Verify P5Desc1 (rowCode=1)
+        InterpretativeReportDescription? p5Desc1 = storedEntity.Descriptions.FirstOrDefault(d => d.SectionName == "P5Desc1");
+        p5Desc1.Should().NotBeNull();
+        p5Desc1!.RowCode.Should().Be(1);
+        p5Desc1.RowType.Should().Be(InterpretativeReportRowType.FixedRow);
+        p5Desc1.Description.Should().NotBeNullOrWhiteSpace("P5Desc1 Description should contain value_23331");
+
+        // Verify P5Desc2 (rowCode=51, value_23461)
+        InterpretativeReportDescription? p5Desc2 = storedEntity.Descriptions.FirstOrDefault(d => d.SectionName == "P5Desc2");
+        p5Desc2.Should().NotBeNull();
+        p5Desc2!.RowCode.Should().Be(51);
+        p5Desc2.RowType.Should().Be(InterpretativeReportRowType.FixedRow);
+        p5Desc2.Description.Should().NotBeNullOrWhiteSpace("P5Desc2 Description should contain value_23461");
+        p5Desc2.Description.Should().Contain("جملات آینده", "P5Desc2 should have Persian text from value_23461");
+
+        // Verify CorporateIncomeProgram (rowCode=27) - should have numeric data in AdditionalValue fields
+        InterpretativeReportDescription? corporateIncome = storedEntity.Descriptions.FirstOrDefault(d => d.SectionName == "CorporateIncomeProgram");
+        corporateIncome.Should().NotBeNull();
+        corporateIncome!.RowCode.Should().Be(27);
+        corporateIncome.RowType.Should().Be(InterpretativeReportRowType.FixedRow);
+        corporateIncome.AdditionalValue1.Should().NotBeNullOrWhiteSpace("CorporateIncomeProgram should have value_2461");
+        corporateIncome.AdditionalValue2.Should().NotBeNullOrWhiteSpace("CorporateIncomeProgram should have value_2462");
+
+        // Verify OtherImportantPrograms (rowCode=28) - Description + AdditionalValue1
+        InterpretativeReportDescription? otherPrograms = storedEntity.Descriptions.FirstOrDefault(d => d.SectionName == "OtherImportantPrograms");
+        otherPrograms.Should().NotBeNull();
+        otherPrograms!.RowCode.Should().Be(28);
+        otherPrograms.Description.Should().NotBeNullOrWhiteSpace("OtherImportantPrograms Description should contain value_2471");
+        otherPrograms.AdditionalValue1.Should().NotBeNullOrWhiteSpace("OtherImportantPrograms AdditionalValue1 should contain value_2472");
+    }
+
+    [Fact]
     public async Task ProcessInterpretativeReportSummaryPage5V2_ShouldHandleUpdate()
     {
         // Arrange

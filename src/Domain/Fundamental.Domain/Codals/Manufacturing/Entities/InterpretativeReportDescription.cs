@@ -30,8 +30,8 @@ public class InterpretativeReportDescription
     /// - p5Desc1: value_23331
     /// - descriptionForDetailsOfTheFinancingOfTheCompanyAtTheEndOfThePeriod: value_2531
     /// - companyEstimatesOfFinancingProgramsAndCompanyFinanceChanges: value_2441
-    /// - corporateIncomeProgram: multiple value fields
-    /// - otherImportantPrograms: value_2471, value_2472
+    /// - corporateIncomeProgram: N/A (uses AdditionalValue1-5 for numeric columns)
+    /// - otherImportantPrograms: value_2471 (value_2472 in AdditionalValue1)
     /// - otherImportantNotes: value_2481
     /// - p5Desc2: value_23461
     /// </summary>
