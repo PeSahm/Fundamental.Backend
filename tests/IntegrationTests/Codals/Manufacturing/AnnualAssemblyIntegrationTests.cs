@@ -8,6 +8,7 @@ using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Codals.ValueObjects;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
+using Fundamental.Infrastructure.Services.Codals.Manufacturing.Detectors;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.AnnualAssembly;
 using Fundamental.IntegrationTests.TestData;
 using IntegrationTests.Shared;

@@ -29,6 +29,7 @@ public enum HandlerCode : ushort
 
     UpdateClosePrices = 14_100,
 
+    GetNonOperationIncomes = 13_373,
     GetAnnualAssemblyById = 13_374,
     GetAnnualAssemblys = 13_375,
     GetInterpretativeReportSummaryPage5ById = 13_376,
@@ -55,7 +56,6 @@ public enum HandlerCode : ushort
     GetMonthlyActivities = 13_397,
     GetFinancialStatements = 13_398,
     AddMonthlyActivity = 13_399,
-    GetNonOperationIncomes = 13_400,
 
     GetFinancialStatementList = 13_999,
     GetCustomerErrorMessages = 17_999,

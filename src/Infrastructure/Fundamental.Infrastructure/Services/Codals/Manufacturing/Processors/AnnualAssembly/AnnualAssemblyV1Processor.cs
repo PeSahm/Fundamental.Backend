@@ -25,7 +25,7 @@ public sealed class AnnualAssemblyV1Processor(
     public static ReportingType ReportingType => ReportingType.Production;
     public static LetterType LetterType => LetterType.AnnualGeneralMeetingDecisions;
     public static CodalVersion CodalVersion => CodalVersion.V1;
-    public static LetterPart LetterPart => LetterPart.AnnualGeneralMeetingDecisions;
+    public static LetterPart LetterPart => LetterPart.NotSpecified;
 
     public async Task Process(GetStatementResponse statement, GetStatementJsonResponse model, CancellationToken cancellationToken)
     {

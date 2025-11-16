@@ -18,7 +18,7 @@ public class CodalAnnualAssemblyV1 : ICodalMappingServiceMetadata
 
     public CodalVersion CodalVersion => CodalVersion.V1;
 
-    public LetterPart LetterPart => LetterPart.AnnualGeneralMeetingDecisions;
+    public LetterPart LetterPart => LetterPart.NotSpecified;
 
     [JsonProperty("parentAssembly")]
     public ParentAssemblyDto? ParentAssembly { get; set; }
