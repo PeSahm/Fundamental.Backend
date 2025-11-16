@@ -1,7 +1,5 @@
 ﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Enums;
-using Fundamental.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +8,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fundamental.Migrations.Fundamental
 {
     /// <inheritdoc />
-    [DbContext(typeof(FundamentalDbContext))]
-    [Migration("20251115120953_AddCanonicalInterpretativeReportSummaryPage5Entity")]
-    public class AddCanonicalInterpretativeReportSummaryPage5Entity : Migration
+    public partial class AddCanonicalAnnualAssemblyEntity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -29,37 +25,53 @@ namespace Fundamental.Migrations.Fundamental
                 oldDefaultValue: new List<NoneOperationalIncomeTag>());
 
             migrationBuilder.CreateTable(
-                name: "canonical_interpretative_report_summary_page5",
+                name: "canonical_annual_assembly",
                 schema: "manufacturing",
                 columns: table => new
                 {
                     _id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    version = table.Column<string>(type: "text", nullable: false),
-                    publish_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    version = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
+                    publish_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     symbol_id = table.Column<long>(type: "bigint", nullable: false),
-                    trace_no = table.Column<decimal>(type: "numeric(20,0)", maxLength: 50, nullable: false),
-                    uri = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
+                    trace_no = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
+                    html_url = table.Column<string>(type: "text", nullable: false),
                     currency = table.Column<IsoCurrency>(type: "iso_currency", nullable: false),
                     year_end_month = table.Column<short>(type: "smallint", nullable: false),
                     report_month = table.Column<short>(type: "smallint", nullable: false),
+                    assembly_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    board_member_period = table.Column<int>(type: "integer", nullable: true),
+                    publish_security_description = table.Column<string>(type: "text", nullable: true),
+                    other_description = table.Column<string>(type: "text", nullable: true),
+                    new_hour = table.Column<string>(type: "text", nullable: true),
+                    new_day = table.Column<string>(type: "text", nullable: true),
+                    new_date = table.Column<string>(type: "text", nullable: true),
+                    new_location = table.Column<string>(type: "text", nullable: true),
+                    break_description = table.Column<string>(type: "text", nullable: true),
                     fiscal_year = table.Column<short>(type: "SMALLINT", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ModifiedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    descriptions = table.Column<string>(type: "jsonb", nullable: true),
-                    financing_details = table.Column<string>(type: "jsonb", nullable: true),
-                    financing_details_estimated = table.Column<string>(type: "jsonb", nullable: true),
-                    investment_incomes = table.Column<string>(type: "jsonb", nullable: true),
-                    miscellaneous_expenses = table.Column<string>(type: "jsonb", nullable: true),
-                    other_non_operating_expenses = table.Column<string>(type: "jsonb", nullable: true),
-                    other_operating_incomes = table.Column<string>(type: "jsonb", nullable: true)
+                    assembly_board_members = table.Column<string>(type: "jsonb", nullable: true),
+                    assembly_chief_members_info = table.Column<string>(type: "jsonb", nullable: true),
+                    assembly_interims = table.Column<string>(type: "jsonb", nullable: true),
+                    audit_committee_chairman = table.Column<string>(type: "jsonb", nullable: true),
+                    board_member_wage_and_gifts = table.Column<string>(type: "jsonb", nullable: true),
+                    ceo = table.Column<string>(type: "jsonb", nullable: true),
+                    independent_auditor_representative = table.Column<string>(type: "jsonb", nullable: true),
+                    inspectors = table.Column<string>(type: "jsonb", nullable: true),
+                    new_board_members = table.Column<string>(type: "jsonb", nullable: true),
+                    news_papers = table.Column<string>(type: "jsonb", nullable: true),
+                    parent_assembly_info = table.Column<string>(type: "jsonb", nullable: true),
+                    proportioned_retained_earnings = table.Column<string>(type: "jsonb", nullable: true),
+                    share_holders = table.Column<string>(type: "jsonb", nullable: true),
+                    top_financial_position = table.Column<string>(type: "jsonb", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_canonical_interpretative_report_summary_page5", x => x._id);
+                    table.PrimaryKey("pk_canonical_annual_assembly", x => x._id);
                     table.ForeignKey(
-                        name: "fk_canonical_interpretative_report_summary_page5_symbols_symbo",
+                        name: "fk_canonical_annual_assembly_symbols_symbol_id",
                         column: x => x.symbol_id,
                         principalSchema: "shd",
                         principalTable: "symbol",
@@ -68,16 +80,16 @@ namespace Fundamental.Migrations.Fundamental
                 });
 
             migrationBuilder.CreateIndex(
-                name: "ix_canonical_interpretative_report_summary_page5_id",
+                name: "ix_canonical_annual_assembly_id",
                 schema: "manufacturing",
-                table: "canonical_interpretative_report_summary_page5",
+                table: "canonical_annual_assembly",
                 column: "Id",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "ix_canonical_interpretative_report_summary_page5_symbol_id",
+                name: "ix_canonical_annual_assembly_symbol_id",
                 schema: "manufacturing",
-                table: "canonical_interpretative_report_summary_page5",
+                table: "canonical_annual_assembly",
                 column: "symbol_id");
         }
 
@@ -85,7 +97,7 @@ namespace Fundamental.Migrations.Fundamental
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "canonical_interpretative_report_summary_page5",
+                name: "canonical_annual_assembly",
                 schema: "manufacturing");
 
             migrationBuilder.AlterColumn<List<NoneOperationalIncomeTag>>(
