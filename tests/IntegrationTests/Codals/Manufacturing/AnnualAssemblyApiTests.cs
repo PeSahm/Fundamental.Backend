@@ -266,7 +266,8 @@ public class AnnualAssemblyApiTests : FinancialStatementTestBase
     /// </summary>
     private async Task CleanAnnualAssemblyData()
     {
-        _fixture.DbContext.CanonicalAnnualAssemblies.RemoveRange(_fixture.DbContext.CanonicalAnnualAssemblies);
+        List<CanonicalAnnualAssembly> assemblies = await _fixture.DbContext.CanonicalAnnualAssemblies.ToListAsync();
+        _fixture.DbContext.CanonicalAnnualAssemblies.RemoveRange(assemblies);
 
         // Also clean up test symbols to avoid duplicate ISIN conflicts
         List<Symbol> testSymbols = await _fixture.DbContext.Symbols
