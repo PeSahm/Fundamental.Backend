@@ -43,19 +43,19 @@ public sealed class AnnualAssemblyDetailItemSpec : Specification<CanonicalAnnual
                 x.NewLocation,
                 x.BreakDescription,
                 x.ParentAssemblyInfo != null && x.ParentAssemblyInfo.SessionOrders != null
-                    ? x.ParentAssemblyInfo.SessionOrders.Select(item => new SessionOrderDto(
+                    ? x.ParentAssemblyInfo.SessionOrders.Select(item => new SessionOrderQueryDto(
                         item.Type,
                         item.Description,
                         item.FieldName
                     )).ToList()
-                    : new List<SessionOrderDto>(),
-                x.ShareHolders.Select(item => new ShareHolderDto(
+                    : new List<SessionOrderQueryDto>(),
+                x.ShareHolders.Select(item => new ShareHolderQueryDto(
                     item.ShareHolderSerial,
                     item.Name,
                     item.ShareCount,
                     item.SharePercent
                 )).ToList(),
-                x.AssemblyBoardMembers.Select(item => new AssemblyBoardMemberDto(
+                x.AssemblyBoardMembers.Select(item => new AssemblyBoardMemberQueryDto(
                     item.BoardMemberSerial,
                     item.FullName,
                     item.NationalCode,
@@ -72,12 +72,12 @@ public sealed class AnnualAssemblyDetailItemSpec : Specification<CanonicalAnnual
                     item.AttendingMeeting,
                     item.Verification
                 )).ToList(),
-                x.Inspectors.Select(item => new InspectorDto(
+                x.Inspectors.Select(item => new InspectorQueryDto(
                     item.Serial,
                     item.Name,
                     item.Type
                 )).ToList(),
-                x.NewBoardMembers.Select(item => new NewBoardMemberDto(
+                x.NewBoardMembers.Select(item => new NewBoardMemberQueryDto(
                     item.Name,
                     item.IsLegal,
                     item.NationalCode,
@@ -85,18 +85,18 @@ public sealed class AnnualAssemblyDetailItemSpec : Specification<CanonicalAnnual
                     item.LegalType,
                     item.MembershipType
                 )).ToList(),
-                x.BoardMemberWageAndGifts.Select(item => new BoardMemberWageAndGiftDto(
+                x.BoardMemberWageAndGifts.Select(item => new BoardMemberWageAndGiftQueryDto(
                     item.Type,
                     item.FieldName,
                     item.CurrentYearValue,
                     item.PastYearValue,
                     item.Description
                 )).ToList(),
-                x.NewsPapers.Select(item => new NewsPaperDto(
+                x.NewsPapers.Select(item => new NewsPaperQueryDto(
                     item.NewsPaperId,
                     item.Name
                 )).ToList(),
-                x.AssemblyInterims.Select(item => new AssemblyInterimDto(
+                x.AssemblyInterims.Select(item => new AssemblyInterimQueryDto(
                     item.FieldName,
                     item.Description,
                     item.YearEndToDateValue,
@@ -104,14 +104,14 @@ public sealed class AnnualAssemblyDetailItemSpec : Specification<CanonicalAnnual
                     item.ChangesReason,
                     item.RowClass
                 )).ToList(),
-                x.ProportionedRetainedEarnings.Select(item => new ProportionedRetainedEarningDto(
+                x.ProportionedRetainedEarnings.Select(item => new ProportionedRetainedEarningQueryDto(
                     item.FieldName,
                     item.Description,
                     item.YearEndToDateValue,
                     item.RowClass
                 )).ToList(),
                 x.Ceo != null
-                    ? new AssemblyAttendeeDto(
+                    ? new AssemblyAttendeeQueryDto(
                         x.Ceo.FullName,
                         x.Ceo.NationalCode,
                         x.Ceo.AttendingMeeting,
@@ -123,7 +123,7 @@ public sealed class AnnualAssemblyDetailItemSpec : Specification<CanonicalAnnual
                     )
                     : null,
                 x.AuditCommitteeChairman != null
-                    ? new AssemblyAttendeeDto(
+                    ? new AssemblyAttendeeQueryDto(
                         x.AuditCommitteeChairman.FullName,
                         x.AuditCommitteeChairman.NationalCode,
                         x.AuditCommitteeChairman.AttendingMeeting,
@@ -135,7 +135,7 @@ public sealed class AnnualAssemblyDetailItemSpec : Specification<CanonicalAnnual
                     )
                     : null,
                 x.IndependentAuditorRepresentative != null
-                    ? new AssemblyAttendeeDto(
+                    ? new AssemblyAttendeeQueryDto(
                         x.IndependentAuditorRepresentative.FullName,
                         x.IndependentAuditorRepresentative.NationalCode,
                         x.IndependentAuditorRepresentative.AttendingMeeting,
@@ -147,7 +147,7 @@ public sealed class AnnualAssemblyDetailItemSpec : Specification<CanonicalAnnual
                     )
                     : null,
                 x.TopFinancialPosition != null
-                    ? new AssemblyAttendeeDto(
+                    ? new AssemblyAttendeeQueryDto(
                         x.TopFinancialPosition.FullName,
                         x.TopFinancialPosition.NationalCode,
                         x.TopFinancialPosition.AttendingMeeting,

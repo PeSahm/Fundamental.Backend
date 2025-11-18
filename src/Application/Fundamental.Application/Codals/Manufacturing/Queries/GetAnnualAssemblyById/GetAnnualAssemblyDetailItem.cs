@@ -35,35 +35,35 @@ public sealed record GetAnnualAssemblyDetailItem(
     string? NewDate,
     string? NewLocation,
     string? BreakDescription,
-    List<SessionOrderDto> SessionOrders,
-    List<ShareHolderDto> ShareHolders,
-    List<AssemblyBoardMemberDto> AssemblyBoardMembers,
-    List<InspectorDto> Inspectors,
-    List<NewBoardMemberDto> NewBoardMembers,
-    List<BoardMemberWageAndGiftDto> BoardMemberWageAndGifts,
-    List<NewsPaperDto> NewsPapers,
-    List<AssemblyInterimDto> AssemblyInterims,
-    List<ProportionedRetainedEarningDto> ProportionedRetainedEarnings,
-    AssemblyAttendeeDto? Ceo,
-    AssemblyAttendeeDto? AuditCommitteeChairman,
-    AssemblyAttendeeDto? IndependentAuditorRepresentative,
-    AssemblyAttendeeDto? TopFinancialPosition
+    List<SessionOrderQueryDto> SessionOrders,
+    List<ShareHolderQueryDto> ShareHolders,
+    List<AssemblyBoardMemberQueryDto> AssemblyBoardMembers,
+    List<InspectorQueryDto> Inspectors,
+    List<NewBoardMemberQueryDto> NewBoardMembers,
+    List<BoardMemberWageAndGiftQueryDto> BoardMemberWageAndGifts,
+    List<NewsPaperQueryDto> NewsPapers,
+    List<AssemblyInterimQueryDto> AssemblyInterims,
+    List<ProportionedRetainedEarningQueryDto> ProportionedRetainedEarnings,
+    AssemblyAttendeeQueryDto? Ceo,
+    AssemblyAttendeeQueryDto? AuditCommitteeChairman,
+    AssemblyAttendeeQueryDto? IndependentAuditorRepresentative,
+    AssemblyAttendeeQueryDto? TopFinancialPosition
 );
 
-public sealed record SessionOrderDto(
+public sealed record SessionOrderQueryDto(
     SessionOrderType Type,
     string? Description,
     string? FieldName
 );
 
-public sealed record ShareHolderDto(
+public sealed record ShareHolderQueryDto(
     int? ShareHolderSerial,
     string? Name,
     long? ShareCount,
     decimal? SharePercent
 );
 
-public sealed record AssemblyBoardMemberDto(
+public sealed record AssemblyBoardMemberQueryDto(
     int? BoardMemberSerial,
     string? FullName,
     string? NationalCode,
@@ -81,13 +81,13 @@ public sealed record AssemblyBoardMemberDto(
     VerificationStatus Verification
 );
 
-public sealed record InspectorDto(
+public sealed record InspectorQueryDto(
     int? Serial,
     string? Name,
     InspectorType Type
 );
 
-public sealed record NewBoardMemberDto(
+public sealed record NewBoardMemberQueryDto(
     string? Name,
     bool IsLegal,
     string? NationalCode,
@@ -96,7 +96,7 @@ public sealed record NewBoardMemberDto(
     BoardMembershipType MembershipType
 );
 
-public sealed record BoardMemberWageAndGiftDto(
+public sealed record BoardMemberWageAndGiftQueryDto(
     WageAndGiftFieldType Type,
     string? FieldName,
     decimal? CurrentYearValue,
@@ -104,12 +104,12 @@ public sealed record BoardMemberWageAndGiftDto(
     string? Description
 );
 
-public sealed record NewsPaperDto(
+public sealed record NewsPaperQueryDto(
     int? NewsPaperId,
     string? Name
 );
 
-public sealed record AssemblyInterimDto(
+public sealed record AssemblyInterimQueryDto(
     string? FieldName,
     string? Description,
     decimal? YearEndToDateValue,
@@ -118,14 +118,14 @@ public sealed record AssemblyInterimDto(
     string? RowClass
 );
 
-public sealed record ProportionedRetainedEarningDto(
+public sealed record ProportionedRetainedEarningQueryDto(
     ProportionedRetainedEarningFieldName? FieldName,
     string? Description,
     decimal? YearEndToDateValue,
     string? RowClass
 );
 
-public sealed record AssemblyAttendeeDto(
+public sealed record AssemblyAttendeeQueryDto(
     string? FullName,
     string? NationalCode,
     bool AttendingMeeting,
