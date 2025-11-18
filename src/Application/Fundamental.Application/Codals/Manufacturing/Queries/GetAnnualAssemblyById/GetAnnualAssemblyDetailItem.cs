@@ -57,14 +57,14 @@ public sealed record SessionOrderQueryDto(
 );
 
 public sealed record ShareHolderQueryDto(
-    int? ShareHolderSerial,
+    int ShareHolderSerial,
     string? Name,
-    long? ShareCount,
+    long ShareCount,
     decimal? SharePercent
 );
 
 public sealed record AssemblyBoardMemberQueryDto(
-    int? BoardMemberSerial,
+    int BoardMemberSerial,
     string? FullName,
     string? NationalCode,
     LegalCompanyType? LegalType,
@@ -82,7 +82,7 @@ public sealed record AssemblyBoardMemberQueryDto(
 );
 
 public sealed record InspectorQueryDto(
-    int? Serial,
+    int Serial,
     string? Name,
     InspectorType Type
 );
@@ -91,7 +91,7 @@ public sealed record NewBoardMemberQueryDto(
     string? Name,
     bool IsLegal,
     string? NationalCode,
-    int? BoardMemberSerial,
+    int BoardMemberSerial,
     LegalCompanyType? LegalType,
     BoardMembershipType MembershipType
 );
@@ -105,7 +105,7 @@ public sealed record BoardMemberWageAndGiftQueryDto(
 );
 
 public sealed record NewsPaperQueryDto(
-    int? NewsPaperId,
+    int NewsPaperId,
     string? Name
 );
 

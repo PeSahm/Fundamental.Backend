@@ -262,12 +262,9 @@ public class AnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Canonical
             return new List<Inspector>();
         }
 
-        return dtos.Select(x => new Inspector
-        {
-            Serial = x.Serial,
-            Name = x.Name,
-            Type = (InspectorType)x.Type
-        }).ToList();
+        return dtos
+            .Select(x => new Inspector(x.Serial, x.Name, (InspectorType)x.Type))
+            .ToList();
     }
 
     private List<NewBoardMember> MapNewBoardMembers(List<NewBoardMemberDto>? dtos)
