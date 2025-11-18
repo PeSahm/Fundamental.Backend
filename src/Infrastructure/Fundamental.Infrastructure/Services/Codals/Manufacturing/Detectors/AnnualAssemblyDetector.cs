@@ -30,6 +30,7 @@ public class AnnualAssemblyDetector : ICodalVersionDetector
             return CodalVersion.None;
         }
     }
+
     public static ReportingType ReportingType => ReportingType.Production;
 
     public static LetterType LetterType => LetterType.AnnualGeneralMeetingDecisions;

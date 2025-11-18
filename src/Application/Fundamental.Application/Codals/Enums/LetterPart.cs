@@ -11,10 +11,5 @@ public enum LetterPart
     /// <summary>
     ///     شرکت های سرمایه پذیر.
     /// </summary>
-    TheStatusOfViableCompanies = 5,
-
-    /// <summary>
-    ///     تصمیمات مجمع عمومی عادی سالیانه.
-    /// </summary>
-    AnnualGeneralMeetingDecisions = 6
+    TheStatusOfViableCompanies = 5
 }

@@ -1,6 +1,5 @@
 using Fundamental.Application.Codals.Enums;
 using Fundamental.Application.Codals.Services;
-using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Enums;
 using Newtonsoft.Json;

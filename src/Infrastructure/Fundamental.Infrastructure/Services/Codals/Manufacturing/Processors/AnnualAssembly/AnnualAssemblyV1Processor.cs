@@ -10,7 +10,6 @@ using Fundamental.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.AnnualAssembly;
 
