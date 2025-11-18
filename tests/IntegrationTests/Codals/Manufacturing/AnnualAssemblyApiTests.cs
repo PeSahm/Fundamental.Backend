@@ -250,7 +250,6 @@ public class AnnualAssemblyApiTests : FinancialStatementTestBase
         await _fixture.DbContext.SaveChangesAsync();
 
         string testJson = AnnualAssemblyTestData.GetV1TestData();
-        SetupApiResponse("annual-assembly", testJson);
 
         AnnualAssemblyV1Processor processor = new(
             _fixture.Services.GetRequiredService<IServiceScopeFactory>(),
@@ -276,14 +275,5 @@ public class AnnualAssemblyApiTests : FinancialStatementTestBase
         _fixture.DbContext.Symbols.RemoveRange(testSymbols);
 
         await _fixture.DbContext.SaveChangesAsync();
-    }
-
-    private void SetupApiResponse(string endpoint, string responseJson)
-    {
-        _fixture.WireMockServer.Given(Request.Create().WithPath($"/{endpoint}").UsingGet())
-            .RespondWith(WireMockResponse.Create()
-                .WithStatusCode(HttpStatusCode.OK)
-                .WithHeader("Content-Type", "application/json")
-                .WithBody(responseJson));
     }
 }
