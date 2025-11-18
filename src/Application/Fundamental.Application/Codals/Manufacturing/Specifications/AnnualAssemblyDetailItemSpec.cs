@@ -4,6 +4,7 @@ using Fundamental.Domain.Codals.Manufacturing.Entities;
 
 namespace Fundamental.Application.Codals.Manufacturing.Specifications;
 
+#pragma warning disable SA1118 // Parameter should not span multiple lines
 public sealed class AnnualAssemblyDetailItemSpec : Specification<CanonicalAnnualAssembly, GetAnnualAssemblyDetailItem>
 {
     public AnnualAssemblyDetailItemSpec()
