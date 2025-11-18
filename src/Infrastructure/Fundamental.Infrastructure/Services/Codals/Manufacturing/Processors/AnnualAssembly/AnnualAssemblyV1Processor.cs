@@ -31,7 +31,7 @@ public sealed class AnnualAssemblyV1Processor(
         using IServiceScope scope = serviceScopeFactory.CreateScope();
         FundamentalDbContext dbContext = scope.ServiceProvider.GetRequiredService<FundamentalDbContext>();
 
-        Symbol symbol = await dbContext.Symbols.FirstOrDefaultAsync(s => s.Isin == statement.Isin, cancellationToken);
+        Symbol? symbol = await dbContext.Symbols.FirstOrDefaultAsync(s => s.Isin == statement.Isin, cancellationToken);
         if (symbol == null)
         {
             throw new InvalidOperationException($"Symbol with ISIN {statement.Isin} not found");
