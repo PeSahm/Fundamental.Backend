@@ -68,7 +68,7 @@ public class AnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Canonical
             Hour = dto.ParentAssembly.Hour,
             Location = dto.ParentAssembly.Location,
             Day = dto.ParentAssembly.Day,
-            LetterTracingNo = dto.ParentAssembly.LetterTracingNo.HasValue
+            LetterTracingNo = dto.ParentAssembly.LetterTracingNo.HasValue && dto.ParentAssembly.LetterTracingNo.Value >= 0
                 ? (ulong)dto.ParentAssembly.LetterTracingNo.Value
                 : null,
             SessionOrders = MapSessionOrders(dto.ParentAssembly.SessionOrders)
