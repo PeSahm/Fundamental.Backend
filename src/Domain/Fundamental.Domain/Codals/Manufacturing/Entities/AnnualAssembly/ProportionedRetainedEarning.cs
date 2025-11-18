@@ -37,6 +37,11 @@ public class ProportionedRetainedEarning
         IEnumerable<ProportionedRetainedEarning> items,
         ProportionedRetainedEarningFieldName fieldName)
     {
+        if (items == null)
+        {
+            return null;
+        }
+
         return items.FirstOrDefault(x => x.FieldName == fieldName);
     }
 
