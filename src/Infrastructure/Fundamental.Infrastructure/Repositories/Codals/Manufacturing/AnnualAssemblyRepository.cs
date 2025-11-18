@@ -35,20 +35,20 @@ public class AnnualAssemblyRepository(FundamentalDbContext dbContext) : IAnnualA
         }
 
         return await query.Select(x => new GetAnnualAssemblyListItem
-            {
-                Id = x.Id,
-                Isin = x.Symbol.Isin,
-                Symbol = x.Symbol.Name,
-                Title = x.Symbol.Title,
-                HtmlUrl = x.HtmlUrl.ToString(),
-                Version = x.Version,
-                FiscalYear = x.FiscalYear.Year,
-                YearEndMonth = x.YearEndMonth.Month,
-                AssemblyDate = x.AssemblyDate,
-                TraceNo = x.TraceNo,
-                PublishDate = x.PublishDate,
-                AssemblyResultTypeTitle = x.ParentAssemblyInfo != null ? x.ParentAssemblyInfo.AssemblyResultTypeTitle ?? string.Empty : string.Empty
-            })
+        {
+            Id = x.Id,
+            Isin = x.Symbol.Isin,
+            Symbol = x.Symbol.Name,
+            Title = x.Symbol.Title,
+            HtmlUrl = x.HtmlUrl.ToString(),
+            Version = x.Version,
+            FiscalYear = x.FiscalYear.Year,
+            YearEndMonth = x.YearEndMonth.Month,
+            AssemblyDate = x.AssemblyDate,
+            TraceNo = x.TraceNo,
+            PublishDate = x.PublishDate,
+            AssemblyResultTypeTitle = x.ParentAssemblyInfo != null ? x.ParentAssemblyInfo.AssemblyResultTypeTitle ?? string.Empty : string.Empty
+        })
             .ToPagingListAsync(request, "FiscalYear desc, AssemblyDate desc", cancellationToken);
     }
 }

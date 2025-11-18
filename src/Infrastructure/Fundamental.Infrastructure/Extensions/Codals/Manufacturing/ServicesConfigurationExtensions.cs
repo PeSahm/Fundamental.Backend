@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Codals.Dto.AnnualAssembly.V1;
+using Fundamental.Application.Codals.Dto.AnnualAssembly.V1;
 using Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage5Summaries.V2.
     InterpretativeReportSummaryPage5;
 using Fundamental.Application.Codals.Dto.MonthlyActivities.V1;

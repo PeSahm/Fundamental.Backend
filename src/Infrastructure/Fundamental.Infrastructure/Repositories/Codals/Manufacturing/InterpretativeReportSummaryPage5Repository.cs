@@ -35,19 +35,19 @@ public class InterpretativeReportSummaryPage5Repository(FundamentalDbContext dbC
         }
 
         return await query.Select(x => new GetInterpretativeReportSummaryPage5ListItem
-            {
-                Id = x.Id,
-                Isin = x.Symbol.Isin,
-                Symbol = x.Symbol.Name,
-                Title = x.Symbol.Title,
-                Uri = x.Uri,
-                Version = x.Version,
-                FiscalYear = x.FiscalYear.Year,
-                YearEndMonth = x.YearEndMonth.Month,
-                ReportMonth = x.ReportMonth.Month,
-                TraceNo = x.TraceNo,
-                PublishDate = x.PublishDate
-            })
+        {
+            Id = x.Id,
+            Isin = x.Symbol.Isin,
+            Symbol = x.Symbol.Name,
+            Title = x.Symbol.Title,
+            Uri = x.Uri,
+            Version = x.Version,
+            FiscalYear = x.FiscalYear.Year,
+            YearEndMonth = x.YearEndMonth.Month,
+            ReportMonth = x.ReportMonth.Month,
+            TraceNo = x.TraceNo,
+            PublishDate = x.PublishDate
+        })
             .ToPagingListAsync(request, "FiscalYear desc, ReportMonth desc", cancellationToken);
     }
 }

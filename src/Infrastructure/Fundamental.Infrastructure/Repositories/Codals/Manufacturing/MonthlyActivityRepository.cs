@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Codals.Manufacturing.Queries.GetMonthlyActivities;
+using Fundamental.Application.Codals.Manufacturing.Queries.GetMonthlyActivities;
 using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Codals.ValueObjects;
@@ -35,21 +35,21 @@ public class MonthlyActivityRepository(FundamentalDbContext dbContext) : IMonthl
         }
 
         return await query.Select(x => new GetMonthlyActivitiesListItem
-            {
-                Id = x.Id,
-                Isin = x.Symbol.Isin,
-                Symbol = x.Symbol.Name,
-                Title = x.Symbol.Title,
-                Uri = x.Uri,
-                Version = x.Version,
-                FiscalYear = x.FiscalYear.Year,
-                YearEndMonth = x.YearEndMonth.Month,
-                ReportMonth = x.ReportMonth.Month,
-                HasSubCompanySale = x.HasSubCompanySale,
-                TraceNo = x.TraceNo,
-                CreatedAt = x.CreatedAt,
-                UpdatedAt = x.UpdatedAt
-            })
+        {
+            Id = x.Id,
+            Isin = x.Symbol.Isin,
+            Symbol = x.Symbol.Name,
+            Title = x.Symbol.Title,
+            Uri = x.Uri,
+            Version = x.Version,
+            FiscalYear = x.FiscalYear.Year,
+            YearEndMonth = x.YearEndMonth.Month,
+            ReportMonth = x.ReportMonth.Month,
+            HasSubCompanySale = x.HasSubCompanySale,
+            TraceNo = x.TraceNo,
+            CreatedAt = x.CreatedAt,
+            UpdatedAt = x.UpdatedAt
+        })
             .ToPagingListAsync(request, "UpdatedAt desc", cancellationToken);
     }
 

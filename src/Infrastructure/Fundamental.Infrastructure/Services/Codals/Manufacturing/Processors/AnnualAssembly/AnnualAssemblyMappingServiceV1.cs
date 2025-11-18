@@ -31,7 +31,7 @@ public class AnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Canonical
         ushort fiscalYear;
         ushort yearEndMonth = 12; // Default to month 12 (end of Persian year)
         ushort reportMonth;
-        
+
         if (parsedDate.HasValue)
         {
             fiscalYear = (ushort)parsedDate.Value.GetPersianYear();
@@ -68,8 +68,8 @@ public class AnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Canonical
             Hour = dto.ParentAssembly.Hour,
             Location = dto.ParentAssembly.Location,
             Day = dto.ParentAssembly.Day,
-            LetterTracingNo = dto.ParentAssembly.LetterTracingNo.HasValue 
-                ? (ulong)dto.ParentAssembly.LetterTracingNo.Value 
+            LetterTracingNo = dto.ParentAssembly.LetterTracingNo.HasValue
+                ? (ulong)dto.ParentAssembly.LetterTracingNo.Value
                 : null,
             SessionOrders = MapSessionOrders(dto.ParentAssembly.SessionOrders)
         };
@@ -119,7 +119,7 @@ public class AnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Canonical
     {
         // Update parent assembly info
         existing.ParentAssemblyInfo = updated.ParentAssemblyInfo;
-        
+
         // Update assembly chief members
         existing.AssemblyChiefMembersInfo = updated.AssemblyChiefMembersInfo;
 
@@ -343,7 +343,7 @@ public class AnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Canonical
 
         return dtos.Select(x => new ProportionedRetainedEarning
         {
-            FieldName = !string.IsNullOrWhiteSpace(x.FieldName) && Enum.TryParse<ProportionedRetainedEarningFieldName>(x.FieldName, out var fieldName)
+            FieldName = !string.IsNullOrWhiteSpace(x.FieldName) && Enum.TryParse<ProportionedRetainedEarningFieldName>(x.FieldName, out ProportionedRetainedEarningFieldName fieldName)
                 ? fieldName
                 : null,
             Description = x.Description,
