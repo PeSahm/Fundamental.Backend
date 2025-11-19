@@ -7,15 +7,15 @@ namespace Fundamental.Domain.Codals.Manufacturing.Entities.AnnualAssembly;
 /// </summary>
 public class Inspector
 {
-    private Inspector()
-    {
-    }
-
     public Inspector(int serial, string? name, InspectorType type)
     {
         Serial = serial;
         Name = name;
         Type = type;
+    }
+
+    private Inspector()
+    {
     }
 
     /// <summary>

@@ -150,6 +150,18 @@ public class AnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Canonical
         existing.TopFinancialPosition = updated.TopFinancialPosition;
     }
 
+    private static List<Inspector> MapInspectors(List<InspectorDto>? dtos)
+    {
+        if (dtos == null)
+        {
+            return new List<Inspector>();
+        }
+
+        return dtos
+            .Select(x => new Inspector(x.Serial, x.Name, (InspectorType)x.Type))
+            .ToList();
+    }
+
     private static DateTime? ParsePersianDate(string? persianDate)
     {
         if (string.IsNullOrWhiteSpace(persianDate))
@@ -255,18 +267,6 @@ public class AnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Canonical
         }).ToList();
     }
 
-    private List<Inspector> MapInspectors(List<InspectorDto>? dtos)
-    {
-        if (dtos == null)
-        {
-            return new List<Inspector>();
-        }
-
-        return dtos
-            .Select(x => new Inspector(x.Serial, x.Name, (InspectorType)x.Type))
-            .ToList();
-    }
-
     private List<NewBoardMember> MapNewBoardMembers(List<NewBoardMemberDto>? dtos)
     {
         if (dtos == null)
@@ -343,7 +343,8 @@ public class AnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Canonical
 
         return dtos.Select(x => new ProportionedRetainedEarning
         {
-            FieldName = !string.IsNullOrWhiteSpace(x.FieldName) && Enum.TryParse<ProportionedRetainedEarningFieldName>(x.FieldName, out ProportionedRetainedEarningFieldName fieldName)
+            FieldName = !string.IsNullOrWhiteSpace(x.FieldName) &&
+                        Enum.TryParse<ProportionedRetainedEarningFieldName>(x.FieldName, out ProportionedRetainedEarningFieldName fieldName)
                 ? fieldName
                 : null,
             Description = x.Description,

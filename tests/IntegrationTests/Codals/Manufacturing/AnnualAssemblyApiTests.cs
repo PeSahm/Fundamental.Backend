@@ -234,7 +234,8 @@ public class AnnualAssemblyApiTests : FinancialStatementTestBase
             // Verify ordering: fiscal year desc, then assembly date desc
             for (int i = 0; i < items.Count - 1; i++)
             {
-                items[i].FiscalYear.Should().BeGreaterThanOrEqualTo(items[i + 1].FiscalYear,
+                items[i].FiscalYear.Should().BeGreaterThanOrEqualTo(
+                    items[i + 1].FiscalYear,
                     "items should be ordered by fiscal year descending");
             }
         }

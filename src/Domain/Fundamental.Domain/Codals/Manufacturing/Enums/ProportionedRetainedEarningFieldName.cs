@@ -26,9 +26,9 @@ public enum ProportionedRetainedEarningFieldName
     AnnualAdjustment,
 
     /// <summary>
-    /// سود (زیان) انباشته ابتدای دوره تعدیل‌شده.
+    /// سود (زیان) انباشته ابتدای دوره تعدیل شده.
     /// </summary>
-    [Description("سود (زیان) انباشته ابتدای دوره تعدیل‌شده")]
+    [Description("سود (زیان) انباشته ابتدای دوره تعدیل شده")]
     AdjustedBeginingRetainedEarnings,
 
     /// <summary>
@@ -64,13 +64,13 @@ public enum ProportionedRetainedEarningFieldName
     /// <summary>
     /// انتقال به اندوخته‌ قانونی.
     /// </summary>
-    [Description("انتقال به اندوخته‌ قانونی")]
+    [Description("انتقال به اتدوخته قانونی")]
     LegalReserve,
 
     /// <summary>
-    /// انتقال به سایر اندوخته‌ها.
+    /// انتقال به سایر اندوخته ها.
     /// </summary>
-    [Description("انتقال به سایر اندوخته‌ها")]
+    [Description("انتقال به سایر اندوخته ها")]
     ExtenseReserve,
 
     /// <summary>
