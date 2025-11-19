@@ -10,6 +10,12 @@ namespace Fundamental.Infrastructure.Repositories.Codals.Manufacturing;
 
 public class ExtraAnnualAssemblyRepository(FundamentalDbContext dbContext) : IExtraAnnualAssemblyRepository
 {
+    /// <summary>
+    /// Retrieves a paginated list of extra annual assembly list items applying optional filters from the request.
+    /// </summary>
+    /// <param name="request">Filtering and paging parameters. Supported filters: <c>Isin</c>, <c>FiscalYear</c>, and <c>YearEndMonth</c>; also contains paging and sorting options.</param>
+    /// <param name="cancellationToken">Token to cancel the operation.</param>
+    /// <returns>A paginated collection of <see cref="GetExtraAnnualAssemblyListItem"/> matching the provided filters, ordered by fiscal year descending then assembly date descending by default.</returns>
     public async Task<Paginated<GetExtraAnnualAssemblyListItem>> GetExtraAnnualAssemblysAsync(
         GetExtraAnnualAssemblysRequest request,
         CancellationToken cancellationToken

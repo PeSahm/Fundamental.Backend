@@ -40,6 +40,10 @@ public static class ServicesConfigurationExtensions
         return serviceCollection;
     }
 
+    /// <summary>
+    /// Registers canonical mapping infrastructure and keyed scoped canonical mappings used by manufacturing codals.
+    /// </summary>
+    /// <returns>The updated <see cref="IServiceCollection"/> with canonical mapping services and keyed mappings for monthly activity, interpretative report summary page 5, annual assembly, and extra annual assembly.</returns>
     public static IServiceCollection AddCodalMonthlyActivityMappingServices(this IServiceCollection serviceCollection)
     {
         // Register canonical mapping services
@@ -72,6 +76,10 @@ public static class ServicesConfigurationExtensions
         return serviceCollection;
     }
 
+    /// <summary>
+    /// Registers keyed scoped CODAL processor implementations used by the manufacturing pipeline.
+    /// </summary>
+    /// <returns>The <see cref="IServiceCollection"/> after registering the CODAL processors.</returns>
     public static IServiceCollection AddCodalProcessorServices(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, MonthlyActivityV1Processor>();
@@ -90,6 +98,10 @@ public static class ServicesConfigurationExtensions
         return serviceCollection;
     }
 
+    /// <summary>
+    /// Adds keyed scoped codal version detector implementations for manufacturing codals to the service collection.
+    /// </summary>
+    /// <returns>The original IServiceCollection with the codal version detector services registered.</returns>
     public static IServiceCollection AddCodalServiceDetectorServices(this IServiceCollection services)
     {
         services.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, MonthlyActivityDetector>();
@@ -104,6 +116,10 @@ public static class ServicesConfigurationExtensions
         return services;
     }
 
+    /// <summary>
+    /// Registers scoped implementations of manufacturing read repositories into the provided service collection.
+    /// </summary>
+    /// <returns>The same IServiceCollection instance with the manufacturing read repositories registered.</returns>
     public static IServiceCollection AddManufacturingReadRepositories(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddScoped<IMonthlyActivityRepository, MonthlyActivityRepository>();

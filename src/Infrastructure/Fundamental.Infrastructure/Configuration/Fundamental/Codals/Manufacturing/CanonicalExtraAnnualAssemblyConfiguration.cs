@@ -10,6 +10,12 @@ namespace Fundamental.Infrastructure.Configuration.Fundamental.Codals.Manufactur
 /// </summary>
 public class CanonicalExtraAnnualAssemblyConfiguration : EntityTypeConfigurationBase<CanonicalExtraAnnualAssembly>
 {
+    /// <summary>
+    /// Configures EF Core mappings for CanonicalExtraAnnualAssembly, including table name and schema, relationships, scalar properties, value objects, and JSON-backed owned entities and collections.
+    /// </summary>
+    /// <remarks>
+    /// Maps the entity to the "manufacturing" schema using snake_case naming, configures a required foreign key to Symbol, applies constraints for version, dates and URLs, maps value objects (fiscal year, year/report months), applies currency configuration, and persists several owned entities and collections as JSON/JSONB columns.
+    /// </remarks>
     protected override void ExtraConfigure(EntityTypeBuilder<CanonicalExtraAnnualAssembly> builder)
     {
         builder.ToTable(NpgsqlSnakeCaseNameTranslator.ConvertToSnakeCase(nameof(CanonicalExtraAnnualAssembly)), "manufacturing");

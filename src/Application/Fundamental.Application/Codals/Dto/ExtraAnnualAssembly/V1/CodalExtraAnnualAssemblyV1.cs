@@ -88,7 +88,10 @@ public class CodalExtraAnnualAssemblyV1 : ICodalMappingServiceMetadata
 
     /// <summary>
     /// Validates if this is a valid extraordinary annual assembly report.
+    /// <summary>
+    /// Determines whether the DTO contains the required ParentAssembly data for a valid report.
     /// </summary>
+    /// <returns>true if ParentAssembly is not null, false otherwise.</returns>
     public bool IsValidReport()
     {
         return ParentAssembly != null;

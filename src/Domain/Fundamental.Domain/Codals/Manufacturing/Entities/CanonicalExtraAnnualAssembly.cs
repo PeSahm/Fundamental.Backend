@@ -13,6 +13,19 @@ namespace Fundamental.Domain.Codals.Manufacturing.Entities;
 /// </summary>
 public class CanonicalExtraAnnualAssembly : BaseEntity<Guid>
 {
+    /// <summary>
+    /// Initializes a new CanonicalExtraAnnualAssembly with core metadata and timestamps.
+    /// </summary>
+    /// <param name="id">Unique identifier for the aggregate.</param>
+    /// <param name="symbol">Market symbol associated with the assembly.</param>
+    /// <param name="traceNo">Tracking number of the announcement.</param>
+    /// <param name="htmlUrl">URL of the announcement's HTML page.</param>
+    /// <param name="fiscalYear">Fiscal year applicable to the assembly.</param>
+    /// <param name="yearEndMonth">Fiscal year end month.</param>
+    /// <param name="reportMonth">Month the report/assembly relates to.</param>
+    /// <param name="assemblyDate">Date when the assembly was held.</param>
+    /// <param name="publishDate">Date the announcement was published.</param>
+    /// <param name="version">JSON version identifier for the record.</param>
     public CanonicalExtraAnnualAssembly(
         Guid id,
         Symbol symbol,
@@ -40,6 +53,9 @@ public class CanonicalExtraAnnualAssembly : BaseEntity<Guid>
         CreatedAt = DateTime.UtcNow;
     }
 
+    /// <summary>
+    /// Initializes a new instance of CanonicalExtraAnnualAssembly for ORM and deserialization purposes.
+    /// </summary>
     protected CanonicalExtraAnnualAssembly()
     {
     }

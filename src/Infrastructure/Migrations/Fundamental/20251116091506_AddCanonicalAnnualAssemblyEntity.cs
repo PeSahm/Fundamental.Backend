@@ -1,4 +1,4 @@
-﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
+using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -14,7 +14,12 @@ namespace Fundamental.Migrations.Fundamental
     [Migration("20251116091506_AddCanonicalAnnualAssemblyEntity")]
     public class AddCanonicalAnnualAssemblyEntity : Migration
     {
-        /// <inheritdoc />
+        /// <summary>
+        /// Applies schema changes that add the canonical_annual_assembly entity and update the tags column on non_operation_income_and_expense.
+        /// </summary>
+        /// <remarks>
+        /// Alters manufacturing.non_operation_income_and_expense.tags to use the PostgreSQL array type `none_operational_income_tag[]` with a non-null default empty list, and creates the manufacturing.canonical_annual_assembly table with its columns, primary key, a foreign key to shd.symbol(symbol_id) with cascade delete, and unique/non-unique indexes on `Id` and `symbol_id` respectively.
+        /// </remarks>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<List<NoneOperationalIncomeTag>>(
