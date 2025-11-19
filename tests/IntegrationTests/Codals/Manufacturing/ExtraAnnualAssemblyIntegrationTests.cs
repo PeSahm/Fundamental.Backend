@@ -1,5 +1,6 @@
 using System.Net;
 using FluentAssertions;
+using Fundamental.Application.Codals.Manufacturing.Queries.GetExtraAnnualAssemblyById;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
@@ -8,10 +9,12 @@ using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Codals.ValueObjects;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Entities;
+using Fundamental.ErrorHandling;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Detectors;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.ExtraAnnualAssembly;
 using Fundamental.IntegrationTests.TestData;
 using IntegrationTests.Shared;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using WireMock.RequestBuilders;
@@ -53,7 +56,7 @@ public class ExtraAnnualAssemblyIntegrationTests : FinancialStatementTestBase
         await processor.Process(statement, jsonResponse, CancellationToken.None);
 
         // Assert
-        CanonicalAnnualAssembly? storedEntity = await _fixture.DbContext.CanonicalAnnualAssemblies
+        CanonicalExtraAnnualAssembly? storedEntity = await _fixture.DbContext.CanonicalExtraAnnualAssemblies
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id && x.TraceNo == 1401458UL);
 
         storedEntity.Should().NotBeNull();
@@ -86,7 +89,7 @@ public class ExtraAnnualAssemblyIntegrationTests : FinancialStatementTestBase
         await processor.Process(statement, jsonResponse, CancellationToken.None);
 
         // Assert - Verify all collection properties are populated
-        CanonicalAnnualAssembly? storedEntity = await _fixture.DbContext.CanonicalAnnualAssemblies
+        CanonicalExtraAnnualAssembly? storedEntity = await _fixture.DbContext.CanonicalExtraAnnualAssemblies
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id && x.TraceNo == 1401458UL);
 
         storedEntity.Should().NotBeNull();
@@ -128,7 +131,7 @@ public class ExtraAnnualAssemblyIntegrationTests : FinancialStatementTestBase
         await processor.Process(statement, jsonResponse, CancellationToken.None);
 
         // Assert - Verify assembly metadata
-        CanonicalAnnualAssembly? storedEntity = await _fixture.DbContext.CanonicalAnnualAssemblies
+        CanonicalExtraAnnualAssembly? storedEntity = await _fixture.DbContext.CanonicalExtraAnnualAssemblies
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id && x.TraceNo == 1401458UL);
 
         storedEntity.Should().NotBeNull();
@@ -164,14 +167,14 @@ public class ExtraAnnualAssemblyIntegrationTests : FinancialStatementTestBase
         await processor.Process(statement, jsonResponse, CancellationToken.None);
 
         // Assert - Verify board member enums are correctly mapped
-        CanonicalAnnualAssembly? storedEntity = await _fixture.DbContext.CanonicalAnnualAssemblies
+        CanonicalExtraAnnualAssembly? storedEntity = await _fixture.DbContext.CanonicalExtraAnnualAssemblies
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id && x.TraceNo == 1401458UL);
 
         storedEntity.Should().NotBeNull();
 
         if (storedEntity!.AssemblyBoardMembers.Any())
         {
-            foreach (var member in storedEntity.AssemblyBoardMembers)
+            foreach (AssemblyBoardMember member in storedEntity.AssemblyBoardMembers)
             {
                 member.MembershipType.Should().BeOneOf(BoardMembershipType.Alternate, BoardMembershipType.Principal);
                 member.Position.Should().BeOneOf(Enum.GetValues<BoardPosition>());
@@ -203,7 +206,7 @@ public class ExtraAnnualAssemblyIntegrationTests : FinancialStatementTestBase
         await processor.Process(statement, jsonResponse, CancellationToken.None);
 
         // Assert - Verify attendee entities
-        CanonicalAnnualAssembly? storedEntity = await _fixture.DbContext.CanonicalAnnualAssemblies
+        CanonicalExtraAnnualAssembly? storedEntity = await _fixture.DbContext.CanonicalExtraAnnualAssemblies
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id && x.TraceNo == 1401458UL);
 
         storedEntity.Should().NotBeNull();
@@ -246,7 +249,7 @@ public class ExtraAnnualAssemblyIntegrationTests : FinancialStatementTestBase
         await processor.Process(statement, jsonResponse, CancellationToken.None);
 
         // Assert - Should only have one record
-        int count = await _fixture.DbContext.CanonicalAnnualAssemblies
+        int count = await _fixture.DbContext.CanonicalExtraAnnualAssemblies
             .CountAsync(x => x.Symbol.Id == symbol.Id && x.TraceNo == 1401458UL);
 
         count.Should().Be(1, "processor should update existing record, not create duplicate");
@@ -280,12 +283,68 @@ public class ExtraAnnualAssemblyIntegrationTests : FinancialStatementTestBase
         detectedVersion.Should().Be(CodalVersion.None, "JSON without 'parentAssembly' should return None");
     }
 
+    [Fact]
+    public async Task GetExtraAnnualAssemblyById_ShouldReturnDetailItem()
+    {
+        // Arrange
+        await CleanExtraAnnualAssemblyData();
+        Symbol symbol = CreateTestSymbol("IRO3RYHZ0001", 9600002UL);
+        await _fixture.DbContext.Symbols.AddAsync(symbol);
+        await _fixture.DbContext.SaveChangesAsync();
+
+        string testJson = ExtraAnnualAssemblyTestData.GetV1TestData();
+        SetupApiResponse("extra-annual-assembly", testJson);
+
+        ExtraAnnualAssemblyV1Processor processor = new(
+            _fixture.Services.GetRequiredService<IServiceScopeFactory>(),
+            _fixture.Services.GetRequiredService<ICanonicalMappingServiceFactory>());
+
+        GetStatementResponse statement = CreateStatementResponse("IRO3RYHZ0001", 1401458);
+        GetStatementJsonResponse jsonResponse = CreateJsonResponse(testJson);
+
+        await processor.Process(statement, jsonResponse, CancellationToken.None);
+
+        CanonicalExtraAnnualAssembly? storedEntity = await _fixture.DbContext.CanonicalExtraAnnualAssemblies
+            .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id && x.TraceNo == 1401458UL);
+
+        // Act
+        IMediator mediator = _fixture.Services.GetRequiredService<IMediator>();
+        Response<GetExtraAnnualAssemblyDetailItem> response = await mediator.Send(
+            new GetExtraAnnualAssemblyByIdRequest(storedEntity!.Id));
+
+        // Assert
+        response.Success.Should().BeTrue();
+        response.Data.Should().NotBeNull();
+        response.Data!.Id.Should().Be(storedEntity.Id);
+        response.Data.Isin.Should().Be("IRO3RYHZ0001");
+        response.Data.Symbol.Should().NotBeNullOrWhiteSpace();
+        response.Data.Version.Should().Be("V1");
+        response.Data.TraceNo.Should().Be(1401458UL);
+    }
+
+    [Fact]
+    public async Task GetExtraAnnualAssemblyById_WithInvalidId_ShouldReturnNotFoundError()
+    {
+        // Arrange
+        await CleanExtraAnnualAssemblyData();
+        Guid nonExistentId = Guid.NewGuid();
+
+        // Act
+        IMediator mediator = _fixture.Services.GetRequiredService<IMediator>();
+        Response<GetExtraAnnualAssemblyDetailItem> response = await mediator.Send(
+            new GetExtraAnnualAssemblyByIdRequest(nonExistentId));
+
+        // Assert
+        response.Success.Should().BeFalse();
+        response.Error.Should().NotBeNull();
+    }
+
     /// <summary>
     /// Cleans all existing Extraordinary Annual Assembly data from the database.
     /// </summary>
     private async Task CleanExtraAnnualAssemblyData()
     {
-        _fixture.DbContext.CanonicalAnnualAssemblies.RemoveRange(_fixture.DbContext.CanonicalAnnualAssemblies);
+        _fixture.DbContext.CanonicalExtraAnnualAssemblies.RemoveRange(_fixture.DbContext.CanonicalExtraAnnualAssemblies);
 
         // Also clean up test symbols to avoid duplicate ISIN conflicts
         List<Symbol> testSymbols = await _fixture.DbContext.Symbols
