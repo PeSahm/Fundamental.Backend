@@ -1,7 +1,7 @@
-﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
+﻿using System;
+using System.Collections.Generic;
+using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Enums;
-using Fundamental.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fundamental.Migrations.Fundamental
 {
     /// <inheritdoc />
-    [DbContext(typeof(FundamentalDbContext))]
-    [Migration("20251116091506_AddCanonicalAnnualAssemblyEntity")]
-    public class AddCanonicalAnnualAssemblyEntity : Migration
+    public partial class AddExtraAnnualAssemblyEntity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -29,7 +27,7 @@ namespace Fundamental.Migrations.Fundamental
                 oldDefaultValue: new List<NoneOperationalIncomeTag>());
 
             migrationBuilder.CreateTable(
-                name: "canonical_annual_assembly",
+                name: "canonical_extra_annual_assembly",
                 schema: "manufacturing",
                 columns: table => new
                 {
@@ -73,9 +71,9 @@ namespace Fundamental.Migrations.Fundamental
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_canonical_annual_assembly", x => x._id);
+                    table.PrimaryKey("pk_canonical_extra_annual_assembly", x => x._id);
                     table.ForeignKey(
-                        name: "fk_canonical_annual_assembly_symbols_symbol_id",
+                        name: "fk_canonical_extra_annual_assembly_symbols_symbol_id",
                         column: x => x.symbol_id,
                         principalSchema: "shd",
                         principalTable: "symbol",
@@ -84,16 +82,16 @@ namespace Fundamental.Migrations.Fundamental
                 });
 
             migrationBuilder.CreateIndex(
-                name: "ix_canonical_annual_assembly_id",
+                name: "ix_canonical_extra_annual_assembly_id",
                 schema: "manufacturing",
-                table: "canonical_annual_assembly",
+                table: "canonical_extra_annual_assembly",
                 column: "Id",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "ix_canonical_annual_assembly_symbol_id",
+                name: "ix_canonical_extra_annual_assembly_symbol_id",
                 schema: "manufacturing",
-                table: "canonical_annual_assembly",
+                table: "canonical_extra_annual_assembly",
                 column: "symbol_id");
         }
 
@@ -101,7 +99,7 @@ namespace Fundamental.Migrations.Fundamental
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "canonical_annual_assembly",
+                name: "canonical_extra_annual_assembly",
                 schema: "manufacturing");
 
             migrationBuilder.AlterColumn<List<NoneOperationalIncomeTag>>(
