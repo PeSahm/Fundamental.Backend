@@ -1,4 +1,4 @@
-using Fundamental.Application.Codals.Manufacturing.Queries.GetAnnualAssemblys;
+using Fundamental.Application.Codals.Manufacturing.Queries.GetExtraAnnualAssemblys;
 using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Common.Dto;
@@ -8,14 +8,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Fundamental.Infrastructure.Repositories.Codals.Manufacturing;
 
-public class AnnualAssemblyRepository(FundamentalDbContext dbContext) : IAnnualAssemblyRepository
+public class ExtraAnnualAssemblyRepository(FundamentalDbContext dbContext) : IExtraAnnualAssemblyRepository
 {
-    public async Task<Paginated<GetAnnualAssemblyListItem>> GetAnnualAssemblysAsync(
-        GetAnnualAssemblysRequest request,
+    public async Task<Paginated<GetExtraAnnualAssemblyListItem>> GetExtraAnnualAssemblysAsync(
+        GetExtraAnnualAssemblysRequest request,
         CancellationToken cancellationToken
     )
     {
-        IQueryable<CanonicalAnnualAssembly> query = dbContext.CanonicalAnnualAssemblies
+        IQueryable<CanonicalExtraAnnualAssembly> query = dbContext.CanonicalExtraAnnualAssemblies
             .AsNoTracking()
             .Include(x => x.Symbol);
 
@@ -34,7 +34,7 @@ public class AnnualAssemblyRepository(FundamentalDbContext dbContext) : IAnnualA
             query = query.Where(x => x.YearEndMonth.Month == request.YearEndMonth);
         }
 
-        return await query.Select(x => new GetAnnualAssemblyListItem
+        return await query.Select(x => new GetExtraAnnualAssemblyListItem
         {
             Id = x.Id,
             Isin = x.Symbol.Isin,

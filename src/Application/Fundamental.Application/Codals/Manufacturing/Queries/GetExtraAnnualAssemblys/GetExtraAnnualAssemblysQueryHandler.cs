@@ -6,7 +6,7 @@ using MediatR;
 namespace Fundamental.Application.Codals.Manufacturing.Queries.GetExtraAnnualAssemblys;
 
 public sealed class GetExtraAnnualAssemblysQueryHandler(
-    IAnnualAssemblyRepository repository
+    IExtraAnnualAssemblyRepository repository
 ) : IRequestHandler<GetExtraAnnualAssemblysRequest, Response<Paginated<GetExtraAnnualAssemblyListItem>>>
 {
     public async Task<Response<Paginated<GetExtraAnnualAssemblyListItem>>> Handle(
