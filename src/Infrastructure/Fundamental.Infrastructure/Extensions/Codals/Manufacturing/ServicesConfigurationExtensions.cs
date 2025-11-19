@@ -115,6 +115,7 @@ public static class ServicesConfigurationExtensions
         serviceCollection.AddScoped<IFinancialStatementReadRepository, FinancialStatementReadRepository>();
         serviceCollection.AddScoped<IInterpretativeReportSummaryPage5Repository, InterpretativeReportSummaryPage5Repository>();
         serviceCollection.AddScoped<IAnnualAssemblyRepository, AnnualAssemblyRepository>();
+        serviceCollection.AddScoped<IExtraAssemblyRepository, ExtraAssemblyRepository>();
         return serviceCollection;
     }
 

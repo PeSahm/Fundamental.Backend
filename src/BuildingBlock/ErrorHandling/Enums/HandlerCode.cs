@@ -56,6 +56,8 @@ public enum HandlerCode : ushort
     GetMonthlyActivities = 13_397,
     GetFinancialStatements = 13_398,
     AddMonthlyActivity = 13_399,
+    GetExtraAssemblyById = 13_400,
+    GetExtraAssemblys = 13_401,
 
     GetFinancialStatementList = 13_999,
     GetCustomerErrorMessages = 17_999,
