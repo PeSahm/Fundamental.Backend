@@ -1,5 +1,6 @@
 using Ardalis.Specification;
 using Fundamental.Application.Codals.Manufacturing.Queries.GetExtraAnnualAssemblyById;
+using Fundamental.Application.Codals.Manufacturing.Queries.Shared;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 
 namespace Fundamental.Application.Codals.Manufacturing.Specifications;
