@@ -1,4 +1,6 @@
 ﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
+using Fundamental.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -6,7 +8,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Fundamental.Migrations.Fundamental
 {
     /// <inheritdoc />
-    public partial class AddPublishDateToCanonicalMonthlyActivity : Migration
+    [DbContext(typeof(FundamentalDbContext))]
+    [Migration("20251103095923_AddPublishDateToCanonicalMonthlyActivity")]
+    public class AddPublishDateToCanonicalMonthlyActivity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

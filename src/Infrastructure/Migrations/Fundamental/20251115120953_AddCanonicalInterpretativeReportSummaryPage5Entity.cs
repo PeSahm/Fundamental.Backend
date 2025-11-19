@@ -1,5 +1,7 @@
 ﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Enums;
+using Fundamental.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -8,7 +10,9 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fundamental.Migrations.Fundamental
 {
     /// <inheritdoc />
-    public partial class AddCanonicalInterpretativeReportSummaryPage5Entity : Migration
+    [DbContext(typeof(FundamentalDbContext))]
+    [Migration("20251115120953_AddCanonicalInterpretativeReportSummaryPage5Entity")]
+    public class AddCanonicalInterpretativeReportSummaryPage5Entity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

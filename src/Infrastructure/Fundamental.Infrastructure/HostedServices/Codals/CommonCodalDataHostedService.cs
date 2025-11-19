@@ -1,4 +1,4 @@
-﻿using Fundamental.Application.Common.Extensions;
+using Fundamental.Application.Common.Extensions;
 using Fundamental.Domain.Symbols.Entities;
 using Fundamental.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
