@@ -1,7 +1,9 @@
 using ErrorHandling.AspNetCore;
+using Fundamental.Application.Codals.Manufacturing.Queries.GetExtraAnnualAssemblyById;
 using Fundamental.Application.Codals.Manufacturing.Queries.GetExtraAnnualAssemblys;
 using Fundamental.Domain.Common.Dto;
 using Fundamental.ErrorHandling;
+using Fundamental.Web.Common.Swagger;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,5 +29,14 @@ public class ExtraAnnualAssemblyController : ControllerBase
     )
     {
         return await _mediator.Send(request);
+    }
+
+    [HttpGet("{id}")]
+    [SwaggerRequestType(typeof(GetExtraAnnualAssemblyByIdRequest))]
+    public async Task<Response<GetExtraAnnualAssemblyDetailItem>> GetExtraAnnualAssembly(
+        [FromRoute] Guid id
+    )
+    {
+        return await _mediator.Send(new GetExtraAnnualAssemblyByIdRequest(id));
     }
 }
