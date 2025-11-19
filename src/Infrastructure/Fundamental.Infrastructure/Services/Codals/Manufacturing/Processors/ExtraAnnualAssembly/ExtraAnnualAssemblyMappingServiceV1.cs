@@ -12,11 +12,11 @@ namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.Ex
 
 /// <summary>
 /// Mapping service for Extraordinary Annual Assembly V1 data.
-/// Reuses CanonicalAnnualAssembly entity as the JSON structure is identical.
+/// Maps to dedicated CanonicalExtraAnnualAssembly entity.
 /// </summary>
-public class ExtraAnnualAssemblyMappingServiceV1 : ICanonicalMappingService<CanonicalAnnualAssembly, CodalExtraAnnualAssemblyV1>
+public class ExtraAnnualAssemblyMappingServiceV1 : ICanonicalMappingService<CanonicalExtraAnnualAssembly, CodalExtraAnnualAssemblyV1>
 {
-    public Task<CanonicalAnnualAssembly> MapToCanonicalAsync(
+    public Task<CanonicalExtraAnnualAssembly> MapToCanonicalAsync(
         CodalExtraAnnualAssemblyV1 dto,
         Symbol symbol,
         GetStatementResponse statement
@@ -48,7 +48,7 @@ public class ExtraAnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Cano
         // Parse assembly date for storage
         DateTime assemblyDate = parsedDate ?? statement.PublishDateMiladi;
 
-        CanonicalAnnualAssembly canonical = new(
+        CanonicalExtraAnnualAssembly canonical = new(
             Guid.NewGuid(),
             symbol,
             statement.TracingNo,
@@ -116,7 +116,7 @@ public class ExtraAnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Cano
         return Task.FromResult(canonical);
     }
 
-    public void UpdateCanonical(CanonicalAnnualAssembly existing, CanonicalAnnualAssembly updated)
+    public void UpdateCanonical(CanonicalExtraAnnualAssembly existing, CanonicalExtraAnnualAssembly updated)
     {
         // Update parent assembly info
         existing.ParentAssemblyInfo = updated.ParentAssemblyInfo;

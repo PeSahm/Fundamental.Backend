@@ -15,7 +15,7 @@ namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.Ex
 
 /// <summary>
 /// Processor for Extraordinary Annual Assembly V1 JSON data.
-/// Reuses CanonicalAnnualAssembly entity for storage.
+/// Uses dedicated CanonicalExtraAnnualAssembly entity for storage.
 /// </summary>
 public sealed class ExtraAnnualAssemblyV1Processor(
     IServiceScopeFactory serviceScopeFactory,
@@ -46,14 +46,14 @@ public sealed class ExtraAnnualAssemblyV1Processor(
         }
 
         // Get mapping service
-        ICanonicalMappingService<CanonicalAnnualAssembly, CodalExtraAnnualAssemblyV1> mappingService =
-            mappingServiceFactory.GetMappingService<CanonicalAnnualAssembly, CodalExtraAnnualAssemblyV1>();
+        ICanonicalMappingService<CanonicalExtraAnnualAssembly, CodalExtraAnnualAssemblyV1> mappingService =
+            mappingServiceFactory.GetMappingService<CanonicalExtraAnnualAssembly, CodalExtraAnnualAssemblyV1>();
 
         // Map to canonical
-        CanonicalAnnualAssembly canonical = await mappingService.MapToCanonicalAsync(dto, symbol, statement);
+        CanonicalExtraAnnualAssembly canonical = await mappingService.MapToCanonicalAsync(dto, symbol, statement);
 
         // Upsert
-        CanonicalAnnualAssembly? existing = await dbContext.CanonicalAnnualAssemblies
+        CanonicalExtraAnnualAssembly? existing = await dbContext.CanonicalExtraAnnualAssemblies
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id && x.TraceNo == statement.TracingNo, cancellationToken);
 
         if (existing != null)
@@ -62,7 +62,7 @@ public sealed class ExtraAnnualAssemblyV1Processor(
         }
         else
         {
-            await dbContext.CanonicalAnnualAssemblies.AddAsync(canonical, cancellationToken);
+            await dbContext.CanonicalExtraAnnualAssemblies.AddAsync(canonical, cancellationToken);
         }
 
         await dbContext.SaveChangesAsync(cancellationToken);

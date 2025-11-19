@@ -67,7 +67,7 @@ public static class ServicesConfigurationExtensions
             .AddKeyedScopedCanonicalMappingService<ICanonicalMappingService<CanonicalAnnualAssembly, CodalAnnualAssemblyV1>,
                 AnnualAssemblyMappingServiceV1, CodalAnnualAssemblyV1>();
         serviceCollection
-            .AddKeyedScopedCanonicalMappingService<ICanonicalMappingService<CanonicalAnnualAssembly, CodalExtraAnnualAssemblyV1>,
+            .AddKeyedScopedCanonicalMappingService<ICanonicalMappingService<CanonicalExtraAnnualAssembly, CodalExtraAnnualAssemblyV1>,
                 ExtraAnnualAssemblyMappingServiceV1, CodalExtraAnnualAssemblyV1>();
         return serviceCollection;
     }
@@ -115,6 +115,7 @@ public static class ServicesConfigurationExtensions
         serviceCollection.AddScoped<IFinancialStatementReadRepository, FinancialStatementReadRepository>();
         serviceCollection.AddScoped<IInterpretativeReportSummaryPage5Repository, InterpretativeReportSummaryPage5Repository>();
         serviceCollection.AddScoped<IAnnualAssemblyRepository, AnnualAssemblyRepository>();
+        serviceCollection.AddScoped<IExtraAnnualAssemblyRepository, ExtraAnnualAssemblyRepository>();
         return serviceCollection;
     }
 
