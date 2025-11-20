@@ -30,7 +30,11 @@ public class ExtraAnnualAssemblyDetector : ICodalVersionDetector
 
             return CodalVersion.None;
         }
-        catch
+        catch (Newtonsoft.Json.JsonReaderException)
+        {
+            return CodalVersion.None;
+        }
+        catch (ArgumentException)
         {
             return CodalVersion.None;
         }

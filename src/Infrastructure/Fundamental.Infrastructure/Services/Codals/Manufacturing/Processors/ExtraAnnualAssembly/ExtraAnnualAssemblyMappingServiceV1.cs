@@ -233,7 +233,7 @@ public class ExtraAnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Cano
     /// </summary>
     /// <param name="value">The verification code string: "1" for verified, "2" for in-progress; may be null or whitespace.</param>
     /// <returns>
-    /// `null` if <paramref name="value"/> is null or whitespace; <see cref="VerificationStatus.Verified"/> for "1"; 
+    /// `null` if <paramref name="value"/> is null or whitespace; <see cref="VerificationStatus.Verified"/> for "1";
     /// <see cref="VerificationStatus.InProgress"/> for "2"; <see cref="VerificationStatus.Unspecified"/> for any other value.
     /// </returns>
     private static VerificationStatus? ParseVerificationString(string? value)
