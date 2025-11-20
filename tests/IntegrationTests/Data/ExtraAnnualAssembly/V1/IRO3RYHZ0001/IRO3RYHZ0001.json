@@ -1,0 +1,355 @@
+{
+  "parentAssembly" : {
+    "assemblyResultType" : 1,
+    "assemblyResultTypeTitle" : "در خصوص دستور جلسات زیر تصمیم گیری نمود",
+    "date" : "1404/06/22",
+    "hour" : "09:00",
+    "location" : "خيابان وليعصر، خيابان جام جم، بالاتر از صدا و سيما، خيابان استقلال، مجموعه فرهنگي ورزشي تلاش، سالن شهيد آويني",
+    "day" : "شنبه",
+    "letterPublishDate" : "1404/06/12",
+    "letterTracingNo" : 1401458,
+    "sessionOrders" : [ {
+      "type" : 0,
+      "description" : "استماع گزارش هیئت‌ مدیره و بازرس قانونی",
+      "fieldName" : "ListenedBoardMemberReport"
+    }, {
+      "type" : 1,
+      "description" : "تصویب صورت‌های مالی سال (دوره) مالی منتهی به1403/12/30",
+      "fieldName" : "ApproveStatements"
+    }, {
+      "type" : 2,
+      "description" : " انتخاب حسابرس و بازرس قانونی",
+      "fieldName" : "SelectInspector"
+    }, {
+      "type" : 3,
+      "description" : "انتخاب روزنامه کثیر‌الانتشار",
+      "fieldName" : "SelectNewspaper"
+    }, {
+      "type" : 5,
+      "description" : "تعیین حق حضور اعضای غیر موظف هیئت مدیره",
+      "fieldName" : "BoardMemberWage"
+    }, {
+      "type" : 6,
+      "description" : "تعیین پاداش هیئت مدیره",
+      "fieldName" : "BoardMemberGift"
+    }, {
+      "type" : 8,
+      "description" : "سایر موارد",
+      "fieldName" : "Other"
+    } ]
+  },
+  "shareHolders" : [ {
+    "shareHolderSerial" : 24026,
+    "name" : "صندوق سرمايه گذاري مشترک يکم ايرانيان",
+    "shareCount" : 57500,
+    "sharePercent" : 0.0
+  }, {
+    "shareHolderSerial" : 24024,
+    "name" : "صندوق با درآمد ثابت آتيه نوين",
+    "shareCount" : 3715000,
+    "sharePercent" : 0.19
+  }, {
+    "shareHolderSerial" : 21622,
+    "name" : "ساير سهامدران",
+    "shareCount" : 9965066,
+    "sharePercent" : 0.5
+  }, {
+    "shareHolderSerial" : 23399,
+    "name" : "صندوق سرمايه گذاري سپهر اول بازار",
+    "shareCount" : 25616517,
+    "sharePercent" : 1.28
+  }, {
+    "shareHolderSerial" : 23398,
+    "name" : "شرکت گروه توسعه مالي مهر آيندگان",
+    "shareCount" : 64820957,
+    "sharePercent" : 3.24
+  }, {
+    "shareHolderSerial" : 16814,
+    "name" : "شرکت کارگزاري تدبيرگران فردا",
+    "shareCount" : 294681595,
+    "sharePercent" : 14.73
+  }, {
+    "shareHolderSerial" : 16811,
+    "name" : "شرکت تامين سرمايه نوين",
+    "shareCount" : 528825832,
+    "sharePercent" : 26.44
+  }, {
+    "shareHolderSerial" : 16812,
+    "name" : "شرکت تامين سرمايه سپهر",
+    "shareCount" : 664887003,
+    "sharePercent" : 33.24
+  } ],
+  "assemblyChiefMembers" : {
+    "assemblyChief" : "مهدي احمدي",
+    "assemblySuperVisor1" : "عارف عليقلي پور",
+    "assemblySuperVisor2" : "مصطفي قاسم پور",
+    "assemblySecretary" : "محمد رضوان مدني "
+  },
+  "assemblyBoardMembers" : [ {
+    "boardMemberSerial" : 25480,
+    "fullName" : "تامين سرمايه نوين",
+    "nationalCode" : "10103584900",
+    "legalType" : 0,
+    "membershipType" : 1,
+    "agentBoardMemberFullName" : "مسعود نيکوفر",
+    "agentBoardMemberNationalCode" : "3875491874",
+    "position" : 1,
+    "hasDuty" : 1,
+    "attendingMeeting" : true,
+    "verification" : 0,
+    "degreeRef" : 5,
+    "educationFieldRef" : 131,
+    "degree" : "کارشناسي ارشد",
+    "educationField" : "مهندسي کامپيوتر"
+  }, {
+    "boardMemberSerial" : 25481,
+    "fullName" : "تامين سرمايه سپهر",
+    "nationalCode" : "10320708990",
+    "legalType" : 0,
+    "membershipType" : 1,
+    "agentBoardMemberFullName" : "مهدي احمدي",
+    "agentBoardMemberNationalCode" : "3801730948",
+    "position" : 2,
+    "hasDuty" : 0,
+    "attendingMeeting" : true,
+    "verification" : 0,
+    "degreeRef" : 2,
+    "educationFieldRef" : 70,
+    "degree" : "دکتراي تخصصي",
+    "educationField" : "علوم اقتصادي"
+  }, {
+    "boardMemberSerial" : 25483,
+    "fullName" : "کارگزاري تدبيرگران فردا",
+    "nationalCode" : "10861464012",
+    "legalType" : 0,
+    "membershipType" : 1,
+    "agentBoardMemberFullName" : "مصطفي قاسم پور",
+    "agentBoardMemberNationalCode" : "0010697578",
+    "position" : 0,
+    "hasDuty" : 0,
+    "attendingMeeting" : true,
+    "verification" : 0,
+    "degreeRef" : 5,
+    "educationFieldRef" : 60,
+    "degree" : "کارشناسي ارشد",
+    "educationField" : "مديريت مالي"
+  }, {
+    "boardMemberSerial" : 25484,
+    "fullName" : "مشاور سرمايه گذاري تامين سرمايه نوين",
+    "nationalCode" : "10320498804",
+    "legalType" : 0,
+    "membershipType" : 1,
+    "agentBoardMemberFullName" : "حسين مولوي",
+    "agentBoardMemberNationalCode" : "0651894719",
+    "position" : 0,
+    "hasDuty" : 0,
+    "attendingMeeting" : true,
+    "verification" : 0,
+    "degreeRef" : 5,
+    "educationFieldRef" : 91,
+    "degree" : "کارشناسي ارشد",
+    "educationField" : "مديريت دولتي"
+  }, {
+    "boardMemberSerial" : 55453,
+    "fullName" : "سرمايه گذاري خورشيد سپهر",
+    "nationalCode" : "10320136673",
+    "legalType" : 0,
+    "membershipType" : 1,
+    "agentBoardMemberFullName" : "محمد رضوان مدني",
+    "agentBoardMemberNationalCode" : "3258563446",
+    "position" : 0,
+    "hasDuty" : 1,
+    "attendingMeeting" : true,
+    "verification" : 0,
+    "degreeRef" : 3,
+    "educationFieldRef" : 189,
+    "degree" : "دکترا",
+    "educationField" : "مديريت فناوري اطلاعات"
+  } ],
+  "ceo" : {
+    "attendingMeeting" : 0,
+    "fullName" : "محمد رضوان مدني",
+    "nationalCode" : "3258563446",
+    "degreeRef" : 3,
+    "educationFieldRef" : 189,
+    "degree" : "دکترا",
+    "educationField" : "مديريت فناوري اطلاعات",
+    "verification" : ""
+  },
+  "auditCommitteeChairman" : {
+    "attendingMeeting" : 0,
+    "fullName" : "مهدي احمدي",
+    "nationalCode" : "3801730948",
+    "degreeRef" : 3,
+    "educationFieldRef" : 70,
+    "degree" : "دکترا",
+    "educationField" : "علوم اقتصادي",
+    "verification" : ""
+  },
+  "independentAuditorLegalInspectorRepresentative" : {
+    "attendingMeeting" : 1,
+    "fullName" : "احمدرضا شریفی قزوینی ",
+    "nationalCode" : "1282368109",
+    "degreeRef" : 7,
+    "educationFieldRef" : 80,
+    "degree" : "کارشناسي",
+    "educationField" : "حسابداري",
+    "verification" : ""
+  },
+  "topFinancialPosition" : {
+    "attendingMeeting" : 1,
+    "fullName" : "نادر شيدائي دوست",
+    "nationalCode" : "3329807628",
+    "degreeRef" : 5,
+    "educationFieldRef" : 80,
+    "degree" : "کارشناسي ارشد",
+    "educationField" : "حسابداري",
+    "verification" : ""
+  },
+  "assemblyInterims" : [ ],
+  "assemblyProportionedRetainedEarning" : [ {
+    "fieldName" : "NetIncomeLoss",
+    "description" : "سود (زیان) خالص",
+    "yearEndToDateValue" : 1537378,
+    "rowClass" : "ComputationalRow"
+  }, {
+    "fieldName" : "BeginingRetainedEarnings",
+    "description" : "سود (زیان) انباشته ابتدای دوره",
+    "yearEndToDateValue" : 2022402,
+    "rowClass" : "SimpleRow"
+  }, {
+    "fieldName" : "AnnualAdjustment",
+    "description" : "تعدیلات سنواتی",
+    "yearEndToDateValue" : 0,
+    "rowClass" : "SimpleRow"
+  }, {
+    "fieldName" : "AdjustedBeginingRetainedEarnings",
+    "description" : "سود (زیان) انباشته ابتدای دوره تعدیل‌شده",
+    "yearEndToDateValue" : 2022402,
+    "rowClass" : "ComputationalRow"
+  }, {
+    "fieldName" : "PreYearDevidedRetainedEarning",
+    "description" : "سود سهام مصوب (مجمع سال قبل)",
+    "yearEndToDateValue" : -850000,
+    "rowClass" : "SimpleRow"
+  }, {
+    "fieldName" : "TransferToCapital",
+    "description" : "تغییرات سرمایه از محل سود (زیان) انباشته",
+    "yearEndToDateValue" : -150000,
+    "rowClass" : "SimpleRow"
+  }, {
+    "fieldName" : "UnallocatedRetainedEarningsAtTheBeginningOfPeriod",
+    "description" : "سود انباشته ابتدای دوره تخصیص نیافته",
+    "yearEndToDateValue" : 1022402,
+    "rowClass" : "ComputationalRow"
+  }, {
+    "fieldName" : "TransfersFromOtherEquityItems",
+    "description" : "انتقال از سایر اقلام حقوق صاحبان سهام",
+    "yearEndToDateValue" : 0,
+    "rowClass" : "SimpleRow"
+  }, {
+    "fieldName" : "ProportionableRetainedEarnings",
+    "description" : "سود قابل تخصیص",
+    "yearEndToDateValue" : 2559780,
+    "rowClass" : "ComputationalRow"
+  }, {
+    "fieldName" : "LegalReserve",
+    "description" : "انتقال به اندوخته‌ قانونی",
+    "yearEndToDateValue" : -65000,
+    "rowClass" : "SimpleRow"
+  }, {
+    "fieldName" : "ExtenseReserve",
+    "description" : "انتقال به سایر اندوخته‌ها",
+    "yearEndToDateValue" : 0,
+    "rowClass" : "SimpleRow"
+  }, {
+    "fieldName" : "EndingRetainedEarnings",
+    "description" : "سود (زیان) انباشته پايان دوره",
+    "yearEndToDateValue" : 2494780,
+    "rowClass" : "ComputationalRow"
+  }, {
+    "fieldName" : "DividedRetainedEarning",
+    "description" : "سود سهام مصوب (مجمع سال جاری)",
+    "yearEndToDateValue" : -760000,
+    "rowClass" : "SimpleRow"
+  }, {
+    "fieldName" : "TotalEndingRetainedEarnings",
+    "description" : "سود (زیان) انباشته پایان دوره (با لحاظ نمودن مصوبات مجمع)",
+    "yearEndToDateValue" : 1734780,
+    "rowClass" : "ComputationalRow"
+  }, {
+    "fieldName" : "EarningsPerShareAfterTax",
+    "description" : "سود (زیان) خالص هر سهم- ریال",
+    "yearEndToDateValue" : 769,
+    "rowClass" : "ComputationalRow"
+  }, {
+    "fieldName" : "DividendPerShare",
+    "description" : "سود نقدی هر سهم (ریال)",
+    "yearEndToDateValue" : 380,
+    "rowClass" : "ComputationalRow"
+  }, {
+    "fieldName" : "ListedCapital",
+    "description" : "سرمایه",
+    "yearEndToDateValue" : 2000000,
+    "rowClass" : "ComputationalRow"
+  } ],
+  "inspectors" : [ {
+    "serial" : 154,
+    "name" : "بهمند",
+    "type" : 0
+  }, {
+    "serial" : 202,
+    "name" : "بيات رايان",
+    "type" : 1
+  } ],
+  "newsPapers" : [ {
+    "newsPaperId" : 4,
+    "name" : "اطلاعات"
+  } ],
+  "boardMemberPeriod" : 0,
+  "newBoardMembers" : [ ],
+  "boardMemberWageAndGifts" : [ {
+    "type" : 0,
+    "fieldName" : "حق حضور (ریال)",
+    "currentYearValue" : 90000000,
+    "pastYearValue" : 65000000,
+    "description" : "به ازای 1 جلسه در ماه و به ازای حداکثر 2جلسه در ماه"
+  }, {
+    "type" : 1,
+    "fieldName" : "پاداش (میلیون ریال)",
+    "currentYearValue" : 11000,
+    "pastYearValue" : 8000,
+    "description" : "به صورت ناخالص"
+  }, {
+    "type" : 2,
+    "fieldName" : "حق حضوراعضای هیات مدیره عضو کمیته حسابرسی (ریال)",
+    "currentYearValue" : 72000000,
+    "pastYearValue" : 52000000,
+    "description" : "بابت برگزاری حداقل 1  جلسه در ماه"
+  }, {
+    "type" : 3,
+    "fieldName" : "حق حضوراعضای هیات مدیره عضو کمیته انتصابات (ریال)\t",
+    "currentYearValue" : 72000000,
+    "pastYearValue" : 52000000,
+    "description" : "بابت برگزاری حداقل 1  جلسه در ماه"
+  }, {
+    "type" : 4,
+    "fieldName" : "سایر کمیته های تخصصی",
+    "currentYearValue" : 72000000,
+    "pastYearValue" : 52000000,
+    "description" : "بابت برگزاری حداقل 1  جلسه در ماه"
+  }, {
+    "type" : 5,
+    "fieldName" : "هزینه های مسولیت اجتماعی",
+    "currentYearValue" : 0,
+    "pastYearValue" : 0,
+    "description" : ""
+  } ],
+  "publishSecurityDes" : "",
+  "otherDescription" : " \r\nهمچنين امکان مشاهده برخط مجمع و طرح سوال از طريق آدرس https://www.aparat.com/rayanhamafza/live\r\nبراي سهامداران محترم فراهم گرديده شده است.       \r\n",
+  "newHour" : "",
+  "newDay" : "",
+  "newDate" : "",
+  "newLocation" : "",
+  "breakDes" : ""
+}

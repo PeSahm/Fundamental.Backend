@@ -1,4 +1,5 @@
 using Fundamental.Application.Codals.Dto.AnnualAssembly.V1;
+using Fundamental.Application.Codals.Dto.ExtraAnnualAssembly.V1;
 using Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage5Summaries.V2.
     InterpretativeReportSummaryPage5;
 using Fundamental.Application.Codals.Dto.MonthlyActivities.V1;
@@ -18,6 +19,7 @@ using Fundamental.Infrastructure.Services.Codals.Factories;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Detectors;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.AnnualAssembly;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.BalanceSheets;
+using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.ExtraAnnualAssembly;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.IncomeStatements;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.InterpretativeReportSummaryPage5;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.InterpretativeReportSummaryPages4;
@@ -38,6 +40,10 @@ public static class ServicesConfigurationExtensions
         return serviceCollection;
     }
 
+    /// <summary>
+    /// Registers canonical mapping infrastructure and keyed scoped canonical mappings used by manufacturing codals.
+    /// </summary>
+    /// <returns>The updated <see cref="IServiceCollection"/> with canonical mapping services and keyed mappings for monthly activity, interpretative report summary page 5, annual assembly, and extra annual assembly.</returns>
     public static IServiceCollection AddCodalMonthlyActivityMappingServices(this IServiceCollection serviceCollection)
     {
         // Register canonical mapping services
@@ -64,9 +70,16 @@ public static class ServicesConfigurationExtensions
         serviceCollection
             .AddKeyedScopedCanonicalMappingService<ICanonicalMappingService<CanonicalAnnualAssembly, CodalAnnualAssemblyV1>,
                 AnnualAssemblyMappingServiceV1, CodalAnnualAssemblyV1>();
+        serviceCollection
+            .AddKeyedScopedCanonicalMappingService<ICanonicalMappingService<CanonicalExtraAnnualAssembly, CodalExtraAnnualAssemblyV1>,
+                ExtraAnnualAssemblyMappingServiceV1, CodalExtraAnnualAssemblyV1>();
         return serviceCollection;
     }
 
+    /// <summary>
+    /// Registers keyed scoped CODAL processor implementations used by the manufacturing pipeline.
+    /// </summary>
+    /// <returns>The <see cref="IServiceCollection"/> after registering the CODAL processors.</returns>
     public static IServiceCollection AddCodalProcessorServices(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, MonthlyActivityV1Processor>();
@@ -81,9 +94,14 @@ public static class ServicesConfigurationExtensions
         serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, CapitalIncreaseRegistrationNoticeV1Processor>();
         serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, InterpretativeReportSummaryPage5V2Processor>();
         serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, AnnualAssemblyV1Processor>();
+        serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, ExtraAnnualAssemblyV1Processor>();
         return serviceCollection;
     }
 
+    /// <summary>
+    /// Adds keyed scoped codal version detector implementations for manufacturing codals to the service collection.
+    /// </summary>
+    /// <returns>The original IServiceCollection with the codal version detector services registered.</returns>
     public static IServiceCollection AddCodalServiceDetectorServices(this IServiceCollection services)
     {
         services.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, MonthlyActivityDetector>();
@@ -94,9 +112,14 @@ public static class ServicesConfigurationExtensions
         services.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, CapitalIncreaseRegistrationNoticeDetector>();
         services.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, InterpretativeReportSummaryPage5Detector>();
         services.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, AnnualAssemblyDetector>();
+        services.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, ExtraAnnualAssemblyDetector>();
         return services;
     }
 
+    /// <summary>
+    /// Registers scoped implementations of manufacturing read repositories into the provided service collection.
+    /// </summary>
+    /// <returns>The same IServiceCollection instance with the manufacturing read repositories registered.</returns>
     public static IServiceCollection AddManufacturingReadRepositories(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddScoped<IMonthlyActivityRepository, MonthlyActivityRepository>();
@@ -108,6 +131,7 @@ public static class ServicesConfigurationExtensions
         serviceCollection.AddScoped<IFinancialStatementReadRepository, FinancialStatementReadRepository>();
         serviceCollection.AddScoped<IInterpretativeReportSummaryPage5Repository, InterpretativeReportSummaryPage5Repository>();
         serviceCollection.AddScoped<IAnnualAssemblyRepository, AnnualAssemblyRepository>();
+        serviceCollection.AddScoped<IExtraAnnualAssemblyRepository, ExtraAnnualAssemblyRepository>();
         return serviceCollection;
     }
 

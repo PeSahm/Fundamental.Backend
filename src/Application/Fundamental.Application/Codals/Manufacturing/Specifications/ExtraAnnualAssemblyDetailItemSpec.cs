@@ -1,19 +1,25 @@
 using Ardalis.Specification;
-using Fundamental.Application.Codals.Manufacturing.Queries.GetAnnualAssemblyById;
+using Fundamental.Application.Codals.Manufacturing.Queries.GetExtraAnnualAssemblyById;
 using Fundamental.Application.Codals.Manufacturing.Queries.Shared;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 
 namespace Fundamental.Application.Codals.Manufacturing.Specifications;
 
 #pragma warning disable SA1118 // Parameter should not span multiple lines
-public sealed class AnnualAssemblyDetailItemSpec : Specification<CanonicalAnnualAssembly, GetAnnualAssemblyDetailItem>
+public sealed class ExtraAnnualAssemblyDetailItemSpec : Specification<CanonicalExtraAnnualAssembly, GetExtraAnnualAssemblyDetailItem>
 {
-    public AnnualAssemblyDetailItemSpec()
+    /// <summary>
+    /// Configures the specification to project a CanonicalExtraAnnualAssembly and its related data into a GetExtraAnnualAssemblyDetailItem DTO.
+    /// </summary>
+    /// <remarks>
+    /// The constructor sets up a no-tracking, split-query projection that maps the entity's scalar properties, related symbol and fiscal fields, optional parent-assembly and chief-member info, various related collections (session orders, shareholders, board members, inspectors, new board members, wages/gifts, newspapers, interims, and proportioned retained earnings), and optional attendee records (CEO, audit committee chairman, independent auditor representative, top financial position) into the corresponding DTO structure.
+    /// </remarks>
+    public ExtraAnnualAssemblyDetailItemSpec()
     {
         Query
             .AsNoTracking()
             .AsSplitQuery()
-            .Select(x => new GetAnnualAssemblyDetailItem(
+            .Select(x => new GetExtraAnnualAssemblyDetailItem(
                 x.Id,
                 x.Symbol.Isin,
                 x.Symbol.Name,
@@ -163,7 +169,12 @@ public sealed class AnnualAssemblyDetailItemSpec : Specification<CanonicalAnnual
             ));
     }
 
-    public AnnualAssemblyDetailItemSpec WhereId(Guid id)
+    /// <summary>
+    /// Restricts the specification to the CanonicalExtraAnnualAssembly with the given identifier.
+    /// </summary>
+    /// <param name="id">The identifier of the entity to filter by.</param>
+    /// <returns>The current specification instance with the applied filter.</returns>
+    public ExtraAnnualAssemblyDetailItemSpec WhereId(Guid id)
     {
         Query.Where(x => x.Id == id);
         return this;

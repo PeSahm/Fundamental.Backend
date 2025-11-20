@@ -1,9 +1,9 @@
 using Fundamental.Application.Codals.Manufacturing.Queries.Shared;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
 
-namespace Fundamental.Application.Codals.Manufacturing.Queries.GetAnnualAssemblyById;
+namespace Fundamental.Application.Codals.Manufacturing.Queries.GetExtraAnnualAssemblyById;
 
-public sealed record GetAnnualAssemblyDetailItem(
+public sealed record GetExtraAnnualAssemblyDetailItem(
     Guid Id,
     string Isin,
     string Symbol,
