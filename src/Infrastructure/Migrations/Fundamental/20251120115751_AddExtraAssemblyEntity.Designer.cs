@@ -16,8 +16,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fundamental.Migrations.Fundamental
 {
     [DbContext(typeof(FundamentalDbContext))]
-    [Migration("20251119095752_AddExtraAnnualAssemblyEntity")]
-    partial class AddExtraAnnualAssemblyEntity
+    [Migration("20251120115751_AddExtraAssemblyEntity")]
+    partial class AddExtraAssemblyEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -630,6 +630,186 @@ namespace Fundamental.Migrations.Fundamental
                         .HasDatabaseName("ix_canonical_extra_annual_assembly_symbol_id");
 
                     b.ToTable("canonical_extra_annual_assembly", "manufacturing");
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.CanonicalExtraAssembly", b =>
+                {
+                    b.Property<long>("_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("_id")
+                        .HasColumnOrder(0);
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("_id"));
+
+                    b.Property<DateTime>("AssemblyDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("assembly_date");
+
+                    b.Property<int>("CapitalChangeState")
+                        .HasColumnType("integer")
+                        .HasColumnName("capital_change_state");
+
+                    b.Property<bool>("CorrectionStatuteApproved")
+                        .HasColumnType("boolean")
+                        .HasColumnName("correction_statute_approved");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<IsoCurrency>("Currency")
+                        .HasColumnType("iso_currency")
+                        .HasColumnName("currency");
+
+                    b.Property<string>("DecidedClause141Des")
+                        .HasColumnType("text")
+                        .HasColumnName("decided_clause141des");
+
+                    b.Property<string>("HtmlUrl")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("html_url");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(1);
+
+                    b.Property<bool>("IsAccordWithSEOStatuteApproved")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_accord_with_seo_statute_approved");
+
+                    b.Property<bool>("IsActivitySubjectChange")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_activity_subject_change");
+
+                    b.Property<bool>("IsDecidedClause141")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_decided_clause141");
+
+                    b.Property<bool>("IsFinancialYearChange")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_financial_year_change");
+
+                    b.Property<bool>("IsLocationChange")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_location_change");
+
+                    b.Property<bool>("IsNameChange")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_name_change");
+
+                    b.Property<int?>("LastCapital")
+                        .HasColumnType("integer")
+                        .HasColumnName("last_capital");
+
+                    b.Property<long?>("LastShareCount")
+                        .HasColumnType("bigint")
+                        .HasColumnName("last_share_count");
+
+                    b.Property<int?>("LastShareValue")
+                        .HasColumnType("integer")
+                        .HasColumnName("last_share_value");
+
+                    b.Property<string>("NewActivitySubject")
+                        .HasColumnType("text")
+                        .HasColumnName("new_activity_subject");
+
+                    b.Property<string>("NewAddress")
+                        .HasColumnType("text")
+                        .HasColumnName("new_address");
+
+                    b.Property<string>("NewFinancialYearDayLength")
+                        .HasColumnType("text")
+                        .HasColumnName("new_financial_year_day_length");
+
+                    b.Property<string>("NewFinancialYearEndDate")
+                        .HasColumnType("text")
+                        .HasColumnName("new_financial_year_end_date");
+
+                    b.Property<string>("NewFinancialYearMonthLength")
+                        .HasColumnType("text")
+                        .HasColumnName("new_financial_year_month_length");
+
+                    b.Property<string>("NewName")
+                        .HasColumnType("text")
+                        .HasColumnName("new_name");
+
+                    b.Property<string>("OldActivitySubject")
+                        .HasColumnType("text")
+                        .HasColumnName("old_activity_subject");
+
+                    b.Property<string>("OldAddress")
+                        .HasColumnType("text")
+                        .HasColumnName("old_address");
+
+                    b.Property<int?>("OldFinancialYearDayLength")
+                        .HasColumnType("integer")
+                        .HasColumnName("old_financial_year_day_length");
+
+                    b.Property<string>("OldFinancialYearEndDate")
+                        .HasColumnType("text")
+                        .HasColumnName("old_financial_year_end_date");
+
+                    b.Property<int?>("OldFinancialYearMonthLength")
+                        .HasColumnType("integer")
+                        .HasColumnName("old_financial_year_month_length");
+
+                    b.Property<string>("OldName")
+                        .HasColumnType("text")
+                        .HasColumnName("old_name");
+
+                    b.Property<string>("OtherDes")
+                        .HasColumnType("text")
+                        .HasColumnName("other_des");
+
+                    b.Property<int?>("PrimaryMarketTracingNo")
+                        .HasColumnType("integer")
+                        .HasColumnName("primary_market_tracing_no");
+
+                    b.Property<DateTime>("PublishDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("publish_date");
+
+                    b.Property<decimal>("TraceNo")
+                        .HasColumnType("numeric(20,0)")
+                        .HasColumnName("trace_no");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("ModifiedAt");
+
+                    b.Property<string>("Version")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)")
+                        .HasColumnName("version");
+
+                    b.Property<long>("symbol_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("symbol_id");
+
+                    b.ComplexProperty<Dictionary<string, object>>("FiscalYear", "Fundamental.Domain.Codals.Manufacturing.Entities.CanonicalExtraAssembly.FiscalYear#FiscalYear", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<short>("Year")
+                                .HasColumnType("SMALLINT")
+                                .HasColumnName("fiscal_year");
+                        });
+
+                    b.HasKey("_id")
+                        .HasName("pk_canonical_extra_assembly");
+
+                    b.HasIndex("Id")
+                        .IsUnique()
+                        .HasDatabaseName("ix_canonical_extra_assembly_id");
+
+                    b.HasIndex("symbol_id")
+                        .HasDatabaseName("ix_canonical_extra_assembly_symbol_id");
+
+                    b.ToTable("canonical_extra_assembly", "manufacturing");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.CanonicalInterpretativeReportSummaryPage5", b =>
@@ -4156,6 +4336,538 @@ namespace Fundamental.Migrations.Fundamental
                     b.Navigation("Symbol");
 
                     b.Navigation("TopFinancialPosition");
+
+                    b.Navigation("YearEndMonth")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.CanonicalExtraAssembly", b =>
+                {
+                    b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Symbol")
+                        .WithMany()
+                        .HasForeignKey("symbol_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_canonical_extra_assembly_symbols_symbol_id");
+
+                    b.OwnsOne("Fundamental.Domain.Codals.Manufacturing.Entities.ExtraAssembly.AssemblyAttendee", "AuditCommitteeChairman", b1 =>
+                        {
+                            b1.Property<long>("CanonicalExtraAssembly_id")
+                                .HasColumnType("bigint");
+
+                            b1.Property<bool>("AttendingMeeting")
+                                .HasColumnType("boolean");
+
+                            b1.Property<string>("Degree")
+                                .HasColumnType("text");
+
+                            b1.Property<int?>("DegreeRef")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("EducationField")
+                                .HasColumnType("text");
+
+                            b1.Property<int?>("EducationFieldRef")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("FullName")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("NationalCode")
+                                .HasColumnType("text");
+
+                            b1.Property<int?>("Verification")
+                                .HasColumnType("integer");
+
+                            b1.HasKey("CanonicalExtraAssembly_id");
+
+                            b1.ToTable("canonical_extra_assembly", "manufacturing");
+
+                            b1.ToJson("audit_committee_chairman");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CanonicalExtraAssembly_id")
+                                .HasConstraintName("fk_canonical_extra_assembly_canonical_extra_assembly__id");
+                        });
+
+                    b.OwnsOne("Fundamental.Domain.Codals.Manufacturing.Entities.ExtraAssembly.AssemblyAttendee", "Ceo", b1 =>
+                        {
+                            b1.Property<long>("CanonicalExtraAssembly_id")
+                                .HasColumnType("bigint");
+
+                            b1.Property<bool>("AttendingMeeting")
+                                .HasColumnType("boolean");
+
+                            b1.Property<string>("Degree")
+                                .HasColumnType("text");
+
+                            b1.Property<int?>("DegreeRef")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("EducationField")
+                                .HasColumnType("text");
+
+                            b1.Property<int?>("EducationFieldRef")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("FullName")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("NationalCode")
+                                .HasColumnType("text");
+
+                            b1.Property<int?>("Verification")
+                                .HasColumnType("integer");
+
+                            b1.HasKey("CanonicalExtraAssembly_id")
+                                .HasName("pk_canonical_extra_assembly");
+
+                            b1.ToTable("canonical_extra_assembly", "manufacturing");
+
+                            b1.ToJson("ceo");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CanonicalExtraAssembly_id")
+                                .HasConstraintName("fk_canonical_extra_assembly_canonical_extra_assembly_canonical");
+                        });
+
+                    b.OwnsOne("Fundamental.Domain.Codals.ValueObjects.StatementMonth", "ReportMonth", b1 =>
+                        {
+                            b1.Property<long>("CanonicalExtraAssembly_id")
+                                .HasColumnType("bigint")
+                                .HasColumnName("_id");
+
+                            b1.Property<short>("Month")
+                                .HasColumnType("smallint")
+                                .HasColumnName("report_month");
+
+                            b1.HasKey("CanonicalExtraAssembly_id");
+
+                            b1.ToTable("canonical_extra_assembly", "manufacturing");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CanonicalExtraAssembly_id")
+                                .HasConstraintName("fk_canonical_extra_assembly_canonical_extra_assembly__id");
+                        });
+
+                    b.OwnsOne("Fundamental.Domain.Codals.ValueObjects.StatementMonth", "YearEndMonth", b1 =>
+                        {
+                            b1.Property<long>("CanonicalExtraAssembly_id")
+                                .HasColumnType("bigint")
+                                .HasColumnName("_id");
+
+                            b1.Property<short>("Month")
+                                .HasColumnType("smallint")
+                                .HasColumnName("year_end_month");
+
+                            b1.HasKey("CanonicalExtraAssembly_id");
+
+                            b1.ToTable("canonical_extra_assembly", "manufacturing");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CanonicalExtraAssembly_id")
+                                .HasConstraintName("fk_canonical_extra_assembly_canonical_extra_assembly__id");
+                        });
+
+                    b.OwnsMany("Fundamental.Domain.Codals.Manufacturing.Entities.ExtraAssembly.AssemblyBoardMember", "AssemblyBoardMembers", b1 =>
+                        {
+                            b1.Property<long>("CanonicalExtraAssembly_id")
+                                .HasColumnType("bigint");
+
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("AgentBoardMemberFullName")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("AgentBoardMemberNationalCode")
+                                .HasColumnType("text");
+
+                            b1.Property<bool>("AttendingMeeting")
+                                .HasColumnType("boolean");
+
+                            b1.Property<int?>("BoardMemberSerial")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("Degree")
+                                .HasColumnType("text");
+
+                            b1.Property<int?>("DegreeRef")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("EducationField")
+                                .HasColumnType("text");
+
+                            b1.Property<int?>("EducationFieldRef")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("FullName")
+                                .HasColumnType("text");
+
+                            b1.Property<bool>("HasDuty")
+                                .HasColumnType("boolean");
+
+                            b1.Property<int?>("LegalType")
+                                .HasColumnType("integer");
+
+                            b1.Property<int>("MembershipType")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("NationalCode")
+                                .HasColumnType("text");
+
+                            b1.Property<int>("Position")
+                                .HasColumnType("integer");
+
+                            b1.Property<int>("Verification")
+                                .HasColumnType("integer");
+
+                            b1.HasKey("CanonicalExtraAssembly_id", "__synthesizedOrdinal")
+                                .HasName("pk_canonical_extra_assembly");
+
+                            b1.ToTable("canonical_extra_assembly", "manufacturing");
+
+                            b1.ToJson("assembly_board_members");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CanonicalExtraAssembly_id")
+                                .HasConstraintName("fk_canonical_extra_assembly_canonical_extra_assembly_canonical");
+                        });
+
+                    b.OwnsOne("Fundamental.Domain.Codals.Manufacturing.Entities.ExtraAssembly.AssemblyChiefMembersInfo", "AssemblyChiefMembersInfo", b1 =>
+                        {
+                            b1.Property<long>("CanonicalExtraAssembly_id")
+                                .HasColumnType("bigint");
+
+                            b1.Property<string>("AssemblyChief")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("AssemblySecretary")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("AssemblySuperVisor1")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("AssemblySuperVisor2")
+                                .HasColumnType("text");
+
+                            b1.HasKey("CanonicalExtraAssembly_id");
+
+                            b1.ToTable("canonical_extra_assembly", "manufacturing");
+
+                            b1.ToJson("assembly_chief_members_info");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CanonicalExtraAssembly_id")
+                                .HasConstraintName("fk_canonical_extra_assembly_canonical_extra_assembly__id");
+                        });
+
+                    b.OwnsOne("Fundamental.Domain.Codals.Manufacturing.Entities.ExtraAssembly.ExtraAssemblyDecreaseCapital", "ExtraAssemblyDecreaseCapital", b1 =>
+                        {
+                            b1.Property<long>("CanonicalExtraAssembly_id")
+                                .HasColumnType("bigint");
+
+                            b1.Property<long?>("CapitalDecreaseValue")
+                                .HasColumnType("bigint");
+
+                            b1.Property<long?>("DecreasePercent")
+                                .HasColumnType("bigint");
+
+                            b1.Property<bool>("IsAccept")
+                                .HasColumnType("boolean");
+
+                            b1.Property<long?>("NewCapital")
+                                .HasColumnType("bigint");
+
+                            b1.Property<long?>("NewShareCount")
+                                .HasColumnType("bigint");
+
+                            b1.Property<int?>("NewShareValue")
+                                .HasColumnType("integer");
+
+                            b1.HasKey("CanonicalExtraAssembly_id");
+
+                            b1.ToTable("canonical_extra_assembly", "manufacturing");
+
+                            b1.ToJson("extra_assembly_decrease_capital");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CanonicalExtraAssembly_id")
+                                .HasConstraintName("fk_canonical_extra_assembly_canonical_extra_assembly__id");
+                        });
+
+                    b.OwnsMany("Fundamental.Domain.Codals.Manufacturing.Entities.ExtraAssembly.ExtraAssemblyIncreaseCapital", "ExtraAssemblyIncreaseCapitals", b1 =>
+                        {
+                            b1.Property<long>("CanonicalExtraAssembly_id")
+                                .HasColumnType("bigint");
+
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer");
+
+                            b1.Property<int?>("CapitalIncreaseValue")
+                                .HasColumnType("integer");
+
+                            b1.Property<decimal?>("CashForceclosurePriority")
+                                .HasColumnType("numeric");
+
+                            b1.Property<int?>("CashForceclosurePriorityAvalableStockCount")
+                                .HasColumnType("integer");
+
+                            b1.Property<int?>("CashForceclosurePriorityPrizeStockCount")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("CashForceclosurePriorityStockDesc")
+                                .HasColumnType("text");
+
+                            b1.Property<decimal?>("CashForceclosurePriorityStockPrice")
+                                .HasColumnType("numeric");
+
+                            b1.Property<int?>("CashIncoming")
+                                .HasColumnType("integer");
+
+                            b1.Property<double?>("IncreasePercent")
+                                .HasColumnType("double precision");
+
+                            b1.Property<bool>("IsAccept")
+                                .HasColumnType("boolean");
+
+                            b1.Property<int?>("Reserves")
+                                .HasColumnType("integer");
+
+                            b1.Property<int?>("RetainedEarning")
+                                .HasColumnType("integer");
+
+                            b1.Property<int?>("RevaluationSurplus")
+                                .HasColumnType("integer");
+
+                            b1.Property<int?>("SarfSaham")
+                                .HasColumnType("integer");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("integer");
+
+                            b1.HasKey("CanonicalExtraAssembly_id", "__synthesizedOrdinal")
+                                .HasName("pk_canonical_extra_assembly");
+
+                            b1.ToTable("canonical_extra_assembly", "manufacturing");
+
+                            b1.ToJson("extra_assembly_increase_capitals");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CanonicalExtraAssembly_id")
+                                .HasConstraintName("fk_canonical_extra_assembly_canonical_extra_assembly_canonical");
+                        });
+
+                    b.OwnsOne("Fundamental.Domain.Codals.Manufacturing.Entities.ExtraAssembly.ExtraAssemblyScheduling", "ExtraAssemblyScheduling", b1 =>
+                        {
+                            b1.Property<long>("CanonicalExtraAssembly_id")
+                                .HasColumnType("bigint");
+
+                            b1.Property<bool>("IsRegistered")
+                                .HasColumnType("boolean");
+
+                            b1.Property<string>("YearEndToDate")
+                                .HasColumnType("text");
+
+                            b1.HasKey("CanonicalExtraAssembly_id");
+
+                            b1.ToTable("canonical_extra_assembly", "manufacturing");
+
+                            b1.ToJson("extra_assembly_scheduling");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CanonicalExtraAssembly_id")
+                                .HasConstraintName("fk_canonical_extra_assembly_canonical_extra_assembly__id");
+                        });
+
+                    b.OwnsOne("Fundamental.Domain.Codals.Manufacturing.Entities.ExtraAssembly.ExtraAssemblyShareValueChangeCapital", "ExtraAssemblyShareValueChangeCapital", b1 =>
+                        {
+                            b1.Property<long>("CanonicalExtraAssembly_id")
+                                .HasColumnType("bigint");
+
+                            b1.Property<bool>("IsAccept")
+                                .HasColumnType("boolean");
+
+                            b1.Property<long?>("NewShareCount")
+                                .HasColumnType("bigint");
+
+                            b1.Property<int?>("NewShareValue")
+                                .HasColumnType("integer");
+
+                            b1.HasKey("CanonicalExtraAssembly_id");
+
+                            b1.ToTable("canonical_extra_assembly", "manufacturing");
+
+                            b1.ToJson("extra_assembly_share_value_change_capital");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CanonicalExtraAssembly_id")
+                                .HasConstraintName("fk_canonical_extra_assembly_canonical_extra_assembly__id");
+                        });
+
+                    b.OwnsOne("Fundamental.Domain.Codals.Manufacturing.Entities.ExtraAssembly.NextSessionInfo", "NextSessionInfo", b1 =>
+                        {
+                            b1.Property<long>("CanonicalExtraAssembly_id")
+                                .HasColumnType("bigint");
+
+                            b1.Property<string>("BreakDesc")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("Date")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("Day")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("Hour")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("Location")
+                                .HasColumnType("text");
+
+                            b1.HasKey("CanonicalExtraAssembly_id");
+
+                            b1.ToTable("canonical_extra_assembly", "manufacturing");
+
+                            b1.ToJson("next_session_info");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CanonicalExtraAssembly_id")
+                                .HasConstraintName("fk_canonical_extra_assembly_canonical_extra_assembly__id");
+                        });
+
+                    b.OwnsOne("Fundamental.Domain.Codals.Manufacturing.Entities.ExtraAssembly.ParentAssemblyInfo", "ParentAssemblyInfo", b1 =>
+                        {
+                            b1.Property<long>("CanonicalExtraAssembly_id")
+                                .HasColumnType("bigint");
+
+                            b1.Property<int>("AssemblyResultType")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("AssemblyResultTypeTitle")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("Date")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("Day")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("Hour")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("LetterPublishDate")
+                                .HasColumnType("text");
+
+                            b1.Property<int?>("LetterTracingNo")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("Location")
+                                .HasColumnType("text");
+
+                            b1.HasKey("CanonicalExtraAssembly_id");
+
+                            b1.ToTable("canonical_extra_assembly", "manufacturing");
+
+                            b1.ToJson("parent_assembly_info");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CanonicalExtraAssembly_id")
+                                .HasConstraintName("fk_canonical_extra_assembly_canonical_extra_assembly__id");
+
+                            b1.OwnsMany("Fundamental.Domain.Codals.Manufacturing.Entities.ExtraAssembly.SessionOrder", "SessionOrders", b2 =>
+                                {
+                                    b2.Property<long>("ParentAssemblyInfoCanonicalExtraAssembly_id")
+                                        .HasColumnType("bigint");
+
+                                    b2.Property<int>("__synthesizedOrdinal")
+                                        .ValueGeneratedOnAdd()
+                                        .HasColumnType("integer");
+
+                                    b2.Property<string>("Description")
+                                        .HasColumnType("text");
+
+                                    b2.Property<string>("FieldName")
+                                        .HasColumnType("text");
+
+                                    b2.Property<int>("Type")
+                                        .HasColumnType("integer");
+
+                                    b2.HasKey("ParentAssemblyInfoCanonicalExtraAssembly_id", "__synthesizedOrdinal");
+
+                                    b2.ToTable("canonical_extra_assembly", "manufacturing");
+
+                                    b2.ToJson("parent_assembly_info");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("ParentAssemblyInfoCanonicalExtraAssembly_id")
+                                        .HasConstraintName("fk_canonical_extra_assembly_canonical_extra_assembly_parent_ass");
+                                });
+
+                            b1.Navigation("SessionOrders");
+                        });
+
+                    b.OwnsMany("Fundamental.Domain.Codals.Manufacturing.Entities.ExtraAssembly.ShareHolder", "ShareHolders", b1 =>
+                        {
+                            b1.Property<long>("CanonicalExtraAssembly_id")
+                                .HasColumnType("bigint");
+
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("Name")
+                                .HasColumnType("text");
+
+                            b1.Property<long?>("ShareCount")
+                                .HasColumnType("bigint");
+
+                            b1.Property<int?>("ShareHolderSerial")
+                                .HasColumnType("integer");
+
+                            b1.Property<double?>("SharePercent")
+                                .HasColumnType("double precision");
+
+                            b1.HasKey("CanonicalExtraAssembly_id", "__synthesizedOrdinal")
+                                .HasName("pk_canonical_extra_assembly");
+
+                            b1.ToTable("canonical_extra_assembly", "manufacturing");
+
+                            b1.ToJson("share_holders");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CanonicalExtraAssembly_id")
+                                .HasConstraintName("fk_canonical_extra_assembly_canonical_extra_assembly_canonical");
+                        });
+
+                    b.Navigation("AssemblyBoardMembers");
+
+                    b.Navigation("AssemblyChiefMembersInfo");
+
+                    b.Navigation("AuditCommitteeChairman");
+
+                    b.Navigation("Ceo");
+
+                    b.Navigation("ExtraAssemblyDecreaseCapital");
+
+                    b.Navigation("ExtraAssemblyIncreaseCapitals");
+
+                    b.Navigation("ExtraAssemblyScheduling");
+
+                    b.Navigation("ExtraAssemblyShareValueChangeCapital");
+
+                    b.Navigation("NextSessionInfo");
+
+                    b.Navigation("ParentAssemblyInfo");
+
+                    b.Navigation("ReportMonth")
+                        .IsRequired();
+
+                    b.Navigation("ShareHolders");
+
+                    b.Navigation("Symbol");
 
                     b.Navigation("YearEndMonth")
                         .IsRequired();

@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
-using Fundamental.Domain.Codals.Manufacturing.Enums;
+﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Enums;
-using Fundamental.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,20 +8,9 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fundamental.Migrations.Fundamental
 {
     /// <inheritdoc />
-    [DbContext(typeof(FundamentalDbContext))]
-    [Migration("20251119095752_AddExtraAnnualAssemblyEntity")]
-    public class AddExtraAnnualAssemblyEntity : Migration
+    public partial class AddExtraAssemblyEntity : Migration
     {
-        /// <summary>
-        /// Applies schema changes: alters the tags column on manufacturing.non_operation_income_and_expense and creates the manufacturing.canonical_extra_annual_assembly table with its indexes and foreign key.
-        /// </summary>
-        /// <remarks>
-        /// Changes performed:
-        /// - Alters manufacturing.non_operation_income_and_expense.tags to a non-nullable none_operational_income_tag[] with a default empty list.
-        /// - Creates manufacturing.canonical_extra_annual_assembly with scalar and JSONB columns, an identity primary key (_id), and a unique UUID Id.
-        /// - Adds a foreign key from canonical_extra_annual_assembly.symbol_id to shd.symbol(_id) with cascade on delete.
-        /// - Creates a unique index on Id and a non-unique index on symbol_id.
-        /// </remarks>
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<List<NoneOperationalIncomeTag>>(
@@ -40,7 +25,7 @@ namespace Fundamental.Migrations.Fundamental
                 oldDefaultValue: new List<NoneOperationalIncomeTag>());
 
             migrationBuilder.CreateTable(
-                name: "canonical_extra_annual_assembly",
+                name: "canonical_extra_assembly",
                 schema: "manufacturing",
                 columns: table => new
                 {
@@ -56,37 +41,52 @@ namespace Fundamental.Migrations.Fundamental
                     year_end_month = table.Column<short>(type: "smallint", nullable: false),
                     report_month = table.Column<short>(type: "smallint", nullable: false),
                     assembly_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    board_member_period = table.Column<int>(type: "integer", nullable: true),
-                    publish_security_description = table.Column<string>(type: "text", nullable: true),
-                    other_description = table.Column<string>(type: "text", nullable: true),
-                    new_hour = table.Column<string>(type: "text", nullable: true),
-                    new_day = table.Column<string>(type: "text", nullable: true),
-                    new_date = table.Column<string>(type: "text", nullable: true),
-                    new_location = table.Column<string>(type: "text", nullable: true),
-                    break_description = table.Column<string>(type: "text", nullable: true),
+                    capital_change_state = table.Column<int>(type: "integer", nullable: false),
+                    last_share_value = table.Column<int>(type: "integer", nullable: true),
+                    last_capital = table.Column<int>(type: "integer", nullable: true),
+                    last_share_count = table.Column<long>(type: "bigint", nullable: true),
+                    old_address = table.Column<string>(type: "text", nullable: true),
+                    new_address = table.Column<string>(type: "text", nullable: true),
+                    old_name = table.Column<string>(type: "text", nullable: true),
+                    new_name = table.Column<string>(type: "text", nullable: true),
+                    old_activity_subject = table.Column<string>(type: "text", nullable: true),
+                    new_activity_subject = table.Column<string>(type: "text", nullable: true),
+                    old_financial_year_month_length = table.Column<int>(type: "integer", nullable: true),
+                    old_financial_year_end_date = table.Column<string>(type: "text", nullable: true),
+                    old_financial_year_day_length = table.Column<int>(type: "integer", nullable: true),
+                    new_financial_year_end_date = table.Column<string>(type: "text", nullable: true),
+                    new_financial_year_month_length = table.Column<string>(type: "text", nullable: true),
+                    new_financial_year_day_length = table.Column<string>(type: "text", nullable: true),
+                    is_location_change = table.Column<bool>(type: "boolean", nullable: false),
+                    is_name_change = table.Column<bool>(type: "boolean", nullable: false),
+                    is_activity_subject_change = table.Column<bool>(type: "boolean", nullable: false),
+                    is_financial_year_change = table.Column<bool>(type: "boolean", nullable: false),
+                    is_decided_clause141 = table.Column<bool>(type: "boolean", nullable: false),
+                    decided_clause141des = table.Column<string>(type: "text", nullable: true),
+                    is_accord_with_seo_statute_approved = table.Column<bool>(type: "boolean", nullable: false),
+                    other_des = table.Column<string>(type: "text", nullable: true),
+                    primary_market_tracing_no = table.Column<int>(type: "integer", nullable: true),
+                    correction_statute_approved = table.Column<bool>(type: "boolean", nullable: false),
                     fiscal_year = table.Column<short>(type: "SMALLINT", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ModifiedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     assembly_board_members = table.Column<string>(type: "jsonb", nullable: true),
                     assembly_chief_members_info = table.Column<string>(type: "jsonb", nullable: true),
-                    assembly_interims = table.Column<string>(type: "jsonb", nullable: true),
                     audit_committee_chairman = table.Column<string>(type: "jsonb", nullable: true),
-                    board_member_wage_and_gifts = table.Column<string>(type: "jsonb", nullable: true),
                     ceo = table.Column<string>(type: "jsonb", nullable: true),
-                    independent_auditor_representative = table.Column<string>(type: "jsonb", nullable: true),
-                    inspectors = table.Column<string>(type: "jsonb", nullable: true),
-                    new_board_members = table.Column<string>(type: "jsonb", nullable: true),
-                    news_papers = table.Column<string>(type: "jsonb", nullable: true),
+                    extra_assembly_decrease_capital = table.Column<string>(type: "jsonb", nullable: true),
+                    extra_assembly_increase_capitals = table.Column<string>(type: "jsonb", nullable: true),
+                    extra_assembly_scheduling = table.Column<string>(type: "jsonb", nullable: true),
+                    extra_assembly_share_value_change_capital = table.Column<string>(type: "jsonb", nullable: true),
+                    next_session_info = table.Column<string>(type: "jsonb", nullable: true),
                     parent_assembly_info = table.Column<string>(type: "jsonb", nullable: true),
-                    proportioned_retained_earnings = table.Column<string>(type: "jsonb", nullable: true),
-                    share_holders = table.Column<string>(type: "jsonb", nullable: true),
-                    top_financial_position = table.Column<string>(type: "jsonb", nullable: true)
+                    share_holders = table.Column<string>(type: "jsonb", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_canonical_extra_annual_assembly", x => x._id);
+                    table.PrimaryKey("pk_canonical_extra_assembly", x => x._id);
                     table.ForeignKey(
-                        name: "fk_canonical_extra_annual_assembly_symbols_symbol_id",
+                        name: "fk_canonical_extra_assembly_symbols_symbol_id",
                         column: x => x.symbol_id,
                         principalSchema: "shd",
                         principalTable: "symbol",
@@ -95,16 +95,16 @@ namespace Fundamental.Migrations.Fundamental
                 });
 
             migrationBuilder.CreateIndex(
-                name: "ix_canonical_extra_annual_assembly_id",
+                name: "ix_canonical_extra_assembly_id",
                 schema: "manufacturing",
-                table: "canonical_extra_annual_assembly",
+                table: "canonical_extra_assembly",
                 column: "Id",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "ix_canonical_extra_annual_assembly_symbol_id",
+                name: "ix_canonical_extra_assembly_symbol_id",
                 schema: "manufacturing",
-                table: "canonical_extra_annual_assembly",
+                table: "canonical_extra_assembly",
                 column: "symbol_id");
         }
 
@@ -112,7 +112,7 @@ namespace Fundamental.Migrations.Fundamental
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "canonical_extra_annual_assembly",
+                name: "canonical_extra_assembly",
                 schema: "manufacturing");
 
             migrationBuilder.AlterColumn<List<NoneOperationalIncomeTag>>(

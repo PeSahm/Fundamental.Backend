@@ -1,5 +1,6 @@
 using Fundamental.Application.Codals.Dto.AnnualAssembly.V1;
 using Fundamental.Application.Codals.Dto.ExtraAnnualAssembly.V1;
+using Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.ExtraAssembly.V1;
 using Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCompanies.InterpretativeReportPage5Summaries.V2.
     InterpretativeReportSummaryPage5;
 using Fundamental.Application.Codals.Dto.MonthlyActivities.V1;
@@ -20,6 +21,7 @@ using Fundamental.Infrastructure.Services.Codals.Manufacturing.Detectors;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.AnnualAssembly;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.BalanceSheets;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.ExtraAnnualAssembly;
+using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.ExtraAssembly;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.IncomeStatements;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.InterpretativeReportSummaryPage5;
 using Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.InterpretativeReportSummaryPages4;
@@ -73,6 +75,9 @@ public static class ServicesConfigurationExtensions
         serviceCollection
             .AddKeyedScopedCanonicalMappingService<ICanonicalMappingService<CanonicalExtraAnnualAssembly, CodalExtraAnnualAssemblyV1>,
                 ExtraAnnualAssemblyMappingServiceV1, CodalExtraAnnualAssemblyV1>();
+        serviceCollection
+            .AddKeyedScopedCanonicalMappingService<ICanonicalMappingService<CanonicalExtraAssembly, CodalExtraAssemblyV1>,
+                ExtraAssemblyMappingServiceV1, CodalExtraAssemblyV1>();
         return serviceCollection;
     }
 
@@ -95,6 +100,7 @@ public static class ServicesConfigurationExtensions
         serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, InterpretativeReportSummaryPage5V2Processor>();
         serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, AnnualAssemblyV1Processor>();
         serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, ExtraAnnualAssemblyV1Processor>();
+        serviceCollection.AddKeyedScopedCodalProcessor<ICodalProcessor, ExtraAssemblyV1Processor>();
         return serviceCollection;
     }
 
@@ -112,6 +118,7 @@ public static class ServicesConfigurationExtensions
         services.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, CapitalIncreaseRegistrationNoticeDetector>();
         services.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, InterpretativeReportSummaryPage5Detector>();
         services.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, AnnualAssemblyDetector>();
+        services.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, ExtraAssemblyDetector>();
         services.AddKeyedScopedCodalVersionDetector<ICodalVersionDetector, ExtraAnnualAssemblyDetector>();
         return services;
     }
@@ -131,6 +138,7 @@ public static class ServicesConfigurationExtensions
         serviceCollection.AddScoped<IFinancialStatementReadRepository, FinancialStatementReadRepository>();
         serviceCollection.AddScoped<IInterpretativeReportSummaryPage5Repository, InterpretativeReportSummaryPage5Repository>();
         serviceCollection.AddScoped<IAnnualAssemblyRepository, AnnualAssemblyRepository>();
+        serviceCollection.AddScoped<IExtraAssemblyRepository, ExtraAssemblyRepository>();
         serviceCollection.AddScoped<IExtraAnnualAssemblyRepository, ExtraAnnualAssemblyRepository>();
         return serviceCollection;
     }
