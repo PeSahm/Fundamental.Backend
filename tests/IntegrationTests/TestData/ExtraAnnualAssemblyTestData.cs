@@ -8,7 +8,11 @@ public static class ExtraAnnualAssemblyTestData
     /// <summary>
     /// Gets the V1 test data for Extraordinary Annual Assembly from IRO3RYHZ0001.
     /// </summary>
-    /// <returns>JSON string for V1 format.</returns>
+    /// <summary>
+    /// Retrieves the V1 test data JSON for IRO3RYHZ0001 from the test data folder.
+    /// </summary>
+    /// <returns>The JSON contents of the V1 test data file for IRO3RYHZ0001.</returns>
+    /// <exception cref="System.IO.FileNotFoundException">Thrown when the expected test data file does not exist at the constructed path.</exception>
     public static string GetV1TestData()
     {
         string filePath = Path.Combine(

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Enums;
@@ -12,7 +12,16 @@ namespace Fundamental.Migrations.Fundamental
     /// <inheritdoc />
     public partial class AddExtraAnnualAssemblyEntity : Migration
     {
-        /// <inheritdoc />
+        /// <summary>
+        /// Applies schema changes: alters the tags column on manufacturing.non_operation_income_and_expense and creates the manufacturing.canonical_extra_annual_assembly table with its indexes and foreign key.
+        /// </summary>
+        /// <remarks>
+        /// Changes performed:
+        /// - Alters manufacturing.non_operation_income_and_expense.tags to a non-nullable none_operational_income_tag[] with a default empty list.
+        /// - Creates manufacturing.canonical_extra_annual_assembly with scalar and JSONB columns, an identity primary key (_id), and a unique UUID Id.
+        /// - Adds a foreign key from canonical_extra_annual_assembly.symbol_id to shd.symbol(_id) with cascade on delete.
+        /// - Creates a unique index on Id and a non-unique index on symbol_id.
+        /// </remarks>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<List<NoneOperationalIncomeTag>>(

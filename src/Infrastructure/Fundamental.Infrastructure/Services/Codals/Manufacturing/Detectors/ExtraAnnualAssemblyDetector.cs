@@ -11,6 +11,11 @@ namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Detectors;
 /// </summary>
 public class ExtraAnnualAssemblyDetector : ICodalVersionDetector
 {
+    /// <summary>
+    /// Determines the CodalVersion of a codal JSON document used for extraordinary annual assembly reports.
+    /// </summary>
+    /// <param name="json">A JSON string representing the codal document to inspect.</param>
+    /// <returns>CodalVersion.V1 if the JSON root contains a "parentAssembly" property; CodalVersion.None if the property is absent or the input cannot be parsed.</returns>
     public CodalVersion DetectVersion(string json)
     {
         try

@@ -16,6 +16,14 @@ namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.Ex
 /// </summary>
 public class ExtraAnnualAssemblyMappingServiceV1 : ICanonicalMappingService<CanonicalExtraAnnualAssembly, CodalExtraAnnualAssemblyV1>
 {
+    /// <summary>
+    /// Maps a CodalExtraAnnualAssemblyV1 DTO and related statement metadata into a CanonicalExtraAnnualAssembly using the V1 mapping rules.
+    /// </summary>
+    /// <param name="dto">The Codal DTO containing assembly data to map; must include ParentAssembly.</param>
+    /// <param name="symbol">The symbol to assign to the resulting canonical entity.</param>
+    /// <param name="statement">Statement metadata (used for publish date, tracing number, and fallback date information).</param>
+    /// <returns>A CanonicalExtraAnnualAssembly populated from the DTO and statement.</returns>
+    /// <exception cref="InvalidOperationException">Thrown when <paramref name="dto"/>.ParentAssembly is null.</exception>
     public Task<CanonicalExtraAnnualAssembly> MapToCanonicalAsync(
         CodalExtraAnnualAssemblyV1 dto,
         Symbol symbol,
@@ -116,6 +124,11 @@ public class ExtraAnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Cano
         return Task.FromResult(canonical);
     }
 
+    /// <summary>
+    /// Apply values from an updated canonical extra-annual assembly to an existing instance.
+    /// </summary>
+    /// <param name="existing">The canonical instance to be updated in-place.</param>
+    /// <param name="updated">The canonical instance containing new values to copy into <paramref name="existing"/>.</param>
     public void UpdateCanonical(CanonicalExtraAnnualAssembly existing, CanonicalExtraAnnualAssembly updated)
     {
         // Update parent assembly info
@@ -151,6 +164,11 @@ public class ExtraAnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Cano
         existing.TopFinancialPosition = updated.TopFinancialPosition;
     }
 
+    /// <summary>
+    /// Maps a sequence of InspectorDto objects to a list of Inspector domain instances.
+    /// </summary>
+    /// <param name="dtos">The source list of InspectorDto objects; may be null.</param>
+    /// <returns>A list of Inspector mapped from <paramref name="dtos"/>; an empty list if <paramref name="dtos"/> is null.</returns>
     private static List<Inspector> MapInspectors(List<Application.Codals.Dto.AnnualAssembly.V1.InspectorDto>? dtos)
     {
         if (dtos == null)
@@ -163,6 +181,11 @@ public class ExtraAnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Cano
             .ToList();
     }
 
+    /// <summary>
+    /// Parses a Persian date string and converts it to the equivalent Gregorian <see cref="DateTime"/>.
+    /// </summary>
+    /// <param name="persianDate">The Persian date string to parse.</param>
+    /// <returns>The converted Gregorian <see cref="DateTime"/>, or <c>null</c> if the input is null, whitespace, or cannot be parsed.</returns>
     private static DateTime? ParsePersianDate(string? persianDate)
     {
         if (string.IsNullOrWhiteSpace(persianDate))
@@ -180,11 +203,21 @@ public class ExtraAnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Cano
         }
     }
 
+    /// <summary>
+    /// Converts a nullable long to a nullable decimal.
+    /// </summary>
+    /// <param name="value">The nullable long value to convert.</param>
+    /// <returns>The converted decimal when <paramref name="value"/> has a value; otherwise null.</returns>
     private static decimal? ParseDecimal(long? value)
     {
         return value.HasValue ? value.Value : null;
     }
 
+    /// <summary>
+    /// Maps an integer verification code to the corresponding VerificationStatus enum.
+    /// </summary>
+    /// <param name="value">Integer code representing verification status (1 = Verified, 2 = InProgress, other values = Unspecified).</param>
+    /// <returns>`VerificationStatus.Verified` for 1, `VerificationStatus.InProgress` for 2, `VerificationStatus.Unspecified` otherwise.</returns>
     private static VerificationStatus ParseVerificationStatus(int value)
     {
         return value switch
@@ -195,6 +228,14 @@ public class ExtraAnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Cano
         };
     }
 
+    /// <summary>
+    /// Converts a verification code represented as a string into a corresponding <see cref="VerificationStatus"/> value.
+    /// </summary>
+    /// <param name="value">The verification code string: "1" for verified, "2" for in-progress; may be null or whitespace.</param>
+    /// <returns>
+    /// `null` if <paramref name="value"/> is null or whitespace; <see cref="VerificationStatus.Verified"/> for "1"; 
+    /// <see cref="VerificationStatus.InProgress"/> for "2"; <see cref="VerificationStatus.Unspecified"/> for any other value.
+    /// </returns>
     private static VerificationStatus? ParseVerificationString(string? value)
     {
         if (string.IsNullOrWhiteSpace(value))
@@ -210,6 +251,11 @@ public class ExtraAnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Cano
         };
     }
 
+    /// <summary>
+    /// Maps a collection of SessionOrderDto objects to a list of SessionOrder domain objects.
+    /// </summary>
+    /// <param name="dtos">The DTOs to map; may be null.</param>
+    /// <returns>A list of mapped <see cref="SessionOrder"/> instances; empty if <paramref name="dtos"/> is null.</returns>
     private List<SessionOrder> MapSessionOrders(List<Application.Codals.Dto.AnnualAssembly.V1.SessionOrderDto>? dtos)
     {
         if (dtos == null)
@@ -225,6 +271,11 @@ public class ExtraAnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Cano
         }).ToList();
     }
 
+    /// <summary>
+    /// Maps a sequence of ShareHolderDto objects into ShareHolder domain objects.
+    /// </summary>
+    /// <param name="dtos">The DTOs to map; may be null.</param>
+    /// <returns>A list of ShareHolder instances corresponding to the input DTOs; an empty list if <paramref name="dtos"/> is null.</returns>
     private List<ShareHolder> MapShareHolders(List<Application.Codals.Dto.AnnualAssembly.V1.ShareHolderDto>? dtos)
     {
         if (dtos == null)
@@ -241,6 +292,11 @@ public class ExtraAnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Cano
         }).ToList();
     }
 
+    /// <summary>
+    /// Convert a sequence of assembly board member DTOs into domain AssemblyBoardMember instances.
+    /// </summary>
+    /// <param name="dtos">The source DTO list to map; may be null.</param>
+    /// <returns>A list of mapped <see cref="AssemblyBoardMember"/> objects; empty if <paramref name="dtos"/> is null or contains no items.</returns>
     private List<AssemblyBoardMember> MapAssemblyBoardMembers(List<Application.Codals.Dto.AnnualAssembly.V1.AssemblyBoardMemberDto>? dtos)
     {
         if (dtos == null)
@@ -268,6 +324,11 @@ public class ExtraAnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Cano
         }).ToList();
     }
 
+    /// <summary>
+    /// Map a list of DTOs into domain NewBoardMember objects.
+    /// </summary>
+    /// <param name="dtos">Source DTO list to map; may be null.</param>
+    /// <returns>A list of NewBoardMember instances; empty when <paramref name="dtos"/> is null. LegalType is converted to a nullable <see cref="LegalCompanyType"/>, and MembershipType is converted to <see cref="BoardMembershipType"/>.</returns>
     private List<NewBoardMember> MapNewBoardMembers(List<Application.Codals.Dto.AnnualAssembly.V1.NewBoardMemberDto>? dtos)
     {
         if (dtos == null)
@@ -286,6 +347,11 @@ public class ExtraAnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Cano
         }).ToList();
     }
 
+    /// <summary>
+    /// Maps wage-and-gift DTOs to domain BoardMemberWageAndGift objects.
+    /// </summary>
+    /// <param name="dtos">Sequence of wage-and-gift DTOs to map; may be null.</param>
+    /// <returns>A list of mapped BoardMemberWageAndGift instances; empty if <paramref name="dtos"/> is null.</returns>
     private List<BoardMemberWageAndGift> MapWageAndGifts(List<Application.Codals.Dto.AnnualAssembly.V1.WageAndGiftDto>? dtos)
     {
         if (dtos == null)
@@ -303,6 +369,11 @@ public class ExtraAnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Cano
         }).ToList();
     }
 
+    /// <summary>
+    /// Maps a collection of NewsPaperDto objects to domain NewsPaper instances.
+    /// </summary>
+    /// <param name="dtos">The source DTOs to map; may be null.</param>
+    /// <returns>A list of NewsPaper objects corresponding to the input DTOs; empty if <paramref name="dtos"/> is null.</returns>
     private List<NewsPaper> MapNewsPapers(List<Application.Codals.Dto.AnnualAssembly.V1.NewsPaperDto>? dtos)
     {
         if (dtos == null)
@@ -317,6 +388,11 @@ public class ExtraAnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Cano
         }).ToList();
     }
 
+    /// <summary>
+    /// Maps a collection of Codal interim DTOs to domain AssemblyInterim objects.
+    /// </summary>
+    /// <param name="dtos">The list of InterimDto instances to map; may be null.</param>
+    /// <returns>A list of mapped AssemblyInterim objects. Returns an empty list if <paramref name="dtos"/> is null.</returns>
     private List<AssemblyInterim> MapInterims(List<Application.Codals.Dto.AnnualAssembly.V1.InterimDto>? dtos)
     {
         if (dtos == null)
@@ -335,6 +411,16 @@ public class ExtraAnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Cano
         }).ToList();
     }
 
+    /// <summary>
+    /// Maps a list of retained-earnings DTOs into domain ProportionedRetainedEarning instances.
+    /// </summary>
+    /// <param name="dtos">The source DTOs; may be null.</param>
+    /// <returns>
+    /// A list of ProportionedRetainedEarning objects. Returns an empty list if <paramref name="dtos"/> is null.
+    /// Each item's <see cref="ProportionedRetainedEarning.FieldName"/> is set by parsing the DTO string to the corresponding
+    /// <see cref="ProportionedRetainedEarningFieldName"/> value; if parsing fails or the string is empty, the field is null.
+    /// Numeric values are converted via the service's decimal parsing helper.
+    /// </returns>
     private List<ProportionedRetainedEarning> MapRetainedEarnings(List<Application.Codals.Dto.AnnualAssembly.V1.RetainedEarningDto>? dtos)
     {
         if (dtos == null)
@@ -354,6 +440,11 @@ public class ExtraAnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Cano
         }).ToList();
     }
 
+    /// <summary>
+    /// Maps an AttendeeDto to an AssemblyAttendee instance; returns null when the input is null.
+    /// </summary>
+    /// <param name="dto">The attendee DTO to map.</param>
+    /// <returns>The mapped AssemblyAttendee, or null if <paramref name="dto"/> is null. AttendingMeeting is set to true when dto.AttendingMeeting equals 1; Verification is derived from dto.Verification.</returns>
     private AssemblyAttendee? MapAttendee(Application.Codals.Dto.AnnualAssembly.V1.AttendeeDto? dto)
     {
         if (dto == null)

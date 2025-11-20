@@ -27,6 +27,13 @@ public sealed class ExtraAnnualAssemblyV1Processor(
     public static CodalVersion CodalVersion => CodalVersion.V1;
     public static LetterPart LetterPart => LetterPart.NotSpecified;
 
+    /// <summary>
+    /// Processes a Codal Extraordinary Annual Assembly V1 JSON payload by mapping it to a canonical entity and upserting it into the database.
+    /// </summary>
+    /// <param name="statement">Statement metadata containing ISIN and tracing information for the codal item.</param>
+    /// <param name="model">Wrapper for the incoming JSON payload; its Json property holds the CodalExtraAnnualAssemblyV1 document.</param>
+    /// <param name="cancellationToken">Cancellation token for the operation.</param>
+    /// <exception cref="InvalidOperationException">Thrown when the symbol for the given ISIN cannot be found or when JSON deserialization fails.</exception>
     public async Task Process(GetStatementResponse statement, GetStatementJsonResponse model, CancellationToken cancellationToken)
     {
         using IServiceScope scope = serviceScopeFactory.CreateScope();
