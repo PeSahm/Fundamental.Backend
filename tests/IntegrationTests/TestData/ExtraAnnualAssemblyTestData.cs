@@ -7,8 +7,6 @@ public static class ExtraAnnualAssemblyTestData
 {
     /// <summary>
     /// Gets the V1 test data for Extraordinary Annual Assembly from IRO3RYHZ0001.
-    /// </summary>
-    /// <summary>
     /// Retrieves the V1 test data JSON for IRO3RYHZ0001 from the test data folder.
     /// </summary>
     /// <returns>The JSON contents of the V1 test data file for IRO3RYHZ0001.</returns>
