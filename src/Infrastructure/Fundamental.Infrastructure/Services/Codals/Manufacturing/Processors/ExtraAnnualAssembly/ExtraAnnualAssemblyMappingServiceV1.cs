@@ -7,6 +7,7 @@ using Fundamental.Domain.Codals.Manufacturing.Entities.AnnualAssembly;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Codals.ValueObjects;
 using Fundamental.Domain.Symbols.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.ExtraAnnualAssembly;
 
@@ -16,6 +17,17 @@ namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.Ex
 /// </summary>
 public class ExtraAnnualAssemblyMappingServiceV1 : ICanonicalMappingService<CanonicalExtraAnnualAssembly, CodalExtraAnnualAssemblyV1>
 {
+    private readonly ILogger<ExtraAnnualAssemblyMappingServiceV1> _logger;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ExtraAnnualAssemblyMappingServiceV1"/> class.
+    /// </summary>
+    /// <param name="logger">The logger instance for structured logging.</param>
+    public ExtraAnnualAssemblyMappingServiceV1(ILogger<ExtraAnnualAssemblyMappingServiceV1> logger)
+    {
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+    }
+
     /// <summary>
     /// Maps a CodalExtraAnnualAssemblyV1 DTO and related statement metadata into a CanonicalExtraAnnualAssembly using the V1 mapping rules.
     /// </summary>
@@ -182,34 +194,6 @@ public class ExtraAnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Cano
     }
 
     /// <summary>
-    /// Parses a Persian date string and converts it to the equivalent Gregorian <see cref="DateTime"/>.
-    /// </summary>
-    /// <param name="persianDate">The Persian date string to parse.</param>
-    /// <returns>The converted Gregorian <see cref="DateTime"/>, or <c>null</c> if the input is null, whitespace, or cannot be parsed.</returns>
-    private static DateTime? ParsePersianDate(string? persianDate)
-    {
-        if (string.IsNullOrWhiteSpace(persianDate))
-        {
-            return null;
-        }
-
-        try
-        {
-            return persianDate.ToGregorianDateTime();
-        }
-        catch (FormatException ex)
-        {
-            Console.Error.WriteLine($"ParsePersianDate failed for '{persianDate}': {ex.Message}");
-            return null;
-        }
-        catch (ArgumentException ex)
-        {
-            Console.Error.WriteLine($"ParsePersianDate failed for '{persianDate}': {ex.Message}");
-            return null;
-        }
-    }
-
-    /// <summary>
     /// Converts a nullable long to a nullable decimal.
     /// </summary>
     /// <param name="value">The nullable long value to convert.</param>
@@ -255,6 +239,34 @@ public class ExtraAnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Cano
             "2" => VerificationStatus.InProgress,
             _ => VerificationStatus.Unspecified
         };
+    }
+
+    /// <summary>
+    /// Parses a Persian date string and converts it to the equivalent Gregorian <see cref="DateTime"/>.
+    /// </summary>
+    /// <param name="persianDate">The Persian date string to parse.</param>
+    /// <returns>The converted Gregorian <see cref="DateTime"/>, or <c>null</c> if the input is null, whitespace, or cannot be parsed.</returns>
+    private DateTime? ParsePersianDate(string? persianDate)
+    {
+        if (string.IsNullOrWhiteSpace(persianDate))
+        {
+            return null;
+        }
+
+        try
+        {
+            return persianDate.ToGregorianDateTime();
+        }
+        catch (FormatException ex)
+        {
+            _logger.LogError(ex, "ParsePersianDate failed for '{PersianDate}'", persianDate);
+            return null;
+        }
+        catch (ArgumentException ex)
+        {
+            _logger.LogError(ex, "ParsePersianDate failed for '{PersianDate}'", persianDate);
+            return null;
+        }
     }
 
     /// <summary>
