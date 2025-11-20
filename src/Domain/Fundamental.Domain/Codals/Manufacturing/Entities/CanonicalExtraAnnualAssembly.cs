@@ -1,5 +1,4 @@
 using Fundamental.Domain.Codals.Manufacturing.Entities.AnnualAssembly;
-using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Codals.ValueObjects;
 using Fundamental.Domain.Common.BaseTypes;
 using Fundamental.Domain.Common.Enums;
@@ -14,6 +13,7 @@ namespace Fundamental.Domain.Codals.Manufacturing.Entities;
 public class CanonicalExtraAnnualAssembly : BaseEntity<Guid>
 {
     /// <summary>
+    /// Initializes a new instance of the <see cref="CanonicalExtraAnnualAssembly"/> class.
     /// Initializes a new CanonicalExtraAnnualAssembly with core metadata and timestamps.
     /// </summary>
     /// <param name="id">Unique identifier for the aggregate.</param>
@@ -54,6 +54,7 @@ public class CanonicalExtraAnnualAssembly : BaseEntity<Guid>
     }
 
     /// <summary>
+    /// Initializes a new instance of the <see cref="CanonicalExtraAnnualAssembly"/> class.
     /// Initializes a new instance of CanonicalExtraAnnualAssembly for ORM and deserialization purposes.
     /// </summary>
     protected CanonicalExtraAnnualAssembly()
@@ -73,7 +74,7 @@ public class CanonicalExtraAnnualAssembly : BaseEntity<Guid>
     /// <summary>
     /// Symbol navigation property.
     /// </summary>
-    public Symbol Symbol { get; private set; } = null!;
+    public Symbol Symbol { get; private set; }
 
     /// <summary>
     /// شماره پیگیری.
@@ -83,13 +84,13 @@ public class CanonicalExtraAnnualAssembly : BaseEntity<Guid>
     /// <summary>
     /// URL صفحه HTML اطلاعیه.
     /// </summary>
-    public Uri HtmlUrl { get; private set; } = null!;
+    public Uri HtmlUrl { get; private set; }
 
     /// <summary>
     /// سال مالی (Persian year).
     /// Extracted from parentAssembly.date.
     /// </summary>
-    public FiscalYear FiscalYear { get; private set; } = null!;
+    public FiscalYear FiscalYear { get; private set; }
 
     /// <summary>
     /// واحد پولی (همیشه IRR).
@@ -101,13 +102,13 @@ public class CanonicalExtraAnnualAssembly : BaseEntity<Guid>
     /// Usually 12 for standard Persian calendar fiscal years.
     /// Extracted from parentAssembly.date.
     /// </summary>
-    public StatementMonth YearEndMonth { get; private set; } = null!;
+    public StatementMonth YearEndMonth { get; private set; }
 
     /// <summary>
     /// ماه گزارش (برابر با ماه برگزاری مجمع).
     /// Report month from assembly date.
     /// </summary>
-    public StatementMonth ReportMonth { get; private set; } = null!;
+    public StatementMonth ReportMonth { get; private set; }
 
     /// <summary>
     /// تاریخ برگزاری مجمع.

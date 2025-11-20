@@ -7,5 +7,5 @@ namespace Fundamental.Application.Codals.Manufacturing.Queries.GetExtraAssemblyB
 public enum GetExtraAssemblyByIdErrorCodes
 {
     [ErrorType(BackendErrorType.BusinessLogic)]
-    ExtraAssemblyNotFound = 13_400_101,
+    ExtraAssemblyNotFound = 13_369_101,
 }
