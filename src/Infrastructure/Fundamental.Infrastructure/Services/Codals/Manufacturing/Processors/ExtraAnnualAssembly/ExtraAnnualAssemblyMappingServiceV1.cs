@@ -197,8 +197,9 @@ public class ExtraAnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Cano
         {
             return persianDate.ToGregorianDateTime();
         }
-        catch
+        catch (Exception ex)
         {
+            Console.Error.WriteLine($"ParsePersianDate failed for '{persianDate}': {ex.Message}");
             return null;
         }
     }
