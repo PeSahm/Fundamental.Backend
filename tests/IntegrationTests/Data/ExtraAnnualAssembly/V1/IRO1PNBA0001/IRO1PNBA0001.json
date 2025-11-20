@@ -1,0 +1,176 @@
+{
+  "parentAssembly" : {
+    "assemblyResultType" : 1,
+    "assemblyResultTypeTitle" : "در خصوص دستور جلسات زیر تصمیم گیری نمود",
+    "date" : "1404/07/30",
+    "hour" : "12:00",
+    "location" : "کيلومتر 20 اسکله شهيد رجايي - شرکت پالايش نفت بندرعباس - سالن کنفرانس شهيد تندگويان(آموزش)",
+    "day" : "چهار شنبه",
+    "letterPublishDate" : "1404/07/16",
+    "letterTracingNo" : 1416293,
+    "sessionOrders" : [ {
+      "type" : 8,
+      "description" : "سایر موارد",
+      "fieldName" : "Other"
+    } ]
+  },
+  "shareHolders" : [ {
+    "shareHolderSerial" : 29208,
+    "name" : "بيمه ايران ",
+    "shareCount" : 46413568,
+    "sharePercent" : 0.03
+  }, {
+    "shareHolderSerial" : 16580,
+    "name" : "شرکت سرمايه گذاري هامون سپاهان(سهامي عام)",
+    "shareCount" : 89985791,
+    "sharePercent" : 0.07
+  }, {
+    "shareHolderSerial" : 19190,
+    "name" : "بانک تجارت",
+    "shareCount" : 4517872838,
+    "sharePercent" : 3.36
+  }, {
+    "shareHolderSerial" : 19188,
+    "name" : "شرکت توسعه سرمايه رفاه",
+    "shareCount" : 5311809279,
+    "sharePercent" : 3.95
+  }, {
+    "shareHolderSerial" : 19189,
+    "name" : "بانک صادرات ايران",
+    "shareCount" : 7731910054,
+    "sharePercent" : 5.76
+  }, {
+    "shareHolderSerial" : 10886,
+    "name" : "شرکت گروه گسترش نفت و گاز پارسيان(سهامي عام)",
+    "shareCount" : 20486832542,
+    "sharePercent" : 15.25
+  }, {
+    "shareHolderSerial" : 13843,
+    "name" : "بانک رفاه کارگران",
+    "shareCount" : 41017508345,
+    "sharePercent" : 30.53
+  } ],
+  "assemblyChiefMembers" : {
+    "assemblyChief" : "محمد صادقي",
+    "assemblySuperVisor1" : "عباس کشوري",
+    "assemblySuperVisor2" : "ابراهيم صادقي",
+    "assemblySecretary" : "احمد هاشمي"
+  },
+  "assemblyBoardMembers" : [ {
+    "boardMemberSerial" : 12904,
+    "fullName" : "گروه گسترش نفت و گاز پارسيان",
+    "nationalCode" : "10103389006",
+    "legalType" : 0,
+    "membershipType" : 1,
+    "agentBoardMemberFullName" : "عبدالوهاب ارامش",
+    "agentBoardMemberNationalCode" : "4230197128",
+    "position" : 0,
+    "hasDuty" : 0,
+    "attendingMeeting" : true,
+    "verification" : 0,
+    "degreeRef" : 7,
+    "educationFieldRef" : 134,
+    "degree" : "کارشناسي",
+    "educationField" : "مهندسي شيمي"
+  }, {
+    "boardMemberSerial" : 29803,
+    "fullName" : "توسعه پيشرو رفاه پرديس",
+    "nationalCode" : "14006294704",
+    "legalType" : 0,
+    "membershipType" : 1,
+    "agentBoardMemberFullName" : "اسحاق جعفري",
+    "agentBoardMemberNationalCode" : "3391592435",
+    "position" : 0,
+    "hasDuty" : 1,
+    "attendingMeeting" : true,
+    "verification" : 0,
+    "degreeRef" : 5,
+    "educationFieldRef" : 88,
+    "degree" : "کارشناسي ارشد",
+    "educationField" : "مديريت اجرايي"
+  }, {
+    "boardMemberSerial" : 29804,
+    "fullName" : "سرمايه گذاري توسعه سرمايه رفاه",
+    "nationalCode" : "10320548447",
+    "legalType" : 0,
+    "membershipType" : 1,
+    "agentBoardMemberFullName" : "احمد هاشمي",
+    "agentBoardMemberNationalCode" : "2390981275",
+    "position" : 1,
+    "hasDuty" : 1,
+    "attendingMeeting" : true,
+    "verification" : 0,
+    "degreeRef" : 5,
+    "educationFieldRef" : 89,
+    "degree" : "کارشناسي ارشد",
+    "educationField" : "مديريت بازرگاني"
+  }, {
+    "boardMemberSerial" : 48913,
+    "fullName" : "سرمايه گذاري استان تهران",
+    "nationalCode" : "10103191091",
+    "legalType" : 0,
+    "membershipType" : 1,
+    "agentBoardMemberFullName" : "محمد صادقي",
+    "agentBoardMemberNationalCode" : "3420159218",
+    "position" : 2,
+    "hasDuty" : 0,
+    "attendingMeeting" : true,
+    "verification" : 0,
+    "degreeRef" : 3,
+    "educationFieldRef" : 79,
+    "degree" : "دکترا",
+    "educationField" : "حقوق"
+  }, {
+    "boardMemberSerial" : 48914,
+    "fullName" : "بانک صادرات ايران",
+    "nationalCode" : "10861736062",
+    "legalType" : 0,
+    "membershipType" : 1,
+    "agentBoardMemberFullName" : "سيدحامد اکبري",
+    "agentBoardMemberNationalCode" : "4231689131",
+    "position" : 0,
+    "hasDuty" : 0,
+    "attendingMeeting" : true,
+    "verification" : 0,
+    "degreeRef" : 3,
+    "educationFieldRef" : 79,
+    "degree" : "دکترا",
+    "educationField" : "حقوق"
+  } ],
+  "ceo" : {
+    "attendingMeeting" : 0,
+    "fullName" : "احمد هاشمي",
+    "nationalCode" : "2390981275",
+    "degreeRef" : 5,
+    "educationFieldRef" : 89,
+    "degree" : "کارشناسي ارشد",
+    "educationField" : "مديريت بازرگاني",
+    "verification" : ""
+  },
+  "auditCommitteeChairman" : {
+    "attendingMeeting" : 0,
+    "fullName" : "سيدحامد اکبري",
+    "nationalCode" : "4231689131",
+    "degreeRef" : 3,
+    "educationFieldRef" : 79,
+    "degree" : "دکترا",
+    "educationField" : "حقوق",
+    "verification" : ""
+  },
+  "independentAuditorLegalInspectorRepresentative" : null,
+  "topFinancialPosition" : null,
+  "assemblyInterims" : [ ],
+  "assemblyProportionedRetainedEarning" : [ ],
+  "inspectors" : [ ],
+  "newsPapers" : [ ],
+  "boardMemberPeriod" : 0,
+  "newBoardMembers" : [ ],
+  "boardMemberWageAndGifts" : [ ],
+  "publishSecurityDes" : "",
+  "otherDescription" : "1- اخذ مجوز هاي مورد نياز طرح ارتقاي کيفيت محصولات سنگين نفتي پالايشگاه \r\n",
+  "newHour" : "",
+  "newDay" : "",
+  "newDate" : "",
+  "newLocation" : "",
+  "breakDes" : ""
+}

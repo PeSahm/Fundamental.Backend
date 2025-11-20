@@ -33,6 +33,8 @@ public class FundamentalDbContext : DbContext, IUnitOfWork, ICoravelProDbContext
 
     public DbSet<CanonicalAnnualAssembly> CanonicalAnnualAssemblies { get; set; }
 
+    public DbSet<CanonicalExtraAnnualAssembly> CanonicalExtraAnnualAssemblies { get; set; }
+
     public DbSet<CanonicalExtraAssembly> CanonicalExtraAssemblies { get; set; }
 
     public DbSet<BalanceSheet> BalanceSheets { get; set; }
