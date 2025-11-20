@@ -1,5 +1,6 @@
 using Ardalis.Specification;
 using Fundamental.Application.Codals.Manufacturing.Queries.GetExtraAssemblyById;
+using Fundamental.Application.Codals.Manufacturing.Queries.Shared;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 
 namespace Fundamental.Application.Codals.Manufacturing.Specifications;
@@ -95,13 +96,13 @@ public sealed class ExtraAssemblyDetailItemSpec : Specification<CanonicalExtraAs
                     )).ToList()
                     : new List<SessionOrderQueryDto>(),
                 x.ShareHolders.Select(item => new ShareHolderQueryDto(
-                    item.ShareHolderSerial,
+                    item.ShareHolderSerial ?? 0,
                     item.Name,
-                    item.ShareCount,
-                    item.SharePercent
+                    item.ShareCount ?? 0,
+                    item.SharePercent.HasValue ? (decimal?)item.SharePercent.Value : null
                 )).ToList(),
                 x.AssemblyBoardMembers.Select(item => new AssemblyBoardMemberQueryDto(
-                    item.BoardMemberSerial,
+                    item.BoardMemberSerial ?? 0,
                     item.FullName,
                     item.NationalCode,
                     item.LegalType,

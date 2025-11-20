@@ -1,3 +1,4 @@
+using Fundamental.Application.Codals.Manufacturing.Queries.Shared;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
 
 namespace Fundamental.Application.Codals.Manufacturing.Queries.GetExtraAssemblyById;
@@ -72,37 +73,6 @@ public sealed record GetExtraAssemblyDetailItem(
     AssemblyAttendeeQueryDto? AuditCommitteeChairman
 );
 
-public sealed record SessionOrderQueryDto(
-    SessionOrderType Type,
-    string? Description,
-    string? FieldName
-);
-
-public sealed record ShareHolderQueryDto(
-    int? ShareHolderSerial,
-    string? Name,
-    long? ShareCount,
-    double? SharePercent
-);
-
-public sealed record AssemblyBoardMemberQueryDto(
-    int? BoardMemberSerial,
-    string? FullName,
-    string? NationalCode,
-    LegalCompanyType? LegalType,
-    BoardMembershipType MembershipType,
-    string? AgentBoardMemberFullName,
-    string? AgentBoardMemberNationalCode,
-    BoardPosition Position,
-    bool HasDuty,
-    string? Degree,
-    int? DegreeRef,
-    string? EducationField,
-    int? EducationFieldRef,
-    bool AttendingMeeting,
-    VerificationStatus Verification
-);
-
 public sealed record ExtraAssemblyIncreaseCapitalQueryDto(
     int? CashIncoming,
     int? RetainedEarning,
@@ -133,15 +103,4 @@ public sealed record ExtraAssemblyShareValueChangeCapitalQueryDto(
     bool IsAccept,
     long? NewShareCount,
     int? NewShareValue
-);
-
-public sealed record AssemblyAttendeeQueryDto(
-    string? FullName,
-    string? NationalCode,
-    bool AttendingMeeting,
-    string? Degree,
-    int? DegreeRef,
-    string? EducationField,
-    int? EducationFieldRef,
-    VerificationStatus? Verification
 );
