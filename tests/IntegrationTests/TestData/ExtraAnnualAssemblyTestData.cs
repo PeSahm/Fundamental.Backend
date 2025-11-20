@@ -15,13 +15,13 @@ public static class ExtraAnnualAssemblyTestData
     /// <exception cref="System.IO.FileNotFoundException">Thrown when the expected test data file does not exist at the constructed path.</exception>
     public static string GetV1TestData()
     {
-        string filePath = Path.Combine(
+        string filePath = Path.GetFullPath(Path.Combine(
             AppDomain.CurrentDomain.BaseDirectory,
             "Data",
             "ExtraAnnualAssembly",
             "V1",
             "IRO3RYHZ0001",
-            "IRO3RYHZ0001.json");
+            "IRO3RYHZ0001.json"));
 
         if (!File.Exists(filePath))
         {
