@@ -12,14 +12,6 @@ namespace Fundamental.Application.Codals.Dto.ExtraAnnualAssembly.V1;
 /// </summary>
 public class CodalExtraAnnualAssemblyV1 : ICodalMappingServiceMetadata
 {
-    public ReportingType ReportingType => ReportingType.Production;
-
-    public LetterType LetterType => LetterType.OrdinaryGeneralMeetingExtraordinaryDecisions;
-
-    public CodalVersion CodalVersion => CodalVersion.V1;
-
-    public LetterPart LetterPart => LetterPart.NotSpecified;
-
     [JsonProperty("parentAssembly")]
     public ParentAssemblyDto? ParentAssembly { get; set; }
 
@@ -86,12 +78,18 @@ public class CodalExtraAnnualAssemblyV1 : ICodalMappingServiceMetadata
     [JsonProperty("breakDes")]
     public string? BreakDescription { get; set; }
 
+    public ReportingType ReportingType => ReportingType.Production;
+
+    public LetterType LetterType => LetterType.OrdinaryGeneralMeetingExtraordinaryDecisions;
+
+    public CodalVersion CodalVersion => CodalVersion.V1;
+
+    public LetterPart LetterPart => LetterPart.NotSpecified;
+
     /// <summary>
-    /// Validates if this is a valid extraordinary annual assembly report.
-    /// <summary>
-    /// Determines whether the DTO contains the required ParentAssembly data for a valid report.
+    /// Determines whether this DTO represents a valid extraordinary annual assembly report.
+    /// Returns true if ParentAssembly is not null, false otherwise.
     /// </summary>
-    /// <returns>true if ParentAssembly is not null, false otherwise.</returns>
     public bool IsValidReport()
     {
         return ParentAssembly != null;
