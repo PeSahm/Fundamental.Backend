@@ -8,12 +8,12 @@ public sealed class ExtraAssemblyDecreaseCapital
     /// <summary>
     /// مبلغ کاهش سرمایه.
     /// </summary>
-    public long? CapitalDecreaseValue { get; init; }
+    public decimal? CapitalDecreaseValue { get; init; }
 
     /// <summary>
     /// درصد کاهش سرمایه.
     /// </summary>
-    public long? DecreasePercent { get; init; }
+    public decimal? DecreasePercent { get; init; }
 
     /// <summary>
     /// موافقت / عدم موافقت.

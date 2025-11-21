@@ -91,8 +91,8 @@ public sealed record ExtraAssemblyIncreaseCapitalQueryDto(
 );
 
 public sealed record ExtraAssemblyDecreaseCapitalQueryDto(
-    long? CapitalDecreaseValue,
-    long? DecreasePercent,
+    decimal? CapitalDecreaseValue,
+    decimal? DecreasePercent,
     bool IsAccept,
     long? NewCapital,
     long? NewShareCount,
