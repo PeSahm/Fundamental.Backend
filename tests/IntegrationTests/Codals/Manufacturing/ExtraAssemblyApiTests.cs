@@ -232,6 +232,14 @@ public class ExtraAssemblyApiTests : FinancialStatementTestBase
                 items[i].FiscalYear.Should().BeGreaterThanOrEqualTo(
                     items[i + 1].FiscalYear,
                     "items should be ordered by fiscal year descending");
+
+                // When fiscal years are equal, verify secondary sort by assembly date descending
+                if (items[i].FiscalYear == items[i + 1].FiscalYear)
+                {
+                    items[i].AssemblyDate.Should().BeOnOrAfter(
+                        items[i + 1].AssemblyDate,
+                        "items with equal fiscal year should be ordered by assembly date descending");
+                }
             }
         }
     }

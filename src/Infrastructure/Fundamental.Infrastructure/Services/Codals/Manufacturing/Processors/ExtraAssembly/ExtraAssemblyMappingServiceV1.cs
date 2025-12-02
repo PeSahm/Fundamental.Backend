@@ -7,13 +7,14 @@ using Fundamental.Domain.Codals.Manufacturing.Entities.ExtraAssembly;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Codals.ValueObjects;
 using Fundamental.Domain.Symbols.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.ExtraAssembly;
 
 /// <summary>
 /// Mapping service for Extra Assembly V1 data.
 /// </summary>
-public class ExtraAssemblyMappingServiceV1 : ICanonicalMappingService<CanonicalExtraAssembly, CodalExtraAssemblyV1>
+public class ExtraAssemblyMappingServiceV1(ILogger<ExtraAssemblyMappingServiceV1> logger) : ICanonicalMappingService<CanonicalExtraAssembly, CodalExtraAssemblyV1>
 {
     public Task<CanonicalExtraAssembly> MapToCanonicalAsync(
         CodalExtraAssemblyV1 dto,
@@ -262,23 +263,6 @@ public class ExtraAssemblyMappingServiceV1 : ICanonicalMappingService<CanonicalE
         existing.AuditCommitteeChairman = updated.AuditCommitteeChairman;
     }
 
-    private static DateTime? ParsePersianDate(string? persianDate)
-    {
-        if (string.IsNullOrWhiteSpace(persianDate))
-        {
-            return null;
-        }
-
-        try
-        {
-            return persianDate.ToGregorianDateTime();
-        }
-        catch
-        {
-            return null;
-        }
-    }
-
     private static VerificationStatus ParseVerificationStatus(int value)
     {
         return value switch
@@ -302,6 +286,29 @@ public class ExtraAssemblyMappingServiceV1 : ICanonicalMappingService<CanonicalE
             "2" => VerificationStatus.InProgress,
             _ => VerificationStatus.Unspecified
         };
+    }
+
+    private DateTime? ParsePersianDate(string? persianDate)
+    {
+        if (string.IsNullOrWhiteSpace(persianDate))
+        {
+            return null;
+        }
+
+        try
+        {
+            return persianDate.ToGregorianDateTime();
+        }
+        catch (FormatException ex)
+        {
+            logger.LogError(ex, "ParsePersianDate failed for '{PersianDate}'", persianDate);
+            return null;
+        }
+        catch (ArgumentException ex)
+        {
+            logger.LogError(ex, "ParsePersianDate failed for '{PersianDate}'", persianDate);
+            return null;
+        }
     }
 
     private List<SessionOrder> MapSessionOrders(List<SessionOrderDto>? dtos)
