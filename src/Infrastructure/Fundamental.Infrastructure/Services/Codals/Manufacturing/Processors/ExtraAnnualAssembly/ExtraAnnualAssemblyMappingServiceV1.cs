@@ -68,6 +68,14 @@ public class ExtraAnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Cano
         // Parse assembly date for storage
         DateTime assemblyDate = parsedDate ?? statement.PublishDateMiladi;
 
+        // Validate HtmlUrl before Uri construction
+        if (string.IsNullOrWhiteSpace(statement.HtmlUrl))
+        {
+            throw new InvalidOperationException(
+                $"Statement HtmlUrl is required for TracingNo {statement.TracingNo}"
+            );
+        }
+
         CanonicalExtraAnnualAssembly canonical = new(
             Guid.NewGuid(),
             symbol,

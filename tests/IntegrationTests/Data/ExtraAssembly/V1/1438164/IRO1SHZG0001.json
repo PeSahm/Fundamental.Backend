@@ -1,0 +1,207 @@
+﻿{
+  "parentAssembly" : {
+    "assemblyResultType" : 1,
+    "assemblyResultTypeTitle" : "در خصوص دستور جلسات زیر تصمیم گیری نمود",
+    "date" : "1404/08/24",
+    "hour" : "11:00",
+    "location" : "تهران، خيابان وليعصر، بالاتر از صدا و سيما، خيابان استقلال، مجموعه فرهنگي ورزشي تلاش،سالن رضوان ",
+    "day" : "شنبه",
+    "letterPublishDate" : "1404/08/12",
+    "letterTracingNo" : 1430876,
+    "sessionOrders" : [ {
+      "type" : 17,
+      "description" : "تغییر سال مالی شرکت",
+      "fieldName" : "FinancialYearChange"
+    } ]
+  },
+  "nextSession" : {
+    "breakDesc" : "",
+    "hour" : "",
+    "date" : "",
+    "day" : "",
+    "location" : ""
+  },
+  "shareHolders" : [ {
+    "shareHolderSerial" : 11071,
+    "name" : "شرکت بازرگاني و توليدي مرجان کار  ",
+    "shareCount" : 3970,
+    "sharePercent" : 0.0
+  }, {
+    "shareHolderSerial" : 10465,
+    "name" : "شرکت چاپ و نشر سپه",
+    "shareCount" : 13461,
+    "sharePercent" : 0.0
+  }, {
+    "shareHolderSerial" : 3309,
+    "name" : "شرکت مديريت توسعه گوهران اميد",
+    "shareCount" : 12558883,
+    "sharePercent" : 0.69
+  }, {
+    "shareHolderSerial" : 684,
+    "name" : "ساير سهامداران",
+    "shareCount" : 25418482,
+    "sharePercent" : 1.39
+  }, {
+    "shareHolderSerial" : 685,
+    "name" : "شرکت سرمايه گذاري سپه",
+    "shareCount" : 91324833,
+    "sharePercent" : 5.01
+  }, {
+    "shareHolderSerial" : 687,
+    "name" : "شرکت مديريت سرمايه گذاري اميد",
+    "shareCount" : 1419248073,
+    "sharePercent" : 77.81
+  } ],
+  "assemblyBoardMembers" : [ {
+    "boardMemberSerial" : 3939,
+    "fullName" : "گروه مديريت سرمايه گذاري اميد",
+    "nationalCode" : "10102258090",
+    "legalType" : 0,
+    "membershipType" : 1,
+    "agentBoardMemberFullName" : "کيانوش جهان بخش",
+    "agentBoardMemberNationalCode" : "3391551062",
+    "position" : 1,
+    "hasDuty" : 0,
+    "attendingMeeting" : true,
+    "verification" : 0,
+    "degreeRef" : 7,
+    "educationFieldRef" : 53,
+    "degree" : null,
+    "educationField" : null
+  }, {
+    "boardMemberSerial" : 3942,
+    "fullName" : "سرمايه گذاري سپه",
+    "nationalCode" : "10101296740",
+    "legalType" : 0,
+    "membershipType" : 1,
+    "agentBoardMemberFullName" : "زايد ملائي",
+    "agentBoardMemberNationalCode" : "5549901110",
+    "position" : 0,
+    "hasDuty" : 0,
+    "attendingMeeting" : true,
+    "verification" : 0,
+    "degreeRef" : 7,
+    "educationFieldRef" : 142,
+    "degree" : null,
+    "educationField" : null
+  }, {
+    "boardMemberSerial" : 3943,
+    "fullName" : "چاپ و نشر سپه",
+    "nationalCode" : "10101233336",
+    "legalType" : 0,
+    "membershipType" : 1,
+    "agentBoardMemberFullName" : "بابک تراکمه",
+    "agentBoardMemberNationalCode" : "2298907005",
+    "position" : 2,
+    "hasDuty" : 0,
+    "attendingMeeting" : true,
+    "verification" : 0,
+    "degreeRef" : 5,
+    "educationFieldRef" : 130,
+    "degree" : null,
+    "educationField" : null
+  }, {
+    "boardMemberSerial" : 8109,
+    "fullName" : "سرمايه گذاري توسعه گوهران اميد",
+    "nationalCode" : "10102823179",
+    "legalType" : 0,
+    "membershipType" : 1,
+    "agentBoardMemberFullName" : "منصور نجفي",
+    "agentBoardMemberNationalCode" : "3781528383",
+    "position" : 0,
+    "hasDuty" : 1,
+    "attendingMeeting" : true,
+    "verification" : 0,
+    "degreeRef" : 5,
+    "educationFieldRef" : 134,
+    "degree" : null,
+    "educationField" : null
+  }, {
+    "boardMemberSerial" : 16956,
+    "fullName" : "بازرگاني و توليدي مرجانکار",
+    "nationalCode" : "10700073536",
+    "legalType" : 0,
+    "membershipType" : 1,
+    "agentBoardMemberFullName" : "جواد دل پسند",
+    "agentBoardMemberNationalCode" : "4449276132",
+    "position" : 0,
+    "hasDuty" : 0,
+    "attendingMeeting" : false,
+    "verification" : 0,
+    "degreeRef" : 3,
+    "educationFieldRef" : 172,
+    "degree" : null,
+    "educationField" : null
+  } ],
+  "assemblyChiefMembers" : {
+    "assemblyChief" : "عذرا بياتي",
+    "assemblySuperVisor1" : "سيد احسان الله سهراب",
+    "assemblySuperVisor2" : "علي عليزاده",
+    "assemblySecretary" : "منصور نجفي"
+  },
+  "capitalChangeState" : 0,
+  "ceo" : {
+    "attendingMeeting" : 0,
+    "fullName" : "منصور نجفي",
+    "nationalCode" : "3781528383",
+    "degreeRef" : 5,
+    "educationFieldRef" : 134,
+    "degree" : "کارشناسي ارشد",
+    "educationField" : "مهندسي شيمي",
+    "verification" : ""
+  },
+  "auditCommitteeChairman" : {
+    "attendingMeeting" : 0,
+    "fullName" : "کيانوش جهان بخش",
+    "nationalCode" : "3391551062",
+    "degreeRef" : 7,
+    "educationFieldRef" : 53,
+    "degree" : "کارشناسي",
+    "educationField" : "مهندسي منابع طبيعي",
+    "verification" : ""
+  },
+  "lastshareValue" : 0,
+  "lastCapital" : 0,
+  "lastshareCount" : 0,
+  "extraAssemblyIncreaseCapitals" : [ ],
+  "extraAssemblyDecreaseCapital" : {
+    "capitalDecreaseValue" : 0,
+    "decreasePercent" : 0,
+    "isAccept" : false,
+    "newCapital" : 0,
+    "newShareCount" : 0,
+    "newShareValue" : 0
+  },
+  "extraAssemblyShareValueChangeCapitals" : {
+    "isAccept" : false,
+    "newShareCount" : 0,
+    "newShareValue" : 0
+  },
+  "extraAssemblyScheduling" : {
+    "isRegistered" : false,
+    "yearEndToDate" : ""
+  },
+  "extraAssemblyChanges" : [ ],
+  "oldAddress" : "",
+  "newAddress" : "",
+  "oldName" : "",
+  "newName" : "",
+  "oldActivitySubject" : "",
+  "newActivitySubject" : "",
+  "oldFinancialYearMonthLenght" : 12,
+  "oldFinancialYearEndDate" : "1404/08/30",
+  "oldFinancialYearDayLenght" : 0,
+  "newFinancialYearEndDate" : "1404/09/30",
+  "newFinancialYearMonthLenght" : "12",
+  "newFinancialYearDayLenght" : "0",
+  "isLocationChange" : false,
+  "isNameChange" : false,
+  "isActivitySubjectChange" : false,
+  "isFinancialYearChange" : true,
+  "isDecidedClause141" : false,
+  "decidedClause141Des" : "",
+  "isAccordWithSEOStatuteApproved" : false,
+  "otherDes" : "",
+  "primaryMarketTracingNo" : -1,
+  "correctionStatuteApproved" : false
+}

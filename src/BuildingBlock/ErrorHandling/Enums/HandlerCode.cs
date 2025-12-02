@@ -30,6 +30,8 @@ public enum HandlerCode : ushort
 
     UpdateClosePrices = 14_100,
 
+    GetExtraAssemblyById = 13_369,
+    GetExtraAssemblys = 13_370,
     GetFinancialStatements = 13_371,
     AddMonthlyActivity = 13_372,
     GetNonOperationIncomes = 13_373,
