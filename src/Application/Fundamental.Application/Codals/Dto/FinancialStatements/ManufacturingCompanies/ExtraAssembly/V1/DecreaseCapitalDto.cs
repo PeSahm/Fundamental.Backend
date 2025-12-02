@@ -8,10 +8,10 @@ namespace Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCo
 public class DecreaseCapitalDto
 {
     [JsonProperty("capitalDecreaseValue")]
-    public long? CapitalDecreaseValue { get; set; }
+    public decimal? CapitalDecreaseValue { get; set; }
 
     [JsonProperty("decreasePercent")]
-    public long? DecreasePercent { get; set; }
+    public decimal? DecreasePercent { get; set; }
 
     [JsonProperty("isAccept")]
     public bool IsAccept { get; set; }
