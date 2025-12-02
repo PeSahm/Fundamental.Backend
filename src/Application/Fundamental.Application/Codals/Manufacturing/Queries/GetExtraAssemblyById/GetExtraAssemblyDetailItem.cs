@@ -81,7 +81,7 @@ public sealed record ExtraAssemblyIncreaseCapitalQueryDto(
     int? SarfSaham,
     bool IsAccept,
     int? CapitalIncreaseValue,
-    double? IncreasePercent,
+    decimal? IncreasePercent,
     CapitalIncreaseApprovalType Type,
     decimal? CashForceclosurePriorityStockPrice,
     string? CashForceclosurePriorityStockDesc,

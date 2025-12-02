@@ -8,7 +8,7 @@ namespace Fundamental.Application.Codals.Dto.FinancialStatements.ManufacturingCo
 public class ShareValueChangeCapitalDto
 {
     [JsonProperty("isAccept")]
-    public bool IsAccept { get; set; }
+    public bool? IsAccept { get; set; }
 
     [JsonProperty("newShareCount")]
     public long? NewShareCount { get; set; }

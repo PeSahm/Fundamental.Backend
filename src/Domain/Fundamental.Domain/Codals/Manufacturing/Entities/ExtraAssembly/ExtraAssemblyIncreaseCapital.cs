@@ -45,7 +45,7 @@ public sealed class ExtraAssemblyIncreaseCapital
     /// <summary>
     /// درصد افزایش سرمایه.
     /// </summary>
-    public double? IncreasePercent { get; init; }
+    public decimal? IncreasePercent { get; init; }
 
     /// <summary>
     /// نحوۀ تصویب.

@@ -125,7 +125,7 @@ public class ExtraAssemblyMappingServiceV1 : ICanonicalMappingService<CanonicalE
             {
                 CapitalDecreaseValue = dto.ExtraAssemblyDecreaseCapital.CapitalDecreaseValue,
                 DecreasePercent = dto.ExtraAssemblyDecreaseCapital.DecreasePercent,
-                IsAccept = dto.ExtraAssemblyDecreaseCapital.IsAccept,
+                IsAccept = dto.ExtraAssemblyDecreaseCapital.IsAccept ?? false,
                 NewCapital = dto.ExtraAssemblyDecreaseCapital.NewCapital,
                 NewShareCount = dto.ExtraAssemblyDecreaseCapital.NewShareCount,
                 NewShareValue = dto.ExtraAssemblyDecreaseCapital.NewShareValue
@@ -137,7 +137,7 @@ public class ExtraAssemblyMappingServiceV1 : ICanonicalMappingService<CanonicalE
         {
             canonical.ExtraAssemblyShareValueChangeCapital = new ExtraAssemblyShareValueChangeCapital
             {
-                IsAccept = dto.ExtraAssemblyShareValueChangeCapitals.IsAccept,
+                IsAccept = dto.ExtraAssemblyShareValueChangeCapitals.IsAccept ?? false,
                 NewShareCount = dto.ExtraAssemblyShareValueChangeCapitals.NewShareCount,
                 NewShareValue = dto.ExtraAssemblyShareValueChangeCapitals.NewShareValue
             };
@@ -375,9 +375,9 @@ public class ExtraAssemblyMappingServiceV1 : ICanonicalMappingService<CanonicalE
             Reserves = x.Reserves,
             RevaluationSurplus = x.RevaluationSurplus,
             SarfSaham = x.SarfSaham,
-            IsAccept = x.IsAccept,
+            IsAccept = x.IsAccept ?? false,
             CapitalIncreaseValue = x.CapitalIncreaseValue,
-            IncreasePercent = x.IncreasePercent,
+            IncreasePercent = x.IncreasePercent.HasValue ? (decimal?)x.IncreasePercent.Value : null,
             Type = (CapitalIncreaseApprovalType)x.Type,
             CashForceclosurePriority = x.CashForceclosurePriority,
             CashForceclosurePriorityStockPrice = x.CashForceclosurePriorityStockPrice,

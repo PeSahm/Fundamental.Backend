@@ -23,13 +23,13 @@ public class IncreaseCapitalDto
     public int? SarfSaham { get; set; }
 
     [JsonProperty("isAccept")]
-    public bool IsAccept { get; set; }
+    public bool? IsAccept { get; set; }
 
     [JsonProperty("capitalIncreaseValue")]
     public int? CapitalIncreaseValue { get; set; }
 
     [JsonProperty("increasePercent")]
-    public double? IncreasePercent { get; set; }
+    public decimal? IncreasePercent { get; set; }
 
     [JsonProperty("type")]
     public int Type { get; set; }
