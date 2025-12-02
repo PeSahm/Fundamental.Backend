@@ -130,7 +130,7 @@ public sealed class ExtraAssemblyDetailItemSpec : Specification<CanonicalExtraAs
                     item.Type,
                     item.CashForceclosurePriorityStockPrice,
                     item.CashForceclosurePriorityStockDesc,
-                    item.CashForceclosurePriorityAvalableStockCount,
+                    item.CashForceclosurePriorityAvailableStockCount,
                     item.CashForceclosurePriorityPrizeStockCount,
                     item.CashForceclosurePriority
                 )).ToList(),

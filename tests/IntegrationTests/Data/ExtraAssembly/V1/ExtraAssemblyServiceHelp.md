@@ -96,7 +96,7 @@
 | type | short | **نحوۀ تصویب:** <br> `0`: قطعی <br> `1`: در اختیار هیئت‌مدیره |
 | cashForceclosurePriorityStockPrice | decimal | قیمت سهام جهت عرضه عمومی-ریال |
 | cashForceclosurePriorityStockDesc | string | توضیحات در خصوص قیمت سهام جهت عرضه عمومی |
-| cashForceclosurePriorityAvalableStockCount | int | تعداد سهام قابل عرضه به عموم |
+| cashForceclosurePriorityAvailableStockCount | int | تعداد سهام قابل عرضه به عموم |
 | cashForceclosurePriorityPrizeStockCount | int | تعداد سهام جایزه |
 | cashForceclosurePriority | decimal | آورده نقدی با سلب حق تقدم از سهامداران فعلی |
 

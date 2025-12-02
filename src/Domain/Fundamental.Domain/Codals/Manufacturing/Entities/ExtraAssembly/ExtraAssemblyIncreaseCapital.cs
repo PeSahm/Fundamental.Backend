@@ -65,12 +65,22 @@ public sealed class ExtraAssemblyIncreaseCapital
     /// <summary>
     /// تعداد سهام قابل عرضه به عموم.
     /// </summary>
-    public int? CashForceclosurePriorityAvalableStockCount { get; init; }
+    public int? CashForceclosurePriorityAvailableStockCount { get; init; }
 
     /// <summary>
     /// تعداد سهام جایزه.
     /// </summary>
     public int? CashForceclosurePriorityPrizeStockCount { get; init; }
+
+    /// <summary>
+    /// Obsolete: Use <see cref="CashForceclosurePriorityAvailableStockCount"/> instead.
+    /// </summary>
+    [Obsolete("Use CashForceclosurePriorityAvailableStockCount instead", false)]
+    public int? CashForceclosurePriorityAvalableStockCount
+    {
+        get => CashForceclosurePriorityAvailableStockCount;
+        init => CashForceclosurePriorityAvailableStockCount = value;
+    }
 
     /// <summary>
     /// آورده نقدی با سلب حق تقدم از سهامداران فعلی.

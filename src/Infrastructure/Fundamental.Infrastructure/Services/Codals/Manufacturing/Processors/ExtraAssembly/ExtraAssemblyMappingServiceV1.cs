@@ -390,7 +390,7 @@ public class ExtraAssemblyMappingServiceV1(ILogger<ExtraAssemblyMappingServiceV1
             CashForceclosurePriority = x.CashForceclosurePriority,
             CashForceclosurePriorityStockPrice = x.CashForceclosurePriorityStockPrice,
             CashForceclosurePriorityStockDesc = x.CashForceclosurePriorityStockDesc,
-            CashForceclosurePriorityAvalableStockCount = x.CashForceclosurePriorityAvalableStockCount,
+            CashForceclosurePriorityAvailableStockCount = x.CashForceclosurePriorityAvailableStockCount,
             CashForceclosurePriorityPrizeStockCount = x.CashForceclosurePriorityPrizeStockCount
         }).ToList();
     }

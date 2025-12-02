@@ -44,7 +44,7 @@ public class IncreaseCapitalDto
     public string? CashForceclosurePriorityStockDesc { get; set; }
 
     [JsonProperty("cashForceclosurePriorityAvalableStockCount")]
-    public int? CashForceclosurePriorityAvalableStockCount { get; set; }
+    public int? CashForceclosurePriorityAvailableStockCount { get; set; }
 
     [JsonProperty("cashForceclosurePriorityPrizeStockCount")]
     public int? CashForceclosurePriorityPrizeStockCount { get; set; }

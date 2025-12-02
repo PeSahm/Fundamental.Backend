@@ -85,7 +85,7 @@ public sealed record ExtraAssemblyIncreaseCapitalQueryDto(
     CapitalIncreaseApprovalType Type,
     decimal? CashForceclosurePriorityStockPrice,
     string? CashForceclosurePriorityStockDesc,
-    int? CashForceclosurePriorityAvalableStockCount,
+    int? CashForceclosurePriorityAvailableStockCount,
     int? CashForceclosurePriorityPrizeStockCount,
     decimal? CashForceclosurePriority
 );
