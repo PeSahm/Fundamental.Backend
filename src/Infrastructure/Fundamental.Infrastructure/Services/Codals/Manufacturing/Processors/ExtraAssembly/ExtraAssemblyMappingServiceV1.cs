@@ -64,6 +64,7 @@ public class ExtraAssemblyMappingServiceV1 : ICanonicalMappingService<CanonicalE
         canonical.ParentAssemblyInfo = new ParentAssemblyInfo
         {
             AssemblyResultType = (AssemblyResultType)dto.ParentAssembly.AssemblyResultType,
+            AssemblyResultTypeTitle = dto.ParentAssembly.AssemblyResultTypeTitle,
             Date = dto.ParentAssembly.Date,
             Hour = dto.ParentAssembly.Hour,
             Location = dto.ParentAssembly.Location,
