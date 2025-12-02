@@ -278,15 +278,17 @@ public class ExtraAssemblyApiTests : FinancialStatementTestBase
         await CleanExtraAssemblyData();
         await SeedTestData();
 
-        // Get a valid ID from database
+        // Get first entity to know the expected title from test data
         CanonicalExtraAssembly? firstEntity = await _fixture.DbContext.CanonicalExtraAssemblies
             .AsNoTracking()
             .FirstOrDefaultAsync();
 
         firstEntity.Should().NotBeNull();
+        firstEntity!.ParentAssemblyInfo.Should().NotBeNull();
+        string? expectedTitle = firstEntity.ParentAssemblyInfo.AssemblyResultTypeTitle;
 
         IMediator mediator = _fixture.Services.GetRequiredService<IMediator>();
-        GetExtraAssemblyByIdRequest request = new(firstEntity!.Id);
+        GetExtraAssemblyByIdRequest request = new(firstEntity.Id);
 
         // Act
         Response<GetExtraAssemblyDetailItem> response =
@@ -295,8 +297,7 @@ public class ExtraAssemblyApiTests : FinancialStatementTestBase
         // Assert
         response.Success.Should().BeTrue();
         response.Data.Should().NotBeNull();
-
-        // AssemblyResultTypeTitle can be null if not present in test data
+        response.Data!.AssemblyResultTypeTitle.Should().Be(expectedTitle);
     }
 
     [Fact]
