@@ -2,6 +2,7 @@ using Fundamental.Application.Codals.Enums;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Enums;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Detectors;
@@ -25,7 +26,11 @@ public class ExtraAssemblyDetector : ICodalVersionDetector
 
             return CodalVersion.None;
         }
-        catch
+        catch (JsonReaderException)
+        {
+            return CodalVersion.None;
+        }
+        catch (ArgumentException)
         {
             return CodalVersion.None;
         }
