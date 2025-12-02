@@ -14,7 +14,7 @@ public class DecreaseCapitalDto
     public decimal? DecreasePercent { get; set; }
 
     [JsonProperty("isAccept")]
-    public bool IsAccept { get; set; }
+    public bool? IsAccept { get; set; }
 
     [JsonProperty("newCapital")]
     public long? NewCapital { get; set; }
