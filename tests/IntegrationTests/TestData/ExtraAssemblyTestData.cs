@@ -11,7 +11,7 @@ public static class ExtraAssemblyTestData
     /// <returns>JSON string for V1 format.</returns>
     public static string GetV1CapitalIncreaseTestData()
     {
-        string filePath = System.IO.Path.Combine(
+        string filePath = System.IO.Path.Join(
             AppDomain.CurrentDomain.BaseDirectory,
             "Data",
             "ExtraAssembly",
@@ -33,7 +33,7 @@ public static class ExtraAssemblyTestData
     /// <returns>JSON string for V1 format.</returns>
     public static string GetV1FiscalYearChangeTestData()
     {
-        string filePath = System.IO.Path.Combine(
+        string filePath = System.IO.Path.Join(
             AppDomain.CurrentDomain.BaseDirectory,
             "Data",
             "ExtraAssembly",
