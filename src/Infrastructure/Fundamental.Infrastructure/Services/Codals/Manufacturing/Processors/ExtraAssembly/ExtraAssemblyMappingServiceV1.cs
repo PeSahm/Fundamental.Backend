@@ -48,6 +48,14 @@ public class ExtraAssemblyMappingServiceV1(ILogger<ExtraAssemblyMappingServiceV1
         // Parse assembly date for storage
         DateTime assemblyDate = parsedDate ?? statement.PublishDateMiladi;
 
+        // Validate HtmlUrl before Uri construction
+        if (string.IsNullOrWhiteSpace(statement.HtmlUrl))
+        {
+            throw new InvalidOperationException(
+                $"Statement HtmlUrl is required for TracingNo {statement.TracingNo}"
+            );
+        }
+
         CanonicalExtraAssembly canonical = new(
             Guid.NewGuid(),
             symbol,
