@@ -197,23 +197,25 @@ public class ExtraAssemblyIntegrationTests : FinancialStatementTestBase
 
         await processor.Process(statement, jsonResponse, CancellationToken.None);
 
-        // Assert - Verify attendee entities
+        // Assert - Verify attendee entities are populated with correct data
         CanonicalExtraAssembly? storedEntity = await _fixture.DbContext.CanonicalExtraAssemblies
             .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id && x.TraceNo == 1418249UL);
 
         storedEntity.Should().NotBeNull();
 
-        // Verify attendee fields exist (nullable)
-        // These should be null or have valid AssemblyAttendee structure
-        if (storedEntity!.Ceo != null)
-        {
-            storedEntity.Ceo.Should().BeOfType<AssemblyAttendee>();
-        }
+        // Verify CEO attendee fields are populated
+        storedEntity!.Ceo.Should().NotBeNull("test data includes CEO");
+        storedEntity.Ceo!.FullName.Should().Be("يحيي نصراصفهاني");
+        storedEntity.Ceo.NationalCode.Should().Be("1290580073");
+        storedEntity.Ceo.Degree.Should().Be("کارشناسي ارشد");
+        storedEntity.Ceo.EducationField.Should().Be("حسابداري");
 
-        if (storedEntity.AuditCommitteeChairman != null)
-        {
-            storedEntity.AuditCommitteeChairman.Should().BeOfType<AssemblyAttendee>();
-        }
+        // Verify AuditCommitteeChairman attendee fields are populated
+        storedEntity.AuditCommitteeChairman.Should().NotBeNull("test data includes audit committee chairman");
+        storedEntity.AuditCommitteeChairman!.FullName.Should().Be("محمدرضا سليميان");
+        storedEntity.AuditCommitteeChairman.NationalCode.Should().Be("0490530915");
+        storedEntity.AuditCommitteeChairman.Degree.Should().Be("کارشناسي ارشد");
+        storedEntity.AuditCommitteeChairman.EducationField.Should().Be("مديريت");
     }
 
     [Fact]
@@ -278,7 +280,7 @@ public class ExtraAssemblyIntegrationTests : FinancialStatementTestBase
         storedEntity!.ExtraAssemblyIncreaseCapitals.Should().NotBeEmpty();
 
         // Verify CapitalIncreaseApprovalType is mapped correctly
-        foreach (var capitalIncrease in storedEntity.ExtraAssemblyIncreaseCapitals)
+        foreach (ExtraAssemblyIncreaseCapital capitalIncrease in storedEntity.ExtraAssemblyIncreaseCapitals)
         {
             capitalIncrease.Type.Should().BeOneOf(Enum.GetValues<CapitalIncreaseApprovalType>());
         }
