@@ -27,6 +27,7 @@ public enum HandlerCode : ushort
     UpdateInterpretativeReportSummaryPage5Data = 13_200,
     UpdateAnnualAssemblyData = 13_201,
     UpdateExtraAnnualAssemblyData = 13_202,
+    UpdateExtraAssemblyData = 13_203,
 
     UpdateClosePrices = 14_100,
 
