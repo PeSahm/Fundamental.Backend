@@ -3,6 +3,7 @@ using Fundamental.Domain.Codals;
 using Fundamental.Domain.Common.Enums;
 using IntegrationTests.Shared;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace IntegrationTests.Codals;
 
@@ -10,19 +11,35 @@ namespace IntegrationTests.Codals;
 /// Integration tests for RawCodalJson caching behavior.
 /// These tests verify that RawCodalJson entities are correctly stored and retrieved.
 /// Note: PostgreSQL's jsonb type may reorder JSON keys, so we test for key content rather than exact string equality.
+/// Each test runs within a transaction that is rolled back after completion for isolation.
 /// </summary>
-public class CodalServiceIntegrationTests : FinancialStatementTestBase
+public class CodalServiceIntegrationTests : FinancialStatementTestBase, IAsyncLifetime
 {
+    private IDbContextTransaction? _transaction;
+
     public CodalServiceIntegrationTests(TestFixture fixture)
         : base(fixture)
     {
+    }
+
+    public async Task InitializeAsync()
+    {
+        _transaction = await _fixture.DbContext.Database.BeginTransactionAsync();
+    }
+
+    public async Task DisposeAsync()
+    {
+        if (_transaction is not null)
+        {
+            await _transaction.RollbackAsync();
+            await _transaction.DisposeAsync();
+        }
     }
 
     [Fact]
     public async Task RawCodalJson_ShouldBeStoredCorrectlyInDatabase()
     {
         // Arrange
-        await CleanTestData();
         ulong traceNo = 987654321UL;
         string rawJson = """{"version":"V5","data":{"test":"value"}}""";
 
@@ -64,7 +81,6 @@ public class CodalServiceIntegrationTests : FinancialStatementTestBase
     public async Task RawCodalJson_WhenTraceNoExists_ShouldBeRetrievable()
     {
         // Arrange
-        await CleanTestData();
         ulong traceNo = 123456789UL;
         string cachedJson = """{"version":"V5","cached":true}""";
 
@@ -100,7 +116,6 @@ public class CodalServiceIntegrationTests : FinancialStatementTestBase
     public async Task RawCodalJson_TraceNoShouldBeUnique()
     {
         // Arrange
-        await CleanTestData();
         ulong traceNo = 111222333UL;
         string rawJson1 = """{"first":true}""";
         string rawJson2 = """{"second":true}""";
@@ -145,7 +160,6 @@ public class CodalServiceIntegrationTests : FinancialStatementTestBase
     public async Task RawCodalJson_ShouldStoreNullHtmlUrl()
     {
         // Arrange
-        await CleanTestData();
         ulong traceNo = 333444555UL;
         string rawJson = """{"test":"nullUrl"}""";
 
@@ -178,7 +192,6 @@ public class CodalServiceIntegrationTests : FinancialStatementTestBase
     public async Task RawCodalJson_PublishDateShouldBeUtc()
     {
         // Arrange
-        await CleanTestData();
         ulong traceNo = 444555666UL;
         DateTime publishDate = DateTime.UtcNow;
         string rawJson = """{"test":"utcDate"}""";
@@ -212,7 +225,6 @@ public class CodalServiceIntegrationTests : FinancialStatementTestBase
     public async Task RawCodalJson_ShouldSupportMultipleRecordsWithDifferentTraceNos()
     {
         // Arrange
-        await CleanTestData();
         List<RawCodalJson> entities = new();
 
         for (int i = 0; i < 10; i++)
@@ -245,7 +257,6 @@ public class CodalServiceIntegrationTests : FinancialStatementTestBase
     public async Task RawCodalJson_UpdateShouldModifyExistingRecord()
     {
         // Arrange
-        await CleanTestData();
         ulong traceNo = 666777888UL;
         string originalJson = """{"original":true}""";
         string updatedJson = """{"updated":true}""";
@@ -281,12 +292,5 @@ public class CodalServiceIntegrationTests : FinancialStatementTestBase
 
         savedJson.Should().NotBeNull();
         savedJson!.RawJson.Should().Contain("updated");
-    }
-
-    private async Task CleanTestData()
-    {
-        _fixture.DbContext.RawCodalJsons.RemoveRange(_fixture.DbContext.RawCodalJsons);
-        await _fixture.DbContext.SaveChangesAsync();
-        _fixture.DbContext.ChangeTracker.Clear();
     }
 }
