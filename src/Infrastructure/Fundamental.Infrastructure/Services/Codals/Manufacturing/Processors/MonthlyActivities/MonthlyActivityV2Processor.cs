@@ -48,38 +48,6 @@ public class MonthlyActivityV2Processor(
             x => x.Isin == statement.Isin,
             cancellationToken);
 
-        // Check for existing record
-        RawMonthlyActivityJson? existingRawJson = await dbContext.RawMonthlyActivityJsons
-            .FirstOrDefaultAsync(
-                x => x.Symbol.Id == symbol.Id &&
-                     x.Version == CodalVersion.V2,
-                cancellationToken);
-
-        // Store raw JSON
-        if (existingRawJson == null)
-        {
-            RawMonthlyActivityJson rawJson = new(
-                id: Guid.NewGuid(),
-                traceNo: (long)statement.TracingNo,
-                symbol: symbol,
-                publishDate: statement.PublishDateMiladi,
-                version: CodalVersion.V2,
-                rawJson: model.Json,
-                createdAt: DateTime.UtcNow);
-            dbContext.Add(rawJson);
-        }
-        else
-        {
-            if (existingRawJson.TraceNo <= (long)statement.TracingNo)
-            {
-                existingRawJson.Update(
-                    traceNo: (long)statement.TracingNo,
-                    publishDate: statement.PublishDateMiladi,
-                    rawJson: model.Json,
-                    updatedAt: DateTime.UtcNow);
-            }
-        }
-
         // Get the mapping service for V2
         ICanonicalMappingService<CanonicalMonthlyActivity, CodalMonthlyActivityV2> mappingService =
             mappingServiceFactory.GetMappingService<CanonicalMonthlyActivity, CodalMonthlyActivityV2>();
@@ -117,6 +85,4 @@ public class MonthlyActivityV2Processor(
             fiscalYear,
             reportMonth);
     }
-
-    // Removed legacy ExtractFiscalYear; rely on canonical entity populated via mapping service.
 }

@@ -4,6 +4,7 @@ using Fundamental.Application.Codals.Manufacturing.Queries.GetMonthlyActivities;
 using Fundamental.Application.Codals.Manufacturing.Queries.GetMonthlyActivityById;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
+using Fundamental.Domain.Codals;
 using Fundamental.Domain.Codals.Manufacturing.Entities;
 using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Dto;
@@ -30,7 +31,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
     }
 
     [Fact]
-    public async Task ProcessMonthlyActivityV5_ShouldStoreCanonicalDataAndRawJson()
+    public async Task ProcessMonthlyActivityV5_ShouldStoreCanonicalData()
     {
         // Arrange
         await CleanMonthlyActivityData();
@@ -71,12 +72,8 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
         storedEntity.CurrencyExchangeItems.Should().NotBeEmpty();
         storedEntity.Descriptions.Should().NotBeEmpty();
 
-        // Verify raw JSON is stored
-        RawMonthlyActivityJson? rawJsonEntity = await _fixture.DbContext.RawMonthlyActivityJsons
-            .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id && x.TraceNo == 123456789L);
-        rawJsonEntity.Should().NotBeNull();
-        rawJsonEntity!.RawJson.Should().NotBeNullOrEmpty();
-        rawJsonEntity.Version.Should().Be(CodalVersion.V5);
+        // Note: Raw JSON storage is now handled centrally by CodalService.ProcessCodal,
+        // not by individual processors. See RawCodalJson entity for new storage mechanism.
     }
 
     [Fact]
@@ -418,10 +415,8 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
 
         storedEntity.Should().BeNull();
 
-        RawMonthlyActivityJson? rawJsonEntity = await _fixture.DbContext.RawMonthlyActivityJsons
-            .FirstOrDefaultAsync(x => x.Symbol.Id == symbol.Id && x.TraceNo == 123456789L);
-
-        rawJsonEntity.Should().BeNull();
+        // Note: Raw JSON storage is now handled centrally by CodalService.ProcessCodal,
+        // and would not be called in this test since we're directly calling the processor.
     }
 
     [Fact]
@@ -1312,6 +1307,7 @@ public class MonthlyActivityIntegrationTests : FinancialStatementTestBase
     {
         _fixture.DbContext.CanonicalMonthlyActivities.RemoveRange(_fixture.DbContext.CanonicalMonthlyActivities);
         _fixture.DbContext.RawMonthlyActivityJsons.RemoveRange(_fixture.DbContext.RawMonthlyActivityJsons);
+        _fixture.DbContext.RawCodalJsons.RemoveRange(_fixture.DbContext.RawCodalJsons);
 
         // Also clean up test symbols to avoid duplicate ISIN conflicts
         List<Symbol> testSymbols = await _fixture.DbContext.Symbols

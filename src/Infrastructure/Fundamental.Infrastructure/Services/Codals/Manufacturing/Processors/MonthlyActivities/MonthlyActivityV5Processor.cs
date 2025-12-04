@@ -70,37 +70,6 @@ public class MonthlyActivityV5Processor(
         CanonicalMonthlyActivity canonical = await mappingService.MapToCanonicalAsync(monthlyActivity, symbol, statement);
         canonical.PublishDate = statement.PublishDateMiladi.ToUniversalTime();
 
-        // Store raw JSON
-        RawMonthlyActivityJson? existingRawJson = await dbContext.RawMonthlyActivityJsons
-            .FirstOrDefaultAsync(
-                x => x.Symbol.Id == symbol.Id &&
-                     x.Version == CodalVersion.V5,
-                cancellationToken);
-
-        if (existingRawJson == null)
-        {
-            RawMonthlyActivityJson rawJson = new(
-                id: Guid.NewGuid(),
-                traceNo: (long)statement.TracingNo,
-                symbol: symbol,
-                publishDate: statement.PublishDateMiladi,
-                version: CodalVersion.V5,
-                rawJson: model.Json,
-                createdAt: DateTime.UtcNow);
-            dbContext.Add(rawJson);
-        }
-        else
-        {
-            if (existingRawJson.TraceNo <= (long)statement.TracingNo)
-            {
-                existingRawJson.Update(
-                    traceNo: (long)statement.TracingNo,
-                    publishDate: statement.PublishDateMiladi,
-                    rawJson: JsonConvert.SerializeObject(monthlyActivity.MonthlyActivity, setting),
-                    updatedAt: DateTime.UtcNow);
-            }
-        }
-
         // Check for existing canonical record
         CanonicalMonthlyActivity? existingCanonical = await dbContext.CanonicalMonthlyActivities
             .FirstOrDefaultAsync(

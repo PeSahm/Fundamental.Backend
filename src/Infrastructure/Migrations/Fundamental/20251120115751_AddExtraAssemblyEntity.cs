@@ -1,14 +1,18 @@
-﻿using Fundamental.Domain.Codals.Manufacturing.Enums;
+﻿#nullable disable
+
+using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Enums;
+using Fundamental.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-
-#nullable disable
 
 namespace Fundamental.Migrations.Fundamental
 {
     /// <inheritdoc />
-    public partial class AddExtraAssemblyEntity : Migration
+    [DbContext(typeof(FundamentalDbContext))]
+    [Migration("20251120115751_AddExtraAssemblyEntity")]
+    public class AddExtraAssemblyEntity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

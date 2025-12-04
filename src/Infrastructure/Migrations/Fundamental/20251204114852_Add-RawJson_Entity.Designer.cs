@@ -16,8 +16,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fundamental.Migrations.Fundamental
 {
     [DbContext(typeof(FundamentalDbContext))]
-    [Migration("20251120115751_AddExtraAssemblyEntity")]
-    partial class AddExtraAssemblyEntity
+    [Migration("20251204114852_Add-RawJson_Entity")]
+    partial class AddRawJson_Entity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -2473,6 +2473,78 @@ namespace Fundamental.Migrations.Fundamental
                     b.ToTable("publisher", "fs");
                 });
 
+            modelBuilder.Entity("Fundamental.Domain.Codals.RawCodalJson", b =>
+                {
+                    b.Property<long>("_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("_id")
+                        .HasColumnOrder(0);
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("_id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<string>("HtmlUrl")
+                        .HasMaxLength(1024)
+                        .HasColumnType("character varying(1024)")
+                        .HasColumnName("html_url");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(1);
+
+                    b.Property<string>("Isin")
+                        .HasMaxLength(12)
+                        .HasColumnType("character varying(12)")
+                        .HasColumnName("isin");
+
+                    b.Property<DateTime>("PublishDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("publish_date");
+
+                    b.Property<long>("PublisherId")
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("publisher_id");
+
+                    b.Property<string>("RawJson")
+                        .IsRequired()
+                        .HasColumnType("jsonb")
+                        .HasColumnName("raw_json");
+
+                    b.Property<ReportingType>("ReportingType")
+                        .HasColumnType("reporting_type")
+                        .HasColumnName("reporting_type");
+
+                    b.Property<int>("StatementLetterType")
+                        .HasColumnType("integer")
+                        .HasColumnName("statement_letter_type");
+
+                    b.Property<decimal>("TraceNo")
+                        .HasColumnType("numeric(20,0)")
+                        .HasColumnName("trace_no");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("ModifiedAt");
+
+                    b.HasKey("_id")
+                        .HasName("pk_raw_codal_json");
+
+                    b.HasIndex("Id")
+                        .IsUnique()
+                        .HasDatabaseName("ix_raw_codal_json_id");
+
+                    b.HasIndex("TraceNo")
+                        .IsUnique()
+                        .HasDatabaseName("ix_raw_codal_json_trace_no");
+
+                    b.ToTable("raw_codal_json", "codals");
+                });
+
             modelBuilder.Entity("Fundamental.Domain.Prices.Entities.ClosePrice", b =>
                 {
                     b.Property<long>("_id")
@@ -4568,11 +4640,11 @@ namespace Fundamental.Migrations.Fundamental
                             b1.Property<long>("CanonicalExtraAssembly_id")
                                 .HasColumnType("bigint");
 
-                            b1.Property<long?>("CapitalDecreaseValue")
-                                .HasColumnType("bigint");
+                            b1.Property<decimal?>("CapitalDecreaseValue")
+                                .HasColumnType("numeric");
 
-                            b1.Property<long?>("DecreasePercent")
-                                .HasColumnType("bigint");
+                            b1.Property<decimal?>("DecreasePercent")
+                                .HasColumnType("numeric");
 
                             b1.Property<bool>("IsAccept")
                                 .HasColumnType("boolean");
@@ -4612,7 +4684,7 @@ namespace Fundamental.Migrations.Fundamental
                             b1.Property<decimal?>("CashForceclosurePriority")
                                 .HasColumnType("numeric");
 
-                            b1.Property<int?>("CashForceclosurePriorityAvalableStockCount")
+                            b1.Property<int?>("CashForceclosurePriorityAvailableStockCount")
                                 .HasColumnType("integer");
 
                             b1.Property<int?>("CashForceclosurePriorityPrizeStockCount")
@@ -4627,8 +4699,8 @@ namespace Fundamental.Migrations.Fundamental
                             b1.Property<int?>("CashIncoming")
                                 .HasColumnType("integer");
 
-                            b1.Property<double?>("IncreasePercent")
-                                .HasColumnType("double precision");
+                            b1.Property<decimal?>("IncreasePercent")
+                                .HasColumnType("numeric");
 
                             b1.Property<bool>("IsAccept")
                                 .HasColumnType("boolean");

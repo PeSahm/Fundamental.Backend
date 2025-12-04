@@ -48,38 +48,6 @@ public class MonthlyActivityV1Processor(
             x => x.Isin == statement.Isin,
             cancellationToken);
 
-        // Check for existing record
-        RawMonthlyActivityJson? existingRawJson = await dbContext.RawMonthlyActivityJsons
-            .FirstOrDefaultAsync(
-                x => x.Symbol.Id == symbol.Id &&
-                     x.Version == CodalVersion.V1,
-                cancellationToken);
-
-        // Store raw JSON
-        if (existingRawJson == null)
-        {
-            RawMonthlyActivityJson rawJson = new(
-                id: Guid.NewGuid(),
-                traceNo: (long)statement.TracingNo,
-                symbol: symbol,
-                publishDate: statement.PublishDateMiladi,
-                version: CodalVersion.V1,
-                rawJson: model.Json,
-                createdAt: DateTime.UtcNow);
-            dbContext.Add(rawJson);
-        }
-        else
-        {
-            if (existingRawJson.TraceNo <= (long)statement.TracingNo)
-            {
-                existingRawJson.Update(
-                    traceNo: (long)statement.TracingNo,
-                    publishDate: statement.PublishDateMiladi,
-                    rawJson: model.Json,
-                    updatedAt: DateTime.UtcNow);
-            }
-        }
-
         // Get the mapping service for V1
         ICanonicalMappingService<CanonicalMonthlyActivity, CodalMonthlyActivityV1> mappingService =
             mappingServiceFactory.GetMappingService<CanonicalMonthlyActivity, CodalMonthlyActivityV1>();
