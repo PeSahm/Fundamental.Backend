@@ -2,6 +2,7 @@ using DotNet.Testcontainers.Builders;
 using Fundamental.Application.Codals.Manufacturing.Repositories;
 using Fundamental.Application.Codals.Services;
 using Fundamental.Domain.Repositories.Base;
+using Fundamental.Infrastructure.Extensions;
 using Fundamental.Infrastructure.Extensions.Codals.Manufacturing;
 using Fundamental.Infrastructure.Persistence;
 using Fundamental.Infrastructure.Persistence.Repositories.Base;
@@ -149,6 +150,12 @@ public class TestFixture : IAsyncLifetime
 
         // Register Canonical Mapping Service Factory and Manufacturing Services
         services.AddCodalMonthlyActivityMappingServices();
+
+        // Register Codal Processor Factory
+        services.AddCodalServices();
+
+        // Register HybridCache for CodalService tests
+        services.AddHybridCache();
 
     }
 
