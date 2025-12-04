@@ -76,38 +76,6 @@ public class MonthlyActivityV4Processor(
             x => x.Isin == statement.Isin,
             cancellationToken);
 
-        // Check for existing record
-        RawMonthlyActivityJson? existingRawJson = await dbContext.RawMonthlyActivityJsons
-            .FirstOrDefaultAsync(
-                x => x.Symbol.Id == symbol.Id &&
-                     x.Version == CodalVersion.V4,
-                cancellationToken);
-
-        // Store raw JSON
-        if (existingRawJson == null)
-        {
-            RawMonthlyActivityJson rawJson = new(
-                id: Guid.NewGuid(),
-                traceNo: (long)statement.TracingNo,
-                symbol: symbol,
-                publishDate: statement.PublishDateMiladi,
-                version: CodalVersion.V4,
-                rawJson: model.Json,
-                createdAt: DateTime.UtcNow);
-            dbContext.Add(rawJson);
-        }
-        else
-        {
-            if (existingRawJson.TraceNo <= (long)statement.TracingNo)
-            {
-                existingRawJson.Update(
-                    traceNo: (long)statement.TracingNo,
-                    publishDate: statement.PublishDateMiladi,
-                    rawJson: model.Json,
-                    updatedAt: DateTime.UtcNow);
-            }
-        }
-
         // Get the mapping service for V4
         ICanonicalMappingService<CanonicalMonthlyActivity, CodalMonthlyActivity> mappingService =
             mappingServiceFactory.GetMappingService<CanonicalMonthlyActivity, CodalMonthlyActivity>();
@@ -132,7 +100,7 @@ public class MonthlyActivityV4Processor(
         {
             if (existingCanonical.TraceNo <= statement.TracingNo)
             {
-                UpdateCanonicalMonthlyActivity(existingCanonical, canonical);
+                mappingService.UpdateCanonical(existingCanonical, canonical);
             }
         }
 
@@ -142,20 +110,5 @@ public class MonthlyActivityV4Processor(
             statement.Isin,
             canonical.FiscalYear,
             canonical.ReportMonth);
-    }
-
-    private static void UpdateCanonicalMonthlyActivity(CanonicalMonthlyActivity existing, CanonicalMonthlyActivity updated)
-    {
-        existing.TraceNo = updated.TraceNo;
-        existing.Uri = updated.Uri;
-        existing.Currency = updated.Currency;
-        existing.HasSubCompanySale = updated.HasSubCompanySale;
-
-        // Update collections
-        existing.BuyRawMaterialItems = updated.BuyRawMaterialItems;
-        existing.ProductionAndSalesItems = updated.ProductionAndSalesItems;
-        existing.EnergyItems = updated.EnergyItems;
-        existing.CurrencyExchangeItems = updated.CurrencyExchangeItems;
-        existing.Descriptions = updated.Descriptions;
     }
 }

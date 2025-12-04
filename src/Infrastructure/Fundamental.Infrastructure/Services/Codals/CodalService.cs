@@ -7,6 +7,7 @@ using Fundamental.Application.Codals.Services;
 using Fundamental.Application.Codals.Services.Models;
 using Fundamental.Application.Codals.Services.Models.CodelServiceModels;
 using Fundamental.Application.Common.Extensions;
+using Fundamental.Domain.Codals;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Infrastructure.Caching;
 using Fundamental.Infrastructure.Common;
@@ -16,6 +17,7 @@ using Microsoft.Extensions.Caching.Hybrid;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Serilog;
 
 namespace Fundamental.Infrastructure.Services.Codals;
 
@@ -125,54 +127,77 @@ public class CodalService(
         CancellationToken cancellationToken = default
     )
     {
-        HttpResponseMessage response =
-            await _mdpClient.GetAsync(
-                new StringBuilder()
-                    .Append(_mdpOption.StatementJson)
-                    .Append('/')
-                    .Append(statement.TracingNo).ToString(),
-                cancellationToken);
-
-        if (!response.IsSuccessStatusCode)
-        {
-            return;
-        }
-
-        if (response.StatusCode == HttpStatusCode.NoContent)
-        {
-            return;
-        }
-
-        string rawJson = await response.Content.ReadAsStringAsync(cancellationToken);
-
-        if (!rawJson.IsValidJson())
-        {
-            return;
-        }
-
-        GetStatementJsonResponse? jsonData = await response.Content.ReadFromJsonAsync<GetStatementJsonResponse>(cancellationToken);
-
-        if (jsonData is null)
-        {
-            return;
-        }
-
-        if (string.IsNullOrWhiteSpace(jsonData.Json))
-        {
-            return;
-        }
-
-        if (!jsonData.Json.IsValidJson())
-        {
-            return;
-        }
-
         if (string.IsNullOrEmpty(statement.Isin))
         {
             return;
         }
 
         using IServiceScope scope = serviceScopeFactory.CreateScope();
+        await using FundamentalDbContext dbContext = scope.ServiceProvider.GetRequiredService<FundamentalDbContext>();
+
+        // Try to get cached JSON from database first
+        RawCodalJson? cachedJson = await dbContext.RawCodalJsons
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.TraceNo == statement.TracingNo, cancellationToken);
+
+        string? rawJson;
+        GetStatementJsonResponse? jsonData;
+
+        if (cachedJson is not null)
+        {
+            // Use cached JSON
+            Log.Debug("Using cached JSON for TraceNo: {TraceNo}", statement.TracingNo);
+            rawJson = cachedJson.RawJson;
+            jsonData = new GetStatementJsonResponse { Json = rawJson };
+        }
+        else
+        {
+            // Fetch from API
+            HttpResponseMessage response =
+                await _mdpClient.GetAsync(
+                    new StringBuilder()
+                        .Append(_mdpOption.StatementJson)
+                        .Append('/')
+                        .Append(statement.TracingNo).ToString(),
+                    cancellationToken);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return;
+            }
+
+            if (response.StatusCode == HttpStatusCode.NoContent)
+            {
+                return;
+            }
+
+            rawJson = await response.Content.ReadAsStringAsync(cancellationToken);
+
+            if (!rawJson.IsValidJson())
+            {
+                return;
+            }
+
+            jsonData = JsonConvert.DeserializeObject<GetStatementJsonResponse>(rawJson);
+
+            if (jsonData is null)
+            {
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(jsonData.Json))
+            {
+                return;
+            }
+
+            if (!jsonData.Json.IsValidJson())
+            {
+                return;
+            }
+
+            // Save to database for future use
+            await SaveRawCodalJsonAsync(dbContext, statement, jsonData.Json, cancellationToken);
+        }
 
         ICodalProcessorFactory codalProcessorFactory = scope.ServiceProvider.GetRequiredService<ICodalProcessorFactory>();
 
@@ -205,6 +230,43 @@ public class CodalService(
 
         List<GetPublisherResponse>? publishers = JsonConvert.DeserializeObject<List<GetPublisherResponse>>(stringResponse);
         return publishers ?? new List<GetPublisherResponse>();
+    }
+
+    private static async Task SaveRawCodalJsonAsync(
+        FundamentalDbContext dbContext,
+        GetStatementResponse statement,
+        string json,
+        CancellationToken cancellationToken)
+    {
+        Uri? htmlUrl = null;
+        if (!string.IsNullOrEmpty(statement.HtmlUrl))
+        {
+            try
+            {
+                htmlUrl = new Uri(statement.HtmlUrl);
+            }
+            catch (UriFormatException)
+            {
+                // Invalid URL, leave as null
+            }
+        }
+
+        RawCodalJson rawCodalJson = new(
+            id: Guid.NewGuid(),
+            traceNo: statement.TracingNo,
+            publishDate: statement.PublishDateMiladi.ToUniversalTime(),
+            reportingType: statement.ReportingType,
+            statementLetterType: statement.Type,
+            htmlUrl: htmlUrl,
+            publisherId: statement.PublisherId,
+            isin: statement.Isin,
+            rawJson: json,
+            createdAt: DateTime.UtcNow);
+
+        dbContext.RawCodalJsons.Add(rawCodalJson);
+        await dbContext.SaveChangesAsync(cancellationToken);
+
+        Log.Debug("Saved raw JSON to database for TraceNo: {TraceNo}", statement.TracingNo);
     }
 
     private async Task<List<(string CodalId, string Isin)>> GetCodalIdIsinPair(
