@@ -127,11 +127,6 @@ public class CodalService(
         CancellationToken cancellationToken = default
     )
     {
-        if (string.IsNullOrEmpty(statement.Isin))
-        {
-            return;
-        }
-
         using IServiceScope scope = serviceScopeFactory.CreateScope();
         await using FundamentalDbContext dbContext = scope.ServiceProvider.GetRequiredService<FundamentalDbContext>();
 
@@ -195,8 +190,15 @@ public class CodalService(
                 return;
             }
 
-            // Save to database for future use
+            // Save to database for future use (handles race conditions gracefully)
             await SaveRawCodalJsonAsync(dbContext, statement, jsonData.Json, cancellationToken);
+        }
+
+        // ISIN is required for downstream processing but not for caching
+        if (string.IsNullOrEmpty(statement.Isin))
+        {
+            Log.Debug("Skipping processing for TraceNo: {TraceNo} - ISIN not available", statement.TracingNo);
+            return;
         }
 
         ICodalProcessorFactory codalProcessorFactory = scope.ServiceProvider.GetRequiredService<ICodalProcessorFactory>();
@@ -264,9 +266,42 @@ public class CodalService(
             createdAt: DateTime.UtcNow);
 
         dbContext.RawCodalJsons.Add(rawCodalJson);
-        await dbContext.SaveChangesAsync(cancellationToken);
 
-        Log.Debug("Saved raw JSON to database for TraceNo: {TraceNo}", statement.TracingNo);
+        try
+        {
+            await dbContext.SaveChangesAsync(cancellationToken);
+            Log.Debug("Saved raw JSON to database for TraceNo: {TraceNo}", statement.TracingNo);
+        }
+        catch (DbUpdateException ex) when (IsUniqueConstraintViolation(ex))
+        {
+            // Another concurrent request already inserted this TraceNo - this is expected and not an error.
+            // The JSON is already cached, so we can safely ignore this.
+            Log.Debug(
+                ex,
+                "Raw JSON for TraceNo: {TraceNo} was already saved by another request (race condition handled)",
+                statement.TracingNo);
+
+            // Detach the entity to prevent tracking issues
+            dbContext.Entry(rawCodalJson).State = EntityState.Detached;
+        }
+    }
+
+    /// <summary>
+    /// Checks if the DbUpdateException is caused by a unique constraint violation.
+    /// PostgreSQL error code 23505 indicates unique_violation.
+    /// </summary>
+    private static bool IsUniqueConstraintViolation(DbUpdateException ex)
+    {
+        // Check for PostgreSQL unique violation (error code 23505)
+        if (ex.InnerException is Npgsql.PostgresException pgEx)
+        {
+            return pgEx.SqlState == "23505";
+        }
+
+        // Fallback: check exception message for common patterns
+        string message = ex.InnerException?.Message ?? ex.Message;
+        return message.Contains("unique constraint", StringComparison.OrdinalIgnoreCase) ||
+               message.Contains("duplicate key", StringComparison.OrdinalIgnoreCase);
     }
 
     private async Task<List<(string CodalId, string Isin)>> GetCodalIdIsinPair(
