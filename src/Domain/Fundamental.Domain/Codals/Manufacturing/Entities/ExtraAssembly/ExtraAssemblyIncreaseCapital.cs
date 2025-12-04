@@ -73,16 +73,6 @@ public sealed class ExtraAssemblyIncreaseCapital
     public int? CashForceclosurePriorityPrizeStockCount { get; init; }
 
     /// <summary>
-    /// Obsolete: Use <see cref="CashForceclosurePriorityAvailableStockCount"/> instead.
-    /// </summary>
-    [Obsolete("Use CashForceclosurePriorityAvailableStockCount instead", false)]
-    public int? CashForceclosurePriorityAvalableStockCount
-    {
-        get => CashForceclosurePriorityAvailableStockCount;
-        init => CashForceclosurePriorityAvailableStockCount = value;
-    }
-
-    /// <summary>
     /// آورده نقدی با سلب حق تقدم از سهامداران فعلی.
     /// </summary>
     public decimal? CashForceclosurePriority { get; init; }
