@@ -1,0 +1,77 @@
+# =============================================================================
+# Fundamental Migrations - Dockerfile
+# =============================================================================
+# Builds the EF Core migration runner as a standalone executable.
+# This runs as a Kubernetes Job before the main API deployment.
+#
+# Usage:
+#   docker run migrations:latest migrate
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Stage 1: Build
+# -----------------------------------------------------------------------------
+FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine AS build
+WORKDIR /src
+
+# Copy solution and project files first (better layer caching)
+COPY ["Fundamental.sln", "."]
+COPY ["Directory.Build.props", "."]
+COPY ["global.json", "."]
+
+# Copy all project files
+COPY ["src/Application/Fundamental.Application/Fundamental.Application.csproj", "src/Application/Fundamental.Application/"]
+COPY ["src/BuildingBlock/ErrorHandling/ErrorHandling.csproj", "src/BuildingBlock/ErrorHandling/"]
+COPY ["src/BuildingBlock/ErrorHandling.AspNetCore/ErrorHandling.AspNetCore.csproj", "src/BuildingBlock/ErrorHandling.AspNetCore/"]
+COPY ["src/BuildingBlock/Fundamental.BuildingBlock/Fundamental.BuildingBlock.csproj", "src/BuildingBlock/Fundamental.BuildingBlock/"]
+COPY ["src/Domain/Fundamental.Domain/Fundamental.Domain.csproj", "src/Domain/Fundamental.Domain/"]
+COPY ["src/Infrastructure/Fundamental.Infrastructure/Fundamental.Infrastructure.csproj", "src/Infrastructure/Fundamental.Infrastructure/"]
+COPY ["src/Infrastructure/Migrations/Migrations.csproj", "src/Infrastructure/Migrations/"]
+COPY ["src/Presentation/Fundamental.WebApi/Fundamental.WebApi.csproj", "src/Presentation/Fundamental.WebApi/"]
+COPY ["src/Presentation/Web.Common/Web.Common.csproj", "src/Presentation/Web.Common/"]
+
+# Restore dependencies
+RUN dotnet restore "src/Infrastructure/Migrations/Migrations.csproj"
+
+# Copy everything else
+COPY . .
+
+# Build and publish
+WORKDIR "/src/src/Infrastructure/Migrations"
+RUN dotnet publish "Migrations.csproj" -c Release -o /app/publish \
+    --no-restore \
+    /p:UseAppHost=false
+
+# -----------------------------------------------------------------------------
+# Stage 2: Runtime
+# -----------------------------------------------------------------------------
+FROM mcr.microsoft.com/dotnet/aspnet:9.0-alpine AS final
+
+# Install curl for health checks and set timezone
+RUN apk add --no-cache tzdata \
+    && cp /usr/share/zoneinfo/Asia/Tehran /etc/localtime \
+    && echo "Asia/Tehran" > /etc/timezone \
+    && apk del tzdata
+
+# Create non-root user (UID 1000 to match Kubernetes securityContext)
+RUN addgroup -g 3000 appgroup \
+    && adduser -u 1000 -G appgroup -s /bin/sh -D appuser
+
+WORKDIR /app
+
+# Copy published files
+COPY --from=build /app/publish .
+
+# Set ownership
+RUN chown -R appuser:appgroup /app
+
+# Switch to non-root user
+USER appuser
+
+# Environment variables
+ENV ASPNETCORE_ENVIRONMENT=Production \
+    DOTNET_RUNNING_IN_CONTAINER=true \
+    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
+
+# Entry point - run migrations
+ENTRYPOINT ["dotnet", "Migrations.dll", "migrate"]

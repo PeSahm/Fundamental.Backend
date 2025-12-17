@@ -1,0 +1,59 @@
+# Docker build context exclusions
+# Reduces build context size and improves build speed
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# IDE
+.idea/
+.vs/
+.vscode/
+*.swp
+*.swo
+
+# Build outputs
+**/bin/
+**/obj/
+**/out/
+
+# Test results
+**/TestResults/
+test-results/
+**/coverage/
+
+# NuGet
+**/*.nupkg
+**/packages/
+
+# User-specific files
+*.user
+*.userosscache
+*.suo
+*.userprefs
+
+# Documentation
+*.md
+!README.md
+docs/
+
+# CI/CD
+.github/
+azure-pipelines.yml
+
+# Misc
+*.log
+*.tmp
+*.temp
+Thumbs.db
+.DS_Store
+
+# SQL files
+*.sql
+
+# Analyzers (not needed at runtime)
+analyzers/
+
+# Tests (not needed in production image)
+tests/
