@@ -93,6 +93,10 @@ builder.Services.AddCors(options =>
         }
     });
 });
+
+// Health checks for Kubernetes probes
+builder.Services.AddCustomHealthChecks(builder.Configuration);
+
 WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -108,6 +112,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapRazorPages();
+app.MapCustomHealthChecks();
 
 if (app.Configuration.GetValue<bool>("JobEnabled"))
 {
