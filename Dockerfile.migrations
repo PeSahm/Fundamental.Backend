@@ -47,8 +47,8 @@ RUN dotnet publish "Migrations.csproj" -c Release -o /app/publish \
 # -----------------------------------------------------------------------------
 FROM mcr.microsoft.com/dotnet/aspnet:9.0-alpine AS final
 
-# Install curl for health checks and set timezone
-RUN apk add --no-cache tzdata \
+# Install ICU libraries for .NET globalization support and set timezone
+RUN apk add --no-cache icu-libs tzdata \
     && cp /usr/share/zoneinfo/Asia/Tehran /etc/localtime \
     && echo "Asia/Tehran" > /etc/timezone \
     && apk del tzdata

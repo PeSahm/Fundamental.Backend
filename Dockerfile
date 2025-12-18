@@ -55,8 +55,8 @@ RUN dotnet publish "Fundamental.WebApi.csproj" -c Release -o /app/publish \
 # -----------------------------------------------------------------------------
 FROM mcr.microsoft.com/dotnet/aspnet:9.0-alpine AS final
 
-# Install curl for health checks and set timezone
-RUN apk add --no-cache curl tzdata \
+# Install curl for health checks, ICU libraries for .NET globalization, and set timezone
+RUN apk add --no-cache curl icu-libs tzdata \
     && cp /usr/share/zoneinfo/Asia/Tehran /etc/localtime \
     && echo "Asia/Tehran" > /etc/timezone \
     && apk del tzdata
