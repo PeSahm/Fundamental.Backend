@@ -15,14 +15,17 @@ public class ChangeReviewStatusToEnum : Migration
     /// <inheritdoc />
     protected override void Up(MigrationBuilder migrationBuilder)
     {
-        migrationBuilder.AlterColumn<ReviewStatus>(
-            "review_status",
-            schema: "shd",
-            table: "symbol-share-holders",
-            type: "review_status",
-            nullable: false,
-            oldClrType: typeof(short),
-            oldType: "SMALLINT");
+        // Use raw SQL with USING clause for PostgreSQL enum conversion
+        migrationBuilder.Sql(@"
+            ALTER TABLE shd.""symbol-share-holders""
+            ALTER COLUMN review_status TYPE review_status
+            USING (CASE review_status
+                WHEN 0 THEN 'pending'::review_status
+                WHEN 1 THEN 'rejected'::review_status
+                WHEN 2 THEN 'approved'::review_status
+                ELSE 'pending'::review_status
+            END);
+        ");
     }
 
     /// <inheritdoc />
