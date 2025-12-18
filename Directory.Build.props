@@ -33,7 +33,8 @@
         <IsTestProject>true</IsTestProject>
     </PropertyGroup>
 
-    <PropertyGroup Condition="!'$(IsDbMigrations)'">
+    <!-- Enable .NET analyzers only when not in migrations and RunAnalyzers != false -->
+    <PropertyGroup Condition="!'$(IsDbMigrations)' and '$(RunAnalyzers)' != 'false'">
         <EnableNETAnalyzers>true</EnableNETAnalyzers>
         <AnalysisMode>Default</AnalysisMode>
     </PropertyGroup>
@@ -172,8 +173,8 @@
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.10" />
     </ItemGroup>
 
-    <!-- Analyzer packages -->
-    <ItemGroup Condition="!'$(IsDbMigrations)'">
+    <!-- Analyzer packages - only included when RunAnalyzers != false -->
+    <ItemGroup Condition="!'$(IsDbMigrations)' and '$(RunAnalyzers)' != 'false'">
         <PackageReference Include="SonarAnalyzer.CSharp" Version="10.15.0.120848">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
@@ -184,20 +185,20 @@
         </PackageReference>
     </ItemGroup>
 
-    <ItemGroup Condition="!'$(IsDbMigrations)'">
+    <!-- Analyzer ruleset references - only when running analyzers -->
+    <ItemGroup Condition="!'$(IsDbMigrations)' and '$(RunAnalyzers)' != 'false'">
         <None Include="$(MSBuildThisFileDirectory)analyzers\Analyzers.ruleset" Link="Properties\Analyzers.ruleset"/>
     </ItemGroup>
 
-    <ItemGroup Condition="'$(IsTests)'">
+    <ItemGroup Condition="'$(IsTests)' and '$(RunAnalyzers)' != 'false'">
         <None Include="$(MSBuildThisFileDirectory)analyzers\TestingAnalyzers.ruleset" Link="Properties\TestingAnalyzers.ruleset"/>
     </ItemGroup>
 
-    <PropertyGroup Condition="!'$(IsDbMigrations)'">
+    <PropertyGroup Condition="!'$(IsDbMigrations)' and '$(RunAnalyzers)' != 'false'">
         <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)analyzers\Analyzers.ruleset</CodeAnalysisRuleSet>
     </PropertyGroup>
 
-    <PropertyGroup Condition="'$(IsTests)'">
+    <PropertyGroup Condition="'$(IsTests)' and '$(RunAnalyzers)' != 'false'">
         <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)analyzers\TestingAnalyzers.ruleset</CodeAnalysisRuleSet>
-
     </PropertyGroup>
 </Project>

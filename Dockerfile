@@ -39,12 +39,14 @@ COPY . .
 
 # Build the application
 # Note: Analyzers are skipped in Docker build (not needed for runtime)
-# They are excluded via .dockerignore and disabled via build properties
+# Warnings are suppressed to provide clean build output
 WORKDIR "/src/src/Presentation/Fundamental.WebApi"
 RUN dotnet build "Fundamental.WebApi.csproj" -c Release -o /app/build --no-restore \
-    -p:RunAnalyzers=false \
-    -p:RunAnalyzersDuringBuild=false \
-    -p:EnableNETAnalyzers=false
+    /p:RunAnalyzers=false \
+    /p:RunAnalyzersDuringBuild=false \
+    /p:EnableNETAnalyzers=false \
+    /p:TreatWarningsAsErrors=false \
+    /p:WarningLevel=0
 
 # -----------------------------------------------------------------------------
 # Stage 2: Publish
