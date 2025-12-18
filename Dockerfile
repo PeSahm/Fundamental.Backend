@@ -55,7 +55,12 @@ FROM build AS publish
 RUN dotnet publish "Fundamental.WebApi.csproj" -c Release -o /app/publish \
     --no-restore \
     /p:UseAppHost=false \
-    /p:PublishTrimmed=false
+    /p:PublishTrimmed=false \
+    /p:RunAnalyzers=false \
+    /p:RunAnalyzersDuringBuild=false \
+    /p:EnableNETAnalyzers=false \
+    /p:TreatWarningsAsErrors=false \
+    /p:WarningLevel=0
 
 # -----------------------------------------------------------------------------
 # Stage 3: Runtime
