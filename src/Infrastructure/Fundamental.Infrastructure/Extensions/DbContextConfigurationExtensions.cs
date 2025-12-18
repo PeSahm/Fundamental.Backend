@@ -51,6 +51,7 @@ public static class DbContextConfigurationExtensions
                             .MapEnum<CodalVersion>()
                 )
                 .UseSnakeCaseNamingConvention()
+
                 // Suppress PendingModelChangesWarning to allow deployment
                 // TODO: Generate proper migration to sync model snapshot
                 .ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning))
