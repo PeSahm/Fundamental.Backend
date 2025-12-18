@@ -37,10 +37,13 @@ RUN dotnet restore "src/Infrastructure/Migrations/Migrations.csproj"
 COPY . .
 
 # Build and publish
+# Note: Analyzers are disabled (migrations are excluded from analysis anyway)
 WORKDIR "/src/src/Infrastructure/Migrations"
 RUN dotnet publish "Migrations.csproj" -c Release -o /app/publish \
     --no-restore \
-    /p:UseAppHost=false
+    /p:UseAppHost=false \
+    /p:RunAnalyzers=false \
+    /p:RunAnalyzersDuringBuild=false
 
 # -----------------------------------------------------------------------------
 # Stage 2: Runtime
