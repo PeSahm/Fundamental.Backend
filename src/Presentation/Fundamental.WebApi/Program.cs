@@ -18,6 +18,43 @@ using Serilog;
 
 WebApplicationBuilder builder = WebApplication.CreateSlimBuilder(args);
 
+// =============================================================================
+// Sentry - Error Tracking & Performance Monitoring
+// =============================================================================
+// Sentry must be initialized as early as possible to capture all errors
+builder.WebHost.UseSentry(options =>
+{
+    // DSN is loaded from configuration: Sentry:Dsn
+    // Environment is set automatically from ASPNETCORE_ENVIRONMENT
+    options.Environment = builder.Environment.EnvironmentName.ToLowerInvariant();
+    
+    // Enable performance monitoring
+    options.TracesSampleRate = builder.Environment.IsProduction() ? 0.2 : 1.0;
+    
+    // Enable profiling (requires Sentry.Profiling package)
+    options.ProfilesSampleRate = builder.Environment.IsProduction() ? 0.1 : 1.0;
+    
+    // Automatically capture unhandled exceptions
+    options.SendDefaultPii = false; // GDPR compliance
+    
+    // Debug mode for development
+    options.Debug = builder.Environment.IsDevelopment();
+    
+    // Add breadcrumbs for better debugging
+    options.MaxBreadcrumbs = 50;
+    
+    // Auto session tracking
+    options.AutoSessionTracking = true;
+    
+    // Attach stacktrace to all messages
+    options.AttachStacktrace = true;
+    
+    // Release tracking (set via environment variable or CI/CD)
+    options.Release = Environment.GetEnvironmentVariable("SENTRY_RELEASE") 
+        ?? Assembly.GetExecutingAssembly().GetName().Version?.ToString() 
+        ?? "unknown";
+});
+
 builder.WebHost.UseKestrelHttpsConfiguration();
 
 builder.Services.AddControllers(options =>
@@ -59,6 +96,12 @@ builder.Host.UseSerilog((context, serviceProvider, configuration) =>
 {
     configuration.ReadFrom.Configuration(context.Configuration);
     configuration.ReadFrom.Services(serviceProvider);
+    // Send Serilog events to Sentry (Warning and above)
+    configuration.WriteTo.Sentry(o =>
+    {
+        o.MinimumEventLevel = Serilog.Events.LogEventLevel.Error;
+        o.MinimumBreadcrumbLevel = Serilog.Events.LogEventLevel.Warning;
+    });
 });
 builder.Services.AddApiVersioning(options =>
 {
@@ -100,9 +143,13 @@ builder.Services.AddCustomHealthChecks(builder.Configuration);
 WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
+// Sentry middleware is added automatically by UseSentry()
 app.UseCustomSwaggerUi();
 
 app.UseHttpsRedirection();
+
+// Sentry tracing for performance monitoring
+app.UseSentryTracing();
 
 app.UseRouting();
 app.UseCors();
