@@ -265,7 +265,7 @@ public class AnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Canonical
             AgentBoardMemberFullName = x.AgentBoardMemberFullName,
             AgentBoardMemberNationalCode = x.AgentBoardMemberNationalCode,
             Position = (BoardPosition)x.Position,
-            HasDuty = x.HasDuty == 1,
+            HasDuty = x.HasDuty,
             Degree = x.Degree,
             DegreeRef = x.DegreeRef,
             EducationField = x.EducationField,

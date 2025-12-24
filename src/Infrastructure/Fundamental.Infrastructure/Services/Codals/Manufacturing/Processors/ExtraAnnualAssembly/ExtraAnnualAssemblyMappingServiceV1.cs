@@ -340,7 +340,7 @@ public class ExtraAnnualAssemblyMappingServiceV1 : ICanonicalMappingService<Cano
             AgentBoardMemberFullName = x.AgentBoardMemberFullName,
             AgentBoardMemberNationalCode = x.AgentBoardMemberNationalCode,
             Position = (BoardPosition)x.Position,
-            HasDuty = x.HasDuty == 1,
+            HasDuty = x.HasDuty,
             Degree = x.Degree,
             DegreeRef = x.DegreeRef,
             EducationField = x.EducationField,

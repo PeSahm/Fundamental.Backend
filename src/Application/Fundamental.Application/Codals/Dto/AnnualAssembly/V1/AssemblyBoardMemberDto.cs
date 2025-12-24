@@ -32,7 +32,7 @@ public class AssemblyBoardMemberDto
     public int Position { get; set; }
 
     [JsonProperty("hasDuty")]
-    public int HasDuty { get; set; }
+    public bool HasDuty { get; set; }
 
     [JsonProperty("degree")]
     public string? Degree { get; set; }
