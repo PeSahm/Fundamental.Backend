@@ -201,6 +201,8 @@ public class CodalService(
             return;
         }
 
+        // some codal valuse has -infinity value that makes deserialization fail
+        jsonData.Json = jsonData.Json.Replace("-infinity", "0", StringComparison.OrdinalIgnoreCase);
         ICodalProcessorFactory codalProcessorFactory = scope.ServiceProvider.GetRequiredService<ICodalProcessorFactory>();
 
         ICodalProcessor processor =
