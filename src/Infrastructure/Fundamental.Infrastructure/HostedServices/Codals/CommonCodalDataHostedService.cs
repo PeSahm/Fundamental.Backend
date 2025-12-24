@@ -16,6 +16,7 @@ public class CommonCodalDataHostedService(IServiceScopeFactory factory) : Backgr
         await Task.CompletedTask;
 
         using IServiceScope scope = factory.CreateScope();
+
         // //
         // // await scope.ServiceProvider.GetRequiredService<UpdateClosePricesDataJob>().Invoke();
         // // await scope.ServiceProvider.GetRequiredService<UpdateCodalPublisherDataJob>().Invoke();
