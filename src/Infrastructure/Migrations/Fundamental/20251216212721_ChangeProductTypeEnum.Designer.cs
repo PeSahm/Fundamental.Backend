@@ -7,6 +7,7 @@ using Fundamental.Domain.Symbols.Enums;
 using Fundamental.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -15,9 +16,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fundamental.Migrations.Fundamental
 {
     [DbContext(typeof(FundamentalDbContext))]
-    partial class FundamentalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251216212721_ChangeProductTypeEnum")]
+    partial class ChangeProductTypeEnum
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,7 +30,7 @@ namespace Fundamental.Migrations.Fundamental
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "codal_version", new[] { "none", "v1", "v2", "v3", "v3o1", "v4", "v5", "v7" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "company_type", new[] { "article44", "associations", "basket_companies", "brokers", "capital_supply_companies", "central_asset_management_company", "exempt_companies", "financial_information_processing_companies", "financial_institutions", "government_companies", "intermediary_institutions", "investment_advisory_companies", "investment_funds", "none_financial_institution", "public_investment_and_holding", "rating_institutions", "subsidiary_financial_institutions", "un_known1" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "enable_sub_company", new[] { "accepted", "active", "in_active" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "etf_type", new[] { "energy", "equity", "fixed_income", "gold", "land_buildings_and_projects", "mixed_income", "vc_and_private_funds" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "etf_type", new[] { "equity", "fixed_income", "gold", "land_buildings_and_projects", "mixed_income", "vc_and_private_funds" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "exchange_type", new[] { "ifb", "ime", "irenex", "none", "tse" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "iso_currency", new[] { "eur", "irr", "usd" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "none_operational_income_tag", new[] { "bank_interest_income", "other_renewable_income", "stock_dividend_income" });
@@ -2495,8 +2498,8 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnOrder(1);
 
                     b.Property<string>("Isin")
-                        .HasMaxLength(48)
-                        .HasColumnType("character varying(48)")
+                        .HasMaxLength(12)
+                        .HasColumnType("character varying(12)")
                         .HasColumnName("isin");
 
                     b.Property<DateTime>("PublishDate")
