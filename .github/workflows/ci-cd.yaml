@@ -180,12 +180,12 @@ jobs:
       
       # Upload debug symbols to Sentry
       - name: Setup Sentry CLI
-        if: secrets.SENTRY_AUTH_TOKEN != ''
+        if: vars.SENTRY_ENABLED == 'true'
         run: |
           curl -sL https://sentry.io/get-cli/ | bash
       
       - name: Create Sentry Release
-        if: secrets.SENTRY_AUTH_TOKEN != ''
+        if: vars.SENTRY_ENABLED == 'true'
         run: |
           SENTRY_RELEASE="fundamental-backend@${{ steps.version.outputs.version }}"
           sentry-cli releases new ${SENTRY_RELEASE}
