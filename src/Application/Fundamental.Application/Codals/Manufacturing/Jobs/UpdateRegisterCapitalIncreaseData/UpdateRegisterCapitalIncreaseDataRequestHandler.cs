@@ -18,7 +18,7 @@ public class UpdateRegisterCapitalIncreaseDataRequestHandler(
         foreach (ReportingType reportingType in Enum.GetValues<ReportingType>())
         {
             List<GetStatementResponse> statements = await codalService.GetStatements(
-                DateTime.UtcNow.AddDays(request.DaysBeforeToday),
+                DateTime.UtcNow.AddDays(-1 * request.DaysBeforeToday),
                 reportingType,
                 LetterType.CapitalIncreaseRegistrationNotice,
                 cancellationToken);

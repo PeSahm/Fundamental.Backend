@@ -6,4 +6,4 @@ using MediatR;
 namespace Fundamental.Application.Codals.Manufacturing.Jobs.UpdateNonOperationIncomeAndExpenseData;
 
 [HandlerCode(HandlerCode.UpdateNonOperationIncomeAndExpenses)]
-public record UpdateNonOperationIncomeAndExpensesDataRequest(int Days) : IRequest<Response>;
+public record UpdateNonOperationIncomeAndExpensesDataRequest(uint DaysBefore) : IRequest<Response>;
