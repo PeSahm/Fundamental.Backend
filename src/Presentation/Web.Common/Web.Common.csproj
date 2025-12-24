@@ -8,4 +8,8 @@
     <ProjectReference Include="..\..\Infrastructure\Fundamental.Infrastructure\Fundamental.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Update="Sentry.Serilog" Version="6.0.0" />
+  </ItemGroup>
+
 </Project>
