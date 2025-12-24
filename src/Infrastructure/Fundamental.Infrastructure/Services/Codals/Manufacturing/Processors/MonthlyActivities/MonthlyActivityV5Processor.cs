@@ -10,6 +10,7 @@ using Fundamental.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Serilog;
 
 namespace Fundamental.Infrastructure.Services.Codals.Manufacturing.Processors.MonthlyActivities;
@@ -32,8 +33,31 @@ public class MonthlyActivityV5Processor(
     {
         JsonSerializerSettings setting = new();
         setting.NullValueHandling = NullValueHandling.Ignore;
-        CodalMonthlyActivityV5? monthlyActivity =
-            JsonConvert.DeserializeObject<CodalMonthlyActivityV5>(model.Json, setting);
+
+        // The codal service has an unexpected response;  If the model.json in the Energy object has value_319524, it's ok else we should add this logic=> value_319521 = value_319522 and value_319522 = value_319523
+        JObject jsonObject = JObject.Parse(model.Json);
+        JToken? energyToken = jsonObject["monthlyActivity"]?["energy"];
+
+        if (energyToken?["rowItems"] is JArray rowItems)
+        {
+            foreach (JToken row in rowItems)
+            {
+                // Check if value_319523 exists (the last column in the expected structure)
+                JToken? value319523 = row["value_319523"];
+                JToken? value319524 = row["value_319524"];
+
+                // If value_319524 is missing, shift values left
+                if (value319524 == null && value319523 != null)
+                {
+                    row["value_319524"] = value319523;
+                    row["value_319523"] = row["value_319522"];
+                    row["value_319522"] = row["value_319521"];
+                    row["value_319521"] = 0;
+                }
+            }
+        }
+
+        CodalMonthlyActivityV5? monthlyActivity = jsonObject.ToObject<CodalMonthlyActivityV5>(JsonSerializer.Create(setting));
 
         if (monthlyActivity is null)
         {
