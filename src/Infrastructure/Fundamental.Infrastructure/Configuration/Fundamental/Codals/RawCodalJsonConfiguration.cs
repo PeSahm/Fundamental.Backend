@@ -40,7 +40,7 @@ public class RawCodalJsonConfiguration : EntityTypeConfigurationBase<RawCodalJso
             .IsRequired();
 
         builder.Property(x => x.Isin)
-            .HasMaxLength(12)
+            .HasMaxLength(48)
             .IsRequired(false);
 
         builder.Property(x => x.RawJson)
