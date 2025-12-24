@@ -20,5 +20,8 @@ public enum EtfType
     Gold = 5,
 
     [Description("جسورانه و خصوصی")]
-    VcAndPrivateFunds = 6
+    VcAndPrivateFunds = 6,
+
+    [Description("انرژی")]
+    Energy = 7
 }

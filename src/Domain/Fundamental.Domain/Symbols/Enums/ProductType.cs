@@ -63,6 +63,8 @@ public enum ProductType
 
     [Description("سایر")]
     Other = 20,
+    [Description("گواهی صرفه جویی برق")]
+    EnergySavingCertificate = 21,
 
     [Description("همه")]
     All = -1
