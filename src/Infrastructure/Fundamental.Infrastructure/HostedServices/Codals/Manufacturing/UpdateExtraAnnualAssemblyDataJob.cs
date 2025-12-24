@@ -11,7 +11,7 @@ public class UpdateExtraAnnualAssemblyDataJob(IServiceScopeFactory serviceScopeF
     {
         using IServiceScope scope = serviceScopeFactory.CreateScope();
         IMediator mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-        await mediator.Send(new UpdateExtraAnnualAssemblyDataRequest(7), CancellationToken);
+        await mediator.Send(new UpdateExtraAnnualAssemblyDataRequest(14), CancellationToken);
     }
 
     public CancellationToken CancellationToken { get; set; }
