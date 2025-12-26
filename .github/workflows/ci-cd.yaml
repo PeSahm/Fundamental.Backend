@@ -151,6 +151,7 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
       
       # Build API Image
+      # Uses registry-side caching for faster builds (layers cached on registry)
       - name: Build and push API image
         uses: docker/build-push-action@v5
         with:
@@ -160,12 +161,13 @@ jobs:
           tags: |
             ${{ env.REGISTRY }}/${{ env.API_IMAGE_NAME }}:${{ steps.version.outputs.version }}
             ${{ env.REGISTRY }}/${{ env.API_IMAGE_NAME }}:${{ steps.env.outputs.environment }}-latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.API_IMAGE_NAME }}:buildcache
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.API_IMAGE_NAME }}:buildcache,mode=max
           build-args: |
             BUILD_VERSION=${{ steps.version.outputs.version }}
       
       # Build Migrations Image
+      # Uses registry-side caching for faster builds
       - name: Build and push Migrations image
         uses: docker/build-push-action@v5
         with:
@@ -175,8 +177,8 @@ jobs:
           tags: |
             ${{ env.REGISTRY }}/${{ env.MIGRATIONS_IMAGE_NAME }}:${{ steps.version.outputs.version }}
             ${{ env.REGISTRY }}/${{ env.MIGRATIONS_IMAGE_NAME }}:${{ steps.env.outputs.environment }}-latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.MIGRATIONS_IMAGE_NAME }}:buildcache
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.MIGRATIONS_IMAGE_NAME }}:buildcache,mode=max
       
       # Upload debug symbols to Sentry
       - name: Setup Sentry CLI
