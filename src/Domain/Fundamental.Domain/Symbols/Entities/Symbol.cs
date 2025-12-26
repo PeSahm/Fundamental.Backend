@@ -84,7 +84,7 @@ public class Symbol : BaseEntity<Guid>
 
     public Publisher? Publisher { get; }
 
-    public Sector? Sector { get; set; }
+    //public Sector? Sector { get; set; }
 
     public ICollection<SymbolRelation> InvestmentSymbols { get; private set; } = new List<SymbolRelation>();
 

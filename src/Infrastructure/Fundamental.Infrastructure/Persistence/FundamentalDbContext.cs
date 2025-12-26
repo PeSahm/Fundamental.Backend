@@ -67,7 +67,7 @@ public class FundamentalDbContext : DbContext, IUnitOfWork, ICoravelProDbContext
 
     public DbSet<CapitalIncreaseRegistrationNotice> CapitalIncreaseRegistrationNotices { get; set; }
 
-    public DbSet<Sector> Sectors { get; set; }
+    //public DbSet<Sector> Sectors { get; set; }
 
     public DbSet<CoravelJobHistory> Coravel_JobHistory { get; set; }
     public DbSet<CoravelScheduledJob> Coravel_ScheduledJobs { get; set; }

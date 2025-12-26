@@ -56,7 +56,8 @@ public class FinancialStatementReadRepository(FundamentalDbContext dataContent) 
             .AsNoTracking()
             .Include(x => x.Symbol)
             .Where(x => !isinList.Any() || isinList.Contains(x.Symbol.Isin))
-            .Where(x => request.SectorCode == null || (x.Symbol.Sector != null && x.Symbol.Sector.Id == request.SectorCode))
+
+            //.Where(x => request.SectorCode == null || (x.Symbol.Sector != null && x.Symbol.Sector.Id == request.SectorCode))
             .Where(x => x.LastClosePrice > 0)
             .Where(x => x.Pe > 0)
             .Where(x =>
