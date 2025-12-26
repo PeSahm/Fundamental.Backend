@@ -22,9 +22,15 @@ WebApplicationBuilder builder = WebApplication.CreateSlimBuilder(args);
 // Sentry - Error Tracking & Performance Monitoring
 // =============================================================================
 // Sentry must be initialized as early as possible to capture all errors
+// DSN is read from: 1) Sentry__Dsn env var, 2) Configuration Sentry:Dsn
+string? sentryDsn = Environment.GetEnvironmentVariable("Sentry__Dsn")
+                     ?? builder.Configuration["Sentry:Dsn"];
+
 builder.WebHost.UseSentry(options =>
 {
-    // DSN is loaded from configuration: Sentry:Dsn
+    // Set DSN explicitly from environment or configuration
+    options.Dsn = sentryDsn ?? string.Empty;
+
     // Environment is set automatically from ASPNETCORE_ENVIRONMENT
     options.Environment = builder.Environment.EnvironmentName.ToLowerInvariant();
 
