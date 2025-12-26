@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#nullable disable
+
 using Fundamental.Domain.Codals.Manufacturing.Enums;
 using Fundamental.Domain.Common.Enums;
 using Fundamental.Domain.Symbols.Enums;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-#nullable disable
-
 namespace Fundamental.Migrations.Fundamental
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,18 +28,25 @@ namespace Fundamental.Migrations.Fundamental
 
             migrationBuilder.AlterDatabase()
                 .Annotation("Npgsql:Enum:codal_version", "none,v1,v2,v3,v3o1,v4,v5,v7")
-                .Annotation("Npgsql:Enum:company_type", "article44,associations,basket_companies,brokers,capital_supply_companies,central_asset_management_company,exempt_companies,financial_information_processing_companies,financial_institutions,government_companies,intermediary_institutions,investment_advisory_companies,investment_funds,none_financial_institution,public_investment_and_holding,rating_institutions,subsidiary_financial_institutions,un_known1")
+                .Annotation("Npgsql:Enum:company_type",
+                    "article44,associations,basket_companies,brokers,capital_supply_companies,central_asset_management_company,exempt_companies,financial_information_processing_companies,financial_institutions,government_companies,intermediary_institutions,investment_advisory_companies,investment_funds,none_financial_institution,public_investment_and_holding,rating_institutions,subsidiary_financial_institutions,un_known1")
                 .Annotation("Npgsql:Enum:enable_sub_company", "accepted,active,in_active")
-                .Annotation("Npgsql:Enum:etf_type", "energy,equity,fixed_income,gold,land_buildings_and_projects,mixed_income,vc_and_private_funds")
+                .Annotation("Npgsql:Enum:etf_type",
+                    "energy,equity,fixed_income,gold,land_buildings_and_projects,mixed_income,vc_and_private_funds")
                 .Annotation("Npgsql:Enum:exchange_type", "ifb,ime,irenex,none,tse")
                 .Annotation("Npgsql:Enum:iso_currency", "eur,irr,usd")
                 .Annotation("Npgsql:Enum:none_operational_income_tag", "bank_interest_income,other_renewable_income,stock_dividend_income")
-                .Annotation("Npgsql:Enum:product_type", "all,bond,certificate_of_deposit,coupon,energy_electricity,energy_saving_certificate,equity,etf,forward,fund,futures,gold_coin,ime_certificate,ime_certificate_agriculture,ime_certificate_glass,index,intellectual_property,mbs,option_buy,option_sell,other,vc")
-                .Annotation("Npgsql:Enum:publisher_fund_type", "commodity,diversified,equity,fixed_income,market_making,mixed,not_a_fund,project,real_estate,un_known,venture")
+                .Annotation("Npgsql:Enum:product_type",
+                    "all,bond,certificate_of_deposit,coupon,energy_electricity,energy_saving_certificate,equity,etf,forward,fund,futures,gold_coin,ime_certificate,ime_certificate_agriculture,ime_certificate_glass,index,intellectual_property,mbs,option_buy,option_sell,other,vc")
+                .Annotation("Npgsql:Enum:publisher_fund_type",
+                    "commodity,diversified,equity,fixed_income,market_making,mixed,not_a_fund,project,real_estate,un_known,venture")
                 .Annotation("Npgsql:Enum:publisher_market_type", "base,first,none,second,small_and_medium")
-                .Annotation("Npgsql:Enum:publisher_state", "not_registered,register_in_ifb,register_in_ime,register_in_irenex,register_in_tse,registered_not_accepted")
-                .Annotation("Npgsql:Enum:publisher_sub_company_type", "has_foreign_currency_unit,has_foreign_currency_unit_and_foreign_auditor,liquidation,normal,un_known,un_known1,un_known2,un_known3,un_known4,un_known5,un_known6,un_known7")
-                .Annotation("Npgsql:Enum:reporting_type", "agriculture,bank,capital_provision,insurance,investment,leasing,maritime_transportation,production,services,structural,un_known")
+                .Annotation("Npgsql:Enum:publisher_state",
+                    "not_registered,register_in_ifb,register_in_ime,register_in_irenex,register_in_tse,registered_not_accepted")
+                .Annotation("Npgsql:Enum:publisher_sub_company_type",
+                    "has_foreign_currency_unit,has_foreign_currency_unit_and_foreign_auditor,liquidation,normal,un_known,un_known1,un_known2,un_known3,un_known4,un_known5,un_known6,un_known7")
+                .Annotation("Npgsql:Enum:reporting_type",
+                    "agriculture,bank,capital_provision,insurance,investment,leasing,maritime_transportation,production,services,structural,un_known")
                 .Annotation("Npgsql:Enum:review_status", "approved,pending,rejected");
 
             migrationBuilder.CreateTable(
@@ -166,23 +171,6 @@ namespace Fundamental.Migrations.Fundamental
                 });
 
             migrationBuilder.CreateTable(
-                name: "sector",
-                schema: "shd",
-                columns: table => new
-                {
-                    _id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    ModifiedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_sector", x => x._id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "symbol",
                 schema: "shd",
                 columns: table => new
@@ -207,19 +195,12 @@ namespace Fundamental.Migrations.Fundamental
                     product_type2 = table.Column<ProductType>(type: "product_type", nullable: false, defaultValue: ProductType.All),
                     exchange_type = table.Column<ExchangeType>(type: "exchange_type", nullable: false, defaultValue: ExchangeType.None),
                     etf_type = table.Column<EtfType>(type: "etf_type", nullable: true),
-                    sector_id = table.Column<long>(type: "bigint", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ModifiedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_symbol", x => x._id);
-                    table.ForeignKey(
-                        name: "fk_symbol_sector_sector_id",
-                        column: x => x.sector_id,
-                        principalSchema: "shd",
-                        principalTable: "sector",
-                        principalColumn: "_id");
                 });
 
             migrationBuilder.CreateTable(
@@ -571,7 +552,8 @@ namespace Fundamental.Migrations.Fundamental
                     market_value = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
                     sale_trace_no = table.Column<long>(type: "BIGINT", nullable: false),
                     this_period_sale_ratio = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
-                    this_period_sale_ratio_with_last_year = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
+                    this_period_sale_ratio_with_last_year =
+                        table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
                     gross_margin = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
                     operational_margin = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
                     net_margin = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
@@ -595,7 +577,8 @@ namespace Fundamental.Migrations.Fundamental
                     dps_two_years_ago = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
                     fall_operation_income = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
                     fiscal_year = table.Column<short>(type: "SMALLINT", nullable: false),
-                    forecast_none_operational_profit = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
+                    forecast_none_operational_profit =
+                        table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
                     forecast_operational_profit = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
                     forecast_sale = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
                     forecast_total_profit = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
@@ -610,8 +593,10 @@ namespace Fundamental.Migrations.Fundamental
                     receivables = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
                     report_month = table.Column<short>(type: "smallint", nullable: false),
                     sale = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
-                    sale_average_exclude_this_period = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
-                    sale_average_last_year_same_period = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
+                    sale_average_exclude_this_period =
+                        table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
+                    sale_average_last_year_same_period =
+                        table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
                     sale_before_this_month = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
                     sale_last_year_same_period = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
                     sale_month = table.Column<short>(type: "smallint", nullable: false),
@@ -751,7 +736,9 @@ namespace Fundamental.Migrations.Fundamental
                     previous_period = table.Column<bool>(type: "boolean", nullable: false),
                     forecast_period = table.Column<bool>(type: "boolean", nullable: false),
                     yearly_forecast_period = table.Column<bool>(type: "boolean", nullable: false, defaultValueSql: "false"),
-                    tags = table.Column<List<NoneOperationalIncomeTag>>(type: "none_operational_income_tag[]", nullable: false, defaultValue: new List<NoneOperationalIncomeTag>()),
+                    tags = table.Column<List<NoneOperationalIncomeTag>>(type: "none_operational_income_tag[]",
+                        nullable: false,
+                        defaultValue: new List<NoneOperationalIncomeTag>()),
                     fiscal_year = table.Column<short>(type: "SMALLINT", nullable: false),
                     value = table.Column<decimal>(type: "numeric(36,10)", precision: 36, scale: 10, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -873,7 +860,8 @@ namespace Fundamental.Migrations.Fundamental
                     parent_symbol_id = table.Column<long>(type: "bigint", nullable: false),
                     subsidiary_symbol_name = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: false),
                     ownership_percentage = table.Column<decimal>(type: "numeric(18,4)", precision: 18, scale: 4, nullable: false),
-                    ownership_percentage_provided_by_admin = table.Column<decimal>(type: "numeric(18,4)", precision: 18, scale: 4, nullable: true),
+                    ownership_percentage_provided_by_admin =
+                        table.Column<decimal>(type: "numeric(18,4)", precision: 18, scale: 4, nullable: true),
                     subsidiary_symbol_id = table.Column<long>(type: "bigint", nullable: true),
                     review_status = table.Column<ReviewStatus>(type: "review_status", nullable: false, defaultValue: ReviewStatus.Pending),
                     trace_no = table.Column<decimal>(type: "numeric(20,0)", nullable: true),
@@ -1425,19 +1413,6 @@ namespace Fundamental.Migrations.Fundamental
                 column: "symbol_id");
 
             migrationBuilder.CreateIndex(
-                name: "ix_sector_id",
-                schema: "shd",
-                table: "sector",
-                column: "Id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "ix_sector_name",
-                schema: "shd",
-                table: "sector",
-                column: "name");
-
-            migrationBuilder.CreateIndex(
                 name: "ix_stock_ownership_id",
                 schema: "manufacturing",
                 table: "stock_ownership",
@@ -1481,12 +1456,6 @@ namespace Fundamental.Migrations.Fundamental
                 schema: "shd",
                 table: "symbol",
                 columns: new[] { "sector_code", "sub_sector_code" });
-
-            migrationBuilder.CreateIndex(
-                name: "ix_symbol_sector_id",
-                schema: "shd",
-                table: "symbol",
-                column: "sector_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_symbol_relation_child_id",
@@ -1633,10 +1602,6 @@ namespace Fundamental.Migrations.Fundamental
 
             migrationBuilder.DropTable(
                 name: "symbol",
-                schema: "shd");
-
-            migrationBuilder.DropTable(
-                name: "sector",
                 schema: "shd");
         }
     }

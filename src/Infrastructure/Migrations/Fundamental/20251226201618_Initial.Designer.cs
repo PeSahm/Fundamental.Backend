@@ -16,8 +16,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fundamental.Migrations.Fundamental
 {
     [DbContext(typeof(FundamentalDbContext))]
-    [Migration("20251225082940_Init")]
-    partial class Init
+    [Migration("20251226201618_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -2756,48 +2756,6 @@ namespace Fundamental.Migrations.Fundamental
                     b.ToTable("index_company", "shd");
                 });
 
-            modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.Sector", b =>
-                {
-                    b.Property<long>("_id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnName("_id")
-                        .HasColumnOrder(0);
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("_id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("CreatedAt");
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid")
-                        .HasColumnName("Id")
-                        .HasColumnOrder(1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("name");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("ModifiedAt");
-
-                    b.HasKey("_id")
-                        .HasName("pk_sector");
-
-                    b.HasIndex("Id")
-                        .IsUnique()
-                        .HasDatabaseName("ix_sector_id");
-
-                    b.HasIndex("Name")
-                        .HasDatabaseName("ix_sector_name");
-
-                    b.ToTable("sector", "shd");
-                });
-
             modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.Symbol", b =>
                 {
                     b.Property<long>("_id")
@@ -2888,10 +2846,6 @@ namespace Fundamental.Migrations.Fundamental
                         .HasColumnType("character varying(50)")
                         .HasColumnName("sector_code");
 
-                    b.Property<long?>("Sector_id")
-                        .HasColumnType("bigint")
-                        .HasColumnName("sector_id");
-
                     b.Property<string>("SubSectorCode")
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)")
@@ -2934,9 +2888,6 @@ namespace Fundamental.Migrations.Fundamental
 
                     b.HasIndex("Name")
                         .HasDatabaseName("ix_symbol_name");
-
-                    b.HasIndex("Sector_id")
-                        .HasDatabaseName("ix_symbol_sector_id");
 
                     b.HasIndex("SectorCode", "SubSectorCode")
                         .HasDatabaseName("ix_symbol_sector_codes");
@@ -6181,17 +6132,6 @@ namespace Fundamental.Migrations.Fundamental
                     b.Navigation("Index");
                 });
 
-            modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.Symbol", b =>
-                {
-                    b.HasOne("Fundamental.Domain.Symbols.Entities.Sector", "Sector")
-                        .WithMany("Symbols")
-                        .HasForeignKey("Sector_id")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .HasConstraintName("fk_symbol_sector_sector_id");
-
-                    b.Navigation("Sector");
-                });
-
             modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.SymbolRelation", b =>
                 {
                     b.HasOne("Fundamental.Domain.Symbols.Entities.Symbol", "Child")
@@ -6240,11 +6180,6 @@ namespace Fundamental.Migrations.Fundamental
             modelBuilder.Entity("Fundamental.Domain.Codals.Manufacturing.Entities.IncomeStatement", b =>
                 {
                     b.Navigation("Details");
-                });
-
-            modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.Sector", b =>
-                {
-                    b.Navigation("Symbols");
                 });
 
             modelBuilder.Entity("Fundamental.Domain.Symbols.Entities.Symbol", b =>
