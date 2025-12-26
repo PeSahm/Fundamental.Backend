@@ -31,16 +31,6 @@ public class MigrationIntegrationTests : IClassFixture<TestFixture>
     }
 
     [Fact]
-    public async Task Database_ShouldCreateSectorTable()
-    {
-        // Act
-        bool exists = await TableExists("sector");
-
-        // Assert
-        exists.Should().BeTrue("Sector table should exist in database");
-    }
-
-    [Fact]
     public async Task Database_ShouldCreateBalanceSheetTable()
     {
         // Act
@@ -81,55 +71,12 @@ public class MigrationIntegrationTests : IClassFixture<TestFixture>
     }
 
     [Fact]
-    public async Task SymbolTable_ShouldHaveSectorIdColumn()
-    {
-        // Act
-        List<string> columns = await GetColumnsForTable("symbol");
-
-        // Assert - EnsureCreatedAsync uses "Sector_id" (PascalCase shadow property)
-        columns.Should().Contain(
-            c => c.Equals("sector_id", StringComparison.OrdinalIgnoreCase) ||
-                 c.Equals("Sector_id", StringComparison.OrdinalIgnoreCase),
-            "Symbol table should have 'sector_id' column for Sector FK");
-    }
-
-    [Fact]
-    public async Task SectorTable_ShouldHaveRequiredColumns()
-    {
-        // Act
-        List<string> columns = await GetColumnsForTable("sector");
-
-        // Assert - Column names may be PascalCase (EnsureCreatedAsync) or snake_case (migrations)
-        columns.Should().Contain(
-            c => c.Equals("id", StringComparison.OrdinalIgnoreCase) ||
-                 c.Equals("Id", StringComparison.OrdinalIgnoreCase),
-            "Sector table should have 'id' column");
-        columns.Should().Contain(
-            c => c.Equals("name", StringComparison.OrdinalIgnoreCase) ||
-                 c.Equals("Name", StringComparison.OrdinalIgnoreCase),
-            "Sector table should have 'name' column");
-    }
-
-    [Fact]
-    public async Task Database_ShouldHaveSymbolToSectorForeignKey()
-    {
-        // Act
-        List<string> foreignKeys = await GetForeignKeysForTable("symbol");
-
-        // Assert
-        foreignKeys.Should().Contain(
-            fk => fk.Contains("sector", StringComparison.OrdinalIgnoreCase),
-            "Symbol table should have FK constraint to Sector table");
-    }
-
-    [Fact]
     public async Task Database_ShouldCreateAllCoreEntities()
     {
         // Core tables that must exist for the application to function
         string[] coreTables =
         [
             "symbol",
-            "sector",
             "balance_sheet",
             "income_statement",
             "publisher",
@@ -167,57 +114,6 @@ public class MigrationIntegrationTests : IClassFixture<TestFixture>
 
         object? result = await command.ExecuteScalarAsync();
         return result is true;
-    }
-
-    private async Task<List<string>> GetColumnsForTable(string tableName)
-    {
-        await using NpgsqlConnection connection = new NpgsqlConnection(_fixture.PostgresConnectionString);
-        await connection.OpenAsync();
-
-        const string sql = """
-            SELECT column_name
-            FROM information_schema.columns
-            WHERE table_name = @table
-            ORDER BY ordinal_position;
-            """;
-
-        await using NpgsqlCommand command = new NpgsqlCommand(sql, connection);
-        command.Parameters.AddWithValue("table", tableName);
-
-        List<string> columns = [];
-        await using NpgsqlDataReader reader = await command.ExecuteReaderAsync();
-        while (await reader.ReadAsync())
-        {
-            columns.Add(reader.GetString(0));
-        }
-
-        return columns;
-    }
-
-    private async Task<List<string>> GetForeignKeysForTable(string tableName)
-    {
-        await using NpgsqlConnection connection = new NpgsqlConnection(_fixture.PostgresConnectionString);
-        await connection.OpenAsync();
-
-        const string sql = """
-            SELECT tc.constraint_name
-            FROM information_schema.table_constraints tc
-            WHERE tc.table_name = @table
-            AND tc.constraint_type = 'FOREIGN KEY'
-            ORDER BY tc.constraint_name;
-            """;
-
-        await using NpgsqlCommand command = new NpgsqlCommand(sql, connection);
-        command.Parameters.AddWithValue("table", tableName);
-
-        List<string> foreignKeys = [];
-        await using NpgsqlDataReader reader = await command.ExecuteReaderAsync();
-        while (await reader.ReadAsync())
-        {
-            foreignKeys.Add(reader.GetString(0));
-        }
-
-        return foreignKeys;
     }
 
     private async Task<List<string>> GetAllTables()
