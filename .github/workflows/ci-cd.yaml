@@ -50,7 +50,7 @@ jobs:
   # ===========================================================================
   build-and-test:
     name: Build & Test
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux, X64, iran]
     
     steps:
       - name: Checkout
@@ -93,7 +93,7 @@ jobs:
   # ===========================================================================
   build-images:
     name: Build Docker Images
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux, X64, iran]
     needs: build-and-test
     if: github.event_name != 'pull_request'
     
@@ -215,7 +215,7 @@ jobs:
   # ===========================================================================
   trigger-deploy:
     name: Trigger GitOps Deploy
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux, X64, iran]
     needs: build-images
     if: github.event_name != 'pull_request'
     
