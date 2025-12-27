@@ -190,7 +190,7 @@ jobs:
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: fundamental
-          SENTRY_PROJECT: dotnet-backend
+          SENTRY_PROJECT: fundamental-backend
           SENTRY_URL: https://sentry.academind.ir
       
       - name: Create summary
