@@ -104,11 +104,18 @@ builder.Host.UseSerilog((context, serviceProvider, configuration) =>
     configuration.ReadFrom.Services(serviceProvider);
 
     // Send Serilog events to Sentry (Warning and above)
-    configuration.WriteTo.Sentry(o =>
+    // Only configure Sentry sink if DSN is available
+    var serilogSentryDsn = Environment.GetEnvironmentVariable("Sentry__Dsn")
+                           ?? context.Configuration["Sentry:Dsn"];
+    if (!string.IsNullOrEmpty(serilogSentryDsn))
     {
-        o.MinimumEventLevel = Serilog.Events.LogEventLevel.Error;
-        o.MinimumBreadcrumbLevel = Serilog.Events.LogEventLevel.Warning;
-    });
+        configuration.WriteTo.Sentry(o =>
+        {
+            o.Dsn = serilogSentryDsn;
+            o.MinimumEventLevel = Serilog.Events.LogEventLevel.Error;
+            o.MinimumBreadcrumbLevel = Serilog.Events.LogEventLevel.Warning;
+        });
+    }
 });
 builder.Services.AddApiVersioning(options =>
 {
