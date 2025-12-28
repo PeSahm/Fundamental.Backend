@@ -105,6 +105,7 @@ public class CommonErrorsPipelineBehavior<TRequest, TResponse>(
 
     private void LogError(string name, Exception e, HandlerCode handlerCode, string handlerNumber, string errorCode, TRequest request)
     {
+        // LogError with exception automatically sends to Sentry via Sentry.Serilog
         logger.LogError(
             e,
             "{Name} --- {HandlerCode} ({HandlerName}) --- ErrorCode: {ErrorCode} {Request}",
