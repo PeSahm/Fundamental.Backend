@@ -178,7 +178,11 @@ jobs:
       - name: Setup Sentry CLI
         if: vars.SENTRY_ENABLED == 'true' && vars.SENTRY_UPLOAD_SOURCEMAPS == 'true'
         run: |
-          curl -sL https://sentry.io/get-cli/ | bash
+          # Download from GitHub releases (sentry.io is blocked in Iran)
+          SENTRY_CLI_VERSION="2.39.1"
+          curl -sL "https://github.com/getsentry/sentry-cli/releases/download/${SENTRY_CLI_VERSION}/sentry-cli-Linux-x86_64" -o /usr/local/bin/sentry-cli
+          chmod +x /usr/local/bin/sentry-cli
+          sentry-cli --version
       
       - name: Create Sentry Release
         if: vars.SENTRY_ENABLED == 'true' && vars.SENTRY_UPLOAD_SOURCEMAPS == 'true'
