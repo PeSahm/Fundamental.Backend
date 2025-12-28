@@ -27,13 +27,17 @@ WebApplicationBuilder builder = WebApplication.CreateSlimBuilder(args);
 string? sentryDsn = Environment.GetEnvironmentVariable("Sentry__Dsn")
                     ?? builder.Configuration["Sentry:Dsn"];
 
+// Environment: prefer SENTRY_ENVIRONMENT, fallback to ASPNETCORE_ENVIRONMENT
+string sentryEnvironment = Environment.GetEnvironmentVariable("SENTRY_ENVIRONMENT")
+                           ?? builder.Environment.EnvironmentName.ToLowerInvariant();
+
 builder.WebHost.UseSentry(options =>
 {
     // Set DSN explicitly from environment or configuration
     options.Dsn = sentryDsn ?? string.Empty;
 
-    // Environment is set automatically from ASPNETCORE_ENVIRONMENT
-    options.Environment = builder.Environment.EnvironmentName.ToLowerInvariant();
+    // Explicit environment setting (development, staging, production)
+    options.Environment = sentryEnvironment;
 
     // Enable performance monitoring
     options.TracesSampleRate = builder.Environment.IsProduction() ? 0.2 : 1.0;
@@ -101,23 +105,11 @@ builder.Services.AddCoravelPro(typeof(FundamentalDbContext));
 builder.Services.AddHttpContextAccessor();
 builder.Host.UseSerilog((context, serviceProvider, configuration) =>
 {
+    // Serilog configuration is read from appsettings.json
+    // Sentry sink is configured there with MinimumEventLevel and MinimumBreadcrumbLevel
+    // DSN, Environment, and Release are set via UseSentry() in WebHost configuration
     configuration.ReadFrom.Configuration(context.Configuration);
     configuration.ReadFrom.Services(serviceProvider);
-
-    // Send Serilog events to Sentry (Warning and above)
-    // Only configure Sentry sink if DSN is available
-    string? serilogSentryDsn = Environment.GetEnvironmentVariable("Sentry__Dsn")
-                               ?? context.Configuration["Sentry:Dsn"];
-
-    if (!string.IsNullOrEmpty(serilogSentryDsn))
-    {
-        configuration.WriteTo.Sentry(o =>
-        {
-            o.Dsn = serilogSentryDsn;
-            o.MinimumEventLevel = LogEventLevel.Error;
-            o.MinimumBreadcrumbLevel = LogEventLevel.Warning;
-        });
-    }
 });
 builder.Services.AddApiVersioning(options =>
 {

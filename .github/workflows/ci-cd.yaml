@@ -196,6 +196,29 @@ jobs:
           SENTRY_ORG: fundamental
           SENTRY_PROJECT: fundamental-backend
           SENTRY_URL: https://sentry.academind.ir
+
+      # Upload .NET debug symbols (PDB files) to Sentry for better stack traces
+      - name: Upload Debug Symbols to Sentry
+        if: vars.SENTRY_ENABLED == 'true' && vars.SENTRY_UPLOAD_SOURCEMAPS == 'true'
+        run: |
+          # Build with PDB files for Sentry upload
+          dotnet publish src/Presentation/Fundamental.WebApi/Fundamental.WebApi.csproj \
+            -c Release \
+            -o ./sentry-symbols \
+            /p:DebugType=portable \
+            /p:DebugSymbols=true
+          
+          # Upload PDB files to Sentry
+          SENTRY_RELEASE="fundamental-backend@${{ steps.version.outputs.version }}"
+          sentry-cli debug-files upload \
+            --include-sources \
+            ./sentry-symbols \
+            --release ${SENTRY_RELEASE}
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: fundamental
+          SENTRY_PROJECT: fundamental-backend
+          SENTRY_URL: https://sentry.academind.ir
       
       - name: Create summary
         run: |
