@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Serilog;
+using Serilog.Events;
 
 WebApplicationBuilder builder = WebApplication.CreateSlimBuilder(args);
 
@@ -24,7 +25,7 @@ WebApplicationBuilder builder = WebApplication.CreateSlimBuilder(args);
 // Sentry must be initialized as early as possible to capture all errors
 // DSN is read from: 1) Sentry__Dsn env var, 2) Configuration Sentry:Dsn
 string? sentryDsn = Environment.GetEnvironmentVariable("Sentry__Dsn")
-                     ?? builder.Configuration["Sentry:Dsn"];
+                    ?? builder.Configuration["Sentry:Dsn"];
 
 builder.WebHost.UseSentry(options =>
 {
@@ -105,15 +106,16 @@ builder.Host.UseSerilog((context, serviceProvider, configuration) =>
 
     // Send Serilog events to Sentry (Warning and above)
     // Only configure Sentry sink if DSN is available
-    var serilogSentryDsn = Environment.GetEnvironmentVariable("Sentry__Dsn")
-                           ?? context.Configuration["Sentry:Dsn"];
+    string? serilogSentryDsn = Environment.GetEnvironmentVariable("Sentry__Dsn")
+                               ?? context.Configuration["Sentry:Dsn"];
+
     if (!string.IsNullOrEmpty(serilogSentryDsn))
     {
         configuration.WriteTo.Sentry(o =>
         {
             o.Dsn = serilogSentryDsn;
-            o.MinimumEventLevel = Serilog.Events.LogEventLevel.Error;
-            o.MinimumBreadcrumbLevel = Serilog.Events.LogEventLevel.Warning;
+            o.MinimumEventLevel = LogEventLevel.Error;
+            o.MinimumBreadcrumbLevel = LogEventLevel.Warning;
         });
     }
 });

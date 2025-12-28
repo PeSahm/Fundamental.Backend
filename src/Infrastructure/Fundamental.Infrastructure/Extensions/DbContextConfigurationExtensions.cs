@@ -66,7 +66,7 @@ public static class DbContextConfigurationExtensions
 
     public static IServiceCollection AddInterceptors(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddSingleton<DomainEventsInterceptor>();
+        // serviceCollection.AddSingleton<DomainEventsInterceptor>();
         return serviceCollection;
     }
 }
