@@ -184,20 +184,8 @@ jobs:
           chmod +x /usr/local/bin/sentry-cli
           sentry-cli --version
       
-      - name: Check Sentry Connectivity
-        id: sentry-check
-        if: vars.SENTRY_ENABLED == 'true' && vars.SENTRY_UPLOAD_SOURCEMAPS == 'true'
-        run: |
-          if curl -f --max-time 10 https://sentry.academind.ir/api/0/organizations/fundamental/ >/dev/null 2>&1; then
-            echo "sentry_accessible=true" >> $GITHUB_OUTPUT
-            echo "Sentry server is accessible"
-          else
-            echo "sentry_accessible=false" >> $GITHUB_OUTPUT
-            echo "Sentry server is not accessible, skipping upload"
-          fi
-      
       - name: Create Sentry Release
-        if: vars.SENTRY_ENABLED == 'true' && vars.SENTRY_UPLOAD_SOURCEMAPS == 'true' && steps.sentry-check.outputs.sentry_accessible == 'true'
+        if: vars.SENTRY_ENABLED == 'true' && vars.SENTRY_UPLOAD_SOURCEMAPS == 'true'
         run: |
           SENTRY_RELEASE="fundamental-backend@${{ steps.version.outputs.version }}"
           sentry-cli releases new ${SENTRY_RELEASE}
@@ -211,7 +199,7 @@ jobs:
 
       # Upload .NET debug symbols (PDB files) to Sentry for better stack traces
       - name: Upload Debug Symbols to Sentry
-        if: vars.SENTRY_ENABLED == 'true' && vars.SENTRY_UPLOAD_SOURCEMAPS == 'true' && steps.sentry-check.outputs.sentry_accessible == 'true'
+        if: vars.SENTRY_ENABLED == 'true' && vars.SENTRY_UPLOAD_SOURCEMAPS == 'true'
         run: |
           # Build with PDB files for Sentry upload
           dotnet publish src/Presentation/Fundamental.WebApi/Fundamental.WebApi.csproj \
