@@ -243,8 +243,10 @@ jobs:
           SENTRY_ORG: fundamental
           SENTRY_PROJECT: fundamental-backend
           SENTRY_URL: https://sentry.academind.ir
+
+      - name: Build Summary
         run: |
-          echo "## 🐳 Docker Images Built" >> $GITHUB_STEP_SUMMARY
+          echo "## Docker Images Built" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Image | Tag |" >> $GITHUB_STEP_SUMMARY
           echo "|-------|-----|" >> $GITHUB_STEP_SUMMARY
