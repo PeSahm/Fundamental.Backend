@@ -212,11 +212,10 @@ jobs:
             /p:DebugSymbols=true
 
           # Upload PDB files to Sentry
-          SENTRY_RELEASE="fundamental-backend@${{ steps.version.outputs.version }}"
+          # Release association is handled by the "Create Sentry Release" step above
           sentry-cli debug-files upload \
             --include-sources \
-            ./sentry-symbols \
-            --release ${SENTRY_RELEASE}
+            ./sentry-symbols
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: fundamental
