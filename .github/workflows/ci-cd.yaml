@@ -180,7 +180,7 @@ jobs:
         continue-on-error: true
         run: |
           # Download from GitHub releases (sentry.io is blocked in Iran)
-          SENTRY_CLI_VERSION="2.39.1"
+          SENTRY_CLI_VERSION="3.2.0"
           curl -sL "https://github.com/getsentry/sentry-cli/releases/download/${SENTRY_CLI_VERSION}/sentry-cli-Linux-x86_64" -o /usr/local/bin/sentry-cli
           chmod +x /usr/local/bin/sentry-cli
           sentry-cli --version
@@ -189,14 +189,14 @@ jobs:
         if: vars.SENTRY_ENABLED == 'true' && vars.SENTRY_UPLOAD_SOURCEMAPS == 'true'
         continue-on-error: true
         run: |
-          SENTRY_RELEASE="fundamental-backend@${{ steps.version.outputs.version }}"
+          SENTRY_RELEASE="fundamental-dotnet-backend@${{ steps.version.outputs.version }}"
           sentry-cli releases new ${SENTRY_RELEASE}
           sentry-cli releases set-commits ${SENTRY_RELEASE} --auto
           sentry-cli releases finalize ${SENTRY_RELEASE}
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: fundamental
-          SENTRY_PROJECT: fundamental-backend
+          SENTRY_ORG: mostafaesmaeili8
+          SENTRY_PROJECT: fundamental-dotnet-backend
           SENTRY_URL: ${{ vars.SENTRY_BASE_URL }}
 
       # # Upload .NET debug symbols (PDB files) to Sentry for better stack traces
@@ -218,8 +218,8 @@ jobs:
             ./sentry-symbols
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: fundamental
-          SENTRY_PROJECT: fundamental-backend
+          SENTRY_ORG: mostafaesmaeili8
+          SENTRY_PROJECT: fundamental-dotnet-backend
           SENTRY_URL: ${{ vars.SENTRY_BASE_URL }}
 
       - name: Build Summary
