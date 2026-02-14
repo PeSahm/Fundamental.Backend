@@ -197,7 +197,7 @@ jobs:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: fundamental
           SENTRY_PROJECT: fundamental-backend
-          SENTRY_URL: https://sentry.academind.ir
+          SENTRY_URL: ${{ vars.SENTRY_BASE_URL }}
 
       # # Upload .NET debug symbols (PDB files) to Sentry for better stack traces
       - name: Upload Debug Symbols to Sentry
@@ -220,7 +220,7 @@ jobs:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: fundamental
           SENTRY_PROJECT: fundamental-backend
-          SENTRY_URL: https://sentry.academind.ir
+          SENTRY_URL: ${{ vars.SENTRY_BASE_URL }}
 
       - name: Build Summary
         run: |
