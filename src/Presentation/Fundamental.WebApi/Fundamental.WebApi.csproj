@@ -5,12 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Sentry.AspNetCore" Version="6.0.0" />
-    <PackageReference Include="Sentry.Profiling" Version="6.0.0" />
-    <PackageReference Include="Sentry.Serilog" Version="6.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\BuildingBlock\ErrorHandling.AspNetCore\ErrorHandling.AspNetCore.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Fundamental.Infrastructure\Fundamental.Infrastructure.csproj" />
     <ProjectReference Include="..\Web.Common\Web.Common.csproj" />

@@ -56,6 +56,7 @@ public static class ServicesConfigurationExtensions
 
         builder.AddMediatR(cfg =>
         {
+            cfg.AddOpenBehavior(typeof(LogRequestsPipelineBehavior<,>));
             cfg.AddOpenBehavior(typeof(CommonErrorsPipelineBehavior<,>));
             cfg.RegisterServicesFromAssemblies(typeof(GetSymbolsQueryHandler).Assembly);
         });
